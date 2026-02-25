@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "tlctc_version": "2.0",
+    "release_date": "2025-12-14",
+    "schema_id": "tlctc-framework",
+    "schema_version": "2.0.0",
+    "publisher": "TLCTC Project",
+    "license": "CC-BY-4.0",
+    "notes": "Framework dictionary for TLCTC v2.0"
+  },
+  "clusters": {
+    "#1": {
+      "strategic_id": "#1",
+      "operational_root_id": "TLCTC-01.00",
+      "name": "Abuse of Functions",
+      "definition": "An attacker abuses the logic or scope of existing, legitimate software functions for malicious purposes without exploiting a code flaw.",
+      "attackers_view": "I abuse a functionality, not a coding issue.",
+      "generic_vulnerability": "The inherent trust, scope, and complexity designed into software functionality and configuration.",
+      "topology": "internal"
+    },
+    "#2": {
+      "strategic_id": "#2",
+      "operational_root_id": "TLCTC-02.00",
+      "name": "Exploiting Server",
+      "definition": "An attacker targets flaws within the server-side application's source code implementation.",
+      "attackers_view": "I abuse a flaw in the application's source code on the server side.",
+      "generic_vulnerability": "Server-side implementation flaws enable unintended behavior.",
+      "topology": "internal"
+    },
+    "#3": {
+      "strategic_id": "#3",
+      "operational_root_id": "TLCTC-03.00",
+      "name": "Exploiting Client",
+      "definition": "An attacker targets flaws within the source code implementation of any software acting in a client role.",
+      "attackers_view": "I abuse a flaw in the source code of software acting as a client.",
+      "generic_vulnerability": "Client-side implementation flaws enable unintended behavior.",
+      "topology": "internal"
+    },
+    "#4": {
+      "strategic_id": "#4",
+      "operational_root_id": "TLCTC-04.00",
+      "name": "Identity Theft",
+      "definition": "An attacker misuses authentication credentials to impersonate an identity.",
+      "attackers_view": "I abuse stolen or forged credentials to act as someone else.",
+      "generic_vulnerability": "Weak identity management processes and/or inadequate credential protection mechanisms throughout the identity lifecycle.",
+      "topology": "internal"
+    },
+    "#5": {
+      "strategic_id": "#5",
+      "operational_root_id": "TLCTC-05.00",
+      "name": "Man in the Middle",
+      "definition": "An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.",
+      "attackers_view": "I abuse my position between communicating parties.",
+      "generic_vulnerability": "The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.",
+      "topology": "internal"
+    },
+    "#6": {
+      "strategic_id": "#6",
+      "operational_root_id": "TLCTC-06.00",
+      "name": "Flooding Attack",
+      "definition": "An attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to denial of service.",
+      "attackers_view": "I abuse the circumstance of always limited capacity.",
+      "generic_vulnerability": "Finite capacity limitations inherent in any system component.",
+      "topology": "internal"
+    },
+    "#7": {
+      "strategic_id": "#7",
+      "operational_root_id": "TLCTC-07.00",
+      "name": "Malware",
+      "definition": "An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.",
+      "attackers_view": "I abuse the environment's designed capability to execute malware code, malicious scripts, or foreign-introduced tools for my purposes.",
+      "generic_vulnerability": "The software environment's designed capability to execute potentially untrusted foreign code.",
+      "topology": "internal"
+    },
+    "#8": {
+      "strategic_id": "#8",
+      "operational_root_id": "TLCTC-08.00",
+      "name": "Physical Attack",
+      "definition": "Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.",
+      "attackers_view": "I abuse the physical accessibility or properties of hardware, devices, and signals.",
+      "generic_vulnerability": "Physical accessibility of infrastructure and the exploitability of physical-layer properties.",
+      "topology": "bridge"
+    },
+    "#9": {
+      "strategic_id": "#9",
+      "operational_root_id": "TLCTC-09.00",
+      "name": "Social Engineering",
+      "definition": "An attacker psychologically manipulates individuals into performing actions counter to their best interests.",
+      "attackers_view": "I abuse human trust and psychology.",
+      "generic_vulnerability": "Humans can be influenced into unsafe actions or decisions.",
+      "topology": "bridge"
+    },
+    "#10": {
+      "strategic_id": "#10",
+      "operational_root_id": "TLCTC-10.00",
+      "name": "Supply Chain Attack",
+      "definition": "An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.",
+      "attackers_view": "I abuse the trust in third-party components.",
+      "generic_vulnerability": "Trust in third-party components and update channels can be subverted.",
+      "topology": "bridge"
+    }
+  },
+  "axioms": [
+    { "axiom_id": "Axiom I", "statement": "The framework is generic and applies to all IT systems; it does not differentiate by system type." },
+    { "axiom_id": "Axiom II", "statement": "All networked systems can be abstracted as client-server interaction." },
+    { "axiom_id": "Axiom III", "statement": "Threats are on the cause side; outcomes and events are not threats." },
+    { "axiom_id": "Axiom IV", "statement": "Threat clusters are separate from threat actors." },
+    { "axiom_id": "Axiom V", "statement": "Control failures are not threats." },
+    { "axiom_id": "Axiom VI", "statement": "For every generic vulnerability, there is one threat cluster (non-overlap)." },
+    { "axiom_id": "Axiom VII", "statement": "Each distinct attack vector is defined by the generic vulnerability it initially targets." },
+    { "axiom_id": "Axiom VIII", "statement": "Top-level clusters have sub-threats (strategic vs operational layering)." },
+    { "axiom_id": "Axiom IX", "statement": "Clusters can be used in sequence to describe an attack path; Δt measures velocity." },
+    { "axiom_id": "Axiom X", "statement": "Credentials are system control elements; acquisition and application are distinct steps." }
+  ],
+  "rules": [
+    {
+      "rule_id": "R-EXEC",
+      "statement": "If Foreign Executable Content executes, a #7 step MUST be recorded at the execution moment.",
+      "enforcement_level": "must",
+      "machine_enforceable": true
+    },
+    {
+      "rule_id": "R-ROLE",
+      "statement": "Classify by the role of the component containing the flaw relative to the attacker: server-role flaw = #2, client-role flaw = #3.",
+      "enforcement_level": "must",
+      "machine_enforceable": false
+    },
+    {
+      "rule_id": "R-FLOOD",
+      "statement": "If the primary mechanism is volume or intensity exhausting finite resources, classify as #6. If it is an implementation defect causing crash/hang/degradation, classify as #2 or #3 per R-ROLE.",
+      "enforcement_level": "must",
+      "machine_enforceable": false
+    },
+    {
+      "rule_id": "R-SUPPLY",
+      "statement": "#10 Supply Chain Attack MUST be placed at the Trust Acceptance Event (TAE) — the moment the third-party trust link is honored and the trust artifact becomes authoritative inside the target domain.",
+      "enforcement_level": "must",
+      "machine_enforceable": false
+    },
+    {
+      "rule_id": "R-MITM",
+      "statement": "Position acquisition maps to the enabling cluster; once position is established, interception/modification/relay actions map to #5.",
+      "enforcement_level": "must",
+      "machine_enforceable": false
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "registry_id": "@Org-registry",
+    "registry_version": "1.0.0",
+    "created_at": "2025-12-14T10:00:00Z",
+    "owner": "Security Architecture",
+    "notes": "Example registry for responsibility spheres and boundary contexts. Organizations should customize this to reflect their own governance structure."
+  },
+  "spheres": [
+    { "sphere_id": "@External", "description": "Outside the organization boundary", "typical_domain": "third-party" },
+    { "sphere_id": "@Org", "description": "Primary organization responsibility sphere", "typical_domain": "cyber" },
+    { "sphere_id": "@Vendor", "description": "Vendor-managed assets or services", "typical_domain": "third-party" },
+    { "sphere_id": "@CloudProvider", "description": "Cloud platform governance domain", "typical_domain": "third-party" },
+    { "sphere_id": "@MSP", "description": "Managed service provider domain", "typical_domain": "third-party" },
+    { "sphere_id": "@Facilities", "description": "Physical facilities / building management", "typical_domain": "physical" },
+    { "sphere_id": "@Human", "description": "Human decision/actions within the org", "typical_domain": "human" },
+    { "sphere_id": "@Partner", "description": "Partner organization domain", "typical_domain": "third-party" },
+    { "sphere_id": "@Attacker", "description": "Attacker-controlled infrastructure and assets", "typical_domain": "third-party" }
+  ],
+  "boundary_contexts": [
+    { "context": "human", "description": "Human decision / manipulation boundary (bridge by #9)" },
+    { "context": "physical", "description": "Physical domain boundary (bridge by #8)" },
+    { "context": "update", "description": "Third-party update / dependency boundary (bridge by #10)" },
+    { "context": "auth", "description": "Identity provider / authentication responsibility boundary" },
+    { "context": "dev", "description": "Build/CI/CD responsibility boundary" },
+    { "context": "api", "description": "API integration / service-to-service boundary" },
+    { "context": "cloud", "description": "Cloud shared responsibility boundary" }
+  ]
+}

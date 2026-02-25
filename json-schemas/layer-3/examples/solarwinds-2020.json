@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "incident_id": "SOLARWINDS-SUNBURST-2020",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "registry_ref": "example-registry.json",
+    "created_at": "2026-02-23T00:00:00Z",
+    "notes": "SolarWinds SUNBURST supply chain compromise (December 2020). Attack path: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]. APT29/Cozy Bear attributed (Axiom IV: actor identity does not change cluster classification). Sources: CISA Alert AA20-352A, Microsoft MSRC, FireEye/Mandiant UNC2452 report."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-supply-chain",
+      "cluster": "#10",
+      "topology_boundary": {
+        "context": "update",
+        "source_sphere": "@Vendor",
+        "target_sphere": "@Org"
+      },
+      "delta_t_to_next": "instant",
+      "notes": "Trust Acceptance Event: SolarWinds Orion update v2019.4-2020.2.1 containing SUNBURST backdoor accepted and installed by target organization via legitimate update channel. The compromised DLL (SolarWinds.Orion.Core.BusinessLayer.dll) was digitally signed by SolarWinds, passing all trust verification. Falsifiability test: removing the third-party trust link (not accepting the update) would have prevented this step."
+    },
+    {
+      "step_id": "s2-sunburst-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "~14d",
+      "notes": "FEC execution via designed capability: SUNBURST backdoor DLL loaded and executed by the legitimate SolarWinds Orion service (solarwinds.businesslayerhost.exe). The execution used the environment's intended DLL loading mechanism — an intended data→code transition, not an exploit. SUNBURST remained dormant for approximately 12-14 days before activating C2 communication via DNS (avsvmcloud.com). R-EXEC satisfied: FEC execution recorded as #7."
+    },
+    {
+      "step_id": "s3-credential-forgery",
+      "cluster": "#4",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~2h",
+      "notes": "Credential application: attacker forged SAML tokens using stolen signing certificates to impersonate legitimate users and access cloud resources (Azure AD, Office 365). Per Axiom X: the acquisition of the signing key occurred during the #7 step (a consequence of the malware's access, recorded as DRE:C); the USE of forged credentials to authenticate is always #4 regardless of acquisition method."
+    },
+    {
+      "step_id": "s4-cloud-abuse",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Abuse of legitimate cloud functions: attacker used valid (forged) credentials to abuse Azure AD APIs, Office 365 mail reading APIs, and federated trust configurations for data exfiltration. No code flaw exploited — the attacker operated within the designed functionality of the cloud platform using stolen identity. Data stayed data; no foreign code was introduced at this stage."
+    }
+  ]
+}

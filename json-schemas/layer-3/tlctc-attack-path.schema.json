@@ -1,0 +1,183 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TLCTC Attack Path Instance (Dynamic) — Schema",
+  "description": "Validates TLCTC incident/attack-path instances for exchange and documentation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metadata", "path_sequence"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["incident_id", "analyst_confidence", "tlctc_version"],
+      "properties": {
+        "incident_id": { "type": "string" },
+        "analyst_confidence": { "type": "string", "enum": ["low", "medium", "high"] },
+        "tlctc_version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+        "framework_ref": { "type": "string", "description": "Identifier/filename for the framework definition package used for interpretation." },
+        "framework_sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+        "registry_ref": { "type": "string", "description": "Identifier/filename for the local reference registry used (spheres/contexts)." },
+        "registry_sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      }
+    },
+    "path_sequence": {
+      "type": "array",
+      "description": "Ordered list of sequence items. Each item is either a single attack_step or a parallel_group.",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/sequence_item" }
+    },
+    "extensions": { "type": "object" }
+  },
+  "definitions": {
+    "step_id": {
+      "type": "string",
+      "description": "Identifier for steps/groups within this document (document-unique).",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+    },
+    "cluster_id": {
+      "type": "string",
+      "pattern": "^(#[1-9]|#10|TLCTC-(0[1-9]|10)\\.[0-9]{2})$",
+      "description": "Strategic: #X (1..10) or Operational: TLCTC-XX.YY"
+    },
+    "sphere_id": {
+      "type": "string",
+      "pattern": "^(\\?|@[^\\s]{1,128})$",
+      "description": "Responsibility sphere identifier. Use '@...' when known, or '?' when unknown."
+    },
+    "context_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,32}$",
+      "description": "Boundary context label (prefer registry-defined values)."
+    },
+    "delta_t": {
+      "type": "string",
+      "pattern": "^(instant|\\?|~?\\d+(ms|s|m|h|d|w|mo|y)|[<>]=?\\d+(ms|s|m|h|d|w|mo|y))$",
+      "description": "Time to next item (Attack Velocity Δt). Supports unknown '?', estimated '~15m', and bounded '<=5m' forms."
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Boundary annotation equivalent to ||[context][@Source→@Target]||.",
+      "required": ["context", "source_sphere", "target_sphere"],
+      "properties": {
+        "context": { "$ref": "#/definitions/context_id" },
+        "source_sphere": { "$ref": "#/definitions/sphere_id" },
+        "target_sphere": { "$ref": "#/definitions/sphere_id" }
+      }
+    },
+    "attack_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step_id", "cluster"],
+      "properties": {
+        "step_id": { "$ref": "#/definitions/step_id" },
+        "cluster": { "$ref": "#/definitions/cluster_id" },
+        "topology_boundary": { "$ref": "#/definitions/boundary" },
+        "fec_executed": {
+          "type": "boolean",
+          "description": "Analyst assertion: an FEC execution occurred and MUST be recorded as a #7 step (here or via fec_recorded_in_step_id)."
+        },
+        "fec_recorded_in_step_id": {
+          "$ref": "#/definitions/step_id",
+          "description": "If fec_executed=true and this step is not #7/TLCTC-07.xx, reference the step_id of the #7 step that records the execution moment."
+        },
+        "outcomes": {
+          "type": "array",
+          "description": "Data Risk Events (DRE) tags resulting from this step (effects; do not change classification).",
+          "items": { "type": "string", "enum": ["C", "I", "A"] },
+          "uniqueItems": true
+        },
+        "delta_t_to_next": { "$ref": "#/definitions/delta_t" },
+        "evidence_refs": {
+          "type": "array",
+          "description": "Optional references (tickets, log sources, intel reports, indicator IDs).",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "fec_executed": { "const": true } },
+            "required": ["fec_executed"]
+          },
+          "then": {
+            "oneOf": [
+              {
+                "properties": { "cluster": { "pattern": "^(#7|TLCTC-07\\.[0-9]{2})$" } },
+                "required": ["cluster"]
+              },
+              { "required": ["fec_recorded_in_step_id"] }
+            ]
+          }
+        }
+      ]
+    },
+    "attack_step_in_parallel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step_id", "cluster"],
+      "properties": {
+        "step_id": { "$ref": "#/definitions/step_id" },
+        "cluster": { "$ref": "#/definitions/cluster_id" },
+        "topology_boundary": { "$ref": "#/definitions/boundary" },
+        "fec_executed": { "type": "boolean" },
+        "fec_recorded_in_step_id": { "$ref": "#/definitions/step_id" },
+        "outcomes": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["C", "I", "A"] },
+          "uniqueItems": true
+        },
+        "evidence_refs": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "fec_executed": { "const": true } },
+            "required": ["fec_executed"]
+          },
+          "then": {
+            "oneOf": [
+              {
+                "properties": { "cluster": { "pattern": "^(#7|TLCTC-07\\.[0-9]{2})$" } },
+                "required": ["cluster"]
+              },
+              { "required": ["fec_recorded_in_step_id"] }
+            ]
+          }
+        }
+      ]
+    },
+    "parallel_group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "steps"],
+      "properties": {
+        "mode": { "const": "parallel" },
+        "group_id": { "$ref": "#/definitions/step_id" },
+        "steps": {
+          "type": "array",
+          "minItems": 2,
+          "description": "Steps executed in parallel. Member steps MUST NOT carry delta_t_to_next; use the group's delta_t_to_next.",
+          "items": { "$ref": "#/definitions/attack_step_in_parallel" }
+        },
+        "delta_t_to_next": { "$ref": "#/definitions/delta_t" },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      }
+    },
+    "sequence_item": {
+      "description": "A single attack step or a parallel group.",
+      "oneOf": [
+        { "$ref": "#/definitions/attack_step" },
+        { "$ref": "#/definitions/parallel_group" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TLCTC Framework Definition (Static) — Schema",
+  "description": "Validates a TLCTC framework release package (e.g., v2.0). This is the immutable dictionary of clusters, axioms, and core rule identifiers.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metadata", "clusters", "axioms", "rules"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tlctc_version", "release_date"],
+      "properties": {
+        "tlctc_version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+        "release_date": { "type": "string", "format": "date" },
+        "schema_id": { "type": "string", "examples": ["tlctc-framework"] },
+        "schema_version": { "type": "string", "examples": ["2.0.0"] },
+        "publisher": { "type": "string" },
+        "license": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "clusters": {
+      "type": "object",
+      "description": "The canonical set of 10 strategic clusters keyed by strategic ID.",
+      "additionalProperties": false,
+      "required": ["#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8", "#9", "#10"],
+      "properties": {
+        "#1": { "$ref": "#/definitions/cluster_def" },
+        "#2": { "$ref": "#/definitions/cluster_def" },
+        "#3": { "$ref": "#/definitions/cluster_def" },
+        "#4": { "$ref": "#/definitions/cluster_def" },
+        "#5": { "$ref": "#/definitions/cluster_def" },
+        "#6": { "$ref": "#/definitions/cluster_def" },
+        "#7": { "$ref": "#/definitions/cluster_def" },
+        "#8": { "$ref": "#/definitions/cluster_def" },
+        "#9": { "$ref": "#/definitions/cluster_def" },
+        "#10": { "$ref": "#/definitions/cluster_def" }
+      }
+    },
+    "axioms": {
+      "type": "array",
+      "description": "The immutable axiom set for this TLCTC release.",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/axiom_def" }
+    },
+    "rules": {
+      "type": "array",
+      "description": "Rule identifiers referenced by tooling and validation layers (e.g., R-EXEC).",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/rule_def" }
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Forward-compatible container for non-standard fields."
+    }
+  },
+  "definitions": {
+    "strategic_id": {
+      "type": "string",
+      "pattern": "^(#[1-9]|#10)$"
+    },
+    "operational_root_id": {
+      "type": "string",
+      "pattern": "^TLCTC-(0[1-9]|10)\\.00$",
+      "description": "Operational root identifier for the strategic cluster (XX.00)."
+    },
+    "topology_type": {
+      "type": "string",
+      "enum": ["internal", "bridge"],
+      "description": "internal = cyber-domain technical surface; bridge = generic vulnerability outside the software domain (human/physical/third-party trust)."
+    },
+    "cluster_def": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategic_id", "operational_root_id", "name", "definition", "attackers_view", "generic_vulnerability", "topology"],
+      "properties": {
+        "strategic_id": { "$ref": "#/definitions/strategic_id" },
+        "operational_root_id": { "$ref": "#/definitions/operational_root_id" },
+        "name": { "type": "string" },
+        "definition": { "type": "string" },
+        "attackers_view": { "type": "string" },
+        "generic_vulnerability": { "type": "string" },
+        "topology": { "$ref": "#/definitions/topology_type" },
+        "operational_sub_threats": {
+          "type": "array",
+          "description": "Optional controlled vocabulary for TLCTC-XX.YY operational IDs for this release.",
+          "items": { "$ref": "#/definitions/operational_def" }
+        },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      }
+    },
+    "operational_def": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "definition"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^TLCTC-(0[1-9]|10)\\.[0-9]{2}$"
+        },
+        "name": { "type": "string" },
+        "definition": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "axiom_def": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axiom_id", "statement"],
+      "properties": {
+        "axiom_id": { "type": "string", "pattern": "^Axiom\\s+[IVXLCDM]+$" },
+        "statement": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "rule_def": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule_id", "statement", "enforcement_level"],
+      "properties": {
+        "rule_id": { "type": "string", "pattern": "^R-[A-Z0-9_-]+$" },
+        "statement": { "type": "string" },
+        "enforcement_level": { "type": "string", "enum": ["must", "should", "may"] },
+        "machine_enforceable": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}
