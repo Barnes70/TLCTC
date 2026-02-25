@@ -1,6 +1,6 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.0** · CC BY 4.0 · [tlctc.net](https://tlctc.net) · [White Paper](https://tlctc.net/whitepaper)
+**Version 2.0** · CC BY 4.0 · [tlctc.net](https://tlctc.net) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
 The first cause-oriented, axiomatic cyber threat taxonomy.
 
