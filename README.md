@@ -1,6 +1,6 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.0** · CC BY 4.0 · [tlctc.net](https://tlctc.net) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
+**Version 2.0** · CC BY 4.0 · [tlctc.net](https://tlctc.net) · [White Paper](https://tlctc.net/whitepaper)
 
 The first cause-oriented, axiomatic cyber threat taxonomy.
 
@@ -274,6 +274,12 @@ tlctc/
 │   ├── TLCTC-glossary-v2.0.pdf           # Comprehensive Definitions
 │   ├── json-architecture.pdf             # JSON Architecture Specification
 │   └── why-exactly-ten.pdf               # Framework Architecture Rationale
+├── examples/
+│   ├── agentic-ai/                       # Analysis of AI semantics in Cyber Threats
+│   │   ├── agentic-attack-paths.json     # 9 attack paths (Paths A–I) from Paper 1
+│   │   └── agentic-consequence-chains.json     # Consequence chain examples from Paper 2
+│   │   └── agentic-tool-profiles.json     # 5 tool category risk profiles
+│   │   └── agentic-irreversibility-matrix.json     # Irreversibility windows per consequence type
 ├── attack-paths/                         # Community-contributed incident analyses
 │   └── CONTRIBUTING.md
 └── LICENSE                               # CC BY 4.0

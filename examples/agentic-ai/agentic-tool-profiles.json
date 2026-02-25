@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TLCTC v2.0 — Agentic AI Tool Category Profiles",
+  "description": "Reference data for agentic AI tool categories, mapping each to its consequence profile (primary DRE, velocity, scope, autonomy characteristics, and irreversibility). Layer 2 reference registry extension. These profiles enable consequence-side risk assessment: for each tool category an agent has access to, the organisation can evaluate the maximum damage potential.",
+  "version": "2.0-agentic-20260225",
+  "license": "CC BY 4.0 — Bernhard Kreinz / tlctc.net",
+  "metadata": {
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.0",
+    "source_paper": "The Consequence Amplifier — Agentic AI on the Right Side of the Bow-Tie",
+    "author": "Bernhard Kreinz",
+    "date": "2026-02-25",
+    "registry_type": "Layer 2 — Reference Registry extension for agentic AI tool profiling"
+  },
+  "velocity_classes": {
+    "description": "TLCTC v2.0 Velocity Classes determine which control types are structurally viable at each speed.",
+    "VC-1": {
+      "range": "Days → months",
+      "viable_control_mode": "Strategic: log retention, threat hunting, strategic monitoring, policy review"
+    },
+    "VC-2": {
+      "range": "Hours",
+      "viable_control_mode": "Tactical: SIEM alerting, analyst triage, guided response"
+    },
+    "VC-3": {
+      "range": "Minutes",
+      "viable_control_mode": "Operational: SOAR/EDR automation, rapid containment, prebuilt playbooks"
+    },
+    "VC-4": {
+      "range": "Seconds → milliseconds",
+      "viable_control_mode": "Real-Time: architecture, circuit breakers, rate-limits, hardening, automatic isolation"
+    }
+  },
+  "tool_profiles": [
+    {
+      "id": "data-access",
+      "category": "Data Access",
+      "description": "Database connectors, document retrieval, search APIs, file system access, CRM/ERP integrations.",
+      "primary_dre": ["LoC"],
+      "secondary_dre": ["LoI"],
+      "consequence_velocity": "VC-4",
+      "scope_description": "All connected data stores. Critical amplification factor: cross-system correlation — the agent can combine individually low-sensitivity data from multiple systems into high-sensitivity composite profiles.",
+      "autonomy_description": "Algorithmic data correlation, selective extraction, bulk aggregation without human guidance.",
+      "irreversibility": "Low recovery feasibility. Once data is read by the compromised process, confidentiality is permanently lost.",
+      "key_consequence_metric": "Maximum volume of records accessible within first 60 seconds, across all connected data stores.",
+      "recommended_controls": {
+        "limitation": ["Per-API rate limits", "Maximum record count per query", "Data classification-aware access gates"],
+        "containment": ["Anomalous query volume circuit breaker", "Cross-system access correlation alerting"],
+        "recovery": ["Breach notification procedures (data exposure is irreversible)"]
+      }
+    },
+    {
+      "id": "code-execution",
+      "category": "Code Execution",
+      "description": "Code interpreters, shell access, CI/CD pipeline triggers, infrastructure-as-code deployments.",
+      "primary_dre": ["LoI", "LoAc"],
+      "secondary_dre": ["LoC", "LoAv"],
+      "consequence_velocity": "VC-4 for individual actions; consequence chains can extend to VC-1 as deployed modifications accumulate undetected.",
+      "scope_description": "Execution environment and all dependencies. Code can create persistent, self-reinforcing damage: backdoors, monitoring suppression, application logic modification.",
+      "autonomy_description": "Self-modifying behaviour. Agent can generate novel code, adapt to defensive responses, establish persistence mechanisms that survive agent termination.",
+      "irreversibility": "Medium. Rollback possible for version-controlled systems, but undetected modifications to build pipelines or application logic may propagate through deployment cycles.",
+      "key_consequence_metric": "Number of systems reachable from execution context × types of modifications possible (config, code, data, infrastructure).",
+      "cause_side_note": "Code execution creates the #1→#7 pattern from the cause-side paper. The agent's designed code execution capability is #1; the generated code executing is FEC → #7.",
+      "recommended_controls": {
+        "limitation": ["Sandboxed execution environment", "Code review gates for generated code", "Allow-listed execution targets only"],
+        "containment": ["Execution anomaly detection", "Kill switch on unexpected system calls"],
+        "recovery": ["Version control rollback", "Build pipeline integrity verification", "State snapshot comparison"]
+      }
+    },
+    {
+      "id": "communication",
+      "category": "Communication",
+      "description": "Email clients, messaging platforms (Slack, Teams), social media APIs, customer notification systems.",
+      "primary_dre": ["LoI"],
+      "secondary_dre": ["LoC"],
+      "consequence_velocity": "VC-4. Milliseconds per message. A compromised agent can send thousands of messages before any human detection.",
+      "scope_description": "All recipients and their networks. Each outbound message potentially creates a new victim. Scope amplification is maximal because the consequence propagates beyond organisational boundaries.",
+      "autonomy_description": "Adaptive content generation. Agent can personalise messages per recipient, vary content to avoid pattern detection, impersonate the organisation convincingly.",
+      "irreversibility": "High. Messages cannot be recalled after delivery. Reputational and legal damage is instantaneous upon receipt.",
+      "key_consequence_metric": "Maximum number of external communications sendable in 60 seconds × average recipient reach per message.",
+      "recommended_controls": {
+        "limitation": ["Outbound message rate caps", "New-recipient approval gates", "Delayed sending queues (impose VC-2 on outbound comms)"],
+        "containment": ["Outbound content scanning", "Recipient anomaly detection (new addresses, bulk sends)"],
+        "recovery": ["Communication recall (limited effectiveness)", "Breach notification to affected recipients", "Reputational damage response procedures"]
+      }
+    },
+    {
+      "id": "financial",
+      "category": "Financial",
+      "description": "Payment APIs, procurement systems, trading platforms, invoice processing, expense management.",
+      "primary_dre": ["LoI"],
+      "secondary_dre": ["LoC"],
+      "consequence_velocity": "VC-4. Financial APIs are designed for speed. Settlement windows may provide limited recovery.",
+      "scope_description": "All connected financial systems. Transaction chaining across payment, procurement, and accounting systems.",
+      "autonomy_description": "Transaction chaining. Agent can initiate payments, modify invoices, and adjust records in coordinated sequences designed to avoid reconciliation detection.",
+      "irreversibility": "Very High. Instant payment systems: zero recovery window. Wire transfers: limited window (hours). Settled transactions: final.",
+      "key_consequence_metric": "Maximum monetary value transferable in 60 seconds = (per-transaction limit × maximum transactions per minute). If no cap exists, the answer is the agent's entire authorised payment authority.",
+      "recommended_controls": {
+        "limitation": ["Per-transaction value caps", "Aggregate daily value caps", "Human approval gates above threshold", "New-payee approval workflow"],
+        "containment": ["Transaction velocity circuit breaker", "Anomalous payee detection", "Duplicate payment detection"],
+        "recovery": ["Transaction reversal (within settlement window only)", "Bank coordination for wire recall", "Insurance coverage for residual loss"]
+      }
+    },
+    {
+      "id": "infrastructure",
+      "category": "Infrastructure",
+      "description": "Cloud management consoles, DNS configuration, certificate management, container orchestration, network configuration.",
+      "primary_dre": ["LoAv", "LoAc"],
+      "secondary_dre": ["LoI"],
+      "consequence_velocity": "VC-4 for individual changes. Recovery is often VC-1 or VC-2 (hours to days) because infrastructure changes require careful rollback.",
+      "scope_description": "All dependent services. A single DNS change or certificate revocation cascades to all dependent services instantly. Scope amplification is maximal at infrastructure layer.",
+      "autonomy_description": "Cascading configuration changes. Agent can modify multiple infrastructure layers in sequence, creating compound failures that are difficult to diagnose and recover from.",
+      "irreversibility": "Medium–High. Rollback is possible but cascading effects complicate recovery. Incorrect recovery order can compound the outage.",
+      "key_consequence_metric": "Number of dependent services × average time to recover per service × cascade multiplication factor.",
+      "recommended_controls": {
+        "limitation": ["Infrastructure change approval gates", "Rate limits on configuration modifications", "Change window restrictions"],
+        "containment": ["Configuration drift detection", "Automated rollback on service health degradation", "Independent monitoring (not modifiable by the agent)"],
+        "recovery": ["Infrastructure state snapshots (sub-minute intervals)", "Documented recovery order for multi-layer failures", "Disaster recovery runbooks for agent-specific scenarios"]
+      }
+    }
+  ],
+  "usage_guidance": {
+    "risk_assessment_procedure": [
+      "1. Inventory all tools and integrations the agent has access to",
+      "2. Map each tool to a tool category profile above",
+      "3. For each profile, calculate the key_consequence_metric given the agent's specific permissions",
+      "4. Evaluate whether the 60-second maximum damage is within risk appetite",
+      "5. If not: reduce blast radius via limitation controls BEFORE deployment",
+      "6. Configure containment controls per the recommended_controls for each active tool category",
+      "7. Document recovery procedures, noting irreversibility constraints per tool category"
+    ]
+  }
+}

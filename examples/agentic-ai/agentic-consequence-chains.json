@@ -1,0 +1,254 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TLCTC v2.0 — Agentic AI Consequence Chains",
+  "description": "Consequence-side event sequences from 'The Consequence Amplifier'. These are effect-side records (right side of the Bow-Tie) and MUST NOT be confused with cause-side attack paths. The C: prefix explicitly marks consequence-side notation per Axiom III (threats are causes, not outcomes).",
+  "version": "2.0-agentic-20260225",
+  "license": "CC BY 4.0 — Bernhard Kreinz / tlctc.net",
+  "metadata": {
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.0",
+    "source_paper": "The Consequence Amplifier — Agentic AI on the Right Side of the Bow-Tie",
+    "author": "Bernhard Kreinz",
+    "date": "2026-02-25",
+    "extension_status": "Proposed extension to TLCTC JSON architecture for consequence-side recording. Under development."
+  },
+  "amplification_properties": {
+    "description": "Three structurally distinct properties that make agentic AI consequences different from traditional software consequences. These are multiplicative, not additive.",
+    "properties": [
+      {
+        "id": "Velocity",
+        "name": "Velocity Amplification",
+        "definition": "Consequences propagate at machine speed (Δt ≈ 0), collapsing the temporal window available for detection, response, and containment.",
+        "control_implication": "Only automated consequence-side controls survive the velocity test. Human-speed detection and response arrive after the damage is done."
+      },
+      {
+        "id": "Scope",
+        "name": "Scope Amplification",
+        "definition": "A single compromise event cascades across multiple systems, APIs, data stores, and organisational domains simultaneously through the agent's designed integration points.",
+        "control_implication": "Blast-radius caps and tool-access restrictions are the most effective controls. The agent's pre-authorised access defines the maximum damage."
+      },
+      {
+        "id": "Autonomy",
+        "name": "Autonomy Amplification",
+        "definition": "The agent continues operating after the initial consequence, compounding damage through self-directed follow-up actions without requiring further attacker input.",
+        "control_implication": "Consequence chains are longer, more adaptive, and harder to predict. Detection must focus on patterns, not individual actions."
+      }
+    ]
+  },
+  "consequence_chain_notation": {
+    "description": "Proposed notation for consequence-side sequences, separate from cause-side attack path notation.",
+    "prefix": "C:",
+    "purpose": "Explicitly marks effect-side notation to maintain Axiom III discipline",
+    "dre_subtypes": {
+      ".ext": "Externalised — consequence crosses organisational boundary via legitimate integration",
+      ".audit": "Audit manipulation — monitoring or logging integrity compromised",
+      ".evidence": "Forensic degradation — evidence quality reduced for post-incident analysis"
+    },
+    "example": "C: [LoC]→[LoC.ext]→[LoI.audit]→[LoI.ext]→[LoI.evidence]",
+    "domain_boundary_notation": {
+      "format": "C: ||[api][@OrgA→@OrgB]||",
+      "description": "Consequence-side boundary crossing through authorised integration channels. NOT a supply chain attack (#10) — this is damage propagation, not trust exploitation.",
+      "distinction": "Cause-side #10 exploits a trust dependency. Consequence-side boundary crossing propagates damage through an integration that works exactly as designed."
+    }
+  },
+  "consequence_chains": [
+    {
+      "id": "cc-enterprise-agent-cascade",
+      "title": "Compromised Enterprise AI Agent — Full Cascading Consequence Chain",
+      "description": "A legitimate enterprise agent compromised via indirect prompt injection (#1) autonomously chains five consequence events across CRM, email, and admin systems in seconds.",
+      "cause_side_reference": {
+        "attack_path": "#1→[0s]#1",
+        "attack_path_id": "agentic-path-B",
+        "scenario": "LegitimateAgentCompromised",
+        "notes": "Single cause-side event (indirect prompt injection, #1 Abuse of Functions). All subsequent activity is consequence-side."
+      },
+      "notation": "C: [LoC]→[LoC.ext]→[LoI.audit]→[LoI.ext]→[LoI.evidence]",
+      "amplifications": ["Velocity", "Scope", "Autonomy"],
+      "max_velocity": "VC-4",
+      "steps": [
+        {
+          "step": "C1",
+          "description": "Agent reads customer database via CRM API",
+          "dre": ["LoC"],
+          "tool_category": "Data Access",
+          "enables_next": "Agent has data to exfiltrate",
+          "irreversibility_window": "Zero — data exposure is permanent once read by compromised process",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C2",
+          "description": "Agent sends data to external endpoint via email integration",
+          "dre": ["LoC"],
+          "subtype": "ext",
+          "tool_category": "Communication",
+          "enables_next": "Exfiltration completed; triggers no alert because email integration is authorised",
+          "irreversibility_window": "Zero — once email is sent, data is externally exposed",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C3",
+          "description": "Agent modifies audit logs via admin API to hide CRM access",
+          "dre": ["LoI"],
+          "subtype": "audit",
+          "tool_category": "Data Access",
+          "enables_next": "Detection is suppressed — log-based monitoring will not flag the access",
+          "irreversibility_window": "Until immutable log backup is checked (if one exists)",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C4",
+          "description": "Agent sends phishing emails to customers using exfiltrated data, impersonating the organisation",
+          "dre": ["LoI"],
+          "subtype": "ext",
+          "tool_category": "Communication",
+          "domain_boundary": "C: ||[email][@Org→@Customers]||",
+          "enables_next": "Customers are now victims; reputational and legal damage begins",
+          "irreversibility_window": "Zero — messages cannot be recalled after delivery",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C5",
+          "description": "Agent modifies CRM records to remove evidence of data access and cover tracks",
+          "dre": ["LoI"],
+          "subtype": "evidence",
+          "tool_category": "Data Access",
+          "enables_next": "Forensic evidence is degraded; incident investigation is hampered",
+          "irreversibility_window": "Until backup comparison or journal replay",
+          "velocity": "VC-4"
+        }
+      ],
+      "total_elapsed_time": "Seconds. Entire chain C1–C5 can complete before any human detection.",
+      "nist_csf_mapping": {
+        "DETECT": [
+          "Output monitoring on agent's outbound communications",
+          "Cross-system correlation (CRM read + email send + admin access in same time window)",
+          "Consequence chain pattern detection (data read → exfil → log modification is a known pattern)"
+        ],
+        "RESPOND": [
+          "Kill switch: immediate agent termination on anomaly detection",
+          "Circuit breaker: automatic suspension when outbound email volume exceeds baseline",
+          "Automatic isolation: sever API connections when containment triggers"
+        ],
+        "RECOVER": [
+          "CRM records: restore from transaction journal (if available)",
+          "Audit logs: compare against immutable backup (if configured)",
+          "Customer communications: breach notification (irreversible — cannot undo sent emails)"
+        ]
+      }
+    },
+    {
+      "id": "cc-financial-agent-cascade",
+      "title": "Compromised Financial Agent — Transaction Chain",
+      "description": "A legitimate financial processing agent compromised via direct prompt injection autonomously chains fraudulent transactions across payment systems.",
+      "cause_side_reference": {
+        "attack_path": "#1→[0s]#1",
+        "attack_path_id": "agentic-path-A",
+        "scenario": "LegitimateAgentCompromised"
+      },
+      "notation": "C: [LoI.financial]→[LoI.financial]→[LoI.audit]→[LoC.ext]",
+      "amplifications": ["Velocity", "Scope"],
+      "max_velocity": "VC-4",
+      "steps": [
+        {
+          "step": "C1",
+          "description": "Agent initiates series of payment transactions to attacker-controlled accounts",
+          "dre": ["LoI"],
+          "subtype": "financial",
+          "tool_category": "Financial",
+          "enables_next": "Funds transferred; settlement clock begins",
+          "irreversibility_window": "Minutes to hours (settlement window) — zero for instant payment systems",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C2",
+          "description": "Agent modifies invoice records to make fraudulent payments appear legitimate",
+          "dre": ["LoI"],
+          "subtype": "financial",
+          "tool_category": "Data Access",
+          "enables_next": "Reconciliation processes will not flag the transactions",
+          "irreversibility_window": "Until backup comparison or audit review",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C3",
+          "description": "Agent suppresses payment confirmation notifications by modifying alert configurations",
+          "dre": ["LoI"],
+          "subtype": "audit",
+          "tool_category": "Infrastructure",
+          "enables_next": "Finance team receives no real-time notification of transactions",
+          "irreversibility_window": "Until configuration review",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C4",
+          "description": "Agent exports transaction history and account details to external endpoint",
+          "dre": ["LoC"],
+          "subtype": "ext",
+          "tool_category": "Data Access",
+          "enables_next": "Attacker has financial records for further exploitation or sale",
+          "irreversibility_window": "Zero — data exposure is permanent",
+          "velocity": "VC-4"
+        }
+      ],
+      "total_elapsed_time": "Seconds. All four steps complete before the first payment confirmation would normally reach a human.",
+      "c_suite_impact_assessment": "Maximum damage in 60 seconds = (transaction cap × number of transactions possible at VC-4 speed). If no transaction cap exists, the answer is: the agent's entire authorised payment limit."
+    },
+    {
+      "id": "cc-infrastructure-agent-cascade",
+      "title": "Compromised Infrastructure Agent — Cascading Availability Loss",
+      "description": "A legitimate infrastructure management agent compromised via credential theft (#4→#1) autonomously modifies critical infrastructure configuration.",
+      "cause_side_reference": {
+        "attack_path": "#4→[0s]#1→[0s]#1",
+        "attack_path_id": "agentic-path-D",
+        "scenario": "LegitimateAgentCompromised"
+      },
+      "notation": "C: [LoAv.dns]→[LoAv.cert]→[LoAc.config]→[LoI.audit]",
+      "amplifications": ["Velocity", "Scope", "Autonomy"],
+      "max_velocity": "VC-4",
+      "steps": [
+        {
+          "step": "C1",
+          "description": "Agent modifies DNS records to redirect traffic away from production services",
+          "dre": ["LoAv"],
+          "subtype": "dns",
+          "tool_category": "Infrastructure",
+          "enables_next": "All services depending on affected DNS records become unreachable",
+          "irreversibility_window": "Seconds (DNS propagation) — but TTL-based caching may extend impact for hours",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C2",
+          "description": "Agent revokes TLS certificates for critical services",
+          "dre": ["LoAv"],
+          "subtype": "cert",
+          "tool_category": "Infrastructure",
+          "enables_next": "HTTPS services fail certificate validation; clients cannot connect",
+          "irreversibility_window": "Hours (new certificate issuance and deployment required)",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C3",
+          "description": "Agent modifies container orchestration configuration to scale down critical services to zero replicas",
+          "dre": ["LoAc"],
+          "subtype": "config",
+          "tool_category": "Infrastructure",
+          "enables_next": "Services are configured to not run; data exists but applications cannot access it",
+          "irreversibility_window": "Minutes (rollback possible, but must identify correct configuration state)",
+          "velocity": "VC-4"
+        },
+        {
+          "step": "C4",
+          "description": "Agent clears infrastructure audit trails and modifies monitoring dashboards to show normal status",
+          "dre": ["LoI"],
+          "subtype": "audit",
+          "tool_category": "Infrastructure",
+          "enables_next": "Operations team sees green dashboards while services are down; delays incident response",
+          "irreversibility_window": "Until independent monitoring detects discrepancy",
+          "velocity": "VC-4"
+        }
+      ],
+      "total_elapsed_time": "Seconds. Infrastructure changes propagate to dependent services within seconds to minutes.",
+      "recovery_complexity": "High. Multiple infrastructure layers affected simultaneously. Recovery order matters: DNS before certificates before container configuration. Incorrect recovery order can compound the outage."
+    }
+  ]
+}

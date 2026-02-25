@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TLCTC v2.0 — Agentic AI Irreversibility Matrix",
+  "description": "Reference data mapping consequence types to their irreversibility windows and recovery feasibility. The irreversibility window is the time between a consequence event and the point at which it becomes permanent. This is the most critical parameter for consequence-side control design: if the agent's consequence velocity exceeds the irreversibility window, prevention-heavy architectures are the only viable strategy.",
+  "version": "2.0-agentic-20260225",
+  "license": "CC BY 4.0 — Bernhard Kreinz / tlctc.net",
+  "metadata": {
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.0",
+    "source_paper": "The Consequence Amplifier — Agentic AI on the Right Side of the Bow-Tie, §8",
+    "author": "Bernhard Kreinz",
+    "date": "2026-02-25",
+    "registry_type": "Layer 2 — Reference Registry extension for consequence-side analysis"
+  },
+  "core_principle": "When the velocity of consequence generation exceeds the irreversibility window, consequence-side detection and response are structurally too late. The only effective control is to bound the consequence space BEFORE compromise occurs (cause-side capability restriction + consequence-side limitation controls).",
+  "irreversibility_matrix": [
+    {
+      "id": "irr-data-exfil",
+      "consequence_type": "Data exfiltration",
+      "dre": ["LoC"],
+      "irreversibility_window": "Zero",
+      "window_explanation": "Once data is copied to an attacker-controlled location, confidentiality is permanently lost. The data cannot be 'unread' or 'unexposed'.",
+      "recovery_feasibility": "None",
+      "recovery_actions": "Breach notification, regulatory compliance, credential rotation (if credentials were exposed), monitoring for secondary abuse of exfiltrated data.",
+      "agentic_velocity": "VC-4. Agent reads and exfiltrates data via designed API integrations in seconds.",
+      "velocity_exceeds_window": true,
+      "control_strategy": "Prevention-heavy. Blast-radius caps on data access volume. Classification-aware access gates. Rate limits per API.",
+      "applicable_tool_categories": ["Data Access", "Communication"]
+    },
+    {
+      "id": "irr-database-modification",
+      "consequence_type": "Database modification",
+      "dre": ["LoI"],
+      "irreversibility_window": "Until backup cycle or journal checkpoint",
+      "window_explanation": "Modifications can be reversed IF transaction journals exist and are checked before the next backup overwrites the pre-modification state.",
+      "recovery_feasibility": "High (conditional)",
+      "recovery_actions": "Transaction journal replay, point-in-time restore, integrity comparison against known-good state.",
+      "agentic_velocity": "VC-4. Agent executes bulk modifications via designed database APIs in seconds.",
+      "velocity_exceeds_window": false,
+      "velocity_note": "Window depends on journal/backup configuration. Sub-minute journal checkpoints preserve recovery capability. Hourly backups create a gap where VC-4 modifications may be unrecoverable.",
+      "control_strategy": "Balanced. Transaction journaling (sub-minute intervals). Modification rate limits. Integrity monitoring.",
+      "applicable_tool_categories": ["Data Access"]
+    },
+    {
+      "id": "irr-sent-communication",
+      "consequence_type": "Sent email or message",
+      "dre": ["LoI"],
+      "irreversibility_window": "Seconds",
+      "window_explanation": "Email delivery is near-instant. Message recall features exist but are unreliable (recipient may have already read, forwarded, or archived the message).",
+      "recovery_feasibility": "Minimal",
+      "recovery_actions": "Attempted message recall (low success rate). Follow-up correction communication. Reputational damage response. Legal assessment.",
+      "agentic_velocity": "VC-4. Agent sends hundreds of messages per second via designed email/messaging APIs.",
+      "velocity_exceeds_window": true,
+      "control_strategy": "Prevention-heavy. Outbound message rate caps. Delayed sending queues (impose artificial VC-2 window). New-recipient approval gates. Content scanning before send.",
+      "applicable_tool_categories": ["Communication"]
+    },
+    {
+      "id": "irr-financial-transaction",
+      "consequence_type": "Financial transaction",
+      "dre": ["LoI"],
+      "irreversibility_window": "Minutes to hours (varies by payment type)",
+      "window_explanation": "Instant payment systems: zero window. Standard wire transfers: limited recall window (hours, success not guaranteed). Card transactions: chargeback possible within days but not guaranteed. Cryptocurrency: zero window.",
+      "recovery_feasibility": "Varies",
+      "recovery_actions": "Transaction reversal (within settlement window only). Bank coordination for wire recall. Chargeback initiation. Insurance claim. Law enforcement notification.",
+      "agentic_velocity": "VC-4. Financial APIs are designed for speed.",
+      "velocity_exceeds_window": true,
+      "velocity_note": "For instant payment systems, velocity always exceeds window. For wire transfers, there is a narrow window where detection may enable reversal.",
+      "control_strategy": "Prevention-heavy. Per-transaction value caps. Aggregate daily caps. Human approval gates above threshold. New-payee verification.",
+      "applicable_tool_categories": ["Financial"]
+    },
+    {
+      "id": "irr-infrastructure-change",
+      "consequence_type": "Infrastructure configuration change",
+      "dre": ["LoAv", "LoAc"],
+      "irreversibility_window": "Seconds (propagation to dependent services)",
+      "window_explanation": "Configuration changes propagate to dependent services in seconds. DNS changes: immediate but TTL-cached. Certificate revocation: immediate. Container scaling: seconds. Network rules: immediate.",
+      "recovery_feasibility": "Medium",
+      "recovery_actions": "Configuration rollback (requires knowing correct prior state). Service restart. DNS re-propagation (delayed by TTL caching). New certificate issuance and deployment.",
+      "agentic_velocity": "VC-4 for modification. Recovery is VC-1 to VC-2 (hours to days).",
+      "velocity_exceeds_window": true,
+      "velocity_note": "The asymmetry between destruction velocity (VC-4) and recovery velocity (VC-1/VC-2) is the core operational challenge. Damage takes seconds; recovery takes hours.",
+      "control_strategy": "Balanced. Infrastructure change approval gates. Configuration drift detection. Automated rollback triggers. State snapshots at sub-minute intervals.",
+      "applicable_tool_categories": ["Infrastructure"]
+    },
+    {
+      "id": "irr-deleted-data",
+      "consequence_type": "Deleted data",
+      "dre": ["LoAv"],
+      "irreversibility_window": "Depends on backup/retention policy",
+      "window_explanation": "If backups exist and are not also deleted/corrupted: recoverable. If no backups exist or agent also modifies backup systems: permanent loss.",
+      "recovery_feasibility": "High (conditional on backup integrity)",
+      "recovery_actions": "Restore from backup. Verify backup integrity (agent may have modified backups before deleting primary data). Forensic analysis of deletion sequence.",
+      "agentic_velocity": "VC-4. Bulk deletion via designed APIs.",
+      "velocity_exceeds_window": false,
+      "velocity_note": "Recovery is feasible IF backups are immutable and inaccessible to the agent. This is an architectural control that must be in place before compromise.",
+      "control_strategy": "Prevention + Recovery. Immutable backups (not accessible to agent). Deletion rate limits. Soft-delete with retention periods. Backup integrity monitoring.",
+      "applicable_tool_categories": ["Data Access", "Infrastructure"]
+    },
+    {
+      "id": "irr-published-content",
+      "consequence_type": "Published content",
+      "dre": ["LoI"],
+      "irreversibility_window": "Zero",
+      "window_explanation": "Public content is immediately cached, indexed, archived, and potentially copied by third parties. Web archives, search engine caches, social media screenshots, and news aggregators preserve published content indefinitely.",
+      "recovery_feasibility": "None",
+      "recovery_actions": "Content takedown request (slow, unreliable). Public correction statement. Reputational damage response. Legal assessment.",
+      "agentic_velocity": "VC-4. Agent publishes via designed CMS/social media APIs instantly.",
+      "velocity_exceeds_window": true,
+      "control_strategy": "Prevention-heavy. Publication approval gates. Content staging with human review. CMS write-access restrictions. No direct social media API access for agents.",
+      "applicable_tool_categories": ["Communication"]
+    },
+    {
+      "id": "irr-credential-exposure",
+      "consequence_type": "Credential exposure",
+      "dre": ["LoC"],
+      "irreversibility_window": "Zero",
+      "window_explanation": "Once credentials are exposed (exfiltrated, logged in plaintext, transmitted to external endpoint), they must be assumed compromised regardless of whether the attacker has actually used them.",
+      "recovery_feasibility": "Partial (rotation required)",
+      "recovery_actions": "Immediate credential rotation. Session invalidation. Review of all actions performed with exposed credentials. Monitoring for credential reuse.",
+      "agentic_velocity": "VC-4. Agent reads credential stores and secrets management systems via designed APIs.",
+      "velocity_exceeds_window": true,
+      "control_strategy": "Prevention-heavy. Agent must not have access to credential stores or secrets management systems. Principle of least privilege: agent uses scoped, short-lived tokens only.",
+      "applicable_tool_categories": ["Data Access"],
+      "cause_side_note": "Per Axiom X (Credential Duality): credential acquisition maps to the enabling cluster. If the agent reads credentials from a secrets store using its designed access (#1 function abuse), the acquisition is a consequence of #1. If those credentials are subsequently used, the use is ALWAYS #4 (R-CRED)."
+    }
+  ],
+  "usage_guidance": {
+    "c_suite_question": "What is the maximum damage this agent can do in its first 60 seconds after compromise, before any detection or containment is possible?",
+    "assessment_procedure": [
+      "1. For each tool category the agent can access, identify the applicable irreversibility entries above",
+      "2. For each entry where velocity_exceeds_window is true, calculate the maximum consequence volume at VC-4 speed",
+      "3. Sum the irreversible consequences across all tool categories — this is the '60-second damage number'",
+      "4. If that number exceeds risk appetite: reduce blast-radius caps and capability restrictions until it doesn't",
+      "5. For entries where velocity_exceeds_window is false: verify that recovery mechanisms (backups, journals, rollback) are functional and tested"
+    ],
+    "architectural_principle": "If 60 seconds of unconstrained agent operation produces unacceptable irreversible damage, the answer is not better detection. The answer is smaller blast-radius caps and tighter capability restrictions."
+  }
+}

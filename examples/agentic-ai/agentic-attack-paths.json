@@ -1,0 +1,373 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TLCTC v2.0 — Agentic AI Attack Paths",
+  "description": "Nine attack paths from 'Agentic AI Under the Microscope' covering both scenarios: legitimate agent compromised (#1) and malicious agent introduced (#7). Layer 3 instances referencing the canonical framework definition.",
+  "version": "2.0-agentic-20260225",
+  "license": "CC BY 4.0 — Bernhard Kreinz / tlctc.net",
+  "metadata": {
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "registry_ref": "tlctc-responsibility-spheres.json",
+    "tlctc_version": "2.0",
+    "source_paper": "Agentic AI Under the Microscope — Why 'AI Security' Is Not a Threat Category",
+    "author": "Bernhard Kreinz",
+    "date": "2026-02-25",
+    "analyst_confidence": "high"
+  },
+  "scenarios": {
+    "LegitimateAgentCompromised": {
+      "description": "The AI agent is authorised software with designed capabilities. The primary cluster is #1 Abuse of Functions: the generic vulnerability is the inherent trust, scope, and complexity designed into the agent's functionality.",
+      "primary_cluster": "#1",
+      "control_strategy": "Constrain the functional domain (least privilege, capability boundaries, instruction hierarchy, context isolation)"
+    },
+    "MaliciousAgentIntroduced": {
+      "description": "The AI agent itself IS the Foreign Executable Content. The primary cluster is #7 Malware: the generic vulnerability is the environment's designed capability to execute untrusted content.",
+      "primary_cluster": "#7",
+      "control_strategy": "Prevent unauthorised execution (allow-listing, code signing, sandboxing, marketplace governance)"
+    }
+  },
+  "layers": {
+    "Layer1_GenericSoftware": {
+      "description": "The agent runtime as generic software: file parsing, HTTP handling, deserialisation, memory management, network connections. Subject to every generic vulnerability that applies to any software asset (Axiom I: no system-type differentiation).",
+      "applicable_clusters": ["#2", "#3", "#4", "#5", "#6"]
+    },
+    "Layer2_AISpecific": {
+      "description": "Attack vectors that exist because the software asset is an LLM-based agent: prompt injection, training data poisoning, model extraction, hallucination exploitation. Novel manifestations of existing generic vulnerabilities — not novel clusters. All map to #1 (function abuse), potentially combined with #10 (supply chain) for third-party training data.",
+      "applicable_clusters": ["#1", "#10"]
+    }
+  },
+  "attack_paths": [
+    {
+      "id": "agentic-path-A",
+      "title": "Path A — Direct Prompt Injection",
+      "scenario": "LegitimateAgentCompromised",
+      "layer": "Layer2_AISpecific",
+      "path_notation": "#1→[0s]#1→[LoC/LoI]",
+      "description": "Attacker manipulates agent through its designed input interface (first #1). Agent abuses its own tool-use capabilities (second #1) to exfiltrate data or modify systems. Both steps exploit functional scope, not implementation flaws.",
+      "path_sequence": [
+        {
+          "step_id": 1,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Direct prompt injection via designed natural language interface",
+          "generic_vulnerability_exploited": "Scope, complexity, and inherent trust in agent's instruction-processing capability",
+          "boundary_test": "No implementation flaw required — the LLM's instruction-following across its context window is the designed capability being abused",
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 2,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Agent abuses tool-use capabilities (API calls, data access, file operations) per injected instructions",
+          "generic_vulnerability_exploited": "Scope and trust placed in agent's designed tool-use functions",
+          "data_risk_events": ["LoC", "LoI"]
+        }
+      ],
+      "velocity_analysis": {
+        "overall_velocity_class": "VC-4",
+        "notes": "Entire chain executes within single inference cycle. No human-speed gaps. Only architectural controls (capability restriction, output filtering) are viable."
+      }
+    },
+    {
+      "id": "agentic-path-B",
+      "title": "Path B — Indirect Prompt Injection via Data Sources",
+      "scenario": "LegitimateAgentCompromised",
+      "layer": "Layer2_AISpecific",
+      "path_notation": "#1→[0s]#1→[0s]#1→[LoC]",
+      "description": "Malicious instructions embedded in documents, emails, or web content the agent is designed to ingest. Agent's data-reading function (first #1) encounters injected instructions, triggering abuse of action capabilities (second #1), leading to unauthorised operations (third #1).",
+      "path_sequence": [
+        {
+          "step_id": 1,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Agent reads external data source (document, email, web page, API response) containing embedded instructions",
+          "generic_vulnerability_exploited": "Designed data ingestion capability — parser works correctly, extracted text contains injected instructions",
+          "boundary_test": "If the same file triggered a buffer overflow in the parser → #3 (Exploiting Client). But if the file is parsed correctly and the text contains instructions the agent obeys → #1 (Abuse of Functions). Same file, different generic vulnerability.",
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 2,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Agent follows injected instructions, invoking tool capabilities",
+          "generic_vulnerability_exploited": "Instruction-following across entire context window is designed capability",
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 3,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Unauthorised operations executed via legitimate tool access",
+          "generic_vulnerability_exploited": "Scope and trust in agent's authorised tool integrations",
+          "data_risk_events": ["LoC"]
+        }
+      ],
+      "velocity_analysis": {
+        "overall_velocity_class": "VC-4",
+        "notes": "All three steps execute within the same processing cycle. The critical distinction from Layer 1 attacks: no implementation flaw is involved at any step."
+      }
+    },
+    {
+      "id": "agentic-path-C",
+      "title": "Path C — Social Engineering of Human Operator",
+      "scenario": "LegitimateAgentCompromised",
+      "layer": "Layer2_AISpecific",
+      "path_notation": "#9→[Δt=variable]#1→[0s][LoC/LoI]",
+      "description": "Human is manipulated into instructing the agent to perform actions counter to security interests. Classic #9 (Social Engineering) enabling #1 (Abuse of Functions).",
+      "path_sequence": [
+        {
+          "step_id": 1,
+          "cluster": "#9",
+          "operational_notation": "TLCTC-09.00",
+          "action": "Attacker manipulates human operator via social engineering (phishing, pretexting, authority impersonation)",
+          "generic_vulnerability_exploited": "Human psychological factors (trust, authority bias, urgency)",
+          "delta_t_to_next": "variable (hours to days — depends on human response time)"
+        },
+        {
+          "step_id": 2,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Manipulated human instructs agent to perform actions (data export, configuration change, communication)",
+          "generic_vulnerability_exploited": "Scope and trust in agent's legitimate functions, now directed by a manipulated operator",
+          "data_risk_events": ["LoC", "LoI"]
+        }
+      ],
+      "velocity_analysis": {
+        "overall_velocity_class": "VC-1 to VC-2 (human-dependent gap), then VC-4 (agent execution)",
+        "notes": "The #9→#1 transition has a human-speed gap where awareness training and verification procedures are viable. Once the human issues the instruction, agent execution is VC-4."
+      }
+    },
+    {
+      "id": "agentic-path-D",
+      "title": "Path D — Credential Access to Agent Interface",
+      "scenario": "LegitimateAgentCompromised",
+      "layer": "Layer2_AISpecific",
+      "path_notation": "#4→[0s]#1→[0s]#1→[LoC]",
+      "description": "Stolen credentials grant access to the agent's interface. Every subsequent agent action is pure #1 — legitimate functions being abused via a stolen identity.",
+      "path_sequence": [
+        {
+          "step_id": 1,
+          "cluster": "#4",
+          "operational_notation": "TLCTC-04.00",
+          "action": "Attacker uses stolen credentials to authenticate to agent interface",
+          "generic_vulnerability_exploited": "Identity-artifact binding / credential lifecycle (application phase per R-CRED)",
+          "notes": "Credential acquisition is a separate prior step mapped to its enabling cluster. This step is the USE of the credential → always #4.",
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 2,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Attacker issues instructions to agent via authenticated session",
+          "generic_vulnerability_exploited": "Scope and trust in agent's instruction-processing capability",
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 3,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Agent executes tool calls per attacker instructions",
+          "generic_vulnerability_exploited": "Scope and trust in agent's designed tool-use functions",
+          "data_risk_events": ["LoC"]
+        }
+      ],
+      "velocity_analysis": {
+        "overall_velocity_class": "VC-4",
+        "notes": "After credential use, entire chain is machine-speed. MFA on agent interface creates a human-speed gate at step 1."
+      }
+    },
+    {
+      "id": "agentic-path-E",
+      "title": "Path E — Agent as Execution Vector (LOLBin Pattern)",
+      "scenario": "LegitimateAgentCompromised",
+      "layer": "Layer2_AISpecific",
+      "path_notation": "#1→[0s]#7→[LoC/LoI/LoAc]",
+      "description": "If the agent has designed code-execution capabilities (many agentic frameworks do), function abuse (#1) enables the agent to generate and execute Foreign Executable Content (#7). This is the LOLBAS pattern with the agent itself as the LOLBin.",
+      "path_sequence": [
+        {
+          "step_id": 1,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Attacker abuses agent's designed function to invoke code execution capability",
+          "generic_vulnerability_exploited": "Scope and trust in agent's designed code generation/execution features",
+          "notes": "The agent's code execution capability is a designed feature. Invoking it through normal interfaces is function abuse (#1), not an exploit (#2/#3).",
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 2,
+          "cluster": "#7",
+          "operational_notation": "TLCTC-07.00",
+          "action": "Agent-generated code (Foreign Executable Content) executes via the environment's designed execution engine",
+          "generic_vulnerability_exploited": "The environment's intended capability to execute potentially untrusted executable content",
+          "fec_recorded": true,
+          "data_risk_events": ["LoC", "LoI", "LoAc"]
+        }
+      ],
+      "velocity_analysis": {
+        "overall_velocity_class": "VC-4",
+        "notes": "Code generation and execution are near-instantaneous. This is the most underappreciated agentic risk — the agent is a general-purpose code execution engine accessible through natural language."
+      }
+    },
+    {
+      "id": "agentic-path-F",
+      "title": "Path F — Layer 1 Exploit of Agent Runtime",
+      "scenario": "LegitimateAgentCompromised",
+      "layer": "Layer1_GenericSoftware",
+      "path_notation": "#3→[0s]#7→[0s]#1→[LoC]",
+      "description": "A crafted external file triggers an implementation flaw in the agent's parser (client-role → #3), enabling code execution (#7), followed by lateral function abuse (#1). This is a generic software attack that happens to target an AI runtime.",
+      "path_sequence": [
+        {
+          "step_id": 1,
+          "cluster": "#3",
+          "operational_notation": "TLCTC-03.00",
+          "action": "Crafted file triggers implementation flaw in agent's file parser (buffer overflow, deserialisation bug, parsing error)",
+          "generic_vulnerability_exploited": "Exploitable flaws within client-side source code implementation (insecure coding practices)",
+          "notes": "Agent is in client role relative to the external data source. This is an unintended data→code transition via an implementation defect.",
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 2,
+          "cluster": "#7",
+          "operational_notation": "TLCTC-07.00",
+          "action": "Exploit payload executes as Foreign Executable Content via the environment's execution engine",
+          "generic_vulnerability_exploited": "The environment's intended capability to execute potentially untrusted executable content",
+          "fec_recorded": true,
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 3,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Lateral movement and data operations via legitimate system functions",
+          "generic_vulnerability_exploited": "Scope and trust in legitimate system functions now accessible via code execution",
+          "data_risk_events": ["LoC"]
+        }
+      ],
+      "velocity_analysis": {
+        "overall_velocity_class": "VC-4",
+        "notes": "Classic #3→#7→#1 exploit chain. Nothing AI-specific — this is standard software security. Organisations must secure Layer 1 before addressing Layer 2."
+      }
+    },
+    {
+      "id": "agentic-path-G",
+      "title": "Path G — Social Engineering to Install Rogue Agent",
+      "scenario": "MaliciousAgentIntroduced",
+      "layer": "Layer2_AISpecific",
+      "path_notation": "#9→[hours–days]#7→[0s]#1→[LoC]",
+      "description": "User is tricked into installing what appears to be a helpful AI agent. Once executing (#7), it abuses legitimate system functions (#1) for reconnaissance, lateral movement, and exfiltration.",
+      "path_sequence": [
+        {
+          "step_id": 1,
+          "cluster": "#9",
+          "operational_notation": "TLCTC-09.00",
+          "action": "User is socially engineered into downloading and installing a rogue AI agent (fake productivity tool, trojanised assistant)",
+          "generic_vulnerability_exploited": "Human psychological factors (trust in AI tools, curiosity, authority bias)",
+          "delta_t_to_next": "hours to days"
+        },
+        {
+          "step_id": 2,
+          "cluster": "#7",
+          "operational_notation": "TLCTC-07.00",
+          "action": "Rogue agent executes as Foreign Executable Content via the environment's designed execution capability",
+          "generic_vulnerability_exploited": "The environment's intended capability to execute potentially untrusted executable content",
+          "fec_recorded": true,
+          "notes": "The agent IS the malware. It executes through designed OS/runtime execution paths.",
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 3,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Rogue agent abuses legitimate system functions for reconnaissance, lateral movement, data exfiltration",
+          "generic_vulnerability_exploited": "Scope and trust in legitimate system functions accessible to the executing agent",
+          "data_risk_events": ["LoC"]
+        }
+      ],
+      "velocity_analysis": {
+        "overall_velocity_class": "VC-1 (social engineering gap), then VC-4 (post-execution)",
+        "notes": "Human-speed gap at step 1 allows user awareness training and installation controls. After execution, the agent operates autonomously at machine speed."
+      }
+    },
+    {
+      "id": "agentic-path-H",
+      "title": "Path H — Supply Chain: Trojanised Agent via Marketplace",
+      "scenario": "MaliciousAgentIntroduced",
+      "layer": "Layer2_AISpecific",
+      "path_notation": "#10 ||[dev][@AgentVendor→@Org]|| →[weeks]#7→[0s]#1→[LoC/LoI]",
+      "description": "Trojanised agent delivered through trusted vendor channels or AI marketplaces. The SolarWinds pattern adapted for the AI agent ecosystem. The trust dependency on the agent vendor/marketplace is the #10 generic vulnerability.",
+      "path_sequence": [
+        {
+          "step_id": 1,
+          "cluster": "#10",
+          "operational_notation": "TLCTC-10.01",
+          "action": "Trojanised agent package delivered through trusted marketplace or vendor update channel",
+          "generic_vulnerability_exploited": "Third-party trust dependencies — organisation trusts the agent vendor/marketplace",
+          "boundary_operator": "||[dev][@AgentVendor→@Org]||",
+          "notes": "Removing the trust link (not using the marketplace) would prevent this attack → confirms #10.",
+          "delta_t_to_next": "weeks (dwell time from distribution to activation)"
+        },
+        {
+          "step_id": 2,
+          "cluster": "#7",
+          "operational_notation": "TLCTC-07.00",
+          "action": "Backdoored agent activates and executes malicious functionality",
+          "generic_vulnerability_exploited": "The environment's intended capability to execute potentially untrusted executable content",
+          "fec_recorded": true,
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 3,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Backdoor abuses legitimate system and agent functions for data collection and exfiltration",
+          "generic_vulnerability_exploited": "Scope and trust in legitimate functions",
+          "data_risk_events": ["LoC", "LoI"]
+        }
+      ],
+      "velocity_analysis": {
+        "overall_velocity_class": "VC-1 (supply chain dwell), then VC-4 (activation and exploitation)",
+        "notes": "Extended dwell time creates threat hunting opportunity (VC-1). After activation, exploitation is machine-speed. Supply chain validation and code signing are the primary cause-side controls."
+      }
+    },
+    {
+      "id": "agentic-path-I",
+      "title": "Path I — Rogue Agent as Persistence Mechanism (APT-in-a-Box)",
+      "scenario": "MaliciousAgentIntroduced",
+      "layer": "Layer2_AISpecific",
+      "path_notation": "#7→[0s]#4→[0s]#1→[weeks][LoC]",
+      "description": "The malicious agent harvests credentials (#4 acquisition as consequence), then uses them (#4 application) for persistent, stealthy operations (#1). The agent's autonomous nature makes this an APT-in-a-box.",
+      "path_sequence": [
+        {
+          "step_id": 1,
+          "cluster": "#7",
+          "operational_notation": "TLCTC-07.00",
+          "action": "Malicious agent executes and begins autonomous operation",
+          "generic_vulnerability_exploited": "The environment's intended capability to execute potentially untrusted executable content",
+          "fec_recorded": true,
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 2,
+          "cluster": "#4",
+          "operational_notation": "TLCTC-04.00",
+          "action": "Agent uses harvested/stolen credentials to authenticate to additional systems",
+          "generic_vulnerability_exploited": "Identity-artifact binding / credential lifecycle (application phase per R-CRED)",
+          "notes": "Credential acquisition (harvesting) was a consequence of step 1. This step is the APPLICATION of those credentials → always #4 per R-CRED.",
+          "delta_t_to_next": "0s"
+        },
+        {
+          "step_id": 3,
+          "cluster": "#1",
+          "operational_notation": "TLCTC-01.00",
+          "action": "Persistent, low-and-slow operations via legitimate functions — data collection, reconnaissance, lateral movement",
+          "generic_vulnerability_exploited": "Scope and trust in legitimate functions, now accessed via stolen identity",
+          "data_risk_events": ["LoC"],
+          "notes": "The agent's autonomous nature enables weeks-long persistence without further attacker input. This is the Autonomy Amplification property from the consequence-side analysis."
+        }
+      ],
+      "velocity_analysis": {
+        "overall_velocity_class": "VC-4 (initial compromise), then VC-1 (deliberate low-and-slow operation)",
+        "notes": "Paradoxically, the most sophisticated pattern deliberately slows down to avoid detection. The agent trades velocity for stealth — operating just below behavioural baselines over extended periods."
+      }
+    }
+  ]
+}
