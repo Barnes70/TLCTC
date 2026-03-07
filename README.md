@@ -1,6 +1,6 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.0** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [White Paper](https://www.tlctc.net/whitepaper)
+**Version 2.0** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
 The first cause-oriented, axiomatic cyber threat taxonomy.
 
@@ -338,7 +338,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 | Resource | Description |
 |---|---|
 | [tlctc.net](https://tlctc.net) | Official TLCTC website with documentation, visuals, and tools |
-| [V2.0 White Paper](https://tlctc.net/whitepaper) | Canonical definitions, boundary logic, and complete specification |
+| [V2.0 White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Canonical definitions, boundary logic, and complete specification |
 | [barnes.ch](https://barnes.ch) | Author's site with foundational analysis on cybersecurity's language problem |
 
 ## License
