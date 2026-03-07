@@ -295,6 +295,9 @@ tlctc/
 │   ├── TLCTC-glossary-v2.0.pdf               # Comprehensive Definitions
 │   ├── json-architecture.pdf                 # JSON Architecture Specification
 │   └── why-exactly-ten.pdf                   # Framework Architecture Rationale
+├── tools/
+│   ├── README.md                             # Tool index
+│   └── threat-modeling.html                  # Threat modeling & architecture analysis app
 ├── examples/
 │   └── agentic-ai/                           # Analysis of AI semantics in Cyber Threats
 │       ├── agentic-attack-paths.json         # 9 attack paths (Paths A–I) from Paper 1
@@ -320,7 +323,7 @@ tlctc/
 We welcome community contributions, particularly:
 - **Attack path mappings** of real-world incidents using TLCTC notation
 - **Framework integration examples** (MITRE ATT&CK mappings, NIST CSF control matrices)
-- **Tooling** that consumes or produces TLCTC JSON
+- **Tooling** that consumes or produces TLCTC JSON (see [`tools/`](tools/) for existing standalone apps)
 
 See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guidelines.
 

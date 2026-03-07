@@ -17,6 +17,7 @@ This is a taxonomy/specification project — no build system, package manager, o
 - **`examples/agentic-ai/`** — Agentic AI threat analysis with 9 individual attack path files (in `attack-paths/`), consequence chains, tool profiles, and irreversibility matrices.
 - **`mappings/mitre-attack-enterprise/`** — Complete MITRE ATT&CK Enterprise → TLCTC mapping (698 techniques) with decision tree and SOC walkthrough.
 - **`mappings/mitre-cwe/`** — MITRE CWE → TLCTC mapping (987 weaknesses, AI-generated, experimental) with verdict system, decision tree, and control walkthrough.
+- **`tools/`** — Standalone HTML applications (threat modeling, etc.). Single-file, no build system, open in browser.
 - **`documentation/`** — PDF white papers and specifications.
 
 ## Validation

