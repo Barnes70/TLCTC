@@ -297,7 +297,8 @@ tlctc/
 │   └── why-exactly-ten.pdf                   # Framework Architecture Rationale
 ├── tools/
 │   ├── README.md                             # Tool index
-│   └── threat-modeling.html                  # Threat modeling & architecture analysis app
+│   ├── threat-modeling.html                  # SDLC threat modeling & architecture analysis
+│   └── attack-path-architect.html            # Incident attack path documentation & CTI exchange
 ├── examples/
 │   └── agentic-ai/                           # Analysis of AI semantics in Cyber Threats
 │       ├── agentic-attack-paths.json         # 9 attack paths (Paths A–I) from Paper 1

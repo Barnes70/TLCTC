@@ -7,6 +7,7 @@ Standalone, self-contained HTML applications that implement the TLCTC framework.
 | Tool | File | Description |
 |------|------|-------------|
 | **Threat Modeling** | [`threat-modeling.html`](threat-modeling.html) | Design threat models by placing components on a canvas, define interfaces, auto-assign threat clusters, generate threat registers and attack chain analysis |
+| **Attack Path Architect** | [`attack-path-architect.html`](attack-path-architect.html) | Document cyber incidents as TLCTC attack paths with velocity analysis, MITRE/CVE references, DRE outcomes, and compliant JSON export for CTI exchange |
 
 ## How to Use
 

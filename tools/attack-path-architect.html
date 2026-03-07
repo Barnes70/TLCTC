@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLCTC Architect V6.0 - Professional Attack Path Documentation</title>
+    <meta name="description" content="TLCTC Architect V6.0. Visual Attack Path Builder with full TLCTC v2.0 compliance, JSON Architecture support, and professional incident documentation.">
+    
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+                        secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+                        muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+                        card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+                        destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --radius: 0.75rem;
+                --background: 210 40% 98%;
+                --foreground: 222 47% 11%;
+                --card: 0 0% 100%;
+                --card-foreground: 222 47% 11%;
+                --primary: 221 83% 53%;
+                --primary-foreground: 210 40% 98%;
+                --secondary: 210 40% 96.1%;
+                --secondary-foreground: 222 47% 11%;
+                --muted: 210 40% 96.1%;
+                --muted-foreground: 215.4 16.3% 46.9%;
+                --destructive: 0 84.2% 60.2%;
+                --destructive-foreground: 210 40% 98%;
+                --border: 214.3 31.8% 91.4%;
+                --input: 214.3 31.8% 91.4%;
+                --ring: 221 83% 53%;
+                
+                /* TLCTC Semantic Colors */
+                --c-bridge: #d97706; 
+                --c-internal: #3b82f6; 
+                --c-data-risk: #dc2626; 
+                --c-biz-risk: #7e22ce;
+                --c-velocity: #059669;
+            }
+
+            .dark {
+                --background: 222 47% 11%;
+                --foreground: 210 40% 98%;
+                --card: 217 33% 17%;
+                --card-foreground: 210 40% 98%;
+                --primary: 217 91% 60%;
+                --primary-foreground: 222 47% 11%;
+                --secondary: 217 33% 17%;
+                --secondary-foreground: 210 40% 98%;
+                --muted: 217 33% 17%;
+                --muted-foreground: 215 20.2% 65.1%;
+                --border: 217 33% 17%;
+                --input: 217 33% 17%;
+                --ring: 224 76% 48%;
+            }
+
+            body { @apply bg-background text-foreground font-sans h-screen flex flex-col overflow-hidden; }
+        }
+
+        @layer components {
+            .btn { @apply inline-flex items-center justify-center rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background; }
+            .btn-primary { @apply bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm; }
+            .btn-secondary { @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border; }
+            .btn-danger { @apply bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 dark:bg-red-900/20 dark:border-red-900/50 dark:text-red-400; }
+            .btn-success { @apply bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-400; }
+            .btn-sm { @apply h-8 px-3 text-xs; }
+            .btn-md { @apply h-10 px-4 py-2; }
+            .btn-xs { @apply h-6 px-2 text-[10px]; }
+            
+            .glass-header { @apply bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-30; }
+            .glass-panel { @apply bg-card/50 backdrop-blur-xl border border-border shadow-sm; }
+            
+            .input-std { @apply flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50; }
+            
+            .grid-bg {
+                background-image: radial-gradient(hsl(var(--muted-foreground) / 0.2) 1px, transparent 1px);
+                background-size: 24px 24px;
+            }
+
+            .vc-badge { @apply text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wide; }
+            .vc-1 { @apply bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300; }
+            .vc-2 { @apply bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400; }
+            .vc-3 { @apply bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400; }
+            .vc-4 { @apply bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400; }
+
+            .conf-high { @apply text-emerald-600 dark:text-emerald-400; }
+            .conf-medium { @apply text-amber-600 dark:text-amber-400; }
+            .conf-low { @apply text-red-500 dark:text-red-400; }
+
+            .tab-btn { @apply px-4 py-2 text-sm font-medium border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors; }
+            .tab-btn.active { @apply border-primary text-primary; }
+        }
+        
+        /* Print Overrides */
+        @media print {
+            @page { size: landscape; margin: 0.5cm; }
+            body { height: auto; overflow: visible; background: white !important; color: black !important; }
+            header, .toolbar, .sidebar, .btn, .modal-overlay, .no-print { display: none !important; }
+            .workspace { display: block; height: auto; overflow: visible; }
+            .main-view { display: block; height: auto; }
+            .canvas-container { border: none; padding: 0; margin: 0; overflow: visible; height: auto; background: white !important; display: block !important; }
+            #notationDisplay { font-size: 12pt; color: black; border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 20px; font-family: monospace; display: block; }
+            #print-table { display: block !important; margin-top: 20px; }
+            svg { width: 100% !important; height: auto !important; max-height: 100vh; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+<header class="glass-header px-4 h-14 flex items-center justify-between flex-shrink-0">
+    <div class="flex items-center gap-3">
+        <div class="h-8 w-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+            <i data-lucide="shield-alert" class="h-5 w-5"></i>
+        </div>
+        <div>
+            <h1 class="font-display font-bold text-lg leading-tight flex items-center gap-2">
+                TLCTC Architect <span class="bg-primary text-primary-foreground text-[10px] px-1.5 py-0.5 rounded uppercase tracking-wider">V6.0</span>
+            </h1>
+        </div>
+    </div>
+    <div class="flex items-center gap-2">
+        <button class="btn btn-secondary btn-sm" onclick="toggleTheme()" title="Toggle Theme">
+            <i data-lucide="sun-moon" class="h-4 w-4 mr-2"></i> Theme
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="exportSVG()" title="Download SVG">
+            <i data-lucide="file-code" class="h-4 w-4 mr-2"></i> SVG
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="exportPNG()" title="Download PNG">
+            <i data-lucide="image" class="h-4 w-4 mr-2"></i> PNG
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="window.print()" title="Print to PDF">
+            <i data-lucide="printer" class="h-4 w-4 mr-2"></i> Print
+        </button>
+    </div>
+</header>
+
+<!-- Strategic Notation Bar -->
+<div class="bg-card border-b border-border px-6 py-3 flex items-center gap-4 flex-shrink-0 overflow-x-auto whitespace-nowrap">
+    <div class="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex-shrink-0">
+        Attack Path Notation
+    </div>
+    <div id="notationDisplay" class="font-mono text-sm text-foreground flex-1"></div>
+    <button class="btn btn-xs btn-secondary no-print" onclick="copyNotation()" title="Copy Notation">
+        <i data-lucide="copy" class="h-3 w-3"></i>
+    </button>
+</div>
+
+<!-- Toolbar -->
+<div class="bg-background border-b border-border px-6 py-2 flex items-center gap-3 flex-wrap flex-shrink-0 no-print">
+    <div class="flex items-center gap-2">
+        <label class="text-xs font-semibold text-muted-foreground">Incident:</label>
+        <select id="caseSelect" class="input-std w-72" onchange="switchCase(this.value)"></select>
+    </div>
+    
+    <div class="h-6 w-px bg-border mx-2"></div>
+    
+    <button class="btn btn-secondary btn-sm" onclick="openMetadataModal()"><i data-lucide="file-edit" class="h-3 w-3 mr-1"></i> Metadata</button>
+    <button class="btn btn-secondary btn-sm" onclick="createNewCase()"><i data-lucide="plus" class="h-3 w-3 mr-1"></i> New</button>
+    <button class="btn btn-secondary btn-sm" onclick="loadTemplate('phishing')">Corp Phishing</button>
+    <button class="btn btn-secondary btn-sm" onclick="loadTemplate('customerphish')">Customer Phishing</button>
+    <button class="btn btn-secondary btn-sm" onclick="loadTemplate('supplychain')">Supply Chain</button>
+    <button class="btn btn-danger btn-sm px-2" onclick="deleteCase()" title="Delete Case"><i data-lucide="trash-2" class="h-3 w-3"></i></button>
+
+    <div class="h-6 w-px bg-border mx-1"></div>
+
+    <button id="undoBtn" class="btn btn-secondary btn-sm px-2" onclick="undo()" title="Undo (Ctrl+Z)" disabled><i data-lucide="undo-2" class="h-3 w-3"></i></button>
+    <button id="redoBtn" class="btn btn-secondary btn-sm px-2" onclick="redo()" title="Redo (Ctrl+Y)" disabled><i data-lucide="redo-2" class="h-3 w-3"></i></button>
+
+    <div class="flex-1"></div>
+
+    <input type="file" id="fileInput" accept=".json" class="hidden" onchange="importCase(this)">
+    <button class="btn btn-secondary btn-sm" onclick="document.getElementById('fileInput').click()"><i data-lucide="upload" class="h-3 w-3 mr-1"></i> Import</button>
+    <button class="btn btn-success btn-sm" onclick="exportCompliantJSON()"><i data-lucide="download" class="h-3 w-3 mr-1"></i> Export JSON (v2.0)</button>
+</div>
+
+<!-- Mobile Sidebar Toggle -->
+<button id="sidebarToggle" class="md:hidden fixed bottom-4 right-4 z-40 btn btn-primary rounded-full w-14 h-14 shadow-lg no-print" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+    <i data-lucide="panel-left" class="h-6 w-6"></i>
+</button>
+
+<!-- Main Workspace -->
+<div class="workspace grid grid-cols-1 md:grid-cols-[360px_1fr] flex-1 overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar bg-card border-r border-border flex flex-col h-full no-print hidden md:flex">
+        <div class="p-4 border-b border-border">
+            <button class="btn btn-primary w-full btn-md" onclick="openStepModal()">
+                <i data-lucide="plus-circle" class="h-4 w-4 mr-2"></i> Add Attack Step
+            </button>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="flex border-b border-border">
+            <button class="tab-btn active flex-1" onclick="switchTab('steps', this)">Steps</button>
+            <button class="tab-btn flex-1" onclick="switchTab('summary', this)">Summary</button>
+        </div>
+        
+        <!-- Steps List -->
+        <div id="stepsTab" class="flex-1 overflow-y-auto p-3 space-y-2">
+            <div id="stepList"></div>
+        </div>
+        
+        <!-- Summary Tab -->
+        <div id="summaryTab" class="flex-1 overflow-y-auto p-4 hidden">
+            <div id="summaryContent" class="space-y-4 text-sm"></div>
+        </div>
+    </aside>
+
+    <!-- Main Canvas Area -->
+    <main class="main-view bg-background flex flex-col h-full relative">
+        <div id="canvasArea" class="canvas-container flex-1 overflow-auto p-8 grid-bg relative"></div>
+        
+        <!-- Print Table (hidden until print) -->
+        <div id="print-table" class="hidden p-8 bg-white text-black">
+            <div id="printHeader" class="mb-6"></div>
+            <h3 class="font-display font-bold text-xl mb-4 border-b-2 border-black pb-2">Attack Path Detail Report</h3>
+            <table class="w-full text-sm border-collapse text-left">
+                <thead>
+                    <tr class="bg-gray-100 border-b-2 border-black">
+                        <th class="p-2 w-[5%]">#</th>
+                        <th class="p-2 w-[18%]">Cluster / Sphere</th>
+                        <th class="p-2 w-[25%]">Description</th>
+                        <th class="p-2 w-[15%]">Velocity</th>
+                        <th class="p-2 w-[17%]">References</th>
+                        <th class="p-2 w-[20%]">Risk Outcomes</th>
+                    </tr>
+                </thead>
+                <tbody id="printTableBody"></tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<!-- Step Modal -->
+<div id="stepModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="stepModalTitle">
+    <div class="bg-card w-full max-w-2xl rounded-xl shadow-2xl border border-border flex flex-col max-h-[90vh]">
+        <div class="p-4 border-b border-border flex justify-between items-center">
+            <h3 id="stepModalTitle" class="font-display font-bold text-lg">Configure Attack Step</h3>
+            <button onclick="closeStepModal()" class="text-muted-foreground hover:text-foreground" aria-label="Close dialog"><i data-lucide="x" class="h-5 w-5"></i></button>
+        </div>
+        
+        <div class="p-6 overflow-y-auto space-y-6">
+            <!-- Section 1: Threat Classification -->
+            <div>
+                <div class="text-xs font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
+                    <span class="bg-primary/10 text-primary w-5 h-5 rounded-full flex items-center justify-center text-[10px]">1</span>
+                    Threat Classification
+                </div>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-muted-foreground mb-1">Primary Cluster *</label>
+                            <select id="sCluster" class="input-std" onchange="updateClusterHelp()">
+                                <option value="" disabled selected>Select threat cluster...</option>
+                                <optgroup label="Bridge Clusters (Domain Transitions)">
+                                    <option value="9">#9 Social Engineering</option>
+                                    <option value="10">#10 Supply Chain</option>
+                                    <option value="8">#8 Physical Attack</option>
+                                </optgroup>
+                                <optgroup label="Internal Clusters">
+                                    <option value="1">#1 Abuse of Functions</option>
+                                    <option value="2">#2 Exploiting Server</option>
+                                    <option value="3">#3 Exploiting Client</option>
+                                    <option value="4">#4 Identity Theft</option>
+                                    <option value="5">#5 Man in the Middle</option>
+                                    <option value="6">#6 Flooding Attack</option>
+                                    <option value="7">#7 Malware</option>
+                                </optgroup>
+                            </select>
+                            <p id="clusterHelp" class="text-[10px] text-muted-foreground mt-1 italic"></p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-muted-foreground mb-1">Responsibility Sphere *</label>
+                            <select id="sSphere" class="input-std">
+                                <option value="Org">@Org (Organization)</option>
+                                <option value="Customer">@Customer</option>
+                                <option value="Vendor">@Vendor</option>
+                                <option value="Partner">@Partner</option>
+                                <option value="Attacker">@Attacker</option>
+                                <option value="Physical">@Physical</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Domain Boundary (for Bridge Clusters) -->
+                    <div id="boundarySection" class="hidden p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-lg">
+                        <label class="block text-xs font-bold text-amber-700 dark:text-amber-400 mb-2">Domain Boundary Operator</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="text-[10px] text-muted-foreground">Context</label>
+                                <select id="sBoundaryContext" class="input-std text-xs">
+                                    <option value="">None</option>
+                                    <option value="human">human</option>
+                                    <option value="physical">physical</option>
+                                    <option value="dev">dev</option>
+                                    <option value="update">update</option>
+                                    <option value="auth">auth</option>
+                                    <option value="supply">supply</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-muted-foreground">Source @</label>
+                                <select id="sBoundarySource" class="input-std text-xs">
+                                    <option value="External">External</option>
+                                    <option value="Vendor">Vendor</option>
+                                    <option value="Customer">Customer</option>
+                                    <option value="Physical">Physical</option>
+                                    <option value="Org">Org</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-muted-foreground">Target @</label>
+                                <select id="sBoundaryTarget" class="input-std text-xs">
+                                    <option value="Org">Org</option>
+                                    <option value="Customer">Customer</option>
+                                    <option value="IT">IT</option>
+                                    <option value="Cyber">Cyber</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parallel Action -->
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="sParallel" class="rounded" onchange="toggleParallel()">
+                        <label for="sParallel" class="text-xs font-semibold text-green-600 cursor-pointer">+ Parallel Action (#X + #Y)</label>
+                    </div>
+                    <div id="parallelBox" class="hidden p-3 bg-green-50 dark:bg-green-900/10 border border-green-200 dark:border-green-800 rounded-lg">
+                        <label class="block text-xs font-bold text-green-700 dark:text-green-400 mb-1">Parallel Cluster</label>
+                        <p class="text-[10px] text-muted-foreground mb-2">Concurrent exploitation of two distinct generic vulnerabilities at the same moment (e.g., #1 + #7 = function abuse and malware execution simultaneously). Must be a different cluster.</p>
+                        <select id="sCluster2" class="input-std">
+                            <option value="">-- None --</option>
+                            <option value="7">#7 Malware</option>
+                            <option value="1">#1 Abuse of Functions</option>
+                            <option value="4">#4 Identity Theft</option>
+                            <option value="2">#2 Exploiting Server</option>
+                            <option value="3">#3 Exploiting Client</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">Description</label>
+                        <textarea id="sDesc" class="input-std h-20 resize-none" placeholder="Describe the specific attack action..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Attack Velocity -->
+            <div>
+                <div class="text-xs font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
+                    <span class="bg-primary/10 text-primary w-5 h-5 rounded-full flex items-center justify-center text-[10px]">2</span>
+                    Attack Velocity (Δt to next step)
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">Time Value</label>
+                        <input type="text" id="sDtVal" placeholder="0, ~15, <5, ?" class="input-std">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">Unit</label>
+                        <select id="sDtUnit" class="input-std">
+                            <option value="m">Minutes (m)</option>
+                            <option value="s">Seconds (s)</option>
+                            <option value="h">Hours (h)</option>
+                            <option value="d">Days (d)</option>
+                            <option value="w">Weeks (w)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">Velocity Class</label>
+                        <select id="sVelocityClass" class="input-std">
+                            <option value="">Auto-detect</option>
+                            <option value="VC-1">VC-1 Strategic (Days-Months)</option>
+                            <option value="VC-2">VC-2 Tactical (Hours)</option>
+                            <option value="VC-3">VC-3 Operational (Minutes)</option>
+                            <option value="VC-4">VC-4 Real-Time (Seconds)</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="text-[10px] text-muted-foreground mt-2">VC-3/4 transitions typically outpace human response — automation required.</p>
+            </div>
+
+            <!-- Section 3: Operational References -->
+            <div>
+                <div class="text-xs font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
+                    <span class="bg-primary/10 text-primary w-5 h-5 rounded-full flex items-center justify-center text-[10px]">3</span>
+                    Operational References
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">MITRE ATT&CK</label>
+                        <input type="text" id="sMitre" placeholder="T1566, T1078..." class="input-std">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">CVE/CWE</label>
+                        <input type="text" id="sCVE" placeholder="CVE-2024-XXXX, CWE-79..." class="input-std">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">IoC / Asset</label>
+                        <input type="text" id="sIoC" placeholder="IP, Hash, Domain, Asset ID..." class="input-std">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">Evidence Reference</label>
+                        <input type="text" id="sEvidence" placeholder="IR-42, EDR-991, LOG-123..." class="input-std">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Step Annotations -->
+            <div>
+                <div class="text-xs font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
+                    <span class="bg-primary/10 text-primary w-5 h-5 rounded-full flex items-center justify-center text-[10px]">4</span>
+                    Step Annotations
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">Confidence</label>
+                        <select id="sConfidence" class="input-std">
+                            <option value="">Not specified</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">Stage</label>
+                        <select id="sStage" class="input-std">
+                            <option value="">Auto</option>
+                            <option value="initial">Initial Access</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="final">Final / Objective</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end pb-1">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="sInferred" class="rounded">
+                            <span class="text-xs font-semibold text-muted-foreground">[inferred]</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label class="block text-xs font-semibold text-muted-foreground mb-1">Timestamp (optional)</label>
+                    <input type="datetime-local" id="sTimestamp" class="input-std">
+                </div>
+            </div>
+
+            <!-- Section 5: Risk Outcomes -->
+            <div>
+                <div class="text-xs font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
+                    <span class="bg-primary/10 text-primary w-5 h-5 rounded-full flex items-center justify-center text-[10px]">5</span>
+                    Risk Outcomes (Right side of Bow-Tie)
+                </div>
+                
+                <!-- Warning for #4 Identity Theft -->
+                <div id="dreWarning" class="hidden mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 rounded-lg">
+                    <p class="text-xs text-red-800 dark:text-red-300 font-medium">
+                        <strong>R-CRED Rule (Enforced):</strong> #4 Identity Theft represents credential <em>use</em>, not acquisition.
+                        DRE inputs are disabled for this cluster. DREs for credential theft belong on the <em>acquisition</em> step (#9, #2, #3, #5, #7, #8, or #10).
+                    </p>
+                </div>
+                
+                <div class="rounded-lg border-l-4 border-red-500 bg-red-50/50 dark:bg-red-900/10 p-4 mb-3">
+                    <label class="block text-xs font-bold text-red-600 dark:text-red-400 mb-2">Data Risk Event (DRE)</label>
+                    <div class="flex gap-4 mb-2">
+                        <label class="flex items-center gap-1.5 cursor-pointer">
+                            <input type="checkbox" id="sDreC" class="rounded border-red-300">
+                            <span class="text-xs font-medium">C (Confidentiality)</span>
+                        </label>
+                        <label class="flex items-center gap-1.5 cursor-pointer">
+                            <input type="checkbox" id="sDreI" class="rounded border-red-300">
+                            <span class="text-xs font-medium">I (Integrity)</span>
+                        </label>
+                        <label class="flex items-center gap-1.5 cursor-pointer">
+                            <input type="checkbox" id="sDreA" class="rounded border-red-300">
+                            <span class="text-xs font-medium">A (Availability)</span>
+                        </label>
+                    </div>
+                    <input type="text" id="sDataRiskTitle" placeholder="Brief title (e.g., Credentials Exfiltrated)" class="input-std mb-2">
+                    <textarea id="sDataRiskDesc" placeholder="Technical details of the data impact..." class="input-std h-16 resize-none"></textarea>
+                </div>
+
+                <div class="rounded-lg border-l-4 border-purple-600 bg-purple-50/50 dark:bg-purple-900/10 p-4">
+                    <label class="block text-xs font-bold text-purple-700 dark:text-purple-400 mb-2">Business Impact</label>
+                    <input type="text" id="sBizRiskTitle" placeholder="Title (e.g., GDPR Fine, Reputational Damage)" class="input-std mb-2">
+                    <textarea id="sBizRiskDesc" placeholder="Strategic business impact description..." class="input-std h-16 resize-none"></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-4 border-t border-border bg-muted/20 flex justify-between rounded-b-xl">
+            <button class="btn btn-danger btn-sm" onclick="deleteEditingStep()" id="deleteStepBtn" style="display:none;">
+                <i data-lucide="trash-2" class="h-3 w-3 mr-1"></i> Delete Step
+            </button>
+            <div class="flex gap-3 ml-auto">
+                <button class="btn btn-secondary" onclick="closeStepModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="commitStep()">Save Step</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Metadata Modal -->
+<div id="metadataModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="metadataModalTitle">
+    <div class="bg-card w-full max-w-lg rounded-xl shadow-2xl border border-border flex flex-col max-h-[90vh]">
+        <div class="p-4 border-b border-border flex justify-between items-center">
+            <h3 id="metadataModalTitle" class="font-display font-bold text-lg">Incident Metadata</h3>
+            <button onclick="closeMetadataModal()" class="text-muted-foreground hover:text-foreground" aria-label="Close dialog"><i data-lucide="x" class="h-5 w-5"></i></button>
+        </div>
+        
+        <div class="p-6 overflow-y-auto space-y-4">
+            <div>
+                <label class="block text-xs font-semibold text-muted-foreground mb-1">Incident Title *</label>
+                <input type="text" id="metaTitle" class="input-std" placeholder="e.g., APT29 Supply Chain Attack">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-muted-foreground mb-1">Sequence ID</label>
+                <input type="text" id="metaSeqId" class="input-std" placeholder="e.g., INC-2025-0042">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-muted-foreground mb-1">Analyst</label>
+                    <input type="text" id="metaAnalyst" class="input-std" placeholder="Your name">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-muted-foreground mb-1">Organization</label>
+                    <input type="text" id="metaOrg" class="input-std" placeholder="Your org">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-muted-foreground mb-1">Threat Actor (if known)</label>
+                <input type="text" id="metaActor" class="input-std" placeholder="e.g., APT29, FIN7, Unknown">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-muted-foreground mb-1">Motivation</label>
+                    <select id="metaMotivation" class="input-std">
+                        <option value="unknown">Unknown</option>
+                        <option value="financial">Financial</option>
+                        <option value="espionage">Espionage</option>
+                        <option value="disruption">Disruption</option>
+                        <option value="ideology">Ideology</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-muted-foreground mb-1">Sophistication</label>
+                    <select id="metaSophistication" class="input-std">
+                        <option value="">Not assessed</option>
+                        <option value="novice">Novice</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-muted-foreground mb-1">Description / Summary</label>
+                <textarea id="metaDescription" class="input-std h-24 resize-none" placeholder="High-level description of the incident..."></textarea>
+            </div>
+        </div>
+        
+        <div class="p-4 border-t border-border bg-muted/20 flex justify-end gap-3 rounded-b-xl">
+            <button class="btn btn-secondary" onclick="closeMetadataModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveMetadata()">Save</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================================================
+// TLCTC ARCHITECT V6.0 - Full TLCTC v2.0 Compliance
+// ============================================================================
+
+const STORAGE_KEY = 'tlctc_v6_data';
+const FRAMEWORK_VERSION = '2.0';
+
+const CLUSTERS = {
+    1:  { name: "Abuse of Functions", type: "Internal", help: "Misuse of legitimate features/configuration without exploiting flaws" },
+    2:  { name: "Exploiting Server", type: "Internal", help: "Server-side code flaws (SQLi, RCE, etc.) — data→code unintended" },
+    3:  { name: "Exploiting Client", type: "Internal", help: "Client-side code flaws (XSS, browser exploits) — data→code unintended" },
+    4:  { name: "Identity Theft", type: "Internal", help: "Credential USE only — never generates DRE. DRE belongs to acquisition step (#9, #3, #5, etc.)" },
+    5:  { name: "Man in the Middle", type: "Internal", help: "Position-based interception — exploiting gained network position" },
+    6:  { name: "Flooding Attack", type: "Internal", help: "Resource exhaustion (DDoS) — capacity overwhelm, not defects. Typically causes [DRE: A]" },
+    7:  { name: "Malware", type: "Internal", help: "Foreign Executable Content via intended mechanism — data→code intended" },
+    8:  { name: "Physical Attack", type: "Bridge", help: "Physical access/interference — crosses physical→cyber boundary" },
+    9:  { name: "Social Engineering", type: "Bridge", help: "Human manipulation — crosses human→technical boundary. Credential phishing = [DRE: C] here" },
+    10: { name: "Supply Chain", type: "Bridge", help: "Trust boundary abuse via third party — TAE placement" }
+};
+
+const TEMPLATES = {
+    'phishing': {
+        title: "Corporate Phishing Attack",
+        metadata: {
+            sequence_id: "TEMPLATE-PHISHING",
+            description: "Standard corporate phishing leading to credential theft and data exfiltration"
+        },
+        path: [
+            { id: 101, cluster: 9, sphere: "Org", dtVal: "4", dtUnit: "h", velocityClass: "VC-2", description: "Phishing email delivered to employee. Victim enters credentials on spoofed login page.", mitre: "T1566.002", confidence: "high", boundary: { context: "human", source: "External", target: "Org" }, dre: { types: ["C"], title: "Credentials Harvested", desc: "Employee credentials exfiltrated to attacker infrastructure during phishing." } },
+            { id: 102, cluster: 4, sphere: "Org", dtVal: "15", dtUnit: "m", velocityClass: "VC-3", description: "Attacker authenticates to VPN using stolen credentials.", mitre: "T1078", confidence: "high" },
+            { id: 103, cluster: 1, sphere: "Org", dtVal: "30", dtUnit: "m", velocityClass: "VC-3", description: "Legitimate file export function abused to exfiltrate sensitive data.", mitre: "T1567", dre: { types: ["C"], title: "PII Data Exfiltrated", desc: "Customer database exported via legitimate SharePoint download." }, bizRisk: { title: "GDPR Violation", desc: "Potential regulatory fine for PII breach" } }
+        ]
+    },
+    'supplychain': {
+        title: "Supply Chain Compromise",
+        metadata: {
+            sequence_id: "TEMPLATE-SUPPLYCHAIN",
+            description: "Supply chain attack via compromised software update"
+        },
+        path: [
+            { id: 201, cluster: 10, sphere: "Vendor", dtVal: "0", dtUnit: "d", description: "Malicious code injected into vendor's build pipeline.", mitre: "T1195.002", boundary: { context: "dev", source: "Vendor", target: "Org" } },
+            { id: 202, cluster: 7, sphere: "Org", dtVal: "1", dtUnit: "d", velocityClass: "VC-1", description: "Backdoor deployed via trusted software update.", mitre: "T1059" },
+            { id: 203, cluster: 4, sphere: "Org", dtVal: "2", dtUnit: "h", velocityClass: "VC-2", description: "Lateral movement using harvested service credentials.", mitre: "T1078.002", inferred: true },
+            { id: 204, cluster: 1, cluster2: 7, sphere: "Org", dtVal: "30", dtUnit: "m", velocityClass: "VC-3", description: "Data staged and encrypted for exfiltration.", mitre: "T1486", dre: { types: ["C", "A"], title: "Ransomware Deployment" }, bizRisk: { title: "Business Disruption", desc: "Operations halted for 72 hours" } }
+        ]
+    },
+    'customerphish': {
+        title: "Customer-Targeted Credential Phishing",
+        metadata: {
+            sequence_id: "TEMPLATE-CUSTOMER-PHISH",
+            description: "Phishing attack targeting customers, leading to account takeover and fraud"
+        },
+        path: [
+            { id: 301, cluster: 9, sphere: "Customer", dtVal: "0", dtUnit: "m", description: "Customer receives phishing email impersonating organization. Enters credentials on fake login portal.", mitre: "T1566.002", confidence: "high", boundary: { context: "human", source: "External", target: "Customer" }, dre: { types: ["C"], title: "Customer Credentials Harvested", desc: "Customer login credentials captured by attacker phishing kit." } },
+            { id: 302, cluster: 4, sphere: "Org", dtVal: "15", dtUnit: "m", velocityClass: "VC-3", description: "Attacker uses stolen customer credentials to access organization's customer portal.", mitre: "T1078", boundary: { context: "auth", source: "Customer", target: "Org" } },
+            { id: 303, cluster: 1, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "Attacker abuses legitimate account functions to initiate fraudulent transactions.", mitre: "T1531", dre: { types: ["I"], title: "Fraudulent Transaction", desc: "Unauthorized wire transfer initiated from compromised account." }, bizRisk: { title: "Financial Loss + Customer Trust", desc: "Direct fraud loss plus reputational damage" } }
+        ]
+    }
+};
+
+let appData = { activeCaseId: null, cases: {} };
+let editingId = null;
+let undoStack = [];
+let redoStack = [];
+const MAX_UNDO = 50;
+
+// ============================================================================
+// INITIALIZATION
+// ============================================================================
+
+window.onload = function() {
+    lucide.createIcons();
+
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    }
+
+    loadStorage();
+    if (Object.keys(appData.cases).length === 0) {
+        loadTemplate('phishing');
+    }
+    renderUI();
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Escape closes modals
+        if (e.key === 'Escape') {
+            if (!document.getElementById('stepModal').classList.contains('hidden')) closeStepModal();
+            else if (!document.getElementById('metadataModal').classList.contains('hidden')) closeMetadataModal();
+        }
+        // Ctrl+Z undo, Ctrl+Y redo
+        if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); redo(); }
+    });
+};
+
+function loadStorage() {
+    const d = localStorage.getItem(STORAGE_KEY);
+    if (d) {
+        try {
+            appData = JSON.parse(d);
+        } catch(e) {
+            console.error("Storage parse error:", e);
+            if (confirm("Saved data is corrupted. Reset to default?\n\nClick Cancel to keep the corrupted data (export won't work).")) {
+                localStorage.removeItem(STORAGE_KEY);
+                appData = { activeCaseId: null, cases: {} };
+            }
+        }
+    }
+}
+
+function saveStorage() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+    } catch(e) {
+        console.error("Storage save error:", e);
+        alert("Failed to save: storage may be full. Try exporting your work as JSON.");
+    }
+}
+
+// ============================================================================
+// UNDO / REDO
+// ============================================================================
+
+function pushUndo() {
+    undoStack.push(JSON.stringify(appData));
+    if (undoStack.length > MAX_UNDO) undoStack.shift();
+    redoStack = [];
+    updateUndoButtons();
+}
+
+function undo() {
+    if (undoStack.length === 0) return;
+    redoStack.push(JSON.stringify(appData));
+    appData = JSON.parse(undoStack.pop());
+    saveStorage();
+    renderUI();
+    updateUndoButtons();
+}
+
+function redo() {
+    if (redoStack.length === 0) return;
+    undoStack.push(JSON.stringify(appData));
+    appData = JSON.parse(redoStack.pop());
+    saveStorage();
+    renderUI();
+    updateUndoButtons();
+}
+
+function updateUndoButtons() {
+    const undoBtn = document.getElementById('undoBtn');
+    const redoBtn = document.getElementById('redoBtn');
+    if (undoBtn) undoBtn.disabled = undoStack.length === 0;
+    if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+}
+
+// ============================================================================
+// MOBILE SIDEBAR
+// ============================================================================
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('hidden');
+    sidebar.classList.toggle('flex');
+}
+
+function getActiveCase() {
+    return appData.cases[appData.activeCaseId];
+}
+
+// ============================================================================
+// CASE MANAGEMENT
+// ============================================================================
+
+function switchCase(id) {
+    appData.activeCaseId = id;
+    editingId = null;
+    saveStorage();
+    renderUI();
+}
+
+function createNewCase() {
+    const id = 'case_' + Date.now();
+    appData.cases[id] = {
+        title: 'New Incident Analysis',
+        metadata: {
+            sequence_id: 'INC-' + new Date().toISOString().slice(0,10).replace(/-/g,''),
+            created: new Date().toISOString(),
+            modified: new Date().toISOString(),
+            framework_version: FRAMEWORK_VERSION
+        },
+        path: []
+    };
+    appData.activeCaseId = id;
+    saveStorage();
+    renderUI();
+    openMetadataModal();
+}
+
+function deleteCase() {
+    if (Object.keys(appData.cases).length <= 1) {
+        alert("Cannot delete the last case.");
+        return;
+    }
+    if (confirm("Delete this incident analysis?")) {
+        pushUndo();
+        delete appData.cases[appData.activeCaseId];
+        appData.activeCaseId = Object.keys(appData.cases)[0];
+        saveStorage();
+        renderUI();
+    }
+}
+
+function loadTemplate(key) {
+    const template = TEMPLATES[key];
+    if (!template) return;
+    pushUndo();
+    const id = 'case_' + Date.now();
+    const newCase = JSON.parse(JSON.stringify(template));
+    newCase.metadata = newCase.metadata || {};
+    newCase.metadata.created = new Date().toISOString();
+    newCase.metadata.modified = new Date().toISOString();
+    newCase.metadata.framework_version = FRAMEWORK_VERSION;
+    
+    appData.cases[id] = newCase;
+    appData.activeCaseId = id;
+    saveStorage();
+    renderUI();
+}
+
+function importCase(input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const data = JSON.parse(e.target.result);
+            
+            // Handle both legacy and v2.0 formats
+            let importedCase = {};
+            if (data.attack_sequence) {
+                // v2.0 format
+                importedCase = convertFromV2Format(data);
+            } else if (data.path) {
+                // Legacy format
+                importedCase = data;
+            } else {
+                throw new Error("Unrecognized format");
+            }
+            
+            pushUndo();
+            const id = 'case_' + Date.now();
+            importedCase.title = (importedCase.title || "Imported") + " (Import)";
+            importedCase.metadata = importedCase.metadata || {};
+            importedCase.metadata.imported = new Date().toISOString();
+            
+            appData.cases[id] = importedCase;
+            appData.activeCaseId = id;
+            saveStorage();
+            renderUI();
+            alert("Imported successfully.");
+        } catch(err) {
+            alert("Invalid JSON format: " + err.message);
+        }
+        input.value = '';
+    };
+    reader.readAsText(file);
+}
+
+function convertFromV2Format(data) {
+    // Convert TLCTC v2.0 JSON to internal format
+    const c = {
+        title: data.metadata?.attack_title || "Imported Incident",
+        metadata: {
+            sequence_id: data.metadata?.sequence_id,
+            description: data.metadata?.description,
+            analyst: data.metadata?.analyst,
+            threat_actor: data.threat_actor,
+            framework_version: data.metadata?.framework_version
+        },
+        path: []
+    };
+    
+    if (data.attack_sequence) {
+        data.attack_sequence.forEach((step, i) => {
+            const s = {
+                id: Date.now() + i,
+                cluster: parseInt(step.tlctc_cluster?.strategic?.replace('#', '') || step.cluster),
+                sphere: step.responsibility_sphere?.replace('@', '') || 'Org',
+                dtVal: step.delta_t_to_next?.replace(/[^\d~<>?]/g, '') || '',
+                dtUnit: (step.delta_t_to_next?.match(/[smhdw]$/)?.[0]) || 'm',
+                velocityClass: step.velocity_class,
+                description: step.description || '',
+                mitre: step.mitre?.join(', ') || '',
+                cve: step.cve?.join(', ') || '',
+                confidence: step.confidence,
+                inferred: step.inferred,
+                evidence: step.evidence
+            };
+            
+            if (step.data_risk_events?.length) {
+                s.dre = {
+                    types: step.data_risk_events.map(d => d.impact_type),
+                    title: step.data_risk_events[0].title,
+                    desc: step.data_risk_events[0].description
+                };
+            }
+            
+            c.path.push(s);
+        });
+    }
+    
+    return c;
+}
+
+// ============================================================================
+// METADATA MODAL
+// ============================================================================
+
+function openMetadataModal() {
+    const c = getActiveCase();
+    const meta = c.metadata || {};
+    
+    document.getElementById('metaTitle').value = c.title || '';
+    document.getElementById('metaSeqId').value = meta.sequence_id || '';
+    document.getElementById('metaAnalyst').value = meta.analyst || '';
+    document.getElementById('metaOrg').value = meta.organization || '';
+    document.getElementById('metaActor').value = meta.threat_actor?.name || '';
+    document.getElementById('metaMotivation').value = meta.threat_actor?.motivation || 'unknown';
+    document.getElementById('metaSophistication').value = meta.threat_actor?.sophistication || '';
+    document.getElementById('metaDescription').value = meta.description || '';
+    
+    const modal = document.getElementById('metadataModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function closeMetadataModal() {
+    const modal = document.getElementById('metadataModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+
+function saveMetadata() {
+    pushUndo();
+    const c = getActiveCase();
+    c.title = document.getElementById('metaTitle').value || 'Untitled Incident';
+    c.metadata = c.metadata || {};
+    c.metadata.sequence_id = document.getElementById('metaSeqId').value;
+    c.metadata.analyst = document.getElementById('metaAnalyst').value;
+    c.metadata.organization = document.getElementById('metaOrg').value;
+    c.metadata.description = document.getElementById('metaDescription').value;
+    c.metadata.modified = new Date().toISOString();
+    
+    const actor = document.getElementById('metaActor').value;
+    if (actor) {
+        c.metadata.threat_actor = {
+            name: actor,
+            motivation: document.getElementById('metaMotivation').value,
+            sophistication: document.getElementById('metaSophistication').value || undefined
+        };
+    }
+    
+    saveStorage();
+    renderUI();
+    closeMetadataModal();
+}
+
+// ============================================================================
+// STEP MODAL
+// ============================================================================
+
+function openStepModal(id = null) {
+    editingId = id;
+    const modal = document.getElementById('stepModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    // Reset all fields
+    document.querySelectorAll('#stepModal input, #stepModal textarea, #stepModal select').forEach(e => {
+        if (e.type === 'checkbox') e.checked = false;
+        else e.value = '';
+    });
+    document.getElementById('sSphere').value = "Org";
+    document.getElementById('sDtUnit').value = "m";
+    document.getElementById('parallelBox').classList.add('hidden');
+    document.getElementById('boundarySection').classList.add('hidden');
+    document.getElementById('dreWarning').classList.add('hidden');
+    document.getElementById('deleteStepBtn').style.display = 'none';
+    document.getElementById('clusterHelp').textContent = '';
+    
+    if (id) {
+        const s = getActiveCase().path.find(p => p.id === id);
+        if (s) {
+            document.getElementById('sCluster').value = s.cluster;
+            document.getElementById('sSphere').value = s.sphere;
+            document.getElementById('sDtVal').value = s.dtVal || '';
+            document.getElementById('sDtUnit').value = s.dtUnit || 'm';
+            document.getElementById('sVelocityClass').value = s.velocityClass || '';
+            document.getElementById('sDesc').value = s.description || '';
+            document.getElementById('sMitre').value = s.mitre || '';
+            document.getElementById('sCVE').value = s.cve || '';
+            document.getElementById('sIoC').value = s.ioc || '';
+            document.getElementById('sEvidence').value = s.evidence || '';
+            document.getElementById('sConfidence').value = s.confidence || '';
+            document.getElementById('sStage').value = s.stage || '';
+            document.getElementById('sInferred').checked = s.inferred || false;
+            
+            if (s.timestamp) {
+                document.getElementById('sTimestamp').value = s.timestamp.slice(0, 16);
+            }
+            
+            if (s.cluster2) {
+                document.getElementById('sParallel').checked = true;
+                document.getElementById('parallelBox').classList.remove('hidden');
+                document.getElementById('sCluster2').value = s.cluster2;
+            }
+            
+            if (s.boundary) {
+                document.getElementById('sBoundaryContext').value = s.boundary.context || '';
+                document.getElementById('sBoundarySource').value = s.boundary.source || '';
+                document.getElementById('sBoundaryTarget').value = s.boundary.target || '';
+            }
+            
+            if (s.dre) {
+                if (s.dre.types?.includes('C')) document.getElementById('sDreC').checked = true;
+                if (s.dre.types?.includes('I')) document.getElementById('sDreI').checked = true;
+                if (s.dre.types?.includes('A')) document.getElementById('sDreA').checked = true;
+                document.getElementById('sDataRiskTitle').value = s.dre.title || '';
+                document.getElementById('sDataRiskDesc').value = s.dre.desc || '';
+            }
+            
+            if (s.bizRisk) {
+                document.getElementById('sBizRiskTitle').value = s.bizRisk.title || '';
+                document.getElementById('sBizRiskDesc').value = s.bizRisk.desc || '';
+            }
+            
+            document.getElementById('deleteStepBtn').style.display = 'inline-flex';
+            updateClusterHelp();
+        }
+    }
+    
+    lucide.createIcons();
+}
+
+function closeStepModal() {
+    const modal = document.getElementById('stepModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    editingId = null;
+}
+
+function updateClusterHelp() {
+    const cl = document.getElementById('sCluster').value;
+    const help = document.getElementById('clusterHelp');
+    const boundarySection = document.getElementById('boundarySection');
+    const dreWarning = document.getElementById('dreWarning');
+    
+    if (cl && CLUSTERS[cl]) {
+        help.textContent = CLUSTERS[cl].help;
+        
+        // Show boundary section for bridge clusters
+        if (CLUSTERS[cl].type === 'Bridge') {
+            boundarySection.classList.remove('hidden');
+        } else {
+            boundarySection.classList.add('hidden');
+        }
+        
+        // R-CRED: Disable DRE for #4 Identity Theft
+        const dreCheckboxes = [document.getElementById('sDreC'), document.getElementById('sDreI'), document.getElementById('sDreA')];
+        if (cl === '4') {
+            dreWarning.classList.remove('hidden');
+            dreCheckboxes.forEach(cb => { cb.disabled = true; cb.checked = false; });
+            document.getElementById('sDataRiskTitle').disabled = true;
+            document.getElementById('sDataRiskDesc').disabled = true;
+        } else {
+            dreWarning.classList.add('hidden');
+            dreCheckboxes.forEach(cb => { cb.disabled = false; });
+            document.getElementById('sDataRiskTitle').disabled = false;
+            document.getElementById('sDataRiskDesc').disabled = false;
+        }
+    } else {
+        help.textContent = '';
+        boundarySection.classList.add('hidden');
+        dreWarning.classList.add('hidden');
+    }
+}
+
+function toggleParallel() {
+    const box = document.getElementById('parallelBox');
+    const checked = document.getElementById('sParallel').checked;
+    if (checked) {
+        box.classList.remove('hidden');
+    } else {
+        box.classList.add('hidden');
+        document.getElementById('sCluster2').value = '';
+    }
+}
+
+function deleteEditingStep() {
+    if (!editingId) return;
+    if (!confirm("Remove this step?")) return;
+    pushUndo();
+    const c = getActiveCase();
+    c.path = c.path.filter(p => p.id !== editingId);
+    c.metadata.modified = new Date().toISOString();
+    saveStorage();
+    renderUI();
+    closeStepModal();
+}
+
+function commitStep() {
+    const cl = document.getElementById('sCluster').value;
+    if (!cl) {
+        alert("Please select a primary cluster.");
+        return;
+    }
+
+    // Gather DRE types
+    const dreTypes = [];
+    if (document.getElementById('sDreC').checked) dreTypes.push('C');
+    if (document.getElementById('sDreI').checked) dreTypes.push('I');
+    if (document.getElementById('sDreA').checked) dreTypes.push('A');
+
+    // R-CRED Enforcement: #4 Identity Theft must not carry DRE
+    if (cl === '4' && dreTypes.length > 0) {
+        alert("R-CRED Rule Violation:\n\n#4 Identity Theft represents credential USE, not acquisition.\n\nDREs for credential theft belong on the acquisition step (#9, #2, #3, #5, #7, #8, or #10).\n\nPlease remove the DRE from this step or change the cluster.");
+        return;
+    }
+
+    // Validate MITRE ATT&CK IDs
+    const mitreRaw = document.getElementById('sMitre').value.trim();
+    if (mitreRaw) {
+        const mitreIds = mitreRaw.split(/[,;\s]+/).filter(Boolean);
+        const mitrePattern = /^T\d{4}(\.\d{3})?$/;
+        const invalid = mitreIds.filter(id => !mitrePattern.test(id));
+        if (invalid.length > 0) {
+            alert(`Invalid MITRE ATT&CK ID(s): ${invalid.join(', ')}\n\nExpected format: T1234 or T1234.001`);
+            return;
+        }
+    }
+
+    // Validate CVE/CWE IDs
+    const cveRaw = document.getElementById('sCVE').value.trim();
+    if (cveRaw) {
+        const cveIds = cveRaw.split(/[,;\s]+/).filter(Boolean);
+        const cvePattern = /^(CVE-\d{4}-\d{4,}|CWE-\d+)$/;
+        const invalid = cveIds.filter(id => !cvePattern.test(id));
+        if (invalid.length > 0) {
+            alert(`Invalid CVE/CWE ID(s): ${invalid.join(', ')}\n\nExpected format: CVE-2024-12345 or CWE-79`);
+            return;
+        }
+    }
+
+    // Validate parallel cluster is different from primary
+    const cl2 = document.getElementById('sCluster2').value;
+    if (cl2 && cl2 === cl) {
+        alert("Parallel cluster must differ from the primary cluster.\n\nAxiom VI: One step = one generic vulnerability = one cluster.");
+        return;
+    }
+
+    // Build boundary object if applicable
+    let boundary = null;
+    const boundaryContext = document.getElementById('sBoundaryContext').value;
+    if (boundaryContext) {
+        boundary = {
+            context: boundaryContext,
+            source: document.getElementById('sBoundarySource').value,
+            target: document.getElementById('sBoundaryTarget').value
+        };
+    }
+
+    pushUndo();
+    const step = {
+        id: editingId || Date.now(),
+        cluster: parseInt(cl),
+        cluster2: document.getElementById('sCluster2').value ? parseInt(document.getElementById('sCluster2').value) : null,
+        sphere: document.getElementById('sSphere').value,
+        dtVal: document.getElementById('sDtVal').value || '',
+        dtUnit: document.getElementById('sDtUnit').value,
+        velocityClass: document.getElementById('sVelocityClass').value || calculateVelocityClass(document.getElementById('sDtVal').value, document.getElementById('sDtUnit').value),
+        description: document.getElementById('sDesc').value,
+        mitre: document.getElementById('sMitre').value,
+        cve: document.getElementById('sCVE').value,
+        ioc: document.getElementById('sIoC').value,
+        evidence: document.getElementById('sEvidence').value,
+        confidence: document.getElementById('sConfidence').value || null,
+        stage: document.getElementById('sStage').value || null,
+        inferred: document.getElementById('sInferred').checked,
+        timestamp: document.getElementById('sTimestamp').value ? document.getElementById('sTimestamp').value + ':00Z' : null,
+        boundary: boundary,
+        dre: dreTypes.length > 0 ? {
+            types: dreTypes,
+            title: document.getElementById('sDataRiskTitle').value,
+            desc: document.getElementById('sDataRiskDesc').value
+        } : null,
+        bizRisk: document.getElementById('sBizRiskTitle').value ? {
+            title: document.getElementById('sBizRiskTitle').value,
+            desc: document.getElementById('sBizRiskDesc').value
+        } : null
+    };
+    
+    const c = getActiveCase();
+    if (editingId) {
+        const idx = c.path.findIndex(p => p.id === editingId);
+        if (idx >= 0) c.path[idx] = step;
+    } else {
+        c.path.push(step);
+    }
+    
+    c.metadata.modified = new Date().toISOString();
+    saveStorage();
+    renderUI();
+    closeStepModal();
+}
+
+function calculateVelocityClass(val, unit) {
+    if (!val || val === '?' || val === '~') return '';
+    
+    const num = parseFloat(val.replace(/[~<>]/g, ''));
+    if (isNaN(num)) return '';
+    
+    // Convert to minutes
+    let minutes = num;
+    switch(unit) {
+        case 's': minutes = num / 60; break;
+        case 'm': minutes = num; break;
+        case 'h': minutes = num * 60; break;
+        case 'd': minutes = num * 60 * 24; break;
+        case 'w': minutes = num * 60 * 24 * 7; break;
+    }
+    
+    if (minutes < 1) return 'VC-4';      // Seconds = Real-time
+    if (minutes < 60) return 'VC-3';     // Minutes = Operational
+    if (minutes < 60 * 24) return 'VC-2'; // Hours = Tactical
+    return 'VC-1';                        // Days+ = Strategic
+}
+
+// ============================================================================
+// RENDERING
+// ============================================================================
+
+function renderUI() {
+    // Update case selector
+    const sel = document.getElementById('caseSelect');
+    sel.innerHTML = '';
+    Object.keys(appData.cases).forEach(k => {
+        const opt = document.createElement('option');
+        opt.value = k;
+        opt.text = appData.cases[k].title;
+        opt.selected = (k === appData.activeCaseId);
+        sel.appendChild(opt);
+    });
+    
+    renderStepList();
+    renderVisualization();
+    renderNotation();
+    renderPrintTable();
+    renderSummary();
+    updateUndoButtons();
+}
+
+function renderStepList() {
+    const c = getActiveCase();
+    const list = document.getElementById('stepList');
+    list.innerHTML = '';
+    
+    if (!c || !c.path.length) {
+        list.innerHTML = '<p class="text-center text-muted-foreground text-sm py-8">No steps yet. Click "Add Attack Step" to begin.</p>';
+        return;
+    }
+    
+    c.path.forEach((s, i) => {
+        const cl = CLUSTERS[s.cluster];
+        const isBridge = cl.type === 'Bridge';
+        
+        let badges = '';
+        if (s.velocityClass) {
+            badges += `<span class="vc-badge ${s.velocityClass.toLowerCase()}">${s.velocityClass}</span>`;
+        }
+        if (s.dre) {
+            badges += `<span class="vc-badge bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400">DRE</span>`;
+        }
+        if (s.confidence) {
+            badges += `<span class="vc-badge conf-${s.confidence}">[${s.confidence}]</span>`;
+        }
+        if (s.inferred) {
+            badges += `<span class="vc-badge bg-gray-100 text-gray-600 dark:bg-gray-800">[inferred]</span>`;
+        }
+        
+        let subText = `<span class="opacity-70">@${s.sphere}</span>`;
+        if (s.dtVal) subText += ` <span class="mx-1">•</span> Δt: ${s.dtVal}${s.dtUnit}`;
+        
+        const div = document.createElement('div');
+        div.className = 'glass-panel p-3 rounded-lg cursor-pointer hover:border-primary transition-all group';
+        div.onclick = () => openStepModal(s.id);
+        
+        div.innerHTML = `
+            <div class="flex items-start gap-3">
+                <div class="h-7 w-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0 mt-0.5" style="background:${isBridge ? '#d97706' : '#3b82f6'}">${i+1}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="font-bold text-sm truncate flex items-center gap-2">
+                        #${s.cluster}${s.cluster2 ? ' + #' + s.cluster2 : ''} ${cl.name}
+                    </div>
+                    <div class="text-xs text-muted-foreground truncate">${subText}</div>
+                    ${badges ? `<div class="flex gap-1 mt-1.5 flex-wrap">${badges}</div>` : ''}
+                </div>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+    
+    lucide.createIcons();
+}
+
+function renderSummary() {
+    const c = getActiveCase();
+    const container = document.getElementById('summaryContent');
+    
+    if (!c) {
+        container.innerHTML = '<p class="text-muted-foreground">No case selected.</p>';
+        return;
+    }
+    
+    const meta = c.metadata || {};
+    const stepCount = c.path.length;
+    const dreCount = c.path.filter(s => s.dre).length;
+    const bridgeCount = c.path.filter(s => CLUSTERS[s.cluster]?.type === 'Bridge').length;
+    
+    // Velocity analysis
+    const vcCounts = { 'VC-1': 0, 'VC-2': 0, 'VC-3': 0, 'VC-4': 0 };
+    c.path.forEach(s => {
+        if (s.velocityClass) vcCounts[s.velocityClass]++;
+    });
+    
+    const criticalVelocity = vcCounts['VC-3'] + vcCounts['VC-4'] > 0;
+    
+    container.innerHTML = `
+        <div class="space-y-4">
+            <div>
+                <h4 class="font-bold text-sm mb-2">Incident Overview</h4>
+                <div class="text-xs space-y-1 text-muted-foreground">
+                    <p><strong>ID:</strong> ${meta.sequence_id || 'Not set'}</p>
+                    <p><strong>Steps:</strong> ${stepCount}</p>
+                    <p><strong>Domain Crossings:</strong> ${bridgeCount}</p>
+                    <p><strong>Data Risk Events:</strong> ${dreCount}</p>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-sm mb-2">Velocity Profile</h4>
+                <div class="grid grid-cols-4 gap-1 text-center text-[10px]">
+                    <div class="vc-badge vc-1">VC-1: ${vcCounts['VC-1']}</div>
+                    <div class="vc-badge vc-2">VC-2: ${vcCounts['VC-2']}</div>
+                    <div class="vc-badge vc-3">VC-3: ${vcCounts['VC-3']}</div>
+                    <div class="vc-badge vc-4">VC-4: ${vcCounts['VC-4']}</div>
+                </div>
+                ${criticalVelocity ? '<p class="text-xs text-amber-600 dark:text-amber-400 mt-2">⚠️ Contains VC-3/4 transitions — automation required for effective defense.</p>' : ''}
+            </div>
+            
+            ${meta.threat_actor ? `
+            <div>
+                <h4 class="font-bold text-sm mb-2">Threat Actor</h4>
+                <div class="text-xs space-y-1 text-muted-foreground">
+                    <p><strong>Name:</strong> ${meta.threat_actor.name}</p>
+                    <p><strong>Motivation:</strong> ${meta.threat_actor.motivation || 'Unknown'}</p>
+                    ${meta.threat_actor.sophistication ? `<p><strong>Sophistication:</strong> ${meta.threat_actor.sophistication}</p>` : ''}
+                </div>
+            </div>
+            ` : ''}
+            
+            <div>
+                <h4 class="font-bold text-sm mb-2">Timestamps</h4>
+                <div class="text-xs space-y-1 text-muted-foreground">
+                    <p><strong>Created:</strong> ${meta.created ? new Date(meta.created).toLocaleString() : 'Unknown'}</p>
+                    <p><strong>Modified:</strong> ${meta.modified ? new Date(meta.modified).toLocaleString() : 'Unknown'}</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderNotation() {
+    const c = getActiveCase();
+    const div = document.getElementById('notationDisplay');
+    
+    if (!c || !c.path.length) {
+        div.innerHTML = '<span class="text-muted-foreground italic">Add steps to generate notation...</span>';
+        return;
+    }
+    
+    let html = '';
+    c.path.forEach((s, i) => {
+        // Add edge notation (between steps)
+        if (i > 0) {
+            const prev = c.path[i-1];
+            
+            // Velocity annotation on edge
+            if (prev.dtVal) {
+                html += `<span class="text-emerald-600 dark:text-emerald-400 text-xs mx-1">[Δt=${prev.dtVal}${prev.dtUnit}]</span>`;
+            }
+            
+            html += ` <span class="text-muted-foreground mx-1">→</span> `;
+        }
+        
+        // Boundary operator (for bridge clusters)
+        if (s.boundary && s.boundary.context) {
+            html += `<span class="text-amber-600 dark:text-amber-400 font-medium">||[${s.boundary.context}][@${s.boundary.source}→@${s.boundary.target}]||</span> `;
+        }
+        
+        // Step notation
+        if (s.cluster2) {
+            html += `<span class="font-bold">(#${s.cluster} + #${s.cluster2})</span>`;
+        } else {
+            html += `<span class="font-bold">#${s.cluster}</span>`;
+        }
+        
+        // Step annotations
+        let annotations = [];
+        if (s.confidence) annotations.push(`conf=${s.confidence}`);
+        if (s.inferred) annotations.push('inferred');
+        if (s.evidence) annotations.push(`evidence=${s.evidence}`);
+        
+        if (annotations.length) {
+            html += `<span class="text-xs text-slate-500 dark:text-slate-400 ml-0.5">[${annotations.join('] [')}]</span>`;
+        }
+        
+        // DRE tag
+        if (s.dre && s.dre.types?.length) {
+            html += `<span class="text-red-600 dark:text-red-400 font-medium ml-1">+ [DRE: ${s.dre.types.join(', ')}]</span>`;
+        }
+    });
+    
+    div.innerHTML = html;
+}
+
+function renderVisualization() {
+    const c = getActiveCase();
+    const container = document.getElementById('canvasArea');
+    
+    if (!c || !c.path.length) {
+        container.innerHTML = `
+            <div class="flex h-full items-center justify-center text-muted-foreground flex-col gap-4">
+                <i data-lucide="shield" class="h-12 w-12 opacity-20"></i>
+                <p>Start by adding an Attack Step...</p>
+            </div>
+        `;
+        lucide.createIcons();
+        return;
+    }
+    
+    const STEP_W = 320;
+    const START_X = 200;
+    const SVG_H = 650;
+    const SVG_W = Math.max(900, START_X + (c.path.length * STEP_W) + 100);
+    const Y_BIZ = 80;
+    const Y_DATA = 230;
+    const Y_THREAT = 450;
+    
+    const isDark = document.documentElement.classList.contains('dark');
+    const C_TEXT = isDark ? "#f8fafc" : "#0f172a";
+    const C_BG_CARD = isDark ? "#1e293b" : "#ffffff";
+    const C_GRAY = isDark ? "#475569" : "#94a3b8";
+    const C_BRIDGE = "#d97706";
+    const C_INTERNAL = "#3b82f6";
+    const C_DATA = "#dc2626";
+    const C_BIZ = "#7e22ce";
+    const C_VELOCITY = "#059669";
+    
+    let svg = `<svg width="${SVG_W}" height="${SVG_H}" xmlns="http://www.w3.org/2000/svg" id="mainSvg">
+        <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="24" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="${C_GRAY}" />
+            </marker>
+            <marker id="arrowBridge" markerWidth="10" markerHeight="10" refX="24" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="${C_BRIDGE}" />
+            </marker>
+            <marker id="uArrow" markerWidth="8" markerHeight="8" refX="0" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="${C_GRAY}" />
+            </marker>
+        </defs>
+        
+        <!-- Background Lanes -->
+        <g id="bg-layers">
+            <text x="10" y="${Y_BIZ}" fill="${C_BIZ}" font-size="10" font-weight="bold" font-family="Inter, sans-serif" opacity="0.7">BUSINESS IMPACT</text>
+            <line x1="0" y1="${Y_BIZ+10}" x2="${SVG_W}" y2="${Y_BIZ+10}" stroke="${C_BIZ}" stroke-dasharray="4" opacity="0.2"/>
+            
+            <text x="10" y="${Y_DATA}" fill="${C_DATA}" font-size="10" font-weight="bold" font-family="Inter, sans-serif" opacity="0.7">DATA RISK EVENTS (DRE)</text>
+            <line x1="0" y1="${Y_DATA+10}" x2="${SVG_W}" y2="${Y_DATA+10}" stroke="${C_DATA}" stroke-dasharray="4" opacity="0.2"/>
+            
+            <text x="10" y="${Y_THREAT+80}" fill="${C_GRAY}" font-size="10" font-weight="bold" font-family="Inter, sans-serif" opacity="0.7">ATTACK PATH (Cause-Side)</text>
+        </g>`;
+    
+    // Draw edges first
+    c.path.forEach((s, i) => {
+        if (i === 0) return;
+        
+        const prev = c.path[i-1];
+        const x1 = START_X + ((i-1) * STEP_W);
+        const x2 = START_X + (i * STEP_W);
+        const hasBoundary = s.boundary && s.boundary.context;
+        
+        // Main edge
+        svg += `<line x1="${x1+30}" y1="${Y_THREAT}" x2="${x2-30}" y2="${Y_THREAT}" 
+                stroke="${hasBoundary ? C_BRIDGE : C_GRAY}" 
+                stroke-width="${hasBoundary ? 3 : 2}" 
+                stroke-dasharray="${hasBoundary ? '6,4' : '0'}" 
+                marker-end="url(#${hasBoundary ? 'arrowBridge' : 'arrow'})" />`;
+        
+        // Velocity label
+        if (prev.dtVal) {
+            const mid = (x1 + x2) / 2;
+            const vcClass = prev.velocityClass;
+            const vcColor = vcClass === 'VC-4' ? '#dc2626' : vcClass === 'VC-3' ? '#ea580c' : vcClass === 'VC-2' ? '#ca8a04' : C_VELOCITY;
+            
+            svg += `<rect x="${mid-35}" y="${Y_THREAT-32}" width="70" height="22" rx="4" fill="${C_BG_CARD}" stroke="${vcColor}" stroke-width="1.5"/>`;
+            svg += `<text x="${mid}" y="${Y_THREAT-18}" text-anchor="middle" font-size="10" fill="${vcColor}" font-weight="600" font-family="JetBrains Mono, monospace">Δt:${prev.dtVal}${prev.dtUnit}</text>`;
+            
+            if (vcClass) {
+                svg += `<text x="${mid}" y="${Y_THREAT-45}" text-anchor="middle" font-size="8" fill="${vcColor}" font-weight="bold" font-family="Inter, sans-serif">${vcClass}</text>`;
+            }
+        }
+        
+        // Domain boundary marker
+        if (hasBoundary) {
+            const mid = (x1 + x2) / 2;
+            svg += `<line x1="${mid}" y1="${Y_BIZ+20}" x2="${mid}" y2="${Y_THREAT+60}" stroke="${C_BRIDGE}" stroke-width="1" stroke-dasharray="3"/>`;
+            svg += `<text x="${mid}" y="${Y_THREAT+75}" text-anchor="middle" font-size="8" fill="${C_BRIDGE}" font-weight="bold" font-family="Inter, sans-serif">||[${s.boundary.context}]||</text>`;
+            svg += `<text x="${mid}" y="${Y_THREAT+88}" text-anchor="middle" font-size="7" fill="${C_BRIDGE}" font-family="Inter, sans-serif">@${s.boundary.source}→@${s.boundary.target}</text>`;
+        }
+    });
+    
+    // Draw nodes
+    c.path.forEach((s, i) => {
+        const x = START_X + (i * STEP_W);
+        const cl = CLUSTERS[s.cluster];
+        const isBridge = cl.type === 'Bridge';
+        const color = isBridge ? C_BRIDGE : C_INTERNAL;
+        
+        // Data Risk connection
+        if (s.dre && s.dre.types?.length) {
+            svg += `<line x1="${x}" y1="${Y_THREAT-30}" x2="${x}" y2="${Y_DATA+40}" stroke="${C_DATA}" stroke-dasharray="4" stroke-width="1.5" marker-end="url(#uArrow)"/>`;
+            svg += `<rect x="${x-80}" y="${Y_DATA+10}" width="160" height="35" rx="6" fill="${isDark ? '#2d1f1f' : '#fef2f2'}" stroke="${C_DATA}" stroke-width="1.5"/>`;
+            svg += `<text x="${x}" y="${Y_DATA+28}" text-anchor="middle" font-size="10" fill="${C_DATA}" font-weight="bold" font-family="Inter, sans-serif">[DRE: ${s.dre.types.join(', ')}]</text>`;
+            if (s.dre.title) {
+                svg += `<text x="${x}" y="${Y_DATA+40}" text-anchor="middle" font-size="8" fill="${C_DATA}" font-family="Inter, sans-serif">${truncate(s.dre.title, 25)}</text>`;
+            }
+        }
+        
+        // Business Risk connection
+        if (s.bizRisk && s.bizRisk.title) {
+            const dreY = (s.dre) ? Y_DATA+10 : Y_THREAT-30;
+            svg += `<line x1="${x}" y1="${dreY-15}" x2="${x}" y2="${Y_BIZ+35}" stroke="${C_GRAY}" stroke-dasharray="3" marker-end="url(#uArrow)"/>`;
+            svg += `<rect x="${x-80}" y="${Y_BIZ+5}" width="160" height="30" rx="6" fill="${isDark ? '#1f1f2d' : '#faf5ff'}" stroke="${C_BIZ}" stroke-width="1.5"/>`;
+            svg += `<text x="${x}" y="${Y_BIZ+24}" text-anchor="middle" font-size="10" fill="${C_BIZ}" font-weight="bold" font-family="Inter, sans-serif">${truncate(s.bizRisk.title, 22)}</text>`;
+        }
+        
+        // Main node
+        svg += `<g onclick="openStepModal(${s.id})" style="cursor:pointer" class="step-node">`;
+        
+        if (isBridge) {
+            svg += `<rect x="${x-26}" y="${Y_THREAT-26}" width="52" height="52" fill="${C_BG_CARD}" stroke="${color}" stroke-width="3" transform="rotate(45 ${x} ${Y_THREAT})" rx="4"/>`;
+        } else {
+            svg += `<circle cx="${x}" cy="${Y_THREAT}" r="28" fill="${C_BG_CARD}" stroke="${color}" stroke-width="3"/>`;
+        }
+        
+        // Cluster number
+        const clusterText = s.cluster2 ? `#${s.cluster}+#${s.cluster2}` : `#${s.cluster}`;
+        svg += `<text x="${x}" y="${Y_THREAT+4}" text-anchor="middle" font-weight="bold" font-size="${s.cluster2 ? 10 : 13}" fill="${C_TEXT}" font-family="Inter, sans-serif">${clusterText}</text>`;
+        
+        svg += `</g>`;
+        
+        // Labels below node
+        svg += `<text x="${x}" y="${Y_THREAT+50}" text-anchor="middle" font-size="11" font-weight="600" fill="${C_TEXT}" font-family="Inter, sans-serif">${cl.name}</text>`;
+        svg += `<text x="${x}" y="${Y_THREAT+65}" text-anchor="middle" font-size="10" fill="${C_GRAY}" font-family="Inter, sans-serif">@${s.sphere}</text>`;
+        
+        // Confidence indicator
+        if (s.confidence) {
+            const confColor = s.confidence === 'high' ? '#10b981' : s.confidence === 'medium' ? '#f59e0b' : '#ef4444';
+            svg += `<circle cx="${x+22}" cy="${Y_THREAT-22}" r="5" fill="${confColor}"/>`;
+        }
+        
+        // Inferred indicator
+        if (s.inferred) {
+            svg += `<text x="${x}" y="${Y_THREAT+78}" text-anchor="middle" font-size="8" fill="${C_GRAY}" font-style="italic" font-family="Inter, sans-serif">[inferred]</text>`;
+        }
+    });
+    
+    svg += `</svg>`;
+    container.innerHTML = svg;
+}
+
+function renderPrintTable() {
+    const c = getActiveCase();
+    const tbody = document.getElementById('printTableBody');
+    const header = document.getElementById('printHeader');
+    
+    if (!c) return;
+    
+    const meta = c.metadata || {};
+    header.innerHTML = `
+        <h2 style="font-size: 18pt; margin-bottom: 5px;">${c.title}</h2>
+        <p style="font-size: 10pt; color: #666;">
+            ID: ${meta.sequence_id || 'N/A'} | 
+            Analyst: ${meta.analyst || 'N/A'} | 
+            Framework: TLCTC v${meta.framework_version || '2.0'} |
+            Generated: ${new Date().toLocaleString()}
+        </p>
+    `;
+    
+    tbody.innerHTML = '';
+    c.path.forEach((s, i) => {
+        const cl = CLUSTERS[s.cluster];
+        
+        let riskHtml = '';
+        if (s.dre) {
+            riskHtml += `<div class="mb-1"><strong style="color:#dc2626">DRE:</strong> [${s.dre.types?.join(', ')}] ${s.dre.title || ''}</div>`;
+        }
+        if (s.bizRisk?.title) {
+            riskHtml += `<div><strong style="color:#7e22ce">Business:</strong> ${s.bizRisk.title}</div>`;
+        }
+        
+        let velocityHtml = '';
+        if (s.dtVal) {
+            velocityHtml = `Δt: ${s.dtVal}${s.dtUnit}`;
+            if (s.velocityClass) velocityHtml += ` (${s.velocityClass})`;
+        }
+        
+        let refHtml = '';
+        if (s.mitre) refHtml += `MITRE: ${s.mitre}<br>`;
+        if (s.cve) refHtml += `CVE: ${s.cve}<br>`;
+        if (s.ioc) refHtml += `IoC: ${s.ioc}`;
+        
+        const row = `<tr class="border-b border-gray-300">
+            <td class="p-2 align-top">${i+1}</td>
+            <td class="p-2 align-top">
+                <strong>#${s.cluster}${s.cluster2 ? ' + #' + s.cluster2 : ''}</strong><br>
+                ${cl.name}<br>
+                <span class="text-gray-500">@${s.sphere}</span>
+                ${s.confidence ? `<br><span style="color:${s.confidence === 'high' ? 'green' : s.confidence === 'medium' ? 'orange' : 'red'}">[${s.confidence}]</span>` : ''}
+            </td>
+            <td class="p-2 align-top">${s.description || ''}</td>
+            <td class="p-2 align-top text-xs">${velocityHtml}</td>
+            <td class="p-2 align-top text-xs">${refHtml}</td>
+            <td class="p-2 align-top text-xs">${riskHtml}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+    });
+}
+
+// ============================================================================
+// TABS
+// ============================================================================
+
+function switchTab(tabName, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    document.getElementById('stepsTab').classList.add('hidden');
+    document.getElementById('summaryTab').classList.add('hidden');
+    document.getElementById(tabName + 'Tab').classList.remove('hidden');
+}
+
+// ============================================================================
+// EXPORT FUNCTIONS
+// ============================================================================
+
+function exportCompliantJSON() {
+    const c = getActiveCase();
+    if (!c) return;
+    
+    const output = {
+        "$schema": "tlctc-attack-sequence.schema.json",
+        "metadata": {
+            "sequence_id": c.metadata?.sequence_id || `INC-${Date.now()}`,
+            "attack_title": c.title,
+            "framework_version": FRAMEWORK_VERSION,
+            "created": c.metadata?.created || new Date().toISOString(),
+            "modified": new Date().toISOString(),
+            "analyst": c.metadata?.analyst || undefined,
+            "organization": c.metadata?.organization || undefined,
+            "description": c.metadata?.description || undefined
+        },
+        "threat_actor": c.metadata?.threat_actor ? {
+            "name": c.metadata.threat_actor.name,
+            "motivation": c.metadata.threat_actor.motivation,
+            "sophistication": c.metadata.threat_actor.sophistication || undefined
+        } : undefined,
+        "attack_sequence": c.path.map((s, i) => {
+            const step = {
+                "step_number": i + 1,
+                "tlctc_cluster": {
+                    "strategic": `#${s.cluster}`,
+                    "name": CLUSTERS[s.cluster].name
+                },
+                "stage": s.stage || (i === 0 ? "initial" : i === c.path.length - 1 ? "final" : "intermediate"),
+                "responsibility_sphere": `@${s.sphere}`,
+                "description": s.description || undefined
+            };
+            
+            if (s.dtVal) {
+                step.delta_t_to_next = `${s.dtVal}${s.dtUnit}`;
+            }
+            if (s.velocityClass) {
+                step.velocity_class = s.velocityClass;
+            }
+            if (s.cluster2) {
+                step.parallel_cluster = {
+                    "strategic": `#${s.cluster2}`,
+                    "name": CLUSTERS[s.cluster2].name
+                };
+            }
+            if (s.boundary && s.boundary.context) {
+                step.boundary_operator = {
+                    "context": s.boundary.context,
+                    "source": `@${s.boundary.source}`,
+                    "target": `@${s.boundary.target}`
+                };
+            }
+            if (s.mitre) {
+                step.mitre = s.mitre.split(',').map(t => t.trim());
+            }
+            if (s.cve) {
+                step.cve = s.cve.split(',').map(t => t.trim());
+            }
+            if (s.confidence) {
+                step.confidence = s.confidence;
+            }
+            if (s.inferred) {
+                step.inferred = true;
+            }
+            if (s.evidence) {
+                step.evidence = s.evidence;
+            }
+            if (s.timestamp) {
+                step.timestamp = s.timestamp;
+            }
+            if (s.dre) {
+                step.data_risk_events = s.dre.types.map(t => ({
+                    "impact_type": t,
+                    "title": s.dre.title || undefined,
+                    "description": s.dre.desc || undefined
+                }));
+            }
+            
+            return step;
+        }),
+        "attack_path_notation": generateNotationString(c),
+        "business_impacts": c.path.filter(s => s.bizRisk?.title).map((s, i) => ({
+            "impact_id": `BIZ-${i+1}`,
+            "category": "operational",
+            "description": s.bizRisk.title,
+            "details": s.bizRisk.desc || undefined,
+            "linked_to_step": c.path.indexOf(s) + 1
+        }))
+    };
+    
+    // Clean undefined values
+    const cleanJSON = JSON.parse(JSON.stringify(output));
+    
+    const blob = new Blob([JSON.stringify(cleanJSON, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${c.metadata?.sequence_id || 'tlctc-incident'}.json`;
+    a.click();
+}
+
+function generateNotationString(c) {
+    if (!c || !c.path.length) return '';
+    
+    let notation = '';
+    c.path.forEach((s, i) => {
+        if (i > 0) {
+            const prev = c.path[i-1];
+            if (prev.dtVal) {
+                notation += ` →[Δt=${prev.dtVal}${prev.dtUnit}] `;
+            } else {
+                notation += ' → ';
+            }
+        }
+        
+        if (s.boundary && s.boundary.context) {
+            notation += `||[${s.boundary.context}][@${s.boundary.source}→@${s.boundary.target}]|| `;
+        }
+        
+        if (s.cluster2) {
+            notation += `(#${s.cluster} + #${s.cluster2})`;
+        } else {
+            notation += `#${s.cluster}`;
+        }
+        
+        if (s.dre && s.dre.types?.length) {
+            notation += ` + [DRE: ${s.dre.types.join(', ')}]`;
+        }
+    });
+    
+    return notation;
+}
+
+function copyNotation() {
+    const c = getActiveCase();
+    const notation = generateNotationString(c);
+    navigator.clipboard.writeText(notation).then(() => {
+        alert('Notation copied to clipboard!');
+    });
+}
+
+function exportSVG() {
+    const svg = document.querySelector('#canvasArea svg');
+    if (!svg) { alert("No graph to export."); return; }
+    
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'tlctc_attack_path.svg';
+    a.click();
+}
+
+function exportPNG() {
+    const svg = document.querySelector('#canvasArea svg');
+    if (!svg) { alert("No graph to export."); return; }
+    
+    const width = parseInt(svg.getAttribute('width'));
+    const height = parseInt(svg.getAttribute('height'));
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    
+    const img = new Image();
+    img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const scale = 2;
+        canvas.width = width * scale;
+        canvas.height = height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(scale, scale);
+        
+        const isDark = document.documentElement.classList.contains('dark');
+        ctx.fillStyle = isDark ? '#0f172a' : '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        const a = document.createElement('a');
+        a.href = canvas.toDataURL('image/png');
+        a.download = 'tlctc_attack_path.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+    img.onerror = function() { alert("Error generating PNG."); URL.revokeObjectURL(url); };
+    img.src = url;
+}
+
+// ============================================================================
+// UTILITIES
+// ============================================================================
+
+function toggleTheme() {
+    const html = document.documentElement;
+    html.classList.toggle('dark');
+    localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+    renderVisualization();
+}
+
+function truncate(s, n) {
+    return (s && s.length > n) ? s.substr(0, n-1) + '...' : s || '';
+}
+</script>
+</body>
+</html>
