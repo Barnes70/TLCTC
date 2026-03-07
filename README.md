@@ -299,6 +299,9 @@ tlctc/
 │   ├── README.md                             # Tool index
 │   ├── threat-modeling.html                  # SDLC threat modeling & architecture analysis
 │   └── attack-path-architect.html            # Incident attack path documentation & CTI exchange
+├── glossary/
+│   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
+│   └── tlctc-glossary.json                   # 55 terms: clusters, axioms, rules, notation, architecture
 ├── examples/
 │   └── agentic-ai/                           # Analysis of AI semantics in Cyber Threats
 │       ├── agentic-attack-paths.json         # 9 attack paths (Paths A–I) from Paper 1
@@ -318,6 +321,7 @@ tlctc/
 4. **Use the JSON schemas** — Validate your attack path instances against Layer 3 schema.
 5. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
 6. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
+7. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
 
 ## Contributing
 
@@ -325,6 +329,7 @@ We welcome community contributions, particularly:
 - **Attack path mappings** of real-world incidents using TLCTC notation
 - **Framework integration examples** (MITRE ATT&CK mappings, NIST CSF control matrices)
 - **Tooling** that consumes or produces TLCTC JSON (see [`tools/`](tools/) for existing standalone apps)
+- **Glossary terms** — propose new terms or refine definitions for the universal cyber security glossary
 
 See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guidelines.
 
