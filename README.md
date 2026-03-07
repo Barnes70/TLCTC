@@ -188,11 +188,15 @@ Note: The consequence is Loss of **Accessibility** (data present but encrypted/u
 
 TLCTC acts as the strategic translation layer — a shared semantic backbone that connects operational frameworks without replacing them.
 
-### CVEs → TLCTC
+### CVEs and CWEs → TLCTC
 
 Every specific CVE is an instance of a generic vulnerability and maps to a primary TLCTC cluster. The hierarchy flows: **Weakness (CWE) → Specific Vulnerability (CVE) → Generic Vulnerability → Threat Cluster (#1–#10)**.
 
 Example: An RCE vulnerability in Apache Struts (CVE-2017-5638) is a server-side implementation flaw → **#2 Exploiting Server**. If the exploit leads to code execution → **#2 → #7**.
+
+The [`mappings/mitre-cwe/`](mappings/mitre-cwe/) directory contains the **mapping of 987 CWE weaknesses** to TLCTC clusters, including rationale, confidence verdicts, CVE references, and a decision tree methodology. Because CWE defines the *flaw* while TLCTC defines the *exploit vector*, the same CWE can map to different clusters depending on context (e.g., server-side vs. client-side). See the [CWE mapping README](mappings/mitre-cwe/README.md) for notation and the [decision tree](mappings/mitre-cwe/decision-tree.md) for classification methodology.
+
+> **Note:** The CWE mapping was generated with AI assistance and is marked experimental.
 
 ### MITRE ATT&CK → TLCTC
 
@@ -263,12 +267,18 @@ TLCTC relies on 10 non-negotiable axioms organized into four groups. These preve
 ```
 tlctc/
 ├── mappings/
-│   └── mitre-attack-enterprise/              # MITRE ATT&CK Enterprise → TLCTC
-│       ├── README.md                         # Mapping documentation & notation
-│       ├── tlctc-enterprise-attack.json      # 698 technique mappings with rationale
+│   ├── mitre-attack-enterprise/              # MITRE ATT&CK Enterprise → TLCTC
+│   │   ├── README.md                         # Mapping documentation & notation
+│   │   ├── tlctc-enterprise-attack.json      # 698 technique mappings with rationale
+│   │   ├── decision-tree.md                  # Classification methodology
+│   │   └── examples/
+│   │       └── soc-to-risk-walkthrough.md    # Worked example: SOC → risk register
+│   └── mitre-cwe/                            # MITRE CWE → TLCTC (experimental)
+│       ├── README.md                         # Mapping documentation & verdict system
+│       ├── tlctc-cwe.json                    # 987 CWE mappings with rationale & CVE refs
 │       ├── decision-tree.md                  # Classification methodology
 │       └── examples/
-│           └── soc-to-risk-walkthrough.md    # Worked example: SOC → risk register
+│           └── cwe-to-control-walkthrough.md # Worked example: vuln findings → controls
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
@@ -303,6 +313,7 @@ tlctc/
 3. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation.
 4. **Use the JSON schemas** — Validate your attack path instances against Layer 3 schema.
 5. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
+6. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
 
 ## Contributing
 
