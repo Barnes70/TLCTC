@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TLCTC Cyber Security Glossary — Schema",
+  "description": "Schema for a universal, machine-readable cyber risk and cyber security glossary. Designed to establish a common language across frameworks, teams, and organizations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metadata", "terms"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["glossary_id", "glossary_version", "license"],
+      "properties": {
+        "glossary_id": {
+          "type": "string",
+          "description": "Unique identifier for this glossary edition."
+        },
+        "glossary_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Semantic version of the glossary."
+        },
+        "tlctc_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+$",
+          "description": "TLCTC framework version these definitions align with."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "license": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "total_terms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "terms": {
+      "type": "array",
+      "description": "Ordered list of glossary terms.",
+      "items": { "$ref": "#/definitions/term" }
+    }
+  },
+  "definitions": {
+    "term": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["term_id", "term", "definition", "domain"],
+      "properties": {
+        "term_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$",
+          "description": "Unique, URL-safe identifier for this term (kebab-case)."
+        },
+        "term": {
+          "type": "string",
+          "description": "The canonical term or phrase."
+        },
+        "abbreviation": {
+          "type": "string",
+          "description": "Standard abbreviation or acronym, if any."
+        },
+        "definition": {
+          "type": "string",
+          "description": "Precise, normative definition."
+        },
+        "not_to_be_confused_with": {
+          "type": "string",
+          "description": "Clarifies common conflations or misuse of this term."
+        },
+        "domain": {
+          "type": "string",
+          "enum": [
+            "tlctc-core",
+            "tlctc-classification",
+            "tlctc-notation",
+            "tlctc-architecture",
+            "tlctc-mapping",
+            "cyber-risk",
+            "cyber-security",
+            "governance"
+          ],
+          "description": "Knowledge domain this term belongs to."
+        },
+        "source": {
+          "type": "string",
+          "description": "Authoritative source or origin of this definition (e.g., 'TLCTC v2.0', 'ISO 27000:2022', 'NIST SP 800-53')."
+        },
+        "see_also": {
+          "type": "array",
+          "description": "Cross-references to related term_ids within this glossary.",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "examples": {
+          "type": "array",
+          "description": "Illustrative examples of correct usage.",
+          "items": { "type": "string" }
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional context, caveats, or editorial notes."
+        }
+      }
+    }
+  }
+}
