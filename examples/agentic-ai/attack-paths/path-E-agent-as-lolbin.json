@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "incident_id": "agentic-path-E",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "notes": "Path E — Agent as Execution Vector (LOLBin Pattern). Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). If the agent has designed code-execution capabilities (many agentic frameworks do), function abuse (#1) enables the agent to generate and execute Foreign Executable Content (#7). This is the LOLBAS pattern with the agent itself as the LOLBin. Notation: #1→[instant]#7 + [DRE: C, I, Ac]. Velocity: VC-4 — code generation and execution are near-instantaneous. This is the most underappreciated agentic risk — the agent is a general-purpose code execution engine accessible through natural language. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-function-abuse",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "Attacker abuses agent's designed function to invoke code execution capability. Generic vulnerability: scope and trust in agent's designed code generation/execution features. The agent's code execution capability is a designed feature. Invoking it through normal interfaces is function abuse (#1), not an exploit (#2/#3)."
+    },
+    {
+      "step_id": "s2-fec-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "outcomes": ["C", "I", "Ac"],
+      "notes": "Agent-generated code (Foreign Executable Content) executes via the environment's designed execution engine. Generic vulnerability: the environment's intended capability to execute potentially untrusted executable content."
+    }
+  ]
+}

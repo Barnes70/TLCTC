@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "incident_id": "agentic-path-I",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "notes": "Path I — Rogue Agent as Persistence Mechanism (APT-in-a-Box). Scenario: MaliciousAgentIntroduced (Layer 2 AI-Specific). The malicious agent harvests credentials (#4 acquisition as consequence), then uses them (#4 application) for persistent, stealthy operations (#1). The agent's autonomous nature makes this an APT-in-a-box. Notation: #7→[instant]#4→[instant]#1 + [DRE: C]. Velocity: VC-4 (initial compromise), then VC-1 (deliberate low-and-slow operation). Paradoxically, the most sophisticated pattern deliberately slows down to avoid detection. The agent trades velocity for stealth — operating just below behavioural baselines over extended periods. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-fec-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "instant",
+      "notes": "Malicious agent executes and begins autonomous operation. Generic vulnerability: the environment's intended capability to execute potentially untrusted executable content."
+    },
+    {
+      "step_id": "s2-credential-use",
+      "cluster": "#4",
+      "delta_t_to_next": "instant",
+      "notes": "Agent uses harvested/stolen credentials to authenticate to additional systems. Generic vulnerability: identity-artifact binding / credential lifecycle (application phase per R-CRED). Credential acquisition (harvesting) was a consequence of step 1. This step is the APPLICATION of those credentials → always #4 per R-CRED."
+    },
+    {
+      "step_id": "s3-persistent-abuse",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Persistent, low-and-slow operations via legitimate functions — data collection, reconnaissance, lateral movement. Generic vulnerability: scope and trust in legitimate functions, now accessed via stolen identity. The agent's autonomous nature enables weeks-long persistence without further attacker input. This is the Autonomy Amplification property from the consequence-side analysis."
+    }
+  ]
+}

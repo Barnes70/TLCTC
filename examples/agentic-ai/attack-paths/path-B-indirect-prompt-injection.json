@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "incident_id": "agentic-path-B",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "notes": "Path B — Indirect Prompt Injection via Data Sources. Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Malicious instructions embedded in documents, emails, or web content the agent is designed to ingest. Agent's data-reading function (first #1) encounters injected instructions, triggering abuse of action capabilities (second #1), leading to unauthorised operations (third #1). Notation: #1→[instant]#1→[instant]#1 + [DRE: C]. Velocity: VC-4 — all three steps execute within the same processing cycle. The critical distinction from Layer 1 attacks: no implementation flaw is involved at any step. Boundary test: if the same file triggered a buffer overflow in the parser → #3 (Exploiting Client). But if the file is parsed correctly and the text contains instructions the agent obeys → #1 (Abuse of Functions). Same file, different generic vulnerability. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-data-ingestion",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "Agent reads external data source (document, email, web page, API response) containing embedded instructions. Generic vulnerability: designed data ingestion capability — parser works correctly, extracted text contains injected instructions."
+    },
+    {
+      "step_id": "s2-instruction-following",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "Agent follows injected instructions, invoking tool capabilities. Generic vulnerability: instruction-following across entire context window is designed capability."
+    },
+    {
+      "step_id": "s3-unauthorised-operations",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Unauthorised operations executed via legitimate tool access. Generic vulnerability: scope and trust in agent's authorised tool integrations."
+    }
+  ]
+}

@@ -142,6 +142,12 @@
       "statement": "Position acquisition maps to the enabling cluster; once position is established, interception/modification/relay actions map to #5.",
       "enforcement_level": "must",
       "machine_enforceable": false
+    },
+    {
+      "rule_id": "R-CRED",
+      "statement": "Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method. These are separate attack steps.",
+      "enforcement_level": "must",
+      "machine_enforceable": false
     }
   ]
 }

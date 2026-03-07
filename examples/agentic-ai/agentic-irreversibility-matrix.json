@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "TLCTC v2.0 — Agentic AI Irreversibility Matrix",
   "description": "Reference data mapping consequence types to their irreversibility windows and recovery feasibility. The irreversibility window is the time between a consequence event and the point at which it becomes permanent. This is the most critical parameter for consequence-side control design: if the agent's consequence velocity exceeds the irreversibility window, prevention-heavy architectures are the only viable strategy.",
   "version": "2.0-agentic-20260225",
@@ -17,7 +16,7 @@
     {
       "id": "irr-data-exfil",
       "consequence_type": "Data exfiltration",
-      "dre": ["LoC"],
+      "dre": ["C"],
       "irreversibility_window": "Zero",
       "window_explanation": "Once data is copied to an attacker-controlled location, confidentiality is permanently lost. The data cannot be 'unread' or 'unexposed'.",
       "recovery_feasibility": "None",
@@ -30,7 +29,7 @@
     {
       "id": "irr-database-modification",
       "consequence_type": "Database modification",
-      "dre": ["LoI"],
+      "dre": ["I"],
       "irreversibility_window": "Until backup cycle or journal checkpoint",
       "window_explanation": "Modifications can be reversed IF transaction journals exist and are checked before the next backup overwrites the pre-modification state.",
       "recovery_feasibility": "High (conditional)",
@@ -44,7 +43,7 @@
     {
       "id": "irr-sent-communication",
       "consequence_type": "Sent email or message",
-      "dre": ["LoI"],
+      "dre": ["I"],
       "irreversibility_window": "Seconds",
       "window_explanation": "Email delivery is near-instant. Message recall features exist but are unreliable (recipient may have already read, forwarded, or archived the message).",
       "recovery_feasibility": "Minimal",
@@ -57,7 +56,7 @@
     {
       "id": "irr-financial-transaction",
       "consequence_type": "Financial transaction",
-      "dre": ["LoI"],
+      "dre": ["I"],
       "irreversibility_window": "Minutes to hours (varies by payment type)",
       "window_explanation": "Instant payment systems: zero window. Standard wire transfers: limited recall window (hours, success not guaranteed). Card transactions: chargeback possible within days but not guaranteed. Cryptocurrency: zero window.",
       "recovery_feasibility": "Varies",
@@ -71,7 +70,7 @@
     {
       "id": "irr-infrastructure-change",
       "consequence_type": "Infrastructure configuration change",
-      "dre": ["LoAv", "LoAc"],
+      "dre": ["A", "Ac"],
       "irreversibility_window": "Seconds (propagation to dependent services)",
       "window_explanation": "Configuration changes propagate to dependent services in seconds. DNS changes: immediate but TTL-cached. Certificate revocation: immediate. Container scaling: seconds. Network rules: immediate.",
       "recovery_feasibility": "Medium",
@@ -85,7 +84,7 @@
     {
       "id": "irr-deleted-data",
       "consequence_type": "Deleted data",
-      "dre": ["LoAv"],
+      "dre": ["A"],
       "irreversibility_window": "Depends on backup/retention policy",
       "window_explanation": "If backups exist and are not also deleted/corrupted: recoverable. If no backups exist or agent also modifies backup systems: permanent loss.",
       "recovery_feasibility": "High (conditional on backup integrity)",
@@ -99,7 +98,7 @@
     {
       "id": "irr-published-content",
       "consequence_type": "Published content",
-      "dre": ["LoI"],
+      "dre": ["I"],
       "irreversibility_window": "Zero",
       "window_explanation": "Public content is immediately cached, indexed, archived, and potentially copied by third parties. Web archives, search engine caches, social media screenshots, and news aggregators preserve published content indefinitely.",
       "recovery_feasibility": "None",
@@ -112,7 +111,7 @@
     {
       "id": "irr-credential-exposure",
       "consequence_type": "Credential exposure",
-      "dre": ["LoC"],
+      "dre": ["C"],
       "irreversibility_window": "Zero",
       "window_explanation": "Once credentials are exposed (exfiltrated, logged in plaintext, transmitted to external endpoint), they must be assumed compromised regardless of whether the attacker has actually used them.",
       "recovery_feasibility": "Partial (rotation required)",

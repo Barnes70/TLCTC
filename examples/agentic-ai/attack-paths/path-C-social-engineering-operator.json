@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "incident_id": "agentic-path-C",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "notes": "Path C — Social Engineering of Human Operator. Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Human is manipulated into instructing the agent to perform actions counter to security interests. Classic #9 (Social Engineering) enabling #1 (Abuse of Functions). Notation: #9 ||[human][@External→@Org]|| →[Δt=?] #1 + [DRE: C, I]. Delta_t between steps is variable (hours to days — depends on human response time). Velocity: VC-1 to VC-2 (human-dependent gap), then VC-4 (agent execution). The #9→#1 transition has a human-speed gap where awareness training and verification procedures are viable. Once the human issues the instruction, agent execution is VC-4. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-social-engineering",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "human",
+        "source_sphere": "@External",
+        "target_sphere": "@Org"
+      },
+      "delta_t_to_next": "?",
+      "notes": "Attacker manipulates human operator via social engineering (phishing, pretexting, authority impersonation). Generic vulnerability: human psychological factors (trust, authority bias, urgency). Delta_t is variable: hours to days depending on human response time."
+    },
+    {
+      "step_id": "s2-agent-abuse",
+      "cluster": "#1",
+      "outcomes": ["C", "I"],
+      "notes": "Manipulated human instructs agent to perform actions (data export, configuration change, communication). Generic vulnerability: scope and trust in agent's legitimate functions, now directed by a manipulated operator."
+    }
+  ]
+}

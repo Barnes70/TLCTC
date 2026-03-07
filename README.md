@@ -196,10 +196,14 @@ Example: An RCE vulnerability in Apache Struts (CVE-2017-5638) is a server-side 
 
 ### MITRE ATT&CK → TLCTC
 
-Operational techniques map to strategic clusters based on the generic vulnerability exploited. Examples:
+Operational techniques map to strategic clusters based on the generic vulnerability exploited. The [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) directory contains the **complete mapping of 698 ATT&CK Enterprise techniques** to TLCTC clusters, including detailed rationale for each classification and a decision tree methodology.
+
+Quick examples:
 - T1566.001 "Spearphishing Attachment" → **#9 Social Engineering** (the phishing step; the payload execution is a separate #7 step)
 - T1059 "Command and Scripting Interpreter" → **#7 Malware** (or #1 → #7 when legitimate tools execute attacker-controlled content)
 - T1078 "Valid Accounts" → **#4 Identity Theft** (credential application)
+
+See the [mapping README](mappings/mitre-attack-enterprise/README.md) for notation conventions, the [decision tree](mappings/mitre-attack-enterprise/decision-tree.md) for classification methodology, and the [SOC-to-risk walkthrough](mappings/mitre-attack-enterprise/examples/soc-to-risk-walkthrough.md) for a worked example.
 
 ### NIST CSF 2.0 → TLCTC
 
@@ -258,31 +262,38 @@ TLCTC relies on 10 non-negotiable axioms organized into four groups. These preve
 
 ```
 tlctc/
+├── mappings/
+│   └── mitre-attack-enterprise/              # MITRE ATT&CK Enterprise → TLCTC
+│       ├── README.md                         # Mapping documentation & notation
+│       ├── tlctc-enterprise-attack.json      # 698 technique mappings with rationale
+│       ├── decision-tree.md                  # Classification methodology
+│       └── examples/
+│           └── soc-to-risk-walkthrough.md    # Worked example: SOC → risk register
 ├── json-schemas/
-│   ├── layer-1/                          # Framework Definition (Static)
-│   │   ├── tlctc-framework.schema.json   # Schema for framework packages
-│   │   └── tlctc-framework.v2.0.json     # V2.0 content: clusters, axioms, rules
-│   ├── layer-2/                          # Reference Registry (Context)
-│   │   ├── tlctc-reference.schema.json   # Schema for reference registries
-│   │   └── example-registry.json         # Example org-specific registry
-│   └── layer-3/                          # Attack Path Instances (Dynamic)
-│       ├── tlctc-attack-path.schema.json # Schema for attack path instances
-│       └── examples/                     # Example incident mappings
+│   ├── layer-1/                              # Framework Definition (Static)
+│   │   ├── tlctc-framework.schema.json       # Schema for framework packages
+│   │   └── tlctc-framework.v2.0.json         # V2.0 content: clusters, axioms, rules
+│   ├── layer-2/                              # Reference Registry (Context)
+│   │   ├── tlctc-reference.schema.json       # Schema for reference registries
+│   │   └── example-registry.json             # Example org-specific registry
+│   └── layer-3/                              # Attack Path Instances (Dynamic)
+│       ├── tlctc-attack-path.schema.json     # Schema for attack path instances
+│       └── examples/                         # Example incident mappings
 │           └── solarwinds-2020.json
 ├── documentation/
-│   ├── TLCTC-v2.0-whitepaper.pdf         # Canonical V2.0 White Paper
-│   ├── TLCTC-glossary-v2.0.pdf           # Comprehensive Definitions
-│   ├── json-architecture.pdf             # JSON Architecture Specification
-│   └── why-exactly-ten.pdf               # Framework Architecture Rationale
+│   ├── TLCTC-v2.0-whitepaper.pdf             # Canonical V2.0 White Paper
+│   ├── TLCTC-glossary-v2.0.pdf               # Comprehensive Definitions
+│   ├── json-architecture.pdf                 # JSON Architecture Specification
+│   └── why-exactly-ten.pdf                   # Framework Architecture Rationale
 ├── examples/
-│   ├── agentic-ai/                       # Analysis of AI semantics in Cyber Threats
-│   │   ├── agentic-attack-paths.json     # 9 attack paths (Paths A–I) from Paper 1
-│   │   └── agentic-consequence-chains.json     # Consequence chain examples from Paper 2
-│   │   └── agentic-tool-profiles.json     # 5 tool category risk profiles
-│   │   └── agentic-irreversibility-matrix.json     # Irreversibility windows per consequence type
-├── attack-paths/                         # Community-contributed incident analyses
+│   └── agentic-ai/                           # Analysis of AI semantics in Cyber Threats
+│       ├── agentic-attack-paths.json         # 9 attack paths (Paths A–I) from Paper 1
+│       ├── agentic-consequence-chains.json   # Consequence chain examples from Paper 2
+│       ├── agentic-tool-profiles.json        # 5 tool category risk profiles
+│       └── agentic-irreversibility-matrix.json # Irreversibility windows per consequence type
+├── attack-paths/                             # Community-contributed incident analyses
 │   └── CONTRIBUTING.md
-└── LICENSE                               # CC BY 4.0
+└── LICENSE                                   # CC BY 4.0
 ```
 
 ## Getting Started
@@ -291,6 +302,7 @@ tlctc/
 2. **Understand the Bow-Tie** — Threats are causes, outcomes are consequences. Never confuse them.
 3. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation.
 4. **Use the JSON schemas** — Validate your attack path instances against Layer 3 schema.
+5. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
 
 ## Contributing
 

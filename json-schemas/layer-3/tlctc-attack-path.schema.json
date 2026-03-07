@@ -86,8 +86,8 @@
         },
         "outcomes": {
           "type": "array",
-          "description": "Data Risk Events (DRE) tags resulting from this step (effects; do not change classification).",
-          "items": { "type": "string", "enum": ["C", "I", "A"] },
+          "description": "Data Risk Events (DRE) tags resulting from this step (effects; do not change classification). C=Confidentiality, I=Integrity, A=Availability, Ac=Accessibility",
+          "items": { "type": "string", "enum": ["C", "I", "A", "Ac"] },
           "uniqueItems": true
         },
         "delta_t_to_next": { "$ref": "#/definitions/delta_t" },
@@ -129,7 +129,7 @@
         "fec_recorded_in_step_id": { "$ref": "#/definitions/step_id" },
         "outcomes": {
           "type": "array",
-          "items": { "type": "string", "enum": ["C", "I", "A"] },
+          "items": { "type": "string", "enum": ["C", "I", "A", "Ac"] },
           "uniqueItems": true
         },
         "evidence_refs": { "type": "array", "items": { "type": "string" } },

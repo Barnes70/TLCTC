@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "incident_id": "agentic-path-H",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "notes": "Path H — Supply Chain: Trojanised Agent via Marketplace. Scenario: MaliciousAgentIntroduced (Layer 2 AI-Specific). Trojanised agent delivered through trusted vendor channels or AI marketplaces. The SolarWinds pattern adapted for the AI agent ecosystem. The trust dependency on the agent vendor/marketplace is the #10 generic vulnerability. Notation: #10 ||[dev][@Vendor→@Org]|| →[Δt=~2w] #7→[instant]#1 + [DRE: C, I]. Velocity: VC-1 (supply chain dwell), then VC-4 (activation and exploitation). Extended dwell time creates threat hunting opportunity (VC-1). After activation, exploitation is machine-speed. Supply chain validation and code signing are the primary cause-side controls. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-supply-chain",
+      "cluster": "#10",
+      "topology_boundary": {
+        "context": "dev",
+        "source_sphere": "@Vendor",
+        "target_sphere": "@Org"
+      },
+      "delta_t_to_next": "~2w",
+      "notes": "Trojanised agent package delivered through trusted marketplace or vendor update channel. Generic vulnerability: third-party trust dependencies — organisation trusts the agent vendor/marketplace. Removing the trust link (not using the marketplace) would prevent this attack → confirms #10."
+    },
+    {
+      "step_id": "s2-fec-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "instant",
+      "notes": "Backdoored agent activates and executes malicious functionality. Generic vulnerability: the environment's intended capability to execute potentially untrusted executable content."
+    },
+    {
+      "step_id": "s3-function-abuse",
+      "cluster": "#1",
+      "outcomes": ["C", "I"],
+      "notes": "Backdoor abuses legitimate system and agent functions for data collection and exfiltration. Generic vulnerability: scope and trust in legitimate functions."
+    }
+  ]
+}

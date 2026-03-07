@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "incident_id": "agentic-path-A",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "notes": "Path A — Direct Prompt Injection. Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Attacker manipulates agent through its designed input interface (first #1). Agent abuses its own tool-use capabilities (second #1) to exfiltrate data or modify systems. Both steps exploit functional scope, not implementation flaws. Notation: #1→[instant]#1 + [DRE: C, I]. Velocity: VC-4 — entire chain executes within single inference cycle. No human-speed gaps. Only architectural controls (capability restriction, output filtering) are viable. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-prompt-injection",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "Direct prompt injection via designed natural language interface. Generic vulnerability: scope, complexity, and inherent trust in agent's instruction-processing capability. No implementation flaw required — the LLM's instruction-following across its context window is the designed capability being abused."
+    },
+    {
+      "step_id": "s2-tool-abuse",
+      "cluster": "#1",
+      "outcomes": ["C", "I"],
+      "notes": "Agent abuses tool-use capabilities (API calls, data access, file operations) per injected instructions. Generic vulnerability: scope and trust placed in agent's designed tool-use functions."
+    }
+  ]
+}
