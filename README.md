@@ -1,6 +1,6 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.0** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
+**Version 2.0 / 2.1** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) · [v2.1 Extension Spec](v2.1-Proposals/)
 
 The first cause-oriented, axiomatic cyber threat taxonomy.
 
@@ -146,7 +146,53 @@ Complex attacks are not single events — they are **sequences**. TLCTC provides
 
 ### v2.1 Boundary Extensions
 
-TLCTC v2.1 adds two backward-compatible notation operators. The **Transit Boundary Operator** (`⇒`) identifies intermediate parties that relay an attack without being its source or target (e.g., an SMS provider carrying a phishing link). The **Intra-System Boundary Operator** (`|[type][@from→@to]|`) annotates boundary crossings within a single host, such as sandbox escapes or privilege escalations. Both are observability annotations — they do not change cluster classification. See [`v2.1-Proposals/`](v2.1-Proposals/) for the full specification.
+TLCTC v2.1 adds two backward-compatible notation operators. Both are **observability annotations** — they increase analytical precision without changing cluster classification.
+
+#### Transit Boundary Operator (`⇒`)
+
+Identifies intermediate responsibility spheres that **relay** an attack without being its source or target. The transit party carries the attack but does not originate or receive it.
+
+```
+||[context][@Source⇒@Carrier→@Target]||          # single transit party
+||[context][@Source⇒@CarrierB⇒@CarrierA→@Target]||  # chained transit (right-to-left relay)
+```
+
+**Example:** SMS-based phishing where the SMS gateway relays the malicious link:
+```
+#9 ||[messaging][@Attacker⇒@SMSProvider→@Victim]||
+```
+
+> **Transit ≠ Supply Chain (#10).** Transit marks a relay/carrier that passes the attack through. #10 marks a Trust Acceptance Event — the moment a trust artifact becomes authoritative inside the target domain. An SMS provider relaying a phishing link is transit; a compromised npm package installed by the target is #10.
+
+#### Intra-System Boundary Operator (`|[type][@from→@to]|`)
+
+Annotates boundary crossings **within a single host or system** — as opposed to domain boundaries (`||...||`) which cross between responsibility spheres.
+
+| Type | Description | Example |
+|---|---|---|
+| `sandbox` | Escape from application sandbox to host OS or less-restricted context | Browser renderer sandbox escape, container breakout |
+| `privilege` | Elevation from lower to higher privilege level | User-to-root, unprivileged to kernel mode |
+| `process` | Crossing from one process's security context to another | Process injection, DLL hijacking |
+| `hypervisor` | Escape from VM to hypervisor or another VM | VM escape, hyperjacking |
+
+```
+#3 |[sandbox][@renderer→@os]|    # browser exploit escaping renderer sandbox
+#2 |[privilege][@user→@root]|    # local privilege escalation via server-side flaw
+```
+
+#### v2.1 Classification Rules
+
+| Rule | Statement |
+|---|---|
+| **R-TRANSIT-3** | Vendor code running on the target device is **NOT** transit. Safari on the victim's phone is the attack surface (classify by R-ROLE as #3), not a transit party. |
+| **R-INTRA-7** | Intra-system boundaries **never change** cluster classification. They are observability annotations, not classification inputs. |
+| **R-INTRA-9** | The `memory` boundary type is explicitly **deferred** and MUST NOT be used. |
+
+#### v2.1 Extended Boundary Contexts
+
+v2.1 expands the Layer 2 boundary context vocabulary beyond the original seven (`human`, `physical`, `update`, `auth`, `dev`, `api`, `cloud`) with ten additional contexts: `messaging`, `email`, `cdn`, `network`, `signaling`, `media`, `browser`, `exploit`, `legal`, `admin`.
+
+See [`v2.1-Proposals/`](v2.1-Proposals/) for the full specification.
 
 ### Example: Deconstructing "Ransomware"
 
@@ -186,6 +232,21 @@ Note: The consequence is Loss of **Accessibility** (data present but encrypted/u
 **Federated access abuse:**
 ```
 #4 → #10 ||[auth][@Vendor(IdP)→@Org(SP)]|| → #1
+```
+
+**SMS phishing with transit carrier (v2.1):**
+```
+#9 ||[messaging][@Attacker⇒@SMSProvider→@Victim]|| →[Δt=1h] #7 →[Δt=5m] #4 + [DRE: C]
+```
+
+**Browser exploit with sandbox escape (v2.1):**
+```
+#3 |[sandbox][@renderer→@os]| →[Δt=0s] #7 |[privilege][@user→@system]| →[Δt=2m] #4 + [DRE: C, I]
+```
+
+**Watering hole via compromised CDN with chained transit (v2.1):**
+```
+#9 ||[browser][@Attacker⇒@CDN⇒@AdNetwork→@Victim]|| →[Δt=0s] #3 |[sandbox][@renderer→@os]| →[Δt=0s] #7 + [DRE: C]
 ```
 
 ---
@@ -237,7 +298,7 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 | Layer | Purpose | Artifact | Scope | Update Frequency |
 |---|---|---|---|---|
 | **Layer 1 — Framework Definition** | Immutable "dictionary": clusters, axioms, rule IDs, topology types | `tlctc-framework.schema.json` / `tlctc-framework.v2.0.json` | Universal | Rarely (framework evolution) |
-| **Layer 2 — Reference Registry** | Reusable reference objects: responsibility spheres, boundary contexts | `tlctc-reference.schema.json` / `@Org-registry.vX.Y.Z.json` | Organization-specific | Occasionally (org changes) |
+| **Layer 2 — Reference Registry** | Reusable reference objects: responsibility spheres, boundary contexts, intra-system boundary types (v2.1) | `tlctc-reference.schema.json` / `@Org-registry.vX.Y.Z.json` | Organization-specific | Occasionally (org changes) |
 | **Layer 3 — Attack Path Instances** | Specific incidents: sequences, parallel groups, Δt, boundary annotations, DREs | `tlctc-attack-path.schema.json` / `incident-<id>.json` | Per-incident | Constantly (new incidents) |
 
 ### Design Principles
@@ -307,7 +368,7 @@ tlctc/
 │   └── attack-path-architect.html            # Incident attack path documentation & CTI exchange
 ├── glossary/
 │   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
-│   └── tlctc-glossary.json                   # 55 terms: clusters, axioms, rules, notation, architecture
+│   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, v2.1 extensions
 ├── examples/
 │   └── agentic-ai/                           # Analysis of AI semantics in Cyber Threats
 │       ├── agentic-attack-paths.json         # 9 attack paths (Paths A–I) from Paper 1
@@ -316,6 +377,9 @@ tlctc/
 │       └── agentic-irreversibility-matrix.json # Irreversibility windows per consequence type
 ├── attack-paths/                             # Community-contributed incident analyses
 │   └── CONTRIBUTING.md
+├── v2.1-Proposals/                           # v2.1 extension specification
+│   ├── TLCTC_v2.1_Full_Extension_Spec.pdf    # Full v2.1 boundary extension spec
+│   └── TLCTC_v2.1_Full_Extension_Spec.docx   # Editable source
 └── LICENSE                                   # CC BY 4.0
 ```
 
@@ -328,6 +392,7 @@ tlctc/
 5. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
 6. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
 7. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
+8. **Learn the v2.1 extensions** — See [`v2.1-Proposals/`](v2.1-Proposals/) for the transit boundary and intra-system boundary operators that add observability to attack paths.
 
 ## Contributing
 
