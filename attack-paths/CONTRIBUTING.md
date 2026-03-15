@@ -20,7 +20,7 @@ Every submission must be a valid JSON file conforming to the Layer 3 attack path
 
 - **`metadata.incident_id`** — Unique identifier for the incident
 - **`metadata.analyst_confidence`** — `low`, `medium`, or `high`
-- **`metadata.tlctc_version`** — Must be `"2.0"`
+- **`metadata.tlctc_version`** — Must be `"2.0"` or `"2.1"`
 - **`metadata.framework_ref`** — Must reference `"tlctc-framework.v2.0.json"`
 - **`metadata.notes`** — Must include the compact attack path notation and source attribution
 
@@ -38,6 +38,8 @@ These are non-negotiable. Submissions that violate them will be rejected.
 
 - **Velocity annotations** (`delta_t_to_next`) — Include at least velocity class estimates (VC-1/2/3/4) even if precise timestamps are unavailable. Use `~` for estimates, `?` for unknown.
 - **Domain boundary operators** (`topology_boundary`) — Required for bridge cluster steps (#8, #9, #10). Include context and sphere identifiers.
+- **Transit boundaries** (`transit_spheres`) — If the attack relays through an intermediate carrier (e.g., SMS provider, CDN), record transit spheres in the boundary. Note: vendor code running on the target device is NOT transit (R-TRANSIT-3).
+- **Intra-system boundaries** (`intra_system_boundaries`) — If a step involves within-host boundary crossings (sandbox escape, privilege escalation, process injection, VM escape), annotate with the appropriate type, from, and to fields.
 - **Outcome tags** (`outcomes`) — Annotate Data Risk Events (C, I, A) where they occur.
 - **Source attribution** — Cite your sources in `metadata.notes` (vendor advisories, CISA alerts, academic papers, threat intel reports).
 
@@ -49,6 +51,8 @@ Before submitting:
 - [ ] File validates against `tlctc-attack-path.schema.json`
 - [ ] All `step_id` values are unique within the document
 - [ ] R-EXEC compliance: every `fec_executed: true` has a corresponding #7 step
+- [ ] R-TRANSIT-3 compliance: vendor code on target device is not marked as transit (e.g., Safari on victim's phone is #3, not a transit party)
+- [ ] R-INTRA-7 compliance: intra-system boundaries are observability annotations only — they do not change cluster classification
 - [ ] Boundary annotations use sphere IDs from the example registry (or clearly document custom spheres)
 - [ ] The compact notation in `metadata.notes` matches the JSON path sequence
 - [ ] Sources are cited

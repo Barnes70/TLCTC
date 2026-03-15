@@ -63,6 +63,28 @@ When creating or reviewing attack path JSON, these rules are non-negotiable:
 - `+ [DRE: C, I, A, Ac]` data risk events (C=Confidentiality, I=Integrity, A=Availability, Ac=Accessibility)
 - Velocity classes: VC-1 (days–months), VC-2 (hours), VC-3 (minutes), VC-4 (seconds–ms)
 
+### v2.1 Boundary Extensions (additive, backward-compatible)
+
+**Transit Boundary Operator** — marks spheres that carry/relay the attack but are not the source or target:
+- `||[context][@Source⇒@Carrier→@Target]||` — single transit party (⇒ = transit, → = delivery)
+- `||[context][@Source⇒@CarrierB⇒@CarrierA→@Target]||` — chained transit (right-to-left relay order)
+
+**Intra-System Boundary Operator** — marks boundary crossings within a single host or system:
+- `|[type][@from→@to]|` — single pipe delimiters, 4 types: `sandbox`, `privilege`, `process`, `hypervisor`
+- Example: `#3 |[sandbox][@renderer→@os]|` — browser exploit escaping renderer sandbox
+
+### Key v2.1 Rules
+
+- **R-TRANSIT-3:** Vendor code running on the target device is NOT transit. Safari on the victim's phone is not a transit party — it is the attack surface (classify by R-ROLE as #3).
+- **R-INTRA-7:** Intra-system boundaries never change cluster classification. They are observability annotations, not classification inputs.
+- **R-INTRA-9:** `memory` boundary type is explicitly deferred and MUST NOT be used.
+
+### Transit vs #10 Supply Chain
+
+Transit (⇒) marks a relay/carrier that passes the attack through. #10 marks trust acceptance. They are different concepts:
+- SMS provider relaying a phishing link = transit (`@Attacker⇒@SMSProvider→@Victim`)
+- Compromised npm package installed by target = #10 at the TAE
+
 ## Contributing Attack Paths
 
 New attack path files go in `attack-paths/`, named `incident-name-year.json`. Must validate against the Layer 3 schema, follow all classification rules above, and include source citations in `metadata.notes`. See `attack-paths/CONTRIBUTING.md` and the SolarWinds example at `json-schemas/layer-3/examples/solarwinds-2020.json` as reference.

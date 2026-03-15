@@ -24,6 +24,22 @@
     { "context": "auth", "description": "Identity provider / authentication responsibility boundary" },
     { "context": "dev", "description": "Build/CI/CD responsibility boundary" },
     { "context": "api", "description": "API integration / service-to-service boundary" },
-    { "context": "cloud", "description": "Cloud shared responsibility boundary" }
+    { "context": "cloud", "description": "Cloud shared responsibility boundary" },
+    { "context": "messaging", "description": "Messaging platform boundary (SMS, instant messaging, chat)" },
+    { "context": "email", "description": "Email transport / relay boundary" },
+    { "context": "cdn", "description": "Content delivery network boundary" },
+    { "context": "network", "description": "Network infrastructure / routing boundary" },
+    { "context": "signaling", "description": "Signaling protocol boundary (SS7, SIP, Diameter)" },
+    { "context": "media", "description": "Media delivery / streaming boundary" },
+    { "context": "browser", "description": "Browser / web rendering boundary" },
+    { "context": "exploit", "description": "Exploit delivery infrastructure boundary" },
+    { "context": "legal", "description": "Legal / jurisdictional boundary" },
+    { "context": "admin", "description": "Administrative / management plane boundary" }
+  ],
+  "intra_system_boundary_types": [
+    { "type": "sandbox", "description": "Escape from an application sandbox or restricted execution environment to the host OS or a less-restricted context.", "notes": "Examples: browser sandbox escape, container breakout, app sandbox bypass." },
+    { "type": "privilege", "description": "Elevation from a lower privilege level to a higher one within the same system.", "notes": "Examples: user-to-root, low-integrity to high-integrity, unprivileged to kernel." },
+    { "type": "process", "description": "Crossing from one process's address space or security context into another on the same host.", "notes": "Examples: process injection, DLL hijacking, shared memory manipulation." },
+    { "type": "hypervisor", "description": "Escape from a virtual machine to the hypervisor or to another VM on the same host.", "notes": "Examples: VM escape, hyperjacking, side-channel across VM boundary." }
   ]
 }

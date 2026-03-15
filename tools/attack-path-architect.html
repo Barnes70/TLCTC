@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TLCTC Architect V6.0 - Professional Attack Path Documentation</title>
-    <meta name="description" content="TLCTC Architect V6.0. Visual Attack Path Builder with full TLCTC v2.0 compliance, JSON Architecture support, and professional incident documentation.">
+    <meta name="description" content="TLCTC Architect V6.0. Visual Attack Path Builder with full TLCTC v2.0/v2.1 compliance, JSON Architecture support, and professional incident documentation.">
     
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
@@ -198,7 +198,7 @@
 
     <input type="file" id="fileInput" accept=".json" class="hidden" onchange="importCase(this)">
     <button class="btn btn-secondary btn-sm" onclick="document.getElementById('fileInput').click()"><i data-lucide="upload" class="h-3 w-3 mr-1"></i> Import</button>
-    <button class="btn btn-success btn-sm" onclick="exportCompliantJSON()"><i data-lucide="download" class="h-3 w-3 mr-1"></i> Export JSON (v2.0)</button>
+    <button class="btn btn-success btn-sm" onclick="exportCompliantJSON()"><i data-lucide="download" class="h-3 w-3 mr-1"></i> Export JSON (v2.1)</button>
 </div>
 
 <!-- Mobile Sidebar Toggle -->
@@ -318,34 +318,70 @@
                                 <label class="text-[10px] text-muted-foreground">Context</label>
                                 <select id="sBoundaryContext" class="input-std text-xs">
                                     <option value="">None</option>
-                                    <option value="human">human</option>
-                                    <option value="physical">physical</option>
-                                    <option value="dev">dev</option>
-                                    <option value="update">update</option>
-                                    <option value="auth">auth</option>
-                                    <option value="supply">supply</option>
+                                    <optgroup label="Core Contexts">
+                                        <option value="human">human</option>
+                                        <option value="physical">physical</option>
+                                        <option value="update">update</option>
+                                        <option value="auth">auth</option>
+                                        <option value="dev">dev</option>
+                                        <option value="api">api</option>
+                                        <option value="cloud">cloud</option>
+                                    </optgroup>
+                                    <optgroup label="v2.1 Extended Contexts">
+                                        <option value="messaging">messaging</option>
+                                        <option value="email">email</option>
+                                        <option value="cdn">cdn</option>
+                                        <option value="network">network</option>
+                                        <option value="signaling">signaling</option>
+                                        <option value="media">media</option>
+                                        <option value="browser">browser</option>
+                                        <option value="exploit">exploit</option>
+                                        <option value="legal">legal</option>
+                                        <option value="admin">admin</option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <div>
                                 <label class="text-[10px] text-muted-foreground">Source @</label>
-                                <select id="sBoundarySource" class="input-std text-xs">
-                                    <option value="External">External</option>
-                                    <option value="Vendor">Vendor</option>
-                                    <option value="Customer">Customer</option>
-                                    <option value="Physical">Physical</option>
-                                    <option value="Org">Org</option>
-                                </select>
+                                <input type="text" id="sBoundarySource" class="input-std text-xs" list="sphereList" value="External" placeholder="e.g., External">
                             </div>
                             <div>
                                 <label class="text-[10px] text-muted-foreground">Target @</label>
-                                <select id="sBoundaryTarget" class="input-std text-xs">
-                                    <option value="Org">Org</option>
-                                    <option value="Customer">Customer</option>
-                                    <option value="IT">IT</option>
-                                    <option value="Cyber">Cyber</option>
-                                </select>
+                                <input type="text" id="sBoundaryTarget" class="input-std text-xs" list="sphereList" value="Org" placeholder="e.g., Org">
                             </div>
+                            <datalist id="sphereList">
+                                <option value="External">
+                                <option value="Org">
+                                <option value="Vendor">
+                                <option value="Customer">
+                                <option value="Partner">
+                                <option value="CloudProvider">
+                                <option value="MSP">
+                                <option value="Facilities">
+                                <option value="Human">
+                                <option value="Attacker">
+                                <option value="IT">
+                                <option value="Cyber">
+                                <option value="Physical">
+                            </datalist>
                         </div>
+                    </div>
+
+                    <!-- Transit Party (v2.1) -->
+                    <div id="transitSection" class="hidden p-3 bg-cyan-50 dark:bg-cyan-900/10 border border-cyan-200 dark:border-cyan-800 rounded-lg">
+                        <label class="block text-xs font-bold text-cyan-700 dark:text-cyan-400 mb-1">Transit Party (v2.1)</label>
+                        <p class="text-[10px] text-muted-foreground mb-2">Intermediate carrier sphere(s) that relay the attack. Comma-separated for chained transit. <strong>R-TRANSIT-3:</strong> Vendor code on target device is NOT transit (e.g., Safari on victim's phone is attack surface, not carrier).</p>
+                        <input type="text" id="sTransit" class="input-std text-xs" list="sphereList" placeholder="e.g., SMSProvider or RelayB, RelayA for chained">
+                    </div>
+
+                    <!-- Intra-System Boundaries (v2.1) -->
+                    <div class="p-3 bg-violet-50 dark:bg-violet-900/10 border border-violet-200 dark:border-violet-800 rounded-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="text-xs font-bold text-violet-700 dark:text-violet-400">Intra-System Boundaries (v2.1)</label>
+                            <button type="button" class="btn btn-xs btn-secondary" onclick="addIntraBoundary()">+ Add</button>
+                        </div>
+                        <p class="text-[10px] text-muted-foreground mb-2">Within-host boundary crossings (sandbox escape, privilege escalation, etc.). These are observability annotations — they do not change cluster classification (R-INTRA-7).</p>
+                        <div id="intraBoundaryRows" class="space-y-2"></div>
                     </div>
 
                     <!-- Parallel Action -->
@@ -597,11 +633,11 @@
 
 <script>
 // ============================================================================
-// TLCTC ARCHITECT V6.0 - Full TLCTC v2.0 Compliance
+// TLCTC ARCHITECT V6.0 - Full TLCTC v2.0/v2.1 Compliance
 // ============================================================================
 
 const STORAGE_KEY = 'tlctc_v6_data';
-const FRAMEWORK_VERSION = '2.0';
+const FRAMEWORK_VERSION = '2.1';
 
 const CLUSTERS = {
     1:  { name: "Abuse of Functions", type: "Internal", help: "Misuse of legitimate features/configuration without exploiting flaws" },
@@ -904,7 +940,26 @@ function convertFromV2Format(data) {
                     desc: step.data_risk_events[0].description
                 };
             }
-            
+
+            // v2.1: transit spheres
+            if (step.boundary_operator?.transit_spheres?.length) {
+                if (!s.boundary) s.boundary = {};
+                s.boundary = s.boundary || {};
+                s.boundary.context = s.boundary.context || step.boundary_operator?.context;
+                s.boundary.source = s.boundary.source || step.boundary_operator?.source?.replace('@', '');
+                s.boundary.target = s.boundary.target || step.boundary_operator?.target?.replace('@', '');
+                s.boundary.transit = step.boundary_operator.transit_spheres.map(t => t.replace('@', ''));
+            }
+
+            // v2.1: intra-system boundaries
+            if (step.intra_system_boundaries?.length) {
+                s.intraBoundaries = step.intra_system_boundaries.map(ib => ({
+                    type: ib.type,
+                    from: ib.from,
+                    to: ib.to
+                }));
+            }
+
             c.path.push(s);
         });
     }
@@ -984,9 +1039,12 @@ function openStepModal(id = null) {
     document.getElementById('sDtUnit').value = "m";
     document.getElementById('parallelBox').classList.add('hidden');
     document.getElementById('boundarySection').classList.add('hidden');
+    document.getElementById('transitSection').classList.add('hidden');
     document.getElementById('dreWarning').classList.add('hidden');
     document.getElementById('deleteStepBtn').style.display = 'none';
     document.getElementById('clusterHelp').textContent = '';
+    document.getElementById('sTransit').value = '';
+    document.getElementById('intraBoundaryRows').innerHTML = '';
     
     if (id) {
         const s = getActiveCase().path.find(p => p.id === id);
@@ -1019,6 +1077,13 @@ function openStepModal(id = null) {
                 document.getElementById('sBoundaryContext').value = s.boundary.context || '';
                 document.getElementById('sBoundarySource').value = s.boundary.source || '';
                 document.getElementById('sBoundaryTarget').value = s.boundary.target || '';
+                if (s.boundary.transit) {
+                    document.getElementById('sTransit').value = s.boundary.transit.join(', ');
+                }
+            }
+
+            if (s.intraBoundaries && s.intraBoundaries.length) {
+                s.intraBoundaries.forEach(ib => addIntraBoundary(ib.type, ib.from, ib.to));
             }
             
             if (s.dre) {
@@ -1058,11 +1123,14 @@ function updateClusterHelp() {
     if (cl && CLUSTERS[cl]) {
         help.textContent = CLUSTERS[cl].help;
         
-        // Show boundary section for bridge clusters
+        // Show boundary section and transit section for bridge clusters
+        const transitSection = document.getElementById('transitSection');
         if (CLUSTERS[cl].type === 'Bridge') {
             boundarySection.classList.remove('hidden');
+            transitSection.classList.remove('hidden');
         } else {
             boundarySection.classList.add('hidden');
+            transitSection.classList.add('hidden');
         }
         
         // R-CRED: Disable DRE for #4 Identity Theft
@@ -1081,6 +1149,7 @@ function updateClusterHelp() {
     } else {
         help.textContent = '';
         boundarySection.classList.add('hidden');
+        document.getElementById('transitSection').classList.add('hidden');
         dreWarning.classList.add('hidden');
     }
 }
@@ -1094,6 +1163,24 @@ function toggleParallel() {
         box.classList.add('hidden');
         document.getElementById('sCluster2').value = '';
     }
+}
+
+function addIntraBoundary(type = '', from = '', to = '') {
+    const container = document.getElementById('intraBoundaryRows');
+    const row = document.createElement('div');
+    row.className = 'flex gap-2 items-center';
+    row.innerHTML = `
+        <select class="input-std text-xs flex-1 intra-type">
+            <option value="sandbox" ${type === 'sandbox' ? 'selected' : ''}>sandbox</option>
+            <option value="privilege" ${type === 'privilege' ? 'selected' : ''}>privilege</option>
+            <option value="process" ${type === 'process' ? 'selected' : ''}>process</option>
+            <option value="hypervisor" ${type === 'hypervisor' ? 'selected' : ''}>hypervisor</option>
+        </select>
+        <input type="text" class="input-std text-xs flex-1 intra-from" placeholder="From (e.g., renderer)" value="${from}">
+        <input type="text" class="input-std text-xs flex-1 intra-to" placeholder="To (e.g., os)" value="${to}">
+        <button type="button" class="btn btn-xs btn-danger" onclick="this.parentElement.remove()">×</button>
+    `;
+    container.appendChild(row);
 }
 
 function deleteEditingStep() {
@@ -1167,7 +1254,23 @@ function commitStep() {
             source: document.getElementById('sBoundarySource').value,
             target: document.getElementById('sBoundaryTarget').value
         };
+        // Transit parties (v2.1)
+        const transitRaw = document.getElementById('sTransit').value.trim();
+        if (transitRaw) {
+            boundary.transit = transitRaw.split(/[,;]+/).map(t => t.trim()).filter(Boolean);
+        }
     }
+
+    // Collect intra-system boundaries (v2.1)
+    const intraBoundaries = [];
+    document.querySelectorAll('#intraBoundaryRows > div').forEach(row => {
+        const type = row.querySelector('.intra-type').value;
+        const from = row.querySelector('.intra-from').value.trim();
+        const to = row.querySelector('.intra-to').value.trim();
+        if (from && to) {
+            intraBoundaries.push({ type, from, to });
+        }
+    });
 
     pushUndo();
     const step = {
@@ -1188,6 +1291,7 @@ function commitStep() {
         inferred: document.getElementById('sInferred').checked,
         timestamp: document.getElementById('sTimestamp').value ? document.getElementById('sTimestamp').value + ':00Z' : null,
         boundary: boundary,
+        intraBoundaries: intraBoundaries.length > 0 ? intraBoundaries : null,
         dre: dreTypes.length > 0 ? {
             types: dreTypes,
             title: document.getElementById('sDataRiskTitle').value,
@@ -1285,6 +1389,14 @@ function renderStepList() {
         }
         if (s.inferred) {
             badges += `<span class="vc-badge bg-gray-100 text-gray-600 dark:bg-gray-800">[inferred]</span>`;
+        }
+        if (s.boundary && s.boundary.transit && s.boundary.transit.length) {
+            badges += `<span class="vc-badge bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400">⇒transit</span>`;
+        }
+        if (s.intraBoundaries && s.intraBoundaries.length) {
+            s.intraBoundaries.forEach(ib => {
+                badges += `<span class="vc-badge bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400">|${ib.type}|</span>`;
+            });
         }
         
         let subText = `<span class="opacity-70">@${s.sphere}</span>`;
@@ -1404,9 +1516,21 @@ function renderNotation() {
         
         // Boundary operator (for bridge clusters)
         if (s.boundary && s.boundary.context) {
-            html += `<span class="text-amber-600 dark:text-amber-400 font-medium">||[${s.boundary.context}][@${s.boundary.source}→@${s.boundary.target}]||</span> `;
+            let boundaryStr = `||[${s.boundary.context}][@${s.boundary.source}`;
+            if (s.boundary.transit && s.boundary.transit.length) {
+                boundaryStr += `⇒@${s.boundary.transit.join('⇒@')}`;
+            }
+            boundaryStr += `→@${s.boundary.target}]||`;
+            html += `<span class="text-amber-600 dark:text-amber-400 font-medium">${boundaryStr}</span> `;
         }
-        
+
+        // Intra-system boundaries (v2.1)
+        if (s.intraBoundaries && s.intraBoundaries.length) {
+            s.intraBoundaries.forEach(ib => {
+                html += `<span class="text-violet-600 dark:text-violet-400 font-medium">|[${ib.type}][@${ib.from}→@${ib.to}]|</span> `;
+            });
+        }
+
         // Step notation
         if (s.cluster2) {
             html += `<span class="font-bold">(#${s.cluster} + #${s.cluster2})</span>`;
@@ -1525,7 +1649,12 @@ function renderVisualization() {
             const mid = (x1 + x2) / 2;
             svg += `<line x1="${mid}" y1="${Y_BIZ+20}" x2="${mid}" y2="${Y_THREAT+60}" stroke="${C_BRIDGE}" stroke-width="1" stroke-dasharray="3"/>`;
             svg += `<text x="${mid}" y="${Y_THREAT+75}" text-anchor="middle" font-size="8" fill="${C_BRIDGE}" font-weight="bold" font-family="Inter, sans-serif">||[${s.boundary.context}]||</text>`;
-            svg += `<text x="${mid}" y="${Y_THREAT+88}" text-anchor="middle" font-size="7" fill="${C_BRIDGE}" font-family="Inter, sans-serif">@${s.boundary.source}→@${s.boundary.target}</text>`;
+            let sphereLabel = `@${s.boundary.source}`;
+            if (s.boundary.transit && s.boundary.transit.length) {
+                sphereLabel += `⇒@${s.boundary.transit.join('⇒@')}`;
+            }
+            sphereLabel += `→@${s.boundary.target}`;
+            svg += `<text x="${mid}" y="${Y_THREAT+88}" text-anchor="middle" font-size="7" fill="${C_BRIDGE}" font-family="Inter, sans-serif">${sphereLabel}</text>`;
         }
     });
     
@@ -1583,6 +1712,16 @@ function renderVisualization() {
         if (s.inferred) {
             svg += `<text x="${x}" y="${Y_THREAT+78}" text-anchor="middle" font-size="8" fill="${C_GRAY}" font-style="italic" font-family="Inter, sans-serif">[inferred]</text>`;
         }
+
+        // Intra-system boundary badges (v2.1)
+        if (s.intraBoundaries && s.intraBoundaries.length) {
+            const intrY = s.inferred ? Y_THREAT + 90 : Y_THREAT + 80;
+            s.intraBoundaries.forEach((ib, j) => {
+                const badgeY = intrY + (j * 14);
+                svg += `<rect x="${x-55}" y="${badgeY-9}" width="110" height="13" rx="3" fill="${isDark ? '#2d1f3d' : '#f5f3ff'}" stroke="#7c3aed" stroke-width="0.5"/>`;
+                svg += `<text x="${x}" y="${badgeY}" text-anchor="middle" font-size="7" fill="#7c3aed" font-family="JetBrains Mono, monospace">|[${ib.type}][@${ib.from}→@${ib.to}]|</text>`;
+            });
+        }
     });
     
     svg += `</svg>`;
@@ -1630,6 +1769,21 @@ function renderPrintTable() {
         if (s.cve) refHtml += `CVE: ${s.cve}<br>`;
         if (s.ioc) refHtml += `IoC: ${s.ioc}`;
         
+        let boundaryHtml = '';
+        if (s.boundary && s.boundary.context) {
+            let bLabel = `||[${s.boundary.context}][@${s.boundary.source}`;
+            if (s.boundary.transit && s.boundary.transit.length) {
+                bLabel += `⇒@${s.boundary.transit.join('⇒@')}`;
+            }
+            bLabel += `→@${s.boundary.target}]||`;
+            boundaryHtml += `<br><span style="color:#d97706;font-size:9px">${bLabel}</span>`;
+        }
+        if (s.intraBoundaries && s.intraBoundaries.length) {
+            s.intraBoundaries.forEach(ib => {
+                boundaryHtml += `<br><span style="color:#7c3aed;font-size:9px">|[${ib.type}][@${ib.from}→@${ib.to}]|</span>`;
+            });
+        }
+
         const row = `<tr class="border-b border-gray-300">
             <td class="p-2 align-top">${i+1}</td>
             <td class="p-2 align-top">
@@ -1637,6 +1791,7 @@ function renderPrintTable() {
                 ${cl.name}<br>
                 <span class="text-gray-500">@${s.sphere}</span>
                 ${s.confidence ? `<br><span style="color:${s.confidence === 'high' ? 'green' : s.confidence === 'medium' ? 'orange' : 'red'}">[${s.confidence}]</span>` : ''}
+                ${boundaryHtml}
             </td>
             <td class="p-2 align-top">${s.description || ''}</td>
             <td class="p-2 align-top text-xs">${velocityHtml}</td>
@@ -1715,6 +1870,16 @@ function exportCompliantJSON() {
                     "source": `@${s.boundary.source}`,
                     "target": `@${s.boundary.target}`
                 };
+                if (s.boundary.transit && s.boundary.transit.length) {
+                    step.boundary_operator.transit_spheres = s.boundary.transit.map(t => `@${t}`);
+                }
+            }
+            if (s.intraBoundaries && s.intraBoundaries.length) {
+                step.intra_system_boundaries = s.intraBoundaries.map(ib => ({
+                    "type": ib.type,
+                    "from": ib.from,
+                    "to": ib.to
+                }));
             }
             if (s.mitre) {
                 step.mitre = s.mitre.split(',').map(t => t.trim());
@@ -1779,20 +1944,31 @@ function generateNotationString(c) {
         }
         
         if (s.boundary && s.boundary.context) {
-            notation += `||[${s.boundary.context}][@${s.boundary.source}→@${s.boundary.target}]|| `;
+            let bStr = `||[${s.boundary.context}][@${s.boundary.source}`;
+            if (s.boundary.transit && s.boundary.transit.length) {
+                bStr += `⇒@${s.boundary.transit.join('⇒@')}`;
+            }
+            bStr += `→@${s.boundary.target}]|| `;
+            notation += bStr;
         }
-        
+
+        if (s.intraBoundaries && s.intraBoundaries.length) {
+            s.intraBoundaries.forEach(ib => {
+                notation += `|[${ib.type}][@${ib.from}→@${ib.to}]| `;
+            });
+        }
+
         if (s.cluster2) {
             notation += `(#${s.cluster} + #${s.cluster2})`;
         } else {
             notation += `#${s.cluster}`;
         }
-        
+
         if (s.dre && s.dre.types?.length) {
             notation += ` + [DRE: ${s.dre.types.join(', ')}]`;
         }
     });
-    
+
     return notation;
 }
 

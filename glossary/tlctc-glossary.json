@@ -7,7 +7,7 @@
     "license": "CC-BY-4.0",
     "publisher": "TLCTC Project",
     "description": "A universal, machine-readable glossary for cyber risk and cyber security. Establishes precise, unambiguous definitions to create a common language across frameworks, teams, and organizations. Seeded from TLCTC v2.0 terminology.",
-    "total_terms": 55
+    "total_terms": 72
   },
   "terms": [
     {
@@ -443,11 +443,11 @@
     {
       "term_id": "boundary-crossing",
       "term": "Boundary Crossing",
-      "definition": "The transition from one responsibility sphere to another through a boundary context. Required annotation for bridge topology clusters (#8, #9, #10). Notated as ||[context][@Source→@Target]||.",
+      "definition": "The transition from one responsibility sphere to another through a boundary context. Required annotation for bridge topology clusters (#8, #9, #10). Notated as ||[context][@Source→@Target]||. In v2.1, may include transit spheres (⇒) for intermediate carriers.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.0",
-      "see_also": ["bridge-topology", "responsibility-sphere", "boundary-context"],
-      "examples": ["||[human][@External→@Org]|| — social engineering crossing from external to organization via human boundary"]
+      "source": "TLCTC v2.0, extended in v2.1",
+      "see_also": ["bridge-topology", "responsibility-sphere", "boundary-context", "transit-boundary", "intra-system-boundary"],
+      "examples": ["||[human][@External→@Org]|| — social engineering crossing from external to organization via human boundary", "||[messaging][@Attacker⇒@SMSProvider→@Victim]|| — phishing via SMS with carrier as transit party"]
     },
     {
       "term_id": "responsibility-sphere",
@@ -461,9 +461,9 @@
     {
       "term_id": "boundary-context",
       "term": "Boundary Context",
-      "definition": "The type of boundary through which a domain crossing occurs. Defined in the Layer 2 registry. Standard contexts: human, physical, update, auth, dev, api, cloud.",
+      "definition": "The type of boundary through which a domain crossing occurs. Defined in the Layer 2 registry. Standard contexts include: human, physical, update, auth, dev, api, cloud. v2.1 adds: messaging, email, cdn, network, signaling, media, browser, exploit, legal, admin.",
       "domain": "tlctc-architecture",
-      "source": "TLCTC v2.0",
+      "source": "TLCTC v2.0, extended in v2.1",
       "see_also": ["boundary-crossing", "responsibility-sphere", "layer-2"]
     },
     {
@@ -572,6 +572,73 @@
       "domain": "tlctc-mapping",
       "source": "TLCTC v2.0 — CWE Mapping",
       "see_also": ["verdict"]
+    },
+    {
+      "term_id": "transit-boundary",
+      "term": "Transit Boundary",
+      "definition": "A v2.1 notation operator that marks an intermediate responsibility sphere through which an attack passes without that sphere being the source or the target. Notated with ⇒ (double arrow). The transit party relays the attack but does not originate or receive it.",
+      "not_to_be_confused_with": "Supply Chain (#10). Transit marks a relay/carrier; #10 marks trust acceptance. An SMS provider carrying a phishing link is transit, not supply chain.",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.1",
+      "see_also": ["boundary-crossing", "transit-party", "responsibility-sphere"],
+      "examples": ["||[messaging][@Attacker⇒@SMSProvider→@Victim]|| — SMS provider is transit", "||[email][@Attacker⇒@RelayB⇒@RelayA→@Target]|| — chained transit through two relays"],
+      "notes": "R-TRANSIT-3: Vendor code running on the target device is NOT transit (e.g., Safari on victim's phone is attack surface, not a carrier)."
+    },
+    {
+      "term_id": "transit-party",
+      "term": "Transit Party",
+      "definition": "A responsibility sphere that relays or carries an attack from source to target without being either endpoint. Identified with the ⇒ operator in transit boundary notation.",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.1",
+      "see_also": ["transit-boundary", "responsibility-sphere"],
+      "examples": ["An SMS gateway relaying a phishing link", "A CDN serving a compromised JavaScript file"]
+    },
+    {
+      "term_id": "intra-system-boundary",
+      "term": "Intra-System Boundary",
+      "definition": "A v2.1 notation operator that marks a boundary crossing within a single host or system, as opposed to between responsibility spheres. Notated as |[type][@from→@to]| with single pipe delimiters. Four types are defined: sandbox, privilege, process, hypervisor.",
+      "not_to_be_confused_with": "Domain boundary (||...||). Domain boundaries cross between responsibility spheres; intra-system boundaries cross within a single host.",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.1",
+      "see_also": ["sandbox-boundary", "privilege-boundary", "process-boundary", "hypervisor-boundary", "boundary-crossing"],
+      "examples": ["|[sandbox][@renderer→@os]| — browser sandbox escape", "|[privilege][@user→@root]| — local privilege escalation"],
+      "notes": "R-INTRA-7: Intra-system boundaries never change cluster classification. They are observability annotations only. R-INTRA-9: The 'memory' boundary type is explicitly deferred."
+    },
+    {
+      "term_id": "sandbox-boundary",
+      "term": "Sandbox Boundary",
+      "definition": "An intra-system boundary type representing escape from an application sandbox or restricted execution environment to the host OS or a less-restricted context.",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.1",
+      "see_also": ["intra-system-boundary"],
+      "examples": ["Browser renderer sandbox escape", "Container breakout", "iOS app sandbox bypass"]
+    },
+    {
+      "term_id": "privilege-boundary",
+      "term": "Privilege Boundary",
+      "definition": "An intra-system boundary type representing elevation from a lower privilege level to a higher one within the same system.",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.1",
+      "see_also": ["intra-system-boundary"],
+      "examples": ["User-to-root escalation", "Low-integrity to high-integrity process", "Unprivileged to kernel mode"]
+    },
+    {
+      "term_id": "process-boundary",
+      "term": "Process Boundary",
+      "definition": "An intra-system boundary type representing crossing from one process's address space or security context into another on the same host.",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.1",
+      "see_also": ["intra-system-boundary"],
+      "examples": ["Process injection via WriteProcessMemory", "DLL hijacking", "Shared memory manipulation"]
+    },
+    {
+      "term_id": "hypervisor-boundary",
+      "term": "Hypervisor Boundary",
+      "definition": "An intra-system boundary type representing escape from a virtual machine to the hypervisor or to another VM on the same physical host.",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.1",
+      "see_also": ["intra-system-boundary"],
+      "examples": ["VM escape to hypervisor", "Hyperjacking", "Side-channel attack across VM boundary"]
     }
   ]
 }

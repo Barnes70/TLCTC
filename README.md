@@ -140,7 +140,13 @@ Complex attacks are not single events — they are **sequences**. TLCTC provides
 | Parallel steps | `(#X + #Y)` | Concurrent exploitation of distinct generic vulnerabilities |
 | Velocity annotation | `→[Δt=value]→` | Time interval between steps (e.g., `→[Δt=15m]→`, `→[Δt=~2h]→`) |
 | Domain boundary | `\|\|[context][@Source→@Target]\|\|` | Marks where attack crosses responsibility spheres |
+| Transit boundary (v2.1) | `\|\|[context][@Source⇒@Carrier→@Target]\|\|` | Marks intermediate carrier/relay spheres (⇒ = transit) |
+| Intra-system boundary (v2.1) | `\|[type][@from→@to]\|` | Within-host boundary crossing (sandbox, privilege, process, hypervisor) |
 | Data Risk Event | `+ [DRE: C, I, A]` | Annotates consequences (never a step itself) |
+
+### v2.1 Boundary Extensions
+
+TLCTC v2.1 adds two backward-compatible notation operators. The **Transit Boundary Operator** (`⇒`) identifies intermediate parties that relay an attack without being its source or target (e.g., an SMS provider carrying a phishing link). The **Intra-System Boundary Operator** (`|[type][@from→@to]|`) annotates boundary crossings within a single host, such as sandbox escapes or privilege escalations. Both are observability annotations — they do not change cluster classification. See [`v2.1-Proposals/`](v2.1-Proposals/) for the full specification.
 
 ### Example: Deconstructing "Ransomware"
 

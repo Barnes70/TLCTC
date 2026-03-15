@@ -29,6 +29,11 @@
       "description": "Allowed values for the boundary operator context label in this environment.",
       "items": { "$ref": "#/definitions/context_def" }
     },
+    "intra_system_boundary_types": {
+      "type": "array",
+      "description": "Allowed intra-system boundary types for within-host boundary crossings (v2.1).",
+      "items": { "$ref": "#/definitions/intra_system_type_def" }
+    },
     "extensions": { "type": "object" }
   },
   "definitions": {
@@ -60,6 +65,16 @@
       "required": ["context", "description"],
       "properties": {
         "context": { "$ref": "#/definitions/context_id" },
+        "description": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "intra_system_type_def": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "description"],
+      "properties": {
+        "type": { "type": "string", "enum": ["sandbox", "privilege", "process", "hypervisor"] },
         "description": { "type": "string" },
         "notes": { "type": "string" }
       }

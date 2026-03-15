@@ -120,7 +120,7 @@
       { id: 'client-mobile', name: 'Mobile Client', layer: 'external', defaultThreats: ['#3', '#7', '#8', '#9'], icon: '📱' }
     ];
 
-    // ============== CLUSTER DEFINITIONS (from TLCTC v2.0 Whitepaper) ==============
+    // ============== CLUSTER DEFINITIONS (from TLCTC v2.0/v2.1 Whitepaper) ==============
     const CLUSTER_DEFINITIONS = {
       '#1': { genericVuln: 'The inherent trust, scope, and complexity designed into software functionality and configuration.', attackerView: 'I abuse a functionality, not a coding issue.', devView: 'I must understand and constrain the functional domain of my code. Every feature and configuration surface needs explicit boundaries and misuse assumptions.' },
       '#2': { genericVuln: 'Exploitable flaws within server-side source code implementation and its resulting logic, stemming from insecure coding practices.', attackerView: 'I abuse a flaw in the application\'s source code on the server side.', devView: 'I must apply language-specific secure coding principles for all server-side code.' },
@@ -1068,7 +1068,7 @@
         const subtitleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         subtitleText.setAttribute('x', '20'); subtitleText.setAttribute('y', '48');
         subtitleText.setAttribute('fill', '#94a3b8'); subtitleText.setAttribute('font-size', '12');
-        subtitleText.textContent = `v${projectMeta.version} | ${projectMeta.sdlcPhase} | TLCTC v2.0 | ${new Date().toLocaleDateString()}`;
+        subtitleText.textContent = `v${projectMeta.version} | ${projectMeta.sdlcPhase} | TLCTC v2.0/v2.1 | ${new Date().toLocaleDateString()}`;
         titleGroup.appendChild(subtitleText);
         
         clonedSvg.insertBefore(titleGroup, clonedSvg.firstChild);

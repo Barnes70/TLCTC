@@ -60,12 +60,29 @@
     "boundary": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Boundary annotation equivalent to ||[context][@Source→@Target]||.",
+      "description": "Boundary annotation equivalent to ||[context][@Source→@Target]||. For transit boundaries, use transit_spheres to record intermediate carrier spheres: @Attacker⇒@Carrier→@Target.",
       "required": ["context", "source_sphere", "target_sphere"],
       "properties": {
         "context": { "$ref": "#/definitions/context_id" },
         "source_sphere": { "$ref": "#/definitions/sphere_id" },
-        "target_sphere": { "$ref": "#/definitions/sphere_id" }
+        "target_sphere": { "$ref": "#/definitions/sphere_id" },
+        "transit_spheres": {
+          "type": "array",
+          "description": "Ordered list of intermediate carrier spheres through which the attack transits before reaching the target. The source_sphere originates, each transit_sphere relays, and the target_sphere receives.",
+          "items": { "$ref": "#/definitions/sphere_id" },
+          "minItems": 1
+        }
+      }
+    },
+    "intra_system_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Intra-system boundary crossing within a single host or system. Notated as |[type][@from→@to]|.",
+      "required": ["type", "from", "to"],
+      "properties": {
+        "type": { "type": "string", "enum": ["sandbox", "privilege", "process", "hypervisor"] },
+        "from": { "type": "string" },
+        "to": { "type": "string" }
       }
     },
     "attack_step": {
@@ -76,6 +93,11 @@
         "step_id": { "$ref": "#/definitions/step_id" },
         "cluster": { "$ref": "#/definitions/cluster_id" },
         "topology_boundary": { "$ref": "#/definitions/boundary" },
+        "intra_system_boundaries": {
+          "type": "array",
+          "description": "Intra-system boundary crossings within a single host (e.g., sandbox escape, privilege escalation).",
+          "items": { "$ref": "#/definitions/intra_system_boundary" }
+        },
         "fec_executed": {
           "type": "boolean",
           "description": "Analyst assertion: an FEC execution occurred and MUST be recorded as a #7 step (here or via fec_recorded_in_step_id)."
@@ -125,6 +147,11 @@
         "step_id": { "$ref": "#/definitions/step_id" },
         "cluster": { "$ref": "#/definitions/cluster_id" },
         "topology_boundary": { "$ref": "#/definitions/boundary" },
+        "intra_system_boundaries": {
+          "type": "array",
+          "description": "Intra-system boundary crossings within a single host (e.g., sandbox escape, privilege escalation).",
+          "items": { "$ref": "#/definitions/intra_system_boundary" }
+        },
         "fec_executed": { "type": "boolean" },
         "fec_recorded_in_step_id": { "$ref": "#/definitions/step_id" },
         "outcomes": {
