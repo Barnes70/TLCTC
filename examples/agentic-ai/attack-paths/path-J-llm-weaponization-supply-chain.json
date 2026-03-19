@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "incident_id": "agentic-path-J",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-03-19T00:00:00Z",
+    "notes": "Path J — LLM Weaponization via Supply Chain (Real-World Precedent). Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Based on the S1ngularity/Nx campaign (August 2025), where the QUIETVAULT payload detected an LLM coding assistant already present on victims' machines and co-opted it as a credential-scanning tool. This is the first documented real-world instance of malware weaponizing a deployed AI agent. The pattern differs from Paths A–F (direct agent compromise) and G–I (malicious agent introduction): here, the agent is a secondary tool — a LOLBin discovered post-compromise and directed by external malware. The LLM's designed code generation and execution capabilities become an attacker force multiplier. Notation: #10 ||[dev][@Vendor⇒@npm→@Org]|| →[instant] #1 →[instant] #7 →[instant] #1 →[instant] #7 + [DRE: C] →[instant] #1 + [DRE: C]. Velocity: VC-4 — supply chain acceptance through agent weaponization is near-instantaneous once the install trigger fires. Source: S1ngularity/Nx post-mortem (Sysdig TRT, Palo Alto Unit 42, ReversingLabs, 2025)."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-supply-chain",
+      "cluster": "#10",
+      "topology_boundary": {
+        "context": "dev",
+        "source_sphere": "@Vendor",
+        "target_sphere": "@Org",
+        "transit_spheres": ["@npm"]
+      },
+      "delta_t_to_next": "instant",
+      "notes": "Trust Acceptance Event: compromised npm package accepted during dependency installation. The developer's environment trusts the package source. Removing the trust link (not depending on the package) would prevent this step — confirms #10."
+    },
+    {
+      "step_id": "s2-install-processing",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "Package manager resolves, downloads, unpacks, and processes the artifact. Legitimate package management functionality, working as designed. The attacker wins because the defender's own tooling faithfully serves a malicious payload."
+    },
+    {
+      "step_id": "s3-malware-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "instant",
+      "notes": "QUIETVAULT payload executes via postinstall lifecycle hook — the environment's designed execution mechanism. R-EXEC: initial FEC execution. The malware begins its discovery phase, scanning for credentials and installed tools."
+    },
+    {
+      "step_id": "s4-agent-discovery-invocation",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "Malware discovers an LLM coding assistant already installed on the victim's machine and programmatically invokes its interface to direct credential scanning. This is #1 Abuse of Functions: the LLM's natural language interface and code generation capabilities are designed features. The malware uses them for their intended purpose (code generation and execution) but with an unintended objective. The agent is not compromised in the traditional sense — it receives what appears to be a legitimate request through its designed interface. This is the LOLBin pattern (cf. Path E) where the agent serves as a living-off-the-land binary, but triggered by external malware rather than direct attacker access."
+    },
+    {
+      "step_id": "s5-agent-code-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "outcomes": ["C"],
+      "delta_t_to_next": "instant",
+      "notes": "The LLM generates and executes credential-scanning code via its designed code execution capability. R-EXEC: separate #7 step. The code is Foreign Executable Content — generated at runtime by the AI model, not present in the original payload. The agent's code execution engine is the designed mechanism. DRE: C — credentials discovered by the AI-generated scanning code. This step demonstrates why agent code execution capabilities require the same controls as any other execution engine: sandboxing, capability restrictions, and output filtering."
+    },
+    {
+      "step_id": "s6-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Stolen credentials exfiltrated via legitimate APIs (GitHub repository creation, commit operations). The malware orchestrates the exfiltration; the agent may or may not be involved in this step depending on the variant. DRE: C."
+    }
+  ]
+}

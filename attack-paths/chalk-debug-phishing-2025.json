@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "incident_id": "CHALK-DEBUG-PHISHING-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-03-19T00:00:00Z",
+    "notes": "Chalk/Debug npm phishing campaign (September 8, 2025). Attackers registered npmjs.help (typosquat of npmjs.com) and phished Josh Junon ('Qix'), maintainer of chalk, debug, and 16+ foundational npm packages. Stolen credentials used to publish trojanized versions with browser-targeted payload: obfuscated JavaScript hooking window.ethereum, fetch, and XMLHttpRequest to replace cryptocurrency wallet addresses across six blockchains using Levenshtein distance matching with 280+ hardcoded fallback addresses. Attack path: #9 ||[human][@External→@Maintainer(Qix)]|| →[~3d] + [DRE: C] #4 →[instant] #1 + [DRE: I] ||[update][@Maintainer(Qix)⇒@npm→@Consumers]|| #10 →[~12h] #1 →[instant] #7 →[instant] #1 + [DRE: C, I]. Update vector (#10.1): existing packages receiving poisoned updates via permissive semver ranges. Sources: npm security advisory, Sonatype, community disclosure by Josh Junon."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-phishing",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "human",
+        "source_sphere": "@External",
+        "target_sphere": "@Maintainer(Qix)"
+      },
+      "outcomes": ["C"],
+      "delta_t_to_next": "~3d",
+      "notes": "Phishing email impersonating npm support, sent from domain npmjs.help (registered 3 days prior). Claimed urgent 2FA credential update required by September 10. Generic vulnerability: human psychological susceptibility — authority bias (email impersonates npm support), urgency (artificial deadline), fatigue (maintainer described 'a long week and a panicky morning'). The maintainer entered credentials on the phishing site. DRE: C — credential acquisition; enabling cluster is #9. The 3-day window between domain registration and credential compromise is a detection opportunity: domain monitoring could have flagged npmjs.help."
+    },
+    {
+      "step_id": "s2-credential-use",
+      "cluster": "#4",
+      "delta_t_to_next": "instant",
+      "notes": "Attacker uses stolen credentials to authenticate as Junon on the npm registry. R-CRED: credential use is always #4 regardless of acquisition method."
+    },
+    {
+      "step_id": "s3-package-publish",
+      "cluster": "#1",
+      "outcomes": ["I"],
+      "delta_t_to_next": "~12h",
+      "notes": "Trojanized versions of 18+ packages (chalk, debug, and others) published via the legitimate npm publish API. The API works as designed. DRE: I — package integrity compromised."
+    },
+    {
+      "step_id": "s4-trust-acceptance",
+      "cluster": "#10",
+      "topology_boundary": {
+        "context": "update",
+        "source_sphere": "@Maintainer(Qix)",
+        "target_sphere": "@Consumers",
+        "transit_spheres": ["@npm"]
+      },
+      "delta_t_to_next": "instant",
+      "notes": "Trust Acceptance Event (Update Vector / #10.1). Unlike development vector attacks, these were existing packages receiving new versions through npm's update channel. Consumers with permissive semver ranges (^x.y.z or ~x.y.z) pulled the poisoned versions as routine updates. Consumers with pinned versions or lockfile enforcement were not affected."
+    },
+    {
+      "step_id": "s5-install-processing",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "The package manager resolves the updated version, downloads, and processes it. The resolver honored the semver range; the installer unpacked the content. Controls at this step: lockfile-enforced version pinning, registry allowlists, install sandboxing."
+    },
+    {
+      "step_id": "s6-payload-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "instant",
+      "notes": "The malicious JavaScript executes when the consuming application runs in a browser — the browser's intended execution capability. The payload operates exclusively in browser environments. R-EXEC: FEC execution via designed mechanism."
+    },
+    {
+      "step_id": "s7-browser-api-abuse",
+      "cluster": "#1",
+      "outcomes": ["C", "I"],
+      "notes": "The payload hooks browser APIs (window.ethereum, fetch, XMLHttpRequest) and uses Levenshtein distance algorithms to replace cryptocurrency wallet addresses with attacker-controlled addresses across six blockchains. 280+ hardcoded fallback wallet addresses maintained. The APIs function as designed; their scope is abused. DRE: C — transaction data intercepted (Loss of Confidentiality). DRE: I — wallet addresses modified in transit (Loss of Integrity)."
+    }
+  ]
+}

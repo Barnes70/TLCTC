@@ -27,17 +27,20 @@ Both papers are available at [tlctc.net](https://tlctc.net).
 | `attack-paths/path-G-rogue-agent-install.json` | Path G — Rogue Agent Install (#9→#7→#1) | Layer 3 (Instance) |
 | `attack-paths/path-H-supply-chain-marketplace.json` | Path H — Supply Chain Marketplace (#10→#7→#1) | Layer 3 (Instance) |
 | `attack-paths/path-I-apt-in-a-box.json` | Path I — APT-in-a-Box (#7→#4→#1) | Layer 3 (Instance) |
+| `attack-paths/path-J-llm-weaponization-supply-chain.json` | Path J — LLM Weaponization via Supply Chain (#10→#1→#7→#1→#7→#1) | Layer 3 (Instance) |
 | `agentic-consequence-chains.json` | Consequence chain examples from Paper 2 | Extension (consequence-side) |
 | `agentic-tool-profiles.json` | 5 tool category risk profiles | Layer 2 (Reference) |
 | `agentic-irreversibility-matrix.json` | Irreversibility windows per consequence type | Layer 2 (Reference) |
 
 ## Scenarios
 
-The 9 attack paths cover two primary scenarios:
+The 10 attack paths cover two primary scenarios:
 
 - **LegitimateAgentCompromised** (Paths A–F): The AI agent is authorised software with designed capabilities. The primary cluster is #1 Abuse of Functions: the generic vulnerability is the inherent trust, scope, and complexity designed into the agent's functionality. Control strategy: constrain the functional domain (least privilege, capability boundaries, instruction hierarchy, context isolation).
 
 - **MaliciousAgentIntroduced** (Paths G–I): The AI agent itself IS the Foreign Executable Content. The primary cluster is #7 Malware: the generic vulnerability is the environment's designed capability to execute untrusted content. Control strategy: prevent unauthorised execution (allow-listing, code signing, sandboxing, marketplace governance).
+
+- **AgentWeaponizedByMalware** (Path J): The AI agent is legitimate software discovered and co-opted post-compromise by external malware. The agent serves as a LOLBin — its designed code execution capabilities become an attacker force multiplier. Unlike Paths A–F (direct compromise) and G–I (malicious introduction), the agent is a secondary tool in a broader supply chain campaign. Based on the S1ngularity/Nx real-world precedent (August 2025). Control strategy: capability restrictions on agent execution (sandboxing, output filtering, invocation authentication).
 
 ## Attack Surface Layers
 

@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "incident_id": "S1NGULARITY-NX-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-03-19T00:00:00Z",
+    "notes": "S1ngularity / Nx monorepo tool supply chain compromise (August 26, 2025). A pull_request_target GitHub Actions workflow ran attacker-submitted PR code in the base repo's security context, exposing the npm publishing token. Trojanized versions of nx and related packages were published. The QUIETVAULT payload harvested credentials, downloaded TruffleHog, and — notably — weaponized an LLM coding assistant already present on victims' machines for deeper credential scanning. Exfiltrated data was committed to a public GitHub repository. Attack path: #1 →[instant] #7 + [DRE: C] →[~5m] #4 →[instant] #1 + [DRE: I] ||[dev][@Nrwl(Nx)⇒@npm→@Consumers]|| #10 →[instant] #1 →[instant] #7 →[instant] #1 + [DRE: C] →[instant] #7 →[instant] #1 + [DRE: C]. Development vector (#10.2): consumers pulled trojanized versions during dependency installation. Velocity profile: CI compromise to publication in minutes; consumer exposure hours to days; consumer-side exploitation near-instantaneous. Sources: Sysdig TRT, Palo Alto Unit 42, ReversingLabs, Nx post-mortem disclosure."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-ci-workflow-abuse",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "Attacker submits a pull request — a legitimate GitHub function. The pull_request_target workflow is designed to run with base-repo privileges. The failure is that the workflow's scope was insufficiently restricted: it permitted untrusted PR code to execute with access to secrets. No bug, no exploit — the CI system is doing what it was configured to do. The excessive scope of a legitimate function is the generic vulnerability."
+    },
+    {
+      "step_id": "s2-payload-execution-ci",
+      "cluster": "#7",
+      "fec_executed": true,
+      "outcomes": ["C"],
+      "delta_t_to_next": "~5m",
+      "notes": "The CI pipeline executes the attacker's code via GitHub Actions' intended execution capability. Foreign code, designed mechanism, R-EXEC. The payload extracts the npm publishing token. DRE: C — credential acquisition; the enabling cluster is #7."
+    },
+    {
+      "step_id": "s3-token-use",
+      "cluster": "#4",
+      "delta_t_to_next": "instant",
+      "notes": "Attacker uses the stolen npm token to authenticate as the Nx maintainer. R-CRED: credential use is always #4 regardless of acquisition method."
+    },
+    {
+      "step_id": "s4-package-publish",
+      "cluster": "#1",
+      "outcomes": ["I"],
+      "delta_t_to_next": "~1d",
+      "notes": "Attacker invokes npm's legitimate publish command to push trojanized versions of nx and related packages. The publish API works as designed. DRE: I — package integrity compromised."
+    },
+    {
+      "step_id": "s5-trust-acceptance",
+      "cluster": "#10",
+      "topology_boundary": {
+        "context": "dev",
+        "source_sphere": "@Nrwl(Nx)",
+        "target_sphere": "@Consumers",
+        "transit_spheres": ["@npm"]
+      },
+      "delta_t_to_next": "instant",
+      "notes": "Trust Acceptance Event (Development Vector / #10.2). Consumers pull the trojanized Nx version during dependency installation. npm serves as transit infrastructure with its own control surface (abuse detection, provenance checking). Boundary test: if the consumer had no dependency on Nx, the attack would not reach them."
+    },
+    {
+      "step_id": "s6-install-processing",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "The consumer's package manager resolves, downloads, unpacks, and processes the package — preparing the lifecycle hook environment. Controls at this step: namespace restrictions, registry allowlists, install sandboxing, --ignore-scripts."
+    },
+    {
+      "step_id": "s7-postinstall-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "instant",
+      "notes": "The postinstall script fires. QUIETVAULT executes on the consumer's machine. R-EXEC: FEC execution via designed lifecycle hook mechanism."
+    },
+    {
+      "step_id": "s8-credential-sweep",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "delta_t_to_next": "instant",
+      "notes": "The payload uses standard filesystem APIs and environment variable access to harvest credentials and tokens (.npmrc, .gitconfig, AWS credential files, GCP JSON keys). Data stays data — no foreign code introduced at this step. DRE: C."
+    },
+    {
+      "step_id": "s9-secondary-tool-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "instant",
+      "notes": "QUIETVAULT downloads and executes TruffleHog (or, in some instances, weaponizes an LLM coding assistant already present on the victim's machine) for deeper credential scanning. R-EXEC: separate #7 step. TruffleHog and the LLM are legitimate tools, but the malware's act of downloading/invoking them constitutes a foreign-code event. The LLM variant is notable — the AI tool's code execution capability is directed by the malware's orchestration script."
+    },
+    {
+      "step_id": "s10-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Exfiltration via legitimate GitHub APIs: the malware creates a public repository and commits the stolen credential data. The APIs function as designed; their scope is abused. DRE: C."
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "metadata": {
+    "title": "TLCTC npm Supply Chain Attack Patterns",
+    "description": "Canonical attack path patterns for npm supply chain attacks, decomposed into TLCTC threat cluster sequences. Each pattern represents a structurally distinct attack archetype observed in real-world npm incidents. Patterns use TLCTC v2.0 cluster notation with v2.1 transit boundary extensions.",
+    "tlctc_version": "2.1",
+    "domain": "npm-registry",
+    "total_patterns": 5,
+    "license": "CC-BY-4.0",
+    "publisher": "TLCTC Project",
+    "created_at": "2026-03-19T00:00:00Z",
+    "notation": {
+      "arrow": "→ denotes sequential causation (left enables right)",
+      "boundary": "||[context][@Source→@Target]|| denotes inter-organizational domain boundary crossing",
+      "transit": "||[context][@Source⇒@Transit→@Target]|| denotes transit boundary (carrier relay)",
+      "dre": "+ [DRE: X] denotes Data Risk Event (C=Confidentiality, I=Integrity, A=Availability, Ac=Accessibility)",
+      "recursive": "[RECURSIVE] denotes cyclic propagation — the path loops back to a prior step"
+    },
+    "vector_definitions": {
+      "update": "#10.1 — Update Vector: poisoned versions pushed through an existing package's update channel. Affects consumers with permissive semver ranges.",
+      "development": "#10.2 — Development Vector: malicious dependency pulled during pre-deployment dependency resolution. Affects consumers who add the package as a new dependency."
+    },
+    "structural_observations": {
+      "canonical_chain": "The #10 → #1 → #7 sequence (trust acceptance → install processing → payload execution) is the canonical post-boundary chain in every npm supply chain attack. The #1 step between #10 and #7 represents the richest and most undertapped control surface.",
+      "cluster_1_dominance": "#1 Abuse of Functions appears more frequently than any other cluster across all npm attack patterns. Modern npm attacks work overwhelmingly by using legitimate functions for unintended purposes.",
+      "credential_duality": "R-CRED applies universally: credential acquisition maps to the enabling cluster; credential use is always #4. Controls at the #4 boundary (hardware MFA, token scoping, publish approval) break every campaign regardless of acquisition method."
+    }
+  },
+  "patterns": [
+    {
+      "patternId": "NPM-PAT-001",
+      "patternName": "Canonical Install-Time Compromise",
+      "description": "A malicious or compromised package is pulled during dependency installation. The base pattern: trust acceptance, install processing, payload execution.",
+      "vector": "development",
+      "tlctcNotation": "#10 ||[dev][@Public⇒@npm→@Org]|| → #1 → #7",
+      "tlctcClusters": ["#10", "#1", "#7"],
+      "tlctcClusterNames": ["Supply Chain Attack", "Abuse of Functions", "Malware"],
+      "mappingRationale": "#10 fires at the Trust Acceptance Event — the moment the package becomes authoritative in the target's dependency tree. #1 records the package manager's legitimate processing (resolve, download, unpack) which prepares the execution environment. #7 records FEC execution via lifecycle hook or import-time side effect. Collapsing to #10→#7 hides the #1 control surface: namespace policies, install sandboxing, --ignore-scripts.",
+      "controlsByCluster": {
+        "#10": "SBOM maintenance, dependency provenance checking, staged updates with canary deployments, internal mirrors with review gates, lockfile-enforced version pinning",
+        "#1": "Namespace/scope restrictions on allowed packages, registry allowlists, sandboxed install with no network egress, disable or audit lifecycle scripts (--ignore-scripts), resolver restrictions",
+        "#7": "Application whitelisting in CI/CD, postinstall audit requirements, sandboxed build environments, code signing enforcement"
+      },
+      "realWorldExamples": ["S1ngularity/Nx 2025 (consumer-side chain)", "Chalk/Debug 2025 (consumer-side chain)"]
+    },
+    {
+      "patternId": "NPM-PAT-002",
+      "patternName": "Maintainer Account Compromise via Phishing",
+      "description": "Attacker phishes an npm maintainer's credentials, authenticates as the maintainer, and publishes trojanized versions of the maintainer's packages.",
+      "vector": "update",
+      "tlctcNotation": "#9 ||[human][@External→@Maintainer]|| + [DRE: C] → #4 → #1 + [DRE: I] ||[update][@Maintainer⇒@npm→@Consumers]|| #10 → #1 → #7",
+      "tlctcClusters": ["#9", "#4", "#1", "#10", "#1", "#7"],
+      "tlctcClusterNames": ["Social Engineering", "Identity Theft", "Abuse of Functions", "Supply Chain Attack", "Abuse of Functions", "Malware"],
+      "mappingRationale": "#9 is the phishing step — human psychological susceptibility. DRE: C records credential acquisition with #9 as enabling cluster. #4 records credential use (R-CRED: always #4). First #1 records the legitimate publish API call. #10 fires at the TAE when consumers pull the update. Second #1 records install processing. #7 records payload execution. The #9→#4 transition is the critical kill chain: controls at either boundary break the chain.",
+      "controlsByCluster": {
+        "#9": "Phishing-resistant MFA (FIDO2/WebAuthn), domain monitoring for registry typosquats, security awareness focused on urgency/authority bias",
+        "#4": "Hardware-backed MFA on npm, scoped publish tokens (per-package, time-limited, IP-restricted), mandatory publish approval workflows",
+        "#1": "Publish-side: rate limiting, anomaly detection on publish velocity. Install-side: namespace policies, install sandboxing",
+        "#10": "Lockfile-enforced version pinning, provenance checking, staged updates",
+        "#7": "Application whitelisting, sandboxed execution environments"
+      },
+      "realWorldExamples": ["Chalk/Debug phishing campaign (September 2025)"]
+    },
+    {
+      "patternId": "NPM-PAT-003",
+      "patternName": "Typosquatting",
+      "description": "Attacker publishes a package with a name deceptively similar to a popular package, inducing developers to install it through confusion.",
+      "vector": "development",
+      "tlctcNotation": "#9 ||[human][@External→@Developer]|| → #10 ||[dev][@Public⇒@npm→@Org]|| → #1 → #7",
+      "tlctcClusters": ["#9", "#10", "#1", "#7"],
+      "tlctcClusterNames": ["Social Engineering", "Supply Chain Attack", "Abuse of Functions", "Malware"],
+      "mappingRationale": "The initial #9 reflects that the wrong package choice was induced through human confusion or deceptive naming — a distinct control surface (developer verification, namespace reservation, review friction) from the #10 trust boundary that follows. The developer's decision to install the typosquat is a social engineering outcome; the TAE fires when the package is actually accepted into the dependency tree. #1 and #7 follow the canonical install chain.",
+      "controlsByCluster": {
+        "#9": "Namespace reservation/squatting prevention, IDE/CLI warnings for similar package names, mandatory peer review for new dependencies, developer awareness training",
+        "#10": "Package provenance verification, download count and age heuristics, dependency review tools",
+        "#1": "Install sandboxing, lifecycle script auditing",
+        "#7": "Application whitelisting, sandboxed execution"
+      },
+      "realWorldExamples": ["Numerous typosquatting campaigns (ongoing)"]
+    },
+    {
+      "patternId": "NPM-PAT-004",
+      "patternName": "Build-to-Secret-Theft (Full Chain)",
+      "description": "End-to-end chain from malicious package installation through credential theft and lateral abuse. Extends the canonical chain with post-execution exploitation.",
+      "vector": "development",
+      "tlctcNotation": "#10 → #1 → #7 → #1 + [DRE: C] → #4 → #1 + [DRE: C, I]",
+      "tlctcClusters": ["#10", "#1", "#7", "#1", "#4", "#1"],
+      "tlctcClusterNames": ["Supply Chain Attack", "Abuse of Functions", "Malware", "Abuse of Functions", "Identity Theft", "Abuse of Functions"],
+      "mappingRationale": "Extends NPM-PAT-001 with post-execution exploitation. After #7 (payload execution), #1 records credential harvesting via legitimate filesystem/environment APIs (DRE: C). #4 records use of stolen credentials to authenticate to other services. Final #1 records abuse of those services' APIs for data exfiltration and/or further compromise (DRE: C, I). Note three structurally distinct #1 steps with different control surfaces: install processing, credential harvesting, and API abuse.",
+      "controlsByCluster": {
+        "#10": "SBOM, provenance, lockfile pinning",
+        "#1": "Install processing: sandboxing, --ignore-scripts. Credential harvesting: filesystem permissions, credential isolation, vault-based secret management. API abuse: egress filtering, network segmentation",
+        "#7": "Application whitelisting, sandboxed build environments",
+        "#4": "Short-lived scoped tokens, separate build/publish credentials, MFA re-verification"
+      },
+      "realWorldExamples": ["S1ngularity/Nx 2025 (full chain including exfiltration)"]
+    },
+    {
+      "patternId": "NPM-PAT-005",
+      "patternName": "Self-Replicating Worm",
+      "description": "Recursive supply chain propagation: the payload steals npm credentials, injects itself into all of the victim's packages, and publishes new versions — making each victim a new distribution node.",
+      "vector": "update",
+      "tlctcNotation": "#10 → #1 → #7 → #1 + [DRE: C] → #7 → #1 + [DRE: C] → #4 → #1 + [DRE: I] → #10 → [RECURSIVE]",
+      "tlctcClusters": ["#10", "#1", "#7", "#1", "#7", "#1", "#4", "#1", "#10"],
+      "tlctcClusterNames": ["Supply Chain Attack", "Abuse of Functions", "Malware", "Abuse of Functions", "Malware", "Abuse of Functions", "Identity Theft", "Abuse of Functions", "Supply Chain Attack"],
+      "mappingRationale": "The most complex npm attack pattern. After the canonical #10→#1→#7 chain, the worm harvests credentials (#1, DRE: C), runs secondary tools (#7, e.g. TruffleHog), scans for more secrets (#1, DRE: C), authenticates as the victim (#4), and publishes poisoned versions of the victim's packages (#1, DRE: I). Each poisoned package creates a new #10 TAE for downstream consumers, and the chain recurses. The [RECURSIVE] marker indicates cyclic propagation — each depth produces new propagation layers. The conventional linear model of supply chain risk fails; the exponential topology must be modeled explicitly.",
+      "controlsByCluster": {
+        "#10": "Lockfile pinning (breaks propagation chain), provenance checking, staged updates",
+        "#1": "Install: sandboxing, --ignore-scripts. Credential sweep: filesystem permissions, credential isolation, vault storage. Publish: rate limiting, anomaly detection on mass publication",
+        "#7": "Application whitelisting (blocks secondary tool download), sandboxed build environments",
+        "#4": "Short-lived tokens, IP-restricted publish tokens, MFA on every publish action, publish approval workflows"
+      },
+      "realWorldExamples": ["Shai-Hulud worm (September–November 2025)"]
+    }
+  ]
+}
