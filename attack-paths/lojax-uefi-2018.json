@@ -1,0 +1,50 @@
+{
+  "metadata": {
+    "incident_id": "LOJAX-UEFI-ROOTKIT-2018",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-03-20T00:00:00Z",
+    "notes": "LoJax UEFI rootkit (September 2018). Attributed to APT28/Fancy Bear/Sednit (Russian GRU Unit 26165). First UEFI rootkit discovered in the wild, targeting government and diplomatic organizations in Central and Eastern Europe. The attackers modified the legitimate LoJack/Computrace anti-theft agent (by Absolute Software) embedded in UEFI/SPI flash firmware, replacing its legitimate C2 server addresses with attacker-controlled domains. The trojanized firmware agent survived OS reinstallation and hard drive replacement, providing extreme persistence. The attack required prior system access (consistent with APT28's documented use of spear-phishing and first-stage tooling like Seduploader and X-Agent) and kernel-level privileges to write to SPI flash using the RWEverything legitimate driver. Attack path: #9 ||[human][@External→@GovAgency]|| →[Δt=~2d] #7 →[Δt=~1d] #1 →[Δt=instant] #7 + [DRE: I] →[Δt=~3mo] #1 + [DRE: C]. Note: the initial access phase is reconstructed from APT28's known operational patterns rather than direct forensic evidence from LoJax-specific incidents. ESET's research focused on the firmware persistence mechanism. Axiom IV: attribution to APT28/GRU does not affect cluster classification. Sources: ESET Research 'LoJax: First UEFI rootkit found in the wild, courtesy of the Sednit group' (September 27, 2018), ESET white paper 'Sednit: What's going on with Zebrocy?' and broader Sednit APT research, NIST SP 800-147 'BIOS Protection Guidelines', Absolute Software/Computrace architecture documentation."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-initial-access-phishing",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "human",
+        "source_sphere": "@External",
+        "target_sphere": "@GovAgency"
+      },
+      "delta_t_to_next": "~2d",
+      "notes": "Initial access to the target government network via spear-phishing, consistent with APT28/Sednit's extensively documented operational playbook. APT28 campaigns typically use targeted emails with malicious document attachments (weaponized Word/Excel files with macros, or RTF files exploiting equation editor vulnerabilities) or links to credential-harvesting sites. The specific initial access vector for LoJax-affected organizations was not fully detailed in ESET's research, which focused on the novel firmware persistence mechanism. However, APT28's operational history (documented across dozens of campaigns from 2014-2018) consistently begins with social engineering. Generic vulnerability: human psychological susceptibility — the target employee is deceived into interacting with malicious content. Topology boundary: the attack crosses from the external sphere into the government agency's organizational sphere through the human context (employee's decision to open/click). The ~2d delta represents the estimated time between initial compromise and deployment of first-stage reconnaissance malware."
+    },
+    {
+      "step_id": "s2-first-stage-malware",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "~1d",
+      "notes": "APT28's first-stage malware toolkit deployed and executed on the compromised workstation. The Sednit group's documented toolchain includes Seduploader (lightweight first-stage downloader for initial reconnaissance), X-Agent (modular backdoor with keylogging, file collection, and credential harvesting capabilities), and X-Tunnel (network tunneling tool for pivoting). These tools provided the attackers with persistent remote access, the ability to survey the target environment, and the capability to download additional payloads. R-EXEC: foreign executable content (APT28 first-stage malware) executes on the target system. This is a distinct FEC execution event from the later UEFI implant and must be recorded as #7 with fec_executed: true. The ~1d delta represents the estimated time for the attackers to complete initial reconnaissance and determine that the target system was suitable for UEFI firmware modification (checking UEFI/BIOS configuration, SPI flash write protections, and platform compatibility)."
+    },
+    {
+      "step_id": "s3-privilege-escalation",
+      "cluster": "#1",
+      "delta_t_to_next": "instant",
+      "notes": "Attackers escalated privileges to SYSTEM/kernel level, which is required for SPI flash write access. Writing to UEFI firmware requires ring-0 (kernel) privileges because SPI flash is a hardware resource protected by the platform's privilege model. APT28 achieved this through abuse of legitimate operating system mechanisms — techniques such as DLL side-loading into privileged processes, exploitation of legitimate signed drivers, or abuse of Windows service configurations. The key tool in this step was the deployment of the RWEverything driver (RwDrv.sys), a legitimate signed kernel driver designed for hardware diagnostics that provides direct read/write access to hardware resources including SPI flash memory. Classification rationale: this is Abuse of Functions (#1). The privilege escalation leveraged designed OS capabilities (service installation, driver loading) and a legitimate signed driver (RWEverything) functioning exactly as intended. RWEverything is designed to provide low-level hardware access — the attacker simply used it for its intended purpose. No software vulnerability was exploited in this step. The 'instant' delta reflects that the UEFI write operation follows immediately upon achieving kernel access."
+    },
+    {
+      "step_id": "s4-uefi-firmware-implant",
+      "cluster": "#7",
+      "fec_executed": true,
+      "outcomes": ["I"],
+      "delta_t_to_next": "~3mo",
+      "notes": "The LoJax rootkit written to UEFI SPI flash firmware. Using the RWEverything driver's kernel-level hardware access, the attackers performed the following operations: (1) dumped the current UEFI firmware image from SPI flash, (2) patched the firmware image by modifying the legitimate Computrace/LoJack anti-theft agent (a UEFI DXE driver by Absolute Software) — specifically replacing its hardcoded C2 server URLs with attacker-controlled domains, (3) wrote the modified firmware image back to SPI flash. The trojanized UEFI module executes during every boot sequence (before the OS loads), drops a Windows executable to disk, and ensures it runs at startup — effectively creating a bootkit that operates below the OS trust boundary. R-EXEC: this is a second, distinct FEC execution event. The UEFI implant is foreign executable content that will execute on every subsequent boot, persisting across OS reinstallation, hard drive replacement, and most remediation actions. It represents a fundamentally different persistence mechanism from the first-stage malware (step s2). fec_executed: true. DRE: I (Loss of Integrity) — the system's firmware integrity is fundamentally compromised. The UEFI firmware, which forms the root of trust for the entire boot chain, now contains attacker-controlled code. This represents a deep integrity violation: the platform can no longer be trusted to boot a clean operating system. Secure Boot was either not enabled or was circumvented. The ~3mo delta represents the estimated period of persistent access enabled by the firmware implant before detection by ESET researchers."
+    },
+    {
+      "step_id": "s5-persistent-c2-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "The LoJax UEFI implant provided persistent, long-term command-and-control access and data exfiltration capability that survived standard remediation. On every boot, the trojanized UEFI Computrace agent: (1) executed during the DXE (Driver Execution Environment) phase before the OS loaded, (2) dropped a small agent executable to the Windows filesystem, (3) ensured the agent ran at OS startup via registry or scheduled task manipulation, (4) the agent communicated with attacker-controlled C2 servers using the Computrace/LoJack protocol — a legitimate anti-theft 'phone home' mechanism designed by Absolute Software. Classification rationale: this is Abuse of Functions (#1). The LoJack/Computrace anti-theft protocol is a legitimate, designed capability — it is specifically intended to allow a remote server to communicate with and control the agent on the endpoint. The attackers simply redirected this designed 'phone home' capability to their own servers. The UEFI execution environment, the agent dropper mechanism, and the C2 protocol all functioned exactly as Absolute Software designed them. The generic vulnerability is the excessive capability of the Computrace agent's legitimate persistence and communication mechanisms — capabilities that, once subverted, provide ideal covert persistence. DRE: C (Loss of Confidentiality) — the persistent C2 channel enabled long-term intelligence collection and data exfiltration from targeted government organizations. Because the implant survived OS reinstallation and hard drive replacement, the exfiltration capability persisted even after incident response teams believed they had remediated the compromise. Remediation required reflashing the UEFI firmware with a known-clean image — a capability many organizations lacked."
+    }
+  ]
+}

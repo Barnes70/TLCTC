@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "incident_id": "DARKHOTEL-WIFI-2014",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-03-20T00:00:00Z",
+    "notes": "DarkHotel APT campaign targeting business executives via luxury hotel WiFi networks, documented by Kaspersky in November 2014 (active since ~2007). Attackers compromised hotel WiFi infrastructure to MitM executive guests, injecting fake software update prompts that delivered digitally signed malware (keylogger/backdoor). Targeted luxury hotels in Asia. Attack path: (#8 + #9) →[Δt=instant] #5 →[Δt=~5m] #7 →[Δt=~1h] #4 →[Δt=~2h] #1 + [DRE: C]. Sources: Kaspersky Lab 'DarkHotel' report (November 2014), Kaspersky SecureList APT analysis, ESET DarkHotel follow-up research."
+  },
+  "path_sequence": [
+    {
+      "mode": "parallel",
+      "group_id": "g1-hotel-access",
+      "steps": [
+        {
+          "step_id": "s1a-physical-network-access",
+          "cluster": "#8",
+          "topology_boundary": {
+            "context": "physical",
+            "source_sphere": "@Attacker",
+            "target_sphere": "@Hotel"
+          },
+          "notes": "Attacker gains physical or logical access to hotel network infrastructure (compromised router, access point, or network management system). The hotel WiFi infrastructure is within the hotel's physical domain. #8 Physical Attack: the generic vulnerability is the physical accessibility of the network infrastructure. The attacker must have access to the hotel's network equipment or management plane to position themselves for interception."
+        },
+        {
+          "step_id": "s1b-guest-trust",
+          "cluster": "#9",
+          "topology_boundary": {
+            "context": "human",
+            "source_sphere": "@Hotel",
+            "target_sphere": "@Executive"
+          },
+          "notes": "Executive guest connects to hotel WiFi, trusting the hotel brand and expecting legitimate connectivity. The social engineering vector is implicit: the victim's trust in the hotel environment is exploited. #9 Social Engineering: the generic vulnerability is human psychological susceptibility — trust in the hotel's network as a safe environment. The guest voluntarily connects to a network controlled by the attacker."
+        }
+      ],
+      "delta_t_to_next": "instant",
+      "notes": "Parallel exploitation: physical compromise of hotel infrastructure (#8) combined with the guest's trust in the hotel environment (#9). Both are required for the attack — the physical access enables network control, and the social trust brings the victim onto the compromised network."
+    },
+    {
+      "step_id": "s2-traffic-interception",
+      "cluster": "#5",
+      "delta_t_to_next": "~5m",
+      "notes": "Man-in-the-middle position established on the hotel network. Attacker intercepts the victim's HTTP traffic and injects fake software update prompts (e.g., Adobe Flash Player, Google Toolbar) into web pages the executive visits. #5 MitM: the generic vulnerability is the ability to intercept and modify communications between two parties. The attacker is positioned between the victim and the internet, actively manipulating traffic content."
+    },
+    {
+      "step_id": "s3-fake-update-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "~1h",
+      "notes": "Victim accepts the fake software update prompt; a digitally signed trojan (keylogger + backdoor) downloads and executes. The malware was signed with stolen or fraudulent code-signing certificates to appear legitimate. R-EXEC: foreign executable content executed — recorded as #7 with fec_executed: true. The victim believed they were installing a legitimate software update due to the MitM-injected prompt."
+    },
+    {
+      "step_id": "s4-credential-capture",
+      "cluster": "#4",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~2h",
+      "notes": "Keylogger component captures credentials for corporate email, VPN, and other services as the executive works from the hotel. The attacker then uses these captured credentials to authenticate to corporate resources. R-CRED: credential use (authentication with captured credentials) = always #4. Axiom X: the credentials were acquired via the malware's keylogger function (enabling cluster = #7), but their application to authenticate is a separate #4 step. DRE: C — credential confidentiality compromised."
+    },
+    {
+      "step_id": "s5-corporate-data-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Attacker uses compromised credentials and backdoor access to exfiltrate corporate documents, emails, strategic plans, and sensitive business data from the executive's accounts and corporate network. The access uses legitimate APIs and file transfer functions. DRE: C — proprietary business intelligence and corporate secrets exfiltrated. #1 Abuse of Functions: all accessed systems function as designed; the attacker operates with stolen but technically valid credentials."
+    }
+  ]
+}

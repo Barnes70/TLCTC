@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "incident_id": "PEGASUS-FORCEDENTRY-2021",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-03-20T00:00:00Z",
+    "notes": "NSO Group Pegasus spyware delivered via FORCEDENTRY zero-click exploit, 2021. Targeted iMessage on iOS. Malicious PDF disguised as GIF exploited integer overflow in CoreGraphics (CVE-2021-30860) within the sandboxed IMTranscoderAgent process, escaped BlastDoor sandbox, and installed Pegasus spyware. Zero user interaction required. Attack path: #3 |[sandbox][@IMTranscoderAgent→@os]| →[Δt=instant] #7 →[Δt=instant] #1 + [DRE: C]. Sources: Citizen Lab FORCEDENTRY report (September 2021), Apple security update for CVE-2021-30860, Google Project Zero JBIG2 exploit analysis."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-imessage-exploit",
+      "cluster": "#3",
+      "intra_system_boundaries": [
+        {
+          "type": "sandbox",
+          "from": "@IMTranscoderAgent",
+          "to": "@os"
+        }
+      ],
+      "delta_t_to_next": "instant",
+      "notes": "Zero-click exploit of CoreGraphics integer overflow vulnerability (CVE-2021-30860) in iOS iMessage attachment processing. A malicious PDF file (disguised with .gif extension) was sent via iMessage and automatically processed by the IMTranscoderAgent sandboxed process. The exploit used a novel JBIG2-based Turing-complete computational oracle to escape the BlastDoor sandbox. R-ROLE: iMessage/CoreGraphics is client-side software that receives and processes attacker-controlled content = #3. Intra-system boundary annotation: sandbox escape from IMTranscoderAgent to OS context. R-INTRA-7: the sandbox escape does not change the cluster classification — it remains #3. The zero-click nature means no social engineering (#9) is involved — the vulnerability is purely technical."
+    },
+    {
+      "step_id": "s2-pegasus-install",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "instant",
+      "notes": "Pegasus spyware installed and executed on the device following sandbox escape. The spyware establishes persistence and begins its surveillance module initialization. R-EXEC: foreign executable content (Pegasus implant) executed — recorded as #7 with fec_executed: true. The spyware is a distinct piece of foreign code, separate from the exploit that delivered it."
+    },
+    {
+      "step_id": "s3-surveillance-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Pegasus abuses legitimate iOS APIs and device capabilities for comprehensive surveillance: microphone recording, camera access, GPS location tracking, message reading (iMessage, WhatsApp, Signal), email access, call logs, and keychain data. All accessed through designed OS interfaces — the spyware operates as a privileged application abusing legitimate device functions. DRE: C — total loss of confidentiality of device data and communications. The surveillance capabilities are abuse of designed functions (#1), not exploitation of additional vulnerabilities."
+    }
+  ]
+}

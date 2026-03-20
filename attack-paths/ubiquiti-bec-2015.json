@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "incident_id": "UBIQUITI-BEC-2015",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-03-20T00:00:00Z",
+    "notes": "Business Email Compromise (BEC) attack on Ubiquiti Networks, June 2015. Attackers impersonated Ubiquiti executives and third-party entities via email, tricking finance department employees into making fraudulent wire transfers totaling $46.7M to overseas accounts ($14.9M later recovered). No malware, no system exploitation — purely social engineering combined with abuse of legitimate financial processes. Attack path: #9 ||[human][@External→@Ubiquiti]|| →[Δt=~2h] #1 + [DRE: I]. Sources: Ubiquiti Networks SEC 10-Q filing (August 2015), FBI IC3 BEC advisories, Krebs on Security reporting."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-executive-impersonation",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "human",
+        "source_sphere": "@External",
+        "target_sphere": "@Ubiquiti"
+      },
+      "delta_t_to_next": "~2h",
+      "notes": "Attacker sent emails impersonating Ubiquiti senior executives and external entities, requesting urgent wire transfers to overseas accounts. Used spoofed email addresses or lookalike domains to create the appearance of legitimate executive communication. #9 Social Engineering: the generic vulnerability is human psychological susceptibility — authority bias (impersonating C-suite executives), urgency (framing requests as time-sensitive), and trust in email as an authentic communication channel. The boundary crossing is via the human context: the attacker manipulates the employees' perception of the communication's source. No technical system was compromised — the attack is entirely against human judgment."
+    },
+    {
+      "step_id": "s2-fraudulent-wire-transfer",
+      "cluster": "#1",
+      "outcomes": ["I"],
+      "notes": "Finance department employees initiated wire transfers totaling $46.7M to attacker-controlled overseas bank accounts using the company's legitimate banking and payment systems. The wire transfer systems, banking APIs, and financial authorization processes all functioned exactly as designed — no technical vulnerability was exploited. #1 Abuse of Functions: the legitimate financial transfer capability was used for unauthorized payments. DRE: I — integrity of financial transactions compromised; the transactions were technically valid but fraudulently authorized. This demonstrates that BEC attacks require no technical sophistication — the entire attack exploits human trust and legitimate business processes."
+    }
+  ]
+}

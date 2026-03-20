@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "incident_id": "CAPITAL-ONE-2019",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-03-20T00:00:00Z",
+    "notes": "Capital One data breach, March 2019 (disclosed July 2019). Former AWS employee Paige Thompson exploited a misconfigured WAF (ModSecurity) on Capital One's AWS infrastructure via Server-Side Request Forgery (SSRF) to reach the EC2 instance metadata service (IMDS v1), obtaining temporary IAM role credentials. Those credentials were used to access S3 buckets containing 106 million customer records (credit card applications, SSNs, bank account numbers). Attack path: #2 + [DRE: C] →[Δt=instant] #4 →[Δt=~4h] #1 + [DRE: C]. Sources: Capital One public statement (July 2019), DOJ criminal complaint, AWS IMDS security guidance, US District Court Western District of Washington case documents."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-ssrf-exploit",
+      "cluster": "#2",
+      "outcomes": ["C"],
+      "delta_t_to_next": "instant",
+      "notes": "Attacker exploited a Server-Side Request Forgery (SSRF) vulnerability in Capital One's misconfigured WAF/reverse proxy running on an EC2 instance. The SSRF allowed the attacker to make the server issue HTTP requests to the internal EC2 instance metadata service (169.254.169.254 — IMDS v1), which returned temporary IAM role credentials. R-ROLE: the WAF/reverse proxy is server-role software — it receives and processes HTTP requests from the internet = #2. DRE: C — the temporary IAM credentials were exposed via the SSRF. Axiom X: the credential acquisition occurs here (enabling cluster = #2); the credential use is a separate step."
+    },
+    {
+      "step_id": "s2-iam-credential-use",
+      "cluster": "#4",
+      "delta_t_to_next": "~4h",
+      "notes": "Attacker used the stolen temporary IAM role credentials to authenticate to AWS APIs. R-CRED: credential application (using IAM credentials to authenticate to AWS) = always #4, regardless of acquisition method (SSRF in this case). Axiom X: the SSRF (#2) acquired the credentials; this step records their use. The temporary credentials had overly broad S3 access permissions — a compounding factor but not a separate cluster (the permissions are part of the credential's authorization scope)."
+    },
+    {
+      "step_id": "s3-s3-data-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Attacker used the authenticated AWS session to list and download data from over 700 Capital One S3 folders. The data included 106 million credit card applications, 140,000 Social Security numbers, and 80,000 bank account numbers. The S3 API (ListBucket, GetObject) functioned as designed — the valid IAM credentials granted legitimate access. #1 Abuse of Functions: the cloud storage APIs worked exactly as intended; the attacker operated within designed functionality using stolen credentials. DRE: C — one of the largest banking data breaches in US history. This incident led to AWS promoting IMDS v2 (which requires session tokens and mitigates SSRF-based metadata theft)."
+    }
+  ]
+}

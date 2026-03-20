@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "incident_id": "CHANGE-HEALTHCARE-2024",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-03-20T00:00:00Z",
+    "notes": "ALPHV/BlackCat ransomware attack on Change Healthcare (UnitedHealth Group), February 2024. Largest healthcare data breach in US history, affecting ~100 million individuals. Attacker used stolen credentials for a Citrix remote access portal with no MFA. Attack path: #4 →[Δt=~9d] #1 →[Δt=~2d] #1 + [DRE: C] →[Δt=~1d] #7 + [DRE: A]. $22M ransom paid. Sources: UnitedHealth Group CEO testimony to US Senate (May 2024), CISA advisory, HHS breach notification, AHA analysis."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-citrix-credential-use",
+      "cluster": "#4",
+      "delta_t_to_next": "~9d",
+      "notes": "Attacker authenticated to Change Healthcare's Citrix remote access portal using stolen credentials. The portal did not enforce multi-factor authentication. R-CRED: credential use (authentication) is always #4 regardless of how the credentials were obtained. Per UnitedHealth CEO Andrew Witty's Senate testimony: 'Criminals used compromised credentials to remotely access a Change Healthcare Citrix portal, an application used to enable remote access to desktops. The portal did not have multi-factor authentication.'"
+    },
+    {
+      "step_id": "s2-lateral-movement",
+      "cluster": "#1",
+      "delta_t_to_next": "~2d",
+      "notes": "Attacker conducted extensive lateral movement through Change Healthcare's network over approximately 9 days, using legitimate remote access tools, admin utilities, and network protocols. The attacker moved through systems using designed functionality — no exploitation of technical vulnerabilities required after initial access. The generic vulnerability is abuse of legitimate administrative functions."
+    },
+    {
+      "step_id": "s3-data-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~1d",
+      "notes": "Approximately 6 terabytes of protected health information (PHI) and personally identifiable information (PII) exfiltrated. Data included medical records, insurance claims, payment information, and SSNs of ~100 million individuals. The data transfer used legitimate network functions. DRE: C — massive loss of confidentiality of healthcare data. The exfiltration leveraged designed capabilities, classifying as #1."
+    },
+    {
+      "step_id": "s4-ransomware-deployment",
+      "cluster": "#7",
+      "fec_executed": true,
+      "outcomes": ["A"],
+      "notes": "ALPHV/BlackCat ransomware deployed, encrypting Change Healthcare systems and disrupting healthcare claims processing nationwide. R-EXEC: ransomware binary is foreign executable content — execution recorded as #7. DRE: A — healthcare payment processing for thousands of providers disrupted for weeks. Axiom III: classify by cause (FEC execution), not by outcome (healthcare disruption). The cascading impact on the US healthcare system was a consequence, not a separate cluster."
+    }
+  ]
+}
