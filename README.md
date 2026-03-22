@@ -363,9 +363,12 @@ tlctc/
 │   ├── json-architecture.pdf                 # JSON Architecture Specification
 │   └── why-exactly-ten.pdf                   # Framework Architecture Rationale
 ├── tools/
-│   ├── README.md                             # Tool index
+│   ├── README.md                             # Tool index & JSON format reference
 │   ├── threat-modeling.html                  # SDLC threat modeling & architecture analysis
-│   └── attack-path-architect.html            # Incident attack path documentation & CTI exchange
+│   ├── attack-path-architect.html            # Incident attack path documentation & CTI exchange
+│   ├── actor-profile-designer.html           # Threat actor capability profiling & comparison
+│   ├── radar-tlctc-app.html                  # Interactive threat radar visualization & assessment
+│   └── examples/                             # Starter templates & real-world example datasets
 ├── glossary/
 │   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
 │   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, v2.1 extensions

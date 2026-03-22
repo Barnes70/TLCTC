@@ -1,0 +1,2136 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>TLCTC Actor Profile Designer - Capability Framework App</title>
+    <meta name="description" content="Design, visualize, and export TLCTC threat actor capability profiles. Generate radar charts, PDF Actor Cards, and JSON datasets compliant with the TLCTC Framework.">
+    <meta name="keywords" content="TLCTC, Threat Actor Profiling, Cyber Threat Intelligence, CTI, Capability Matrix, MITRE ATT&CK, Actor Cards, Risk Management, Cybersecurity Tools">
+    <meta name="author" content="TLCTC Framework">
+    <meta property="og:title" content="TLCTC Actor Profile Designer">
+    <meta property="og:type" content="website">
+    
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))"
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))"
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))"
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))"
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))"
+                        },
+                        destructive: {
+                            DEFAULT: "hsl(var(--destructive))",
+                            foreground: "hsl(var(--destructive-foreground))"
+                        },
+                    },
+                },
+            }
+        }
+
+
+        // ============================================================
+        //  FEATURE: Dataset Loading
+        // ============================================================
+        function loadExampleDataset(key) {
+            if (!key) return;
+            var dataset = EXAMPLE_DATASETS[key];
+            if (!dataset) return;
+            var arr = dataset.actors;
+            var imported = {};
+            arr.forEach(function(item) {
+                if (!item || !item.threat_actor || !item.tlctc_scores) return;
+                var name = String(item.threat_actor).trim();
+                imported[name] = {
+                    scores: normalizeScores(item.tlctc_scores),
+                    notes: (item.notes || '').toString(),
+                    sources: item.sources || [],
+                    sequence: item.sequence || '',
+                    updated: item.last_updated || item.updated || today(),
+                    incidents: item.incidents || [],
+                    target_sectors: item.target_sectors || [],
+                    motivation: item.motivation || [],
+                    origin_country: item.origin_country || '',
+                };
+            });
+            if (Object.keys(imported).length === 0) { alert('No valid actors found.'); return; }
+            if (Object.keys(actors).length > 0) {
+                if (confirm('Load ' + Object.keys(imported).length + ' actors from "' + dataset.name + '" and REPLACE existing library? (Cancel = merge)')) actors = imported;
+                else Object.assign(actors, imported);
+            } else {
+                actors = imported;
+            }
+            saveLocal(); populateSelect(); renderLibrary();
+            var first = Object.keys(imported).sort()[0];
+            if (first) { $selActor.value = first; onSelectChange(); }
+            sel('selLoadDataset').value = '';
+        }
+
+        // ============================================================
+        //  FEATURE: Search & Filter
+        // ============================================================
+        function getFilteredActors() {
+            var searchTerm = (sel('librarySearch') ? sel('librarySearch').value : '').toLowerCase();
+            var clusterFilter = sel('libraryClusterFilter') ? sel('libraryClusterFilter').value : '';
+            var threshold = parseInt(sel('libraryClusterThreshold') ? sel('libraryClusterThreshold').value : '1', 10);
+            var originFilter = sel('libraryOriginFilter') ? sel('libraryOriginFilter').value : '';
+            var motivationFilter = sel('libraryMotivationFilter') ? sel('libraryMotivationFilter').value : '';
+            var sectorFilter = sel('librarySectorFilter') ? sel('librarySectorFilter').value : '';
+            var entries = Object.entries(actors).sort(function(a, b) { return a[0].localeCompare(b[0]); });
+            if (searchTerm) {
+                entries = entries.filter(function(e) {
+                    return e[0].toLowerCase().includes(searchTerm) ||
+                           (e[1].notes || '').toLowerCase().includes(searchTerm) ||
+                           (e[1].sequence || '').toLowerCase().includes(searchTerm) ||
+                           (e[1].origin_country || '').toLowerCase().includes(searchTerm) ||
+                           (e[1].motivation || []).join(' ').toLowerCase().includes(searchTerm) ||
+                           (e[1].target_sectors || []).join(' ').toLowerCase().includes(searchTerm);
+                });
+            }
+            if (clusterFilter) {
+                var ci = parseInt(clusterFilter, 10) - 1;
+                entries = entries.filter(function(e) {
+                    return ((e[1].scores || DEFAULT_SCORES)[ci] || 1) >= threshold;
+                });
+            }
+            if (originFilter) {
+                entries = entries.filter(function(e) {
+                    return (e[1].origin_country || '') === originFilter;
+                });
+            }
+            if (motivationFilter) {
+                entries = entries.filter(function(e) {
+                    return (e[1].motivation || []).indexOf(motivationFilter) !== -1;
+                });
+            }
+            if (sectorFilter) {
+                entries = entries.filter(function(e) {
+                    return (e[1].target_sectors || []).indexOf(sectorFilter) !== -1;
+                });
+            }
+            return entries;
+        }
+
+        function setLibraryView(mode) {
+            libraryViewMode = mode;
+            sel('btnViewGrid').className = 'btn btn-sm h-7 px-2 rounded-none ' + (mode === 'grid' ? 'bg-primary text-primary-foreground' : '');
+            sel('btnViewTable').className = 'btn btn-sm h-7 px-2 rounded-none ' + (mode === 'table' ? 'bg-primary text-primary-foreground' : '');
+            renderLibrary();
+        }
+
+        function populateClusterFilter() {
+            var s = sel('libraryClusterFilter');
+            if (!s) return;
+            s.innerHTML = '<option value="">All Clusters</option>';
+            LABELS.forEach(function(label, i) {
+                var o = document.createElement('option');
+                o.value = i + 1;
+                o.textContent = '#' + (i + 1) + ' ' + label;
+                s.appendChild(o);
+            });
+        }
+
+        // ============================================================
+        //  FEATURE: Grid & Table Views
+        // ============================================================
+        function renderLibraryGrid(entries) {
+            var box = sel('library');
+            var isDark = htmlEl.classList.contains('dark');
+            var brandColor = isDark ? '#60a5fa' : '#3b82f6';
+            entries.forEach(function(e) {
+                var name = e[0], a = e[1];
+                var tile = document.createElement('div');
+                tile.className = 'border border-border rounded-lg p-2 bg-card hover:border-primary transition-colors cursor-pointer w-[200px] shrink-0';
+                var h = document.createElement('h4');
+                h.textContent = name;
+                h.className = 'font-display font-bold text-sm text-center mb-1 truncate text-foreground';
+                tile.appendChild(h);
+                if (a.origin_country) {
+                    var originBadge = document.createElement('div');
+                    originBadge.className = 'text-center mb-1';
+                    originBadge.innerHTML = '<span class="inline-block px-1.5 py-0.5 rounded text-[9px] font-medium bg-secondary/60 text-muted-foreground">' + a.origin_country + '</span>';
+                    tile.appendChild(originBadge);
+                }
+                var cvs = document.createElement('canvas');
+                cvs.width = 180; cvs.height = 140;
+                tile.appendChild(cvs);
+                new Chart(cvs.getContext('2d'), {
+                    type: 'radar',
+                    data: {
+                        labels: LABELS.map(function() { return ''; }),
+                        datasets: [
+                            { data: Array(10).fill(4), backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)', borderColor: 'transparent', pointRadius: 0, fill: true },
+                            { data: a.scores || DEFAULT_SCORES, backgroundColor: rgba(brandColor, 0.35), borderColor: brandColor, pointRadius: 0, borderWidth: 1, fill: true }
+                        ]
+                    },
+                    options: { responsive: false, animation: false, scales: { r: { display: false, suggestedMin: 0, suggestedMax: 4 } }, plugins: { legend: { display: false } } }
+                });
+                tile.onclick = function() { $selActor.value = name; onSelectChange(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+                box.appendChild(tile);
+            });
+        }
+
+        function renderLibraryTable(entries) {
+            var box = sel('library');
+            var table = document.createElement('table');
+            table.className = 'w-full text-sm border-collapse';
+            var thead = document.createElement('thead');
+            thead.innerHTML = '<tr class="border-b border-border text-left">' +
+                '<th class="py-2 px-3 font-bold text-xs uppercase tracking-wider text-muted-foreground">Name</th>' +
+                '<th class="py-2 px-3 font-bold text-xs uppercase tracking-wider text-muted-foreground hidden sm:table-cell">Origin</th>' +
+                '<th class="py-2 px-3 font-bold text-xs uppercase tracking-wider text-muted-foreground">Top Clusters</th>' +
+                '<th class="py-2 px-3 font-bold text-xs uppercase tracking-wider text-muted-foreground text-center">Max</th>' +
+                '<th class="py-2 px-3 font-bold text-xs uppercase tracking-wider text-muted-foreground hidden md:table-cell">Motivation</th>' +
+                '<th class="py-2 px-3 font-bold text-xs uppercase tracking-wider text-muted-foreground hidden lg:table-cell">Sectors</th></tr>';
+            table.appendChild(thead);
+            var tbody = document.createElement('tbody');
+            entries.forEach(function(e) {
+                var name = e[0], a = e[1];
+                var scores = a.scores || DEFAULT_SCORES;
+                var max = Math.max.apply(null, scores);
+                var topClusters = scores.map(function(v, i) { return { c: i + 1, v: v }; }).filter(function(p) { return p.v >= 3; }).sort(function(x, y) { return y.v - x.v; });
+                var badges = topClusters.map(function(p) { return '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold ' + CLUSTER_COLORS[p.c - 1] + '">#' + p.c + '</span>'; }).join(' ');
+                var tr = document.createElement('tr');
+                tr.className = 'border-b border-border/50 hover:bg-secondary/30 cursor-pointer transition-colors';
+                var maxClass = max === 4 ? 'text-purple-500' : max === 3 ? 'text-red-500' : 'text-muted-foreground';
+                var originText = a.origin_country || '\u2014';
+                var motivBadges = (a.motivation || []).map(function(m) { return '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-secondary text-secondary-foreground">' + m + '</span>'; }).join(' ');
+                var sectorText = (a.target_sectors || []).slice(0, 3).join(', ');
+                if ((a.target_sectors || []).length > 3) sectorText += ' +' + ((a.target_sectors || []).length - 3);
+                tr.innerHTML = '<td class="py-2 px-3 font-bold text-foreground">' + name + '</td>' +
+                    '<td class="py-2 px-3 text-xs text-muted-foreground hidden sm:table-cell">' + originText + '</td>' +
+                    '<td class="py-2 px-3">' + (badges || '<span class="text-muted-foreground text-xs">\u2014</span>') + '</td>' +
+                    '<td class="py-2 px-3 text-center font-bold ' + maxClass + '">' + max + '</td>' +
+                    '<td class="py-2 px-3 text-xs text-muted-foreground hidden md:table-cell">' + (motivBadges || '\u2014') + '</td>' +
+                    '<td class="py-2 px-3 text-xs text-muted-foreground hidden lg:table-cell max-w-[250px] truncate">' + (sectorText || '\u2014') + '</td>';
+                tr.onclick = function() { $selActor.value = name; onSelectChange(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+            box.appendChild(table);
+        }
+
+        // ============================================================
+        //  FEATURE: Intelligence Summary
+        // ============================================================
+        function renderIntelligenceSummary() {
+            var section = sel('intelligenceSummary');
+            if (!section) return;
+            var entries = Object.entries(actors);
+            if (entries.length < 2) { section.classList.add('hidden'); return; }
+            section.classList.remove('hidden');
+            sel('intelActorCount').textContent = entries.length + ' actors';
+            renderArchetypes();
+            renderAvgRadar();
+            renderLeaderboard();
+            renderEnrichmentBreakdowns();
+            lucide.createIcons();
+        }
+
+        function toggleIntelligenceSummary() {
+            var content = sel('intelContent');
+            var icon = sel('intelCollapseIcon');
+            content.classList.toggle('hidden');
+            icon.setAttribute('data-lucide', content.classList.contains('hidden') ? 'chevron-down' : 'chevron-up');
+            lucide.createIcons();
+        }
+
+        function renderArchetypes() {
+            var container = sel('intelArchetypes');
+            if (!container) return;
+            container.innerHTML = '';
+            var withSeq = [], withoutSeq = 0;
+            Object.entries(actors).forEach(function(e) {
+                if (e[1].sequence && e[1].sequence.trim()) withSeq.push({ name: e[0], sequence: e[1].sequence.trim() });
+                else withoutSeq++;
+            });
+            var groups = {};
+            withSeq.forEach(function(item) {
+                var norm = item.sequence.replace(/\s+/g, ' ').replace(/\s*\u2192\s*/g, ' \u2192 ');
+                if (!groups[norm]) groups[norm] = [];
+                groups[norm].push(item.name);
+            });
+            var sorted = Object.entries(groups).sort(function(a, b) { return b[1].length - a[1].length; });
+            if (sorted.length === 0) {
+                container.innerHTML = '<p class="text-xs text-muted-foreground italic">No archetypes defined in current dataset.</p>';
+            } else {
+                sorted.slice(0, 8).forEach(function(entry) {
+                    var seq = entry[0], names = entry[1];
+                    var row = document.createElement('div');
+                    row.className = 'bg-secondary/30 border border-border rounded-lg p-2';
+                    var badges = seq.split(' \u2192 ').map(function(s) {
+                        var m = s.trim().match(/#(\d+)/);
+                        if (m) {
+                            var c = parseInt(m[1], 10);
+                            return '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold ' + (CLUSTER_COLORS[c - 1] || '') + '">#' + c + '</span>';
+                        }
+                        return s;
+                    }).join(' <span class="text-muted-foreground">\u2192</span> ');
+                    row.innerHTML = '<div class="flex items-center gap-2 mb-1">' + badges +
+                        ' <span class="text-xs font-bold text-primary">(' + names.length + 'x)</span></div>' +
+                        '<div class="text-[10px] text-muted-foreground truncate">' + names.join(', ') + '</div>';
+                    container.appendChild(row);
+                });
+            }
+            var ctx = document.createElement('p');
+            ctx.className = 'text-[10px] text-muted-foreground mt-2 italic';
+            ctx.textContent = withSeq.length + ' actors with sequences, ' + withoutSeq + ' without';
+            container.appendChild(ctx);
+        }
+
+        function renderAvgRadar() {
+            var entries = Object.entries(actors);
+            if (entries.length === 0) return;
+            var sums = Array(10).fill(0);
+            entries.forEach(function(e) {
+                var scores = e[1].scores || DEFAULT_SCORES;
+                scores.forEach(function(v, i) { sums[i] += v; });
+            });
+            var avgs = sums.map(function(s) { return +(s / entries.length).toFixed(2); });
+            var isDark = htmlEl.classList.contains('dark');
+            var color = '#a855f7';
+            var canvas = sel('avgRadar');
+            if (!canvas) return;
+            if (avgRadarChart) {
+                avgRadarChart.data.datasets[0].data = avgs;
+                avgRadarChart.data.datasets[0].backgroundColor = rgba(color, 0.25);
+                avgRadarChart.data.datasets[0].borderColor = color;
+                avgRadarChart.data.datasets[0].pointBackgroundColor = color;
+                avgRadarChart.options.scales.r.ticks.color = isDark ? '#9ca3af' : '#4b5563';
+                avgRadarChart.options.scales.r.grid.color = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+                avgRadarChart.options.scales.r.pointLabels.color = isDark ? '#e5e7eb' : '#374151';
+                avgRadarChart.update();
+            } else {
+                avgRadarChart = new Chart(canvas.getContext('2d'), {
+                    type: 'radar',
+                    data: { labels: LABELS, datasets: [{ label: 'Average', data: avgs, backgroundColor: rgba(color, 0.25), borderColor: color, borderWidth: 2, pointBackgroundColor: color, fill: true }] },
+                    options: {
+                        responsive: true, maintainAspectRatio: true, animation: false,
+                        scales: { r: { suggestedMin: 0, suggestedMax: 4, ticks: { stepSize: 1, backdropColor: 'transparent', color: isDark ? '#9ca3af' : '#4b5563', font: { size: 8 }, callback: function(v) { return (['', 'L', 'M', 'H', 'C'])[v] || ''; } }, grid: { color: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }, pointLabels: { color: isDark ? '#e5e7eb' : '#374151', font: { size: 8 } } } },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+            var maxAvg = Math.max.apply(null, avgs);
+            var maxIdx = avgs.indexOf(maxAvg);
+            sel('intelAvgStat').textContent = 'Highest avg: #' + (maxIdx + 1) + ' ' + LABELS[maxIdx].split(' ')[0] + ' (' + maxAvg.toFixed(1) + ')';
+        }
+
+        function renderLeaderboard() {
+            var container = sel('intelLeaderboard');
+            if (!container) return;
+            container.innerHTML = '';
+            var entries = Object.entries(actors);
+            if (entries.length === 0) return;
+            var sums = Array(10).fill(0);
+            var champCounts = Array(10).fill(0);
+            var highCounts = Array(10).fill(0);
+            entries.forEach(function(e) {
+                var scores = e[1].scores || DEFAULT_SCORES;
+                scores.forEach(function(v, i) { sums[i] += v; if (v === 4) champCounts[i]++; if (v >= 3) highCounts[i]++; });
+            });
+            var avgs = sums.map(function(s) { return +(s / entries.length).toFixed(2); });
+            var maxAvg = Math.max.apply(null, avgs);
+            var ranked = avgs.map(function(avg, i) { return { idx: i, avg: avg, champ: champCounts[i], high: highCounts[i] }; })
+                .sort(function(a, b) { return b.avg - a.avg; });
+            ranked.forEach(function(r) {
+                var pct = maxAvg > 0 ? (r.avg / maxAvg * 100) : 0;
+                var isBridge = r.idx >= 7;
+                var barColor = isBridge ? 'bg-amber-500' : 'bg-primary';
+                var row = document.createElement('div');
+                row.className = 'flex items-center gap-2 text-xs';
+                row.innerHTML = '<span class="w-20 text-muted-foreground truncate font-mono">#' + (r.idx + 1) + ' ' + LABELS[r.idx].split(' ')[0] + '</span>' +
+                    '<div class="flex-1 bg-secondary rounded-full h-3 overflow-hidden"><div class="h-3 rounded-full ' + barColor + ' transition-all" style="width:' + pct + '%"></div></div>' +
+                    '<span class="w-8 text-right font-bold">' + r.avg.toFixed(1) + '</span>' +
+                    '<span class="w-16 text-[10px] text-muted-foreground">' + r.champ + 'C ' + r.high + 'H</span>';
+                container.appendChild(row);
+            });
+        }
+
+        function renderEnrichmentBreakdowns() {
+            var entries = Object.entries(actors);
+            if (entries.length < 2) return;
+
+            // Origin breakdown
+            var originCounts = {};
+            entries.forEach(function(e) {
+                var o = e[1].origin_country || 'Unknown';
+                originCounts[o] = (originCounts[o] || 0) + 1;
+            });
+            var originContainer = sel('intelOriginBreakdown');
+            if (originContainer) {
+                originContainer.innerHTML = '';
+                var originMax = Math.max.apply(null, Object.values(originCounts));
+                Object.entries(originCounts).sort(function(a, b) { return b[1] - a[1]; }).forEach(function(entry) {
+                    var pct = originMax > 0 ? (entry[1] / originMax * 100) : 0;
+                    var row = document.createElement('div');
+                    row.className = 'flex items-center gap-2 text-xs';
+                    row.innerHTML = '<span class="w-24 text-muted-foreground truncate">' + entry[0] + '</span>' +
+                        '<div class="flex-1 bg-secondary rounded-full h-3 overflow-hidden"><div class="h-3 rounded-full bg-blue-500 transition-all" style="width:' + pct + '%"></div></div>' +
+                        '<span class="w-6 text-right font-bold">' + entry[1] + '</span>';
+                    originContainer.appendChild(row);
+                });
+            }
+
+            // Sector breakdown (top 10)
+            var sectorCounts = {};
+            entries.forEach(function(e) {
+                (e[1].target_sectors || []).forEach(function(s) {
+                    sectorCounts[s] = (sectorCounts[s] || 0) + 1;
+                });
+            });
+            var sectorContainer = sel('intelSectorBreakdown');
+            if (sectorContainer) {
+                sectorContainer.innerHTML = '';
+                var sectorSorted = Object.entries(sectorCounts).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
+                var sectorMax = sectorSorted.length > 0 ? sectorSorted[0][1] : 1;
+                sectorSorted.forEach(function(entry) {
+                    var pct = sectorMax > 0 ? (entry[1] / sectorMax * 100) : 0;
+                    var row = document.createElement('div');
+                    row.className = 'flex items-center gap-2 text-xs';
+                    row.innerHTML = '<span class="w-28 text-muted-foreground truncate text-[10px]">' + entry[0] + '</span>' +
+                        '<div class="flex-1 bg-secondary rounded-full h-3 overflow-hidden"><div class="h-3 rounded-full bg-emerald-500 transition-all" style="width:' + pct + '%"></div></div>' +
+                        '<span class="w-6 text-right font-bold">' + entry[1] + '</span>';
+                    sectorContainer.appendChild(row);
+                });
+            }
+
+            // Motivation breakdown
+            var motivCounts = {};
+            entries.forEach(function(e) {
+                (e[1].motivation || []).forEach(function(m) {
+                    motivCounts[m] = (motivCounts[m] || 0) + 1;
+                });
+            });
+            var motivContainer = sel('intelMotivationBreakdown');
+            if (motivContainer) {
+                motivContainer.innerHTML = '';
+                var motivSorted = Object.entries(motivCounts).sort(function(a, b) { return b[1] - a[1]; });
+                var motivMax = motivSorted.length > 0 ? motivSorted[0][1] : 1;
+                motivSorted.forEach(function(entry) {
+                    var pct = motivMax > 0 ? (entry[1] / motivMax * 100) : 0;
+                    var row = document.createElement('div');
+                    row.className = 'flex items-center gap-2 text-xs';
+                    row.innerHTML = '<span class="w-28 text-muted-foreground truncate text-[10px]">' + entry[0] + '</span>' +
+                        '<div class="flex-1 bg-secondary rounded-full h-3 overflow-hidden"><div class="h-3 rounded-full bg-violet-500 transition-all" style="width:' + pct + '%"></div></div>' +
+                        '<span class="w-6 text-right font-bold">' + entry[1] + '</span>';
+                    motivContainer.appendChild(row);
+                });
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --radius: 0.75rem;
+                --background: 0 0% 100%;
+                --foreground: 240 10% 3.9%;
+                --card: 0 0% 100%;
+                --card-foreground: 240 10% 3.9%;
+                --primary: 240 5.9% 10%;
+                --primary-foreground: 0 0% 98%;
+                --secondary: 240 4.8% 95.9%;
+                --secondary-foreground: 240 5.9% 10%;
+                --muted: 240 4.8% 95.9%;
+                --muted-foreground: 240 3.8% 46.1%;
+                --accent: 240 4.8% 95.9%;
+                --accent-foreground: 240 5.9% 10%;
+                --destructive: 0 84.2% 60.2%;
+                --destructive-foreground: 0 0% 98%;
+                --border: 240 5.9% 90%;
+                --input: 240 5.9% 90%;
+                --ring: 240 5.9% 10%;
+            }
+
+            .dark {
+                --background: 240 10% 3.9%;
+                --foreground: 0 0% 98%;
+                --card: 240 10% 3.9%;
+                --card-foreground: 0 0% 98%;
+                --primary: 0 0% 98%;
+                --primary-foreground: 240 5.9% 10%;
+                --secondary: 240 3.7% 15.9%;
+                --secondary-foreground: 0 0% 98%;
+                --muted: 240 3.7% 15.9%;
+                --muted-foreground: 240 5% 64.9%;
+                --accent: 240 3.7% 15.9%;
+                --accent-foreground: 0 0% 98%;
+                --destructive: 0 62.8% 30.6%;
+                --destructive-foreground: 0 0% 98%;
+                --border: 240 3.7% 15.9%;
+                --input: 240 3.7% 15.9%;
+                --ring: 240 4.9% 83.9%;
+            }
+
+            body {
+                @apply bg-background text-foreground selection:bg-primary/20;
+            }
+        }
+
+        @layer components {
+            .container-custom { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
+            
+            .btn { @apply inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background active:scale-95; }
+            .btn-sm { @apply h-9 px-3 text-xs; }
+            .btn-md { @apply h-10 px-4 py-2; }
+            .btn-primary { @apply bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5; }
+            .btn-secondary { @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border/50; }
+            .btn-destructive { @apply bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm; }
+            .btn-outline { @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground; }
+            .btn-ghost { @apply hover:bg-accent hover:text-accent-foreground; }
+
+            .glass-card { @apply bg-card/50 backdrop-blur-xl border border-border/50 shadow-sm transition-all duration-300; }
+            
+            .input-field { @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50; }
+            
+            .grid-bg {
+                background-image: linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px),
+                                linear-gradient(to bottom, hsl(var(--border) / 0.1) 1px, transparent 1px);
+                background-size: 40px 40px;
+                mask-image: radial-gradient(ellipse at center, black, transparent 80%);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased relative overflow-x-hidden flex flex-col">
+
+    <div class="fixed inset-0 -z-10 h-full w-full bg-background">
+        <div class="absolute inset-0 grid-bg"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[600px] bg-primary/5 rounded-full blur-[100px] opacity-50 pointer-events-none"></div>
+    </div>
+
+    <header class="sticky top-4 z-50 mx-auto max-w-7xl px-4 w-full">
+        <div class="rounded-2xl border border-border/40 bg-background/70 backdrop-blur-md shadow-sm">
+            <div class="flex h-16 items-center justify-between px-4 sm:px-6">
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
+                           <img src="/images/logo-small.png" alt="Logo" class="h-full w-full object-contain p-1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                           <i data-lucide="shield" class="h-5 w-5 hidden"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-display font-bold text-lg leading-tight">TLCTC</span>
+                            <span class="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="threat-modeling.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Modeling</a>
+                    <a href="attack-path-architect.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Attack Path Architect</a>
+                    <a href="actor-profile-designer.html" class="text-sm font-medium text-foreground font-semibold transition-colors">Actor Profiler</a>
+                    <a href="radar-tlctc-app.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Radar</a>
+                    <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+                </nav>
+
+                <div class="flex items-center gap-3">
+                    <button id="theme-toggle" onclick="toggleDarkMode()" class="btn btn-ghost btn-sm h-9 w-9 p-0 rounded-full" aria-label="Toggle theme">
+                        <i id="theme-toggle-dark-icon" data-lucide="sun" class="h-4 w-4 hidden dark:block"></i>
+                        <i id="theme-toggle-light-icon" data-lucide="moon" class="h-4 w-4 block dark:hidden"></i>
+                    </button>
+                    <button onclick="toggleMenu()" class="md:hidden btn btn-ghost btn-sm h-9 w-9 p-0 rounded-full">
+                        <i data-lucide="menu" class="h-5 w-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden hidden transition-all duration-300 opacity-0">
+        <div class="flex h-20 items-center justify-between px-6 border-b border-border">
+            <span class="font-display font-bold text-lg">TLCTC</span>
+            <button onclick="toggleMenu()" class="btn btn-ghost h-10 w-10 p-0 rounded-full">
+                <i data-lucide="x" class="h-6 w-6"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col p-8 gap-6 text-lg font-medium">
+            <a href="threat-modeling.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Threat Modeling</a>
+            <a href="attack-path-architect.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Attack Path Architect</a>
+            <a href="actor-profile-designer.html" onclick="toggleMenu()" class="text-foreground font-semibold">Actor Profiler</a>
+            <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Threat Radar</a>
+            <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">TLCTC.net</a>
+        </nav>
+    </div>
+
+    <main class="flex-grow pt-12 pb-24">
+        
+        <section class="container-custom mb-12 text-center animate-fade-in-up">
+            <div class="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-3 py-1 text-xs font-medium text-secondary-foreground backdrop-blur-sm mb-6">
+                <span class="text-primary">Tool</span> / Threat Intelligence
+            </div>
+            <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 gradient-text">
+                Actor Capability Designer
+            </h1>
+            <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Design, visualize, and share TLCTC-style capability profiles for threat actors.
+            </p>
+        </section>
+
+        <div class="container-custom mb-8">
+            <div class="glass-card rounded-xl p-3 flex flex-wrap gap-3 items-center justify-between">
+                <div class="flex items-center gap-2">
+                     <span class="text-sm font-bold ml-2 mr-2"><i data-lucide="file-json" class="inline h-4 w-4 mb-0.5"></i> Data Actions:</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <select id="selLoadDataset" class="input-field h-9 text-xs w-auto" onchange="loadExampleDataset(this.value)">
+                        <option value="">Load Dataset...</option>
+                        <optgroup label="Example Datasets">
+                            <option value="google_mandiant">Google/Mandiant APTs (44)</option>
+                            <option value="crowdstrike_2025">CrowdStrike 2025 (13)</option>
+                            <option value="all">All Combined (57)</option>
+                        </optgroup>
+                    </select>
+                    <div class="h-6 w-px bg-border mx-1"></div>
+                    <button id="btnQuickJson" class="btn btn-secondary btn-sm border-primary/20 text-primary">
+                        <i data-lucide="clipboard-copy" class="h-3 w-3 mr-2"></i> Quick JSON
+                    </button>
+                    <button id="btnImport" class="btn btn-outline btn-sm">
+                        <i data-lucide="upload" class="h-3 w-3 mr-2"></i> Import JSON
+                    </button>
+                    <button id="btnExportRef" class="btn btn-outline btn-sm">
+                        <i data-lucide="download" class="h-3 w-3 mr-2"></i> Export JSON
+                    </button>
+                    <button id="btnExportCSV" class="btn btn-outline btn-sm">
+                        <i data-lucide="table" class="h-3 w-3 mr-2"></i> Summary CSV
+                    </button>
+                    <div class="h-6 w-px bg-border mx-1"></div>
+                    <button id="btnImportL3" class="btn btn-outline btn-sm bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20">
+                        <i data-lucide="route" class="h-3 w-3 mr-2"></i> Import Attack Paths
+                    </button>
+                    <input type="file" id="fileInput" accept=".json" hidden />
+                    <input type="file" id="fileInputL3" accept=".json" hidden multiple />
+                </div>
+            </div>
+        </div>
+
+        <div id="intelligenceSummary" class="container-custom mb-8 hidden">
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2 text-primary">
+                        <i data-lucide="brain" class="h-5 w-5"></i>
+                        <h2 class="font-display text-lg font-bold text-foreground">Intelligence Summary</h2>
+                        <span id="intelActorCount" class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">0</span>
+                    </div>
+                    <button onclick="toggleIntelligenceSummary()" class="btn btn-ghost btn-sm">
+                        <i data-lucide="chevron-up" class="h-4 w-4" id="intelCollapseIcon"></i>
+                    </button>
+                </div>
+                <div id="intelContent">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Most Common Archetypes</h3>
+                        <div id="intelArchetypes" class="space-y-2"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Average Capability Profile</h3>
+                        <div class="aspect-square max-h-[250px] mx-auto"><canvas id="avgRadar"></canvas></div>
+                        <div id="intelAvgStat" class="text-center mt-2 text-xs text-muted-foreground"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Cluster Leaderboard</h3>
+                        <div id="intelLeaderboard" class="space-y-1.5"></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-6 border-t border-border/50">
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Origin Breakdown</h3>
+                        <div id="intelOriginBreakdown" class="space-y-1.5"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Top Targeted Sectors</h3>
+                        <div id="intelSectorBreakdown" class="space-y-1.5"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Motivation Profile</h3>
+                        <div id="intelMotivationBreakdown" class="space-y-1.5"></div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-custom grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-4 space-y-6">
+                <div class="glass-card rounded-xl p-6 h-full flex flex-col">
+                    <div class="flex items-center gap-2 mb-6 text-primary">
+                        <i data-lucide="venetian-mask" class="h-5 w-5"></i>
+                        <h2 class="font-display text-lg font-bold text-foreground">Actor Profile</h2>
+                    </div>
+
+                    <div class="space-y-4 flex-grow">
+                        <div>
+                            <label for="selActor" class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Select Actor</label>
+                            <select id="selActor" class="input-field cursor-pointer">
+                                <option value="__new__">— New Actor —</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="txtName" class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Name</label>
+                            <input id="txtName" type="text" class="input-field font-bold" placeholder="e.g., APT28">
+                        </div>
+
+                        <div>
+                            <label for="selOrigin" class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Origin</label>
+                            <select id="selOrigin" class="input-field text-xs">
+                                <option value="">— Select —</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="txtUpdated" class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Last Updated</label>
+                                <input id="txtUpdated" type="date" class="input-field text-xs">
+                            </div>
+                             <div>
+                                <label for="txtSequence" class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Archetype</label>
+                                <input id="txtSequence" type="text" class="input-field text-xs" placeholder="#9 → #7">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="txtSources" class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Sources</label>
+                            <textarea id="txtSources" class="input-field h-20 text-xs font-mono leading-relaxed" placeholder="https://report1.com..."></textarea>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Motivation</label>
+                            <div id="motivationPills" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Target Sectors <span id="sectorCount" class="text-primary font-normal normal-case">(0 selected)</span></label>
+                            <div id="sectorPills" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+
+                        <div>
+                            <label for="txtNotes" class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Notes / Narrative</label>
+                            <textarea id="txtNotes" class="input-field h-24 text-sm" placeholder="Key TTPs, targeting scope, etc..."></textarea>
+                        </div>
+
+                        <div class="pt-4 border-t border-border/50">
+                            <h3 class="font-display font-bold text-sm mb-4">Capabilities (1=Low, 4=Champion)</h3>
+                            <div id="caps" class="space-y-3">
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 pt-6 mt-6 border-t border-border">
+                        <button id="btnSave" class="btn btn-primary btn-md flex-1">
+                            <i data-lucide="save" class="h-4 w-4 mr-2"></i> Save
+                        </button>
+                        <button id="btnDelete" class="btn btn-destructive btn-md">
+                            <i data-lucide="trash-2" class="h-4 w-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 space-y-6">
+                <div class="glass-card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+                        <div class="flex items-center gap-2 text-primary">
+                            <i data-lucide="radar" class="h-5 w-5"></i>
+                            <h2 id="chartTitle" class="font-display text-lg font-bold text-foreground">Capability Radar</h2>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <select id="selCompare" class="input-field text-xs h-8 w-44">
+                                <option value="">Compare with...</option>
+                            </select>
+                            <div class="text-[10px] bg-secondary px-2 py-1 rounded text-muted-foreground" id="legendBox" style="display:none;">
+                               <span class="font-bold text-primary">Current</span> vs <span class="font-bold text-emerald-500">Compare</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full aspect-[4/3] max-h-[500px] flex items-center justify-center p-4">
+                        <canvas id="radar"></canvas>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mt-6">
+                        <div class="bg-secondary/30 border border-border rounded-lg p-3 text-center">
+                            <div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">Max Score</div>
+                            <div class="text-2xl font-display font-bold text-primary mt-1" id="mMax">-</div>
+                        </div>
+                        <div class="bg-secondary/30 border border-border rounded-lg p-3 text-center">
+                            <div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">Dominance Idx</div>
+                            <div class="text-2xl font-display font-bold text-primary mt-1" id="mDom">-</div>
+                        </div>
+                        <div class="bg-secondary/30 border border-border rounded-lg p-3 text-center">
+                            <div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">Breadth ≥3</div>
+                            <div class="text-2xl font-display font-bold text-primary mt-1" id="mBr">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                         <span id="mTop" class="text-xs font-mono bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20">Top clusters: -</span>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3 mt-8 justify-end">
+                        <button id="btnPNG" class="btn btn-secondary btn-sm">
+                            <i data-lucide="image" class="h-3 w-3 mr-2"></i> Export Chart PNG
+                        </button>
+                        <button id="btnPDF" class="btn btn-outline btn-sm bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-emerald-500/20">
+                            <i data-lucide="file-text" class="h-3 w-3 mr-2"></i> Export Actor Card (PDF)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="observedPathsSection" class="lg:col-span-8 lg:col-start-5 hidden">
+                <div class="glass-card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                        <div class="flex items-center gap-2 text-primary">
+                            <i data-lucide="route" class="h-5 w-5"></i>
+                            <h2 class="font-display text-lg font-bold text-foreground">Observed Attack Paths</h2>
+                            <span id="incidentCount" class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">0</span>
+                        </div>
+                        <button id="btnAutoDerive" class="btn btn-outline btn-sm bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20">
+                            <i data-lucide="wand-2" class="h-3 w-3 mr-2"></i> Auto-derive Scores
+                        </button>
+                    </div>
+
+                    <div id="incidentList" class="space-y-2 mb-6"></div>
+
+                    <div class="mt-4">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Cluster Frequency</h3>
+                        <div id="clusterHistogram" class="space-y-1.5"></div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-border">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">DRE Targeting Profile</h3>
+                        <div id="dreProfile" class="flex flex-wrap gap-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-1 lg:col-span-12">
+                <div class="glass-card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                        <div class="flex items-center gap-2 text-primary">
+                            <i data-lucide="library" class="h-5 w-5"></i>
+                            <h2 class="font-display text-lg font-bold text-foreground">Actor Library</h2>
+                        </div>
+                        <span id="libraryMatchCount" class="text-xs text-muted-foreground"></span>
+                    </div>
+                    <div class="flex flex-wrap gap-3 items-center mb-4">
+                        <input id="librarySearch" type="text" class="input-field h-8 text-xs flex-1 min-w-[180px]" placeholder="Search by name, origin, sector, motivation...">
+                        <select id="libraryClusterFilter" class="input-field h-8 text-xs w-auto">
+                            <option value="">All Clusters</option>
+                        </select>
+                        <select id="libraryClusterThreshold" class="input-field h-8 text-xs w-20">
+                            <option value="1">&ge; 1</option>
+                            <option value="2">&ge; 2</option>
+                            <option value="3" selected>&ge; 3</option>
+                            <option value="4">= 4</option>
+                        </select>
+                        <div class="h-6 w-px bg-border mx-1 hidden sm:block"></div>
+                        <select id="libraryOriginFilter" class="input-field h-8 text-xs w-auto">
+                            <option value="">All Origins</option>
+                        </select>
+                        <select id="libraryMotivationFilter" class="input-field h-8 text-xs w-auto">
+                            <option value="">All Motivations</option>
+                        </select>
+                        <select id="librarySectorFilter" class="input-field h-8 text-xs w-auto">
+                            <option value="">All Sectors</option>
+                        </select>
+                        <div class="flex border border-border rounded-lg overflow-hidden">
+                            <button id="btnViewGrid" class="btn btn-sm h-7 px-2 rounded-none bg-primary text-primary-foreground" onclick="setLibraryView('grid')">
+                                <i data-lucide="grid-3x3" class="h-3 w-3"></i>
+                            </button>
+                            <button id="btnViewTable" class="btn btn-sm h-7 px-2 rounded-none" onclick="setLibraryView('table')">
+                                <i data-lucide="list" class="h-3 w-3"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="library" class="flex flex-wrap gap-4 overflow-x-auto pb-4 min-h-[150px]">
+                        <p class="text-muted-foreground text-sm italic w-full text-center py-8">Import JSON or create actors, then save to see previews.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-card border-t border-border py-12 text-sm mt-auto opacity-90">
+        <div class="container-custom flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2 opacity-80">
+                <img src="/images/logo-small.png" alt="TLCTC" class="h-6 w-auto">
+                <span class="font-bold">TLCTC Framework</span>
+            </div>
+            <div class="text-muted-foreground text-center md:text-right text-xs">
+                <p>Exports support TLCTC Actor Profile v2 with observed attack paths. Generated cards include vector charts and DRE profiles.</p>
+                <p class="mt-1">Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" class="underline decoration-dotted hover:text-primary">CC BY 4.0</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="jsonModal" class="fixed inset-0 z-[100] bg-background/80 backdrop-blur-sm hidden transition-all duration-300 opacity-0 flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-2xl flex flex-col rounded-xl shadow-2xl transform transition-all scale-95" id="jsonModalContent">
+            <div class="flex items-center justify-between p-4 border-b border-border">
+                <h3 class="font-display font-bold text-lg flex items-center gap-2">
+                    <i data-lucide="file-code-2" class="h-5 w-5 text-primary"></i> 
+                    Quick JSON Editor
+                </h3>
+                <button onclick="toggleJsonModal()" class="btn btn-ghost btn-sm h-8 w-8 p-0 rounded-full">
+                    <i data-lucide="x" class="h-4 w-4"></i>
+                </button>
+            </div>
+            <div class="p-4 flex-grow">
+                <p class="text-xs text-muted-foreground mb-2">
+                    Copy the current actor JSON below, or paste a JSON snippet here and click "Load".
+                </p>
+                <textarea id="txtQuickJson" class="input-field h-[300px] font-mono text-xs leading-relaxed resize-none p-3" spellcheck="false"></textarea>
+            </div>
+            <div class="flex justify-end gap-3 p-4 border-t border-border bg-secondary/20 rounded-b-xl">
+                <button id="btnCopyClipboard" class="btn btn-secondary btn-sm">
+                    <i data-lucide="copy" class="h-3 w-3 mr-2"></i> Copy to Clipboard
+                </button>
+                <button id="btnLoadClipboard" class="btn btn-primary btn-sm">
+                    <i data-lucide="check-circle" class="h-3 w-3 mr-2"></i> Load from Text
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="l3Modal" class="fixed inset-0 z-[100] bg-background/80 backdrop-blur-sm hidden transition-all duration-300 opacity-0 flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-lg flex flex-col rounded-xl shadow-2xl transform transition-all scale-95" id="l3ModalContent">
+            <div class="flex items-center justify-between p-4 border-b border-border">
+                <h3 class="font-display font-bold text-lg flex items-center gap-2">
+                    <i data-lucide="route" class="h-5 w-5 text-amber-500"></i>
+                    Assign Actor to Attack Paths
+                </h3>
+                <button onclick="toggleL3Modal(false)" class="btn btn-ghost btn-sm h-8 w-8 p-0 rounded-full">
+                    <i data-lucide="x" class="h-4 w-4"></i>
+                </button>
+            </div>
+            <div class="p-4 space-y-4">
+                <p class="text-sm text-muted-foreground">
+                    Layer 3 attack path files don't always include an actor name. Assign these incidents to an actor:
+                </p>
+                <div id="l3IncidentPreview" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                <div>
+                    <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Actor Name</label>
+                    <div class="flex gap-2">
+                        <select id="l3ActorSelect" class="input-field flex-1">
+                            <option value="__new__">— New Actor —</option>
+                        </select>
+                        <input id="l3ActorName" type="text" class="input-field flex-1" placeholder="e.g., APT28">
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end gap-3 p-4 border-t border-border bg-secondary/20 rounded-b-xl">
+                <button onclick="toggleL3Modal(false)" class="btn btn-secondary btn-sm">Cancel</button>
+                <button id="btnL3Confirm" class="btn btn-primary btn-sm">
+                    <i data-lucide="check-circle" class="h-3 w-3 mr-2"></i> Import
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- UI & Theme Setup (From Template) ---
+        lucide.createIcons();
+        const htmlEl = document.documentElement;
+
+        function updateThemeIcons() {
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+            if (htmlEl.classList.contains('dark')) {
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            }
+        }
+
+        function toggleDarkMode() {
+            htmlEl.classList.toggle('dark');
+            localStorage.theme = htmlEl.classList.contains('dark') ? 'dark' : 'light';
+            updateThemeIcons();
+            // Trigger Chart update to fix colors if needed
+            if(window.updateChart) window.updateChart(false);
+            renderLibrary(); 
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
+        }
+        updateThemeIcons();
+
+        // Mobile Menu
+        const mobileMenu = document.getElementById('mobile-menu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+            } else {
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+            }
+        }
+
+        // --- App Logic (Refactored for Tailwind/DOM) ---
+        
+        const LABELS = [
+            "Abuse of Functionality", "Exploit – Server-Side", "Exploit – Client-Side",
+            "Identity & Authorization", "Man-in-the-Middle", "Flooding / DoS",
+            "Malware", "Physical Attack", "Social Engineering", "Supply Chain Compromise"
+        ];
+        const TLCTC = {
+            "TLCTC-01.00": LABELS[0], "TLCTC-02.00": LABELS[1], "TLCTC-03.00": LABELS[2],
+            "TLCTC-04.00": LABELS[3], "TLCTC-05.00": LABELS[4], "TLCTC-06.00": LABELS[5],
+            "TLCTC-07.00": LABELS[6], "TLCTC-08.00": LABELS[7], "TLCTC-09.00": LABELS[8],
+            "TLCTC-10.00": LABELS[9]
+        };
+        const CODES = Object.keys(TLCTC);
+        const DEFAULT_SCORES = Array(10).fill(1);
+        const CTA_GOOGLE_MANDIANT = [
+            {"threat_actor":"APT41 (Double Dragon, Winnti, Barium, Axiom)","tlctc_scores":[3,2,3,3,1,1,4,1,3,1],"origin_country":"China","motivation":["Espionage","Financial Gain"],"target_sectors":["Technology","Healthcare","Gaming","Financial Services","Government","Telecommunications","Education","Pharma & Biotech","Manufacturing","Media & Entertainment"],"notes":"China-nexus, espionage + financial motivation. Champion Malware use (46+ families, rootkits, bootkits, ransomware) [#7]. High initial access via Spear Phishing (.chm) [#9]. Uses sophisticated TTPs post-compromise including credential stealers [#4 High], keyloggers, and likely lateral movement [#1 High]. Client exploit used via .chm files [#3 High]. Server exploit assumed moderate [#2]. Targets wide range including tech, healthcare, gaming."},
+            {"threat_actor":"APT40 (Leviathan)","tlctc_scores":[2,1,1,2,1,1,4,1,3,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Maritime","Aerospace & Defense","Government","Technology","Transportation & Logistics"],"notes":"China-nexus maritime espionage focus. Champion Malware use (51 families, 37 non-public, shares some) [#7]. High Social Engineering (#9 - Spear phishing posing as relevant individuals, uses compromised accounts). Moderate Function Abuse [#1] & Identity Theft [#4] assumed for espionage. Exploits not mentioned [#2, #3 Low]."},
+            {"threat_actor":"APT31 (Zirconium, Violet Typhoon)","tlctc_scores":[1,2,3,1,1,1,2,1,1,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Technology","Financial Services"],"notes":"China-nexus espionage actor. Known to exploit client-side application vulnerabilities (Java, Flash) [#3 High]. Associated Malware listed [#7 Medium]. Server exploit assumed possible [#2 Medium]. Initial access vectors beyond exploits not detailed [#9, #4 Low]. Focus on info for political/economic/military advantage."},
+            {"threat_actor":"APT30 (Naikon, PLA Unit 78020)","tlctc_scores":[2,1,1,1,1,1,3,2,1,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Aerospace & Defense","Media & Entertainment"],"notes":"China-nexus (PLA Unit 78020). Long-term sustained activity targeting ASEAN. High Malware use (#7 - suite including downloaders, backdoors, specific components for removable drives/air-gapped networks). Medium Physical Attack (#8) implied by air-gap crossing capability. Abuses DNS functions for C2 [#1 Medium]. No exploits or social engineering mentioned as primary vectors [#2, #3, #9 Low]."},
+            {"threat_actor":"APT27 (Emissary Panda)","tlctc_scores":[2,3,2,2,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Government","Technology","Aerospace & Defense"],"notes":"China-nexus IP theft focus. High Social Engineering (#9 - Spear phishing, uses compromised accounts). High Exploiting Server (#2 - Compromises vulnerable web apps). Leverages public exploits (likely client-side) [#3 Medium]. Uses multiple malware families [#7 Medium]. Identity Theft via compromised accounts [#4 Medium]. Abuse of Functions likely post-compromise [#1 Medium]."},
+            {"threat_actor":"APT26 (Turbine Panda)","tlctc_scores":[1,3,1,1,1,1,3,1,1,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Aerospace & Defense","Technology"],"notes":"China-nexus IP theft focus. High Exploiting Server (#2 - Frequent use of strategic web compromises). High Malware use (#7 - Custom backdoors like SOGU, BEACON). Other vectors not detailed [#1, #3, #4, #9 Low]."},
+            {"threat_actor":"APT25 (Uncool, Vixen Panda, Ke3chang, Sushi Roll, Tor)","tlctc_scores":[1,1,2,1,1,1,3,1,3,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Government","Aerospace & Defense"],"notes":"China-nexus data theft focus. High Social Engineering (#9 - Spear phishing with malicious attachments/links). High Malware use (#7 - Multiple custom families listed). Leverages public exploits (likely client-side) [#3 Medium]. No zero-days mentioned. Other vectors not detailed [#1, #2, #4 Low]."},
+            {"threat_actor":"APT24 (PittyTiger)","tlctc_scores":[2,1,1,1,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Manufacturing"],"notes":"China-nexus, targets related to political monitoring (Taiwan). High Social Engineering (#9 - Phishing emails with military/business lures). Medium Malware use (#7 - PITTYTIGER, ENFAL, TAIDOOR). Medium Abuse of Functions (#1 - Uses RAR utility for exfil). Exploits not mentioned [#2, #3 Low]."},
+            {"threat_actor":"APT23","tlctc_scores":[1,1,2,1,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Aerospace & Defense"],"notes":"China-nexus, focus on political/military info theft. High Social Engineering (#9 - Spear phishing with education lures). Medium Malware use (#7 - NONGMIN). Leverages public exploits (likely client-side) [#3 Medium]. No zero-days mentioned. Other vectors not detailed [#1, #2, #4 Low]."},
+            {"threat_actor":"APT22 (Barista)","tlctc_scores":[1,3,1,1,1,1,3,1,1,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Aerospace & Defense","Civil Society & NGOs"],"notes":"China-nexus, targets political/military/economic entities, dissidents. High Exploiting Server (#2 - Strategic web compromises, uploads webshells to vulnerable servers). High Malware use (#7 - Multiple families listed). Other vectors not detailed [#1, #3, #4, #9 Low]."},
+            {"threat_actor":"APT21 (Zhenbao)","tlctc_scores":[1,2,1,1,1,1,3,1,3,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Civil Society & NGOs"],"notes":"China-nexus, targets Russian security issues, dissident groups. High Malware use (#7 - Primarily custom backdoors like TRAVELNET, TEMPFUN, rarely public tools). High Social Engineering (#9 - Spear phishing with attachments/links). Medium Exploiting Server (#2 - Uses strategic web compromises). Other vectors not detailed [#1, #3, #4 Low]."},
+            {"threat_actor":"APT20 (Twivy)","tlctc_scores":[1,3,1,1,1,1,2,1,1,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Government","Civil Society & NGOs"],"notes":"China-nexus (possible freelancer/state mix), data theft focus (IP, political). High Exploiting Server (#2 - Strategic web compromises, particularly on sites related to democracy/human rights). Medium Malware use (#7 - Several families listed). Other vectors not detailed [#1, #3, #4, #9 Low]."},
+            {"threat_actor":"APT19 (Codoso Team)","tlctc_scores":[2,1,3,1,1,1,3,1,3,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Legal & Professional Services","Technology"],"notes":"China-nexus (likely freelancers/state mix). High Social Engineering (#9 - Phishing lures). High Exploiting Client (#3 - RTF exploit CVE-2017-0199, Macro-enabled Excel). High Malware use (#7 - BEACON/COBALTSTRIKE payload mentioned, includes app safelisting bypass [#1 Medium]). Other vectors not detailed [#2, #4 Low]."},
+            {"threat_actor":"APT18 (Wekby)","tlctc_scores":[1,2,3,1,1,1,2,1,1,2],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Aerospace & Defense","Technology","Healthcare"],"notes":"China-nexus. High Exploiting Client (#3 - Frequently developed/adapted zero-day exploits, used Hacking Team leak). Medium Malware use (#7 - Gh0st RAT mentioned). Medium Supply Chain (#10) implied by use of Hacking Team exploit. Medium Server exploit [#2] assumed possible for APT. Other vectors not detailed [#1, #4, #9 Low]."},
+            {"threat_actor":"APT17 (Tailgator Team, Deputy Dog)","tlctc_scores":[2,1,1,1,1,1,2,1,1,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Technology","Legal & Professional Services"],"notes":"China-nexus. Medium Abuse of Functions (#1 - Used forum profiles/posts to embed C2 info for malware). Medium Malware use (#7 - BLACKCOFFEE mentioned). Other vectors not detailed [#2, #3, #4, #9 Low]."},
+            {"threat_actor":"APT16","tlctc_scores":[1,1,1,1,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Media & Entertainment"],"notes":"China-nexus, focus on Taiwan political/journalistic matters. High Social Engineering (#9 - Spear phishing emails with lure documents targeting Taiwanese media/webmail). Medium Malware use (#7 - IRONHALO, ELMER). Other vectors not detailed [#1, #2, #3, #4 Low]."},
+            {"threat_actor":"APT15 (Ke3chang, Vixen Panda)","tlctc_scores":[1,1,1,1,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Aerospace & Defense","Energy & Utilities"],"notes":"China-nexus espionage. High Social Engineering (#9 - Well-developed spear phishing emails). Medium Malware use (#7 - Uses backdoors shared with other groups, ENFAL, MIRAGE etc.). Shared resources make attribution hard. Other vectors not detailed [#1, #2, #3, #4 Low]."},
+            {"threat_actor":"APT14","tlctc_scores":[2,1,2,1,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Government","Aerospace & Defense","Maritime"],"notes":"China-nexus data theft (military/maritime focus). High Social Engineering (#9 - Spear phishing, crafted to appear from trusted orgs, uses custom SMTP mailer [#1 Medium]). Medium Malware use (#7 - Gh0st, POISONIVY etc.). Leverages public exploits [#3 Medium]. No zero-days mentioned. Other vectors not detailed [#2, #4 Low]."},
+            {"threat_actor":"APT12 (Numbered Panda, Calc Team)","tlctc_scores":[1,1,2,2,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Media & Entertainment","Aerospace & Defense"],"notes":"China-nexus (PLA link suggested), focus on Taiwan. High Social Engineering (#9 - Phishing emails, uses compromised accounts). Medium Malware use (#7 - RIPTIDE, HIGHTIDE etc.). Exploits via documents mentioned [#3 Medium]. Identity Theft via compromised accounts [#4 Medium]. Other vectors not detailed [#1, #2 Low]."},
+            {"threat_actor":"APT10 (Red Apollo, MenuPass Team)","tlctc_scores":[2,1,2,2,1,1,3,1,3,3],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Aerospace & Defense","Government","Technology","Manufacturing","Healthcare","Telecommunications"],"notes":"China-nexus espionage (military/business intel theft). High Social Engineering (#9 - Spear phishing, though described as 'unsophisticated' lures using .lnk, double extensions). High Malware use (#7 - HAYMAKER, SNUGRIDE etc.). High Supply Chain compromise (#10 - Access via managed service providers). Medium Client Exploits [#3] implied by malicious attachments. Medium Abuse of Functions [#1] / Identity Theft [#4] implied by MSP access."},
+            {"threat_actor":"APT9","tlctc_scores":[2,1,1,2,1,1,3,1,3,2],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Pharma & Biotech","Healthcare","Technology"],"notes":"China-nexus (possible freelancer/state mix), data theft focus (pharma/biotech). High Malware use (#7 - Wide range, public & custom, shared). High Social Engineering (#9 - Spear phishing). Medium Identity Theft (#4 - Uses valid accounts). Medium Abuse of Functions (#1 - Uses remote services). Medium Supply Chain (#10 - Initial access via trusted relationship between companies). Exploits not mentioned [#2, #3 Low]."},
+            {"threat_actor":"APT8","tlctc_scores":[2,2,1,1,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Technology","Financial Services","Media & Entertainment"],"notes":"China-nexus (possible freelancer/state mix), IP theft focus. High Social Engineering (#9 - Spear phishing with attachments/links, uses chat/IM). Medium Malware use (#7 - HASH, FLYZAP etc.). Medium Exploiting Server (#2 - Exploits vulnerable internet-facing web servers). Medium Abuse of Functions (#1 - uses chat/IM programs). Other vectors not detailed [#3, #4 Low]."},
+            {"threat_actor":"APT7","tlctc_scores":[2,1,1,1,1,1,2,1,1,2],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Technology","Government"],"notes":"China-nexus IP theft focus. Medium Supply Chain (#10 - Used access to one org to infiltrate another under same parent via trusted relationship). Medium Malware use (#7 - DIGDUG, TRACKS). Medium Abuse of Functions (#1 - Lateral movement between related orgs). Other vectors not detailed [#2, #3, #4, #9 Low]."},
+            {"threat_actor":"APT6","tlctc_scores":[1,1,1,1,1,1,3,1,1,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Technology","Government","Transportation & Logistics"],"notes":"China-nexus data theft focus. High Malware use (#7 - Several custom backdoors, some shared, some unique). Other vectors not detailed [#1, #2, #3, #4, #9 Low]."},
+            {"threat_actor":"APT5","tlctc_scores":[3,1,1,2,1,1,4,1,1,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Technology","Telecommunications"],"notes":"China-nexus, focus on telecoms/satellite tech. Champion Malware use (#7 - Extremely long list, keylogging capabilities). High Abuse of Functions (#1 - Unauthorized code mods to embedded OS, modifies router images, compromises networking devices). Medium Identity Theft (#4 - Keylogging implies credential focus). Exploits/Social Engineering not mentioned as primary vectors [#2, #3, #9 Low]. Large group with subgroups."},
+            {"threat_actor":"APT4 (Maverick Panda, Sykipot Group, Wisp)","tlctc_scores":[1,1,1,1,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Aerospace & Defense","Government"],"notes":"China-nexus, targets DIB. High Social Engineering (#9 - Spear phishing using US gov/DoD themes, repurposes valid web content for lures). Medium Malware use (#7 - Multiple families listed). Other vectors not detailed [#1, #2, #3, #4 Low]."},
+            {"threat_actor":"APT3 (Buckeye, Gothic Panda, UPS Team)","tlctc_scores":[3,1,4,3,1,1,3,1,2,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Aerospace & Defense","Technology","Telecommunications","Government"],"notes":"Sophisticated China-nexus group. Champion in Client-Side Exploits (#3 - browser/Flash zero-days, ASLR/DEP bypass). High Malware use (#7 - custom backdoors, payload obfuscation) & Identity Theft (#4 - quick credential dump). High Abuse of Functions (#1 - lateral movement, complex C2). Medium Social Engineering (#9 - generic phishing). Server exploit not emphasized [#2 Low]."},
+            {"threat_actor":"APT2 (PLA Unit 61486)","tlctc_scores":[1,1,3,1,1,1,2,1,3,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Aerospace & Defense","Government"],"notes":"China-nexus (PLA Unit 61486) IP theft focus (military/aerospace). High Social Engineering (#9 - Spear phishing). High Client Exploit (#3 - Specifically mentions exploiting CVE-2012-0158 via email). Medium Malware use (#7 - MOOSE, WARP). Other vectors not detailed [#1, #2, #4 Low]."},
+            {"threat_actor":"APT1 (PLA Unit 61398, Comment Crew)","tlctc_scores":[2,1,2,2,1,1,4,1,3,1],"origin_country":"China","motivation":["Espionage","IP Theft"],"target_sectors":["Aerospace & Defense","Technology","Energy & Utilities","Financial Services","Government","Healthcare","Manufacturing","Media & Entertainment","Telecommunications","Transportation & Logistics"],"notes":"China-nexus (PLA Unit 61398). Large scale, broad industry targeting, massive data theft. Champion Malware use (#7 - Vast majority custom backdoors, installs multiple families for persistence). High Social Engineering (#9 - Spear phishing with relevant lures, attachments/links, uses fake webmail accounts). Medium Client Exploit [#3] implied by malicious files. Medium Abuse of Functions [#1] & Identity Theft [#4] implied by long-term persistence and likely credential use. Server exploits not mentioned [#2 Low]."},
+            {"threat_actor":"APT43","tlctc_scores":[2,1,1,3,1,1,2,1,4,1],"origin_country":"North Korea","motivation":["Espionage","Financial Gain"],"target_sectors":["Government","Aerospace & Defense","Education","Financial Services","Pharma & Biotech"],"notes":"North Korean state interests (espionage + cyber-crime funding). Champion Social Engineering (#9 - Aggressive, elaborate tactics, numerous spoofed personas). High Identity Theft (#4 - Likely goal of SE). Medium Malware use (#7 - Gh0st RAT, QUASARRAT etc.). Medium Abuse of Functions (#1 - Uses cover identities for tooling/infra purchase). Exploits not emphasized [#2, #3 Low]."},
+            {"threat_actor":"APT44 (Sandworm, Voodoo Bear, Seashell Blizzard, Iron Viking, Telebots)","tlctc_scores":[3,3,2,3,2,3,4,2,3,3],"origin_country":"Russia","motivation":["Espionage","Sabotage / Destruction"],"target_sectors":["Critical Infrastructure","Energy & Utilities","Government","Aerospace & Defense","Media & Entertainment","Civil Society & NGOs","Telecommunications","Transportation & Logistics"],"notes":"Russia-nexus (GRU Unit 74455). Formally designated APT44 by Mandiant in April 2024. Champion Malware use (#7 - wipers: NotPetya, HermeticWiper, CaddyWiper, CrashOverride/Industroyer, DARKCRYSTALRAT). High Exploiting Server (#2 - unpatched internet-facing appliances, OT/ICS). High Abuse of Functions (#1 - LOTL, OT/SCADA manipulation). High Identity Theft (#4 - credential phishing, lateral movement). High Social Engineering (#9 - spear phishing, watering holes). High Flooding (#6 - DDoS in combined ops). High Supply Chain (#10 - trojanized software, compromised updates). Targets critical infrastructure, defense, media, civil society. Ukraine/NATO focus. Notable: Ukraine power grid 2015/2016, NotPetya 2017, Olympic Destroyer 2018."},
+            {"threat_actor":"APT45 (Andariel, Silent Chollima)","tlctc_scores":[2,3,2,2,1,1,4,1,3,2],"origin_country":"North Korea","motivation":["Espionage","Financial Gain"],"target_sectors":["Aerospace & Defense","Government","Healthcare","Energy & Utilities","Financial Services","Nuclear"],"notes":"North Korea-nexus (DPRK military intelligence). Formally designated APT45 by Mandiant in July 2024. Champion Malware use (#7 - Dtrack/Valefor/Preft backdoor, SHATTEREDGLASS wiper, Maui ransomware). High Exploiting Server (#2 - internet-facing apps, healthcare/energy). High Social Engineering (#9 - spear phishing with military/defense lures). Medium Client Exploits (#3). Medium Identity Theft (#4 - credential expansion). Medium Supply Chain (#10 - Kudankulam NPP India 2019 via contractor networks). Active since ~2009, expanded from espionage to ransomware."},
+            {"threat_actor":"APT38","tlctc_scores":[3,1,1,2,1,1,4,1,1,1],"origin_country":"North Korea","motivation":["Financial Gain"],"target_sectors":["Financial Services"],"notes":"North Korean financially motivated (large heists). Champion Malware use (#7 - Custom backdoors, tunnelers, data miners, destructive wipers). High Abuse of Functions (#1 - Long-term access maintenance, understanding network/permissions, destructive actions). Medium Identity Theft [#4] assumed for lateral movement/access. Initial access vector not detailed [#2, #3, #9 Low]. Distinct TTPs from Lazarus."},
+            {"threat_actor":"APT37 (Scarcruft, Group123)","tlctc_scores":[1,2,4,1,1,1,3,1,3,1],"origin_country":"North Korea","motivation":["Espionage"],"target_sectors":["Government","Aerospace & Defense","Manufacturing","Healthcare"],"notes":"North Korean state interests (espionage). Champion Client-Side Exploits (#3 - Access to zero-day vulns like CVE-2018-0802, frequent HWP/Flash exploits). High Malware use (#7 - Diverse suite, custom espionage tools, destructive wipers). High Social Engineering (#9 - Tailored tactics, torrent distribution). Medium Server Exploits (#2 - Strategic web compromises mentioned). Other vectors not detailed [#1, #4 Low]."},
+            {"threat_actor":"APT42 (Charming Kitten, Mint Sandstorm)","tlctc_scores":[2,1,1,3,1,1,3,1,4,1],"origin_country":"Iran","motivation":["Espionage","Surveillance"],"target_sectors":["Government","Civil Society & NGOs","Media & Entertainment","Education","Legal & Professional Services","Pharma & Biotech"],"notes":"Iranian state-sponsored espionage/surveillance. Champion Social Engineering (#9 - Builds trust/rapport, targets specific individuals). High Malware use (#7 - Mobile malware focus for tracking/recording/SMS theft, multiple families). High Identity Theft (#4 - Focus on accessing personal/corporate email accounts). Medium Abuse of Functions [#1] via mobile malware capabilities. Exploits not emphasized [#2, #3 Low]."},
+            {"threat_actor":"APT39","tlctc_scores":[2,3,1,2,1,1,3,1,3,1],"origin_country":"Iran","motivation":["Espionage","Surveillance"],"target_sectors":["Telecommunications","Government","Retail & Hospitality"],"notes":"Iranian state-sponsored (telecoms/travel focus, likely surveillance). High Malware use (#7 - SEAWEED, CACHEMONEY, POWBAT). High Exploiting Server (#2 - Exploits vulnerable web servers, installs web shells ANTAK/ASPXSPY). High Social Engineering (#9 - Spear phishing with attachments/links, uses compromised accounts, masquerades domains). Medium Identity Theft (#4 - Uses stolen creds for OWA). Medium Abuse of Functions [#1] via web shells. No vuln exploits observed [#3 Low]."},
+            {"threat_actor":"APT34","tlctc_scores":[1,1,3,1,1,1,3,1,2,1],"origin_country":"Iran","motivation":["Espionage"],"target_sectors":["Government","Financial Services","Energy & Utilities","Telecommunications"],"notes":"Iranian state-sponsored espionage. High Malware use (#7 - POWBAT, POWRUNER, BONDUPDATER). High Client Exploit (#3 - Leveraged Office vuln CVE-2017-11882). Medium Social Engineering [#9] implied by exploit delivery mechanism. Focus on reconnaissance. Other vectors not detailed [#1, #2, #4 Low]."},
+            {"threat_actor":"APT33","tlctc_scores":[1,1,2,1,1,1,3,1,3,1],"origin_country":"Iran","motivation":["Espionage","Sabotage / Destruction"],"target_sectors":["Aerospace & Defense","Energy & Utilities","Government"],"notes":"Iranian state-sponsored (aerospace/energy focus). High Malware use (#7 - SHAPESHIFT, DROPSHOT, TURNEDUP, wipers implied by association though not listed here). High Social Engineering (#9 - Spear phishing with recruitment lures, links to malicious .hta files). Medium Client Exploit [#3] implied by .hta file delivery. Other vectors not detailed [#1, #2, #4 Low]."},
+            {"threat_actor":"APT28 (Fancy Bear, Sednit, Sofacy, STRONTIUM, Tsar Team)","tlctc_scores":[3,3,3,4,1,2,4,1,4,2],"origin_country":"Russia","motivation":["Espionage","Information Operations"],"target_sectors":["Government","Aerospace & Defense","Media & Entertainment","Energy & Utilities","Civil Society & NGOs"],"notes":"Russian GRU actor known for espionage AND disruptive operations. Champion in Spear-phishing (#9), Credential Harvesting (#4), and Malware use (#7 custom tools). High exploit use (#2/#3 server & client-side). High Abuse of Functions (#1). Also known to conduct DDoS attacks (#6 Medium) against various targets, often political or geopolitical. Potential for Supply Chain attacks (#10 Medium). [Score for #6 updated based on broader threat intelligence beyond initial text]."},
+            {"threat_actor":"APT29 (Cozy Bear, Nobelium)","tlctc_scores":[3,1,2,1,1,1,4,1,3,4],"origin_country":"Russia","motivation":["Espionage"],"target_sectors":["Government","Technology","Healthcare","Energy & Utilities","Financial Services"],"notes":"Sophisticated Russian state-sponsored group. Champion Malware use (#7 - Range of custom tools like COZYCAR, SUNBURST, BEACON). Champion Supply Chain compromise (#10 - Explicitly mentioned). High Social Engineering (#9 - Spear phishing, can be generic). High Abuse of Functions (#1 - High OPSEC, evades detection, extensive C2 infra possibly via compromised services). Medium Client Exploits [#3] implied by spear phishing delivery. Server exploits not highlighted [#2 Low]."},
+            {"threat_actor":"APT36","tlctc_scores":[1,2,3,1,1,1,3,1,4,1],"origin_country":"Pakistan","motivation":["Espionage"],"target_sectors":["Government","Aerospace & Defense"],"notes":"Pakistan linked, targets India/regional interests. Champion Social Engineering (#9 - Spear phishing with military/political themes, unique watering hole technique using SE). High Malware use (#7 - Multiple families listed). High Client Exploit (#3 - Malicious Office docs leveraging macros/known exploits). Medium Server Exploit (#2) implied by watering hole. Other vectors not detailed [#1, #4 Low]."},
+            {"threat_actor":"APT35 (Newscaster Team)","tlctc_scores":[2,2,1,3,1,1,2,1,4,1],"origin_country":"Iran","motivation":["Espionage"],"target_sectors":["Government","Healthcare","Aerospace & Defense","Energy & Utilities","Civil Society & NGOs"],"notes":"Iranian state-sponsored espionage. Champion Social Engineering (#9 - Complex, long-term efforts, spear phishing lures: healthcare, jobs, pw policies). High Identity Theft (#4 - Uses compromised accounts, credential harvesting, password spray attacks). Medium Malware use (#7 - Relies on public webshells/pentest tools, some custom). Medium Exploiting Server (#2 - Strategic web compromises, targets external web apps). Medium Abuse of Functions (#1 - Uses public tools). Client exploits not emphasized [#3 Low]."},
+            {"threat_actor":"APT32 (OceanLotus Group)","tlctc_scores":[1,1,2,1,1,1,3,1,3,1],"origin_country":"Vietnam","motivation":["Espionage"],"target_sectors":["Government","Manufacturing","Technology","Media & Entertainment","Retail & Hospitality"],"notes":"Vietnam linked, targets foreign companies investing in Vietnam. High Malware use (#7 - SOUNDBITE, WINDSHIELD etc., BEACON). High Social Engineering (#9 - Spear phishing via email (Gmail noted), uses ActiveMime files requiring macro enabling). Medium Client Exploit (#3) implied by malicious attachments/macros. Other vectors not detailed [#1, #2, #4 Low]."},
+            {"threat_actor":"UNC1878 (linked to Ryuk/Conti)","tlctc_scores":[3,3,2,3,1,2,4,1,3,1],"origin_country":"Russia","motivation":["Financial Gain"],"target_sectors":["Healthcare","Government","Manufacturing","Financial Services","Technology","Education"],"notes":"Financially motivated actor deploying Ryuk/Conti ransomware. Champion Malware capability (#7). High initial access via Social Engineering (#9). High exploitation of Server vulnerabilities (#2) and heavy use of Credential Theft tools (#4). High Abuse of Functions (#1) for lateral movement/persistence. Known to leverage DDoS (#6 Medium) as an additional extortion tactic within the broader ransomware ecosystem. [Score for #6 updated based on broader threat intelligence beyond initial text]."}
+        ];
+        const CTA_CROWDSTRIKE_2025 = {schema_version:'tlctc-actor-profile.v1',actors:[
+                {"threat_actor":"CURLY SPIDER","tlctc_scores":[2,1,1,3,1,1,2,1,4,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Technology","Financial Services","Retail & Hospitality"],"notes":"Vishing/remote-assist to obtain credentials and enroll attacker devices; quick persistence and handoff to BGH operators.","sequence":"#09 → #04 → #07","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"CHATTY SPIDER","tlctc_scores":[2,1,1,2,1,1,2,1,3,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Legal & Professional Services","Financial Services","Healthcare"],"notes":"Callback phishing leading to credential abuse and staging of exfil tools (WinSCP/Rclone) for extortion.","sequence":"#09 → #04 → #07","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"PLUMP SPIDER","tlctc_scores":[2,1,1,3,1,1,1,1,3,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Financial Services","Retail & Hospitality"],"notes":"Brazil-focused vishing to push RMM, harvest creds, and manipulate business functions (payments) post-access.","sequence":"#09 → #04 → #01","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"SCATTERED SPIDER","tlctc_scores":[2,1,1,4,2,1,2,1,4,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Technology","Telecommunications","Financial Services","Retail & Hospitality","Gaming"],"notes":"Help-desk social engineering to reset MFA/passwords; pivots into SSO/SaaS for lateral movement and data theft.","sequence":"#09 → #04","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"FAMOUS CHOLLIMA","tlctc_scores":[3,1,2,3,1,1,3,1,3,1],"origin_country":"North Korea","motivation":["Espionage","Financial Gain"],"target_sectors":["Technology","Aerospace & Defense","Financial Services"],"notes":"GenAI-augmented personas to gain roles/insider footholds; abuse of business processes followed by identity expansion and malware staging.","sequence":"#09 → #01 → #04","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"WANDERING SPIDER (Black Basta operators)","tlctc_scores":[2,1,1,3,1,1,4,1,2,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Healthcare","Manufacturing","Financial Services","Government"],"notes":"Big-game-hunting ransomware; often receives initial access from brokers, then deploys Black Basta payloads.","sequence":"#04 → #07","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"NITRO SPIDER","tlctc_scores":[2,1,3,1,1,1,3,1,2,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Technology","Financial Services"],"notes":"Malvertising/SEO-poisoning funnels victims into client-side installs leading to malware (Nitrogen).","sequence":"#01 → #03 → #07","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"OPERATOR PANDA","tlctc_scores":[2,4,1,2,2,1,2,1,1,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Telecommunications","Government","Technology"],"notes":"Internet-facing appliance exploit chains for initial access; identity pivot and occasional MitM for persistence/movement.","sequence":"#02 → #04 → #05","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"VAULT PANDA","tlctc_scores":[2,3,1,2,1,1,2,1,1,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government","Technology","Financial Services"],"notes":"Web-app exploitation followed by credential expansion and malware tooling for collection/exfiltration.","sequence":"#02 → #04 → #07","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"ENVOY PANDA","tlctc_scores":[2,2,1,2,1,1,1,1,1,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Government"],"notes":"Targeted ops against diplomatic/government entities; blends server-side access with identity abuse and business-function misuse.","sequence":"#02 → #04 → #01","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"LIMINAL PANDA","tlctc_scores":[2,3,1,2,2,1,1,1,1,2],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Telecommunications"],"notes":"Deep telecom network knowledge; leverages compromised telecom infra for routing/relays across regions (supply-chain/partner trust).","sequence":"#02 → #05 → #10","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"LOCKSMITH PANDA","tlctc_scores":[2,3,1,2,1,1,2,1,1,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Technology","Gaming","Energy & Utilities","Telecommunications","Civil Society & NGOs"],"notes":"Targets tech/gaming/energy/telecom plus dissident communities; exploit external services, expand identity, deploy tooling for collection.","sequence":"#02 → #04 → #07","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"},
+                {"threat_actor":"APT INC (BGH operators)","tlctc_scores":[1,1,1,3,1,1,4,1,2,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Technology","Healthcare","Financial Services","Manufacturing"],"notes":"Credential-centric access and rapid ransomware staging; observed destructive PowerShell usage aligned with genAI patterns.","sequence":"#04 → #07","sources":["CrowdStrike Global Threat Report 2025"],"last_updated":"2025-09-07"}
+        ]};
+        const EXAMPLE_DATASETS = {
+            google_mandiant:{name:'Google/Mandiant APTs (44)',actors:CTA_GOOGLE_MANDIANT},
+            crowdstrike_2025:{name:'CrowdStrike 2025 (13)',actors:CTA_CROWDSTRIKE_2025.actors},
+            all:{name:'All Combined (57)',get actors(){return[...CTA_GOOGLE_MANDIANT,...CTA_CROWDSTRIKE_2025.actors];}}
+        };
+        let libraryViewMode = 'grid';
+        let avgRadarChart = null;
+        const storageKey = 'threatActorRadarData_TLCTC_v4';
+        
+        let actors = {}; 
+        let current = null; 
+        let savedScores = []; 
+        let prevBeforeSave = [];
+        let chart;
+
+        // DOM Elements
+        const sel = id => document.getElementById(id);
+        const $selActor = sel('selActor');
+        const $txtName = sel('txtName');
+        const $txtNotes = sel('txtNotes');
+        const $txtSources = sel('txtSources');
+        const $txtUpdated = sel('txtUpdated');
+        const $txtSequence = sel('txtSequence');
+        const $caps = sel('caps');
+        const $mMax = sel('mMax');
+        const $mDom = sel('mDom');
+        const $mBr = sel('mBr');
+        const $mTop = sel('mTop');
+        const $legend = sel('legendBox');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            buildCapabilitySliders();
+            loadLocal();
+            populateSelect();
+            initChart();
+            bindUI();
+            if ($selActor.options.length > 1) { 
+                $selActor.selectedIndex = 1; 
+                onSelectChange(); 
+            } else { 
+                loadNew(); 
+            }
+            populateClusterFilter();
+            populateFilterSelect('libraryOriginFilter', ORIGINS, 'All Origins');
+            populateFilterSelect('libraryMotivationFilter', MOTIVATIONS, 'All Motivations');
+            populateFilterSelect('librarySectorFilter', TARGET_SECTORS, 'All Sectors');
+            populateFilterSelect('selOrigin', ORIGINS, '— Select Origin —');
+            buildPillGroup('motivationPills', MOTIVATIONS);
+            buildPillGroup('sectorPills', TARGET_SECTORS);
+            // Sector count update
+            if(sel('sectorPills')) sel('sectorPills').addEventListener('click', function(){ var c = getSelectedPills('sectorPills').length; sel('sectorCount').textContent = '(' + c + ' selected)'; });
+            var _searchTimeout;
+            if(sel('librarySearch')) sel('librarySearch').addEventListener('input', function(){ clearTimeout(_searchTimeout); _searchTimeout = setTimeout(function(){ renderLibrary(); }, 200); });
+            if(sel('libraryClusterFilter')) sel('libraryClusterFilter').addEventListener('change', function(){ renderLibrary(); });
+            if(sel('libraryClusterThreshold')) sel('libraryClusterThreshold').addEventListener('change', function(){ renderLibrary(); });
+            if(sel('libraryOriginFilter')) sel('libraryOriginFilter').addEventListener('change', function(){ renderLibrary(); });
+            if(sel('libraryMotivationFilter')) sel('libraryMotivationFilter').addEventListener('change', function(){ renderLibrary(); });
+            if(sel('librarySectorFilter')) sel('librarySectorFilter').addEventListener('change', function(){ renderLibrary(); });
+            renderLibrary();
+        });;
+
+        function buildCapabilitySliders(){
+            $caps.innerHTML = '';
+            LABELS.forEach((label, i) => {
+                const row = document.createElement('div'); 
+                row.className = 'flex items-center gap-3 text-sm';
+                
+                const lab = document.createElement('label'); 
+                lab.setAttribute('for', 'cap-'+i); 
+                lab.className = 'w-1/2 text-muted-foreground truncate';
+                lab.title = label;
+                lab.textContent = `${label} (#${i+1})`;
+                
+                const rng = document.createElement('input'); 
+                rng.type='range'; rng.min=1; rng.max=4; rng.step=1; rng.value=1; rng.id='cap-'+i; 
+                rng.className = 'w-full h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary';
+                
+                rng.addEventListener('input', ()=>{ 
+                    sel('val-'+i).textContent=rng.value; 
+                    // Color logic for value text
+                    const v = parseInt(rng.value);
+                    const valEl = sel('val-'+i);
+                    valEl.className = `w-6 text-right font-bold ${v===4?'text-purple-500':v===3?'text-red-500':v===2?'text-orange-400':'text-muted-foreground'}`;
+                    updateChart(true); 
+                });
+                
+                const val = document.createElement('div'); 
+                val.className='w-6 text-right font-bold text-muted-foreground'; 
+                val.id='val-'+i; 
+                val.textContent='1';
+                
+                row.append(lab, rng, val); 
+                $caps.appendChild(row);
+            });
+        }
+
+        // ChartJS Logic
+        function rgba(hex, a) {
+            // Simple hex to rgba conversion
+            let c;
+            if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+                c= hex.substring(1).split('');
+                if(c.length== 3){
+                    c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+                }
+                c= '0x'+c.join('');
+                return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+a+')';
+            }
+            return hex; // fail-safe
+        }
+
+        function initChart(){
+            const isDark = htmlEl.classList.contains('dark');
+            const brandColor = isDark ? '#60a5fa' : '#3b82f6'; 
+            
+            chart = new Chart(sel('radar').getContext('2d'), {
+                type:'radar',
+                data:{ labels: LABELS, datasets:[
+                    { 
+                        label:'Current', 
+                        data:[...DEFAULT_SCORES], 
+                        backgroundColor: rgba(brandColor, 0.25), 
+                        borderColor: brandColor, 
+                        borderWidth:2, 
+                        pointBackgroundColor: brandColor, 
+                        fill:true 
+                    },
+                    {
+                        label:'Previous',
+                        data:[],
+                        backgroundColor:'transparent',
+                        borderColor: isDark ? '#9ca3af' : '#6b7280',
+                        borderDash:[5,5],
+                        borderWidth:2,
+                        pointRadius:0,
+                        fill:false
+                    },
+                    {
+                        label:'Compare',
+                        data:[],
+                        backgroundColor: rgba('#10b981', 0.15),
+                        borderColor: '#10b981',
+                        borderWidth:2,
+                        pointBackgroundColor: '#10b981',
+                        borderDash:[4,4],
+                        fill:true
+                    }
+                ]},
+                options:{ 
+                    maintainAspectRatio:false, 
+                    responsive:true, 
+                    scales:{ 
+                        r:{ 
+                            suggestedMin:0, 
+                            suggestedMax:4, 
+                            ticks:{ 
+                                stepSize:1, 
+                                backdropColor:'transparent', 
+                                color: isDark ? '#9ca3af' : '#4b5563',
+                                callback:v=>(['','Low','Med','High','Champ'])[v]||'' 
+                            },
+                            grid: { color: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' },
+                            pointLabels: {
+                                color: isDark ? '#e5e7eb' : '#374151',
+                                font: { size: 10 }
+                            }
+                        } 
+                    }, 
+                    plugins:{ legend:{ display:false } } 
+                }
+            });
+        }
+
+        window.updateChart = function(isLive){
+            if(!chart) return;
+            const isDark = htmlEl.classList.contains('dark');
+            const brandColor = isDark ? '#60a5fa' : '#3b82f6';
+
+            // Update Theme Colors
+            chart.options.scales.r.ticks.color = isDark ? '#9ca3af' : '#4b5563';
+            chart.options.scales.r.grid.color = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+            chart.options.scales.r.pointLabels.color = isDark ? '#e5e7eb' : '#374151';
+            
+            const scores = currentScores();
+            chart.data.datasets[0].data = scores;
+            chart.data.datasets[0].backgroundColor = rgba(brandColor, 0.25);
+            chart.data.datasets[0].borderColor = brandColor;
+            chart.data.datasets[0].pointBackgroundColor = brandColor;
+
+            let showPrev=false, prev=[];
+            if(isLive && savedScores.length && JSON.stringify(scores)!==JSON.stringify(savedScores)){ showPrev=true; prev=[...savedScores]; }
+            else if(!isLive && prevBeforeSave.length && JSON.stringify(prevBeforeSave)!==JSON.stringify(savedScores)){ showPrev=true; prev=[...prevBeforeSave]; }
+            chart.data.datasets[1].data = prev;
+            chart.data.datasets[1].borderColor = isDark ? '#9ca3af' : '#6b7280';
+            
+            // Comparison dataset
+            const compareName = sel('selCompare').value;
+            if(compareName && actors[compareName]){
+                chart.data.datasets[2].data = actors[compareName].scores || [...DEFAULT_SCORES];
+                chart.data.datasets[2].label = compareName;
+            } else {
+                chart.data.datasets[2].data = [];
+            }
+
+            $legend.style.display = (showPrev || compareName) ? 'inline-block' : 'none';
+            if(compareName && !showPrev){
+                $legend.innerHTML = `<span class="font-bold text-primary">Current</span> vs <span class="font-bold text-emerald-500">${compareName}</span>`;
+            } else if(showPrev && !compareName){
+                $legend.innerHTML = '<span class="font-bold text-primary">Current</span> vs <span class="font-bold text-muted-foreground line-through decoration-dashed">Previous</span>';
+            } else if(showPrev && compareName){
+                $legend.innerHTML = `<span class="font-bold text-primary">Current</span> · <span class="font-bold text-muted-foreground line-through decoration-dashed">Previous</span> · <span class="font-bold text-emerald-500">${compareName}</span>`;
+            }
+
+            chart.update();
+            updateMetrics(scores);
+        }
+
+        function currentScores(){ return LABELS.map((_,i)=>parseInt(sel('cap-'+i).value,10)); }
+
+        function updateMetrics(scores){
+            const sorted=[...scores].sort((a,b)=>b-a);
+            const max = sorted[0]||0; const second = sorted[1]||0; const dom = (max-second)||0;
+            const breadth = scores.filter(v=>v>=3).length;
+            $mMax.textContent = max;
+            $mDom.textContent = dom.toFixed(0);
+            $mBr.textContent = breadth;
+            
+            const pairs = scores.map((v,i)=>({c:(i+1).toString().padStart(2,'0'), v})).sort((a,b)=>b.v-a.v);
+            const kth = pairs[Math.min(2,pairs.length-1)].v; 
+            const top = pairs.filter(p=>p.v>0 && p.v>=kth).map(p=>`#${p.c} (${p.v})`).join(', ');
+            $mTop.textContent = top ? `Top clusters: ${top}` : 'Top clusters: –';
+        }
+
+        function loadLocal(){ try{ actors = JSON.parse(localStorage.getItem(storageKey)||"{}") }catch{ actors = {} } }
+        function saveLocal(){ localStorage.setItem(storageKey, JSON.stringify(actors)); }
+
+        function populateSelect(){ 
+            const keep = $selActor.value; 
+            $selActor.innerHTML='<option value="__new__">— New Actor —</option>'; 
+            Object.keys(actors).sort((a,b)=>a.localeCompare(b)).forEach(n=>{ 
+                const o=document.createElement('option'); 
+                o.value=n; o.textContent=n; 
+                $selActor.appendChild(o); 
+            }); 
+            if(actors[keep]) $selActor.value=keep; 
+        }
+
+        function onSelectChange(){ 
+            const name = $selActor.value; 
+            if(name==='__new__' || !actors[name]){ loadNew(); return; }
+            
+            current=name; const a=actors[name];
+            $txtName.value=name;
+            $txtNotes.value=a.notes||'';
+            $txtSources.value=(a.sources||[]).join('\n');
+            $txtUpdated.value=a.updated||'';
+            $txtSequence.value=a.sequence||'';
+            sel('selOrigin').value=a.origin_country||'';
+            setSelectedPills('motivationPills', a.motivation||[]);
+            setSelectedPills('sectorPills', a.target_sectors||[]);
+            sel('sectorCount').textContent = '(' + (a.target_sectors||[]).length + ' selected)';
+            
+            savedScores = (a.scores && a.scores.length===10) ? [...a.scores] : [...DEFAULT_SCORES];
+            prevBeforeSave = [...savedScores];
+            
+            LABELS.forEach((_,i)=>{ 
+                sel('cap-'+i).value = savedScores[i]; 
+                sel('val-'+i).textContent=savedScores[i];
+                // Trigger color update
+                const valEl = sel('val-'+i);
+                const v = savedScores[i];
+                valEl.className = `w-6 text-right font-bold ${v===4?'text-purple-500':v===3?'text-red-500':v===2?'text-orange-400':'text-muted-foreground'}`;
+            });
+            sel('chartTitle').textContent = `Capability Radar — ${name}`;
+            sel('btnDelete').disabled = false;
+            updateChart(false);
+            renderObservedPaths();
+            populateCompareSelect();
+        }
+
+        function loadNew(){ 
+            current=null; 
+            $selActor.value='__new__'; 
+            $txtName.value='';
+            $txtNotes.value='';
+            $txtSources.value='';
+            $txtUpdated.value='';
+            $txtSequence.value='';
+            if(sel('selOrigin')) sel('selOrigin').value='';
+            setSelectedPills('motivationPills', []);
+            setSelectedPills('sectorPills', []);
+            if(sel('sectorCount')) sel('sectorCount').textContent = '(0 selected)'; 
+            LABELS.forEach((_,i)=>{ 
+                sel('cap-'+i).value=1; 
+                sel('val-'+i).textContent='1';
+                sel('val-'+i).className = 'w-6 text-right font-bold text-muted-foreground';
+            }); 
+            savedScores=[]; prevBeforeSave=[];
+            sel('chartTitle').textContent = 'Capability Radar — New Actor';
+            sel('btnDelete').disabled = true;
+            updateChart(false);
+            sel('observedPathsSection').classList.add('hidden');
+            sel('selCompare').value='';
+            populateCompareSelect();
+        }
+
+        function handleSave(){ 
+            const name = $txtName.value.trim(); 
+            if(!name){ alert('Name is required'); return; }
+            const scores = currentScores();
+            if(current && current!==name){ 
+                if(actors[name]){ alert('Actor with that name exists. Choose a different name.'); return; } 
+                delete actors[current]; 
+            }
+            const existingIncidents = actors[name]?.incidents || (current && actors[current]?.incidents) || [];
+            actors[name] = {
+                scores,
+                notes:$txtNotes.value.trim(),
+                sources: splitSources($txtSources.value),
+                sequence:$txtSequence.value.trim(),
+                updated:$txtUpdated.value||today(),
+                incidents: existingIncidents,
+                target_sectors: getSelectedPills('sectorPills'),
+                motivation: getSelectedPills('motivationPills'),
+                origin_country: sel('selOrigin').value || '',
+            };
+            saveLocal(); 
+            current=name; 
+            populateSelect(); 
+            $selActor.value=name; 
+            prevBeforeSave = [...savedScores];
+            savedScores=[...scores];
+            updateChart(false);
+            renderLibrary();
+            renderObservedPaths();
+            populateCompareSelect();
+            
+            // Visual feedback
+            const btn = sel('btnSave');
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="check" class="h-4 w-4 mr-2"></i> Saved';
+            lucide.createIcons();
+            setTimeout(()=> { btn.innerHTML = orig; lucide.createIcons(); }, 1500);
+        }
+
+        function handleDelete(){ 
+            const n = $selActor.value; 
+            if(n==='__new__' || !actors[n]){ alert('Select an actor first.'); return; } 
+            if(!confirm(`Delete "${n}"?`)) return; 
+            delete actors[n]; 
+            saveLocal(); 
+            populateSelect(); 
+            renderLibrary(); 
+            loadNew(); 
+        }
+
+        function splitSources(s){ return s.split(/\n|,/).map(x=>x.trim()).filter(Boolean); }
+        function today(){ return new Date().toISOString().slice(0,10); }
+
+        function normalizeScores(scoreObj){
+            const out = [];
+            for(let i=1;i<=10;i++){
+                const k1 = `TLCTC-${String(i).padStart(2,'0')}.00`;
+                const k2 = `cluster_${String(i).padStart(2,'0')}`;
+                const k3 = `cluster_${i}`;
+                let v = scoreObj?.[k1];
+                if(v==null) v = scoreObj?.[k2];
+                if(v==null) v = scoreObj?.[k3];
+                if(Array.isArray(scoreObj) && scoreObj[i-1]!=null) v = scoreObj[i-1];
+                v = parseInt(v,10);
+                if(!(v>=1 && v<=4)) v = 1;
+                out.push(v);
+            }
+            return out;
+        }
+
+        sel('btnImport').addEventListener('click', (e)=>{ e.preventDefault(); sel('fileInput').click(); });
+        sel('fileInput').addEventListener('change', (e)=>{
+            const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{
+                try{
+                    const obj = JSON.parse(r.result);
+                    let arr = null;
+                    if (Array.isArray(obj)) arr = obj;
+                    else if (Array.isArray(obj.actors)) arr = obj.actors;
+                    else if (obj && (obj.format || obj.schema_version) && Array.isArray(obj.actors)) arr = obj.actors;
+                    if(!arr) throw new Error('JSON must be an array or an object with an "actors" array.');
+                    const imported = {};
+                    arr.forEach(item=>{
+                        if(!item || !item.threat_actor || !item.tlctc_scores) return;
+                        const name = String(item.threat_actor).trim();
+                        const scores = normalizeScores(item.tlctc_scores);
+                        imported[name] = {
+                            scores,
+                            notes: (item.notes||'').toString(),
+                            sources: item.sources || [],
+                            sequence: item.sequence || '',
+                            updated: item.last_updated || item.updated || today(),
+                            incidents: item.incidents || item.observed_paths || [],
+                            target_sectors: item.target_sectors || [],
+                            motivation: item.motivation || [],
+                            origin_country: item.origin_country || '',
+                        };
+                    });
+                    if(Object.keys(imported).length===0){ alert('No valid actors found.'); return; }
+                    if(Object.keys(actors).length>0){ 
+                        if(confirm(`Import ${Object.keys(imported).length} actors and REPLACE existing library? (Cancel = merge)`)) actors=imported; 
+                        else Object.assign(actors, imported); 
+                    }
+                    else actors=imported;
+                    saveLocal(); populateSelect(); renderLibrary(); 
+                    if(Object.keys(imported).length){ $selActor.value=Object.keys(imported)[0]; onSelectChange(); }
+                }catch(err){ alert('Import failed: '+err.message); console.error(err); }
+                finally{ e.target.value=null; }
+            }; r.readAsText(f);
+        });
+
+        sel('btnExportRef').addEventListener('click', (e)=>{ e.preventDefault();
+            if(Object.keys(actors).length===0){ alert('No actors to export.'); return; }
+            const exportArray = Object.entries(actors).map(([name,a])=>{
+                const scoresObj={}; CODES.forEach((code,i)=> scoresObj[code]=a.scores?.[i]??1 );
+                const entry = { threat_actor:name, tlctc_scores:scoresObj, notes:a.notes||'', sources:a.sources||[], sequence:a.sequence||'', last_updated:a.updated||today(), origin_country:a.origin_country||'', motivation:a.motivation||[], target_sectors:a.target_sectors||[] };
+                if(a.incidents?.length) entry.observed_paths = a.incidents.map(inc=>({incident_id:inc.incident_id, notation:inc.notation, cluster_sequence:inc.cluster_sequence, dre_outcomes:inc.outcomes}));
+                return entry;
+            }).sort((x,y)=>x.threat_actor.localeCompare(y.threat_actor));
+            const payload = {
+                schema_version: 'tlctc-actor-profile.v2',
+                score_scale: '1=Low,2=Medium,3=High,4=Champion',
+                exported_at: new Date().toISOString(),
+                actors: exportArray
+            };
+            downloadJSON(payload, `ActorCapabilities-TLCTC-${today()}.json`);
+        });
+
+        sel('btnExportCSV').addEventListener('click', (e)=>{ e.preventDefault();
+            if(Object.keys(actors).length===0){ alert('No actors to export.'); return; }
+            const header = ['actor','max_score','dominance_index','breadth_ge3','top_clusters','notes'];
+            const rows = Object.entries(actors).map(([name,a])=>{
+                const s=a.scores||DEFAULT_SCORES; const sorted=[...s].sort((a,b)=>b-a); const max=sorted[0]||0; const dom=(max-(sorted[1]||0))||0; const br=s.filter(v=>v>=3).length;
+                const pairs = s.map((v,i)=>({c:(i+1).toString().padStart(2,'0'), v})).sort((a,b)=>b.v-a.v);
+                const kth = pairs[Math.min(2,pairs.length-1)].v; const top = pairs.filter(p=>p.v>0 && p.v>=kth).map(p=>`${p.c}:${p.v}`).join(' ');
+                return [name, max, dom, br, top, JSON.stringify(a.notes||'').replaceAll('"','""')];
+            });
+            const csv = [header.join(','), ...rows.map(r=>r.join(','))].join('\n');
+            downloadBlob(new Blob([csv],{type:'text/csv'}), `tlctc_actor_summary_${today()}.csv`);
+        });
+
+        function downloadJSON(obj, filename){ const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}); downloadBlob(blob, filename); }
+        function downloadBlob(blob, filename){ const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); }
+
+        sel('btnPNG').addEventListener('click', (e)=>{ e.preventDefault();
+            const name=current||'NewActor'; const cvs=sel('radar'); const url=cvs.toDataURL('image/png'); const a=document.createElement('a'); a.href=url; a.download=`${name}-CapabilityRadar.png`; a.click();
+        });
+
+        sel('btnPDF').addEventListener('click', async (e)=>{ e.preventDefault();
+            const name = $txtName.value.trim() || current || 'New Actor';
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ unit:'pt', format:'a4' });
+            const pad = 36; let y = pad;
+            doc.setFont('helvetica','bold'); doc.setFontSize(18); doc.text(`Actor Card — ${name}`, pad, y); y+=22;
+            doc.setFont('helvetica',''); doc.setFontSize(11);
+            const lines = doc.splitTextToSize(($txtNotes.value||'').toString(), 523);
+            const pdfOrigin = sel('selOrigin').value || '–';
+            const pdfMotiv = getSelectedPills('motivationPills').join(', ') || '–';
+            const pdfSectors = getSelectedPills('sectorPills').join(', ') || '–';
+            doc.text(`Origin: ${pdfOrigin}   |   Motivation: ${pdfMotiv}`, pad, y); y+=16;
+            const sectorLines = doc.splitTextToSize(`Target Sectors: ${pdfSectors}`, 523);
+            doc.text(sectorLines, pad, y); y += sectorLines.length*12 + 4;
+            doc.text(`Updated: ${$txtUpdated.value||today()}`, pad, y); y+=16;
+            doc.text(`Sequence: ${$txtSequence.value||'–'}`, pad, y); y+=16;
+            doc.text(`Sources: ${(splitSources($txtSources.value).join(', ')||'–')}`, pad, y); y+=16;
+            doc.text('Notes:', pad, y); y+=14; doc.text(lines, pad, y); y += lines.length*12 + 8;
+
+            const scores = currentScores(); const sorted=[...scores].sort((a,b)=>b-a); const max=sorted[0]||0; const dom=(max-(sorted[1]||0))||0; const br=scores.filter(v=>v>=3).length; const pairs=scores.map((v,i)=>({c:(i+1).toString().padStart(2,'0'), v})).sort((a,b)=>b.v-a.v); const kth=pairs[Math.min(2,pairs.length-1)].v; const top=pairs.filter(p=>p.v>0 && p.v>=kth).map(p=>`${p.c}:${p.v}`).join(', ');
+            doc.text(`Max: ${max}   Dominance: ${dom}   Breadth≥3: ${br}`, pad, y); y+=16; doc.text(`Top clusters: ${top||'–'}`, pad, y); y+=22;
+
+            // DRE Targeting Profile (if incidents exist)
+            const actor = actors[name] || actors[current];
+            if(actor?.incidents?.length){
+                const totals={C:0,I:0,A:0,Ac:0};
+                actor.incidents.forEach(inc=>{ if(inc.outcomes) Object.entries(inc.outcomes).forEach(([k,v])=>{ if(totals[k]!=null) totals[k]+=v; }); });
+                const dreTotal=Object.values(totals).reduce((a,b)=>a+b,0);
+                if(dreTotal>0){
+                    doc.setFont('helvetica','bold'); doc.text('DRE Targeting:', pad, y); y+=14;
+                    doc.setFont('helvetica','');
+                    const dreLabels={C:'Confidentiality',I:'Integrity',A:'Availability',Ac:'Accessibility'};
+                    const dreText=Object.entries(totals).filter(([_,v])=>v>0).map(([k,v])=>`${dreLabels[k]}: ${Math.round((v/dreTotal)*100)}%`).join(', ');
+                    doc.text(dreText, pad, y); y+=18;
+                }
+                doc.setFont('helvetica','bold'); doc.text(`Observed Attack Paths (${actor.incidents.length}):`, pad, y); y+=14;
+                doc.setFont('helvetica','');
+                actor.incidents.slice(0,8).forEach(inc=>{
+                    const notation=inc.notation || inc.cluster_sequence.map(c=>'#'+c).join(' → ');
+                    const line = doc.splitTextToSize(`${inc.incident_id}: ${notation}`, 523);
+                    doc.text(line, pad, y); y+=line.length*12+2;
+                });
+                if(actor.incidents.length>8) { doc.text(`... and ${actor.incidents.length-8} more`, pad, y); y+=14; }
+                y+=8;
+            }
+
+            const img = sel('radar').toDataURL('image/png', 1.0); doc.addImage(img, 'PNG', pad, y, 523, 300); y+=310;
+            doc.setFontSize(9); doc.setTextColor(120); doc.text('Scale: 1=Low, 2=Medium, 3=High, 4=Champion · TLCTC capability profile', pad, 820);
+            doc.save(`${name}-ActorCard.pdf`);
+        });
+
+        function renderLibrary(){
+            const box=sel('library');
+            box.innerHTML='';
+            const entries = getFilteredActors();
+            const total = Object.keys(actors).length;
+            const matchEl = sel('libraryMatchCount');
+            if(matchEl) matchEl.textContent = entries.length === total ? total + ' actors' : entries.length + ' of ' + total;
+            if(!entries.length){
+                box.innerHTML = '<p class="text-muted-foreground text-sm italic w-full text-center py-8">' + (total === 0 ? 'Import JSON or create actors, then save to see previews.' : 'No actors match the current filter.') + '</p>';
+                renderIntelligenceSummary();
+                return;
+            }
+            if(libraryViewMode === 'table') {
+                box.className = 'min-h-[150px] overflow-x-auto';
+                renderLibraryTable(entries);
+            } else {
+                box.className = 'flex flex-wrap gap-4 overflow-x-auto pb-4 min-h-[150px]';
+                renderLibraryGrid(entries);
+            }
+            renderIntelligenceSummary();
+        }
+
+        // --- Quick JSON Modal Logic ---
+        const $modal = document.getElementById('jsonModal');
+        const $modalContent = document.getElementById('jsonModalContent');
+        const $txtJson = document.getElementById('txtQuickJson');
+
+        function toggleJsonModal(show) {
+            if (show) {
+                $modal.classList.remove('hidden');
+                setTimeout(() => {
+                    $modal.classList.remove('opacity-0');
+                    $modalContent.classList.remove('scale-95');
+                    $modalContent.classList.add('scale-100');
+                }, 10);
+                
+                // Generate Current Actor JSON
+                const currentData = getCurrentActorObject();
+                $txtJson.value = JSON.stringify(currentData, null, 4);
+                
+            } else {
+                $modal.classList.add('opacity-0');
+                $modalContent.classList.remove('scale-100');
+                $modalContent.classList.add('scale-95');
+                setTimeout(() => $modal.classList.add('hidden'), 300);
+            }
+        }
+
+        function getCurrentActorObject() {
+            const name = $txtName.value.trim() || "New Actor";
+            const scores = currentScores();
+            return {
+                threat_actor: name,
+                tlctc_scores: scores,
+                notes: $txtNotes.value.trim(),
+                sources: splitSources($txtSources.value),
+                sequence: $txtSequence.value.trim(),
+                last_updated: $txtUpdated.value || today(),
+                origin_country: sel('selOrigin').value || '',
+                motivation: getSelectedPills('motivationPills'),
+                target_sectors: getSelectedPills('sectorPills'),
+            };
+        }
+
+        document.getElementById('btnQuickJson').addEventListener('click', () => toggleJsonModal(true));
+
+        document.getElementById('btnCopyClipboard').addEventListener('click', () => {
+            $txtJson.select();
+            navigator.clipboard.writeText($txtJson.value).then(() => {
+                const btn = document.getElementById('btnCopyClipboard');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `<i data-lucide="check" class="h-3 w-3 mr-2"></i> Copied!`;
+                lucide.createIcons();
+                setTimeout(() => { 
+                    btn.innerHTML = originalHTML; 
+                    lucide.createIcons();
+                }, 2000);
+            });
+        });
+
+        document.getElementById('btnLoadClipboard').addEventListener('click', () => {
+            try {
+                const raw = $txtJson.value.trim();
+                if (!raw) return;
+                
+                const obj = JSON.parse(raw);
+                let arr = [];
+                
+                if (Array.isArray(obj)) arr = obj;
+                else if (obj.actors && Array.isArray(obj.actors)) arr = obj.actors;
+                else arr = [obj]; 
+
+                const imported = {};
+                arr.forEach(item => {
+                    if(!item || (!item.threat_actor && !item.name)) return;
+                    const name = String(item.threat_actor || item.name).trim();
+                    const scores = normalizeScores(item.tlctc_scores || item.scores);
+                    imported[name] = {
+                        scores,
+                        notes: (item.notes || '').toString(),
+                        sources: item.sources || [],
+                        sequence: item.sequence || '',
+                        updated: item.last_updated || item.updated || today(),
+                        incidents: item.incidents || item.observed_paths || [],
+                        target_sectors: item.target_sectors || [],
+                        motivation: item.motivation || [],
+                        origin_country: item.origin_country || '',
+                    };
+                });
+
+                if (Object.keys(imported).length === 0) throw new Error("No valid actor data found.");
+                // Merge incidents if actor already exists
+                Object.entries(imported).forEach(([name, data])=>{
+                    if(actors[name]?.incidents?.length && data.incidents?.length){
+                        data.incidents = [...actors[name].incidents, ...data.incidents.filter(ni=> !actors[name].incidents.some(ei=>ei.incident_id===ni.incident_id))];
+                    }
+                });
+                Object.assign(actors, imported);
+                saveLocal();
+                populateSelect();
+                renderLibrary();
+                
+                const firstName = Object.keys(imported)[0];
+                $selActor.value = firstName;
+                onSelectChange();
+                
+                toggleJsonModal(false);
+                alert(`Loaded ${Object.keys(imported).length} actor(s) successfully.`);
+            } catch (e) {
+                alert("Invalid JSON: " + e.message);
+            }
+        });
+
+        function bindUI(){
+            $selActor.addEventListener('change', onSelectChange);
+            sel('btnSave').addEventListener('click', handleSave);
+            sel('btnDelete').addEventListener('click', handleDelete);
+            sel('selCompare').addEventListener('change', ()=> updateChart(false));
+            sel('btnAutoDerive').addEventListener('click', handleAutoDerive);
+        }
+
+        // ============================================================
+        //  PHASE 2 — Layer 3 Attack Path Import
+        // ============================================================
+
+        function parseCluster(s){
+            if(!s) return null;
+            if(s.startsWith('#')) return parseInt(s.slice(1),10);
+            const m = s.match(/TLCTC-(\d{2})\.\d{2}/);
+            return m ? parseInt(m[1],10) : null;
+        }
+
+        function extractFromPath(pathSequence){
+            const clusters=[]; const outcomes={C:0,I:0,A:0,Ac:0}; const velocities=[]; const stepsDetail=[];
+            if(!Array.isArray(pathSequence)) return {clusters,outcomes,velocities,stepsDetail};
+
+            pathSequence.forEach(item=>{
+                if(item.mode==='parallel' && Array.isArray(item.steps)){
+                    const pClusters=[];
+                    item.steps.forEach(s=>{
+                        const c=parseCluster(s.cluster);
+                        if(c) { clusters.push(c); pClusters.push(c); }
+                        (s.outcomes||[]).forEach(o=>{ if(outcomes[o]!=null) outcomes[o]++; });
+                    });
+                    stepsDetail.push({parallel:true, clusters:pClusters, outcomes:item.steps.flatMap(s=>s.outcomes||[])});
+                    if(item.delta_t_to_next) velocities.push(item.delta_t_to_next);
+                } else {
+                    const c=parseCluster(item.cluster);
+                    if(c) clusters.push(c);
+                    (item.outcomes||[]).forEach(o=>{ if(outcomes[o]!=null) outcomes[o]++; });
+                    stepsDetail.push({parallel:false, clusters: c?[c]:[], outcomes:item.outcomes||[]});
+                    if(item.delta_t_to_next) velocities.push(item.delta_t_to_next);
+                }
+            });
+            return {clusters, outcomes, velocities, stepsDetail};
+        }
+
+        function buildNotation(stepsDetail){
+            const parts=[];
+            stepsDetail.forEach(sd=>{
+                if(sd.parallel && sd.clusters.length>1){
+                    parts.push('('+sd.clusters.map(c=>'#'+c).join(' + ')+')');
+                } else {
+                    sd.clusters.forEach(c=> parts.push('#'+c));
+                }
+                if(sd.outcomes.length){
+                    const last=parts.length-1;
+                    parts[last]+=' + [DRE: '+[...new Set(sd.outcomes)].join(', ')+']';
+                }
+            });
+            return parts.join(' → ');
+        }
+
+        // Cluster badge colors
+        const CLUSTER_COLORS = [
+            'bg-blue-500/20 text-blue-600 dark:text-blue-400',       // #1
+            'bg-red-500/20 text-red-600 dark:text-red-400',          // #2
+            'bg-orange-500/20 text-orange-600 dark:text-orange-400',  // #3
+            'bg-violet-500/20 text-violet-600 dark:text-violet-400',  // #4
+            'bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',       // #5
+            'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400',  // #6
+            'bg-pink-500/20 text-pink-600 dark:text-pink-400',       // #7
+            'bg-amber-500/20 text-amber-700 dark:text-amber-400',    // #8 bridge
+            'bg-amber-500/20 text-amber-700 dark:text-amber-400',    // #9 bridge
+            'bg-amber-500/20 text-amber-700 dark:text-amber-400',    // #10 bridge
+        ];
+
+        // ============================================================
+        //  Enrichment Taxonomy Constants
+        // ============================================================
+        const TARGET_SECTORS = [
+            'Aerospace & Defense', 'Civil Society & NGOs', 'Critical Infrastructure',
+            'Education', 'Energy & Utilities', 'Financial Services', 'Gaming',
+            'Government', 'Healthcare', 'Legal & Professional Services',
+            'Manufacturing', 'Maritime', 'Media & Entertainment', 'Nuclear',
+            'Pharma & Biotech', 'Retail & Hospitality', 'Technology',
+            'Telecommunications', 'Transportation & Logistics'
+        ];
+        const MOTIVATIONS = ['Espionage', 'Financial Gain', 'IP Theft', 'Information Operations', 'Sabotage / Destruction', 'Surveillance'];
+        const ORIGINS = ['China', 'Iran', 'North Korea', 'Pakistan', 'Russia', 'Vietnam', 'Unknown'];
+
+        function buildPillGroup(containerId, items) {
+            var container = sel(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            items.forEach(function(item) {
+                var pill = document.createElement('button');
+                pill.type = 'button';
+                pill.dataset.value = item;
+                pill.textContent = item;
+                pill.dataset.active = 'false';
+                pill.className = 'pill-toggle px-2 py-0.5 rounded-full text-[10px] font-medium border transition-all cursor-pointer bg-secondary/50 text-muted-foreground border-border hover:border-primary/50';
+                pill.onclick = function() {
+                    if (pill.dataset.active === 'true') {
+                        pill.dataset.active = 'false';
+                        pill.className = 'pill-toggle px-2 py-0.5 rounded-full text-[10px] font-medium border transition-all cursor-pointer bg-secondary/50 text-muted-foreground border-border hover:border-primary/50';
+                    } else {
+                        pill.dataset.active = 'true';
+                        pill.className = 'pill-toggle px-2 py-0.5 rounded-full text-[10px] font-medium border transition-all cursor-pointer bg-primary text-primary-foreground border-primary';
+                    }
+                };
+                container.appendChild(pill);
+            });
+        }
+
+        function getSelectedPills(containerId) {
+            var container = sel(containerId);
+            if (!container) return [];
+            return Array.from(container.querySelectorAll('.pill-toggle')).filter(function(p) { return p.dataset.active === 'true'; }).map(function(p) { return p.dataset.value; });
+        }
+
+        function setSelectedPills(containerId, values) {
+            var container = sel(containerId);
+            if (!container) return;
+            container.querySelectorAll('.pill-toggle').forEach(function(p) {
+                if ((values || []).indexOf(p.dataset.value) !== -1) {
+                    p.dataset.active = 'true';
+                    p.className = 'pill-toggle px-2 py-0.5 rounded-full text-[10px] font-medium border transition-all cursor-pointer bg-primary text-primary-foreground border-primary';
+                } else {
+                    p.dataset.active = 'false';
+                    p.className = 'pill-toggle px-2 py-0.5 rounded-full text-[10px] font-medium border transition-all cursor-pointer bg-secondary/50 text-muted-foreground border-border hover:border-primary/50';
+                }
+            });
+        }
+
+        function populateFilterSelect(selectId, items, label) {
+            var s = sel(selectId);
+            if (!s) return;
+            s.innerHTML = '<option value="">' + label + '</option>';
+            items.forEach(function(item) {
+                var o = document.createElement('option');
+                o.value = item;
+                o.textContent = item;
+                s.appendChild(o);
+            });
+        }
+
+        function notationHTML(stepsDetail){
+            const parts=[];
+            stepsDetail.forEach(sd=>{
+                if(sd.parallel && sd.clusters.length>1){
+                    const badges=sd.clusters.map(c=>`<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold ${CLUSTER_COLORS[c-1]||''}">#${c}</span>`);
+                    parts.push('('+badges.join(' + ')+')');
+                } else {
+                    sd.clusters.forEach(c=>{
+                        parts.push(`<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold ${CLUSTER_COLORS[c-1]||''}">#${c}</span>`);
+                    });
+                }
+                if(sd.outcomes.length){
+                    parts[parts.length-1]+= ` <span class="text-[10px] text-destructive font-mono">[DRE: ${[...new Set(sd.outcomes)].join(', ')}]</span>`;
+                }
+            });
+            return parts.join(' <span class="text-muted-foreground mx-0.5">→</span> ');
+        }
+
+        let pendingL3Incidents = [];
+
+        function toggleL3Modal(show){
+            const modal=sel('l3Modal'), content=sel('l3ModalContent');
+            if(show){
+                modal.classList.remove('hidden');
+                setTimeout(()=>{ modal.classList.remove('opacity-0'); content.classList.remove('scale-95'); content.classList.add('scale-100'); },10);
+                // Populate actor select
+                const s=sel('l3ActorSelect');
+                s.innerHTML='<option value="__new__">— New Actor —</option>';
+                Object.keys(actors).sort().forEach(n=>{
+                    const o=document.createElement('option'); o.value=n; o.textContent=n; s.appendChild(o);
+                });
+                if(current) s.value=current;
+                sel('l3ActorName').value = current||'';
+                s.addEventListener('change', ()=>{
+                    sel('l3ActorName').value = s.value==='__new__' ? '' : s.value;
+                });
+                lucide.createIcons();
+            } else {
+                modal.classList.add('opacity-0');
+                content.classList.remove('scale-100'); content.classList.add('scale-95');
+                setTimeout(()=> modal.classList.add('hidden'),300);
+                pendingL3Incidents=[];
+            }
+        }
+
+        sel('btnImportL3').addEventListener('click', ()=> sel('fileInputL3').click());
+        sel('fileInputL3').addEventListener('change', e=>{
+            const files=Array.from(e.target.files); if(!files.length) return;
+            pendingL3Incidents=[];
+            const preview=sel('l3IncidentPreview');
+            preview.innerHTML='';
+            let loaded=0;
+
+            files.forEach(file=>{
+                const reader=new FileReader();
+                reader.onload=()=>{
+                    try{
+                        const json=JSON.parse(reader.result);
+                        if(!json.path_sequence) throw new Error('Not a Layer 3 file');
+                        const {clusters,outcomes,velocities,stepsDetail}=extractFromPath(json.path_sequence);
+                        const incId=json.metadata?.incident_id||file.name.replace('.json','');
+                        const notation=buildNotation(stepsDetail);
+                        pendingL3Incidents.push({incident_id:incId, cluster_sequence:clusters, outcomes, velocities, stepsDetail, notation, imported_at:new Date().toISOString()});
+
+                        const row=document.createElement('div');
+                        row.className='bg-secondary/30 border border-border rounded-lg p-2';
+                        row.innerHTML=`<div class="font-mono text-xs font-bold mb-1">${incId}</div><div class="text-xs">${notationHTML(stepsDetail)}</div>`;
+                        preview.appendChild(row);
+                    }catch(err){ console.warn('Skipped',file.name,err.message); }
+                    loaded++;
+                    if(loaded===files.length && pendingL3Incidents.length>0) toggleL3Modal(true);
+                    else if(loaded===files.length) alert('No valid Layer 3 attack path files found.');
+                };
+                reader.readAsText(file);
+            });
+            e.target.value=null;
+        });
+
+        sel('btnL3Confirm').addEventListener('click', ()=>{
+            if(!pendingL3Incidents.length) return;
+            const nameInput=sel('l3ActorName').value.trim();
+            const selectVal=sel('l3ActorSelect').value;
+            const actorName = nameInput || (selectVal!=='__new__' ? selectVal : '');
+            if(!actorName){ alert('Enter an actor name.'); return; }
+
+            if(!actors[actorName]){
+                actors[actorName]={scores:[...DEFAULT_SCORES], notes:'', sources:[], sequence:'', updated:today(), incidents:[]};
+            }
+            if(!actors[actorName].incidents) actors[actorName].incidents=[];
+            pendingL3Incidents.forEach(inc=>{
+                // Avoid duplicate incident_ids
+                if(!actors[actorName].incidents.some(e=>e.incident_id===inc.incident_id)){
+                    actors[actorName].incidents.push(inc);
+                }
+            });
+            actors[actorName].updated=today();
+            saveLocal();
+            populateSelect();
+            $selActor.value=actorName;
+            current=actorName;
+            onSelectChange();
+            renderLibrary();
+            toggleL3Modal(false);
+        });
+
+        // ============================================================
+        //  PHASE 3 — Observed Attack Paths & Cluster Histogram
+        // ============================================================
+
+        function renderObservedPaths(){
+            const section=sel('observedPathsSection');
+            const list=sel('incidentList');
+            const actor=current && actors[current];
+
+            if(!actor?.incidents?.length){
+                section.classList.add('hidden');
+                return;
+            }
+            section.classList.remove('hidden');
+            sel('incidentCount').textContent=actor.incidents.length;
+            list.innerHTML='';
+
+            actor.incidents.forEach((inc,idx)=>{
+                const row=document.createElement('div');
+                row.className='flex items-center justify-between gap-2 bg-secondary/30 border border-border rounded-lg p-3';
+
+                const left=document.createElement('div');
+                left.className='flex-1 min-w-0';
+                left.innerHTML=`
+                    <div class="font-mono text-xs font-bold text-muted-foreground mb-1">${inc.incident_id}</div>
+                    <div class="text-xs leading-relaxed">${notationHTML(inc.stepsDetail||[])}</div>
+                `;
+
+                const del=document.createElement('button');
+                del.className='btn btn-ghost btn-sm h-7 w-7 p-0 text-destructive shrink-0';
+                del.innerHTML='<i data-lucide="x" class="h-3 w-3"></i>';
+                del.onclick=()=> removeIncident(idx);
+
+                row.append(left,del);
+                list.appendChild(row);
+            });
+
+            renderClusterHistogram();
+            renderDREProfile();
+            lucide.createIcons();
+        }
+
+        function removeIncident(idx){
+            const actor=actors[current];
+            if(!actor?.incidents) return;
+            actor.incidents.splice(idx,1);
+            saveLocal();
+            renderObservedPaths();
+        }
+
+        function renderClusterHistogram(){
+            const actor=current && actors[current];
+            if(!actor?.incidents?.length) return;
+
+            const freq=Array(10).fill(0);
+            actor.incidents.forEach(inc=>{
+                (inc.cluster_sequence||[]).forEach(c=>{ if(c>=1&&c<=10) freq[c-1]++; });
+            });
+
+            const maxFreq=Math.max(...freq,1);
+            const container=sel('clusterHistogram');
+            container.innerHTML='';
+
+            freq.forEach((count,i)=>{
+                const pct=count ? (count/maxFreq*100) : 0;
+                const barColor = i>=7 ? 'bg-amber-500' : 'bg-primary';
+                const row=document.createElement('div');
+                row.className='flex items-center gap-2 text-xs';
+                row.innerHTML=`
+                    <span class="w-24 text-muted-foreground truncate font-mono">#${i+1} ${LABELS[i].split(' ')[0]}</span>
+                    <div class="flex-1 bg-secondary rounded-full h-3 overflow-hidden">
+                        <div class="h-3 rounded-full ${barColor} transition-all" style="width:${pct}%"></div>
+                    </div>
+                    <span class="w-6 text-right font-bold">${count}</span>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // ============================================================
+        //  PHASE 4 — DRE Targeting Profile
+        // ============================================================
+
+        function renderDREProfile(){
+            const actor=current && actors[current];
+            const container=sel('dreProfile');
+            container.innerHTML='';
+            if(!actor?.incidents?.length) return;
+
+            const totals={C:0,I:0,A:0,Ac:0};
+            actor.incidents.forEach(inc=>{
+                if(inc.outcomes) Object.entries(inc.outcomes).forEach(([k,v])=>{ if(totals[k]!=null) totals[k]+=v; });
+            });
+
+            const total=Object.values(totals).reduce((a,b)=>a+b,0);
+            if(total===0){
+                container.innerHTML='<p class="text-xs text-muted-foreground italic">No DRE outcomes recorded in imported paths.</p>';
+                return;
+            }
+
+            const labels={C:'Confidentiality',I:'Integrity',A:'Availability',Ac:'Accessibility'};
+            const colors={C:'text-red-500',I:'text-purple-500',A:'text-orange-500',Ac:'text-cyan-500'};
+
+            Object.entries(totals).forEach(([key,count])=>{
+                if(count===0) return;
+                const pct=Math.round((count/total)*100);
+                const el=document.createElement('div');
+                el.className='bg-secondary/30 border border-border rounded-lg px-4 py-2 text-center min-w-[100px]';
+                el.innerHTML=`
+                    <div class="text-2xl font-display font-bold ${colors[key]}">${pct}%</div>
+                    <div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">${labels[key]}</div>
+                    <div class="text-[10px] text-muted-foreground">(${count} events)</div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        // ============================================================
+        //  PHASE 5 — Actor Comparison
+        // ============================================================
+
+        function populateCompareSelect(){
+            const s=sel('selCompare');
+            const keep=s.value;
+            s.innerHTML='<option value="">Compare with...</option>';
+            Object.keys(actors).sort().forEach(name=>{
+                if(name===current) return;
+                const o=document.createElement('option'); o.value=name; o.textContent=name; s.appendChild(o);
+            });
+            if(actors[keep] && keep!==current) s.value=keep;
+        }
+
+        // Auto-derive scores from incident cluster frequency
+        function handleAutoDerive(){
+            const actor=current && actors[current];
+            if(!actor?.incidents?.length){ alert('No imported attack paths to derive from.'); return; }
+
+            const freq=Array(10).fill(0);
+            actor.incidents.forEach(inc=>{
+                (inc.cluster_sequence||[]).forEach(c=>{ if(c>=1&&c<=10) freq[c-1]++; });
+            });
+
+            const maxFreq=Math.max(...freq);
+            if(maxFreq===0) return;
+
+            const derived=freq.map(f=>{
+                if(f===0) return 1;
+                return Math.min(4, Math.max(1, Math.ceil((f/maxFreq)*3)+1));
+            });
+
+            LABELS.forEach((_,i)=>{
+                sel('cap-'+i).value=derived[i];
+                sel('val-'+i).textContent=derived[i];
+                const v=derived[i];
+                sel('val-'+i).className=`w-6 text-right font-bold ${v===4?'text-purple-500':v===3?'text-red-500':v===2?'text-orange-400':'text-muted-foreground'}`;
+            });
+            updateChart(true);
+        }
+    </script>
+</body>
+</html>

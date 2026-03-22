@@ -8,11 +8,17 @@
   <script src="/vendor/react/18.3.1/react-dom.production.min.js"></script>
   <script src="/vendor/babel/7.26.4/babel.min.js"></script>
   <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+          },
           colors: {
             slate: {
               900: '#0f172a', 800: '#1e293b', 700: '#334155', 600: '#475569', 500: '#64748b', 400: '#94a3b8'
@@ -24,7 +30,54 @@
   </script>
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.2s, color 0.2s; }
+    body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; transition: background-color 0.2s, color 0.2s; }
+
+    /* Nav bar HSL variables (matching TLCTC app ecosystem) */
+    :root {
+      --nav-background: 210 40% 98%;
+      --nav-foreground: 222 47% 11%;
+      --nav-primary: 221 83% 53%;
+      --nav-muted-foreground: 215.4 16.3% 46.9%;
+      --nav-border: 214.3 31.8% 91.4%;
+      --nav-secondary: 210 40% 96.1%;
+    }
+    .dark {
+      --nav-background: 222 47% 11%;
+      --nav-foreground: 210 40% 98%;
+      --nav-primary: 217 91% 60%;
+      --nav-muted-foreground: 215 20.2% 65.1%;
+      --nav-border: 217 33% 17%;
+      --nav-secondary: 217 33% 17%;
+    }
+
+    #tlctc-unified-nav {
+      background: hsl(var(--nav-background) / 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid hsl(var(--nav-border));
+      color: hsl(var(--nav-foreground));
+    }
+    #tlctc-unified-nav a { color: hsl(var(--nav-muted-foreground)); text-decoration: none; transition: color 0.15s; }
+    #tlctc-unified-nav a:hover { color: hsl(var(--nav-foreground)); }
+    #tlctc-unified-nav a.nav-active { color: hsl(var(--nav-foreground)); font-weight: 600; }
+    #tlctc-unified-nav .nav-logo-bg { background: hsl(var(--nav-primary) / 0.1); color: hsl(var(--nav-primary)); }
+    #tlctc-unified-nav .nav-label { color: hsl(var(--nav-foreground)); }
+    #tlctc-unified-nav .nav-sublabel { color: hsl(var(--nav-muted-foreground)); }
+    #tlctc-unified-nav .nav-toggle-btn { background: transparent; border: none; cursor: pointer; color: hsl(var(--nav-foreground)); border-radius: 9999px; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+    #tlctc-unified-nav .nav-toggle-btn:hover { background: hsl(var(--nav-secondary)); }
+
+    #tlctc-mobile-menu {
+      background: hsl(var(--nav-background) / 0.95);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      color: hsl(var(--nav-foreground));
+    }
+    #tlctc-mobile-menu a { color: hsl(var(--nav-muted-foreground)); text-decoration: none; }
+    #tlctc-mobile-menu a:hover { color: hsl(var(--nav-foreground)); }
+    #tlctc-mobile-menu a.nav-active { color: hsl(var(--nav-foreground)); font-weight: 600; }
+    #tlctc-mobile-menu .nav-toggle-btn { background: transparent; border: none; cursor: pointer; color: hsl(var(--nav-foreground)); border-radius: 9999px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+    #tlctc-mobile-menu .nav-toggle-btn:hover { background: hsl(var(--nav-secondary)); }
+
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -34,9 +87,102 @@
     .dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
   </style>
 </head>
-<body>
-  <div id="root"></div>
-  
+<body class="flex flex-col h-screen overflow-hidden">
+
+  <!-- Unified TLCTC Nav Bar (static HTML, outside React) -->
+  <header id="tlctc-unified-nav" class="sticky top-0 z-50 px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="flex items-center gap-2" style="text-decoration:none;">
+        <div class="nav-logo-bg flex items-center justify-center rounded-lg" style="width:36px;height:36px;">
+          <img src="/images/logo-small.png" alt="Logo" style="width:100%;height:100%;object-fit:contain;padding:4px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+          <i data-lucide="shield" style="width:20px;height:20px;display:none;"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="nav-label font-display font-bold text-lg leading-tight">TLCTC</span>
+          <span class="nav-sublabel text-[10px] font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+        </div>
+      </a>
+    </div>
+    <nav class="hidden md:flex items-center gap-6">
+      <a href="threat-modeling.html" class="nav-active text-sm font-medium">Threat Modeling</a>
+      <a href="attack-path-architect.html" class="text-sm font-medium">Attack Path Architect</a>
+      <a href="actor-profile-designer.html" class="text-sm font-medium">Actor Profiler</a>
+      <a href="radar-tlctc-app.html" class="text-sm font-medium">Threat Radar</a>
+      <a href="/" class="text-sm font-medium flex items-center gap-1">TLCTC.net <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <button onclick="toggleNavTheme()" class="nav-toggle-btn" aria-label="Toggle theme">
+        <i data-lucide="sun" id="nav-sun-icon" style="width:16px;height:16px;display:none;"></i>
+        <i data-lucide="moon" id="nav-moon-icon" style="width:16px;height:16px;"></i>
+      </button>
+      <button onclick="toggleNavMenu()" class="nav-toggle-btn md:hidden">
+        <i data-lucide="menu" style="width:20px;height:20px;"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Menu -->
+  <div id="tlctc-mobile-menu" class="fixed inset-0 z-[60] md:hidden hidden transition-all duration-300 opacity-0">
+    <div class="flex h-14 items-center justify-between px-6" style="border-bottom:1px solid hsl(var(--nav-border));">
+      <span class="font-display font-bold text-lg" style="color:hsl(var(--nav-foreground));">TLCTC</span>
+      <button onclick="toggleNavMenu()" class="nav-toggle-btn">
+        <i data-lucide="x" style="width:24px;height:24px;"></i>
+      </button>
+    </div>
+    <nav class="flex flex-col p-8 gap-6 text-lg font-medium">
+      <a href="threat-modeling.html" class="nav-active">Threat Modeling</a>
+      <a href="attack-path-architect.html">Attack Path Architect</a>
+      <a href="actor-profile-designer.html">Actor Profiler</a>
+      <a href="radar-tlctc-app.html">Threat Radar</a>
+      <a href="/">TLCTC.net</a>
+    </nav>
+  </div>
+
+  <div id="root" class="flex-1 overflow-hidden"></div>
+
+  <!-- Nav bar vanilla JS (outside React) -->
+  <script>
+    function toggleNavMenu() {
+      var menu = document.getElementById('tlctc-mobile-menu');
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        requestAnimationFrame(function() { menu.classList.add('opacity-100'); menu.classList.remove('opacity-0'); });
+      } else {
+        menu.classList.add('opacity-0');
+        menu.classList.remove('opacity-100');
+        setTimeout(function() { menu.classList.add('hidden'); }, 300);
+      }
+    }
+
+    function toggleNavTheme() {
+      if (window.__tlctcToggleTheme) {
+        window.__tlctcToggleTheme();
+      } else {
+        document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      }
+    }
+
+    function updateNavThemeIcons() {
+      var isDark = document.documentElement.classList.contains('dark');
+      var sun = document.getElementById('nav-sun-icon');
+      var moon = document.getElementById('nav-moon-icon');
+      if (sun && moon) {
+        sun.style.display = isDark ? 'block' : 'none';
+        moon.style.display = isDark ? 'none' : 'block';
+      }
+    }
+
+    // Watch for theme class changes on <html> (syncs with React state)
+    new MutationObserver(updateNavThemeIcons).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    // Initialize icons after DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.lucide) { lucide.createIcons(); }
+      updateNavThemeIcons();
+    });
+  </script>
+
   <script type="text/babel">
     const { useState, useRef, useEffect, useCallback } = React;
 
@@ -618,7 +764,7 @@
       });
       const canvasRef = useRef(null);
 
-      // Sync dark mode class
+      // Sync dark mode class and expose toggle bridge for nav bar
       useEffect(() => {
         if (darkMode) {
           document.documentElement.classList.add('dark');
@@ -626,6 +772,8 @@
           document.documentElement.classList.remove('dark');
         }
         localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+        window.__tlctcToggleTheme = () => setDarkMode(prev => !prev);
+        return () => { delete window.__tlctcToggleTheme; };
       }, [darkMode]);
 
       // Load from localStorage
@@ -1323,17 +1471,12 @@
       const getFilteredComponents = () => activeTab === 'all' ? COMPONENT_TYPES : COMPONENT_TYPES.filter(c => c.layer === activeTab);
 
       return (
-        <div className={`flex flex-col h-screen ${darkMode ? 'bg-slate-900 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
-          {/* Header */}
-          <header className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} border-b px-4 py-2 flex items-center justify-between flex-shrink-0`}>
+        <div className={`flex flex-col h-full ${darkMode ? 'bg-slate-900 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+          {/* Toolbar */}
+          <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} border-b px-4 py-2 flex items-center justify-between flex-shrink-0`}>
             <div className="flex items-center gap-3">
               <span className="text-amber-500"><Icons.Target /></span>
-              <div>
-                <h1 className="font-bold">TLCTC Threat Identification Tool</h1>
-                <p className={`text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>SDLC Threat Modeling · v2.0 <a href="/"> --> TLCTC.net</a>
-                  </p>
-
-              </div>
+              <span className={`text-xs font-semibold ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Threat Modeling · v2.0</span>
               <select onChange={(e) => { if (e.target.value) { loadTemplate(e.target.value); e.target.value = ''; } }}
                 className={`${darkMode ? 'bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600' : 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200'} border rounded px-2 py-1 text-xs cursor-pointer`}>
                 <option value="">Load Example Template...</option>
@@ -1341,7 +1484,6 @@
               </select>
             </div>
             <div className="flex items-center gap-2">
-
               <button onClick={() => setShowThreatRegister(true)} className="flex items-center gap-2 px-3 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm font-medium text-white">
                 <Icons.FileJson /> Threat Register
               </button>
@@ -1351,12 +1493,8 @@
               </label>
               <button onClick={() => setShowExport(true)} className={`p-2 ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-200'} rounded`}><Icons.Download /></button>
               <button onClick={clearAll} className={`p-2 ${darkMode ? 'hover:bg-red-900/50 text-red-400' : 'hover:bg-red-100 text-red-500'} rounded`}><Icons.Trash /></button>
-              <div className={`h-5 w-px mx-1 ${darkMode ? 'bg-slate-700' : 'bg-slate-200'}`}></div>
-              <button onClick={() => setDarkMode(!darkMode)} className={`p-2 ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-200'} rounded`} title="Toggle theme">
-                {darkMode ? <Icons.Sun /> : <Icons.Moon />}
-              </button>
             </div>
-          </header>
+          </div>
 
           <div className="flex flex-1 overflow-hidden">
             {/* Left Panel */}

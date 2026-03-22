@@ -1,0 +1,63 @@
+{
+    "sectors": [
+      {
+        "id": "financially-motivated-ch-2024annual",
+        "name": "Financially Motivated Crim. (CH 2024)",
+        "color": "#e67e22", 
+        "backgroundColor": "rgba(230, 126, 34, 0.1)",
+        "activeThreats": { "1": true, "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true, "9": true, "10": true },
+        "values": { 
+          "1": 11, "2": 10, "3": 0, "4": 21, "5": 0, "6": 6, "7": 23, "8": 0, "9": 20, "10": 5 
+        },
+        "oldValues": { 
+          "1": 16, "2": 12, "3": 0, "4": 30, "5": 0, "6": 0, "7": 25, "8": 0, "9": 39, "10": 3 
+        },
+        "zoneLimits": { 
+          "1": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "2": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "3": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "4": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "5": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "6": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "7": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "8": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "9": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
+         },
+        "toBeReported": { 
+          "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
+         },
+        "riskToleranceCrashed": { "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false },
+        "collapsed": false
+      },
+      {
+        "id": "nation-state-apt-ch-2024annual",
+        "name": "Nation-State / APTs (CH 2024)",
+        "color": "#e74c3c", 
+        "backgroundColor": "rgba(231, 76, 60, 0.1)",
+        "activeThreats": { "1": true, "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true, "9": true, "10": true },
+        "values": { 
+          "1": 5, "2": 18, "3": 0, "4": 16, "5": 3, "6": 0, "7": 14, "8": 0, "9": 13, "10": 19
+         },
+        "oldValues": { 
+          "1": 2, "2": 20, "3": 0, "4": 17, "5": 3, "6": 0, "7": 16, "8": 0, "9": 14, "10": 18 
+         },
+        "zoneLimits": {
+           "1": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "2": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "3": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "4": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "5": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "6": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "7": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "8": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "9": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
+         },
+        "toBeReported": { "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false },
+        "riskToleranceCrashed": { "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false },
+        "collapsed": true 
+      },
+      {
+        "id": "hacktivist-ch-2024annual",
+        "name": "Hacktivists (CH 2024)",
+        "color": "#2ecc71", 
+        "backgroundColor": "rgba(46, 204, 113, 0.1)",
+        "activeThreats": { "1": true, "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true, "9": true, "10": true },
+        "values": { 
+          "1": 4, "2": 0, "3": 0, "4": 0, "5": 0, "6": 24, "7": 3, "8": 0, "9": 0, "10": 0
+         },
+        "oldValues": { 
+          "1": 5, "2": 0, "3": 0, "4": 0, "5": 0, "6": 25, "7": 4, "8": 0, "9": 0, "10": 0 
+         },
+        "zoneLimits": {
+           "1": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "2": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "3": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "4": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "5": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "6": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "7": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "8": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "9": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
+         },
+        "toBeReported": { "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false },
+        "riskToleranceCrashed": { "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false },
+        "collapsed": true 
+      }
+    ]
+}

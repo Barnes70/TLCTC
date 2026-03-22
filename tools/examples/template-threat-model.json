@@ -1,0 +1,306 @@
+{
+  "$schema": "tlctc-threat-identification-v2",
+  "tlctc_version": "2.0",
+  "metadata": {
+    "name": "YOUR PROJECT NAME",
+    "version": "1.0.0",
+    "author": "Your Name",
+    "sdlcPhase": "Design",
+    "description": "Brief description of the system being modeled. Replace this template with your own components, interfaces, and threat assessments.",
+    "created": "2026-01-01T00:00:00.000Z"
+  },
+  "system_model": {
+    "groups": [
+      {
+        "id": "group-cloud",
+        "name": "Cloud Environment",
+        "type": "group-container",
+        "position": { "x": 30, "y": 30 },
+        "size": { "width": 600, "height": 400 },
+        "metadata": {
+          "version": "",
+          "owner": "@Org",
+          "isThirdParty": false,
+          "description": "Primary cloud hosting environment. Groups organize components into trust zones.",
+          "environment": "Production"
+        }
+      }
+    ],
+    "components": [
+      {
+        "id": "comp-api",
+        "type": "api-endpoint",
+        "name": "API Server",
+        "layer": "application",
+        "groupId": "group-cloud",
+        "position": { "x": 80, "y": 120 },
+        "metadata": {
+          "version": "1.0.0",
+          "owner": "@Org",
+          "isThirdParty": false,
+          "criticality": "High",
+          "description": "REST API endpoint. Server-role component: threats include #2 (Exploiting Server).",
+          "sbom": ""
+        },
+        "threats": [
+          {
+            "cluster": { "strategic": "#1", "operational": "TLCTC-01.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-3",
+            "residual_risk": "Medium",
+            "notes": "API functions could be abused beyond intended scope (e.g., bulk data extraction via pagination abuse).",
+            "control_ref": ""
+          },
+          {
+            "cluster": { "strategic": "#2", "operational": "TLCTC-02.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-3",
+            "residual_risk": "High",
+            "notes": "Server-side vulnerabilities: injection flaws, deserialization, SSRF. Classify by R-ROLE: server-role = #2.",
+            "control_ref": ""
+          },
+          {
+            "cluster": { "strategic": "#4", "operational": "TLCTC-04.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-3",
+            "residual_risk": "Medium",
+            "notes": "Authentication bypass, token abuse, privilege escalation. Credential use is always #4 (R-CRED).",
+            "control_ref": ""
+          },
+          {
+            "cluster": { "strategic": "#6", "operational": "TLCTC-06.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-4",
+            "residual_risk": "Low",
+            "notes": "Denial of service via request flooding. Consider rate limiting and WAF controls.",
+            "control_ref": ""
+          }
+        ]
+      },
+      {
+        "id": "comp-db",
+        "type": "database",
+        "name": "PostgreSQL Database",
+        "layer": "external",
+        "groupId": "group-cloud",
+        "position": { "x": 350, "y": 120 },
+        "metadata": {
+          "version": "16",
+          "owner": "@Org",
+          "isThirdParty": false,
+          "criticality": "Critical",
+          "description": "Primary data store. External-layer component within the cloud group.",
+          "sbom": ""
+        },
+        "threats": [
+          {
+            "cluster": { "strategic": "#1", "operational": "TLCTC-01.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-2",
+            "residual_risk": "Medium",
+            "notes": "Abuse of legitimate database functions (e.g., COPY TO for exfiltration, excessive privilege grants).",
+            "control_ref": ""
+          },
+          {
+            "cluster": { "strategic": "#2", "operational": "TLCTC-02.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-3",
+            "residual_risk": "High",
+            "notes": "SQL injection, stored procedure exploitation. Server-role = #2 (R-ROLE).",
+            "control_ref": ""
+          },
+          {
+            "cluster": { "strategic": "#4", "operational": "TLCTC-04.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-2",
+            "residual_risk": "High",
+            "notes": "Database credential theft or reuse. Credential use = #4 (R-CRED).",
+            "control_ref": ""
+          }
+        ]
+      },
+      {
+        "id": "comp-browser",
+        "type": "client-browser",
+        "name": "User Browser",
+        "layer": "external",
+        "groupId": null,
+        "position": { "x": 80, "y": 500 },
+        "metadata": {
+          "version": "",
+          "owner": "@User",
+          "isThirdParty": false,
+          "criticality": "Medium",
+          "description": "End-user browser client. External to the cloud trust boundary.",
+          "sbom": ""
+        },
+        "threats": [
+          {
+            "cluster": { "strategic": "#3", "operational": "TLCTC-03.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-3",
+            "residual_risk": "Medium",
+            "notes": "Client-side exploitation: XSS, DOM manipulation, browser vulnerabilities. Client-role = #3 (R-ROLE).",
+            "control_ref": ""
+          },
+          {
+            "cluster": { "strategic": "#9", "operational": "TLCTC-09.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-2",
+            "residual_risk": "Medium",
+            "notes": "Social engineering targeting the user (phishing, credential harvesting). Bridge cluster: crosses human boundary.",
+            "control_ref": ""
+          }
+        ]
+      }
+    ],
+    "interfaces": [
+      {
+        "id": "iface-browser-api",
+        "name": "User Browser → API Server",
+        "type": "network",
+        "from": "comp-browser",
+        "to": "comp-api",
+        "protocol": "HTTPS",
+        "port": "443",
+        "clientComponentId": "comp-browser",
+        "serverComponentId": "comp-api",
+        "roleConfidence": "high",
+        "crossesTrustBoundary": true,
+        "sourceSphere": "@User",
+        "targetSphere": "@Org",
+        "sourceGroup": null,
+        "targetGroup": "Cloud Environment",
+        "threats": [
+          {
+            "cluster": { "strategic": "#5", "operational": "TLCTC-05.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-3",
+            "residual_risk": "Low",
+            "notes": "Man-in-the-Middle on the network interface. TLS mitigates but certificate pinning, HSTS should be verified.",
+            "control_ref": ""
+          },
+          {
+            "cluster": { "strategic": "#3", "operational": "TLCTC-03.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-3",
+            "residual_risk": "Medium",
+            "notes": "Response manipulation targeting the client (XSS via API responses). Client-role = #3 (R-ROLE).",
+            "control_ref": ""
+          }
+        ]
+      },
+      {
+        "id": "iface-api-db",
+        "name": "API Server → PostgreSQL Database",
+        "type": "network",
+        "from": "comp-api",
+        "to": "comp-db",
+        "protocol": "TCP",
+        "port": "5432",
+        "clientComponentId": "comp-api",
+        "serverComponentId": "comp-db",
+        "roleConfidence": "high",
+        "crossesTrustBoundary": false,
+        "sourceSphere": "@Org",
+        "targetSphere": "@Org",
+        "sourceGroup": "Cloud Environment",
+        "targetGroup": "Cloud Environment",
+        "threats": [
+          {
+            "cluster": { "strategic": "#5", "operational": "TLCTC-05.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-3",
+            "residual_risk": "Low",
+            "notes": "MitM on internal database connection. Consider mTLS or encrypted connections even within the trust zone.",
+            "control_ref": ""
+          },
+          {
+            "cluster": { "strategic": "#4", "operational": "TLCTC-04.00" },
+            "applicable": true,
+            "status": "Identified",
+            "velocity_class": "VC-3",
+            "residual_risk": "Medium",
+            "notes": "Database credential interception or connection string exposure. R-CRED: credential use = #4.",
+            "control_ref": ""
+          }
+        ]
+      }
+    ]
+  },
+  "threat_register": [
+    {
+      "elementType": "component",
+      "componentId": "comp-api",
+      "componentName": "API Server",
+      "componentType": "api-endpoint",
+      "group": "Cloud Environment",
+      "cluster": "#2",
+      "clusterName": "Exploiting Server",
+      "status": "Identified",
+      "velocityClass": "VC-3",
+      "residualRisk": "High",
+      "notes": "Server-side vulnerabilities: injection flaws, deserialization, SSRF. Classify by R-ROLE: server-role = #2.",
+      "controlRef": ""
+    },
+    {
+      "elementType": "component",
+      "componentId": "comp-db",
+      "componentName": "PostgreSQL Database",
+      "componentType": "database",
+      "group": "Cloud Environment",
+      "cluster": "#2",
+      "clusterName": "Exploiting Server",
+      "status": "Identified",
+      "velocityClass": "VC-3",
+      "residualRisk": "High",
+      "notes": "SQL injection, stored procedure exploitation. Server-role = #2 (R-ROLE).",
+      "controlRef": ""
+    },
+    {
+      "elementType": "component",
+      "componentId": "comp-db",
+      "componentName": "PostgreSQL Database",
+      "componentType": "database",
+      "group": "Cloud Environment",
+      "cluster": "#4",
+      "clusterName": "Identity Theft",
+      "status": "Identified",
+      "velocityClass": "VC-2",
+      "residualRisk": "High",
+      "notes": "Database credential theft or reuse. Credential use = #4 (R-CRED).",
+      "controlRef": ""
+    },
+    {
+      "elementType": "interface",
+      "interfaceId": "iface-browser-api",
+      "interfaceName": "User Browser → API Server",
+      "interfaceType": "network",
+      "fromComponent": "User Browser",
+      "toComponent": "API Server",
+      "fromGroup": null,
+      "toGroup": "Cloud Environment",
+      "protocol": "HTTPS",
+      "cluster": "#5",
+      "clusterName": "Man in the Middle",
+      "status": "Identified",
+      "velocityClass": "VC-3",
+      "residualRisk": "Low",
+      "notes": "Man-in-the-Middle on the network interface. TLS mitigates but certificate pinning, HSTS should be verified.",
+      "controlRef": "",
+      "isNetworkInterface": true
+    }
+  ]
+}

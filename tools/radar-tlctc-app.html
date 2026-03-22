@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>TLCTC Threat Radar - Interactive Assessment Tool V4</title>
+    <meta name="description" content="Visualize and assess your cyber risk posture with the interactive TLCTC Threat Radar. Map threats to the 10 universal clusters and export reports.">
+    <meta name="keywords" content="TLCTC, Cyber Radar, Threat Assessment, Risk Management, Cyber Threat Clusters, Interactive Tool, CISO Dashboard, Threat Visualization, JSON Import">
+    <meta name="author" content="TLCTC Framework">
+    <meta property="og:title" content="TLCTC Threat Radar App">
+    <meta property="og:type" content="website">
+
+    <script src="/vendor/react/18.3.1/react.development.js"></script>
+    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
+    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
+    
+    <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
+    <script src="/vendor/lucide/0.469.0/lucide.min.js"></script>
+    <script src="/vendor/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <link rel="stylesheet" href="/vendor/pickr/1.9.1/monolith.min.css"/>
+    <script src="/vendor/pickr/1.9.1/pickr.min.js"></script>
+    <link href="/vendor/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <link href="/vendor/fonts/google-fonts.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))"
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))"
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))"
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))"
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))"
+                        },
+                        destructive: {
+                            DEFAULT: "hsl(var(--destructive))",
+                            foreground: "hsl(var(--destructive-foreground))"
+                        },
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                },
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --radius: 0.75rem;
+                --background: 210 40% 98%;
+                --foreground: 222 47% 11%;
+                --card: 0 0% 100%;
+                --card-foreground: 222 47% 11%;
+                --primary: 221 83% 53%;
+                --primary-foreground: 210 40% 98%;
+                --secondary: 210 40% 96.1%;
+                --secondary-foreground: 222 47% 11%;
+                --muted: 210 40% 96.1%;
+                --muted-foreground: 215.4 16.3% 46.9%;
+                --accent: 210 40% 96.1%;
+                --accent-foreground: 222 47% 11%;
+                --destructive: 0 84.2% 60.2%;
+                --destructive-foreground: 210 40% 98%;
+                --border: 214.3 31.8% 91.4%;
+                --input: 214.3 31.8% 91.4%;
+                --ring: 221 83% 53%;
+                --warning-color: #facc15;
+                --danger-color: #ef4444;
+                --text-dark: #1f2937;
+            }
+            .dark {
+                --background: 222 47% 11%;
+                --foreground: 210 40% 98%;
+                --card: 217 33% 17%;
+                --card-foreground: 210 40% 98%;
+                --primary: 217 91% 60%;
+                --primary-foreground: 222 47% 11%;
+                --secondary: 217 33% 17%;
+                --secondary-foreground: 210 40% 98%;
+                --muted: 217 33% 17%;
+                --muted-foreground: 215 20.2% 65.1%;
+                --accent: 217 33% 17%;
+                --accent-foreground: 210 40% 98%;
+                --destructive: 0 63% 31%;
+                --destructive-foreground: 210 40% 98%;
+                --border: 217 33% 17%;
+                --input: 217 33% 17%;
+                --ring: 224 76% 48%;
+            }
+        }
+        @layer components {
+            .glass-header { @apply bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-40; }
+            .card { @apply bg-card text-card-foreground rounded-xl border border-border shadow-lg; }
+            .input-control { @apply bg-input border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring; }
+            .app-btn { @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg px-4 py-2 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background; }
+            .app-btn-primary { @apply bg-primary text-primary-foreground hover:opacity-90; }
+            .app-btn-secondary { @apply bg-secondary text-secondary-foreground hover:opacity-90; }
+            .app-btn-outline { @apply border border-border hover:bg-accent; }
+            .app-btn-danger { @apply bg-destructive text-destructive-foreground hover:opacity-90; }
+            .app-btn-sm { @apply text-xs px-2 py-1.5 rounded-md; }
+            .toggle-switch { @apply relative inline-block w-10 h-5 rounded-full cursor-pointer transition-colors; }
+            .toggle-switch input { @apply opacity-0 w-0 h-0; }
+            .toggle-slider { @apply absolute cursor-pointer inset-0 bg-muted rounded-full transition-all; }
+            .toggle-slider:before { content: ''; @apply absolute w-4 h-4 left-0.5 bottom-0.5 bg-foreground rounded-full transition-all; }
+            input:checked + .toggle-slider { @apply bg-blue-500; }
+            input:checked + .toggle-slider:before { transform: translateX(1.25rem); }
+            .threat-card { @apply bg-muted/50 rounded-lg border border-border; }
+            .collapse-transition { @apply transition-all duration-300 ease-in-out overflow-hidden; }
+            .collapsed-content { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; }
+            .modal-overlay { @apply fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm; }
+            .modal-content { @apply bg-card rounded-xl shadow-2xl w-full max-w-2xl p-6; }
+            .modal-content-lg { @apply bg-card rounded-xl shadow-2xl w-full max-w-4xl max-h-[85vh] p-6 overflow-hidden flex flex-col; }
+            .modal-textarea { @apply w-full h-64 bg-input border border-border rounded-lg p-3 text-sm font-mono resize-none focus:outline-none focus:ring-2 focus:ring-ring; }
+            .modal-textarea.drag-over { @apply border-blue-500 ring-2 ring-blue-500/50; }
+            .radar-container { @apply w-full aspect-square rounded-xl shadow-xl overflow-hidden; }
+            .tooltip { @apply relative inline-block; }
+            .tooltip .tooltip-text { @apply invisible opacity-0 absolute z-50 bg-foreground text-background text-xs px-2 py-1 rounded whitespace-nowrap bottom-full left-1/2 -translate-x-1/2 mb-1 transition-all duration-200; }
+            .tooltip:hover .tooltip-text { @apply visible opacity-100; }
+            .color-picker-wrapper { @apply flex items-center gap-1.5 cursor-pointer; }
+            .color-picker-indicator { @apply w-6 h-6 rounded-full border-2 border-border; }
+            .pickr .pcr-button { @apply w-6 h-6 rounded-full !important; }
+            .sector-dragging { @apply opacity-50 border-2 border-dashed border-blue-400; }
+            .sector-drop-indicator-top { @apply border-t-4 border-t-blue-500; }
+            .sector-drop-indicator-bottom { @apply border-b-4 border-b-blue-500; }
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .radar-container { break-inside: avoid; max-width: 100%; box-shadow: none !important; }
+            .radar-container-wrapper { width: 100% !important; padding: 0 !important; }
+        }
+    </style>
+    
+</head>
+<body class="bg-background text-foreground min-h-screen font-sans antialiased flex flex-col">
+    <header class="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
+                    <img src="/images/logo-small.png" alt="Logo" class="h-full w-full object-contain p-1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <i data-lucide="shield" class="h-5 w-5 hidden"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-display font-bold text-lg leading-tight">TLCTC</span>
+                    <span class="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+                </div>
+            </a>
+        </div>
+        <nav class="hidden md:flex items-center gap-6">
+            <a href="threat-modeling.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Modeling</a>
+            <a href="attack-path-architect.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Attack Path Architect</a>
+            <a href="actor-profile-designer.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Actor Profiler</a>
+            <a href="radar-tlctc-app.html" class="text-sm font-medium text-foreground font-semibold transition-colors">Threat Radar</a>
+            <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+        </nav>
+        <div class="flex items-center gap-3">
+            <button onclick="toggleDarkMode()" class="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Toggle theme">
+                <i data-lucide="sun" id="theme-toggle-dark-icon" class="h-4 w-4 hidden"></i>
+                <i data-lucide="moon" id="theme-toggle-light-icon" class="h-4 w-4"></i>
+            </button>
+            <button onclick="toggleMenu()" class="md:hidden app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary">
+                <i data-lucide="menu" class="h-5 w-5"></i>
+            </button>
+        </div>
+    </header>
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden hidden transition-all duration-300 opacity-0 no-print">
+        <div class="flex h-14 items-center justify-between px-6 border-b border-border">
+            <span class="font-display font-bold text-lg">TLCTC</span>
+            <button onclick="toggleMenu()" class="app-btn h-10 w-10 p-0 rounded-full hover:bg-secondary">
+                <i data-lucide="x" class="h-6 w-6"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col p-8 gap-6 text-lg font-medium">
+            <a href="threat-modeling.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Threat Modeling</a>
+            <a href="attack-path-architect.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Attack Path Architect</a>
+            <a href="actor-profile-designer.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Actor Profiler</a>
+            <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="text-foreground font-semibold">Threat Radar</a>
+            <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">TLCTC.net</a>
+        </nav>
+    </div>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef, useCallback } = React;
+
+        // === THREAT CLUSTER DATA ===
+const ORIGINAL_THREAT_CLUSTERS = [
+    { id: 1, name: 'Abuse of Functions', shortName: 'Abuse of Function', description: 'Misuse of legitimate software logic or configuration without foreign code.' },
+    { id: 2, name: 'Exploiting Server', shortName: 'Exploit Server', description: 'Targeting flaws in server-side source code implementation.' },
+    { id: 3, name: 'Exploiting Client', shortName: 'Exploit Client', description: 'Targeting flaws in client-side source code implementation.' },
+    { id: 4, name: 'Identity Theft', shortName: 'Identity Theft', description: 'Misuse of credentials or tokens to impersonate a legitimate identity.' },
+    { id: 5, name: 'Man in the Middle', shortName: 'MitM', description: 'Interception or modification of communication between parties.' },
+    { id: 6, name: 'Flooding Attack', shortName: 'Flooding (DDOS)', description: 'Overwhelming system resources or capacity limits.' },
+    { id: 7, name: 'Malware', shortName: 'Malware', description: 'Execution of foreign malicious code, scripts, or binaries.' },
+    { id: 8, name: 'Physical Attack', shortName: 'Physical', description: 'Unauthorized physical interaction with hardware or facilities.' },
+    { id: 9, name: 'Social Engineering', shortName: 'Social Engineering', description: 'Psychological manipulation of humans into unsafe actions.' },
+    { id: 10, name: 'Supply Chain Attack', shortName: 'Supply Chain', description: 'Compromise via trusted third-party components or updates.' },
+];
+
+const defaultZoneLimits = { latent: 0, low: 5, medium: 35, high: 100 };
+const ZONE_NAMES_ORDERED = ['latent', 'low', 'medium', 'high']; // outer to inner
+
+const ZONE_DESCRIPTIONS = {
+    latent: 'No immediate risk. Dormant or theoretical.',
+    low: 'Minor concern. Keep monitoring.',
+    medium: 'Moderate risk requiring attention.',
+    high: 'High volume of incidents.'
+};
+
+const DEFAULT_RADAR_BG_COLOR = '#FFFFFF';
+const DEFAULT_RADAR_TEXT_COLOR = '#111827';
+const DEFAULT_ZONE_LABEL_COLOR = '#374151';
+const DEFAULT_ZONE_LINE_STYLE = 'dashed';
+const DEFAULT_RADAR_SHAPE = 'full';
+const DEFAULT_CLUSTER_DISPLAY_MODE = 'name';
+
+// Default Flag Settings
+const DEFAULT_REPORT_FLAG_BG_COLOR = '#facc15'; // Tailwind yellow-400
+const DEFAULT_REPORT_FLAG_TEXT_COLOR = '#1f2937'; // Tailwind gray-800
+const DEFAULT_TOLERANCE_FLAG_BG_COLOR = '#ef4444'; // Tailwind red-500
+const DEFAULT_TOLERANCE_FLAG_TEXT_COLOR = '#FFFFFF'; // White
+const DEFAULT_LABEL_TEXT_COLOR = '#FFFFFF'; // White - for "both" mode labels
+
+const DEFAULT_BUBBLE_RADIUS = 15;
+const DEFAULT_RECT_WIDTH = 50;
+const DEFAULT_RECT_HEIGHT = 18;
+
+// zone closer to center = bigger
+const DEFAULT_ZONE_SIZE_MULTIPLIERS = {
+    latent: 0.8,
+    low: 0.9,
+    medium: 1.05,
+    high: 1.2,
+};
+
+const DEFAULT_OLD_BUBBLE_SIZE_MULTIPLIER = 0.8;
+
+const DEFAULT_SECTOR_NAME_TEXT_SIZE_PX = 13;
+const DEFAULT_ZONE_LABEL_TEXT_SIZE_PX = 10;
+const DEFAULT_BUBBLE_TEXT_SIZE_PX = 7.5;
+const DEFAULT_BASELINE_LABEL_MARGIN = 15;
+const DEFAULT_REPORT_FLAG_SIZE_PX = 8;
+const DEFAULT_TOLERANCE_FLAG_SIZE_PX = 10;
+
+// === Helper: approximate rect size for name mode ===
+const BUBBLE_TEXT_CHAR_WIDTH_FACTOR = 0.6;
+const BUBBLE_TEXT_H_PADDING = 4;
+const BUBBLE_TEXT_V_PADDING = 2;
+const MIN_RECT_WIDTH_PX = 30;
+const MIN_RECT_HEIGHT_PX = 16;
+
+function computeRectSize(text, baseFontSizePx, sizeMultiplier) {
+    const effectiveFontSize = baseFontSizePx * sizeMultiplier;
+    const textWidth = text.length * effectiveFontSize * BUBBLE_TEXT_CHAR_WIDTH_FACTOR;
+    const width = Math.max(
+        MIN_RECT_WIDTH_PX * sizeMultiplier,
+        textWidth + 2 * BUBBLE_TEXT_H_PADDING * sizeMultiplier
+    );
+    const height = Math.max(
+        MIN_RECT_HEIGHT_PX * sizeMultiplier,
+        effectiveFontSize + 2 * BUBBLE_TEXT_V_PADDING * sizeMultiplier
+    );
+    return { width, height };
+}
+
+        const generateRandomColor = () => `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;
+
+        const createDefaultSector = (threatClustersDefinition) => ({
+            id: Date.now() + Math.random(), name: "New Sector", color: generateRandomColor(),
+            backgroundColor: `rgba(${Math.floor(Math.random()*50+20)},${Math.floor(Math.random()*50+20)},${Math.floor(Math.random()*50+40)},0.35)`,
+            labelTextColor: DEFAULT_LABEL_TEXT_COLOR,
+            activeThreats: Object.fromEntries(threatClustersDefinition.map(c => [c.id, true])),
+            values: Object.fromEntries(threatClustersDefinition.map(c => [c.id, 0])),
+            oldValues: Object.fromEntries(threatClustersDefinition.map(c => [c.id, 0])),
+            zoneLimits: Object.fromEntries(threatClustersDefinition.map(c => [c.id, { ...defaultZoneLimits }])),
+            toBeReported: Object.fromEntries(threatClustersDefinition.map(c => [c.id, false])),
+            riskToleranceCrashed: Object.fromEntries(threatClustersDefinition.map(c => [c.id, false])),
+            bubbleOffsets: Object.fromEntries(threatClustersDefinition.map(c => [c.id, { dx: 0, dy: 0 }])),
+            collapsed: false
+        });
+
+        function ColorPicker({ color, onChange, label }) {
+            const pickerRef = useRef(null);
+            const pickrInstance = useRef(null);
+            const [currentColor, setCurrentColor] = useState(color);
+            useEffect(() => {
+                if (!pickerRef.current) return;
+                pickrInstance.current = Pickr.create({
+                    el: pickerRef.current, theme: 'monolith', default: color,
+                    components: { preview: true, opacity: true, hue: true, interaction: { hex: true, rgba: true, hsla: true, hsva: true, cmyk: false, input: true, clear: false, save: true } }
+                });
+                pickrInstance.current.on('save', (clr) => {
+                    if (clr) { const newColor = clr.toHEXA().toString(); setCurrentColor(newColor); onChange(newColor); }
+                    pickrInstance.current.hide();
+                });
+                return () => { if (pickrInstance.current) { pickrInstance.current.destroyAndRemove(); pickrInstance.current = null; } };
+            }, []);
+            useEffect(() => {
+                setCurrentColor(color);
+                if (pickrInstance.current && color && pickrInstance.current.getColor().toHEXA().toString() !== color) {
+                    pickrInstance.current.setColor(color);
+                }
+            }, [color]);
+            return (
+                <div className="flex items-center gap-2">
+                    {label && <label className="text-sm text-muted-foreground whitespace-nowrap">{label}:</label>}
+                    <div className="color-picker-wrapper">
+                        <div ref={pickerRef} className="color-picker-indicator" style={{ backgroundColor: currentColor }} />
+                    </div>
+                </div>
+            );
+        }
+
+        function Tooltip({ children, text }) {
+            if (!text) return children;
+            return (<div className="tooltip">{children}<div className="tooltip-text">{text}</div></div>);
+        }
+        
+function RadarBubble({
+    x,
+    y,
+    size,
+    color,
+    labelTextColor,
+    label,
+    shortName,
+    highlight,
+    toBeReported,
+    riskToleranceCrashed,
+    displayMode,
+    sizeMultiplier,
+    bubbleTextSizePx,
+    reportFlagSizePx,
+    reportFlagColor,
+    reportFlagTextColor,
+    toleranceFlagSizePx,
+    toleranceFlagColor,
+    toleranceFlagTextColor,
+    isDragging,
+}) {
+    // For "both" mode, we show the number in bubble and name above
+    const bubbleText = displayMode === 'name' ? shortName : label;
+    const effectiveFontSize = bubbleTextSizePx * sizeMultiplier;
+
+    let rectWidth = DEFAULT_RECT_WIDTH * sizeMultiplier;
+    let rectHeight = DEFAULT_RECT_HEIGHT * sizeMultiplier;
+
+    if (displayMode === 'name') {
+        const rect = computeRectSize(bubbleText, bubbleTextSizePx, sizeMultiplier);
+        rectWidth = rect.width;
+        rectHeight = rect.height;
+    }
+
+    const reportFlagTextSize = reportFlagSizePx * 0.8;
+    const toleranceFlagTextSize = toleranceFlagSizePx * 1;
+
+    const flagOffsetFactor = displayMode === 'name' ? 0.75 : 0.8;
+    const fixedFlagOffset = 1 * sizeMultiplier;
+
+    const halfW = rectWidth / 2;
+    const halfH = rectHeight / 2;
+
+    // Calculate label position for "both" mode (label above the circle)
+    const labelOffsetY = displayMode === 'both' ? -(size + 8 * sizeMultiplier) : 0;
+
+    return (
+        <g transform={`translate(${x},${y})`} style={{ filter: isDragging ? 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.8))' : 'none' }}>
+            {/* Short name label above bubble for "both" mode - only for current bubbles, not old ones */}
+            {displayMode === 'both' && highlight && (
+                <text
+                    x={0}
+                    y={labelOffsetY}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill={labelTextColor || '#FFFFFF'}
+                    fontSize={`${effectiveFontSize * 0.95}px`}
+                    fontWeight="500"
+                    fontFamily="Inter, sans-serif"
+                    style={{ pointerEvents: 'none', textShadow: '0 1px 2px rgba(0,0,0,0)' }}
+                >
+                    {shortName}
+                </text>
+            )}
+            {displayMode === 'name' ? (
+                <rect
+                    x={-halfW}
+                    y={-halfH}
+                    width={rectWidth}
+                    height={rectHeight}
+                    fill={color}
+                    opacity={highlight ? "1" : "0.85"}
+                    stroke={isDragging ? "#3b82f6" : "#fff"}
+                    strokeWidth={isDragging ? "2" : highlight ? "1.5" : "0.5"}
+                    rx="3"
+                />
+            ) : (
+                <circle
+                    r={size}
+                    fill={color}
+                    opacity={highlight ? "1" : "0.85"}
+                    stroke={isDragging ? "#3b82f6" : "#fff"}
+                    strokeWidth={isDragging ? "2.5" : highlight ? "2" : "1"}
+                />
+            )}
+
+            <text
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="#FFFFFF"
+                fontSize={`${effectiveFontSize}px`}
+                fontWeight={highlight ? "normal" : "latin"}
+                fontFamily="Inter, sans-serif"
+                style={{ pointerEvents: 'none' }}
+            >
+                {bubbleText}
+            </text>
+
+            {toBeReported && (
+                <g
+                    transform={
+                        displayMode === 'name'
+                            ? `translate(${halfW * flagOffsetFactor + fixedFlagOffset}, ${-halfH * flagOffsetFactor - fixedFlagOffset})`
+                            : `translate(${size * flagOffsetFactor + fixedFlagOffset}, ${-size * flagOffsetFactor - fixedFlagOffset})`
+                    }
+                >
+                    <circle
+                        r={reportFlagSizePx}
+                        fill={reportFlagColor}
+                        stroke="#333"
+                        strokeWidth="0.5"
+                    />
+                    <text
+                        textAnchor="middle"
+                        dy=".3em"
+                        fill={reportFlagTextColor}
+                        fontSize={`${reportFlagTextSize}px`}
+                        fontWeight="normal"
+                    >
+                        !
+                    </text>
+                </g>
+            )}
+
+            {riskToleranceCrashed && (
+                <g
+                    transform={
+                        displayMode === 'name'
+                            ? `translate(${-halfW * flagOffsetFactor - fixedFlagOffset}, ${-halfH * flagOffsetFactor - fixedFlagOffset})`
+                            : `translate(${-size * flagOffsetFactor - fixedFlagOffset}, ${-size * flagOffsetFactor - fixedFlagOffset})`
+                    }
+                >
+                    <circle
+                        r={toleranceFlagSizePx}
+                        fill={toleranceFlagColor}
+                        stroke="#333"
+                        strokeWidth="0.5"
+                    />
+                    <text
+                        textAnchor="middle"
+                        dy=".35em"
+                        fill={toleranceFlagTextColor}
+                        fontSize={`${toleranceFlagTextSize}px`}
+                        fontWeight="normal"
+                    >
+                        ⚡
+                    </text>
+                </g>
+            )}
+        </g>
+    );
+}
+
+        function determineZone(value, limits) {
+            const validLimits = typeof limits === 'object' && limits !== null ? limits : defaultZoneLimits;
+            const { latent, low, medium, high } = validLimits;
+            const numLatent = typeof latent === 'number' ? latent : 0;
+            const numLow = typeof low === 'number' ? low : 5;
+            const numMedium = typeof medium === 'number' ? medium : 35;
+            if (value <= numLatent) return 'latent';
+            if (value <= numLow) return 'low';
+            if (value <= numMedium) return 'medium';
+            return 'high';
+        }
+
+        // Zone radii define the OUTER boundary of each zone band
+        // Using full 320px radius with equal bands of 80px each
+        function getZoneBoundaries(scaleFactor = 1) {
+            return {
+                high:   { inner: 0, outer: 80 * scaleFactor },
+                medium: { inner: 80 * scaleFactor, outer: 160 * scaleFactor },
+                low:    { inner: 160 * scaleFactor, outer: 240 * scaleFactor },
+                latent: { inner: 240 * scaleFactor, outer: 320 * scaleFactor }
+            };
+        }
+
+        function RadarVisualization({ 
+            sectors, radarBgColor, radarTextColor, radarShape, clusterDisplayMode, zoneSizeMultipliers, zoneLabelColor, zoneLineStyle, oldBubbleSizeMultiplier, threatClustersData, 
+            sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin, 
+            reportFlagSizePx, reportFlagColor, reportFlagTextColor,
+            toleranceFlagSizePx, toleranceFlagColor, toleranceFlagTextColor,
+            onBubbleMove 
+        }) {
+            const svgContainerRef = useRef(null);
+            const [dragging, setDragging] = useState(null);
+            const baseDimension = 800;
+            const overallScaleFactor = 1;
+            const currentDimension = baseDimension * overallScaleFactor;
+            const centerX = currentDimension / 2;
+            const centerY = currentDimension / 2;
+            const outerRadius = 320 * overallScaleFactor;
+
+            // Zone boundaries for constraining bubbles
+            const zoneBounds = useMemo(() => getZoneBoundaries(overallScaleFactor), [overallScaleFactor]);
+
+            // Zone outer radii for drawing circles
+            const zoneRadii = useMemo(() => ({
+                high:   zoneBounds.high.outer,
+                medium: zoneBounds.medium.outer,
+                low:    zoneBounds.low.outer,
+                latent: zoneBounds.latent.outer
+            }), [zoneBounds]);
+
+            const getAngle = useCallback((index, total) => {
+                if (radarShape === 'half') { return Math.PI + (index / total) * Math.PI; }
+                return (index / total) * 2 * Math.PI - Math.PI / 2;
+            }, [radarShape]);
+
+const bubblePositions = useMemo(() => {
+    let allBubbles = [];
+    const numSectors = sectors.length;
+
+    sectors.forEach((sector, sectorIndex) => {
+        const baseAngle = getAngle(sectorIndex, sectors.length);
+        const nextBaseAngle = getAngle(sectorIndex + 1, sectors.length);
+
+        let sectorAngleSpan = nextBaseAngle - baseAngle;
+        if (radarShape === 'full' && sectorAngleSpan < 0) {
+            sectorAngleSpan += 2 * Math.PI;
+        }
+
+        const activeInSector = threatClustersData
+            .filter(c_data => sector.activeThreats?.[c_data.id] && sector.zoneLimits?.[c_data.id]);
+
+        activeInSector.forEach((cluster, threatIdx) => {
+            const value = parseFloat(sector.values?.[cluster.id] ?? 0);
+            const zone = determineZone(value, sector.zoneLimits[cluster.id]);
+            const bounds = zoneBounds[zone];
+            
+            // Place bubble in center of its zone band
+            const baseRadius = (bounds.inner + bounds.outer) / 2;
+
+            const paddingFactor = 0.15;
+            const usableAngleSpan = sectorAngleSpan * (1 - 2 * paddingFactor);
+            const angleOffsetInSector =
+                paddingFactor * sectorAngleSpan +
+                ((threatIdx + 0.5) / activeInSector.length) * usableAngleSpan;
+
+            const idealAngle = baseAngle + angleOffsetInSector;
+
+            const sizeMultiplier = zoneSizeMultipliers[zone] || 1.0;
+            const currentBubbleRadius = DEFAULT_BUBBLE_RADIUS * sizeMultiplier;
+
+            let collisionWidth;
+            let collisionHeight;
+
+            if (clusterDisplayMode === 'name') {
+                const text = cluster.shortName;
+                const rect = computeRectSize(text, bubbleTextSizePx, sizeMultiplier);
+                collisionWidth = rect.width;
+                collisionHeight = rect.height;
+            } else {
+                collisionWidth = currentBubbleRadius * 2;
+                collisionHeight = currentBubbleRadius * 2;
+            }
+
+            // Get custom offset if exists
+            const offset = sector.bubbleOffsets?.[cluster.id] || { dx: 0, dy: 0 };
+            const baseX = centerX + Math.cos(idealAngle) * baseRadius;
+            const baseY = centerY + Math.sin(idealAngle) * baseRadius;
+
+            // Calculate bubble half-size for zone boundary padding
+            const bubbleHalfSize = clusterDisplayMode === 'name' 
+                ? Math.max(collisionWidth, collisionHeight) / 2 
+                : currentBubbleRadius;
+
+            allBubbles.push({
+                id: `${sector.id}-${cluster.id}`,
+                sectorId: sector.id,
+                clusterId: cluster.id,
+                baseX: baseX,
+                baseY: baseY,
+                x: baseX + offset.dx,
+                y: baseY + offset.dy,
+                dx: offset.dx,
+                dy: offset.dy,
+                color: sector.color,
+                labelTextColor: sector.labelTextColor || DEFAULT_LABEL_TEXT_COLOR,
+                shortName: cluster.shortName,
+                label: `#${cluster.id}`,
+                toBeReported: sector.toBeReported?.[cluster.id] ?? false,
+                riskToleranceCrashed: sector.riskToleranceCrashed?.[cluster.id] ?? false,
+                currentValue: value,
+                oldValue: parseFloat(sector.oldValues?.[cluster.id]),
+                currentZone: zone,
+                oldZone: !isNaN(parseFloat(sector.oldValues?.[cluster.id]))
+                    ? determineZone(
+                        parseFloat(sector.oldValues?.[cluster.id]),
+                        sector.zoneLimits[cluster.id]
+                      )
+                    : zone,
+                width: collisionWidth,
+                height: collisionHeight,
+                size: currentBubbleRadius,
+                sizeMultiplier,
+                // Zone boundary info for drag constraints
+                zoneInnerRadius: bounds.inner,
+                zoneOuterRadius: bounds.outer,
+                bubbleHalfSize: bubbleHalfSize,
+                sectorStartAngle: baseAngle,
+                sectorEndAngle: nextBaseAngle,
+            });
+        });
+    });
+
+    return allBubbles;
+}, [
+    sectors,
+    radarShape,
+    clusterDisplayMode,
+    getAngle,
+    centerX,
+    centerY,
+    zoneBounds,
+    zoneSizeMultipliers,
+    threatClustersData,
+    bubbleTextSizePx,
+]);
+
+            // Convert screen coordinates to SVG coordinates
+            const getSvgPoint = useCallback((clientX, clientY) => {
+                const svg = svgContainerRef.current?.querySelector('svg');
+                if (!svg) return { x: 0, y: 0 };
+                const pt = svg.createSVGPoint();
+                pt.x = clientX;
+                pt.y = clientY;
+                const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+                return { x: svgP.x, y: svgP.y };
+            }, []);
+
+            // Handle mouse down on bubble
+            const handleBubbleMouseDown = useCallback((e, bubble) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const svgPoint = getSvgPoint(e.clientX, e.clientY);
+                setDragging({
+                    sectorId: bubble.sectorId,
+                    clusterId: bubble.clusterId,
+                    startMouseX: svgPoint.x,
+                    startMouseY: svgPoint.y,
+                    startDx: bubble.dx,
+                    startDy: bubble.dy,
+                    baseX: bubble.baseX,
+                    baseY: bubble.baseY,
+                    zoneInnerRadius: bubble.zoneInnerRadius,
+                    zoneOuterRadius: bubble.zoneOuterRadius,
+                    bubbleHalfSize: bubble.bubbleHalfSize,
+                    bubbleId: bubble.id,
+                });
+            }, [getSvgPoint]);
+
+            // Handle mouse move - constrain to zone bandwidth
+            const handleMouseMove = useCallback((e) => {
+                if (!dragging) return;
+                const svgPoint = getSvgPoint(e.clientX, e.clientY);
+                
+                // Calculate new offset
+                let newDx = dragging.startDx + (svgPoint.x - dragging.startMouseX);
+                let newDy = dragging.startDy + (svgPoint.y - dragging.startMouseY);
+                
+                // Calculate new absolute position
+                let newX = dragging.baseX + newDx;
+                let newY = dragging.baseY + newDy;
+                
+                // Constrain to zone boundaries (radial constraint within band)
+                const distFromCenter = Math.sqrt(Math.pow(newX - centerX, 2) + Math.pow(newY - centerY, 2));
+                const angle = Math.atan2(newY - centerY, newX - centerX);
+                
+                // Add padding for bubble size so center stays within band
+                const padding = dragging.bubbleHalfSize + 5;
+                const minRadius = dragging.zoneInnerRadius + padding;
+                const maxRadius = dragging.zoneOuterRadius - padding;
+                const clampedRadius = Math.max(minRadius, Math.min(maxRadius, distFromCenter));
+                
+                // Recalculate position if clamped
+                if (distFromCenter !== clampedRadius) {
+                    newX = centerX + Math.cos(angle) * clampedRadius;
+                    newY = centerY + Math.sin(angle) * clampedRadius;
+                    newDx = newX - dragging.baseX;
+                    newDy = newY - dragging.baseY;
+                }
+                
+                // For half radar, also constrain to upper half
+                if (radarShape === 'half' && newY > centerY) {
+                    newY = centerY;
+                    newDy = newY - dragging.baseY;
+                }
+                
+                // Update position via callback
+                if (onBubbleMove) {
+                    onBubbleMove(dragging.sectorId, dragging.clusterId, newDx, newDy);
+                }
+            }, [dragging, getSvgPoint, centerX, centerY, onBubbleMove, radarShape]);
+
+            // Handle mouse up
+            const handleMouseUp = useCallback(() => {
+                setDragging(null);
+            }, []);
+
+            // Add/remove global mouse listeners when dragging
+            useEffect(() => {
+                if (dragging) {
+                    window.addEventListener('mousemove', handleMouseMove);
+                    window.addEventListener('mouseup', handleMouseUp);
+                    return () => {
+                        window.removeEventListener('mousemove', handleMouseMove);
+                        window.removeEventListener('mouseup', handleMouseUp);
+                    };
+                }
+            }, [dragging, handleMouseMove, handleMouseUp]);
+
+            const renderRadarStructure = () => {
+                let strokeDashValue;
+                switch(zoneLineStyle) {
+                    case 'solid': strokeDashValue = "none"; break;
+                    case 'dotted': strokeDashValue = "2,4"; break;
+                    case 'dashed': default: strokeDashValue = "6,6"; break;
+                }
+                
+                // Draw zone circles at outer boundary of each zone (skip latent as outer boundary handles it)
+                const zoneElements = Object.entries(zoneRadii)
+                    .filter(([zoneName]) => zoneName !== 'latent') // Skip latent, outer boundary handles it
+                    .map(([zoneName, radius]) => {
+                    if (radarShape === 'half') { 
+                        return <path key={`zone-${zoneName}`} d={`M ${centerX - radius},${centerY} A ${radius},${radius} 0 0 1 ${centerX + radius},${centerY}`} fill="none" stroke={radarTextColor} strokeWidth="1" opacity="0.3" strokeDasharray={strokeDashValue} />; 
+                    }
+                    return <circle key={`zone-${zoneName}`} cx={centerX} cy={centerY} r={radius} fill="none" stroke={radarTextColor} strokeWidth="1" opacity="0.3" strokeDasharray={strokeDashValue} />;
+                });
+                
+                // Zone labels - positioned INSIDE the band, centered radially
+                const zoneLabelElements = Object.entries(zoneBounds).flatMap(([name, bounds]) => {
+                    const labelText = name.charAt(0).toUpperCase() + name.slice(1);
+                    // Position label at center of band
+                    const centerOfBand = (bounds.inner + bounds.outer) / 2;
+                    const fontSize = zoneLabelTextSizePx;
+                    
+                    if (radarShape === 'half') {
+                        // For 180° view: place labels below the horizontal baseline at each zone boundary
+                        const labelY = centerY + baselineLabelMargin;
+                        const positions = [
+                            { x: centerX - centerOfBand, anchor: 'middle' },
+                            { x: centerX + centerOfBand, anchor: 'middle' }
+                        ];
+                        return positions.map((pos, i) => (
+                            <text 
+                                key={`label-${name}-half-${i}`} 
+                                x={pos.x} 
+                                y={labelY} 
+                                textAnchor={pos.anchor} 
+                                dominantBaseline="hanging" 
+                                fontSize={`${fontSize}px`} 
+                                fontFamily="Inter, sans-serif"
+                                fill={zoneLabelColor || radarTextColor} 
+                                opacity="0.8"
+                            >
+                                {labelText}
+                            </text>
+                        ));
+                    } else {
+                        // For 360° view: place labels radially at 4 positions (top, right, bottom, left)
+                        const anglesForLabels = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
+                        return anglesForLabels.map((angle) => {
+                            const lx = centerX + centerOfBand * Math.cos(angle);
+                            const ly = centerY + centerOfBand * Math.sin(angle);
+                            
+                            // Calculate rotation to align text radially (pointing outward)
+                            let rotationDeg = (angle * 180 / Math.PI) + 90;
+                            // Flip text that would be upside down
+                            if (rotationDeg > 90 && rotationDeg <= 270) {
+                                rotationDeg -= 180;
+                            }
+                            if (rotationDeg < -90) {
+                                rotationDeg += 180;
+                            }
+                            
+                            return (
+                                <text 
+                                    key={`label-${name}-${angle.toFixed(2)}`} 
+                                    x={lx} 
+                                    y={ly} 
+                                    textAnchor="middle" 
+                                    dominantBaseline="middle" 
+                                    fontSize={`${fontSize}px`} 
+                                    fontFamily="Inter, sans-serif"
+                                    fill={zoneLabelColor || radarTextColor} 
+                                    opacity="0.8"
+                                    transform={`rotate(${rotationDeg} ${lx} ${ly})`}
+                                >
+                                    {labelText}
+                                </text>
+                            );
+                        });
+                    }
+                });
+
+                const sectorBgPaths = sectors.map((sector, sectorIndex) => {
+                    const startAngle = getAngle(sectorIndex, sectors.length);
+                    const endAngle = getAngle(sectorIndex + 1, sectors.length);
+                    const x1 = centerX + outerRadius * Math.cos(startAngle); const y1 = centerY + outerRadius * Math.sin(startAngle);
+                    const x2 = centerX + outerRadius * Math.cos(endAngle); const y2 = centerY + outerRadius * Math.sin(endAngle);
+                    let pathData;
+                    if (radarShape === 'half') { pathData = `M ${centerX},${centerY} L ${x1},${y1} A ${outerRadius},${outerRadius} 0 0 1 ${x2},${y2} Z`; } else { const largeArcFlag = (endAngle - startAngle) > Math.PI ? 1 : 0; pathData = `M ${centerX},${centerY} L ${x1},${y1} A ${outerRadius},${outerRadius} 0 ${largeArcFlag} 1 ${x2},${y2} Z`; }
+                    return <path key={`sector-bg-${sector.id}`} d={pathData} fill={sector.backgroundColor || 'transparent'} stroke="none" />;
+                });
+
+                const sectorLineElements = sectors.length > 1 ? sectors.map((_, sectorIndex) => {
+                    if (radarShape === 'half' && sectorIndex === 0) return null;
+                    const angle = getAngle(sectorIndex, sectors.length);
+                    const x2 = centerX + outerRadius * Math.cos(angle); const y2 = centerY + outerRadius * Math.sin(angle);
+                    return <line key={`s-line-${sectorIndex}`} x1={centerX} y1={centerY} x2={x2} y2={y2} stroke={radarTextColor} strokeWidth="1" opacity="0.3" />;
+                }) : [];
+
+                const sectorNameElements = sectors.map((sector, sectorIndex) => {
+                    const startAngle = getAngle(sectorIndex, sectors.length);
+                    const endAngle = getAngle(sectorIndex + 1, sectors.length);
+                    let angleDiff = endAngle - startAngle;
+                    if (radarShape === 'full' && angleDiff < 0) { angleDiff += 2 * Math.PI; }
+                    const midAngle = startAngle + angleDiff / 2;
+                    const labelRadiusOffset = 35 * overallScaleFactor;
+                    const labelRad = outerRadius + labelRadiusOffset;
+                    const x = centerX + labelRad * Math.cos(midAngle); const y = centerY + labelRad * Math.sin(midAngle);
+                    let rotationForRadius = midAngle * (180 / Math.PI);
+                    let tangentialRotation = rotationForRadius + 90;
+                    while (tangentialRotation <= -180) tangentialRotation += 360;
+                    while (tangentialRotation > 180) tangentialRotation -= 360;
+                    if (tangentialRotation > 90) { tangentialRotation -= 180; } else if (tangentialRotation < -90) { tangentialRotation += 180; }
+                    const fontSize = sectorNameTextSizePx;
+                    return ( <text key={`s-name-${sector.id}`} x={x} y={y} transform={`rotate(${tangentialRotation} ${x} ${y})`} textAnchor="middle" dominantBaseline="central" fontSize={`${fontSize}px`} fontWeight="500" fontFamily="Inter, sans-serif" fill={radarTextColor} > {sector.name} </text> );
+                });
+
+                // Outer boundary is now part of the latent zone, so we make it more prominent
+                const outerBoundary = radarShape === 'half' ? (
+                    <g> 
+                        <path d={`M ${centerX - outerRadius},${centerY} A ${outerRadius},${outerRadius} 0 0 1 ${centerX + outerRadius},${centerY}`} fill="none" stroke={radarTextColor} strokeWidth="2" opacity="0.6" /> 
+                        <line x1={centerX - outerRadius} y1={centerY} x2={centerX + outerRadius} y2={centerY} stroke={radarTextColor} strokeWidth="2" opacity="0.6" /> 
+                    </g>
+                ) : <circle cx={centerX} cy={centerY} r={outerRadius} fill="none" stroke={radarTextColor} strokeWidth="2" opacity="0.6" />;
+
+                return (<g>{outerBoundary}{sectorBgPaths}{zoneElements}{sectorLineElements}{zoneLabelElements}{sectorNameElements}</g>);
+            };
+
+            return (
+                <div className="radar-container" style={{ backgroundColor: radarBgColor, cursor: dragging ? 'grabbing' : 'default' }} ref={svgContainerRef}>
+                    <svg viewBox={`0 0 ${currentDimension} ${currentDimension}`} preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%' }} id="radar-svg-element">
+                        <rect x="0" y="0" width={currentDimension} height={currentDimension} fill="transparent" />
+                        {renderRadarStructure()}
+                        {/* Trend lines and old bubbles */}
+                        {bubblePositions.filter(b => {
+                            if (isNaN(b.oldValue)) return false;
+                            const valueChanged = Math.abs(b.oldValue - b.currentValue) >= 1;
+                            const zoneChanged = b.oldZone !== b.currentZone;
+                            return zoneChanged || valueChanged;
+                        }).map(bubble => {
+                             const oldBounds = zoneBounds[bubble.oldZone];
+                             const oldBubbleRadiusInZone = (oldBounds.inner + oldBounds.outer) / 2;
+                             const angleToNewBubble = Math.atan2(bubble.baseY - centerY, bubble.baseX - centerX);
+                             const oldX = centerX + Math.cos(angleToNewBubble) * oldBubbleRadiusInZone;
+                             const oldY = centerY + Math.sin(angleToNewBubble) * oldBubbleRadiusInZone;
+                             const oldBubbleDisplaySize = DEFAULT_BUBBLE_RADIUS * oldBubbleSizeMultiplier;
+                             const trendUp = bubble.currentValue > bubble.oldValue;
+                             const trendColor = trendUp ? '#ef4444' : '#22c55e';
+                            return (
+                                <React.Fragment key={`old-${bubble.id}`}>
+                                    <line x1={oldX} y1={oldY} x2={bubble.x} y2={bubble.y} stroke={trendColor} strokeWidth="2" strokeDasharray="4,2" opacity="0.7"/>
+                                    <RadarBubble 
+                                        x={oldX} y={oldY} size={oldBubbleDisplaySize} color="#a0aec0" 
+                                        labelTextColor={bubble.labelTextColor}
+                                        label={bubble.label} shortName={bubble.shortName} highlight={false} 
+                                        toBeReported={false} riskToleranceCrashed={false} displayMode={clusterDisplayMode} 
+                                        sizeMultiplier={oldBubbleSizeMultiplier} bubbleTextSizePx={bubbleTextSizePx} 
+                                        reportFlagSizePx={reportFlagSizePx} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor}
+                                        toleranceFlagSizePx={toleranceFlagSizePx} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor}
+                                        isDragging={false} 
+                                    />
+                                </React.Fragment>
+                            );
+                        })}
+                        {/* Current bubbles - draggable within zone band */}
+                        {bubblePositions.map(bubble => (
+                            <g key={bubble.id} style={{ cursor: dragging?.bubbleId === bubble.id ? 'grabbing' : 'grab' }} onMouseDown={(e) => handleBubbleMouseDown(e, bubble)}>
+                                <RadarBubble 
+                                    x={bubble.x} 
+                                    y={bubble.y} 
+                                    size={bubble.size} 
+                                    color={bubble.color} 
+                                    labelTextColor={bubble.labelTextColor}
+                                    label={bubble.label} 
+                                    shortName={bubble.shortName} 
+                                    highlight={true} 
+                                    toBeReported={bubble.toBeReported} 
+                                    riskToleranceCrashed={bubble.riskToleranceCrashed} 
+                                    displayMode={clusterDisplayMode} 
+                                    sizeMultiplier={bubble.sizeMultiplier} 
+                                    bubbleTextSizePx={bubbleTextSizePx} 
+                                    reportFlagSizePx={reportFlagSizePx} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor}
+                                    toleranceFlagSizePx={toleranceFlagSizePx} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor}
+                                    isDragging={dragging?.bubbleId === bubble.id}
+                                />
+                            </g>
+                        ))}
+                    </svg>
+                </div>
+            );
+        }
+
+        function RadarLegend({ threatClustersData, reportFlagColor, reportFlagTextColor, toleranceFlagColor, toleranceFlagTextColor, radarTextColor }) {
+            const textColor = radarTextColor || '#111827';
+            const mutedColor = radarTextColor ? `${radarTextColor}99` : '#6b7280';
+            return (
+                <div className="p-4 md:p-6 mt-2 mx-auto max-w-5xl" style={{color: textColor}}>
+                    <h3 className="text-base font-semibold mb-3" style={{color: textColor}}>Threat Cluster Reference</h3>
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2">
+                        {threatClustersData.map(c => ( <div key={c.id} className="flex items-start gap-2"> <div className="flex-shrink-0 mt-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-blue-500 text-white text-[10px] font-bold">#{c.id}</div> <div> <div className="font-medium text-xs" style={{color: textColor}}>{c.name}</div> <div className="text-[10px]" style={{color: mutedColor}}>{c.description}</div> </div> </div> ))}
+                    </div>
+                    <h3 className="text-base font-semibold mt-4 mb-2" style={{color: textColor}}>Flag Reference</h3>
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+                        <div className="flex items-center gap-2"> <div className="w-5 h-5 rounded-full flex items-center justify-center font-bold text-[10px]" style={{backgroundColor: reportFlagColor, color: reportFlagTextColor}}>!</div> <div> <div className="font-medium text-xs" style={{color: textColor}}>To Be Reported</div> </div> </div>
+                        <div className="flex items-center gap-2"> <div className="w-5 h-5 rounded-full flex items-center justify-center font-bold text-[10px]" style={{backgroundColor: toleranceFlagColor, color: toleranceFlagTextColor}}>⚡</div> <div> <div className="font-medium text-xs" style={{color: textColor}}>Tolerance Exceeded</div> </div> </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function ZoneLegend({ radarTextColor }) {
+            const textColor = radarTextColor || '#111827';
+            const mutedColor = radarTextColor ? `${radarTextColor}99` : '#6b7280';
+             return (
+                <div className="p-4 md:p-6 mt-0 mx-auto max-w-5xl" style={{color: textColor}}>
+                    <h3 className="text-base font-semibold mb-2" style={{color: textColor}}>Threat Zone Reference</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2">
+                        {Object.entries(ZONE_DESCRIPTIONS).map(([zone, description]) => ( <div key={zone} className="flex items-center gap-2"> <div className={`w-3 h-3 rounded-full ${ zone === 'high' ? 'bg-red-500' : zone === 'medium' ? 'bg-yellow-500' : zone === 'low' ? 'bg-blue-500' : 'bg-green-500' }`}></div> <div> <div className="font-medium capitalize text-xs" style={{color: textColor}}>{zone}</div> <div className="text-[10px]" style={{color: mutedColor}}>{description}</div> </div> </div> ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function JsonImportModal({ isOpen, onClose, onImport }) {
+            const [jsonText, setJsonText] = useState('');
+            const [isDragging, setIsDragging] = useState(false);
+            const textareaRef = useRef(null);
+            useEffect(() => { if (isOpen) { setJsonText(''); } }, [isOpen]);
+            if (!isOpen) return null;
+            const handleImportClick = () => { onImport(jsonText); };
+            const handleDragOver = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragging(true); };
+            const handleDragLeave = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragging(false); };
+            const handleDrop = (e) => {
+                e.preventDefault(); e.stopPropagation(); setIsDragging(false);
+                const files = e.dataTransfer.files;
+                if (files && files.length > 0) {
+                    const file = files[0];
+                    if (file.type === "application/json") { const reader = new FileReader(); reader.onload = (loadEvent) => { setJsonText(loadEvent.target.result); }; reader.readAsText(file); } else { alert("Please drop a valid JSON file (.json)."); }
+                }
+            };
+            return (
+                <div className="modal-overlay no-print" onClick={onClose}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <h3 className="text-xl font-semibold mb-4 text-foreground">Import Configuration from Text</h3>
+                        <p className="text-sm text-muted-foreground mb-3">Paste your JSON configuration below or drag and drop a .json file onto the text area.</p>
+                        <textarea ref={textareaRef} className={`modal-textarea ${isDragging ? 'drag-over' : ''}`} value={jsonText} onChange={e => setJsonText(e.target.value)} placeholder='{ "sectors": [ ... ], "radarBgColor": "#FFFFFF", ... }' onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} />
+                        <div className="flex justify-end gap-3 mt-4"> <button onClick={onClose} className="app-btn app-btn-outline">Cancel</button> <button onClick={handleImportClick} className="app-btn app-btn-primary">Import JSON</button> </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function SectorEditModal({ 
+            isOpen, 
+            onClose, 
+            sector, 
+            threatClustersData, 
+            updateSectorProperty, 
+            toggleThreatActive, 
+            updateThreatValue, 
+            toggleThreatFlag, 
+            updateZoneLimit, 
+            takeSnapshot, 
+            deleteSector,
+            defaultZoneLimits 
+        }) {
+            if (!isOpen || !sector) return null;
+            
+            return (
+                <div className="modal-overlay no-print" onClick={onClose}>
+                    <div className="modal-content-lg" onClick={e => e.stopPropagation()}>
+                        {/* Header */}
+                        <div className="flex items-center justify-between pb-4 border-b border-border flex-shrink-0">
+                            <div className="flex items-center gap-3">
+                                <div className="w-6 h-6 rounded-full" style={{backgroundColor: sector.color}}></div>
+                                <input 
+                                    type="text" 
+                                    value={sector.name} 
+                                    onChange={e => updateSectorProperty(sector.id, 'name', e.target.value)} 
+                                    className="input-control bg-transparent border-0 p-1 text-lg font-semibold text-foreground focus:ring-0 focus:border-border" 
+                                />
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Tooltip text="Bubble Color"><ColorPicker color={sector.color} onChange={c => updateSectorProperty(sector.id, 'color', c)}/></Tooltip>
+                                <Tooltip text="Slice BG Color"><ColorPicker color={sector.backgroundColor} onChange={c => updateSectorProperty(sector.id, 'backgroundColor', c)}/></Tooltip>
+                                <Tooltip text="Label Text Color"><ColorPicker color={sector.labelTextColor || DEFAULT_LABEL_TEXT_COLOR} onChange={c => updateSectorProperty(sector.id, 'labelTextColor', c)}/></Tooltip>
+                                <Tooltip text="Take Snapshot"><button onClick={() => takeSnapshot(sector.id)} className="app-btn app-btn-outline app-btn-sm px-2 py-1"><i className="fas fa-camera"></i></button></Tooltip>
+                                <Tooltip text="Delete Sector"><button onClick={() => { deleteSector(sector.id); onClose(); }} className="app-btn app-btn-danger app-btn-sm px-2 py-1"><i className="fas fa-trash"></i></button></Tooltip>
+                                <button onClick={onClose} className="app-btn app-btn-outline app-btn-sm px-2 py-1 ml-2"><i className="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                        
+                        {/* Scrollable Content */}
+                        <div className="flex-1 overflow-y-auto py-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {threatClustersData.map(cluster => (
+                                    <div key={cluster.id} className="threat-card p-3 space-y-2">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2 min-w-0">
+                                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold">#{cluster.id}</div>
+                                                <span className="font-medium text-sm text-foreground truncate" title={cluster.name}>{cluster.name}</span>
+                                            </div>
+                                            <label className="toggle-switch">
+                                                <input type="checkbox" checked={sector.activeThreats[cluster.id]} onChange={() => toggleThreatActive(sector.id, cluster.id)} />
+                                                <span className="toggle-slider"></span>
+                                            </label>
+                                        </div>
+                                        {sector.activeThreats[cluster.id] && (
+                                            <div className="space-y-3 pl-1">
+                                                <div>
+                                                    <label className="text-xs text-muted-foreground mb-1 block">Level (0-100)</label>
+                                                    <div className="flex items-center gap-2">
+                                                        <input type="range" min="0" max="100" value={sector.values[cluster.id]} onChange={e => updateThreatValue(sector.id, cluster.id, e.target.value)} className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" />
+                                                        <input type="number" min="0" max="100" value={sector.values[cluster.id]} onChange={e => updateThreatValue(sector.id, cluster.id, e.target.value)} className="input-control w-16 text-center text-sm p-1"/>
+                                                    </div>
+                                                    {!isNaN(parseFloat(sector.oldValues[cluster.id])) && sector.oldValues[cluster.id] !== sector.values[cluster.id] && (
+                                                        <div className="text-xs mt-1 text-muted-foreground">Prev: <span className={sector.values[cluster.id] > sector.oldValues[cluster.id] ? 'text-red-400' : 'text-green-400'}>{sector.oldValues[cluster.id]}</span></div>
+                                                    )}
+                                                </div>
+                                                <div className="flex gap-2 justify-around text-xs">
+                                                    <label className="flex items-center gap-1 cursor-pointer text-muted-foreground">
+                                                        <input type="checkbox" checked={sector.toBeReported[cluster.id]} onChange={() => toggleThreatFlag(sector.id, cluster.id, 'toBeReported')} className="form-checkbox h-3.5 w-3.5 text-yellow-400 bg-muted border-border rounded focus:ring-yellow-300"/>Report
+                                                    </label>
+                                                    <label className="flex items-center gap-1 cursor-pointer text-muted-foreground">
+                                                        <input type="checkbox" checked={sector.riskToleranceCrashed[cluster.id]} onChange={() => toggleThreatFlag(sector.id, cluster.id, 'riskToleranceCrashed')} className="form-checkbox h-3.5 w-3.5 text-red-500 bg-muted border-border rounded focus:ring-red-400"/>Tolerance
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label className="text-xs text-muted-foreground mb-1 block">Zone Thresholds</label>
+                                                    <div className="grid grid-cols-4 gap-1">
+                                                        {Object.entries(sector.zoneLimits[cluster.id] || defaultZoneLimits).map(([limitName, limitValue]) => (
+                                                            <div key={limitName} className="flex flex-col items-center">
+                                                                <label className="capitalize text-xs text-muted-foreground truncate">{limitName}</label>
+                                                                <input type="number" min="0" max="100" value={limitValue} onChange={e => updateZoneLimit(sector.id, cluster.id, limitName, e.target.value)} disabled={limitName === 'latent'} className="input-control p-1 text-xs text-center w-full disabled:bg-muted disabled:cursor-not-allowed"/>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        {/* Footer */}
+                        <div className="flex justify-end pt-4 border-t border-border flex-shrink-0">
+                            <button onClick={onClose} className="app-btn app-btn-primary">Done</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function App() {
+            const [sectors, setSectors] = useState([]);
+            const [newSectorName, setNewSectorName] = useState('');
+            const [error, setError] = useState('');
+            const [radarBgColor, setRadarBgColor] = useState(DEFAULT_RADAR_BG_COLOR);
+            const [radarTextColor, setRadarTextColor] = useState(DEFAULT_RADAR_TEXT_COLOR);
+            const [zoneLabelColor, setZoneLabelColor] = useState(DEFAULT_ZONE_LABEL_COLOR);
+            const [zoneLineStyle, setZoneLineStyle] = useState(DEFAULT_ZONE_LINE_STYLE);
+            const [radarShape, setRadarShape] = useState(DEFAULT_RADAR_SHAPE);
+            const [clusterDisplayMode, setClusterDisplayMode] = useState(DEFAULT_CLUSTER_DISPLAY_MODE);
+            const [zoneSizeMultipliers, setZoneSizeMultipliers] = useState({...DEFAULT_ZONE_SIZE_MULTIPLIERS});
+            const [oldBubbleSizeMultiplier, setOldBubbleSizeMultiplier] = useState(DEFAULT_OLD_BUBBLE_SIZE_MULTIPLIER);
+            const [threatClustersData, setThreatClustersData] = useState(() => JSON.parse(JSON.stringify(ORIGINAL_THREAT_CLUSTERS)));
+            const [sectorNameTextSizePx, setSectorNameTextSizePx] = useState(DEFAULT_SECTOR_NAME_TEXT_SIZE_PX);
+            const [zoneLabelTextSizePx, setZoneLabelTextSizePx] = useState(DEFAULT_ZONE_LABEL_TEXT_SIZE_PX);
+            const [bubbleTextSizePx, setBubbleTextSizePx] = useState(DEFAULT_BUBBLE_TEXT_SIZE_PX);
+            const [baselineLabelMargin, setBaselineLabelMargin] = useState(DEFAULT_BASELINE_LABEL_MARGIN);
+            
+            // Flag Settings State
+            const [reportFlagSizePx, setReportFlagSizePx] = useState(DEFAULT_REPORT_FLAG_SIZE_PX);
+            const [reportFlagColor, setReportFlagColor] = useState(DEFAULT_REPORT_FLAG_BG_COLOR);
+            const [reportFlagTextColor, setReportFlagTextColor] = useState(DEFAULT_REPORT_FLAG_TEXT_COLOR);
+            
+            const [toleranceFlagSizePx, setToleranceFlagSizePx] = useState(DEFAULT_TOLERANCE_FLAG_SIZE_PX);
+            const [toleranceFlagColor, setToleranceFlagColor] = useState(DEFAULT_TOLERANCE_FLAG_BG_COLOR);
+            const [toleranceFlagTextColor, setToleranceFlagTextColor] = useState(DEFAULT_TOLERANCE_FLAG_TEXT_COLOR);
+
+            const [showLegend, setShowLegend] = useState(false);
+            const [showGlobalSettings, setShowGlobalSettings] = useState(true);
+            const [showClusterEditor, setShowClusterEditor] = useState(false);
+            const [notification, setNotification] = useState(null);
+            const radarWrapperRef = useRef(null);
+            const [draggedSectorId, setDraggedSectorId] = useState(null);
+            const [dropTargetInfo, setDropTargetInfo] = useState({ sectorId: null, position: null });
+            const [isJsonImportModalOpen, setIsJsonImportModalOpen] = useState(false);
+            const [editingSectorId, setEditingSectorId] = useState(null);
+            const LOCAL_STORAGE_KEY = 'threatRadarData_V4_7_1'; 
+
+            const applyImportedData = (imported) => {
+                const currentClusterDefs = imported.threatClustersData || ORIGINAL_THREAT_CLUSTERS;
+                const hydratedSectors = (imported.sectors || []).map(s => ({
+                    ...createDefaultSector(currentClusterDefs), ...s,
+                    zoneLimits: Object.fromEntries(currentClusterDefs.map(c => [c.id, s.zoneLimits?.[c.id] || { ...defaultZoneLimits }]))
+                }));
+                setSectors(hydratedSectors);
+                setRadarBgColor(imported.radarBgColor || DEFAULT_RADAR_BG_COLOR); setRadarTextColor(imported.radarTextColor || DEFAULT_RADAR_TEXT_COLOR); setZoneLabelColor(imported.zoneLabelColor || DEFAULT_ZONE_LABEL_COLOR); setZoneLineStyle(imported.zoneLineStyle || DEFAULT_ZONE_LINE_STYLE);
+                setRadarShape(imported.radarShape || DEFAULT_RADAR_SHAPE); setClusterDisplayMode(imported.clusterDisplayMode || DEFAULT_CLUSTER_DISPLAY_MODE); setZoneSizeMultipliers(imported.zoneSizeMultipliers || {...DEFAULT_ZONE_SIZE_MULTIPLIERS}); setOldBubbleSizeMultiplier(imported.oldBubbleSizeMultiplier || DEFAULT_OLD_BUBBLE_SIZE_MULTIPLIER);
+                setSectorNameTextSizePx(imported.sectorNameTextSizePx || DEFAULT_SECTOR_NAME_TEXT_SIZE_PX); setZoneLabelTextSizePx(imported.zoneLabelTextSizePx || DEFAULT_ZONE_LABEL_TEXT_SIZE_PX); setBubbleTextSizePx(imported.bubbleTextSizePx || DEFAULT_BUBBLE_TEXT_SIZE_PX); setBaselineLabelMargin(imported.baselineLabelMargin || DEFAULT_BASELINE_LABEL_MARGIN); 
+                
+                // Import Flag Settings
+                setReportFlagSizePx(imported.reportFlagSizePx || DEFAULT_REPORT_FLAG_SIZE_PX);
+                setReportFlagColor(imported.reportFlagColor || DEFAULT_REPORT_FLAG_BG_COLOR);
+                setReportFlagTextColor(imported.reportFlagTextColor || DEFAULT_REPORT_FLAG_TEXT_COLOR);
+                
+                setToleranceFlagSizePx(imported.toleranceFlagSizePx || DEFAULT_TOLERANCE_FLAG_SIZE_PX);
+                setToleranceFlagColor(imported.toleranceFlagColor || DEFAULT_TOLERANCE_FLAG_BG_COLOR);
+                setToleranceFlagTextColor(imported.toleranceFlagTextColor || DEFAULT_TOLERANCE_FLAG_TEXT_COLOR);
+                
+                if (imported.threatClustersData) { const mergedClusters = ORIGINAL_THREAT_CLUSTERS.map(origCluster => { const savedCluster = imported.threatClustersData.find(sc => sc.id === origCluster.id); return savedCluster ? { ...origCluster, shortName: savedCluster.shortName } : origCluster; }); setThreatClustersData(mergedClusters); } else { setThreatClustersData(JSON.parse(JSON.stringify(ORIGINAL_THREAT_CLUSTERS))); }
+                setShowGlobalSettings(imported.showGlobalSettings !== undefined ? imported.showGlobalSettings : true); setShowClusterEditor(imported.showClusterEditor !== undefined ? imported.showClusterEditor : false);
+                showNotificationMessage('Configuration imported successfully.'); setError('');
+            };
+
+            useEffect(() => {
+                try {
+                    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+                    if (saved) { applyImportedData(JSON.parse(saved)); } else {
+                        setSectors([createDefaultSector(ORIGINAL_THREAT_CLUSTERS)]); setThreatClustersData(JSON.parse(JSON.stringify(ORIGINAL_THREAT_CLUSTERS))); setZoneSizeMultipliers({...DEFAULT_ZONE_SIZE_MULTIPLIERS}); setOldBubbleSizeMultiplier(DEFAULT_OLD_BUBBLE_SIZE_MULTIPLIER);
+                        setSectorNameTextSizePx(DEFAULT_SECTOR_NAME_TEXT_SIZE_PX); setZoneLabelTextSizePx(DEFAULT_ZONE_LABEL_TEXT_SIZE_PX); setBubbleTextSizePx(DEFAULT_BUBBLE_TEXT_SIZE_PX); setBaselineLabelMargin(DEFAULT_BASELINE_LABEL_MARGIN); 
+                        setReportFlagSizePx(DEFAULT_REPORT_FLAG_SIZE_PX); setReportFlagColor(DEFAULT_REPORT_FLAG_BG_COLOR); setReportFlagTextColor(DEFAULT_REPORT_FLAG_TEXT_COLOR);
+                        setToleranceFlagSizePx(DEFAULT_TOLERANCE_FLAG_SIZE_PX); setToleranceFlagColor(DEFAULT_TOLERANCE_FLAG_BG_COLOR); setToleranceFlagTextColor(DEFAULT_TOLERANCE_FLAG_TEXT_COLOR);
+                        setZoneLabelColor(DEFAULT_ZONE_LABEL_COLOR); setZoneLineStyle(DEFAULT_ZONE_LINE_STYLE);
+                        setShowGlobalSettings(true); setShowClusterEditor(false);
+                    }
+                } catch (e) { console.error("Failed to load data from localStorage", e); setError("Error loading saved data. Resetting to defaults."); setSectors([createDefaultSector(ORIGINAL_THREAT_CLUSTERS)]); setThreatClustersData(JSON.parse(JSON.stringify(ORIGINAL_THREAT_CLUSTERS))); }
+            }, []);
+
+            useEffect(() => {
+                try {
+                    const dataToSave = { 
+                        sectors, radarBgColor, radarTextColor, zoneLabelColor, zoneLineStyle, radarShape, clusterDisplayMode, zoneSizeMultipliers, oldBubbleSizeMultiplier, threatClustersData, 
+                        sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin, 
+                        reportFlagSizePx, reportFlagColor, reportFlagTextColor,
+                        toleranceFlagSizePx, toleranceFlagColor, toleranceFlagTextColor,
+                        showGlobalSettings, showClusterEditor 
+                    };
+                    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
+                } catch (e) { console.error("Failed to save data to localStorage", e); }
+            }, [
+                sectors, radarBgColor, radarTextColor, zoneLabelColor, zoneLineStyle, radarShape, clusterDisplayMode, zoneSizeMultipliers, oldBubbleSizeMultiplier, threatClustersData, 
+                sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin, 
+                reportFlagSizePx, reportFlagColor, reportFlagTextColor,
+                toleranceFlagSizePx, toleranceFlagColor, toleranceFlagTextColor,
+                showGlobalSettings, showClusterEditor
+            ]);
+
+            const handleClusterDataChange = (clusterId, field, value) => { setThreatClustersData(prevClusters => prevClusters.map(c => c.id === clusterId ? { ...c, [field]: value } : c)); };
+            const handleZoneSizeChange = (zoneName, value) => { setZoneSizeMultipliers(prev => ({ ...prev, [zoneName]: parseFloat(value) })); };
+            const showNotificationMessage = (message, type = 'success', duration = 3000) => { setNotification({ message, type }); setTimeout(() => setNotification(null), duration); };
+
+            const addSector = () => { const name = newSectorName.trim() || `Sector ${sectors.length + 1}`; setSectors([...sectors, { ...createDefaultSector(threatClustersData), name }]); setNewSectorName(''); showNotificationMessage(`Sector "${name}" added.`); };
+            const deleteSector = (id) => { setSectors(sectors.filter(s => s.id !== id)); showNotificationMessage('Sector deleted.', 'info'); };
+            const updateSectorProperty = (sectorId, property, value) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, [property]: value } : s)); };
+            const toggleThreatActive = (sectorId, clusterId) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, activeThreats: { ...s.activeThreats, [clusterId]: !s.activeThreats[clusterId] } } : s)); };
+            const updateThreatValue = (sectorId, clusterId, value) => { const numVal = Math.min(100, Math.max(0, parseInt(value, 10) || 0)); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, values: { ...s.values, [clusterId]: numVal } } : s)); };
+            const updateZoneLimit = (sectorId, clusterId, limitName, value) => { const numVal = Math.min(100, Math.max(0, parseInt(value, 10) || 0)); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, zoneLimits: { ...s.zoneLimits, [clusterId]: { ...s.zoneLimits[clusterId], [limitName]: numVal } } } : s)); };
+            const toggleThreatFlag = (sectorId, clusterId, flagName) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, [flagName]: { ...s[flagName], [clusterId]: !s[flagName][clusterId] } } : s)); };
+            const toggleSectorCollapse = (sectorId) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, collapsed: !s.collapsed } : s)); };
+
+            const handleBubbleMove = (sectorId, clusterId, dx, dy) => {
+                setSectors(prev => prev.map(s => 
+                    s.id === sectorId 
+                        ? { ...s, bubbleOffsets: { ...s.bubbleOffsets, [clusterId]: { dx, dy } } } 
+                        : s
+                ));
+            };
+
+            const handleJsonImport = (jsonText) => {
+                try { const imported = JSON.parse(jsonText); applyImportedData(imported); setIsJsonImportModalOpen(false); } 
+                catch (e) { alert("Invalid JSON format. Please check your input."); console.error("JSON Import Error:", e); }
+            };
+
+            const handleFileImport = (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+                if (file.type !== "application/json" && !file.name.endsWith('.json')) {
+                    alert("Please select a valid JSON file (.json).");
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const imported = JSON.parse(e.target.result);
+                        applyImportedData(imported);
+                        showNotificationMessage('Configuration imported from file.');
+                    } catch (err) {
+                        alert("Invalid JSON format in file.");
+                        console.error("File Import Error:", err);
+                    }
+                };
+                reader.readAsText(file);
+                event.target.value = ''; // Reset input
+            };
+
+            const exportConfig = () => {
+                const dataToExport = { 
+                    sectors, radarBgColor, radarTextColor, zoneLabelColor, zoneLineStyle, radarShape, clusterDisplayMode, zoneSizeMultipliers, oldBubbleSizeMultiplier, threatClustersData, 
+                    sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin, 
+                    reportFlagSizePx, reportFlagColor, reportFlagTextColor,
+                    toleranceFlagSizePx, toleranceFlagColor, toleranceFlagTextColor 
+                };
+                const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'threat-radar-config.json'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+                showNotificationMessage('Configuration exported.'); 
+            };
+
+            const exportRadarAsPNG = async () => {
+                const radarElement = document.getElementById('radar-svg-element');
+                if (!radarElement) { alert('Radar not found.'); return; }
+                try {
+                    const canvas = await html2canvas(radarWrapperRef.current, { backgroundColor: radarBgColor, scale: 2, useCORS: true });
+                    const link = document.createElement('a'); link.download = 'threat-radar.png'; link.href = canvas.toDataURL('image/png'); link.click();
+                    showNotificationMessage('Radar exported as PNG.');
+                } catch(e) { alert('Error exporting radar.'); console.error(e); }
+            };
+
+            const takeSnapshot = (sectorId) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, oldValues: { ...s.values } } : s)); showNotificationMessage('Snapshot taken. Trends will now appear.'); };
+
+            const handleDragStart = (e, sectorId) => { e.dataTransfer.effectAllowed = 'move'; setDraggedSectorId(sectorId); };
+            const handleDragOver = (e, targetSectorId) => { e.preventDefault(); if (draggedSectorId && draggedSectorId !== targetSectorId) { const rect = e.currentTarget.getBoundingClientRect(); const y = e.clientY - rect.top; const position = y < rect.height / 2 ? 'before' : 'after'; setDropTargetInfo({ sectorId: targetSectorId, position }); } };
+            const handleDragLeave = () => { setDropTargetInfo({ sectorId: null, position: null }); };
+            const handleDrop = (e, targetSectorId) => { e.preventDefault(); if (!draggedSectorId || draggedSectorId === targetSectorId) { setDropTargetInfo({ sectorId: null, position: null }); return; } setSectors(prev => { const draggedIndex = prev.findIndex(s => s.id === draggedSectorId); const targetIndex = prev.findIndex(s => s.id === targetSectorId); if (draggedIndex === -1 || targetIndex === -1) return prev; const newSectors = [...prev]; const [draggedItem] = newSectors.splice(draggedIndex, 1); let insertIndex = targetIndex; if (dropTargetInfo.position === 'after') { insertIndex = draggedIndex < targetIndex ? targetIndex : targetIndex + 1; } else { insertIndex = draggedIndex < targetIndex ? targetIndex - 1 : targetIndex; } newSectors.splice(insertIndex, 0, draggedItem); return newSectors; }); setDropTargetInfo({ sectorId: null, position: null }); };
+            const handleDragEnd = () => { setDraggedSectorId(null); setDropTargetInfo({ sectorId: null, position: null }); };
+
+            return (
+                <div className="container mx-auto px-4 py-8">
+                    {notification && ( <div className={`fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg ${ notification.type === 'success' ? 'bg-green-600 text-white' : notification.type === 'error' ? 'bg-red-600 text-white' : 'bg-blue-600 text-white' }`}> {notification.message} </div> )}
+                    <JsonImportModal isOpen={isJsonImportModalOpen} onClose={() => setIsJsonImportModalOpen(false)} onImport={handleJsonImport} />
+                    <SectorEditModal
+                        isOpen={editingSectorId !== null}
+                        onClose={() => setEditingSectorId(null)}
+                        sector={sectors.find(s => s.id === editingSectorId)}
+                        threatClustersData={threatClustersData}
+                        updateSectorProperty={updateSectorProperty}
+                        toggleThreatActive={toggleThreatActive}
+                        updateThreatValue={updateThreatValue}
+                        toggleThreatFlag={toggleThreatFlag}
+                        updateZoneLimit={updateZoneLimit}
+                        takeSnapshot={takeSnapshot}
+                        deleteSector={deleteSector}
+                        defaultZoneLimits={defaultZoneLimits}
+                    />
+
+                    {/* Data Actions Toolbar */}
+                    <div className="card p-3 mb-6 no-print">
+                        <div className="flex flex-wrap items-center gap-3">
+                            <span className="text-sm font-bold text-foreground flex items-center gap-2"><i className="fas fa-database"></i> Data:</span>
+                            <button onClick={exportConfig} className="app-btn app-btn-secondary app-btn-sm"><i className="fas fa-download"></i>Export JSON</button>
+                            <input type="file" id="json-file-input" accept=".json,application/json" onChange={handleFileImport} className="hidden" />
+                            <button onClick={() => document.getElementById('json-file-input').click()} className="app-btn app-btn-secondary app-btn-sm"><i className="fas fa-file-import"></i>Import File</button>
+                            <button onClick={() => setIsJsonImportModalOpen(true)} className="app-btn app-btn-outline app-btn-sm"><i className="fas fa-paste"></i>Paste JSON</button>
+                            <div className="h-6 w-px bg-border hidden sm:block"></div>
+                            <span className="text-sm font-bold text-foreground flex items-center gap-2"><i className="fas fa-book-open"></i> Examples:</span>
+                            <select
+                                className="input-control text-xs h-8"
+                                defaultValue=""
+                                onChange={(e) => {
+                                    if (!e.target.value) return;
+                                    fetch(e.target.value)
+                                        .then(r => r.json())
+                                        .then(data => { applyImportedData(data); showNotificationMessage('Example loaded.'); })
+                                        .catch(err => { alert('Failed to load example.'); console.error(err); });
+                                    e.target.value = '';
+                                }}
+                            >
+                                <option value="">Load example...</option>
+                                <optgroup label="NCSC/BACS Switzerland 2024">
+                                    <option value="examples/ncsc-google-2024-JB-bericht.json">National Overview (CH vs Global)</option>
+                                    <option value="examples/ncsc-google-2024-JB-bericht-sectors.json">By Industry Sector</option>
+                                    <option value="examples/ncsc-google-2024-JB-bericht-actors.json">By Threat Actor Type</option>
+                                    <option value="examples/ncsc-google-2024-JB-bericht-cia.json">By CIA Impact</option>
+                                    <option value="examples/ncsc-google-2024-JB-bericht-it-types.json">By IT Asset Type</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-6 lg:gap-10">
+                        <div className="w-full md:w-2/5 lg:w-1/3 space-y-6 no-print" id="editor">
+                            <section className="card">
+                                <header className="flex items-center justify-between p-4 border-b border-border cursor-pointer" onClick={() => setShowGlobalSettings(!showGlobalSettings)}> <h2 className="text-lg font-semibold text-foreground"><i className="fas fa-globe mr-2 text-blue-400"></i>Global Radar Settings</h2> <i className={`fas fa-chevron-down transition-transform duration-300 ${showGlobalSettings ? 'rotate-180' : ''}`}></i> </header>
+                                <div className={`collapse-transition ${showGlobalSettings ? 'p-4 md:p-6 max-h-[2000px] opacity-100' : 'collapsed-content'}`}>
+                                    <div className="space-y-4">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div><label className="block text-sm font-medium text-muted-foreground mb-1">Shape</label><select value={radarShape} onChange={e => setRadarShape(e.target.value)} className="input-control w-full"><option value="full">360° (Full)</option><option value="half">180° (Half)</option></select></div>
+                                            <div><label className="block text-sm font-medium text-muted-foreground mb-1">Bubble Display</label><select value={clusterDisplayMode} onChange={e => setClusterDisplayMode(e.target.value)} className="input-control w-full"><option value="name">Short Name</option><option value="number">Cluster #</option><option value="both">Cluster # with Short Name</option></select></div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4 items-end">
+                                            <ColorPicker color={radarBgColor} onChange={setRadarBgColor} label="BG Color" />
+                                            <ColorPicker color={radarTextColor} onChange={setRadarTextColor} label="Text Color" />
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4 items-end">
+                                            <ColorPicker color={zoneLabelColor} onChange={setZoneLabelColor} label="Zone Labels" />
+                                            <div><label className="block text-sm font-medium text-muted-foreground mb-1">Zone Lines</label><select value={zoneLineStyle} onChange={e => setZoneLineStyle(e.target.value)} className="input-control w-full"><option value="dashed">Dashed</option><option value="solid">Solid</option><option value="dotted">Dotted</option></select></div>
+                                        </div>
+                                        <div className="pt-2"><h4 className="text-sm font-semibold text-foreground mb-2">Zone Bubble Sizes</h4><div className="grid grid-cols-2 gap-x-4 gap-y-2">{Object.entries(zoneSizeMultipliers).map(([zone, val]) => (<div key={zone} className="flex items-center gap-2"><label className="capitalize text-xs text-muted-foreground w-16">{zone}:</label><input type="number" step="0.05" min="0.5" max="2" value={val} onChange={e => handleZoneSizeChange(zone, e.target.value)} className="input-control p-1 text-xs text-center flex-grow"/></div>))}</div></div>
+                                        <div><label className="block text-xs text-muted-foreground mb-1">Trend (Old) Bubble Size ({oldBubbleSizeMultiplier}x)</label><input type="range" min="0.3" max="1.5" step="0.05" value={oldBubbleSizeMultiplier} onChange={e => setOldBubbleSizeMultiplier(parseFloat(e.target.value))} className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" /></div>
+                                        <div className="pt-2 grid grid-cols-2 gap-4">
+                                            <div><label className="block text-xs text-muted-foreground mb-1">Sector Name Size ({sectorNameTextSizePx}px)</label><input type="range" min="8" max="24" step="1" value={sectorNameTextSizePx} onChange={e => setSectorNameTextSizePx(parseInt(e.target.value))} className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" /></div>
+                                            <div><label className="block text-xs text-muted-foreground mb-1">Zone Label Size ({zoneLabelTextSizePx}px)</label><input type="range" min="6" max="18" step="1" value={zoneLabelTextSizePx} onChange={e => setZoneLabelTextSizePx(parseInt(e.target.value))} className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" /></div>
+                                            <div><label className="block text-xs text-muted-foreground mb-1">Bubble Text Size ({bubbleTextSizePx}px)</label><input type="range" min="5" max="14" step="0.5" value={bubbleTextSizePx} onChange={e => setBubbleTextSizePx(parseFloat(e.target.value))} className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" /></div>
+                                            <div><label className="block text-xs text-muted-foreground mb-1">Baseline Margin ({baselineLabelMargin}px)</label><input type="range" min="5" max="40" step="1" value={baselineLabelMargin} onChange={e => setBaselineLabelMargin(parseInt(e.target.value))} className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" /></div>
+                                        </div>
+                                        
+                                        {/* New Flag Settings Section */}
+                                        <div className="pt-3 border-t border-border">
+                                            <h4 className="text-sm font-semibold text-foreground mb-3">Flag Settings</h4>
+                                            
+                                            {/* Report Flag Settings */}
+                                            <div className="mb-4">
+                                                <div className="text-xs font-semibold text-yellow-400 mb-2 flex items-center gap-2"><i className="fas fa-exclamation-circle"></i> Report Flag (!)</div>
+                                                <div className="grid grid-cols-2 gap-2 mb-2">
+                                                    <ColorPicker color={reportFlagColor} onChange={setReportFlagColor} label="BG" />
+                                                    <ColorPicker color={reportFlagTextColor} onChange={setReportFlagTextColor} label="Text" />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs text-muted-foreground mb-1">Size ({reportFlagSizePx}px)</label>
+                                                    <input type="range" min="3" max="12" step="0.5" value={reportFlagSizePx} onChange={e => setReportFlagSizePx(parseFloat(e.target.value))} className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" />
+                                                </div>
+                                            </div>
+
+                                            {/* Tolerance Flag Settings */}
+                                            <div>
+                                                <div className="text-xs font-semibold text-red-400 mb-2 flex items-center gap-2"><i className="fas fa-bolt"></i> Tolerance Flag (⚡)</div>
+                                                <div className="grid grid-cols-2 gap-2 mb-2">
+                                                    <ColorPicker color={toleranceFlagColor} onChange={setToleranceFlagColor} label="BG" />
+                                                    <ColorPicker color={toleranceFlagTextColor} onChange={setToleranceFlagTextColor} label="Text" />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs text-muted-foreground mb-1">Size ({toleranceFlagSizePx}px)</label>
+                                                    <input type="range" min="3" max="12" step="0.5" value={toleranceFlagSizePx} onChange={e => setToleranceFlagSizePx(parseFloat(e.target.value))} className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="pt-4 flex flex-wrap gap-2">
+                                            <input type="text" value={newSectorName} onChange={e => setNewSectorName(e.target.value)} placeholder="New Sector Name" className="input-control flex-grow"/>
+                                            <button onClick={addSector} className="app-btn app-btn-primary"><i className="fas fa-plus"></i>Add Sector</button>
+                                        </div>
+                                        <div className="flex flex-wrap gap-2 pt-2">
+                                            <button onClick={() => setShowLegend(!showLegend)} className="app-btn app-btn-outline app-btn-sm"><i className="fas fa-info-circle"></i>{showLegend ? 'Hide' : 'Show'} Legend</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section className="card">
+                                <header className="flex items-center justify-between p-4 border-b border-border cursor-pointer" onClick={() => setShowClusterEditor(!showClusterEditor)}> <h2 className="text-lg font-semibold text-foreground"><i className="fas fa-edit mr-2 text-purple-400"></i>Cluster Short Names</h2> <i className={`fas fa-chevron-down transition-transform duration-300 ${showClusterEditor ? 'rotate-180' : ''}`}></i> </header>
+                                <div className={`collapse-transition ${showClusterEditor ? 'p-4 md:p-6 max-h-[1000px] opacity-100' : 'collapsed-content'}`}>
+                                    <div className="space-y-2">
+                                        {threatClustersData.map(c => (<div key={c.id} className="flex items-center gap-2"><span className="w-5 text-xs text-muted-foreground text-right">#{c.id}</span><input type="text" value={c.shortName} onChange={e => handleClusterDataChange(c.id, 'shortName', e.target.value)} className="input-control flex-grow p-1 text-sm" title={c.name}/></div>))}
+                                    </div>
+                                </div>
+                            </section>
+                            {sectors.length === 0 ? ( <div className="text-center py-10 card"> <i className="fas fa-folder-open text-4xl text-muted-foreground mb-3"></i> <h3 className="text-sm text-muted-foreground">No sectors defined.</h3> <p className="text-muted-foreground">Load an example from the toolbar above, import a JSON file, or add a sector in Global Radar Settings.</p> </div> ) : (
+                                <div className="space-y-2">
+                                    {sectors.map((sector, index) => {
+                                        const activeCount = Object.values(sector.activeThreats).filter(Boolean).length;
+                                        return (
+                                            <div 
+                                                key={sector.id} 
+                                                className={`card p-3 cursor-pointer hover:bg-muted/80 transition-colors ${draggedSectorId === sector.id ? 'sector-dragging' : ''} ${dropTargetInfo.sectorId === sector.id && dropTargetInfo.position === 'before' ? 'sector-drop-indicator-top' : ''} ${dropTargetInfo.sectorId === sector.id && dropTargetInfo.position === 'after' ? 'sector-drop-indicator-bottom' : ''}`} 
+                                                draggable={true} 
+                                                onDragStart={(e) => handleDragStart(e, sector.id)} 
+                                                onDragOver={(e) => handleDragOver(e, sector.id)} 
+                                                onDragLeave={handleDragLeave} 
+                                                onDrop={(e) => handleDrop(e, sector.id)} 
+                                                onDragEnd={handleDragEnd}
+                                                onClick={() => setEditingSectorId(sector.id)}
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-5 h-5 rounded-full flex-shrink-0" style={{backgroundColor: sector.color}}></div>
+                                                        <div>
+                                                            <div className="font-semibold text-sm text-foreground">{sector.name}</div>
+                                                            <div className="text-xs text-muted-foreground">{activeCount} active threat{activeCount !== 1 ? 's' : ''}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <Tooltip text="Edit Sector"><i className="fas fa-pen text-muted-foreground text-sm"></i></Tooltip>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
+                        <div className="w-full md:w-3/5 lg:w-2/3 flex flex-col items-center space-y-4 radar-container-wrapper">
+                            <div className="card p-4 w-full max-w-md self-center no-print flex gap-2"> 
+                                <button onClick={exportRadarAsPNG} className="app-btn app-btn-primary flex-grow"><i className="fas fa-camera-retro"></i>Export PNG</button>
+                                <button onClick={() => { setSectors(prev => prev.map(s => ({ ...s, bubbleOffsets: Object.fromEntries(threatClustersData.map(c => [c.id, { dx: 0, dy: 0 }])) }))); showNotificationMessage('Bubble positions reset.'); }} className="app-btn app-btn-outline" title="Reset all bubbles to default positions"><i className="fas fa-undo"></i>Reset Positions</button>
+                            </div>
+                            {sectors.length > 0 ? (
+                                <div ref={radarWrapperRef} className="w-full" style={{backgroundColor: radarBgColor}}>
+                                    <RadarVisualization
+                                        sectors={sectors} radarBgColor={radarBgColor} radarTextColor={radarTextColor} zoneLabelColor={zoneLabelColor} zoneLineStyle={zoneLineStyle} radarShape={radarShape} clusterDisplayMode={clusterDisplayMode} zoneSizeMultipliers={zoneSizeMultipliers} oldBubbleSizeMultiplier={oldBubbleSizeMultiplier} threatClustersData={threatClustersData}
+                                        sectorNameTextSizePx={sectorNameTextSizePx} zoneLabelTextSizePx={zoneLabelTextSizePx} bubbleTextSizePx={bubbleTextSizePx} baselineLabelMargin={baselineLabelMargin}
+                                        reportFlagSizePx={reportFlagSizePx} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor}
+                                        toleranceFlagSizePx={toleranceFlagSizePx} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor}
+                                        onBubbleMove={handleBubbleMove}
+                                    />
+                                    {showLegend && (<><RadarLegend threatClustersData={threatClustersData} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor} radarTextColor={radarTextColor} /><ZoneLegend radarTextColor={radarTextColor} /></>)}
+                                </div>
+                            ) : ( <div className="text-center py-10 card w-full max-w-lg flex-grow flex flex-col justify-center items-center no-print"> <i className="fas fa-exclamation-triangle text-4xl text-yellow-400 mb-3"></i> <h3 className="text-xl text-muted-foreground">No Data to Visualize</h3> <p className="text-muted-foreground">Add and configure sectors in the Editor panel.</p> </div> )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+
+    <script>
+        // --- UI & Theme Logic ---
+        lucide.createIcons();
+
+        const htmlEl = document.documentElement;
+
+        // Theme Toggle Logic
+        function updateThemeIcons() {
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+            if (htmlEl.classList.contains('dark')) {
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            }
+        }
+
+        function toggleDarkMode() {
+            htmlEl.classList.toggle('dark');
+            localStorage.theme = htmlEl.classList.contains('dark') ? 'dark' : 'light';
+            updateThemeIcons();
+        }
+
+        // Init Theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
+        }
+        updateThemeIcons();
+
+        // Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                requestAnimationFrame(() => { menu.classList.add('opacity-100'); menu.classList.remove('opacity-0'); });
+            } else {
+                menu.classList.add('opacity-0');
+                menu.classList.remove('opacity-100');
+                setTimeout(() => menu.classList.add('hidden'), 300);
+            }
+        }
+    </script>
+</body>
+</html>

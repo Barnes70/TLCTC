@@ -1,0 +1,398 @@
+{
+  "schema_version": "tlctc-actor-profile.v1",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2025-09-07T00:00:00Z",
+  "actors": [
+    {
+      "threat_actor": "CURLY SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #07",
+      "notes": "Vishing/remote-assist to obtain credentials and enroll attacker devices; quick persistence and handoff to BGH operators.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services",
+        "Retail & Hospitality"
+      ]
+    },
+    {
+      "threat_actor": "CHATTY SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #07",
+      "notes": "Callback phishing leading to credential abuse and staging of exfil tools (WinSCP/Rclone) for extortion.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Legal & Professional Services",
+        "Financial Services",
+        "Healthcare"
+      ]
+    },
+    {
+      "threat_actor": "PLUMP SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #01",
+      "notes": "Brazil-focused vishing to push RMM, harvest creds, and manipulate business functions (payments) post-access.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Financial Services",
+        "Retail & Hospitality"
+      ]
+    },
+    {
+      "threat_actor": "SCATTERED SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 \u00e2\u2020\u2019 #04",
+      "notes": "Help-desk social engineering to reset MFA/passwords; pivots into SSO/SaaS for lateral movement and data theft.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Telecommunications",
+        "Financial Services",
+        "Retail & Hospitality",
+        "Gaming"
+      ]
+    },
+    {
+      "threat_actor": "FAMOUS CHOLLIMA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 \u00e2\u2020\u2019 #01 \u00e2\u2020\u2019 #04",
+      "notes": "GenAI-augmented personas to gain roles/insider footholds; abuse of business processes followed by identity expansion and malware staging.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Espionage",
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Aerospace & Defense",
+        "Financial Services"
+      ]
+    },
+    {
+      "threat_actor": "WANDERING SPIDER (Black Basta operators)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#04 \u00e2\u2020\u2019 #07",
+      "notes": "Big-game-hunting ransomware; often receives initial access from brokers, then deploys Black Basta payloads.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Healthcare",
+        "Manufacturing",
+        "Financial Services",
+        "Government"
+      ]
+    },
+    {
+      "threat_actor": "NITRO SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#01 \u00e2\u2020\u2019 #03 \u00e2\u2020\u2019 #07",
+      "notes": "Malvertising/SEO-poisoning funnels victims into client-side installs leading to malware (Nitrogen).",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services"
+      ]
+    },
+    {
+      "threat_actor": "OPERATOR PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #05",
+      "notes": "Internet-facing appliance exploit chains for initial access; identity pivot and occasional MitM for persistence/movement.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Telecommunications",
+        "Government",
+        "Technology"
+      ]
+    },
+    {
+      "threat_actor": "VAULT PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #07",
+      "notes": "Web-app exploitation followed by credential expansion and malware tooling for collection/exfiltration.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Technology",
+        "Financial Services"
+      ]
+    },
+    {
+      "threat_actor": "ENVOY PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #01",
+      "notes": "Targeted ops against diplomatic/government entities; blends server-side access with identity abuse and business-function misuse.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government"
+      ]
+    },
+    {
+      "threat_actor": "LIMINAL PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 2
+      },
+      "sequence": "#02 \u00e2\u2020\u2019 #05 \u00e2\u2020\u2019 #10",
+      "notes": "Deep telecom network knowledge; leverages compromised telecom infra for routing/relays across regions (supply-chain/partner trust).",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Telecommunications"
+      ]
+    },
+    {
+      "threat_actor": "LOCKSMITH PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #07",
+      "notes": "Targets tech/gaming/energy/telecom plus dissident communities; exploit external services, expand identity, deploy tooling for collection.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Gaming",
+        "Energy & Utilities",
+        "Telecommunications",
+        "Civil Society & NGOs"
+      ]
+    },
+    {
+      "threat_actor": "APT INC (BGH operators)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#04 \u00e2\u2020\u2019 #07",
+      "notes": "Credential-centric access and rapid ransomware staging; observed destructive PowerShell usage aligned with genAI patterns.",
+      "sources": [
+        "CrowdStrike Global Threat Report 2025"
+      ],
+      "last_updated": "2025-09-07",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Healthcare",
+        "Financial Services",
+        "Manufacturing"
+      ]
+    }
+  ]
+}

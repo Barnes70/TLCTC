@@ -135,32 +135,53 @@
 </head>
 <body data-theme="light">
 
-<header class="glass-header px-4 h-14 flex items-center justify-between flex-shrink-0">
+<header class="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0">
     <div class="flex items-center gap-3">
-        <div class="h-8 w-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-            <i data-lucide="shield-alert" class="h-5 w-5"></i>
-        </div>
-        <div>
-            <h1 class="font-display font-bold text-lg leading-tight flex items-center gap-2">
-                TLCTC Architect <span class="bg-primary text-primary-foreground text-[10px] px-1.5 py-0.5 rounded uppercase tracking-wider">V6.0</span>
-            </h1>
-        </div>
+        <a href="index.html" class="flex items-center gap-2 group">
+            <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
+                <img src="/images/logo-small.png" alt="Logo" class="h-full w-full object-contain p-1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <i data-lucide="shield" class="h-5 w-5 hidden"></i>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-display font-bold text-lg leading-tight">TLCTC</span>
+                <span class="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+            </div>
+        </a>
     </div>
-    <div class="flex items-center gap-2">
-        <button class="btn btn-secondary btn-sm" onclick="toggleTheme()" title="Toggle Theme">
-            <i data-lucide="sun-moon" class="h-4 w-4 mr-2"></i> Theme
+    <nav class="hidden md:flex items-center gap-6">
+        <a href="threat-modeling.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Modeling</a>
+        <a href="attack-path-architect.html" class="text-sm font-medium text-foreground font-semibold transition-colors">Attack Path Architect</a>
+        <a href="actor-profile-designer.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Actor Profiler</a>
+        <a href="radar-tlctc-app.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Radar</a>
+        <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+    </nav>
+    <div class="flex items-center gap-3">
+        <button onclick="toggleTheme()" class="btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Toggle theme">
+            <i data-lucide="sun" class="h-4 w-4 hidden dark:block"></i>
+            <i data-lucide="moon" class="h-4 w-4 block dark:hidden"></i>
         </button>
-        <button class="btn btn-secondary btn-sm" onclick="exportSVG()" title="Download SVG">
-            <i data-lucide="file-code" class="h-4 w-4 mr-2"></i> SVG
-        </button>
-        <button class="btn btn-secondary btn-sm" onclick="exportPNG()" title="Download PNG">
-            <i data-lucide="image" class="h-4 w-4 mr-2"></i> PNG
-        </button>
-        <button class="btn btn-secondary btn-sm" onclick="window.print()" title="Print to PDF">
-            <i data-lucide="printer" class="h-4 w-4 mr-2"></i> Print
+        <button onclick="toggleMenu()" class="md:hidden btn h-9 w-9 p-0 rounded-full hover:bg-secondary">
+            <i data-lucide="menu" class="h-5 w-5"></i>
         </button>
     </div>
 </header>
+
+<!-- Mobile Navigation Menu -->
+<div id="mobile-menu" class="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden hidden transition-all duration-300 opacity-0">
+    <div class="flex h-14 items-center justify-between px-6 border-b border-border">
+        <span class="font-display font-bold text-lg">TLCTC</span>
+        <button onclick="toggleMenu()" class="btn h-10 w-10 p-0 rounded-full hover:bg-secondary">
+            <i data-lucide="x" class="h-6 w-6"></i>
+        </button>
+    </div>
+    <nav class="flex flex-col p-8 gap-6 text-lg font-medium">
+        <a href="threat-modeling.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Threat Modeling</a>
+        <a href="attack-path-architect.html" onclick="toggleMenu()" class="text-foreground font-semibold">Attack Path Architect</a>
+        <a href="actor-profile-designer.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Actor Profiler</a>
+        <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Threat Radar</a>
+        <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">TLCTC.net</a>
+    </nav>
+</div>
 
 <!-- Strategic Notation Bar -->
 <div class="bg-card border-b border-border px-6 py-3 flex items-center gap-4 flex-shrink-0 overflow-x-auto whitespace-nowrap">
@@ -184,19 +205,6 @@
     
     <button class="btn btn-secondary btn-sm" onclick="openMetadataModal()"><i data-lucide="file-edit" class="h-3 w-3 mr-1"></i> Metadata</button>
     <button class="btn btn-secondary btn-sm" onclick="createNewCase()"><i data-lucide="plus" class="h-3 w-3 mr-1"></i> New</button>
-    <select id="templateSelect" class="input-std text-xs h-7">
-        <optgroup label="Templates">
-            <option value="phishing">Corp Phishing (3 steps)</option>
-            <option value="customerphish">Customer Phishing (3 steps)</option>
-            <option value="supplychain">Supply Chain (4 steps)</option>
-        </optgroup>
-        <optgroup label="Real-World npm Campaigns">
-            <option value="npm_chalk">Chalk/Debug Phishing 2025 (7 steps)</option>
-            <option value="npm_nx">S1ngularity/Nx CI Abuse 2025 (10 steps)</option>
-            <option value="npm_worm">Shai-Hulud Worm 2025 (14 steps)</option>
-        </optgroup>
-    </select>
-    <button class="btn btn-secondary btn-sm" onclick="loadTemplate(document.getElementById('templateSelect').value)"><i data-lucide="copy" class="h-3 w-3 mr-1"></i>Load</button>
     <button class="btn btn-danger btn-sm px-2" onclick="deleteCase()" title="Delete Case"><i data-lucide="trash-2" class="h-3 w-3"></i></button>
 
     <div class="h-6 w-px bg-border mx-1"></div>
@@ -209,6 +217,12 @@
     <input type="file" id="fileInput" accept=".json" class="hidden" onchange="importCase(this)">
     <button class="btn btn-secondary btn-sm" onclick="document.getElementById('fileInput').click()"><i data-lucide="upload" class="h-3 w-3 mr-1"></i> Import</button>
     <button class="btn btn-success btn-sm" onclick="exportCompliantJSON()"><i data-lucide="download" class="h-3 w-3 mr-1"></i> Export JSON (v2.1)</button>
+
+    <div class="h-6 w-px bg-border mx-1"></div>
+
+    <button class="btn btn-secondary btn-sm" onclick="exportSVG()" title="Download SVG"><i data-lucide="file-code" class="h-3 w-3 mr-1"></i> SVG</button>
+    <button class="btn btn-secondary btn-sm" onclick="exportPNG()" title="Download PNG"><i data-lucide="image" class="h-3 w-3 mr-1"></i> PNG</button>
+    <button class="btn btn-secondary btn-sm" onclick="window.print()" title="Print to PDF"><i data-lucide="printer" class="h-3 w-3 mr-1"></i> Print</button>
 </div>
 
 <!-- Mobile Sidebar Toggle -->
@@ -220,7 +234,7 @@
 <div class="workspace grid grid-cols-1 md:grid-cols-[360px_1fr] flex-1 overflow-hidden">
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar bg-card border-r border-border flex flex-col h-full no-print hidden md:flex">
+    <aside id="sidebar" class="sidebar bg-card border-r border-border flex flex-col h-full min-h-0 no-print hidden md:flex">
         <div class="p-4 border-b border-border">
             <button class="btn btn-primary w-full btn-md" onclick="openStepModal()">
                 <i data-lucide="plus-circle" class="h-4 w-4 mr-2"></i> Add Attack Step
@@ -247,6 +261,13 @@
     <!-- Main Canvas Area -->
     <main class="main-view bg-background flex flex-col h-full relative">
         <div id="canvasArea" class="canvas-container flex-1 overflow-auto p-8 grid-bg relative"></div>
+
+        <!-- Zoom Controls -->
+        <div class="absolute top-3 right-3 flex items-center gap-1 bg-card/90 backdrop-blur border border-border rounded-lg shadow-sm px-1.5 py-1 z-10 no-print">
+            <button class="btn btn-secondary btn-xs" onclick="zoomOut()" title="Zoom Out"><i data-lucide="minus" class="h-3 w-3"></i></button>
+            <button id="zoomLabel" class="text-[10px] font-mono text-muted-foreground w-12 text-center cursor-pointer hover:text-foreground" onclick="zoomFit()" title="Fit to View">Fit</button>
+            <button class="btn btn-secondary btn-xs" onclick="zoomIn()" title="Zoom In"><i data-lucide="plus" class="h-3 w-3"></i></button>
+        </div>
         
         <!-- Print Table (hidden until print) -->
         <div id="print-table" class="hidden p-8 bg-white text-black">
@@ -774,6 +795,7 @@ let editingId = null;
 let undoStack = [];
 let redoStack = [];
 const MAX_UNDO = 50;
+let zoomLevel = 0; // 0 = fit-to-width (default), >0 = explicit scale
 
 // ============================================================================
 // INITIALIZATION
@@ -802,6 +824,15 @@ window.onload = function() {
         // Ctrl+Z undo, Ctrl+Y redo
         if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
         if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); redo(); }
+    });
+
+    // Re-render on resize when using fit-to-width
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (zoomLevel === 0) renderVisualization();
+        }, 150);
     });
 };
 
@@ -880,12 +911,53 @@ function getActiveCase() {
 }
 
 // ============================================================================
+// ZOOM CONTROLS
+// ============================================================================
+
+const ZOOM_STEPS = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2];
+
+function zoomFit() {
+    zoomLevel = 0;
+    renderVisualization();
+}
+
+function zoomIn() {
+    if (zoomLevel === 0) {
+        zoomLevel = 1;
+    } else {
+        const idx = ZOOM_STEPS.indexOf(zoomLevel);
+        if (idx < ZOOM_STEPS.length - 1) zoomLevel = ZOOM_STEPS[idx + 1];
+    }
+    renderVisualization();
+}
+
+function zoomOut() {
+    if (zoomLevel === 0) {
+        zoomLevel = 0.75;
+    } else {
+        const idx = ZOOM_STEPS.indexOf(zoomLevel);
+        if (idx > 0) zoomLevel = ZOOM_STEPS[idx - 1];
+    }
+    renderVisualization();
+}
+
+function updateZoomLabel() {
+    const label = document.getElementById('zoomLabel');
+    if (label) label.textContent = zoomLevel === 0 ? 'Fit' : Math.round(zoomLevel * 100) + '%';
+}
+
+// ============================================================================
 // CASE MANAGEMENT
 // ============================================================================
 
 function switchCase(id) {
+    if (id.startsWith('template:')) {
+        loadTemplate(id.slice('template:'.length));
+        return;
+    }
     appData.activeCaseId = id;
     editingId = null;
+    zoomLevel = 0;
     saveStorage();
     renderUI();
 }
@@ -953,6 +1025,9 @@ function importCase(input) {
             if (data.attack_sequence) {
                 // v2.0 format
                 importedCase = convertFromV2Format(data);
+            } else if (data.path_sequence) {
+                // Layer 3 schema format (attack-paths/*.json)
+                importedCase = convertFromLayer3Format(data);
             } else if (data.path) {
                 // Legacy format
                 importedCase = data;
@@ -1041,6 +1116,162 @@ function convertFromV2Format(data) {
         });
     }
     
+    return c;
+}
+
+// ============================================================================
+// LAYER 3 IMPORT HELPERS
+// ============================================================================
+
+function parseDeltaT(str) {
+    if (!str) return { dtVal: '', dtUnit: 'm' };
+    if (str === 'instant') return { dtVal: '0', dtUnit: 's' };
+    if (str === '?') return { dtVal: '?', dtUnit: 'm' };
+    // Handle months: ~3mo → convert to days (UI has no month option)
+    const moMatch = str.match(/^(~?)(\d+)mo$/);
+    if (moMatch) {
+        return { dtVal: moMatch[1] + String(parseInt(moMatch[2]) * 30), dtUnit: 'd' };
+    }
+    // Handle standard units: ~7d, ~2h, ~30m, ~10s
+    const match = str.match(/^([~<>]?\d+)([smhdw])$/);
+    if (match) {
+        return { dtVal: match[1], dtUnit: match[2] };
+    }
+    return { dtVal: str, dtUnit: 'm' };
+}
+
+function convertBoundary(tb) {
+    if (!tb) return null;
+    const b = {
+        context: tb.context,
+        source: (tb.source_sphere || '').replace('@', ''),
+        target: (tb.target_sphere || '').replace('@', '')
+    };
+    if (tb.transit_spheres?.length) {
+        b.transit = tb.transit_spheres.map(t => t.replace('@', ''));
+    }
+    return b;
+}
+
+function deriveSphere(step) {
+    if (step.topology_boundary?.target_sphere) {
+        return step.topology_boundary.target_sphere.replace('@', '');
+    }
+    return 'Org';
+}
+
+function buildParallelDescription(group) {
+    let desc = group.notes || '';
+    group.steps.forEach(s => {
+        if (s.notes) desc += (desc ? '\n\n' : '') + '[' + s.step_id + '] ' + s.notes;
+    });
+    return desc;
+}
+
+function convertFromLayer3Format(data) {
+    const c = {
+        title: data.metadata?.incident_id || "Imported Incident",
+        metadata: {
+            sequence_id: data.metadata?.incident_id,
+            description: data.metadata?.notes,
+            framework_version: data.metadata?.tlctc_version,
+            created: data.metadata?.created_at
+        },
+        path: []
+    };
+
+    if (data.path_sequence) {
+        data.path_sequence.forEach((item, i) => {
+            if (item.mode === 'parallel' && item.steps?.length) {
+                // Parallel group: flatten to cluster + cluster2
+                const primary = item.steps[0];
+                const secondary = item.steps[1];
+                const dt = parseDeltaT(item.delta_t_to_next);
+
+                const s = {
+                    id: Date.now() + i,
+                    cluster: parseInt(primary.cluster.replace('#', '')),
+                    sphere: deriveSphere(primary),
+                    dtVal: dt.dtVal,
+                    dtUnit: dt.dtUnit,
+                    description: buildParallelDescription(item),
+                    mitre: '',
+                    cve: ''
+                };
+
+                if (secondary) {
+                    s.cluster2 = parseInt(secondary.cluster.replace('#', ''));
+                }
+
+                // Use primary's boundary; fall back to secondary's
+                const boundary = convertBoundary(primary.topology_boundary)
+                    || convertBoundary(secondary?.topology_boundary);
+                if (boundary) s.boundary = boundary;
+
+                // Merge outcomes from both children
+                const allOutcomes = [
+                    ...(primary.outcomes || []),
+                    ...(secondary?.outcomes || [])
+                ];
+                if (allOutcomes.length) {
+                    s.dre = { types: [...new Set(allOutcomes)] };
+                }
+
+                // Merge evidence refs
+                const allEvidence = [
+                    ...(primary.evidence_refs || []),
+                    ...(secondary?.evidence_refs || [])
+                ];
+                if (allEvidence.length) s.evidence = allEvidence.join('; ');
+
+                // Intra-system boundaries from either child
+                const allIntra = [
+                    ...(primary.intra_system_boundaries || []),
+                    ...(secondary?.intra_system_boundaries || [])
+                ];
+                if (allIntra.length) {
+                    s.intraBoundaries = allIntra.map(ib => ({
+                        type: ib.type, from: ib.from, to: ib.to
+                    }));
+                }
+
+                c.path.push(s);
+            } else {
+                // Sequential step
+                const dt = parseDeltaT(item.delta_t_to_next);
+                const s = {
+                    id: Date.now() + i,
+                    cluster: parseInt(item.cluster.replace('#', '')),
+                    sphere: deriveSphere(item),
+                    dtVal: dt.dtVal,
+                    dtUnit: dt.dtUnit,
+                    description: item.notes || '',
+                    mitre: '',
+                    cve: ''
+                };
+
+                const boundary = convertBoundary(item.topology_boundary);
+                if (boundary) s.boundary = boundary;
+
+                if (item.intra_system_boundaries?.length) {
+                    s.intraBoundaries = item.intra_system_boundaries.map(ib => ({
+                        type: ib.type, from: ib.from, to: ib.to
+                    }));
+                }
+
+                if (item.outcomes?.length) {
+                    s.dre = { types: item.outcomes };
+                }
+
+                if (item.evidence_refs?.length) {
+                    s.evidence = item.evidence_refs.join('; ');
+                }
+
+                c.path.push(s);
+            }
+        });
+    }
+
     return c;
 }
 
@@ -1431,6 +1662,30 @@ function renderUI() {
         opt.selected = (k === appData.activeCaseId);
         sel.appendChild(opt);
     });
+
+    const tplGroups = [
+        { label: 'Templates', items: [
+            { value: 'template:phishing', text: 'Corp Phishing (3 steps)' },
+            { value: 'template:customerphish', text: 'Customer Phishing (3 steps)' },
+            { value: 'template:supplychain', text: 'Supply Chain (4 steps)' }
+        ]},
+        { label: 'Real-World npm Campaigns', items: [
+            { value: 'template:npm_chalk', text: 'Chalk/Debug Phishing 2025 (7 steps)' },
+            { value: 'template:npm_nx', text: 'S1ngularity/Nx CI Abuse 2025 (10 steps)' },
+            { value: 'template:npm_worm', text: 'Shai-Hulud Worm 2025 (14 steps)' }
+        ]}
+    ];
+    tplGroups.forEach(g => {
+        const og = document.createElement('optgroup');
+        og.label = g.label;
+        g.items.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.value;
+            opt.text = item.text;
+            og.appendChild(opt);
+        });
+        sel.appendChild(og);
+    });
     
     renderStepList();
     renderVisualization();
@@ -1666,8 +1921,21 @@ function renderVisualization() {
     const C_DATA = "#dc2626";
     const C_BIZ = "#7e22ce";
     const C_VELOCITY = "#059669";
-    
-    let svg = `<svg width="${SVG_W}" height="${SVG_H}" xmlns="http://www.w3.org/2000/svg" id="mainSvg">
+
+    // Calculate display dimensions based on zoom
+    let displayW, displayH;
+    if (zoomLevel === 0) {
+        const containerW = container.clientWidth - 64; // subtract padding
+        const scale = Math.min(containerW / SVG_W, 1); // don't upscale
+        displayW = SVG_W * scale;
+        displayH = SVG_H * scale;
+    } else {
+        displayW = SVG_W * zoomLevel;
+        displayH = SVG_H * zoomLevel;
+    }
+    updateZoomLabel();
+
+    let svg = `<svg width="${displayW}" height="${displayH}" viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" id="mainSvg">
         <defs>
             <marker id="arrow" markerWidth="10" markerHeight="10" refX="24" refY="3" orient="auto">
                 <path d="M0,0 L0,6 L9,3 z" fill="${C_GRAY}" />
@@ -2114,6 +2382,19 @@ function toggleTheme() {
     html.classList.toggle('dark');
     localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
     renderVisualization();
+}
+
+function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        requestAnimationFrame(() => menu.classList.add('opacity-100'));
+        menu.classList.remove('opacity-0');
+    } else {
+        menu.classList.add('opacity-0');
+        menu.classList.remove('opacity-100');
+        setTimeout(() => menu.classList.add('hidden'), 300);
+    }
 }
 
 function truncate(s, n) {

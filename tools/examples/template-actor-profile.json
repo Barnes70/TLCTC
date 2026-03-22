@@ -1,0 +1,114 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-01-01T00:00:00Z",
+  "actors": [
+    {
+      "threat_actor": "YOUR ACTOR NAME",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Brief summary of the actor's observed TTPs and operational profile. Describe their typical attack chains and targeting patterns.",
+      "sources": [
+        "Primary intelligence source (e.g., vendor report, CERT advisory)",
+        "Secondary source for corroboration"
+      ],
+      "sequence": "#09 → #04 → #07",
+      "last_updated": "2026-01-01",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "INC-YYYY-NNN",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=24h] #4 →[Δt=5m] #7 + [DRE: C, I]",
+          "cluster_sequence": [9, 4, 7],
+          "dre_outcomes": {
+            "C": 1,
+            "I": 1,
+            "A": 0,
+            "Ac": 0
+          }
+        }
+      ]
+    },
+    {
+      "threat_actor": "EXAMPLE: Nation-State APT Template",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 2,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 3
+      },
+      "notes": "High-capability state-sponsored actor with custom tooling. Strong server-side exploit development (#2=Champion), advanced malware ecosystem (#7=Champion), and demonstrated supply chain compromise capability (#10=High). Typical chain: spearphishing or supply chain entry, followed by custom implant deployment and long-term persistence.",
+      "sources": [
+        "Example vendor report — replace with real sources"
+      ],
+      "sequence": "#09 → #04 → #02 → #07 → #01",
+      "last_updated": "2026-01-01",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Government",
+        "Defense",
+        "Critical Infrastructure",
+        "Technology"
+      ],
+      "observed_paths": []
+    },
+    {
+      "threat_actor": "EXAMPLE: Ransomware Operator Template",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 2
+      },
+      "notes": "Financially motivated operator using commodity tooling and initial access brokers. Strong social engineering (#9=High) for phishing campaigns, credential abuse (#4=High) via purchased credentials, and ransomware deployment (#7=High). Double extortion model: data exfiltration followed by encryption.",
+      "sources": [
+        "Example vendor report — replace with real sources"
+      ],
+      "sequence": "#09 → #04 → #01 → #07",
+      "last_updated": "2026-01-01",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Healthcare",
+        "Manufacturing",
+        "Education"
+      ],
+      "observed_paths": []
+    }
+  ]
+}

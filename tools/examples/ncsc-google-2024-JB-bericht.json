@@ -1,0 +1,44 @@
+{
+    "sectors": [
+      {
+        "id": "switzerland-2024annual-bacs",
+        "name": "CH 2024",
+        "color": "#e74c3c",
+        "backgroundColor": "rgba(52, 73, 94, 0.2)",
+        "activeThreats": { "1": true, "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true, "9": true, "10": true },
+        "values": { 
+          "1": 13, "2": 11, "3": 4, "4": 20, "5": 0, "6": 13, "7": 21, "8": 0, "9": 24, "10": 16 
+        },
+        "oldValues": { 
+           "1": 12, "2": 7, "3": 3, "4": 18, "5": 0, "6": 14, "7": 19, "8": 0, "9": 25, "10": 11 
+        },
+        "zoneLimits": { 
+          "1": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "2": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "3": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "4": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "5": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "6": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "7": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "8": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "9": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
+         },
+        "toBeReported": { 
+          "1": false, "2": false, "3": false, "4": true, "5": false, "6": true, "7": true, "8": false, "9": true, "10": true 
+         },
+        "riskToleranceCrashed": { "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false },
+        "collapsed": false
+      },
+      {
+        "id": "global-2024annual-bacs",
+        "name": "Global 2024",
+        "color": "#3498db",
+        "backgroundColor": "rgba(52, 73, 94, 0.2)",
+        "activeThreats": { "1": true, "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true, "9": true, "10": true },
+        "values": { 
+          "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0 
+         },
+        "oldValues": { 
+           "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0 
+         },
+        "zoneLimits": {
+           "1": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "2": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "3": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "4": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "5": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "6": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "7": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "8": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "9": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
+         },
+        "toBeReported": { "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false },
+        "riskToleranceCrashed": { "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false },
+        "collapsed": true
+      }
+    ]
+  }

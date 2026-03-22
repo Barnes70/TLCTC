@@ -1,0 +1,106 @@
+{
+  "title": "YOUR INCIDENT TITLE HERE",
+  "metadata": {
+    "sequence_id": "INC-YYYY-NNN",
+    "description": "Brief description of the incident. What happened, to whom, and what was the impact?",
+    "analyst": "Your Name",
+    "organization": "Your Organization",
+    "threat_actor": {
+      "name": "Unknown or actor name",
+      "motivation": "financial | espionage | hacktivism | destructive | unknown",
+      "sophistication": "basic | intermediate | advanced | state-level"
+    },
+    "created": "2026-01-01T00:00:00Z",
+    "modified": "2026-01-01T00:00:00Z",
+    "framework_version": "2.1"
+  },
+  "path": [
+    {
+      "id": 1,
+      "cluster": 9,
+      "sphere": "External",
+      "dtVal": "24",
+      "dtUnit": "h",
+      "velocityClass": "VC-2",
+      "description": "Step 1: Describe the initial access vector. What generic vulnerability was exploited? For Social Engineering (#9), the vulnerability is human psychological susceptibility.",
+      "mitre": "T1566.002",
+      "cve": "",
+      "confidence": "high",
+      "stage": "initial",
+      "boundary": {
+        "context": "human",
+        "source": "External",
+        "target": "Org"
+      },
+      "intraBoundaries": null,
+      "dre": {
+        "types": ["C"],
+        "title": "Credentials Harvested",
+        "desc": "Describe what data was exposed or compromised."
+      },
+      "bizRisk": null,
+      "evidence": "Cite your source: CVE advisories, vendor reports, news articles, internal IR findings."
+    },
+    {
+      "id": 2,
+      "cluster": 4,
+      "sphere": "Org",
+      "dtVal": "5",
+      "dtUnit": "m",
+      "velocityClass": "VC-3",
+      "description": "Step 2: Credential use is ALWAYS #4 Identity Theft (R-CRED), regardless of how the credentials were acquired.",
+      "mitre": "T1078",
+      "cve": "",
+      "confidence": "high",
+      "stage": "intermediate",
+      "boundary": null,
+      "intraBoundaries": null,
+      "dre": null,
+      "bizRisk": null,
+      "evidence": ""
+    },
+    {
+      "id": 3,
+      "cluster": 7,
+      "sphere": "Org",
+      "dtVal": "",
+      "dtUnit": "m",
+      "velocityClass": "VC-3",
+      "description": "Step 3: If Foreign Executable Content runs, record a #7 Malware step with R-EXEC. The FEC moment is when the payload actually executes, not when it arrives.",
+      "mitre": "T1059",
+      "cve": "",
+      "confidence": "medium",
+      "stage": "intermediate",
+      "boundary": null,
+      "intraBoundaries": null,
+      "dre": null,
+      "bizRisk": null,
+      "evidence": ""
+    },
+    {
+      "id": 4,
+      "cluster": 1,
+      "sphere": "Org",
+      "dtVal": "",
+      "dtUnit": "",
+      "velocityClass": "",
+      "description": "Step 4: Final impact. Abuse of Functionality (#1) when the attacker uses legitimate system features for unintended purposes (e.g., data exfiltration via allowed APIs).",
+      "mitre": "T1567",
+      "cve": "",
+      "confidence": "medium",
+      "stage": "final",
+      "boundary": null,
+      "intraBoundaries": null,
+      "dre": {
+        "types": ["C", "A"],
+        "title": "Data Exfiltration and Service Disruption",
+        "desc": "Describe the data risk events. C=Confidentiality, I=Integrity, A=Availability, Ac=Accessibility."
+      },
+      "bizRisk": {
+        "title": "Business Impact Category",
+        "desc": "Describe operational, financial, reputational, or regulatory impact."
+      },
+      "evidence": ""
+    }
+  ]
+}
