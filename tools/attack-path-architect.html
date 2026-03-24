@@ -137,7 +137,7 @@
 
 <header class="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0">
     <div class="flex items-center gap-3">
-        <a href="index.html" class="flex items-center gap-2 group">
+        <a href="/index.html" class="flex items-center gap-2 group">
             <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
                 <img src="/images/logo-small.png" alt="Logo" class="h-full w-full object-contain p-1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
                 <i data-lucide="shield" class="h-5 w-5 hidden"></i>
@@ -719,6 +719,23 @@ const TEMPLATES = {
             { id: 301, cluster: 9, sphere: "Customer", dtVal: "0", dtUnit: "m", description: "Customer receives phishing email impersonating organization. Enters credentials on fake login portal.", mitre: "T1566.002", confidence: "high", boundary: { context: "human", source: "External", target: "Customer" }, dre: { types: ["C"], title: "Customer Credentials Harvested", desc: "Customer login credentials captured by attacker phishing kit." } },
             { id: 302, cluster: 4, sphere: "Org", dtVal: "15", dtUnit: "m", velocityClass: "VC-3", description: "Attacker uses stolen customer credentials to access organization's customer portal.", mitre: "T1078", boundary: { context: "auth", source: "Customer", target: "Org" } },
             { id: 303, cluster: 1, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "Attacker abuses legitimate account functions to initiate fraudulent transactions.", mitre: "T1531", dre: { types: ["I"], title: "Fraudulent Transaction", desc: "Unauthorized wire transfer initiated from compromised account." }, bizRisk: { title: "Financial Loss + Customer Trust", desc: "Direct fraud loss plus reputational damage" } }
+        ]
+    },
+    'midnight_blizzard': {
+        title: "Midnight Blizzard / Microsoft Corporate Email Breach (2024)",
+        metadata: {
+            sequence_id: "MIDNIGHT-BLIZZARD-MICROSOFT-2024",
+            description: "APT29 (Midnight Blizzard/Nobelium) compromise of Microsoft corporate email via password spray on legacy test tenant, OAuth application abuse, and systematic exfiltration of senior leadership email. Source: Splunk/Cisco Top 50 Cybersecurity Threats report; Microsoft MSRC disclosure.",
+            analyst: "TLCTC Project",
+            organization: "Community Example",
+            threat_actor: { name: "Midnight Blizzard (APT29/Nobelium)", motivation: "espionage", sophistication: "nation-state" }
+        },
+        path: [
+            { id: 400001, cluster: 4, sphere: "Org", dtVal: "30", dtUnit: "d", velocityClass: "VC-1", description: "Password spray attack against a legacy non-production test tenant account lacking MFA. Distributed, low-volume approach to avoid lockout thresholds. Successful authentication with guessed credentials = credential application = always #4 per R-CRED. The absence of MFA is a control failure (Axiom V) that enabled the attack but is not itself the threat.", mitre: "T1110.003", confidence: "high", stage: "initial", evidence: "Microsoft MSRC blog 2024-01-19; CISA Emergency Directive 24-02." },
+            { id: 400002, cluster: 1, sphere: "Org", dtVal: "7", dtUnit: "d", velocityClass: "VC-1", description: "Compromised test account used to access a legacy test OAuth application with full_access_as_app permission to Microsoft corporate Exchange Online. The OAuth grant was legitimate but overly permissive — a designed authorization mechanism used beyond its intended scope. No code flaw exploited. R-ABUSE: abuse of designed OAuth delegation capability.", mitre: "T1098.003", confidence: "high", stage: "intermediate" },
+            { id: 400003, cluster: 1, sphere: "Org", dtVal: "2", dtUnit: "h", velocityClass: "VC-2", description: "Attacker created additional malicious OAuth applications and granted them Exchange Online mailbox read permissions via Microsoft Graph API. Azure AD application registration and consent APIs functioned as designed; the administrative scope was abused for persistent, broad mailbox access. R-ABUSE: legitimate admin APIs, abused scope.", mitre: "T1098.002", confidence: "high", stage: "intermediate", dre: { types: ["I"], title: "OAuth App Persistence Established", desc: "Malicious OAuth applications created with Exchange Online read permissions, independent of original test account." } },
+            { id: 400004, cluster: 4, sphere: "Org", dtVal: "15", dtUnit: "m", velocityClass: "VC-3", description: "OAuth tokens from malicious applications used to authenticate to Exchange Online corporate mailboxes. R-CRED: token-based authentication = credential application = always #4. Axiom X (Credential Duality): OAuth app creation (step 3, enabling #1) and token use to authenticate (this step, #4) are distinct steps.", mitre: "T1078.004", confidence: "high", stage: "intermediate" },
+            { id: 400005, cluster: 1, sphere: "Org", dtVal: "0", dtUnit: "d", velocityClass: "VC-2", description: "Systematic exfiltration of email from senior leadership, cybersecurity staff, and legal staff via Microsoft Graph API. Mail access APIs functioned as designed; access scope abused. Notably, exfiltrated data included information about Midnight Blizzard itself — the attacker was searching for what Microsoft knew about them.", mitre: "T1114.002", confidence: "high", stage: "final", dre: { types: ["C"], title: "Executive Email Exfiltration", desc: "Sensitive corporate communications from senior leadership, cybersecurity, and legal staff exfiltrated. Included information about the threat actor's own operations." }, bizRisk: { title: "Strategic Intelligence Compromise", desc: "Attacker gained visibility into Microsoft's knowledge of APT29 operations, security posture discussions, and legal strategy. Regulatory notification required under SEC rules." }, evidence: "Microsoft MSRC blog 2024-01-19 and 2024-03-08; SEC 8-K filing." }
         ]
     },
     'npm_chalk': {
@@ -1668,6 +1685,9 @@ function renderUI() {
             { value: 'template:phishing', text: 'Corp Phishing (3 steps)' },
             { value: 'template:customerphish', text: 'Customer Phishing (3 steps)' },
             { value: 'template:supplychain', text: 'Supply Chain (4 steps)' }
+        ]},
+        { label: 'Real-World APT Campaigns', items: [
+            { value: 'template:midnight_blizzard', text: 'Midnight Blizzard / Microsoft 2024 (5 steps)' }
         ]},
         { label: 'Real-World npm Campaigns', items: [
             { value: 'template:npm_chalk', text: 'Chalk/Debug Phishing 2025 (7 steps)' },

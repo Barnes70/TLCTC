@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splunk/Cisco Top 50 → TLCTC Cluster Mapping</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep: #060a12;
+      --bg: #0b1120;
+      --surface: #111a2e;
+      --surface-hover: #162040;
+      --surface-raised: #1a2744;
+      --border: #1a2744;
+      --border-light: #243352;
+      --text: #e4e8f1;
+      --text-secondary: #8b97b8;
+      --text-muted: #5a6785;
+      --accent: #4d8ef7;
+      --accent-dim: rgba(77,142,247,0.12);
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --orange: #fb923c;
+      --violet: #818cf8;
+      --rose: #fb7185;
+      --c1: #eab308; --c2: #ef4444; --c3: #f97316; --c4: #a855f7; --c5: #06b6d4;
+      --c6: #3b82f6; --c7: #e11d48; --c8: #c49a6c; --c9: #10b981; --c10: #ec4899;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Source Sans 3', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    .light {
+      --bg-deep: #f0f2f5;
+      --bg: #f8f9fb;
+      --surface: #ffffff;
+      --surface-hover: #f0f3f8;
+      --surface-raised: #e8ecf3;
+      --border: #d4dae5;
+      --border-light: #e2e7f0;
+      --text: #1a2236;
+      --text-secondary: #4a5672;
+      --text-muted: #8793ab;
+      --accent: #2563eb;
+      --accent-dim: rgba(37,99,235,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Subtle grid background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: -1;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.15;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      padding: 0 1.5rem; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--text); }
+    .nav-logo {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--accent-dim); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font: 700 14px/1 var(--font-mono);
+    }
+    .nav-title { font: 700 1.1rem var(--font-display); }
+    .nav-subtitle { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--accent); }
+    .theme-btn {
+      background: none; border: 1px solid var(--border); color: var(--text-secondary);
+      width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; transition: all 0.15s;
+    }
+    .theme-btn:hover { background: var(--surface); color: var(--text); border-color: var(--border-light); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.35rem 1rem; border-radius: 100px;
+      background: var(--accent-dim); color: var(--accent);
+      font: 500 0.75rem var(--font-mono); letter-spacing: 0.04em;
+      margin-bottom: 1.25rem; text-transform: uppercase;
+    }
+    .hero h1 {
+      font: 800 2.5rem/1.15 var(--font-display);
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 1rem;
+    }
+    .hero-subtitle { color: var(--text-secondary); font-size: 1.1rem; max-width: 700px; margin: 0 auto 2rem; }
+
+    .insight-box {
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem;
+      align-items: center; max-width: 800px; margin: 0 auto 2rem;
+      padding: 1.5rem; border-radius: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+    }
+    .insight-side { text-align: center; }
+    .insight-label { font: 600 0.7rem var(--font-mono); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .insight-text { font: 600 1.05rem var(--font-display); color: var(--text); }
+    .insight-arrow { font-size: 1.5rem; color: var(--accent); font-family: var(--font-mono); }
+
+    /* ── Stats ── */
+    .stats {
+      max-width: 1200px; margin: 0 auto 1.5rem; padding: 0 1.5rem;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.25rem; text-align: center;
+    }
+    .stat-num { font: 700 2rem var(--font-display); margin-bottom: 0.2rem; }
+    .stat-label { font-size: 0.8rem; color: var(--text-secondary); }
+
+    /* ── Cluster distribution bar ── */
+    .dist-section {
+      max-width: 1200px; margin: 0 auto 2rem; padding: 0 1.5rem;
+    }
+    .dist-title {
+      font: 600 0.75rem var(--font-mono); color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem;
+    }
+    .dist-bar {
+      display: flex; height: 36px; border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .dist-seg {
+      display: flex; align-items: center; justify-content: center;
+      font: 600 0.7rem var(--font-mono); color: #fff; white-space: nowrap;
+      transition: flex 0.3s; cursor: pointer; position: relative;
+    }
+    .dist-seg:hover { filter: brightness(1.2); }
+    .dist-seg span { text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+    .dist-legend {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin-top: 0.75rem;
+    }
+    .dist-legend-item {
+      display: flex; align-items: center; gap: 0.35rem;
+      font-size: 0.75rem; color: var(--text-secondary); cursor: pointer;
+      transition: color 0.15s;
+    }
+    .dist-legend-item:hover { color: var(--text); }
+    .dist-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+    .dist-not-threat { background: repeating-linear-gradient(45deg, var(--yellow), var(--yellow) 2px, transparent 2px, transparent 6px); }
+
+    /* ── Filters ── */
+    .filters {
+      max-width: 1200px; margin: 0 auto 1.5rem; padding: 0 1.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+    }
+    .filter-group { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+    .filter-label { font: 500 0.7rem var(--font-mono); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 0.25rem; }
+    .filter-btn {
+      background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary);
+      padding: 0.3rem 0.65rem; border-radius: 6px; cursor: pointer;
+      font: 500 0.75rem var(--font-body); transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--border-light); color: var(--text); }
+    .filter-btn.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+    .filter-sep { width: 1px; height: 24px; background: var(--border); margin: 0 0.5rem; }
+    .search-input {
+      background: var(--surface); border: 1px solid var(--border); color: var(--text);
+      padding: 0.35rem 0.75rem; border-radius: 6px; font: 400 0.85rem var(--font-body);
+      width: 200px; transition: border-color 0.15s; outline: none;
+    }
+    .search-input::placeholder { color: var(--text-muted); }
+    .search-input:focus { border-color: var(--accent); }
+
+    /* ── Table ── */
+    .table-wrap {
+      max-width: 1200px; margin: 0 auto 3rem; padding: 0 1.5rem;
+    }
+    .table-container {
+      border: 1px solid var(--border); border-radius: 12px;
+      background: var(--surface);
+    }
+    table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    thead th {
+      position: sticky; top: 55px; z-index: 10;
+      background: var(--surface-raised); border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1rem; text-align: left;
+      font: 600 0.7rem var(--font-mono); color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    thead th:first-child { border-radius: 12px 0 0 0; }
+    thead th:last-child { border-radius: 0 12px 0 0; }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background 0.1s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--surface-hover); }
+    tbody tr.expanded { background: var(--surface-hover); }
+    tbody td { padding: 0.75rem 1rem; vertical-align: top; font-size: 0.9rem; }
+
+    .threat-num {
+      font: 600 0.8rem var(--font-mono); color: var(--text-muted); min-width: 28px;
+    }
+    .threat-name { font: 600 0.92rem var(--font-display); color: var(--text); }
+    .threat-chapter {
+      display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+      font: 500 0.7rem var(--font-body); color: var(--text-secondary);
+      background: var(--surface-raised); border: 1px solid var(--border); white-space: nowrap;
+    }
+
+    .cluster-badges { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .cluster-badge {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      padding: 0.2rem 0.5rem; border-radius: 5px;
+      font: 600 0.72rem var(--font-mono); white-space: nowrap;
+      border: 1px solid; transition: transform 0.1s;
+    }
+    .cluster-badge:hover { transform: scale(1.05); }
+
+    .type-badge {
+      display: inline-block; padding: 0.2rem 0.55rem; border-radius: 4px;
+      font: 500 0.72rem var(--font-mono); white-space: nowrap;
+    }
+    .type-direct { background: rgba(52,211,153,0.12); color: var(--green); }
+    .type-path { background: rgba(129,140,248,0.12); color: var(--violet); }
+    .type-not-threat { background: rgba(251,191,36,0.12); color: var(--yellow); }
+    .type-contextual { background: rgba(251,146,60,0.12); color: var(--orange); }
+
+    .rule-tag {
+      display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px;
+      font: 500 0.65rem var(--font-mono); margin: 0.1rem;
+      background: var(--surface-raised); color: var(--text-muted); border: 1px solid var(--border);
+    }
+
+    .expand-row td {
+      padding: 0 1rem 1rem; cursor: default;
+    }
+    .expand-content {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      padding: 1rem; background: var(--bg); border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .expand-refs {
+      grid-column: 1 / -1;
+      border-top: 1px solid var(--border); padding-top: 0.75rem; margin-top: 0.25rem;
+    }
+    .expand-refs h4 { margin-bottom: 0.5rem; }
+    .ref-grid { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .ref-tag {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.2rem 0.55rem; border-radius: 5px;
+      font: 500 0.72rem var(--font-body); white-space: nowrap;
+      border: 1px solid var(--border);
+    }
+    .ref-tag.actor { background: rgba(251,113,133,0.1); color: var(--rose); border-color: rgba(251,113,133,0.25); }
+    .ref-tag.software { background: rgba(96,165,250,0.1); color: #60a5fa; border-color: rgba(96,165,250,0.25); }
+    .ref-tag.cve { background: rgba(251,191,36,0.1); color: var(--yellow); border-color: rgba(251,191,36,0.25); }
+    .ref-tag.incident { background: rgba(52,211,153,0.1); color: var(--green); border-color: rgba(52,211,153,0.25); }
+    .ref-icon { font-size: 0.7rem; opacity: 0.7; }
+    .expand-col h4 {
+      font: 600 0.7rem var(--font-mono); color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;
+    }
+    .expand-col p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55; }
+    .expand-col .rules-list { margin-top: 0.5rem; }
+    .not-threat-hint {
+      display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+      font: 500 0.72rem var(--font-mono); background: rgba(251,191,36,0.08);
+      color: var(--yellow); border: 1px dashed rgba(251,191,36,0.3);
+    }
+
+    /* ── Arrow for attack paths ── */
+    .path-arrow { color: var(--text-muted); font: 500 0.8rem var(--font-mono); margin: 0 0.15rem; }
+
+    /* ── Methodology ── */
+    .methodology {
+      max-width: 1200px; margin: 0 auto 3rem; padding: 0 1.5rem;
+    }
+    .meth-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 2rem;
+    }
+    .meth-card h2 { font: 700 1.25rem var(--font-display); margin-bottom: 1rem; }
+    .meth-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.75rem; max-width: 800px; }
+    .meth-card ul { color: var(--text-secondary); font-size: 0.9rem; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+    .meth-card li { margin-bottom: 0.3rem; }
+    .meth-card code { font-family: var(--font-mono); font-size: 0.82rem; background: var(--surface-raised); padding: 0.1rem 0.35rem; border-radius: 3px; }
+
+    /* ── Critique ── */
+    .critique {
+      max-width: 1200px; margin: 0 auto 2.5rem; padding: 0 1.5rem;
+    }
+    .critique-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 2rem; position: relative; overflow: hidden;
+    }
+    .critique-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--rose), var(--orange), var(--yellow));
+    }
+    .critique-card h2 { font: 700 1.35rem var(--font-display); margin-bottom: 0.5rem; }
+    .critique-lead { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 850px; line-height: 1.65; }
+    .critique-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
+    .issue-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.25rem; border-left: 3px solid var(--rose);
+    }
+    .issue-card.warn { border-left-color: var(--orange); }
+    .issue-card.info { border-left-color: var(--yellow); }
+    .issue-card h3 {
+      font: 600 0.85rem var(--font-display); margin-bottom: 0.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .issue-card h3 .issue-icon { font-size: 1rem; }
+    .issue-card p { color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin-bottom: 0.5rem; }
+    .issue-card .issue-items {
+      display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem;
+    }
+    .issue-tag {
+      display: inline-block; padding: 0.15rem 0.45rem; border-radius: 4px;
+      font: 500 0.7rem var(--font-mono); background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .issue-tag.dup { background: rgba(251,113,133,0.08); color: var(--rose); border-color: rgba(251,113,133,0.2); }
+    .issue-tag.axiom { background: rgba(251,191,36,0.08); color: var(--yellow); border-color: rgba(251,191,36,0.2); }
+    .critique-summary {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.25rem; margin-top: 0.5rem;
+    }
+    .critique-summary h3 { font: 600 0.85rem var(--font-display); margin-bottom: 0.6rem; }
+    .critique-summary p { color: var(--text-secondary); font-size: 0.82rem; line-height: 1.6; }
+    .critique-stat-row {
+      display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0;
+    }
+    .critique-stat {
+      display: flex; align-items: baseline; gap: 0.4rem;
+    }
+    .critique-stat .cs-num { font: 700 1.5rem var(--font-display); color: var(--rose); }
+    .critique-stat .cs-label { font-size: 0.78rem; color: var(--text-secondary); }
+    .chapter-axis-table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      font-size: 0.78rem; margin-top: 0.75rem;
+    }
+    .chapter-axis-table th {
+      background: var(--surface); color: var(--text-muted); font: 500 0.7rem var(--font-mono);
+      text-transform: uppercase; letter-spacing: 0.04em; padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border); text-align: left;
+    }
+    .chapter-axis-table td {
+      padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border); color: var(--text-secondary);
+    }
+    .chapter-axis-table td:first-child { font-weight: 500; color: var(--text); }
+    .axis-tag {
+      display: inline-block; padding: 0.1rem 0.35rem; border-radius: 3px;
+      font: 500 0.68rem var(--font-mono);
+      background: rgba(129,140,248,0.1); color: var(--violet); border: 1px solid rgba(129,140,248,0.2);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+      font-size: 0.8rem; color: var(--text-muted);
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.75rem; }
+      .insight-box { grid-template-columns: 1fr; gap: 0.75rem; }
+      .insight-arrow { transform: rotate(90deg); margin: 0 auto; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+      thead th { top: 56px; font-size: 0.6rem; padding: 0.5rem; }
+      tbody td { padding: 0.5rem; font-size: 0.82rem; }
+      .expand-content { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; text-align: center; }
+      .table-container { font-size: 0.85rem; }
+      .critique-grid { grid-template-columns: 1fr; }
+      .critique-stat-row { flex-direction: column; gap: 0.5rem; }
+      .chapter-axis-table { font-size: 0.7rem; }
+      .col-rules, .col-chapter { display: none; }
+    }
+
+    /* ── Animation ── */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .fade-in { animation: fadeIn 0.4s ease-out both; }
+    .expand-row { animation: fadeIn 0.2s ease-out; }
+
+    /* ── No results ── */
+    .no-results { text-align: center; padding: 3rem; color: var(--text-muted); font-size: 0.95rem; }
+
+    /* ── Count badge on filter ── */
+    .filter-count {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 18px; height: 18px; border-radius: 9px; font-size: 0.65rem;
+      background: var(--surface-raised); color: var(--text-muted); margin-left: 0.25rem;
+      font-family: var(--font-mono); font-weight: 600;
+    }
+    .filter-btn.active .filter-count { background: var(--accent); color: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="../../tools/" class="nav-brand">
+    <div class="nav-logo">T</div>
+    <div>
+      <div class="nav-title">TLCTC</div>
+      <div class="nav-subtitle">Mappings</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="../../tools/threat-modeling.html">Threat Modeling</a>
+    <a href="../../tools/attack-path-architect.html">Attack Paths</a>
+    <a href="../../tools/radar-tlctc-app.html">Threat Radar</a>
+    <a href="#" class="active">Splunk Top 50</a>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">&#9681;</button>
+</nav>
+
+<!-- Hero -->
+<section class="hero fade-in">
+  <div class="hero-badge">&#9670; Mapping &middot; Splunk/Cisco &rarr; TLCTC v2.0</div>
+  <h1>Top 50 Cybersecurity Threats<br>Through the TLCTC Lens</h1>
+  <p class="hero-subtitle">
+    Splunk/Cisco's report catalogs threats by <em>what happens</em>.
+    TLCTC classifies by <em>why compromise is possible</em> &mdash; the generic vulnerability exploited.
+    This comparison reveals the causal structure behind each threat.
+  </p>
+  <div class="insight-box">
+    <div class="insight-side">
+      <div class="insight-label">Splunk asks</div>
+      <div class="insight-text">&ldquo;What is the threat?&rdquo;</div>
+    </div>
+    <div class="insight-arrow">&xrarr;</div>
+    <div class="insight-side">
+      <div class="insight-label">TLCTC reveals</div>
+      <div class="insight-text">&ldquo;Why does it work?&rdquo;</div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats fade-in" id="stats"></div>
+
+<!-- Cluster distribution -->
+<div class="dist-section fade-in">
+  <div class="dist-title">TLCTC Cluster Distribution across Splunk's Threats</div>
+  <div class="dist-bar" id="dist-bar"></div>
+  <div class="dist-legend" id="dist-legend"></div>
+</div>
+
+<!-- Taxonomy Critique -->
+<section class="critique fade-in">
+  <div class="critique-card">
+    <h2>Taxonomy Critique: Six Problems in One List</h2>
+    <p class="critique-lead">
+      The Splunk/Cisco report markets itself as a &ldquo;Top 50&rdquo; threat list, but it actually contains 53 entries
+      that conflate at least six fundamentally different classification axes into one flat ranking.
+      When causes, outcomes, actor labels, control failures, evasion techniques, and specificity levels
+      are treated as interchangeable, the resulting list cannot answer the question it implies:
+      <em>&ldquo;What should we defend against?&rdquo;</em>
+    </p>
+
+    <div class="critique-stat-row">
+      <div class="critique-stat"><span class="cs-num">6</span><span class="cs-label">not threats (outcomes, actors, control failures)</span></div>
+      <div class="critique-stat"><span class="cs-num">5</span><span class="cs-label">near-duplicate entries across chapters</span></div>
+      <div class="critique-stat"><span class="cs-num">7</span><span class="cs-label">entries for a single TLCTC cluster (#9)</span></div>
+      <div class="critique-stat"><span class="cs-num">6</span><span class="cs-label">different grouping axes across 8 chapters</span></div>
+    </div>
+
+    <div class="critique-grid">
+
+      <div class="issue-card">
+        <h3><span class="issue-icon">&#9632;</span> Outcomes disguised as threats</h3>
+        <p>Data exfiltration and ransomware encryption are <em>consequences</em> of compromise, not causes.
+           Listing them as threats is like listing &ldquo;bleeding&rdquo; as a disease.
+           TLCTC Axiom III: threats exist on the cause side; outcomes are Data Risk Events.</p>
+        <div class="issue-items">
+          <span class="issue-tag axiom">#2 Data Exfiltration</span>
+          <span class="issue-tag axiom">#13 Data Exfil (Cloud)</span>
+          <span class="issue-tag axiom">#39 Ransomware (partly)</span>
+        </div>
+      </div>
+
+      <div class="issue-card">
+        <h3><span class="issue-icon">&#9632;</span> Actor labels disguised as threats</h3>
+        <p>&ldquo;APT&rdquo; describes who is attacking and how patient they are.
+           &ldquo;Insider Threat&rdquo; describes where the attacker sits.
+           Neither tells you which generic vulnerability is exploited.
+           TLCTC Axiom IV: actor identity must never determine classification.</p>
+        <div class="issue-items">
+          <span class="issue-tag axiom">#1 APT</span>
+          <span class="issue-tag axiom">#22 Insider Threat</span>
+        </div>
+      </div>
+
+      <div class="issue-card">
+        <h3><span class="issue-icon">&#9632;</span> Control failures disguised as threats</h3>
+        <p>A misconfigured S3 bucket is not an attack &mdash; it is a door left open.
+           The attack is what walks through the door.
+           TLCTC Axiom V: control failures create exposure; exploitation is the threat.</p>
+        <div class="issue-items">
+          <span class="issue-tag axiom">#12 Cloud Misconfig</span>
+          <span class="issue-tag axiom">#16 Exposed Databases</span>
+          <span class="issue-tag axiom">#19 Shadow IT</span>
+        </div>
+      </div>
+
+      <div class="issue-card warn">
+        <h3><span class="issue-icon">&#9670;</span> Operational traits disguised as distinct threats</h3>
+        <p>A &ldquo;zero-day&rdquo; is a patch-availability status, not a vulnerability class.
+           &ldquo;Polymorphic&rdquo; describes an evasion wrapper. &ldquo;Living off the land&rdquo; describes tool selection.
+           None of these change the generic vulnerability exploited &mdash; they are operational modifiers on real threats.</p>
+        <div class="issue-items">
+          <span class="issue-tag">#5 Zero-Day Exploit</span>
+          <span class="issue-tag">#38 Polymorphic Malware</span>
+          <span class="issue-tag">#36 Living off the Land</span>
+          <span class="issue-tag">#37 Malware C2</span>
+        </div>
+      </div>
+
+      <div class="issue-card warn">
+        <h3><span class="issue-icon">&#9670;</span> Near-duplicate entries across chapters</h3>
+        <p>The same concept appears multiple times under different surface labels,
+           inflating the count and fragmenting detection logic.
+           A &ldquo;top 50&rdquo; that double-counts is not a top 50.</p>
+        <div class="issue-items">
+          <span class="issue-tag dup">#2 &#8776; #13 Data Exfiltration</span>
+          <span class="issue-tag dup">#11 &#8776; #15 Resource/Cryptojacking</span>
+          <span class="issue-tag dup">#14 &#8776; #48 Insecure APIs / API Exploit</span>
+          <span class="issue-tag dup">#22 &#8776; #23 Insider Threat / Misuse</span>
+          <span class="issue-tag dup">#34 overlaps #33 BYOVD</span>
+        </div>
+      </div>
+
+      <div class="issue-card info">
+        <h3><span class="issue-icon">&#9671;</span> Granularity chaos: one cluster, seven entries</h3>
+        <p>Social Engineering, Phishing, Spear Phishing, Smishing, BEC, Vishing/Deepfake, and SIM Hijacking
+           all exploit the same generic vulnerability: human psychological susceptibility.
+           The report gives 7 entries to #9 while #5 MitM, #6 Flooding, and #8 Physical get one each.
+           Specificity is applied selectively &mdash; there is no consistent zoom level.</p>
+        <div class="issue-items">
+          <span class="issue-tag">#41 BEC</span>
+          <span class="issue-tag">#42 Deepfake/Vishing</span>
+          <span class="issue-tag">#43 Phishing</span>
+          <span class="issue-tag">#44 SIM Hijacking</span>
+          <span class="issue-tag">#45 Smishing</span>
+          <span class="issue-tag">#46 Social Engineering</span>
+          <span class="issue-tag">#47 Spear Phishing</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="critique-summary">
+      <h3>Inconsistent chapter grouping axes</h3>
+      <p>The 8 chapters use at least 6 different organizing principles simultaneously.
+         No two chapters apply the same classification axis, making cross-chapter comparison meaningless.</p>
+      <table class="chapter-axis-table">
+        <thead><tr><th>Chapter</th><th>Stated scope</th><th>Actual grouping axis</th></tr></thead>
+        <tbody>
+          <tr><td>Ch 1</td><td>Advanced &amp; Emerging</td><td><span class="axis-tag">Novelty / severity</span></td></tr>
+          <tr><td>Ch 2</td><td>AI Threats</td><td><span class="axis-tag">Technology domain</span></td></tr>
+          <tr><td>Ch 3</td><td>Cloud &amp; SaaS</td><td><span class="axis-tag">Deployment model</span></td></tr>
+          <tr><td>Ch 4</td><td>Identity &amp; Credential</td><td><span class="axis-tag">Target asset</span></td></tr>
+          <tr><td>Ch 5</td><td>Network &amp; Infrastructure</td><td><span class="axis-tag">OSI layer</span></td></tr>
+          <tr><td>Ch 6</td><td>Malware &amp; Exploits</td><td><span class="axis-tag">Technique category</span></td></tr>
+          <tr><td>Ch 7</td><td>Phishing &amp; Social Engineering</td><td><span class="axis-tag">Technique category</span></td></tr>
+          <tr><td>Ch 8</td><td>Web &amp; Application</td><td><span class="axis-tag">Attack surface</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="critique-summary" style="margin-top:1rem;">
+      <h3>Why this matters</h3>
+      <p>A taxonomy that mixes classification axes cannot produce non-overlapping categories.
+         Entries inevitably appear in multiple chapters (an API exploit is also a web attack, a cloud threat, and potentially an AI threat),
+         duplicates inflate the count, and defenders cannot derive a finite set of controls from the list.
+         TLCTC solves this with a single classification axis: the <em>generic vulnerability exploited</em>.
+         Ten clusters. Non-overlapping. Every attack step maps to exactly one.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Filters -->
+<div class="filters fade-in" id="filters"></div>
+
+<!-- Table -->
+<div class="table-wrap fade-in">
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:40px">#</th>
+          <th>Threat</th>
+          <th class="col-chapter">Chapter</th>
+          <th>TLCTC Clusters</th>
+          <th>Type</th>
+          <th class="col-rules">Rules</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Methodology -->
+<section class="methodology fade-in">
+  <div class="meth-card">
+    <h2>Methodology &amp; Key Principles</h2>
+    <p>Each of Splunk/Cisco's threats was analyzed against the TLCTC v2.0 framework axioms and classification rules. The mapping follows these principles:</p>
+    <ul>
+      <li><strong>Axiom III</strong> &mdash; Threats are causes, not outcomes. "Data exfiltration" and "ransomware" are outcomes (DREs), not threat clusters.</li>
+      <li><strong>Axiom IV</strong> &mdash; Actor identity never determines classification. "Insider threat" and "APT" describe actors/campaigns, not generic vulnerabilities.</li>
+      <li><strong>Axiom V</strong> &mdash; Control failures are not threats. "Cloud misconfiguration" and "Shadow IT" are governance failures; the exploitation is the threat.</li>
+      <li><strong>R-ROLE</strong> &mdash; Classify by component role relative to attacker: server-role = #2, client-role = #3.</li>
+      <li><strong>R-CRED</strong> &mdash; Credential acquisition maps to the enabling cluster; credential use is always #4 Identity Theft.</li>
+      <li><strong>R-EXEC</strong> &mdash; If foreign executable content executes, a #7 Malware step must be recorded.</li>
+      <li><strong>R-SUPPLY</strong> &mdash; #10 is placed at the Trust Acceptance Event (TAE).</li>
+      <li><strong>R-FLOOD</strong> &mdash; Volume/intensity exhaustion = #6; implementation defect causing crash = #2/#3.</li>
+      <li><strong>R-HUMAN</strong> &mdash; If the mechanism is psychological manipulation of a human, classify as #9; subsequent technical steps are separate.</li>
+      <li><strong>R-PHYSICAL</strong> &mdash; If the mechanism is unauthorized physical access/interference, classify as #8; subsequent steps are separate.</li>
+      <li><strong>R-ABUSE</strong> &mdash; If no implementation flaw is required and the attacker abuses designed functionality, classify as #1. "Perfect Implementation Test": would this work against a perfect implementation? Yes = #1, No = #2/#3.</li>
+      <li><strong>Axiom VI</strong> &mdash; One step = one cluster. Multi-cluster threats must be decomposed into separate attack-path steps.</li>
+    </ul>
+    <p>Source: <em>"Top 50 Cybersecurity Threats"</em>, Splunk (a Cisco company), 2025. The report describes 53 individual threat entries across 8 chapters.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div>TLCTC v2.0 Framework &middot; CC BY 4.0 &middot; <a href="https://tlctc.net">tlctc.net</a></div>
+  <div>Source report: Splunk/Cisco, 2025</div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════
+
+const CLUSTERS = {
+  '#1': { name: 'Abuse of Functions', color: '#eab308', short: '#1 AoF' },
+  '#2': { name: 'Exploiting Server', color: '#ef4444', short: '#2 ExS' },
+  '#3': { name: 'Exploiting Client', color: '#f97316', short: '#3 ExC' },
+  '#4': { name: 'Identity Theft', color: '#a855f7', short: '#4 IdT' },
+  '#5': { name: 'Man in the Middle', color: '#06b6d4', short: '#5 MitM' },
+  '#6': { name: 'Flooding Attack', color: '#3b82f6', short: '#6 Flood' },
+  '#7': { name: 'Malware', color: '#e11d48', short: '#7 Mal' },
+  '#8': { name: 'Physical Attack', color: '#c49a6c', short: '#8 Phys' },
+  '#9': { name: 'Social Engineering', color: '#10b981', short: '#9 SE' },
+  '#10': { name: 'Supply Chain', color: '#ec4899', short: '#10 SC' },
+};
+
+const TYPE_LABELS = {
+  'direct': 'Direct Match',
+  'path': 'Attack Path',
+  'not-threat': 'Not a Threat',
+  'contextual': 'Context-Dependent'
+};
+
+const CHAPTERS = [
+  { num: 1, name: 'Advanced & Emerging' },
+  { num: 2, name: 'AI Threats' },
+  { num: 3, name: 'Cloud & SaaS' },
+  { num: 4, name: 'Identity & Credential' },
+  { num: 5, name: 'Network & Infrastructure' },
+  { num: 6, name: 'Malware & Exploits' },
+  { num: 7, name: 'Phishing & Social Engineering' },
+  { num: 8, name: 'Web & Application' },
+];
+
+const threats = [
+  // Ch 1: Advanced & Emerging
+  { id:1, name:"Advanced Persistent Threat", ch:1, clusters:["#9","#4","#7","#1"], type:"path", rules:["Axiom IV","Axiom IX"],
+    refs:{actors:["Midnight Blizzard","Nobelium","APT29"],software:["SolarWinds"],cves:[],incidents:["Microsoft corporate email breach (2024)"]},
+    splunk:"Long-term, covert intrusion by well-resourced actors using spear phishing, zero-days, credential theft, and stealthy persistence.",
+    analysis:"APT describes a campaign style and actor capability, not a single generic vulnerability. Per Axiom IV, actor type never determines cluster classification. An APT decomposes into sequential attack-path steps, e.g. #9 (phishing entry) \u2192 #4 (credential use) \u2192 #7 (backdoor persistence) \u2192 #1 (lateral movement via legitimate tools). Each step is classified independently." },
+  { id:2, name:"Data Exfiltration", ch:1, clusters:[], type:"not-threat", rules:["Axiom III"],
+    refs:{actors:["Interlock"],software:["Google Chrome"],cves:[],incidents:["Interlock fake browser update campaign"]},
+    splunk:"Unauthorized transfer of sensitive data outside the organization, typically late in an intrusion after credential theft and lateral movement.",
+    analysis:"Data exfiltration is an outcome \u2014 a Data Risk Event [DRE: C] (confidentiality breach) \u2014 not a cause. Per Axiom III, threats exist on the cause side. The causing cluster depends on the method: #1 (legitimate tool abuse), #4 (credential-based access), or #7 (exfiltration malware). The exfiltration event is annotated as + [DRE: C]." },
+  { id:3, name:"Session Hijacking", ch:1, clusters:["#4"], type:"direct", rules:["R-CRED","Axiom X"],
+    refs:{actors:[],software:["Google OAuth MultiLogin","Office 365","Google Workspace"],cves:[],incidents:[]},
+    splunk:"Attacker steals or reuses authenticated session tokens to impersonate a legitimate user, bypassing login and even MFA.",
+    analysis:"Token/session reuse to impersonate a user = credential application = always #4 per R-CRED. The acquisition method maps to its own enabling cluster: #3 for XSS-based token theft, #5 for network interception, #7 for malware-based theft. Acquisition and application are distinct steps per Axiom X (Credential Duality)." },
+  { id:4, name:"Watering Hole Attack", ch:1, clusters:["#3","#7"], type:"path", rules:["R-ROLE","R-EXEC"],
+    splunk:"Threat actors compromise legitimate, high-traffic websites to deliver malware to visitors who trust the site.",
+    analysis:"Victim\u2019s browser processes malicious content from a compromised site = #3 (client-role flaw, R-ROLE). Malware delivery and execution = #7 (R-EXEC). The upstream site compromise is a separate prior chain (#2 server exploit). The attack path from the victim\u2019s perspective: #3 \u2192 #7." },
+  { id:5, name:"Zero-Day Exploit", ch:1, clusters:["#2","#3"], type:"contextual", rules:["R-ROLE"],
+    refs:{actors:[],software:["Stuxnet"],cves:[],incidents:["Stuxnet attack on Iran nuclear centrifuges"]},
+    splunk:"Exploitation of unknown software vulnerabilities before patches exist, often used for silent, immediate access.",
+    analysis:"\"Zero-day\" describes patch availability, not the generic vulnerability exploited. Classification depends entirely on R-ROLE: server-side flaw = #2, client-side flaw = #3. The zero-day status is operationally critical but taxonomically irrelevant \u2014 the cause is the implementation flaw, regardless of patch existence." },
+
+  // Ch 2: AI Threats
+  { id:6, name:"Backdoor Injection (AI)", ch:2, clusters:["#10"], type:"direct", rules:["R-SUPPLY"],
+    refs:{actors:[],software:[],cves:[],incidents:["UK AI Security Institute / Alan Turing Institute backdoor study (2025)"]},
+    splunk:"Attackers implant hidden triggers in ML models during training, causing malicious behavior when specific inputs are received.",
+    analysis:"Hidden triggers implanted via training data become authoritative when the model is deployed = Trust Acceptance Event (R-SUPPLY). The model is a third-party or shared component whose integrity has been subverted before acceptance into the target domain." },
+  { id:7, name:"Content Abuse (AI)", ch:2, clusters:["#1"], type:"direct", rules:["R-ABUSE"],
+    splunk:"Using AI systems to generate disinformation, toxic content, deepfakes, or scam material at scale.",
+    analysis:"Manipulating an AI system to produce harmful output abuses its legitimate content-generation capability. No code flaw is exploited \u2014 the attacker uses the designed functionality beyond its intended scope. This is the essence of #1 Abuse of Functions." },
+  { id:8, name:"Jailbreaking (AI)", ch:2, clusters:["#1"], type:"direct", rules:["R-ABUSE"],
+    refs:{actors:[],software:["GPT-4","Llama 2"],cves:[],incidents:[]},
+    splunk:"Manipulating AI models via crafted prompts to bypass safety filters and generate restricted or harmful content.",
+    analysis:"Prompt manipulation abuses the model\u2019s designed input-processing logic to bypass safety filters. No code flaw is exploited \u2014 the attacker exploits the inherent trust and complexity built into the model\u2019s functionality. Classic #1 Abuse of Functions." },
+  { id:9, name:"Model Extraction Attacks", ch:2, clusters:["#1"], type:"direct", rules:["R-ABUSE"],
+    splunk:"Sending strategic queries to an AI system\u2019s API to reconstruct a near-identical copy of the model without accessing its code.",
+    analysis:"Querying an API within its designed interface to reverse-engineer the model. The API functions exactly as intended; the scope is abused. No code flaw, no foreign code execution \u2014 purely abusing designed capability = #1." },
+  { id:10, name:"Model Poisoning", ch:2, clusters:["#10"], type:"direct", rules:["R-SUPPLY"],
+    refs:{actors:[],software:[],cves:[],incidents:["Medical AI model poisoning study"]},
+    splunk:"Injecting malicious samples into training data to covertly alter model behavior, often undetectable by standard testing.",
+    analysis:"Corrupting training data from external or shared sources = compromising a trusted input to the ML pipeline. The poisoned data becomes authoritative at ingestion = Trust Acceptance Event (R-SUPPLY). The data pipeline is the supply chain." },
+  { id:11, name:"Resource Hijacking", ch:2, clusters:["#1"], type:"contextual", rules:[],
+    refs:{actors:[],software:["Ray"],cves:[],incidents:["Ray AI framework exploitation (2023)"]},
+    splunk:"Attackers steal computing resources (CPU/GPU) from AI infrastructure for cryptomining or running unauthorized workloads.",
+    analysis:"Post-compromise abuse of legitimate compute resources for unauthorized workloads. The computing capability works as designed \u2014 it is the scope that is abused = #1. Initial access is classified separately by its own method (#2, #3, or #4)." },
+
+  // Ch 3: Cloud & SaaS
+  { id:12, name:"Cloud Misconfiguration", ch:3, clusters:[], type:"not-threat", rules:["Axiom V"],
+    splunk:"Security settings left open or misconfigured in cloud environments, providing easy entry without exploiting any vulnerability.",
+    analysis:"Misconfiguration is a control failure, not an attack. Per Axiom V, control failures are not threats. When exploited, the exploitation itself is classified: accessing exposed resources via their legitimate interface = #1 Abuse of Functions. The misconfiguration enabled it; it didn\u2019t cause it." },
+  { id:13, name:"Data Exfiltration (Cloud)", ch:3, clusters:[], type:"not-threat", rules:["Axiom III"],
+    splunk:"Unauthorized extraction of sensitive data from cloud environments using legitimate cloud services and APIs to avoid detection.",
+    analysis:"Same principle as general data exfiltration: this is an outcome (DRE [C]), not a cause. Cloud context does not change the classification principle per Axiom III. The causing cluster depends on the exfiltration method used." },
+  { id:14, name:"Insecure APIs", ch:3, clusters:["#2"], type:"direct", rules:["R-ROLE"],
+    splunk:"Poorly secured APIs with weak authentication, insufficient input validation, or excessive data exposure creating direct attack vectors.",
+    analysis:"APIs operate in server-role relative to the caller. Implementation flaws (broken auth, injection, mass assignment) = #2 Exploiting Server per R-ROLE. If the API logic is abused without a code flaw (e.g., enumeration via intended endpoints) = #1." },
+  { id:15, name:"Cryptojacking (Cloud)", ch:3, clusters:["#1"], type:"contextual", rules:[],
+    refs:{actors:[],software:["Kubernetes"],cves:[],incidents:["Government cloud cryptojacking campaign (2024)"]},
+    splunk:"Hijacking cloud compute resources to mine cryptocurrency, causing performance degradation and unexpected costs.",
+    analysis:"Unauthorized cryptocurrency mining abuses legitimate compute capability. The infrastructure works as designed \u2014 the scope is abused = #1 Abuse of Functions. Initial access (via #2, #3, or #4) is a separate step in the attack path." },
+  { id:16, name:"Misconfigured Systems / Exposed Databases", ch:3, clusters:[], type:"not-threat", rules:["Axiom V"],
+    refs:{actors:[],software:[],cves:[],incidents:["Car manufacturer customer database exposure (Japan)"]},
+    splunk:"Systems with default settings, open ports, or publicly accessible databases that expose sensitive data without requiring exploitation.",
+    analysis:"Exposed databases are a control failure per Axiom V. The misconfiguration is not the attack. When exploited: accessing exposed data via its legitimate interface = #1 Abuse of Functions. The control failure created the opportunity; the threat is the exploitation." },
+  { id:17, name:"SaaS Authentication Exploits", ch:3, clusters:["#2","#4"], type:"contextual", rules:["R-ROLE","R-CRED"],
+    refs:{actors:[],software:["Okta","Duo","Ping"],cves:[],incidents:[]},
+    splunk:"Exploiting weaknesses in SaaS authentication including OAuth misconfigurations, token theft, and session manipulation.",
+    analysis:"If exploiting an authentication implementation flaw (OAuth bypass, token handling bug) = #2 (server-side, R-ROLE). If using stolen or guessed credentials to access the SaaS platform = #4 per R-CRED. The method determines the cluster." },
+  { id:18, name:"Malicious Process Injection", ch:3, clusters:["#7"], type:"direct", rules:["R-EXEC"],
+    refs:{actors:[],software:["QakBot","Emotet","TrickBot"],cves:[],incidents:[]},
+    splunk:"Injecting malicious code into legitimate running processes to execute commands, evade detection, and maintain persistence.",
+    analysis:"Injecting foreign code into a running process = foreign executable content execution. R-EXEC mandates: if FEC executes, a #7 Malware step MUST be recorded at the execution moment. The injection technique is operational; the cause is code execution." },
+  { id:19, name:"Shadow IT", ch:3, clusters:[], type:"not-threat", rules:["Axiom V"],
+    splunk:"Unauthorized use of cloud services, applications, or devices outside IT governance, creating unmonitored attack surfaces.",
+    analysis:"Shadow IT is an organizational governance failure, not an attack. Per Axiom V, control failures are not threats. Shadow IT creates exposure that attackers may exploit, but the exploitation (via #1, #2, #4, etc.) is the threat, not the shadow IT itself." },
+  { id:20, name:"Suspicious Cloud Authentication Activities", ch:3, clusters:["#4"], type:"direct", rules:["R-CRED"],
+    splunk:"Anomalous login patterns, impossible travel, and unauthorized access attempts across cloud services indicating credential compromise.",
+    analysis:"Unauthorized use of credentials to authenticate to cloud services = credential application = always #4 Identity Theft per R-CRED. The credential acquisition method (phishing, brute force, malware theft) is classified as a separate preceding step." },
+
+  // Ch 4: Identity & Credential
+  { id:21, name:"Brute Force Attack", ch:4, clusters:["#4"], type:"direct", rules:["R-CRED"],
+    refs:{actors:[],software:["WinRM","PowerShell","Python"],cves:[],incidents:["ISP brute-force campaign targeting US and China (2025)"]},
+    splunk:"Automated, systematic attempts to guess credentials by trying many password combinations against authentication systems.",
+    analysis:"Systematic credential guessing until successful authentication. The successful login using guessed credentials = #4 Identity Theft. The brute force is the acquisition technique; the successful use is always #4 per R-CRED." },
+  { id:22, name:"Insider Threat", ch:4, clusters:[], type:"not-threat", rules:["Axiom IV"],
+    splunk:"Threats originating from within the organization \u2014 employees, contractors, or partners who misuse their authorized access.",
+    analysis:"\"Insider\" describes the actor, not the attack method. Per Axiom IV, threat clusters are separate from threat actors \u2014 actor identity must never determine classification. An insider\u2019s actions classify by their nature: #1 (function abuse), #4 (credential misuse), #7 (malware installation), etc." },
+  { id:23, name:"Insider Misuse / Privilege Escalation", ch:4, clusters:["#1","#2"], type:"contextual", rules:["Axiom IV","R-ROLE"],
+    splunk:"Authorized users exceeding their access boundaries or exploiting system flaws to gain elevated privileges.",
+    analysis:"Abusing legitimate access beyond intended scope = #1 Abuse of Functions. Exploiting a software flaw for privilege escalation = #2 (server-side, R-ROLE) or #3 (client-side). Per Axiom IV, \u201Cinsider\u201D status is irrelevant to classification \u2014 an external attacker exploiting the same flaw gets the same cluster." },
+  { id:24, name:"MFA Fatigue Attacks", ch:4, clusters:["#9","#4"], type:"path", rules:["R-CRED"],
+    splunk:"Overwhelming users with repeated MFA push notifications until they approve a fraudulent authentication request.",
+    analysis:"Bombarding a user with push notifications until they approve = social engineering (#9, crossing the human boundary ||[human]||). Victim approval = credential obtained. Subsequent login with approved MFA = #4 per R-CRED. Two distinct steps: #9 \u2192 #4." },
+  { id:25, name:"Password Spraying", ch:4, clusters:["#4"], type:"direct", rules:["R-CRED"],
+    splunk:"Testing a small set of common passwords against many accounts simultaneously to avoid lockout thresholds.",
+    analysis:"Low-and-slow credential guessing across many accounts. Successful authentication with a guessed password = credential application = #4 Identity Theft per R-CRED. A distribution variant of brute force; same classification." },
+  { id:26, name:"Pass-the-Hash", ch:4, clusters:["#4"], type:"direct", rules:["R-CRED","Axiom X"],
+    refs:{actors:[],software:["NTLM","Kerberos","Active Directory","Mimikatz"],cves:[],incidents:["Retail breach exposing tens of millions of records"]},
+    splunk:"Using stolen password hashes directly to authenticate without needing the plaintext password.",
+    analysis:"Replaying a captured password hash for authentication = credential application = always #4 per R-CRED. Hash acquisition maps to its enabling cluster (#7 for malware-based dump, #1 for tool abuse). Axiom X: acquisition and application are distinct steps." },
+
+  // Ch 5: Network & Infrastructure
+  { id:27, name:"Distributed Denial-of-Service (DDoS)", ch:5, clusters:["#6"], type:"direct", rules:["R-FLOOD"],
+    refs:{actors:[],software:["Xor DDoS"],cves:[],incidents:["GitHub DDoS attack (2018)","Microsoft Azure DDoS attack (2025)"]},
+    splunk:"Coordinated flood of traffic from distributed sources to overwhelm and disable target systems, networks, or services.",
+    analysis:"Volume-based resource exhaustion overwhelming finite capacity = #6 Flooding Attack per R-FLOOD. Important: if an application-layer implementation bug causes crash/hang/degradation, classify as #2 or #3 per R-ROLE instead. Pure volume = #6." },
+  { id:28, name:"DNS Spoofing", ch:5, clusters:["#5"], type:"direct", rules:["R-MITM"],
+    refs:{actors:["OurMine"],software:["BIND 9"],cves:["CVE-2025-40778","CVE-2025-40780"],incidents:[]},
+    splunk:"Injecting forged DNS records to redirect users to malicious sites by corrupting the DNS resolution process.",
+    analysis:"Forging DNS responses to redirect traffic = exploiting a position on the communication path to modify/relay data. R-MITM: position acquisition maps to the enabling cluster; once positioned, interception and modification actions = #5 Man in the Middle." },
+  { id:29, name:"IoT Botnets", ch:5, clusters:["#7","#2","#6"], type:"path", rules:["R-EXEC","R-ROLE","R-FLOOD"],
+    refs:{actors:[],software:["Mirai"],cves:[],incidents:[]},
+    splunk:"Networks of compromised IoT devices controlled remotely to launch DDoS attacks, mine crypto, or serve as proxies.",
+    analysis:"Multi-step path: IoT device compromise via default credentials (#4) or firmware flaws (#2/#3 per R-ROLE). Botnet malware installation and execution = #7 (R-EXEC). DDoS usage = #6 (R-FLOOD). Each step classified independently per Axiom VI." },
+  { id:30, name:"Man-in-the-Middle Attack", ch:5, clusters:["#5"], type:"direct", rules:["R-MITM"],
+    refs:{actors:[],software:["Microsoft 365","Google Workspace"],cves:[],incidents:["Russian intelligence MitM operation against OPCW (2018)"]},
+    splunk:"Intercepting and potentially altering communication between two parties by exploiting a position on the network path.",
+    analysis:"Direct match to TLCTC #5. Attacker exploits a privileged position on the communication path to intercept, modify, or relay data. R-MITM: position acquisition = enabling cluster; once the position is established, all interception/modification actions = #5." },
+  { id:31, name:"Protocol Tunneling", ch:5, clusters:["#1"], type:"direct", rules:["R-ABUSE"],
+    splunk:"Hiding malicious traffic inside legitimate protocol channels like DNS or HTTP to bypass security controls.",
+    analysis:"Encapsulating malicious traffic inside legitimate protocols (DNS, HTTP, ICMP) = abusing the protocol\u2019s designed capability. No code flaw is exploited \u2014 the protocol functions exactly as intended; the scope of use is abused = #1 Abuse of Functions." },
+  { id:32, name:"Rogue Access Points / Evil Twin Wi-Fi", ch:5, clusters:["#8","#5"], type:"path", rules:["R-PHYSICAL","R-MITM"],
+    splunk:"Deploying fake Wi-Fi access points that mimic legitimate networks to intercept traffic, steal credentials, and inject malware.",
+    analysis:"Physical deployment of rogue hardware = #8 Physical Attack (crossing the physical domain boundary). Intercepting traffic via the rogue AP = #5 MitM (R-MITM). Credential capture from intercepted traffic is an enabling step for #4. Multi-step: #8 \u2192 #5 \u2192 #4." },
+
+  // Ch 6: Malware & Exploits
+  { id:33, name:"Bring Your Own Vulnerable Driver (BYOVD)", ch:6, clusters:["#10","#7"], type:"path", rules:["R-SUPPLY","R-EXEC"],
+    refs:{actors:[],software:["QakBot","TrickBot"],cves:[],incidents:[]},
+    splunk:"Loading legitimate but vulnerable signed drivers to exploit kernel-level flaws, bypass security, and gain deep system access.",
+    analysis:"Loading a legitimately signed but vulnerable driver = Trust Acceptance Event (#10, R-SUPPLY: the system trusts the driver\u2019s signature). Exploiting the driver\u2019s vulnerability = #2 (server-role, R-ROLE). Using gained privileges to execute malicious code or disable security = #7 (R-EXEC) or #1." },
+  { id:34, name:"Disabling Security Tools", ch:6, clusters:["#1","#7"], type:"contextual", rules:["R-EXEC"],
+    refs:{actors:[],software:["Windows Security Center"],cves:[],incidents:["Endpoint protection bypass PoC (2025)"]},
+    splunk:"Neutralizing endpoint protection, SIEM agents, or logging services to operate undetected within compromised environments.",
+    analysis:"If using legitimate admin commands to disable AV/EDR = #1 Abuse of Functions (no code flaw, no foreign code). If using malware or exploit code to kill security processes = #7 (R-EXEC). The method determines the cluster classification." },
+  { id:35, name:"Infostealers", ch:6, clusters:["#7"], type:"direct", rules:["R-EXEC"],
+    refs:{actors:[],software:["RedLine","Vidar","Raccoon Stealer"],cves:[],incidents:[]},
+    splunk:"Purpose-built malware designed to harvest credentials, session tokens, browser data, and financial information.",
+    analysis:"Foreign executable content that harvests credentials and data = #7 Malware (R-EXEC). The stolen data itself is a DRE [C], not the cluster. Credential use from stolen data = separate #4 step per R-CRED." },
+  { id:36, name:"Living Off the Land", ch:6, clusters:["#1"], type:"direct", rules:["R-ABUSE"],
+    refs:{actors:[],software:["PowerShell"],cves:[],incidents:[]},
+    splunk:"Using legitimate, pre-installed system tools and processes for malicious purposes to avoid detection.",
+    analysis:"Using legitimate system tools (PowerShell, WMI, certutil) for malicious purposes. No foreign executable content is introduced = NOT #7. The built-in tools function as designed; the scope and intent are abused = #1 Abuse of Functions." },
+  { id:37, name:"Malware Command-and-Control", ch:6, clusters:["#7"], type:"direct", rules:["R-EXEC"],
+    splunk:"Malware communicating with external attacker infrastructure to receive commands, exfiltrate data, and download payloads.",
+    analysis:"Foreign executable content maintaining communication with attacker infrastructure = #7 Malware. C2 is a capability of the executing malware, not a separate generic vulnerability. R-EXEC: foreign executable content is executing." },
+  { id:38, name:"Polymorphic Malware", ch:6, clusters:["#7"], type:"direct", rules:["R-EXEC"],
+    splunk:"Malware that continuously changes its code signature to evade pattern-based detection while maintaining its core functionality.",
+    analysis:"Self-modifying malware is still foreign executable content. The polymorphic evasion technique is an operational characteristic that does not change the generic vulnerability exploited. Classification unchanged: #7 Malware (R-EXEC)." },
+  { id:39, name:"Ransomware / RaaS", ch:6, clusters:["#7"], type:"direct", rules:["Axiom III","R-EXEC"],
+    splunk:"Malware that encrypts victim data and demands payment, increasingly offered as Ransomware-as-a-Service.",
+    analysis:"Encryption payload execution = #7 Malware (R-EXEC). Per Axiom III, \u201Cransomware\u201D as an outcome = DRE [Ac] (data present but unusable/inaccessible). RaaS is a business model, not a threat cluster. The payload execution is the threat; the extortion is the impact." },
+  { id:40, name:"Supply-Chain Attacks / Third-Party Vendor Breaches", ch:6, clusters:["#10"], type:"direct", rules:["R-SUPPLY"],
+    splunk:"Compromising third-party software, hardware, services, or update mechanisms that targets trust and integrate.",
+    analysis:"Direct match to TLCTC #10. Compromising trusted third-party components at the Trust Acceptance Event (R-SUPPLY) \u2014 the moment the trust artifact becomes authoritative inside the target domain. This is the defining example of bridge topology trust exploitation." },
+
+  // Ch 7: Phishing & Social Engineering
+  { id:41, name:"Business Email Compromise", ch:7, clusters:["#9","#4"], type:"path", rules:["R-CRED"],
+    refs:{actors:[],software:["SharePoint","DocuSign"],cves:[],incidents:["Australian Northern Territory government transfer fraud (AUD $3.58M, 2024)"]},
+    splunk:"Targeted email fraud where attackers impersonate executives or partners to trick employees into transferring funds or data.",
+    analysis:"Social engineering via email = #9 (human boundary crossing). If via a compromised email account: initial #4 (using stolen credentials to access the account), then #9 (manipulating the target through the trusted identity). Multi-step path." },
+  { id:42, name:"Deepfake-Enabled Scams (Vishing)", ch:7, clusters:["#9"], type:"direct", rules:["R-HUMAN"],
+    refs:{actors:[],software:[],cves:[],incidents:["Hong Kong multinational deepfake video call fraud ($25M, 2024)"]},
+    splunk:"Using AI-generated voice or video to impersonate trusted individuals for fraud, targeting financial transactions.",
+    analysis:"AI-generated voice/video used for psychological manipulation = #9 Social Engineering. The deepfake technology is the delivery mechanism; the generic vulnerability exploited is human susceptibility to influence \u2014 unchanged by the sophistication of the medium." },
+  { id:43, name:"Phishing", ch:7, clusters:["#9"], type:"direct", rules:["R-HUMAN"],
+    refs:{actors:[],software:["Microsoft Outlook","Amazon","Apple"],cves:[],incidents:[]},
+    splunk:"Mass deceptive communications designed to trick recipients into revealing credentials, clicking links, or executing malware.",
+    analysis:"Deceptive communication exploiting human psychology = #9 Social Engineering. Bridge topology: crosses the human boundary ||[human][@External\u2192@Org]||. The generic vulnerability is that humans can be influenced into unsafe actions." },
+  { id:44, name:"SIM Hijacking", ch:7, clusters:["#9","#4"], type:"path", rules:["R-CRED"],
+    refs:{actors:["Scattered Spider"],software:[],cves:[],incidents:[]},
+    splunk:"Convincing mobile carriers to transfer a victim\u2019s phone number to an attacker-controlled SIM to intercept MFA codes.",
+    analysis:"Social engineering a carrier employee to transfer the phone number = #9 (human boundary crossing). Using the hijacked number for SMS-based MFA authentication = #4 per R-CRED. Two distinct steps: #9 \u2192 #4." },
+  { id:45, name:"Smishing (SMS Phishing)", ch:7, clusters:["#9"], type:"direct", rules:["R-HUMAN"],
+    refs:{actors:["Scattered Spider","Lapsus$"],software:[],cves:[],incidents:[]},
+    splunk:"Phishing attacks delivered via SMS, exploiting mobile trust to trick users into clicking links or sharing credentials.",
+    analysis:"SMS-based social engineering = #9. The delivery channel (SMS vs. email vs. voice) does not change the generic vulnerability: human susceptibility to psychological manipulation." },
+  { id:46, name:"Social Engineering", ch:7, clusters:["#9"], type:"direct", rules:["R-HUMAN"],
+    splunk:"Psychological manipulation of individuals to perform actions or divulge information, exploiting trust and cognitive biases.",
+    analysis:"Exact match to TLCTC #9. Psychological manipulation of individuals into performing actions counter to their interests. Bridge topology crossing the human domain boundary. This is the Splunk category that maps 1:1 to a TLCTC cluster." },
+  { id:47, name:"Spear Phishing", ch:7, clusters:["#9"], type:"direct", rules:["R-HUMAN"],
+    splunk:"Highly targeted phishing using personalized information to deceive specific individuals within an organization.",
+    analysis:"Targeted phishing = #9 Social Engineering. Targeting precision is an operational characteristic of the attack, not a different generic vulnerability. The cause remains human susceptibility to influence \u2014 regardless of how personalized the lure is." },
+
+  // Ch 8: Web & Application
+  { id:48, name:"API Exploitation", ch:8, clusters:["#2"], type:"direct", rules:["R-ROLE"],
+    splunk:"Targeting API vulnerabilities including broken authentication, injection flaws, and business logic errors.",
+    analysis:"APIs operate in server-role relative to the attacker. Exploiting implementation flaws (injection, broken auth, BOLA) = #2 Exploiting Server per R-ROLE." },
+  { id:49, name:"Cross-Site Request Forgery", ch:8, clusters:["#2"], type:"direct", rules:["R-ROLE"],
+    splunk:"Tricking authenticated users\u2019 browsers into sending unauthorized requests to web applications that trust the session.",
+    analysis:"Server fails to validate request origin = server-side implementation flaw = #2 Exploiting Server per R-ROLE. The server trusts a forged request because it lacks proper CSRF protection \u2014 the flaw is in the server\u2019s request-handling code." },
+  { id:50, name:"Cross-Site Scripting (XSS)", ch:8, clusters:["#3","#2"], type:"contextual", rules:["R-ROLE","Axiom VI"],
+    refs:{actors:[],software:[],cves:[],incidents:["Gaming platform chat client XSS disclosure (2019)"]},
+    splunk:"Injecting malicious scripts into web pages that execute in victims\u2019 browsers to steal data or hijack sessions.",
+    analysis:"Reflected/DOM XSS: client browser executes injected script = #3 (client-role, R-ROLE). Stored XSS: server stores malicious content (#2) and client renders it (#3) \u2014 two separate steps per Axiom VI (one step = one cluster). The split reveals the actual causal structure." },
+  { id:51, name:"Drive-by Downloads", ch:8, clusters:["#3","#7"], type:"path", rules:["R-ROLE","R-EXEC"],
+    refs:{actors:[],software:["FakeBat"],cves:[],incidents:["FakeBat malvertising campaign (2024)"]},
+    splunk:"Automatic malware download triggered by visiting a compromised website, exploiting browser or plugin vulnerabilities.",
+    analysis:"Browser vulnerability exploited when visiting a page = #3 (client-role, R-ROLE). Malware downloaded and executed = #7 (R-EXEC). Two distinct steps per Axiom VI, each targeting a different generic vulnerability: #3 \u2192 #7." },
+  { id:52, name:"SQL Injection", ch:8, clusters:["#2"], type:"direct", rules:["R-ROLE"],
+    refs:{actors:[],software:[],cves:[],incidents:["Global design platform user records extraction"]},
+    splunk:"Inserting malicious SQL queries through application inputs to manipulate databases, extract data, or bypass authentication.",
+    analysis:"Server-side input validation failure allowing arbitrary SQL execution = #2 Exploiting Server per R-ROLE. A textbook server-side implementation flaw \u2014 the quintessential #2 example." },
+  { id:53, name:"Web Application Threats", ch:8, clusters:["#2","#3"], type:"contextual", rules:["R-ROLE"],
+    refs:{actors:[],software:["Log4Shell"],cves:[],incidents:["Global airline payment data interception"]},
+    splunk:"Broad category of attacks targeting web application vulnerabilities including authentication flaws and code injection.",
+    analysis:"Generic category. Classification depends entirely on R-ROLE: server-side flaws (auth bypass, injection, logic errors) = #2 Exploiting Server. Client-side flaws (DOM manipulation, browser exploits) = #3 Exploiting Client." },
+];
+
+// ═══════════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════════
+
+let activeChapter = null;
+let activeType = null;
+let activeCluster = null;
+let searchQuery = '';
+let expandedRows = new Set();
+
+function getClusterColor(c) { return CLUSTERS[c] ? CLUSTERS[c].color : '#666'; }
+
+function renderClusterBadge(c, showPath) {
+  const cl = CLUSTERS[c];
+  if (!cl) return '';
+  const bg = cl.color + '18';
+  return `<span class="cluster-badge" style="background:${bg};color:${cl.color};border-color:${cl.color}30" title="${c} ${cl.name}">${c}</span>`;
+}
+
+function renderStats() {
+  const direct = threats.filter(t => t.type === 'direct').length;
+  const path = threats.filter(t => t.type === 'path').length;
+  const notThreat = threats.filter(t => t.type === 'not-threat').length;
+  const contextual = threats.filter(t => t.type === 'contextual').length;
+
+  document.getElementById('stats').innerHTML = `
+    <div class="stat-card"><div class="stat-num" style="color:var(--green)">${direct}</div><div class="stat-label">Direct cluster matches</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--violet)">${path}</div><div class="stat-label">Multi-step attack paths</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--yellow)">${notThreat}</div><div class="stat-label">Not threats per TLCTC axioms</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--orange)">${contextual}</div><div class="stat-label">Context-dependent</div></div>
+  `;
+}
+
+function renderDistribution() {
+  // Count cluster appearances
+  const counts = {};
+  Object.keys(CLUSTERS).forEach(c => counts[c] = 0);
+  let notThreatCount = 0;
+  threats.forEach(t => {
+    if (t.clusters.length === 0) { notThreatCount++; return; }
+    t.clusters.forEach(c => { if (counts[c] !== undefined) counts[c]++; });
+  });
+
+  const total = Object.values(counts).reduce((a,b) => a+b, 0) + notThreatCount;
+  let barHtml = '';
+  let legendHtml = '';
+
+  Object.entries(counts).sort((a,b) => b[1] - a[1]).forEach(([c, count]) => {
+    if (count === 0) return;
+    const pct = (count / total * 100).toFixed(1);
+    const cl = CLUSTERS[c];
+    barHtml += `<div class="dist-seg" style="flex:${count};background:${cl.color}" onclick="filterByCluster('${c}')" title="${c} ${cl.name}: ${count} appearances"><span>${count > 2 ? c : ''}</span></div>`;
+    legendHtml += `<div class="dist-legend-item" onclick="filterByCluster('${c}')"><div class="dist-legend-dot" style="background:${cl.color}"></div>${c} ${cl.name} (${count})</div>`;
+  });
+
+  if (notThreatCount > 0) {
+    const pct = (notThreatCount / total * 100).toFixed(1);
+    barHtml += `<div class="dist-seg" style="flex:${notThreatCount};background:var(--yellow);opacity:0.5" onclick="filterByType('not-threat')" title="Not a Threat: ${notThreatCount}"><span style="color:#000">${notThreatCount}</span></div>`;
+    legendHtml += `<div class="dist-legend-item" onclick="filterByType('not-threat')"><div class="dist-legend-dot dist-not-threat"></div>Not a Threat (${notThreatCount})</div>`;
+  }
+
+  document.getElementById('dist-bar').innerHTML = barHtml;
+  document.getElementById('dist-legend').innerHTML = legendHtml;
+}
+
+function renderFilters() {
+  let html = '';
+
+  // Chapter filters
+  html += '<div class="filter-group"><span class="filter-label">Chapter:</span>';
+  html += `<button class="filter-btn ${!activeChapter ? 'active' : ''}" onclick="filterByChapter(null)">All</button>`;
+  CHAPTERS.forEach(ch => {
+    const count = threats.filter(t => t.ch === ch.num).length;
+    html += `<button class="filter-btn ${activeChapter === ch.num ? 'active' : ''}" onclick="filterByChapter(${ch.num})">${ch.name}<span class="filter-count">${count}</span></button>`;
+  });
+  html += '</div>';
+
+  html += '<div class="filter-sep"></div>';
+
+  // Type filters
+  html += '<div class="filter-group"><span class="filter-label">Type:</span>';
+  html += `<button class="filter-btn ${!activeType ? 'active' : ''}" onclick="filterByType(null)">All</button>`;
+  Object.entries(TYPE_LABELS).forEach(([key, label]) => {
+    const count = threats.filter(t => t.type === key).length;
+    html += `<button class="filter-btn ${activeType === key ? 'active' : ''}" onclick="filterByType('${key}')">${label}<span class="filter-count">${count}</span></button>`;
+  });
+  html += '</div>';
+
+  html += '<div class="filter-sep"></div>';
+
+  // Cluster filter
+  html += '<div class="filter-group"><span class="filter-label">Cluster:</span>';
+  html += `<button class="filter-btn ${!activeCluster ? 'active' : ''}" onclick="filterByCluster(null)">All</button>`;
+  Object.entries(CLUSTERS).forEach(([key, cl]) => {
+    html += `<button class="filter-btn ${activeCluster === key ? 'active' : ''}" onclick="filterByCluster('${key}')" style="${activeCluster === key ? 'border-color:'+cl.color+';color:'+cl.color+';background:'+cl.color+'18' : ''}">${key}</button>`;
+  });
+  html += '</div>';
+
+  html += '<div class="filter-sep"></div>';
+
+  // Search
+  html += `<input type="text" class="search-input" placeholder="Search threats\u2026" oninput="onSearch(this.value)" value="${searchQuery}">`;
+
+  document.getElementById('filters').innerHTML = html;
+}
+
+function getFiltered() {
+  return threats.filter(t => {
+    if (activeChapter && t.ch !== activeChapter) return false;
+    if (activeType && t.type !== activeType) return false;
+    if (activeCluster && !t.clusters.includes(activeCluster)) return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      if (!t.name.toLowerCase().includes(q) && !t.analysis.toLowerCase().includes(q) && !t.splunk.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function renderTable() {
+  const filtered = getFiltered();
+  const tbody = document.getElementById('table-body');
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="no-results">No threats match the current filters.</td></tr>';
+    return;
+  }
+
+  let html = '';
+  filtered.forEach(t => {
+    const chName = CHAPTERS.find(c => c.num === t.ch)?.name || '';
+    const isExpanded = expandedRows.has(t.id);
+
+    // Cluster badges
+    let clusterHtml = '';
+    if (t.clusters.length === 0) {
+      clusterHtml = '<span class="not-threat-hint">See analysis</span>';
+    } else if (t.type === 'path' && t.clusters.length > 1) {
+      clusterHtml = t.clusters.map(c => renderClusterBadge(c)).join('<span class="path-arrow">\u2192</span>');
+    } else {
+      clusterHtml = t.clusters.map(c => renderClusterBadge(c)).join(' ');
+    }
+
+    // Type badge
+    const typeClass = 'type-' + t.type;
+    const typeLabel = TYPE_LABELS[t.type] || t.type;
+
+    // Rules
+    const rulesHtml = t.rules.map(r => `<span class="rule-tag">${r}</span>`).join('');
+
+    html += `<tr class="${isExpanded ? 'expanded' : ''}" onclick="toggleRow(${t.id})">
+      <td><span class="threat-num">${t.id}</span></td>
+      <td><span class="threat-name">${t.name}</span></td>
+      <td class="col-chapter"><span class="threat-chapter">${chName}</span></td>
+      <td><div class="cluster-badges">${clusterHtml}</div></td>
+      <td><span class="type-badge ${typeClass}">${typeLabel}</span></td>
+      <td class="col-rules">${rulesHtml || '<span style="color:var(--text-muted)">\u2014</span>'}</td>
+    </tr>`;
+
+    if (isExpanded) {
+      let refsHtml = '';
+      if (t.refs && (t.refs.actors.length || t.refs.software.length || t.refs.cves.length || t.refs.incidents.length)) {
+        refsHtml = '<div class="expand-refs"><div class="expand-col"><h4>Referenced in Report</h4><div class="ref-grid">';
+        t.refs.actors.forEach(a => refsHtml += `<span class="ref-tag actor"><span class="ref-icon">\u2691</span>${a}</span>`);
+        t.refs.software.forEach(s => refsHtml += `<span class="ref-tag software"><span class="ref-icon">\u2699</span>${s}</span>`);
+        t.refs.cves.forEach(c => refsHtml += `<span class="ref-tag cve"><span class="ref-icon">\u26a0</span>${c}</span>`);
+        t.refs.incidents.forEach(inc => refsHtml += `<span class="ref-tag incident"><span class="ref-icon">\u25c8</span>${inc}</span>`);
+        refsHtml += '</div></div></div>';
+      }
+      html += `<tr class="expand-row" onclick="event.stopPropagation()">
+        <td colspan="6">
+          <div class="expand-content">
+            <div class="expand-col">
+              <h4>Splunk/Cisco Description</h4>
+              <p>${t.splunk}</p>
+            </div>
+            <div class="expand-col">
+              <h4>TLCTC v2.0 Analysis</h4>
+              <p>${t.analysis}</p>
+              ${t.rules.length ? '<div class="rules-list"><h4 style="margin-top:0.75rem">Rules Applied</h4>' + t.rules.map(r => `<span class="rule-tag">${r}</span>`).join(' ') + '</div>' : ''}
+            </div>
+            ${refsHtml}
+          </div>
+        </td>
+      </tr>`;
+    }
+  });
+
+  tbody.innerHTML = html;
+}
+
+function toggleRow(id) {
+  if (expandedRows.has(id)) expandedRows.delete(id);
+  else expandedRows.add(id);
+  renderTable();
+}
+
+function filterByChapter(ch) {
+  activeChapter = activeChapter === ch ? null : ch;
+  renderFilters(); renderTable();
+}
+
+function filterByType(type) {
+  activeType = activeType === type ? null : type;
+  renderFilters(); renderTable();
+}
+
+function filterByCluster(c) {
+  activeCluster = activeCluster === c ? null : c;
+  renderFilters(); renderTable();
+}
+
+function onSearch(val) {
+  searchQuery = val;
+  renderTable();
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+}
+
+// Init
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') document.body.classList.add('light');
+  renderStats();
+  renderDistribution();
+  renderFilters();
+  renderTable();
+})();
+</script>
+
+</body>
+</html>

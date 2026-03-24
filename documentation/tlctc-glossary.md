@@ -1,11 +1,11 @@
-# TLCTC Framework Glossary — Version 2.0
+# TLCTC Framework Glossary — Version 2.0 / 2.1
 
 *Comprehensive definitions and concepts for the Top Level Cyber Threat Clusters framework.*
-*Author: Bernhard Kreinz | Last Updated: 20 Feb 2026*
+*Author: Bernhard Kreinz | Last Updated: 24 Mar 2026*
 
 ---
 
-This glossary contains all defined terms from the TLCTC framework specification V2.0, organized alphabetically. Each entry includes cross-references to the section(s) where the term is normatively defined or substantively discussed in the whitepaper.
+This glossary contains all defined terms from the TLCTC framework specification V2.0, organized alphabetically, including additive V2.1 boundary extensions. Each entry includes cross-references to the section(s) where the term is normatively defined or substantively discussed in the whitepaper. V2.1 additions are marked with *(V2.1)*.
 
 ---
 
@@ -392,6 +392,12 @@ A TLCTC cluster that operates primarily **within the software domain's** attack 
 
 **Reference:** §2.2.2 (Global Definitions), §5.1.5, §5.2 (Topology Classification)
 
+### Intra-System Boundary Operator (|...|) *(V2.1)*
+
+Notation: `|[type][@from→@to]|`. Used to annotate boundary crossings **within a single host or system**, such as sandbox escapes, privilege escalations, process boundary violations, and VM escapes. Uses single pipe delimiters to distinguish from the inter-sphere Domain Boundary Operator (`||...||`). Defined boundary types: `sandbox`, `privilege`, `process`, `hypervisor`. The `memory` type is reserved and MUST NOT be used (R-INTRA-9). Intra-system boundaries are observability annotations and never change cluster classification (R-INTRA-7). Example: `#3 |[sandbox][@renderer→@os]|` — browser exploit escaping renderer sandbox.
+
+**Reference:** §3.3.6 (Intra-System Boundary Operator)
+
 ---
 
 ## J
@@ -635,6 +641,18 @@ Global mapping rule: If the attacker's advantage comes from psychological manipu
 
 **Reference:** §2.2.4 (R-HUMAN)
 
+### R-INTRA-7 (Classification Independence) *(V2.1)*
+
+Global mapping rule: Intra-system boundaries (`|[type][@from→@to]|`) never change cluster classification. They are observability annotations, not classification inputs. The cluster assigned to a step is determined solely by the generic vulnerability exploited (per R-ROLE, R-EXEC, R-ABUSE, etc.).
+
+**Reference:** §2.2.4 (R-INTRA), §3.3.6 (Intra-System Boundary Operator)
+
+### R-INTRA-9 (Reserved Boundary Type) *(V2.1)*
+
+Global mapping rule: The `memory` boundary type for the Intra-System Boundary Operator is explicitly deferred and MUST NOT be used. Memory-level transitions are reserved for potential future specification. Tools and validators SHOULD reject `|[memory][@from→@to]|` as non-conformant.
+
+**Reference:** §2.2.4 (R-INTRA), §3.3.6 (Intra-System Boundary Operator)
+
 ### R-MITM (Position vs Action)
 
 Global mapping rule: The method of gaining a privileged communication-path position maps to another cluster. `#5 Man in the Middle` begins only once the attacker controls a point on the communication path and performs MitM actions.
@@ -658,6 +676,12 @@ Global mapping rule: If the vulnerable component accepts and handles inbound req
 Global mapping rule: `#10 Supply Chain Attack` MUST be placed at the Trust Acceptance Event (TAE)—the moment where the third-party trust link is honored and the trust artifact becomes authoritative inside the organization's domain.
 
 **Reference:** §2.2.4 (R-SUPPLY)
+
+### R-TRANSIT-3 (Vendor Code on Target Device) *(V2.1)*
+
+Global mapping rule: Vendor code running on the target device is NOT transit. It is the attack surface and MUST be classified by R-ROLE. For example, a browser (Safari, Chrome) on the victim's phone is a client-role component (`#3 Exploiting Client`), not a transit party. The transit operator (`⇒`) is reserved for entities that relay or carry the attack between spheres without processing the exploit payload on the target's behalf.
+
+**Reference:** §2.2.4 (R-TRANSIT), §3.3.5 (Transit Boundary Operator)
 
 ### Realtime Velocity Class *(V2.0)*
 
@@ -790,6 +814,12 @@ The V2.0 extension to standard attack path notation that explicitly annotates ti
 - With parallel execution: `#9→[30s]#7→[2m]#4→[15m](#1+#7)`
 
 Enables precise velocity analysis, detection coverage score calculation, and realistic assessment of control effectiveness against time-sensitive attacks.
+
+### Transit Boundary Operator (⇒) *(V2.1)*
+
+Notation: `||[context][@Source⇒@Carrier→@Target]||`. An extension to the Domain Boundary Operator that marks responsibility spheres which **carry or relay** the attack without being the source or the target. The `⇒` symbol denotes transit (relay), while `→` denotes delivery to the final target. Chained transit uses right-to-left relay order: `||[context][@Source⇒@CarrierB⇒@CarrierA→@Target]||`. Transit is distinct from `#10 Supply Chain Attack`: transit marks a passive relay, while `#10` marks a Trust Acceptance Event. Key rule (R-TRANSIT-3): vendor code running on the target device is NOT transit — it is the attack surface (classify by R-ROLE). Example: `#9 ||[human][@Attacker⇒@SMSProvider→@Victim]||` — phishing SMS relayed through carrier.
+
+**Reference:** §3.3.5 (Transit Boundary Operator)
 
 ### Third-Party Trust Link (TTL)
 
@@ -983,5 +1013,8 @@ See also: Vulnerability, Generic Vulnerability, CVE, CWE, Threat Cluster, Coder,
 | **R-HUMAN** | Human Manipulation | Psychological manipulation → `#9`; subsequent tech steps separate |
 | **R-PHYSICAL** | Physical Access | Physical interaction → `#8`; subsequent tech steps separate |
 | **R-ABUSE** | Function Misuse | No flaw required, legitimate capability abused → `#1` |
+| **R-TRANSIT-3** *(V2.1)* | Transit vs Attack Surface | Vendor code on target device → classify by R-ROLE, not transit |
+| **R-INTRA-7** *(V2.1)* | Intra-System Classification | Intra-system boundaries are observability only → never change cluster |
+| **R-INTRA-9** *(V2.1)* | Reserved Boundary Type | `memory` boundary type is deferred → MUST NOT be used |
 
 **Reference:** §2.2.4 (Global Mapping Rules), §2.2.9 (Quick Reference)

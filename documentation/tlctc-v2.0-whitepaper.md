@@ -1315,6 +1315,52 @@ If the attacker's success **does not require any implementation flaw** and inste
 
 ---
 
+##### R-TRANSIT — Transit Boundary Rules *(V2.1)*
+
+**R-TRANSIT-3 — Vendor Code on Target Device (Normative):**
+
+Vendor code running **on the target device** is **NOT** transit. It is the attack surface and **MUST** be classified by R-ROLE.
+
+**Clarifications (Normative):**
+
+1. A browser (e.g., Safari, Chrome) running on the victim's device is the **client-role component** being exploited — classify as `#3 Exploiting Client`, not as a transit party.
+2. The transit operator (`⇒`) is reserved for entities that **relay or carry** the attack between spheres. If the component **processes** the exploit payload and is the point of compromise, it is the attack surface.
+3. **Test:** Does the entity execute/process the malicious content on the target's behalf? → Attack surface (R-ROLE). Does the entity merely forward/relay the content to the target? → Transit (`⇒`).
+
+**Examples:**
+
+| Scenario | Classification | Rationale |
+| --- | --- | --- |
+| Safari renders exploit on victim's phone | `#3` (R-ROLE) | Safari is client-role software on the target — it is the attack surface |
+| SMS gateway relays phishing link | `⇒@SMSProvider` (transit) | Gateway forwards the message without processing exploit content |
+| CDN serves malicious JavaScript | `⇒@CDN` (transit) | CDN forwards content; the browser on the victim is the attack surface |
+
+---
+
+##### R-INTRA — Intra-System Boundary Rules *(V2.1)*
+
+**R-INTRA-7 — Classification Independence (Normative):**
+
+Intra-system boundaries **never change cluster classification**. They are **observability annotations**, not classification inputs.
+
+**Clarifications (Normative):**
+
+1. The cluster assigned to a step is determined solely by the generic vulnerability exploited (per R-ROLE, R-EXEC, R-ABUSE, etc.). An intra-system boundary annotation adds detail about **where within the host** the boundary was crossed, but does not alter the cluster.
+2. A sandbox escape exploiting a client-side implementation flaw is `#3` (by R-ROLE). The `|[sandbox][@renderer→@os]|` annotation records the escape but does not create a new cluster or change the existing one.
+3. Multiple intra-system boundary crossings in a single step are **non-conformant**. If two distinct intra-host boundaries are crossed, they **MUST** be represented as separate steps.
+
+**R-INTRA-9 — Reserved Boundary Type (Normative):**
+
+The `memory` boundary type is explicitly **deferred** and **MUST NOT** be used.
+
+**Clarifications (Normative):**
+
+1. Memory-level transitions (e.g., stack → heap, user-space → kernel-space memory) are reserved for potential future specification.
+2. Tools and validators **SHOULD** reject `|[memory][@from→@to]|` as non-conformant.
+3. This reservation ensures that memory-level granularity can be added in a future version without conflicting with existing annotations.
+
+---
+
 #### 2.2.5 Tie-Breaker / Precedence Rules
 
 When a step appears to fit multiple clusters, apply the following precedence rules **in order**. These rules are **normative**.
@@ -1849,6 +1895,142 @@ Absence of a boundary operator implies **no explicit responsibility-sphere trans
   #8 ||[physical][@Facilities→@Org]|| → #5 → #4
   ```
 
+#### 3.3.5 Transit Boundary Operator (⇒) *(V2.1 Extension)*
+
+The Transit Boundary Operator is an **additive, backward-compatible** extension that marks responsibility spheres that **carry or relay** the attack but are neither the source nor the target. Transit parties pass the attack through without being the origin or the final victim.
+
+##### 3.3.5.1 Syntax (Normative)
+
+Single transit party:
+
+```
+||[context][@Source⇒@Carrier→@Target]||
+```
+
+Chained transit (right-to-left relay order):
+
+```
+||[context][@Source⇒@CarrierB⇒@CarrierA→@Target]||
+```
+
+Where:
+
+- `⇒` denotes a **transit** relationship — the carrier relays the attack without being the intended source or target.
+- `→` denotes **delivery** to the final target sphere.
+- In chained transit, relay order reads **right-to-left**: `@CarrierA` receives from `@CarrierB`, which receives from `@Source`.
+
+##### 3.3.5.2 Semantics (Normative)
+
+A transit annotation asserts that the marked sphere(s) **relay the attack** between source and target. The transit party:
+
+- is not the originating attacker sphere,
+- is not the final victim sphere,
+- carries, routes, or forwards the attack vector through its infrastructure or services.
+
+Transit annotations are **observability metadata** — they enrich the path with relay information but do **not** change cluster classification.
+
+##### 3.3.5.3 Key Rules (Normative)
+
+1. **R-TRANSIT-3:** Vendor code running on the target device is **NOT** transit. For example, Safari on the victim's phone is not a transit party — it is the attack surface. Classify by R-ROLE as `#3 Exploiting Client`.
+2. Transit annotations **MUST** appear inside a domain boundary operator (`||...||`). They are not standalone operators.
+3. Transit parties **SHOULD** be annotated when the relay path is operationally relevant (e.g., for forensics, takedown coordination, or regulatory reporting).
+
+##### 3.3.5.4 Transit vs #10 Supply Chain
+
+Transit (`⇒`) and `#10 Supply Chain Attack` are **different concepts**:
+
+- **Transit** marks a relay/carrier that passes the attack through without the target placing trust in the carrier's output.
+- **#10** marks the **Trust Acceptance Event** — where a trust artifact becomes authoritative inside the target domain.
+
+| Scenario | Notation | Rationale |
+| --- | --- | --- |
+| SMS provider relaying a phishing link | `#9 \|\|[human][@Attacker⇒@SMSProvider→@Victim]\|\|` | SMS provider is a passive relay; victim does not trust SMS content as authoritative software |
+| Compromised npm package installed by target | `#10 \|\|[dev][@Attacker→@Org]\|\|` | Trust acceptance — the package becomes authoritative in the target's build/runtime |
+| CDN serving malicious ad content | `#3 \|\|[web][@Attacker⇒@AdNetwork⇒@CDN→@Victim]\|\|` | Chained transit; the client-side browser is the attack surface |
+
+##### 3.3.5.5 Examples
+
+- Phishing SMS relayed through a carrier:
+
+  ```
+  #9 ||[human][@Attacker⇒@SMSProvider→@Victim]||
+  ```
+- Malvertising through ad network and CDN:
+
+  ```
+  #3 ||[web][@Attacker⇒@AdNetwork⇒@CDN→@Victim]||
+  ```
+- Watering hole via compromised third-party site:
+
+  ```
+  #3 ||[web][@Attacker⇒@CompromisedSite→@Victim]||
+  ```
+
+---
+
+#### 3.3.6 Intra-System Boundary Operator (|...|) *(V2.1 Extension)*
+
+The Intra-System Boundary Operator is an **additive, backward-compatible** extension that marks boundary crossings **within a single host or system**. Unlike the domain boundary operator (`||...||`) which marks inter-sphere transitions, the intra-system operator annotates privilege escalations, sandbox escapes, and other intra-host boundary crossings.
+
+##### 3.3.6.1 Syntax (Normative)
+
+```
+|[type][@from→@to]|
+```
+
+Where:
+
+- Single pipe delimiters (`|...|`) distinguish intra-system boundaries from inter-sphere boundaries (`||...||`).
+- `type` is one of the following defined boundary types:
+
+| Type | Meaning | Example |
+| --- | --- | --- |
+| `sandbox` | Escape from a sandboxed execution context | Browser renderer → OS, app sandbox → kernel |
+| `privilege` | Privilege level escalation | User → root, low-integrity → high-integrity |
+| `process` | Cross-process boundary violation | IPC exploitation, process injection |
+| `hypervisor` | Virtual machine escape | Guest VM → hypervisor / host |
+
+- `@from` is the originating context within the system.
+- `@to` is the target context within the system.
+
+##### 3.3.6.2 Semantics (Normative)
+
+An intra-system boundary annotation asserts that the step involves crossing an **internal boundary** within a single host or system. These annotations are **observability metadata** — they provide visibility into the depth of compromise but do **not** change cluster classification.
+
+##### 3.3.6.3 Key Rules (Normative)
+
+1. **R-INTRA-7:** Intra-system boundaries **never change cluster classification**. They are observability annotations, not classification inputs. The cluster is still determined by the generic vulnerability exploited (R-ROLE, R-EXEC, etc.).
+2. **R-INTRA-9:** The `memory` boundary type is explicitly **deferred** and **MUST NOT** be used. Memory-level transitions (e.g., stack → heap, user-space → kernel-space memory) are reserved for potential future specification.
+3. Intra-system operators **MAY** appear alongside domain boundary operators on the same step if both an intra-host boundary crossing and an inter-sphere transition occur.
+
+##### 3.3.6.4 Examples
+
+- Browser exploit escaping renderer sandbox:
+
+  ```
+  #3 |[sandbox][@renderer→@os]|
+  ```
+- Kernel exploit for privilege escalation:
+
+  ```
+  #2 |[privilege][@user→@root]|
+  ```
+- VM escape from guest to hypervisor:
+
+  ```
+  #2 |[hypervisor][@guest→@host]|
+  ```
+- Process injection:
+
+  ```
+  #7 |[process][@malware→@lsass]|
+  ```
+- Full chain combining both operators (sandbox escape after phishing):
+
+  ```
+  #9 ||[human][@External→@Org]|| → #3 |[sandbox][@renderer→@os]| → #7 |[privilege][@user→@root]|
+  ```
+
 ---
 
 ### 3.4 Responsibility Spheres (@Entity)
@@ -1964,12 +2146,15 @@ A textual TLCTC path is **conformant** with this specification if it satisfies a
    - Sequence: `→` (or `->` as accepted alternative)
    - Parallel: `+` inside parentheses only
    - Domain boundary: `||[context][@Source→@Target]||` attached to a step
+   - Transit boundary *(V2.1)*: `||[context][@Source⇒@Carrier→@Target]||` attached to a step
+   - Intra-system boundary *(V2.1)*: `|[type][@from→@to]|` attached to a step
 3. Has **balanced parentheses** for all parallel groups.
 4. Does not contain:
    - trailing sequence operators (`... →`)
    - `+` outside parentheses
    - boundary operator as the final element
    - adjacent boundary operators with no step between
+5. *(V2.1)* Intra-system boundary types are limited to: `sandbox`, `privilege`, `process`, `hypervisor`. The `memory` type is reserved and **MUST NOT** be used (R-INTRA-9).
 
 ---
 
@@ -1988,17 +2173,23 @@ PHASE         = STEP / PAR_GROUP
 
 PAR_GROUP     = "(" SP* STEP *(SP* "+" SP* STEP) SP* ")"
 
-STEP          = CLUSTER_REF [SP* BOUNDARY] *(SP* STEP_ANN) [SP* DRE_TAG]
+STEP          = CLUSTER_REF [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN) [SP* DRE_TAG]
 
 CLUSTER_REF   = STRATEGIC / OPERATIONAL
 STRATEGIC     = "#" ( "10" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" )
 OPERATIONAL   = "TLCTC-" 2DIG "." 2DIG
 
-BOUNDARY      = "||" "[" CONTEXT "]" "[" SPHERE BOUNDARY_ARROW SPHERE "]" "||"
+BOUNDARY      = "||" "[" CONTEXT "]" "[" SPHERE_LIST "]" "||"
+SPHERE_LIST   = SPHERE *(TRANSIT_ARROW SPHERE) BOUNDARY_ARROW SPHERE
 BOUNDARY_ARROW = (ARROW / ARROW_ASCII)
+TRANSIT_ARROW = "⇒"                                  ; V2.1 transit operator
 CONTEXT       = 1*(ALPHA / DIGIT / "_" / "-")
 
 SPHERE        = "@" 1*(ALPHA / DIGIT / "_" / "-" / "(" / ")")
+
+; V2.1 Intra-System Boundary Operator
+INTRA_BOUNDARY = "|" "[" INTRA_TYPE "]" "[" SPHERE BOUNDARY_ARROW SPHERE "]" "|"
+INTRA_TYPE     = "sandbox" / "privilege" / "process" / "hypervisor"
 
 STEP_ANN      = "[" ANN_KEY "=" ANN_VAL "]" / "[inferred]"
 ANN_KEY       = 1*(ALPHA / DIGIT / "_" / "-")
@@ -5198,6 +5389,15 @@ Each example is written as:
   - New concepts (Δt, Domain Boundaries, Bridge/Internal)
   - Deprecated terminology
 
+- Changes from V2.0 to V2.1 *(additive, backward-compatible)*
+  - **Transit Boundary Operator (`⇒`):** New operator to annotate responsibility spheres that relay/carry attacks without being source or target (§3.3.5)
+  - **Intra-System Boundary Operator (`|...|`):** New operator to annotate boundary crossings within a single host — sandbox escapes, privilege escalation, process injection, VM escape (§3.3.6)
+  - **R-TRANSIT-3:** Vendor code on target device is NOT transit; classify by R-ROLE (§2.2.4)
+  - **R-INTRA-7:** Intra-system boundaries never change cluster classification (§2.2.4)
+  - **R-INTRA-9:** `memory` boundary type reserved/deferred (§2.2.4)
+  - Updated ABNF grammar to include transit arrow (`⇒`), `SPHERE_LIST`, and `INTRA_BOUNDARY` productions (§3.7)
+  - Updated conformance rules to recognize V2.1 operators (§3.6)
+
 ---
 
-*TLCTC Framework — Version 2.0*
+*TLCTC Framework — Version 2.0 / 2.1*

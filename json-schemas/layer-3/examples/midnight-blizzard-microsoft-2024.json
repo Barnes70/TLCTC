@@ -1,0 +1,45 @@
+{
+  "metadata": {
+    "incident_id": "MIDNIGHT-BLIZZARD-MICROSOFT-2024",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "registry_ref": "example-registry.json",
+    "created_at": "2026-03-24T00:00:00Z",
+    "notes": "Midnight Blizzard (APT29/Nobelium) compromise of Microsoft corporate email (January 2024). Attack path: #4 →[Δt=VC-1] #1 →[Δt=VC-1] #1 →[Δt=VC-2] #4 →[Δt=VC-3] #1 + [DRE: C]. Password spray against legacy test tenant without MFA, escalation via overly permissive OAuth application, creation of additional malicious OAuth apps, and systematic exfiltration of senior leadership, cybersecurity, and legal staff email. Per Axiom IV, APT29 attribution does not change cluster classification. Sources: Microsoft MSRC blog (January/March 2024), Splunk/Cisco Top 50 Cybersecurity Threats report, CISA Emergency Directive 24-02."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-password-spray",
+      "cluster": "#4",
+      "delta_t_to_next": "~30d",
+      "evidence_refs": ["Microsoft MSRC blog 2024-01-19", "CISA ED 24-02"],
+      "notes": "Password spray attack against a legacy non-production test tenant account that lacked MFA. Midnight Blizzard used a distributed, low-volume approach to avoid triggering account lockout thresholds. Successful authentication with guessed credentials = credential application = always #4 per R-CRED. The absence of MFA is a control failure (Axiom V) that enabled the attack but is not itself the threat."
+    },
+    {
+      "step_id": "s2-oauth-app-abuse",
+      "cluster": "#1",
+      "delta_t_to_next": "~7d",
+      "notes": "Compromised test account used to access a legacy test OAuth application that had been granted full_access_as_app permission to the Microsoft corporate Exchange Online environment. The OAuth grant was legitimate but overly permissive — a designed authorization mechanism used beyond its intended scope. No code flaw exploited; the identity platform functioned as configured. R-ABUSE: abuse of designed OAuth delegation capability."
+    },
+    {
+      "step_id": "s3-oauth-persistence",
+      "cluster": "#1",
+      "delta_t_to_next": "~2h",
+      "notes": "Attacker created additional malicious OAuth applications and granted them Exchange Online mailbox read permissions via Microsoft Graph API. The Azure AD application registration and consent APIs functioned as designed; the administrative scope was abused to establish persistent, broad mailbox access. This step provided persistence independent of the original test account. R-ABUSE: legitimate admin APIs, abused scope."
+    },
+    {
+      "step_id": "s4-token-authentication",
+      "cluster": "#4",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~15m",
+      "notes": "OAuth tokens from the newly created malicious applications used to authenticate to Exchange Online and access corporate mailboxes. Per R-CRED: token-based authentication = credential application = always #4 regardless of acquisition method. Per Axiom X (Credential Duality): the creation of the OAuth app (step 3, enabling cluster #1) and the use of its tokens to authenticate (this step, #4) are distinct steps."
+    },
+    {
+      "step_id": "s5-email-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Systematic access and exfiltration of email from accounts of senior leadership team members, cybersecurity staff, and legal staff using Microsoft Graph API / Exchange Web Services. The mail access APIs functioned as designed; the scope of access was abused. DRE: C — confidentiality breach of sensitive corporate communications including information about Midnight Blizzard itself. The exfiltration is annotated as + [DRE: C], not classified as a separate cluster (Axiom III: exfiltration is an outcome)."
+    }
+  ]
+}
