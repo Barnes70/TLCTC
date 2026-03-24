@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" aria-labelledby="bowtieTitle bowtieDesc" role="img">
+  <title id="bowtieTitle">TLCTC Dual-Layer Bow-Tie Model</title>
+  <desc id="bowtieDesc">A bow-tie diagram mapping Cyber Threat Clusters (Cause) to Business Consequences, split between Strategic and Operational layers.</desc>
+
+  <defs>
+    <linearGradient id="wingGradientLeft" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#18181b" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#18181b" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="wingGradientRight" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#e74c3c" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#e74c3c" stop-opacity="0.05"/>
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon fill="#6b7280" opacity="0.5" points="0 0, 10 3.5, 0 7"/>
+    </marker>
+    <style>
+      .label { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Section headers -->
+  <text class="label" x="190" y="30" fill="#6b7280" text-anchor="middle" font-size="12" font-weight="bold" letter-spacing="2">CAUSE</text>
+  <text class="label" x="375" y="30" fill="#e74c3c" text-anchor="middle" font-size="12" font-weight="bold" letter-spacing="2">EVENT</text>
+  <text class="label" x="610" y="30" fill="#6b7280" text-anchor="middle" font-size="12" font-weight="bold" letter-spacing="2">CONSEQUENCES</text>
+
+  <!-- Left wing (Cause) -->
+  <path d="M 40,60 L 340,130 L 340,170 L 40,240 Z" fill="url(#wingGradientLeft)" stroke="#e5e7eb" stroke-width="1.5"/>
+
+  <!-- Right wing (Consequences) -->
+  <path d="M 460,130 L 760,60 L 760,240 L 460,170 Z" fill="url(#wingGradientRight)" stroke="#e5e7eb" stroke-width="1.5"/>
+
+  <!-- Strategic / Operational divider -->
+  <line x1="20" x2="780" y1="150" y2="150" stroke="#18181b" stroke-dasharray="6 4" stroke-width="1" opacity="0.3"/>
+  <text class="label" x="480" y="145" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">STRATEGIC</text>
+  <text class="label" x="480" y="160" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">OPERATIONAL</text>
+  <text class="label" x="250" y="145" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">STRATEGIC</text>
+  <text class="label" x="250" y="160" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">OPERATIONAL</text>
+
+  <!-- Central Risk Event circle -->
+  <circle cx="400" cy="150" r="65" fill="#ffffff" stroke="#e74c3c" stroke-width="3"/>
+  <text class="label" x="400" y="142" fill="#0a0a0b" text-anchor="middle" font-size="14" font-weight="bold">Risk Event</text>
+  <text class="label" x="400" y="160" fill="#e74c3c" text-anchor="middle" font-size="11" font-weight="500" text-transform="uppercase" letter-spacing="1">CYBER INCIDENT</text>
+  <text class="label" x="400" y="176" fill="#6b7280" text-anchor="middle" font-size="9">(System Compromise)</text>
+
+  <!-- Left wing labels: Strategic (top) -->
+  <text class="label" x="120" y="120" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Threat Clusters</text>
+  <text class="label" x="120" y="134" fill="#6b7280" text-anchor="middle" font-size="9">Generic vulnerabilities of</text>
+  <text class="label" x="120" y="146" fill="#6b7280" text-anchor="middle" font-size="9">asset-types</text>
+
+  <!-- Left wing labels: Operational (bottom) -->
+  <text class="label" x="120" y="168" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Threats / TTPs</text>
+  <text class="label" x="120" y="182" fill="#6b7280" text-anchor="middle" font-size="9">Specific vulnerability of</text>
+  <text class="label" x="120" y="194" fill="#6b7280" text-anchor="middle" font-size="9">specific assets</text>
+
+  <!-- Right wing labels: Strategic (top) -->
+  <text class="label" x="680" y="120" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Appetite &amp; Tolerance</text>
+  <text class="label" x="680" y="134" fill="#6b7280" text-anchor="middle" font-size="9">Business Impact Analysis</text>
+  <text class="label" x="680" y="146" fill="#6b7280" text-anchor="middle" font-size="9">(BIA)</text>
+
+  <!-- Right wing labels: Operational (bottom) -->
+  <text class="label" x="680" y="168" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Consequences</text>
+  <text class="label" x="680" y="182" fill="#6b7280" text-anchor="middle" font-size="9">Data Risk Events</text>
+  <text class="label" x="680" y="194" fill="#6b7280" text-anchor="middle" font-size="9">(C-I-A Impact) → Business Risk Event</text>
+
+  <!-- Arrows from wings to center -->
+  <path d="M 300,100 Q 350,100 360,130" fill="none" stroke="#e5e7eb" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <path d="M 300,200 Q 350,200 360,170" fill="none" stroke="#e5e7eb" stroke-width="1" marker-end="url(#arrowhead)"/>
+</svg>

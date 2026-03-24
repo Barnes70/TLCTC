@@ -1,1157 +1,1525 @@
-[
-  {
-    "threat_actor": "APT41 (Double Dragon, Winnti, Barium, Axiom)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 3,
-      "TLCTC-02.00": 2,
-      "TLCTC-03.00": 3,
-      "TLCTC-04.00": 3,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-03-22T00:00:00Z",
+  "actors": [
+    {
+      "threat_actor": "APT41 (Double Dragon, Winnti, Barium, Axiom)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, espionage + financial motivation. Champion Malware use (46+ families, rootkits, bootkits, ransomware) [#7]. High initial access via Spear Phishing (.chm) [#9]. Uses sophisticated TTPs post-compromise including credential stealers [#4 High], keyloggers, and likely lateral movement [#1 High]. Client exploit used via .chm files [#3 High]. Server exploit assumed moderate [#2]. Targets wide range including tech, healthcare, gaming.",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "US DOJ Indictment (September 2020)"
+      ],
+      "sequence": "#09 → #03 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Healthcare",
+        "Gaming",
+        "Financial Services",
+        "Government",
+        "Telecommunications",
+        "Education",
+        "Pharma & Biotech",
+        "Manufacturing",
+        "Media & Entertainment"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "APT41-DOJ-INDICTMENT-2020",
+          "notation": "#09 ||[human][@External→@Org]|| →[Δt=~1d] #03 →[Δt=instant] #07 →[Δt=~7d] #04 →[Δt=~30d] #01 + [DRE: C]",
+          "cluster_sequence": [9, 3, 7, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
     },
-    "notes": "China-nexus, espionage + financial motivation. Champion Malware use (46+ families, rootkits, bootkits, ransomware) [#7]. High initial access via Spear Phishing (.chm) [#9]. Uses sophisticated TTPs post-compromise including credential stealers [#4 High], keyloggers, and likely lateral movement [#1 High]. Client exploit used via .chm files [#3 High]. Server exploit assumed moderate [#2]. Targets wide range including tech, healthcare, gaming.",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "Financial Gain"
-    ],
-    "target_sectors": [
-      "Technology",
-      "Healthcare",
-      "Gaming",
-      "Financial Services",
-      "Government",
-      "Telecommunications",
-      "Education",
-      "Pharma & Biotech",
-      "Manufacturing",
-      "Media & Entertainment"
-    ]
-  },
-  {
-    "threat_actor": "APT40 (Leviathan)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT40 (Leviathan)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus maritime espionage focus. Champion Malware use (51 families, 37 non-public, shares some) [#7]. High Social Engineering (#9 - Spear phishing posing as relevant individuals, uses compromised accounts). Moderate Function Abuse [#1] & Identity Theft [#4] assumed for espionage. Exploits not mentioned [#2, #3 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "CISA Advisory AA21-200A (July 2021)"
+      ],
+      "sequence": "#09 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Maritime",
+        "Aerospace & Defense",
+        "Government",
+        "Technology",
+        "Transportation & Logistics"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "APT40-CISA-AA21-200A-2021",
+          "notation": "#09 ||[human][@External→@Org]|| →[Δt=instant] #07 →[Δt=~14d] #04 →[Δt=~30d] #01 + [DRE: C]",
+          "cluster_sequence": [9, 7, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
     },
-    "notes": "China-nexus maritime espionage focus. Champion Malware use (51 families, 37 non-public, shares some) [#7]. High Social Engineering (#9 - Spear phishing posing as relevant individuals, uses compromised accounts). Moderate Function Abuse [#1] & Identity Theft [#4] assumed for espionage. Exploits not mentioned [#2, #3 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Maritime",
-      "Aerospace & Defense",
-      "Government",
-      "Technology",
-      "Transportation & Logistics"
-    ]
-  },
-  {
-    "threat_actor": "APT31 (Zirconium, Violet Typhoon)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 2,
-      "TLCTC-03.00": 3,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT31 (Zirconium, Violet Typhoon)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus espionage actor. Known to exploit client-side application vulnerabilities (Java, Flash) [#3 High]. Associated Malware listed [#7 Medium]. Server exploit assumed possible [#2 Medium]. Initial access vectors beyond exploits not detailed [#9, #4 Low]. Focus on info for political/economic/military advantage.",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#03 → #02 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Technology",
+        "Financial Services"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus espionage actor. Known to exploit client-side application vulnerabilities (Java, Flash) [#3 High]. Associated Malware listed [#7 Medium]. Server exploit assumed possible [#2 Medium]. Initial access vectors beyond exploits not detailed [#9, #4 Low]. Focus on info for political/economic/military advantage.",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Technology",
-      "Financial Services"
-    ]
-  },
-  {
-    "threat_actor": "APT30 (Naikon, PLA Unit 78020)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 2,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT30 (Naikon, PLA Unit 78020)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 2,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus (PLA Unit 78020). Long-term sustained activity targeting ASEAN. High Malware use (#7 - suite including downloaders, backdoors, specific components for removable drives/air-gapped networks). Medium Physical Attack (#8) implied by air-gap crossing capability. Abuses DNS functions for C2 [#1 Medium]. No exploits or social engineering mentioned as primary vectors [#2, #3, #9 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#07 → #08 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense",
+        "Media & Entertainment"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus (PLA Unit 78020). Long-term sustained activity targeting ASEAN. High Malware use (#7 - suite including downloaders, backdoors, specific components for removable drives/air-gapped networks). Medium Physical Attack (#8) implied by air-gap crossing capability. Abuses DNS functions for C2 [#1 Medium]. No exploits or social engineering mentioned as primary vectors [#2, #3, #9 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense",
-      "Media & Entertainment"
-    ]
-  },
-  {
-    "threat_actor": "APT27 (Emissary Panda)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 3,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT27 (Emissary Panda)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus IP theft focus. High Social Engineering (#9 - Spear phishing, uses compromised accounts). High Exploiting Server (#2 - Compromises vulnerable web apps). Leverages public exploits (likely client-side) [#3 Medium]. Uses multiple malware families [#7 Medium]. Identity Theft via compromised accounts [#4 Medium]. Abuse of Functions likely post-compromise [#1 Medium].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #02 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Government",
+        "Technology",
+        "Aerospace & Defense"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus IP theft focus. High Social Engineering (#9 - Spear phishing, uses compromised accounts). High Exploiting Server (#2 - Compromises vulnerable web apps). Leverages public exploits (likely client-side) [#3 Medium]. Uses multiple malware families [#7 Medium]. Identity Theft via compromised accounts [#4 Medium]. Abuse of Functions likely post-compromise [#1 Medium].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Government",
-      "Technology",
-      "Aerospace & Defense"
-    ]
-  },
-  {
-    "threat_actor": "APT26 (Turbine Panda)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 3,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT26 (Turbine Panda)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus IP theft focus. High Exploiting Server (#2 - Frequent use of strategic web compromises). High Malware use (#7 - Custom backdoors like SOGU, BEACON). Other vectors not detailed [#1, #3, #4, #9 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#02 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Aerospace & Defense",
+        "Technology"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus IP theft focus. High Exploiting Server (#2 - Frequent use of strategic web compromises). High Malware use (#7 - Custom backdoors like SOGU, BEACON). Other vectors not detailed [#1, #3, #4, #9 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Aerospace & Defense",
-      "Technology"
-    ]
-  },
-  {
-    "threat_actor": "APT25 (Uncool, Vixen Panda, Ke3chang, Sushi Roll, Tor)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT25 (Uncool, Vixen Panda, Ke3chang, Sushi Roll, Tor)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus data theft focus. High Social Engineering (#9 - Spear phishing with malicious attachments/links). High Malware use (#7 - Multiple custom families listed). Leverages public exploits (likely client-side) [#3 Medium]. No zero-days mentioned. Other vectors not detailed [#1, #2, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus data theft focus. High Social Engineering (#9 - Spear phishing with malicious attachments/links). High Malware use (#7 - Multiple custom families listed). Leverages public exploits (likely client-side) [#3 Medium]. No zero-days mentioned. Other vectors not detailed [#1, #2, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense"
-    ]
-  },
-  {
-    "threat_actor": "APT24 (PittyTiger)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT24 (PittyTiger)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, targets related to political monitoring (Taiwan). High Social Engineering (#9 - Phishing emails with military/business lures). Medium Malware use (#7 - PITTYTIGER, ENFAL, TAIDOOR). Medium Abuse of Functions (#1 - Uses RAR utility for exfil). Exploits not mentioned [#2, #3 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #07 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Manufacturing"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus, targets related to political monitoring (Taiwan). High Social Engineering (#9 - Phishing emails with military/business lures). Medium Malware use (#7 - PITTYTIGER, ENFAL, TAIDOOR). Medium Abuse of Functions (#1 - Uses RAR utility for exfil). Exploits not mentioned [#2, #3 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Manufacturing"
-    ]
-  },
-  {
-    "threat_actor": "APT23",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT23",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, focus on political/military info theft. High Social Engineering (#9 - Spear phishing with education lures). Medium Malware use (#7 - NONGMIN). Leverages public exploits (likely client-side) [#3 Medium]. No zero-days mentioned. Other vectors not detailed [#1, #2, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus, focus on political/military info theft. High Social Engineering (#9 - Spear phishing with education lures). Medium Malware use (#7 - NONGMIN). Leverages public exploits (likely client-side) [#3 Medium]. No zero-days mentioned. Other vectors not detailed [#1, #2, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense"
-    ]
-  },
-  {
-    "threat_actor": "APT22 (Barista)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 3,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT22 (Barista)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, targets political/military/economic entities, dissidents. High Exploiting Server (#2 - Strategic web compromises, uploads webshells to vulnerable servers). High Malware use (#7 - Multiple families listed). Other vectors not detailed [#1, #3, #4, #9 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#02 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense",
+        "Civil Society & NGOs"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus, targets political/military/economic entities, dissidents. High Exploiting Server (#2 - Strategic web compromises, uploads webshells to vulnerable servers). High Malware use (#7 - Multiple families listed). Other vectors not detailed [#1, #3, #4, #9 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense",
-      "Civil Society & NGOs"
-    ]
-  },
-  {
-    "threat_actor": "APT21 (Zhenbao)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 2,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT21 (Zhenbao)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, targets Russian security issues, dissident groups. High Malware use (#7 - Primarily custom backdoors like TRAVELNET, TEMPFUN, rarely public tools). High Social Engineering (#9 - Spear phishing with attachments/links). Medium Exploiting Server (#2 - Uses strategic web compromises). Other vectors not detailed [#1, #3, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #02 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Civil Society & NGOs"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus, targets Russian security issues, dissident groups. High Malware use (#7 - Primarily custom backdoors like TRAVELNET, TEMPFUN, rarely public tools). High Social Engineering (#9 - Spear phishing with attachments/links). Medium Exploiting Server (#2 - Uses strategic web compromises). Other vectors not detailed [#1, #3, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Civil Society & NGOs"
-    ]
-  },
-  {
-    "threat_actor": "APT20 (Twivy)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 3,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT20 (Twivy)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus (possible freelancer/state mix), data theft focus (IP, political). High Exploiting Server (#2 - Strategic web compromises, particularly on sites related to democracy/human rights). Medium Malware use (#7 - Several families listed). Other vectors not detailed [#1, #3, #4, #9 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#02 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Government",
+        "Civil Society & NGOs"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus (possible freelancer/state mix), data theft focus (IP, political). High Exploiting Server (#2 - Strategic web compromises, particularly on sites related to democracy/human rights). Medium Malware use (#7 - Several families listed). Other vectors not detailed [#1, #3, #4, #9 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Government",
-      "Civil Society & NGOs"
-    ]
-  },
-  {
-    "threat_actor": "APT19 (Codoso Team)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 3,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT19 (Codoso Team)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus (likely freelancers/state mix). High Social Engineering (#9 - Phishing lures). High Exploiting Client (#3 - RTF exploit CVE-2017-0199, Macro-enabled Excel). High Malware use (#7 - BEACON/COBALTSTRIKE payload mentioned, includes app safelisting bypass [#1 Medium]). Other vectors not detailed [#2, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Legal & Professional Services",
+        "Technology"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus (likely freelancers/state mix). High Social Engineering (#9 - Phishing lures). High Exploiting Client (#3 - RTF exploit CVE-2017-0199, Macro-enabled Excel). High Malware use (#7 - BEACON/COBALTSTRIKE payload mentioned, includes app safelisting bypass [#1 Medium]). Other vectors not detailed [#2, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Legal & Professional Services",
-      "Technology"
-    ]
-  },
-  {
-    "threat_actor": "APT18 (Wekby)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 2,
-      "TLCTC-03.00": 3,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 2
+    {
+      "threat_actor": "APT18 (Wekby)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 2
+      },
+      "notes": "China-nexus. High Exploiting Client (#3 - Frequently developed/adapted zero-day exploits, used Hacking Team leak). Medium Malware use (#7 - Gh0st RAT mentioned). Medium Supply Chain (#10) implied by use of Hacking Team exploit. Medium Server exploit [#2] assumed possible for APT. Other vectors not detailed [#1, #4, #9 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#03 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Aerospace & Defense",
+        "Technology",
+        "Healthcare"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus. High Exploiting Client (#3 - Frequently developed/adapted zero-day exploits, used Hacking Team leak). Medium Malware use (#7 - Gh0st RAT mentioned). Medium Supply Chain (#10) implied by use of Hacking Team exploit. Medium Server exploit [#2] assumed possible for APT. Other vectors not detailed [#1, #4, #9 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Aerospace & Defense",
-      "Technology",
-      "Healthcare"
-    ]
-  },
-  {
-    "threat_actor": "APT17 (Tailgator Team, Deputy Dog)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT17 (Tailgator Team, Deputy Dog)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus. Medium Abuse of Functions (#1 - Used forum profiles/posts to embed C2 info for malware). Medium Malware use (#7 - BLACKCOFFEE mentioned). Other vectors not detailed [#2, #3, #4, #9 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#01 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Technology",
+        "Legal & Professional Services"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus. Medium Abuse of Functions (#1 - Used forum profiles/posts to embed C2 info for malware). Medium Malware use (#7 - BLACKCOFFEE mentioned). Other vectors not detailed [#2, #3, #4, #9 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Technology",
-      "Legal & Professional Services"
-    ]
-  },
-  {
-    "threat_actor": "APT16",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT16",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, focus on Taiwan political/journalistic matters. High Social Engineering (#9 - Spear phishing emails with lure documents targeting Taiwanese media/webmail). Medium Malware use (#7 - IRONHALO, ELMER). Other vectors not detailed [#1, #2, #3, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Media & Entertainment"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus, focus on Taiwan political/journalistic matters. High Social Engineering (#9 - Spear phishing emails with lure documents targeting Taiwanese media/webmail). Medium Malware use (#7 - IRONHALO, ELMER). Other vectors not detailed [#1, #2, #3, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Media & Entertainment"
-    ]
-  },
-  {
-    "threat_actor": "APT15 (Ke3chang, Vixen Panda)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT15 (Ke3chang, Vixen Panda)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus espionage. High Social Engineering (#9 - Well-developed spear phishing emails). Medium Malware use (#7 - Uses backdoors shared with other groups, ENFAL, MIRAGE etc.). Shared resources make attribution hard. Other vectors not detailed [#1, #2, #3, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense",
+        "Energy & Utilities"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus espionage. High Social Engineering (#9 - Well-developed spear phishing emails). Medium Malware use (#7 - Uses backdoors shared with other groups, ENFAL, MIRAGE etc.). Shared resources make attribution hard. Other vectors not detailed [#1, #2, #3, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense",
-      "Energy & Utilities"
-    ]
-  },
-  {
-    "threat_actor": "APT14",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT14",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus data theft (military/maritime focus). High Social Engineering (#9 - Spear phishing, crafted to appear from trusted orgs, uses custom SMTP mailer [#1 Medium]). Medium Malware use (#7 - Gh0st, POISONIVY etc.). Leverages public exploits [#3 Medium]. No zero-days mentioned. Other vectors not detailed [#2, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense",
+        "Maritime"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus data theft (military/maritime focus). High Social Engineering (#9 - Spear phishing, crafted to appear from trusted orgs, uses custom SMTP mailer [#1 Medium]). Medium Malware use (#7 - Gh0st, POISONIVY etc.). Leverages public exploits [#3 Medium]. No zero-days mentioned. Other vectors not detailed [#2, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense",
-      "Maritime"
-    ]
-  },
-  {
-    "threat_actor": "APT12 (Numbered Panda, Calc Team)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT12 (Numbered Panda, Calc Team)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus (PLA link suggested), focus on Taiwan. High Social Engineering (#9 - Phishing emails, uses compromised accounts). Medium Malware use (#7 - RIPTIDE, HIGHTIDE etc.). Exploits via documents mentioned [#3 Medium]. Identity Theft via compromised accounts [#4 Medium]. Other vectors not detailed [#1, #2 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07 → #04",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Media & Entertainment",
+        "Aerospace & Defense"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus (PLA link suggested), focus on Taiwan. High Social Engineering (#9 - Phishing emails, uses compromised accounts). Medium Malware use (#7 - RIPTIDE, HIGHTIDE etc.). Exploits via documents mentioned [#3 Medium]. Identity Theft via compromised accounts [#4 Medium]. Other vectors not detailed [#1, #2 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Media & Entertainment",
-      "Aerospace & Defense"
-    ]
-  },
-  {
-    "threat_actor": "APT10 (Red Apollo, MenuPass Team)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 3
+    {
+      "threat_actor": "APT10 (Red Apollo, MenuPass Team)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 3
+      },
+      "notes": "China-nexus espionage (military/business intel theft). High Social Engineering (#9 - Spear phishing, though described as 'unsophisticated' lures using .lnk, double extensions). High Malware use (#7 - HAYMAKER, SNUGRIDE etc.). High Supply Chain compromise (#10 - Access via managed service providers). Medium Client Exploits [#3] implied by malicious attachments. Medium Abuse of Functions [#1] / Identity Theft [#4] implied by MSP access.",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "NCSC UK / PwC / BAE Systems 'Operation Cloud Hopper' (April 2017)"
+      ],
+      "sequence": "#10 → #09 → #07 → #04",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Aerospace & Defense",
+        "Government",
+        "Technology",
+        "Manufacturing",
+        "Healthcare",
+        "Telecommunications"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "OPERATION-CLOUD-HOPPER-2017",
+          "notation": "#10 ||[dev][@MSP→@Org]|| →[Δt=~1d] #04 →[Δt=~7d] #07 →[Δt=~30d] #01 + [DRE: C]",
+          "cluster_sequence": [10, 4, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
     },
-    "notes": "China-nexus espionage (military/business intel theft). High Social Engineering (#9 - Spear phishing, though described as 'unsophisticated' lures using .lnk, double extensions). High Malware use (#7 - HAYMAKER, SNUGRIDE etc.). High Supply Chain compromise (#10 - Access via managed service providers). Medium Client Exploits [#3] implied by malicious attachments. Medium Abuse of Functions [#1] / Identity Theft [#4] implied by MSP access.",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Aerospace & Defense",
-      "Government",
-      "Technology",
-      "Manufacturing",
-      "Healthcare",
-      "Telecommunications"
-    ]
-  },
-  {
-    "threat_actor": "APT9",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 2
+    {
+      "threat_actor": "APT9",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 2
+      },
+      "notes": "China-nexus (possible freelancer/state mix), data theft focus (pharma/biotech). High Malware use (#7 - Wide range, public & custom, shared). High Social Engineering (#9 - Spear phishing). Medium Identity Theft (#4 - Uses valid accounts). Medium Abuse of Functions (#1 - Uses remote services). Medium Supply Chain (#10 - Initial access via trusted relationship between companies). Exploits not mentioned [#2, #3 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Pharma & Biotech",
+        "Healthcare",
+        "Technology"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus (possible freelancer/state mix), data theft focus (pharma/biotech). High Malware use (#7 - Wide range, public & custom, shared). High Social Engineering (#9 - Spear phishing). Medium Identity Theft (#4 - Uses valid accounts). Medium Abuse of Functions (#1 - Uses remote services). Medium Supply Chain (#10 - Initial access via trusted relationship between companies). Exploits not mentioned [#2, #3 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Pharma & Biotech",
-      "Healthcare",
-      "Technology"
-    ]
-  },
-  {
-    "threat_actor": "APT8",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 2,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT8",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus (possible freelancer/state mix), IP theft focus. High Social Engineering (#9 - Spear phishing with attachments/links, uses chat/IM). Medium Malware use (#7 - HASH, FLYZAP etc.). Medium Exploiting Server (#2 - Exploits vulnerable internet-facing web servers). Medium Abuse of Functions (#1 - uses chat/IM programs). Other vectors not detailed [#3, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #02 → #07 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services",
+        "Media & Entertainment"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus (possible freelancer/state mix), IP theft focus. High Social Engineering (#9 - Spear phishing with attachments/links, uses chat/IM). Medium Malware use (#7 - HASH, FLYZAP etc.). Medium Exploiting Server (#2 - Exploits vulnerable internet-facing web servers). Medium Abuse of Functions (#1 - uses chat/IM programs). Other vectors not detailed [#3, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Technology",
-      "Financial Services",
-      "Media & Entertainment"
-    ]
-  },
-  {
-    "threat_actor": "APT7",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 2
+    {
+      "threat_actor": "APT7",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 2
+      },
+      "notes": "China-nexus IP theft focus. Medium Supply Chain (#10 - Used access to one org to infiltrate another under same parent via trusted relationship). Medium Malware use (#7 - DIGDUG, TRACKS). Medium Abuse of Functions (#1 - Lateral movement between related orgs). Other vectors not detailed [#2, #3, #4, #9 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#10 → #07 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Government"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus IP theft focus. Medium Supply Chain (#10 - Used access to one org to infiltrate another under same parent via trusted relationship). Medium Malware use (#7 - DIGDUG, TRACKS). Medium Abuse of Functions (#1 - Lateral movement between related orgs). Other vectors not detailed [#2, #3, #4, #9 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Technology",
-      "Government"
-    ]
-  },
-  {
-    "threat_actor": "APT6",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT6",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus data theft focus. High Malware use (#7 - Several custom backdoors, some shared, some unique). Other vectors not detailed [#1, #2, #3, #4, #9 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Government",
+        "Transportation & Logistics"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus data theft focus. High Malware use (#7 - Several custom backdoors, some shared, some unique). Other vectors not detailed [#1, #2, #3, #4, #9 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Technology",
-      "Government",
-      "Transportation & Logistics"
-    ]
-  },
-  {
-    "threat_actor": "APT5",
-    "tlctc_scores": {
-      "TLCTC-01.00": 3,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT5",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, focus on telecoms/satellite tech. Champion Malware use (#7 - Extremely long list, keylogging capabilities). High Abuse of Functions (#1 - Unauthorized code mods to embedded OS, modifies router images, compromises networking devices). Medium Identity Theft (#4 - Keylogging implies credential focus). Exploits/Social Engineering not mentioned as primary vectors [#2, #3, #9 Low]. Large group with subgroups.",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#07 → #01 → #04",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Telecommunications"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus, focus on telecoms/satellite tech. Champion Malware use (#7 - Extremely long list, keylogging capabilities). High Abuse of Functions (#1 - Unauthorized code mods to embedded OS, modifies router images, compromises networking devices). Medium Identity Theft (#4 - Keylogging implies credential focus). Exploits/Social Engineering not mentioned as primary vectors [#2, #3, #9 Low]. Large group with subgroups.",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Technology",
-      "Telecommunications"
-    ]
-  },
-  {
-    "threat_actor": "APT4 (Maverick Panda, Sykipot Group, Wisp)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT4 (Maverick Panda, Sykipot Group, Wisp)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, targets DIB. High Social Engineering (#9 - Spear phishing using US gov/DoD themes, repurposes valid web content for lures). Medium Malware use (#7 - Multiple families listed). Other vectors not detailed [#1, #2, #3, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Aerospace & Defense",
+        "Government"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus, targets DIB. High Social Engineering (#9 - Spear phishing using US gov/DoD themes, repurposes valid web content for lures). Medium Malware use (#7 - Multiple families listed). Other vectors not detailed [#1, #2, #3, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Aerospace & Defense",
-      "Government"
-    ]
-  },
-  {
-    "threat_actor": "APT3 (Buckeye, Gothic Panda, UPS Team)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 3,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 4,
-      "TLCTC-04.00": 3,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 2,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT3 (Buckeye, Gothic Panda, UPS Team)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 4,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Sophisticated China-nexus group. Champion in Client-Side Exploits (#3 - browser/Flash zero-days, ASLR/DEP bypass). High Malware use (#7 - custom backdoors, payload obfuscation) & Identity Theft (#4 - quick credential dump). High Abuse of Functions (#1 - lateral movement, complex C2). Medium Social Engineering (#9 - generic phishing). Server exploit not emphasized [#2 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Aerospace & Defense",
+        "Technology",
+        "Telecommunications",
+        "Government"
+      ],
+      "observed_paths": []
     },
-    "notes": "Sophisticated China-nexus group. Champion in Client-Side Exploits (#3 - browser/Flash zero-days, ASLR/DEP bypass). High Malware use (#7 - custom backdoors, payload obfuscation) & Identity Theft (#4 - quick credential dump). High Abuse of Functions (#1 - lateral movement, complex C2). Medium Social Engineering (#9 - generic phishing). Server exploit not emphasized [#2 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Aerospace & Defense",
-      "Technology",
-      "Telecommunications",
-      "Government"
-    ]
-  },
-  {
-    "threat_actor": "APT2 (PLA Unit 61486)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 3,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT2 (PLA Unit 61486)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus (PLA Unit 61486) IP theft focus (military/aerospace). High Social Engineering (#9 - Spear phishing). High Client Exploit (#3 - Specifically mentions exploiting CVE-2012-0158 via email). Medium Malware use (#7 - MOOSE, WARP). Other vectors not detailed [#1, #2, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Aerospace & Defense",
+        "Government"
+      ],
+      "observed_paths": []
     },
-    "notes": "China-nexus (PLA Unit 61486) IP theft focus (military/aerospace). High Social Engineering (#9 - Spear phishing). High Client Exploit (#3 - Specifically mentions exploiting CVE-2012-0158 via email). Medium Malware use (#7 - MOOSE, WARP). Other vectors not detailed [#1, #2, #4 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Aerospace & Defense",
-      "Government"
-    ]
-  },
-  {
-    "threat_actor": "APT1 (PLA Unit 61398, Comment Crew)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT1 (PLA Unit 61398, Comment Crew)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus (PLA Unit 61398). Large scale, broad industry targeting, massive data theft. Champion Malware use (#7 - Vast majority custom backdoors, installs multiple families for persistence). High Social Engineering (#9 - Spear phishing with relevant lures, attachments/links, uses fake webmail accounts). Medium Client Exploit [#3] implied by malicious files. Medium Abuse of Functions [#1] & Identity Theft [#4] implied by long-term persistence and likely credential use. Server exploits not mentioned [#2 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "Mandiant 'APT1: Exposing One of China's Cyber Espionage Units' (February 2013)"
+      ],
+      "sequence": "#09 → #03 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "IP Theft"
+      ],
+      "target_sectors": [
+        "Aerospace & Defense",
+        "Technology",
+        "Energy & Utilities",
+        "Financial Services",
+        "Government",
+        "Healthcare",
+        "Manufacturing",
+        "Media & Entertainment",
+        "Telecommunications",
+        "Transportation & Logistics"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "MANDIANT-APT1-REPORT-2013",
+          "notation": "#09 ||[human][@External→@Org]|| →[Δt=~1d] #03 →[Δt=instant] #07 →[Δt=~7d] #04 →[Δt=~30d] #01 + [DRE: C]",
+          "cluster_sequence": [9, 3, 7, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
     },
-    "notes": "China-nexus (PLA Unit 61398). Large scale, broad industry targeting, massive data theft. Champion Malware use (#7 - Vast majority custom backdoors, installs multiple families for persistence). High Social Engineering (#9 - Spear phishing with relevant lures, attachments/links, uses fake webmail accounts). Medium Client Exploit [#3] implied by malicious files. Medium Abuse of Functions [#1] & Identity Theft [#4] implied by long-term persistence and likely credential use. Server exploits not mentioned [#2 Low].",
-    "origin_country": "China",
-    "motivation": [
-      "Espionage",
-      "IP Theft"
-    ],
-    "target_sectors": [
-      "Aerospace & Defense",
-      "Technology",
-      "Energy & Utilities",
-      "Financial Services",
-      "Government",
-      "Healthcare",
-      "Manufacturing",
-      "Media & Entertainment",
-      "Telecommunications",
-      "Transportation & Logistics"
-    ]
-  },
-  {
-    "threat_actor": "APT43",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 3,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 4,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT43",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "North Korean state interests (espionage + cyber-crime funding). Champion Social Engineering (#9 - Aggressive, elaborate tactics, numerous spoofed personas). High Identity Theft (#4 - Likely goal of SE). Medium Malware use (#7 - Gh0st RAT, QUASARRAT etc.). Medium Abuse of Functions (#1 - Uses cover identities for tooling/infra purchase). Exploits not emphasized [#2, #3 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #04 → #07 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Espionage",
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense",
+        "Education",
+        "Financial Services",
+        "Pharma & Biotech"
+      ],
+      "observed_paths": []
     },
-    "notes": "North Korean state interests (espionage + cyber-crime funding). Champion Social Engineering (#9 - Aggressive, elaborate tactics, numerous spoofed personas). High Identity Theft (#4 - Likely goal of SE). Medium Malware use (#7 - Gh0st RAT, QUASARRAT etc.). Medium Abuse of Functions (#1 - Uses cover identities for tooling/infra purchase). Exploits not emphasized [#2, #3 Low].",
-    "origin_country": "North Korea",
-    "motivation": [
-      "Espionage",
-      "Financial Gain"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense",
-      "Education",
-      "Financial Services",
-      "Pharma & Biotech"
-    ]
-  },
-  {
-    "threat_actor": "APT44 (Sandworm, Voodoo Bear, Seashell Blizzard, Iron Viking, Telebots)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 3,
-      "TLCTC-02.00": 3,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 3,
-      "TLCTC-05.00": 2,
-      "TLCTC-06.00": 3,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 2,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 3
+    {
+      "threat_actor": "APT44 (Sandworm, Voodoo Bear, Seashell Blizzard, Iron Viking, Telebots)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 3,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 2,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 3
+      },
+      "notes": "Russia-nexus (GRU Unit 74455). Formally designated APT44 by Mandiant in April 2024. Champion Malware use (#7 - wipers: NotPetya, HermeticWiper, CaddyWiper, CrashOverride/Industroyer, DARKCRYSTALRAT, trojanized software). High Exploiting Server (#2 - exploitation of unpatched internet-facing appliances, OT/ICS systems). High Abuse of Functions (#1 - Living-off-the-Land techniques, OT/SCADA manipulation for physical impact). High Identity Theft (#4 - credential phishing, lateral movement via stolen creds). High Social Engineering (#9 - spear phishing, watering holes, trojanized software via forums). High Flooding Attack (#6 - DDoS as part of combined operations). High Supply Chain (#10 - trojanized software distribution, compromised update channels). Medium MitM (#5 - network interception in targeted environments). Medium Physical (#8 - OT attacks causing real-world physical impact: power outages, industrial disruption). Targets critical infrastructure (energy, water, transportation), defense, media, civil society. Primarily Ukraine and NATO-aligned nations. Notable incidents: Ukraine power grid 2015/2016, NotPetya 2017, Olympic Destroyer 2018, ongoing Ukraine war operations.",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "Mandiant 'APT44: Unearthing Sandworm' (April 2024)",
+        "CISA ICS-CERT Alert IR-ALERT-H-16-056-01",
+        "SANS ICS 'Analysis of the Cyber Attack on the Ukrainian Power Grid' (2016)"
+      ],
+      "sequence": "#09 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "Russia",
+      "motivation": [
+        "Espionage",
+        "Sabotage / Destruction"
+      ],
+      "target_sectors": [
+        "Critical Infrastructure",
+        "Energy & Utilities",
+        "Government",
+        "Aerospace & Defense",
+        "Media & Entertainment",
+        "Civil Society & NGOs",
+        "Telecommunications",
+        "Transportation & Logistics"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "UKRAINE-POWER-GRID-2015",
+          "notation": "#09 ||[human][@External→@PowerCompany]|| →[Δt=instant] #07 →[Δt=~6mo] #04 →[Δt=~2h] #01 →[Δt=~4h] #01 + [DRE: A] →[Δt=instant] #07 + [DRE: A]",
+          "cluster_sequence": [9, 7, 4, 1, 1, 7],
+          "dre_outcomes": { "C": 0, "I": 0, "A": 2, "Ac": 0 }
+        },
+        {
+          "incident_id": "NOTPETYA-2017",
+          "notation": "#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #07 + [DRE: A]",
+          "cluster_sequence": [10, 7],
+          "dre_outcomes": { "C": 0, "I": 0, "A": 1, "Ac": 0 }
+        }
+      ]
     },
-    "notes": "Russia-nexus (GRU Unit 74455). Formally designated APT44 by Mandiant in April 2024. Champion Malware use (#7 - wipers: NotPetya, HermeticWiper, CaddyWiper, CrashOverride/Industroyer, DARKCRYSTALRAT, trojanized software). High Exploiting Server (#2 - exploitation of unpatched internet-facing appliances, OT/ICS systems). High Abuse of Functions (#1 - Living-off-the-Land techniques, OT/SCADA manipulation for physical impact). High Identity Theft (#4 - credential phishing, lateral movement via stolen creds). High Social Engineering (#9 - spear phishing, watering holes, trojanized software via forums). High Flooding Attack (#6 - DDoS as part of combined operations). High Supply Chain (#10 - trojanized software distribution, compromised update channels). Medium MitM (#5 - network interception in targeted environments). Medium Physical (#8 - OT attacks causing real-world physical impact: power outages, industrial disruption). Targets critical infrastructure (energy, water, transportation), defense, media, civil society. Primarily Ukraine and NATO-aligned nations. Notable incidents: Ukraine power grid 2015/2016, NotPetya 2017, Olympic Destroyer 2018, ongoing Ukraine war operations.",
-    "origin_country": "Russia",
-    "motivation": [
-      "Espionage",
-      "Sabotage / Destruction"
-    ],
-    "target_sectors": [
-      "Critical Infrastructure",
-      "Energy & Utilities",
-      "Government",
-      "Aerospace & Defense",
-      "Media & Entertainment",
-      "Civil Society & NGOs",
-      "Telecommunications",
-      "Transportation & Logistics"
-    ]
-  },
-  {
-    "threat_actor": "APT45 (Andariel, Silent Chollima)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 3,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 2
+    {
+      "threat_actor": "APT45 (Andariel, Silent Chollima)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 2
+      },
+      "notes": "North Korea-nexus (DPRK military intelligence). Formally designated APT45 by Mandiant in July 2024. Champion Malware use (#7 - Dtrack/Valefor/Preft backdoor, SHATTEREDGLASS wiper, Maui ransomware, custom families with unique encoding and code reuse). High Exploiting Server (#2 - targeting internet-facing applications, particularly in healthcare and energy sectors). High Social Engineering (#9 - spear phishing with military/defense lures). Medium Client Exploits (#3 - leveraging public exploits). Medium Identity Theft (#4 - credential expansion for lateral movement). Medium Abuse of Functions (#1 - post-compromise data staging and exfiltration). Medium Supply Chain (#10 - Kudankulam NPP India 2019 intrusion via contractor networks). Active since ~2009, expanded from pure espionage to financially-motivated ransomware. Targets defense industries, government agencies, healthcare, energy, financial institutions, and nuclear facilities.",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "Mandiant 'APT45: North Korea's Digital Military Machine' (July 2024)",
+        "CISA Advisory AA22-187A (July 2022)"
+      ],
+      "sequence": "#09 → #02 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Espionage",
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Aerospace & Defense",
+        "Government",
+        "Healthcare",
+        "Energy & Utilities",
+        "Financial Services",
+        "Nuclear"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "MAUI-RANSOMWARE-HEALTHCARE-2022",
+          "notation": "#02 →[Δt=~7d] #07 →[Δt=~3d] #04 →[Δt=~1d] #01 + [DRE: C] →[Δt=~2h] #07 + [DRE: A]",
+          "cluster_sequence": [2, 7, 4, 1, 7],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 1, "Ac": 0 }
+        }
+      ]
     },
-    "notes": "North Korea-nexus (DPRK military intelligence). Formally designated APT45 by Mandiant in July 2024. Champion Malware use (#7 - Dtrack/Valefor/Preft backdoor, SHATTEREDGLASS wiper, Maui ransomware, custom families with unique encoding and code reuse). High Exploiting Server (#2 - targeting internet-facing applications, particularly in healthcare and energy sectors). High Social Engineering (#9 - spear phishing with military/defense lures). Medium Client Exploits (#3 - leveraging public exploits). Medium Identity Theft (#4 - credential expansion for lateral movement). Medium Abuse of Functions (#1 - post-compromise data staging and exfiltration). Medium Supply Chain (#10 - Kudankulam NPP India 2019 intrusion via contractor networks). Active since ~2009, expanded from pure espionage to financially-motivated ransomware. Targets defense industries, government agencies, healthcare, energy, financial institutions, and nuclear facilities.",
-    "origin_country": "North Korea",
-    "motivation": [
-      "Espionage",
-      "Financial Gain"
-    ],
-    "target_sectors": [
-      "Aerospace & Defense",
-      "Government",
-      "Healthcare",
-      "Energy & Utilities",
-      "Financial Services",
-      "Nuclear"
-    ]
-  },
-  {
-    "threat_actor": "APT38",
-    "tlctc_scores": {
-      "TLCTC-01.00": 3,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 1,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT38",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "North Korean financially motivated (large heists). Champion Malware use (#7 - Custom backdoors, tunnelers, data miners, destructive wipers). High Abuse of Functions (#1 - Long-term access maintenance, understanding network/permissions, destructive actions). Medium Identity Theft [#4] assumed for lateral movement/access. Initial access vector not detailed [#2, #3, #9 Low]. Distinct TTPs from Lazarus.",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "SWIFT / BAE Systems 'Bangladesh Bank Heist' analysis (2016)"
+      ],
+      "sequence": "#07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Financial Services"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "BANGLADESH-BANK-HEIST-2016",
+          "notation": "#09 ||[human][@External→@Bank]|| →[Δt=instant] #07 →[Δt=~6mo] #04 →[Δt=~30d] #01 + [DRE: C, I]",
+          "cluster_sequence": [9, 7, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 1, "A": 0, "Ac": 0 }
+        }
+      ]
     },
-    "notes": "North Korean financially motivated (large heists). Champion Malware use (#7 - Custom backdoors, tunnelers, data miners, destructive wipers). High Abuse of Functions (#1 - Long-term access maintenance, understanding network/permissions, destructive actions). Medium Identity Theft [#4] assumed for lateral movement/access. Initial access vector not detailed [#2, #3, #9 Low]. Distinct TTPs from Lazarus.",
-    "origin_country": "North Korea",
-    "motivation": [
-      "Financial Gain"
-    ],
-    "target_sectors": [
-      "Financial Services"
-    ]
-  },
-  {
-    "threat_actor": "APT37 (Scarcruft, Group123)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 2,
-      "TLCTC-03.00": 4,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT37 (Scarcruft, Group123)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 4,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "North Korean state interests (espionage). Champion Client-Side Exploits (#3 - Access to zero-day vulns like CVE-2018-0802, frequent HWP/Flash exploits). High Malware use (#7 - Diverse suite, custom espionage tools, destructive wipers). High Social Engineering (#9 - Tailored tactics, torrent distribution). Medium Server Exploits (#2 - Strategic web compromises mentioned). Other vectors not detailed [#1, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense",
+        "Manufacturing",
+        "Healthcare"
+      ],
+      "observed_paths": []
     },
-    "notes": "North Korean state interests (espionage). Champion Client-Side Exploits (#3 - Access to zero-day vulns like CVE-2018-0802, frequent HWP/Flash exploits). High Malware use (#7 - Diverse suite, custom espionage tools, destructive wipers). High Social Engineering (#9 - Tailored tactics, torrent distribution). Medium Server Exploits (#2 - Strategic web compromises mentioned). Other vectors not detailed [#1, #4 Low].",
-    "origin_country": "North Korea",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense",
-      "Manufacturing",
-      "Healthcare"
-    ]
-  },
-  {
-    "threat_actor": "APT42 (Charming Kitten, Mint Sandstorm)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 3,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 4,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT42 (Charming Kitten, Mint Sandstorm)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Iranian state-sponsored espionage/surveillance. Champion Social Engineering (#9 - Builds trust/rapport, targets specific individuals). High Malware use (#7 - Mobile malware focus for tracking/recording/SMS theft, multiple families). High Identity Theft (#4 - Focus on accessing personal/corporate email accounts). Medium Abuse of Functions [#1] via mobile malware capabilities. Exploits not emphasized [#2, #3 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #04 → #07 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "Iran",
+      "motivation": [
+        "Espionage",
+        "Surveillance"
+      ],
+      "target_sectors": [
+        "Government",
+        "Civil Society & NGOs",
+        "Media & Entertainment",
+        "Education",
+        "Legal & Professional Services",
+        "Pharma & Biotech"
+      ],
+      "observed_paths": []
     },
-    "notes": "Iranian state-sponsored espionage/surveillance. Champion Social Engineering (#9 - Builds trust/rapport, targets specific individuals). High Malware use (#7 - Mobile malware focus for tracking/recording/SMS theft, multiple families). High Identity Theft (#4 - Focus on accessing personal/corporate email accounts). Medium Abuse of Functions [#1] via mobile malware capabilities. Exploits not emphasized [#2, #3 Low].",
-    "origin_country": "Iran",
-    "motivation": [
-      "Espionage",
-      "Surveillance"
-    ],
-    "target_sectors": [
-      "Government",
-      "Civil Society & NGOs",
-      "Media & Entertainment",
-      "Education",
-      "Legal & Professional Services",
-      "Pharma & Biotech"
-    ]
-  },
-  {
-    "threat_actor": "APT39",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 3,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 2,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT39",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Iranian state-sponsored (telecoms/travel focus, likely surveillance). High Malware use (#7 - SEAWEED, CACHEMONEY, POWBAT). High Exploiting Server (#2 - Exploits vulnerable web servers, installs web shells ANTAK/ASPXSPY). High Social Engineering (#9 - Spear phishing with attachments/links, uses compromised accounts, masquerades domains). Medium Identity Theft (#4 - Uses stolen creds for OWA). Medium Abuse of Functions [#1] via web shells. No vuln exploits observed [#3 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #02 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "Iran",
+      "motivation": [
+        "Espionage",
+        "Surveillance"
+      ],
+      "target_sectors": [
+        "Telecommunications",
+        "Government",
+        "Retail & Hospitality"
+      ],
+      "observed_paths": []
     },
-    "notes": "Iranian state-sponsored (telecoms/travel focus, likely surveillance). High Malware use (#7 - SEAWEED, CACHEMONEY, POWBAT). High Exploiting Server (#2 - Exploits vulnerable web servers, installs web shells ANTAK/ASPXSPY). High Social Engineering (#9 - Spear phishing with attachments/links, uses compromised accounts, masquerades domains). Medium Identity Theft (#4 - Uses stolen creds for OWA). Medium Abuse of Functions [#1] via web shells. No vuln exploits observed [#3 Low].",
-    "origin_country": "Iran",
-    "motivation": [
-      "Espionage",
-      "Surveillance"
-    ],
-    "target_sectors": [
-      "Telecommunications",
-      "Government",
-      "Retail & Hospitality"
-    ]
-  },
-  {
-    "threat_actor": "APT34",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 3,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 2,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT34",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Iranian state-sponsored espionage. High Malware use (#7 - POWBAT, POWRUNER, BONDUPDATER). High Client Exploit (#3 - Leveraged Office vuln CVE-2017-11882). Medium Social Engineering [#9] implied by exploit delivery mechanism. Focus on reconnaissance. Other vectors not detailed [#1, #2, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "Iran",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Financial Services",
+        "Energy & Utilities",
+        "Telecommunications"
+      ],
+      "observed_paths": []
     },
-    "notes": "Iranian state-sponsored espionage. High Malware use (#7 - POWBAT, POWRUNER, BONDUPDATER). High Client Exploit (#3 - Leveraged Office vuln CVE-2017-11882). Medium Social Engineering [#9] implied by exploit delivery mechanism. Focus on reconnaissance. Other vectors not detailed [#1, #2, #4 Low].",
-    "origin_country": "Iran",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Financial Services",
-      "Energy & Utilities",
-      "Telecommunications"
-    ]
-  },
-  {
-    "threat_actor": "APT33",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT33",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Iranian state-sponsored (aerospace/energy focus). High Malware use (#7 - SHAPESHIFT, DROPSHOT, TURNEDUP, wipers implied by association though not listed here). High Social Engineering (#9 - Spear phishing with recruitment lures, links to malicious .hta files). Medium Client Exploit [#3] implied by .hta file delivery. Other vectors not detailed [#1, #2, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "Iran",
+      "motivation": [
+        "Espionage",
+        "Sabotage / Destruction"
+      ],
+      "target_sectors": [
+        "Aerospace & Defense",
+        "Energy & Utilities",
+        "Government"
+      ],
+      "observed_paths": []
     },
-    "notes": "Iranian state-sponsored (aerospace/energy focus). High Malware use (#7 - SHAPESHIFT, DROPSHOT, TURNEDUP, wipers implied by association though not listed here). High Social Engineering (#9 - Spear phishing with recruitment lures, links to malicious .hta files). Medium Client Exploit [#3] implied by .hta file delivery. Other vectors not detailed [#1, #2, #4 Low].",
-    "origin_country": "Iran",
-    "motivation": [
-      "Espionage",
-      "Sabotage / Destruction"
-    ],
-    "target_sectors": [
-      "Aerospace & Defense",
-      "Energy & Utilities",
-      "Government"
-    ]
-  },
-  {
-    "threat_actor": "APT28 (Fancy Bear, Sednit, Sofacy, STRONTIUM, Tsar Team)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 3,
-      "TLCTC-02.00": 3,
-      "TLCTC-03.00": 3,
-      "TLCTC-04.00": 4,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 2,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 4,
-      "TLCTC-10.00": 2
+    {
+      "threat_actor": "APT28 (Fancy Bear, Sednit, Sofacy, STRONTIUM, Tsar Team)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 2,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 2
+      },
+      "notes": "Russian GRU actor known for espionage AND disruptive operations. Champion in Spear-phishing (#9), Credential Harvesting (#4), and Malware use (#7 custom tools). High exploit use (#2/#3 server & client-side). High Abuse of Functions (#1). Also known to conduct DDoS attacks (#6 Medium) against various targets, often political or geopolitical. Potential for Supply Chain attacks (#10 Medium). [Score for #6 updated based on broader threat intelligence beyond initial text].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "ESET Research 'LoJax: First UEFI rootkit found in the wild' (September 2018)",
+        "CrowdStrike 'Bears in the Midst: Intrusion into the DNC' (June 2016)"
+      ],
+      "sequence": "#09 → #04 → #02 → #07 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "Russia",
+      "motivation": [
+        "Espionage",
+        "Information Operations"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense",
+        "Media & Entertainment",
+        "Energy & Utilities",
+        "Civil Society & NGOs"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "LOJAX-UEFI-ROOTKIT-2018",
+          "notation": "#09 ||[human][@External→@GovAgency]|| →[Δt=~2d] #07 →[Δt=~1d] #01 →[Δt=instant] #07 + [DRE: I] →[Δt=~3mo] #01 + [DRE: C]",
+          "cluster_sequence": [9, 7, 1, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 1, "A": 0, "Ac": 0 }
+        },
+        {
+          "incident_id": "DNC-HACK-2016",
+          "notation": "#09 ||[human][@External→@DNC]|| →[Δt=~1d] #07 →[Δt=~7d] #04 →[Δt=~30d] #01 + [DRE: C]",
+          "cluster_sequence": [9, 7, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
     },
-    "notes": "Russian GRU actor known for espionage AND disruptive operations. Champion in Spear-phishing (#9), Credential Harvesting (#4), and Malware use (#7 custom tools). High exploit use (#2/#3 server & client-side). High Abuse of Functions (#1). Also known to conduct DDoS attacks (#6 Medium) against various targets, often political or geopolitical. Potential for Supply Chain attacks (#10 Medium). [Score for #6 updated based on broader threat intelligence beyond initial text].",
-    "origin_country": "Russia",
-    "motivation": [
-      "Espionage",
-      "Information Operations"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense",
-      "Media & Entertainment",
-      "Energy & Utilities",
-      "Civil Society & NGOs"
-    ]
-  },
-  {
-    "threat_actor": "APT29 (Cozy Bear, Nobelium)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 3,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 4
+    {
+      "threat_actor": "APT29 (Cozy Bear, Nobelium)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 4
+      },
+      "notes": "Sophisticated Russian state-sponsored group. Champion Malware use (#7 - Range of custom tools like COZYCAR, SUNBURST, BEACON). Champion Supply Chain compromise (#10 - Explicitly mentioned). High Social Engineering (#9 - Spear phishing, can be generic). High Abuse of Functions (#1 - High OPSEC, evades detection, extensive C2 infra possibly via compromised services). Medium Client Exploits [#3] implied by spear phishing delivery. Server exploits not highlighted [#2 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "CISA Alert AA20-352A (December 2020)",
+        "Microsoft MSRC SolarWinds analysis",
+        "FireEye/Mandiant UNC2452 report"
+      ],
+      "sequence": "#10 → #07 → #04 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "Russia",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Technology",
+        "Healthcare",
+        "Energy & Utilities",
+        "Financial Services"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "SOLARWINDS-SUNBURST-2020",
+          "notation": "#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #07 →[Δt=~14d] #04 →[Δt=~2h] #01 + [DRE: C]",
+          "cluster_sequence": [10, 7, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
     },
-    "notes": "Sophisticated Russian state-sponsored group. Champion Malware use (#7 - Range of custom tools like COZYCAR, SUNBURST, BEACON). Champion Supply Chain compromise (#10 - Explicitly mentioned). High Social Engineering (#9 - Spear phishing, can be generic). High Abuse of Functions (#1 - High OPSEC, evades detection, extensive C2 infra possibly via compromised services). Medium Client Exploits [#3] implied by spear phishing delivery. Server exploits not highlighted [#2 Low].",
-    "origin_country": "Russia",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Technology",
-      "Healthcare",
-      "Energy & Utilities",
-      "Financial Services"
-    ]
-  },
-  {
-    "threat_actor": "APT36",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 2,
-      "TLCTC-03.00": 3,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 4,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT36",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Pakistan linked, targets India/regional interests. Champion Social Engineering (#9 - Spear phishing with military/political themes, unique watering hole technique using SE). High Malware use (#7 - Multiple families listed). High Client Exploit (#3 - Malicious Office docs leveraging macros/known exploits). Medium Server Exploit (#2) implied by watering hole. Other vectors not detailed [#1, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "Pakistan",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Aerospace & Defense"
+      ],
+      "observed_paths": []
     },
-    "notes": "Pakistan linked, targets India/regional interests. Champion Social Engineering (#9 - Spear phishing with military/political themes, unique watering hole technique using SE). High Malware use (#7 - Multiple families listed). High Client Exploit (#3 - Malicious Office docs leveraging macros/known exploits). Medium Server Exploit (#2) implied by watering hole. Other vectors not detailed [#1, #4 Low].",
-    "origin_country": "Pakistan",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Aerospace & Defense"
-    ]
-  },
-  {
-    "threat_actor": "APT35 (Newscaster Team)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 2,
-      "TLCTC-02.00": 2,
-      "TLCTC-03.00": 1,
-      "TLCTC-04.00": 3,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 2,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 4,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT35 (Newscaster Team)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Iranian state-sponsored espionage. Champion Social Engineering (#9 - Complex, long-term efforts, spear phishing lures: healthcare, jobs, pw policies). High Identity Theft (#4 - Uses compromised accounts, credential harvesting, password spray attacks). Medium Malware use (#7 - Relies on public webshells/pentest tools, some custom). Medium Exploiting Server (#2 - Strategic web compromises, targets external web apps). Medium Abuse of Functions (#1 - Uses public tools). Client exploits not emphasized [#3 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #04 → #02 → #07 → #01",
+      "last_updated": "2026-03-22",
+      "origin_country": "Iran",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Healthcare",
+        "Aerospace & Defense",
+        "Energy & Utilities",
+        "Civil Society & NGOs"
+      ],
+      "observed_paths": []
     },
-    "notes": "Iranian state-sponsored espionage. Champion Social Engineering (#9 - Complex, long-term efforts, spear phishing lures: healthcare, jobs, pw policies). High Identity Theft (#4 - Uses compromised accounts, credential harvesting, password spray attacks). Medium Malware use (#7 - Relies on public webshells/pentest tools, some custom). Medium Exploiting Server (#2 - Strategic web compromises, targets external web apps). Medium Abuse of Functions (#1 - Uses public tools). Client exploits not emphasized [#3 Low].",
-    "origin_country": "Iran",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Healthcare",
-      "Aerospace & Defense",
-      "Energy & Utilities",
-      "Civil Society & NGOs"
-    ]
-  },
-  {
-    "threat_actor": "APT32 (OceanLotus Group)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 1,
-      "TLCTC-02.00": 1,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 1,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 1,
-      "TLCTC-07.00": 3,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
+    {
+      "threat_actor": "APT32 (OceanLotus Group)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Vietnam linked, targets foreign companies investing in Vietnam. High Malware use (#7 - SOUNDBITE, WINDSHIELD etc., BEACON). High Social Engineering (#9 - Spear phishing via email (Gmail noted), uses ActiveMime files requiring macro enabling). Medium Client Exploit (#3) implied by malicious attachments/macros. Other vectors not detailed [#1, #2, #4 Low].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "Vietnam",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Manufacturing",
+        "Technology",
+        "Media & Entertainment",
+        "Retail & Hospitality"
+      ],
+      "observed_paths": []
     },
-    "notes": "Vietnam linked, targets foreign companies investing in Vietnam. High Malware use (#7 - SOUNDBITE, WINDSHIELD etc., BEACON). High Social Engineering (#9 - Spear phishing via email (Gmail noted), uses ActiveMime files requiring macro enabling). Medium Client Exploit (#3) implied by malicious attachments/macros. Other vectors not detailed [#1, #2, #4 Low].",
-    "origin_country": "Vietnam",
-    "motivation": [
-      "Espionage"
-    ],
-    "target_sectors": [
-      "Government",
-      "Manufacturing",
-      "Technology",
-      "Media & Entertainment",
-      "Retail & Hospitality"
-    ]
-  },
-  {
-    "threat_actor": "UNC1878 (linked to Ryuk/Conti)",
-    "tlctc_scores": {
-      "TLCTC-01.00": 3,
-      "TLCTC-02.00": 3,
-      "TLCTC-03.00": 2,
-      "TLCTC-04.00": 3,
-      "TLCTC-05.00": 1,
-      "TLCTC-06.00": 2,
-      "TLCTC-07.00": 4,
-      "TLCTC-08.00": 1,
-      "TLCTC-09.00": 3,
-      "TLCTC-10.00": 1
-    },
-    "notes": "Financially motivated actor deploying Ryuk/Conti ransomware. Champion Malware capability (#7). High initial access via Social Engineering (#9). High exploitation of Server vulnerabilities (#2) and heavy use of Credential Theft tools (#4). High Abuse of Functions (#1) for lateral movement/persistence. Known to leverage DDoS (#6 Medium) as an additional extortion tactic within the broader ransomware ecosystem. [Score for #6 updated based on broader threat intelligence beyond initial text].",
-    "origin_country": "Russia",
-    "motivation": [
-      "Financial Gain"
-    ],
-    "target_sectors": [
-      "Healthcare",
-      "Government",
-      "Manufacturing",
-      "Financial Services",
-      "Technology",
-      "Education"
-    ]
-  }
-]
+    {
+      "threat_actor": "UNC1878 (linked to Ryuk/Conti)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 2,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Financially motivated actor deploying Ryuk/Conti ransomware. Champion Malware capability (#7). High initial access via Social Engineering (#9). High exploitation of Server vulnerabilities (#2) and heavy use of Credential Theft tools (#4). High Abuse of Functions (#1) for lateral movement/persistence. Known to leverage DDoS (#6 Medium) as an additional extortion tactic within the broader ransomware ecosystem. [Score for #6 updated based on broader threat intelligence beyond initial text].",
+      "sources": [
+        "Google Threat Intelligence (Mandiant APT Groups)",
+        "Mandiant incident report — Colonial Pipeline (May 2021)",
+        "CISA Alert AA21-131A"
+      ],
+      "sequence": "#09 → #04 → #02 → #01 → #07",
+      "last_updated": "2026-03-22",
+      "origin_country": "Russia",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Healthcare",
+        "Government",
+        "Manufacturing",
+        "Financial Services",
+        "Technology",
+        "Education"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "COLONIAL-PIPELINE-2021",
+          "notation": "#04 →[Δt=~7d] #01 →[Δt=~2h] #01 + [DRE: C] →[Δt=~4h] #07 + [DRE: A]",
+          "cluster_sequence": [4, 1, 1, 7],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 1, "Ac": 0 }
+        }
+      ]
+    }
+  ]
+}

@@ -340,12 +340,17 @@ tlctc/
 │   │   ├── decision-tree.md                  # Classification methodology
 │   │   └── examples/
 │   │       └── soc-to-risk-walkthrough.md    # Worked example: SOC → risk register
-│   └── mitre-cwe/                            # MITRE CWE → TLCTC (experimental)
-│       ├── README.md                         # Mapping documentation & verdict system
-│       ├── tlctc-cwe.json                    # 987 CWE mappings with rationale & CVE refs
-│       ├── decision-tree.md                  # Classification methodology
+│   ├── mitre-cwe/                            # MITRE CWE → TLCTC (experimental)
+│   │   ├── README.md                         # Mapping documentation & verdict system
+│   │   ├── tlctc-cwe.json                    # 987 CWE mappings with rationale & CVE refs
+│   │   ├── decision-tree.md                  # Classification methodology
+│   │   └── examples/
+│   │       └── cwe-to-control-walkthrough.md # Worked example: vuln findings → controls
+│   └── npm-supply-chain/                     # npm supply chain patterns → TLCTC
+│       ├── README.md                         # Pattern documentation & methodology
+│       ├── tlctc-npm-patterns.json           # Supply chain attack patterns mapping
 │       └── examples/
-│           └── cwe-to-control-walkthrough.md # Worked example: vuln findings → controls
+│           └── incident-to-control-walkthrough.md # Worked example: incident → controls
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
@@ -355,13 +360,20 @@ tlctc/
 │   │   └── example-registry.json             # Example org-specific registry
 │   └── layer-3/                              # Attack Path Instances (Dynamic)
 │       ├── tlctc-attack-path.schema.json     # Schema for attack path instances
-│       └── examples/                         # Example incident mappings
-│           └── solarwinds-2020.json
+│       └── examples/
+│           ├── solarwinds-2020.json          # SolarWinds supply chain incident
+│           └── chalk-debug-2025.json         # npm phishing campaign incident
 ├── documentation/
-│   ├── TLCTC-v2.0-whitepaper.pdf             # Canonical V2.0 White Paper
-│   ├── TLCTC-glossary-v2.0.pdf               # Comprehensive Definitions
+│   ├── tlctc-v2.0-whitepaper.md              # Canonical V2.0 White Paper
+│   ├── tlctc-glossary.md                     # Comprehensive Definitions
+│   ├── npm-supply-chain-blog-final.md        # npm supply chain threat analysis
 │   ├── json-architecture.pdf                 # JSON Architecture Specification
-│   └── why-exactly-ten.pdf                   # Framework Architecture Rationale
+│   ├── why-exactly-ten.pdf                   # Framework Architecture Rationale
+│   └── images/                               # Diagrams and visual assets
+│       ├── tlctc-bowtie-anchor-diagram.svg
+│       ├── tlctc-cyber-bow-tie.svg
+│       ├── tlctc-dual-layer-bowtie-overview.svg
+│       └── tlctc-dual-layer-naming.svg
 ├── tools/
 │   ├── README.md                             # Tool index & JSON format reference
 │   ├── threat-modeling.html                  # SDLC threat modeling & architecture analysis
@@ -369,17 +381,59 @@ tlctc/
 │   ├── actor-profile-designer.html           # Threat actor capability profiling & comparison
 │   ├── radar-tlctc-app.html                  # Interactive threat radar visualization & assessment
 │   └── examples/                             # Starter templates & real-world example datasets
+│       ├── template-threat-model.json        # Blank threat model starter
+│       ├── template-attack-path.json         # Blank attack path starter
+│       ├── template-actor-profile.json       # Blank actor profile starter
+│       ├── CTA-CrowdStrike2025.json          # CrowdStrike 2025 Global Threat Report actors
+│       ├── CTA-Google-APT-Groups.json        # Google APT group profiles
+│       ├── CTA-NCSC-SituationRadar-2024-2025.json  # NCSC Situation Radar threat data
+│       ├── CTA-NCSC-TAC-Profiles.json        # NCSC threat actor capability profiles
+│       ├── ncsc-google-2024-JB-bericht*.json # NCSC/Google 2024 annual report datasets (5 files)
+│       └── npm-*.json                        # npm supply chain incident examples (3 files)
 ├── glossary/
 │   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
 │   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, v2.1 extensions
 ├── examples/
 │   └── agentic-ai/                           # Analysis of AI semantics in Cyber Threats
-│       ├── agentic-attack-paths.json         # 9 attack paths (Paths A–I) from Paper 1
-│       ├── agentic-consequence-chains.json   # Consequence chain examples from Paper 2
+│       ├── README.md                         # Overview and methodology
+│       ├── agentic-consequence-chains.json   # Consequence chain examples
 │       ├── agentic-tool-profiles.json        # 5 tool category risk profiles
-│       └── agentic-irreversibility-matrix.json # Irreversibility windows per consequence type
-├── attack-paths/                             # Community-contributed incident analyses
-│   └── CONTRIBUTING.md
+│       ├── agentic-irreversibility-matrix.json # Irreversibility windows per consequence type
+│       └── attack-paths/                     # 10 individual agentic AI attack paths (A–J)
+│           ├── path-A-direct-prompt-injection.json
+│           ├── path-B-indirect-prompt-injection.json
+│           ├── path-C-social-engineering-operator.json
+│           ├── path-D-credential-access.json
+│           ├── path-E-agent-as-lolbin.json
+│           ├── path-F-runtime-exploit.json
+│           ├── path-G-rogue-agent-install.json
+│           ├── path-H-supply-chain-marketplace.json
+│           ├── path-I-apt-in-a-box.json
+│           └── path-J-llm-weaponization-supply-chain.json
+├── attack-paths/                             # Community-contributed incident analyses (22 incidents)
+│   ├── CONTRIBUTING.md
+│   ├── agent-btz-usb-2008.json
+│   ├── capital-one-2019.json
+│   ├── chalk-debug-phishing-2025.json
+│   ├── change-healthcare-2024.json
+│   ├── cloudflare-http-ddos-2023.json
+│   ├── colonial-pipeline-2021.json
+│   ├── credential-stuffing-2020.json
+│   ├── darkhotel-wifi-2014.json
+│   ├── lockbit-byovd-2023.json
+│   ├── lojax-uefi-2018.json
+│   ├── mirai-botnet-2016.json
+│   ├── okta-lapsus-2022.json
+│   ├── pegasus-forcedentry-2021.json
+│   ├── s1ngularity-nx-2025.json
+│   ├── shai-hulud-worm-2025.json
+│   ├── tesla-insider-2023.json
+│   ├── tesla-k8s-cryptojacking-2018.json
+│   ├── twitter-hack-2020.json
+│   ├── uber-breach-2016.json
+│   ├── ubiquiti-bec-2015.json
+│   ├── ukraine-power-grid-2015.json
+│   └── watering-hole-iphonedevsdk-2013.json
 ├── v2.1-Proposals/                           # v2.1 extension specification
 │   ├── TLCTC_v2.1_Full_Extension_Spec.pdf    # Full v2.1 boundary extension spec
 │   └── TLCTC_v2.1_Full_Extension_Spec.docx   # Editable source

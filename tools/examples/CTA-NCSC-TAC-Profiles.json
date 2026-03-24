@@ -1,0 +1,223 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-03-23T00:00:00Z",
+  "actors": [
+    {
+      "threat_actor": "TAC01 — Ransomware / Data Extortion",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 2
+      },
+      "notes": "NCSC Threat Level: MEDIUM | Trend: MEDIUM. Composite profile of all ransomware and data extortion activity observed in Switzerland. Ransomware deployment is the defining action [#7 Champion] — from Conti-lineage groups (Akira, Black Basta, BlackSuit) to rising RaaS operators (RansomHub, Qilin) and vulnerability-only actors (Ghost/Cring, Cl0p). Server-side exploitation of VPN/edge devices for initial access [#2 High] alongside phishing [#9 High]. Credential abuse and brute-forcing (BRUTED framework) for lateral movement [#4 High]. EDR evasion via BYOVD (EDRKillShifter), data exfiltration with legitimate tools [#1 High]. Some supply chain amplification — CDK Global cascading to 15K+ dealerships, Space Bears via third-party contractors [#10 Medium]. Post-2024 landscape fragmented after LockBit/ALPHV takedowns, with RansomHub and Akira filling the vacuum. Novel techniques: Codefinger weaponizing AWS SSE-C (pure #1, no #7), FunkSec using AI-assisted development. Double/triple extortion is standard. At least 17 Swiss companies hit by 8Base/Phobos alone (Apr 2023–Oct 2024).",
+      "sources": [
+        "NCSC Situation Radar June 2024 — TAC01 (12 articles)",
+        "NCSC Situation Radar January 2025 — TAC01 (7 articles)",
+        "NCSC Situation Radar February 2025 — TAC01 (8 articles)",
+        "NCSC Situation Radar March 2025 — TAC01 (7 articles)"
+      ],
+      "sequence": "#09 or #02 → #04 → #01 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Various (Russia-dominant, also China, Unknown)",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Healthcare", "Manufacturing", "Financial Services", "IT & Cloud Services", "Government", "Education", "Services"]
+    },
+    {
+      "threat_actor": "TAC02 — Initial Access (Client/Server)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 3
+      },
+      "notes": "NCSC Threat Level: MEDIUM | Trend: MEDIUM. Composite profile of all initial access techniques — the enabler layer that feeds into TAC01, TAC07, and others. Exploitation of public-facing applications and misconfigurations [#2 High] — FortiGate (Belsen Group 15K dump), Ivanti Connect Secure (UNC5221), Juniper routers (UNC3886). Client-side exploitation via drive-by downloads, ClickFix/Fake Captcha, fake browser updates (SocGholish, ClearFake, LummaStealer) [#3 High]. Social engineering delivery — copy-paste PowerShell lures (TA571), fake Reddit sites, malicious GitHub releases [#9 High]. Malware delivery of infostealers, RATs, backdoors [#7 High]. Supply chain compromises — Polyfill.io CDN affecting 110K+ sites, trojanized installers (Conceptworld), malicious npm packages [#10 High]. Valid account abuse via default/phished credentials [#4 Medium]. Platform abuse for hosting — Google/Bing ads (malvertising), cloud services [#1 Medium]. LummaStealer is the most actively distributed infostealer in Switzerland (Jan–Feb 2025). Banshee Stealer used Apple XProtect's own encryption algorithm to evade detection for 2+ months.",
+      "sources": [
+        "NCSC Situation Radar June 2024 — TAC02 (10 articles)",
+        "NCSC Situation Radar January 2025 — TAC02 (8 articles)",
+        "NCSC Situation Radar February 2025 — TAC02 (5 articles)",
+        "NCSC Situation Radar March 2025 — TAC02 (7 articles)"
+      ],
+      "sequence": "#09 or #02 or #10 → #03 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Various",
+      "motivation": ["Financial Gain", "Espionage"],
+      "target_sectors": ["Various"]
+    },
+    {
+      "threat_actor": "TAC03 — DDoS",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 4,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "NCSC Threat Level: LOW | Trend: LOW. Composite profile of all DDoS activity targeting Switzerland. Flooding attacks are the defining action [#6 Champion] — ranging from hacktivist campaigns (NoName057(16) DDoSia botnet, RooTDoS) to criminal ransom DDoS. Botnet infrastructure built via IoT/router exploitation [#2 Medium] — Mirai/Gayfemboy exploiting CVE-2024-12856 zero-day in Four-Faith industrial routers, Murdoc Botnet targeting AVTECH cameras and Huawei routers [#7 Medium]. High-intensity short-burst attacks (100+ Gbps, 10-30 seconds). Key events: Swiss government targeted during Ukraine Peace Summit (June 2024), WEF Davos (January 2025). RooTDoS disrupted Swiss Federal Administration ~45 min and Migros Bank services (January 2025, motivated by burqa ban). HackNeT peaked at 115M requests/hour during EU elections. Only limited, short-term operational effects observed — recommended mitigations proved effective.",
+      "sources": [
+        "NCSC Situation Radar June 2024 — TAC03 (3 articles)",
+        "NCSC Situation Radar January 2025 — TAC03 (5 articles)",
+        "NCSC Situation Radar February 2025 — TAC03 (1 article)",
+        "NCSC Situation Radar March 2025 — TAC03 (2 articles)"
+      ],
+      "sequence": "#02 → #07 → #06",
+      "last_updated": "2026-03-23",
+      "origin_country": "Various (Russia-dominant hacktivists, pro-Palestine groups)",
+      "motivation": ["Information Operations", "Financial Gain"],
+      "target_sectors": ["Government", "Financial Services", "Telecommunications"]
+    },
+    {
+      "threat_actor": "TAC04 — Phishing (Data)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 3,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "NCSC Threat Level: LOW | Trend: LOW. Composite profile of credential and data phishing — explicitly excludes malware distribution (that belongs to TAC02). Social engineering is the defining method [#9 Champion] — email phishing, vishing, smishing, QR code phishing (quishing), both targeted (spearphishing) and mass campaigns. Credential harvesting is the defining outcome [#4 Champion] — including 2FA/MFA tokens, OTPs, PhotoTANs. Adversary-in-The-Middle (AiTM) for real-time MFA bypass is a major trend [#5 High] — ONNX PhaaS platform intercepting 2FA codes, V3B kit targeting 54+ EU financial institutions with real-time OTP interception. Top phished brands in Switzerland include DHL, Swiss Post, SBB, Swisscom, Microsoft. Darcula v3 phishing kit enables non-technical criminals to clone any brand website. Device code phishing (APT29/Storm-2372) represents the state-sponsored end of this spectrum. SIM swapping as complementary technique. Cash-out via money mule networks.",
+      "sources": [
+        "NCSC Situation Radar June 2024 — TAC04 (9 articles)",
+        "NCSC Situation Radar January 2025 — TAC04 (5 articles)",
+        "NCSC Situation Radar February 2025 — TAC04 (3 articles)",
+        "NCSC Situation Radar March 2025 — TAC04 (4 articles)"
+      ],
+      "sequence": "#09 → #05 → #04",
+      "last_updated": "2026-03-23",
+      "origin_country": "Various",
+      "motivation": ["Financial Gain", "Espionage"],
+      "target_sectors": ["Financial Services", "Government", "Technology"]
+    },
+    {
+      "threat_actor": "TAC05 — Sabotage",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 2,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 2
+      },
+      "notes": "NCSC Threat Level: LATENT | Trend: LOW. Composite profile of cyber sabotage activity. Almost exclusively observed in the context of already escalated conflicts — the war in Ukraine and the Middle East conflict. In IT systems, sabotage is executed deploying wipers or wiper-like capabilities to render targets unusable [#7 High]. In OT space, sabotage means manipulating physical processes to induce real-world harm [#1 Medium]. Exploitation of infrastructure vulnerabilities for access [#2 High]; credential use for network traversal [#4 Medium]. Physical dimension in conflict zones — Sandworm close-access operations using battlefield-captured devices [#8 Medium]; potential supply chain vectors [#10 Medium]. NCSC assesses this threat as LATENT for Switzerland — not currently expected to occur domestically but requires monitoring given its nature and potential. The trend toward LOW reflects growing hybrid warfare capabilities that could spill over. Gained dedicated reporting chapter starting January 2025.",
+      "sources": [
+        "NCSC Situation Radar June 2024 — Management Summary only",
+        "NCSC Situation Radar January 2025 — TAC05 (1 article)",
+        "NCSC Situation Radar February 2025 — TAC05 (2 articles)",
+        "NCSC Situation Radar March 2025 — TAC05 (1 article)"
+      ],
+      "sequence": "#02 → #04 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia (primary), Various conflict actors",
+      "motivation": ["Sabotage"],
+      "target_sectors": ["Critical Infrastructure", "Energy & Utilities", "Government"]
+    },
+    {
+      "threat_actor": "TAC06 — Hacktivism",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 3,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "notes": "NCSC Threat Level: LOW | Trend: LOW. Composite profile of hacktivist activity — abusing computer systems to achieve political, social or ideological aims. DDoS is the primary technique [#6 High], supplemented by hack-and-leak, defacement, doxing, and network intrusion [#2 Medium]. Information operations and public messaging [#9 Medium]. The landscape is evolving: CyberVolk represents a concerning trend of hacktivists adopting ransomware and info-stealer capabilities alongside traditional DDoS [#7 Medium] — blurring the line between hacktivism and cybercrime. Pro-Ukrainian groups (Head Mare & Twelve) demonstrate sophisticated collaboration — sharing CobInt backdoor, C2 infrastructure, and compromising contractors for supply chain access into Russian targets. GhostSec temporarily pivoted to ransomware (GhostLocker) before returning to hacktivist operations. Geopolitically driven: pro-Russian (NoName057(16), CyberVolk, Z-Pentest), pro-Palestinian (RooTDoS, RipperSec), pro-Ukrainian (Head Mare, Twelve).",
+      "sources": [
+        "NCSC Situation Radar June 2024 — TAC06 (2 articles)",
+        "NCSC Situation Radar January 2025 — TAC06 (no new articles)",
+        "NCSC Situation Radar February 2025 — TAC06 (no new articles)",
+        "NCSC Situation Radar March 2025 — TAC06 (2 articles)"
+      ],
+      "sequence": "#06 or #02 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Various (Russia, pro-Palestine, pro-Ukraine, mixed)",
+      "motivation": ["Information Operations"],
+      "target_sectors": ["Government", "Critical Infrastructure", "Financial Services"]
+    },
+    {
+      "threat_actor": "TAC07 — Espionage",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 3
+      },
+      "notes": "NCSC Threat Level: LOW | Trend: MEDIUM (only TAC where trend exceeds level — NCSC expects espionage risk to increase). Composite profile of state-sponsored cyber espionage. Server-side zero-day exploitation of edge devices, VPNs, and network infrastructure is the defining initial access method [#2 Champion] — Cisco IOS XE (Salt Typhoon), Ivanti Connect Secure (UNC5221), Juniper Junos (UNC3886), FortiGate (COATHANGER), VMware ESXi (UNC3886), BeyondTrust (Silk Typhoon). Custom implants, rootkits, and backdoors for long-term persistent access [#7 High] — PlugX, RESURGE, TINYSHELL, COATHANGER, ANEL/UPPERCUT. Credential and token theft for lateral movement [#4 High] — device code phishing (APT29/Storm-2372), SSH/TACACS+ sniffing (UNC3886), PAM credential abuse (Silk Typhoon). Legitimate feature abuse for persistence [#1 High] — Signal linked-device exploitation (Sandworm, UNC4221, UNC5792, Turla), RMM tools, ORB networks, cloud configuration abuse. Supply chain targeting [#10 High] — Silk Typhoon targeting IT supply chain for downstream access, inter-provider trust exploitation (Salt Typhoon). Spear-phishing [#9 High] — compromised diplomatic accounts (APT29), WhatsApp QR codes (Star Blizzard), Expo 2025 lures (MirrorFace). Chrome zero-day sandbox escape (Operation ForumTroll) [#3 Medium]. Telecom interception [#5 Medium]. Dominated by China-nexus (Silk Typhoon, Salt Typhoon, Velvet Ant, UNC3886, UNC5221, MirrorFace, ChamelGang) and Russia-nexus (APT29, Sandworm, Star Blizzard, Turla) actors.",
+      "sources": [
+        "NCSC Situation Radar June 2024 — TAC07 (9 articles)",
+        "NCSC Situation Radar January 2025 — TAC07 (2 articles)",
+        "NCSC Situation Radar February 2025 — TAC07 (4 articles)",
+        "NCSC Situation Radar March 2025 — TAC07 (2 articles)"
+      ],
+      "sequence": "#02 → #07 → #04 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "China (dominant), Russia, North Korea",
+      "motivation": ["Espionage", "IP Theft", "Surveillance"],
+      "target_sectors": ["Government", "Telecommunications", "Technology", "Critical Infrastructure", "Diplomatic", "Defense"]
+    },
+    {
+      "threat_actor": "TAC08 — Scam / Fraud / Social Engineering",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "NCSC Threat Level: LOW | Trend: LOW. Composite profile of fraud, scam, and social engineering activity that deceives people into illegally appropriating money and other goods. Social engineering is the defining and often sole technique [#9 Champion] — this TAC relies on human manipulation rather than technical exploitation. Business Email Compromise (BEC) and CEO fraud represent the most damaging subtypes [#1 Medium] — abusing legitimate business processes and trust relationships. Identity impersonation [#4 Medium] — impersonating executives, vendors, or authorities. Typically low-tech: no malware, no server exploitation, no supply chain vectors. The damage is financial and reputational. Voice phishing (vishing) operations, including Google account targeting via voice calls, observed alongside traditional email-based BEC. Investment scams, romance scams, and advance-fee fraud round out the threat space. Several reporting periods had no situationally relevant updates (Feb 2025 TAC08: 'No situationally relevant updates'), reflecting its steady-state nature.",
+      "sources": [
+        "NCSC Situation Radar June 2024 — TAC08 (3 articles)",
+        "NCSC Situation Radar January 2025 — TAC08 (1 article)",
+        "NCSC Situation Radar February 2025 — TAC08 (no new articles)",
+        "NCSC Situation Radar March 2025 — TAC08 (1 article)"
+      ],
+      "sequence": "#09 → #04 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "Various",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Financial Services", "Various"]
+    }
+  ]
+}

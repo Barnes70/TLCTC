@@ -1,12 +1,12 @@
 {
-  "schema_version": "tlctc-actor-profile.v1",
+  "schema_version": "tlctc-actor-profile.v2",
   "score_scale": "1=Low,2=Medium,3=High,4=Champion",
-  "exported_at": "2025-09-07T00:00:00Z",
+  "exported_at": "2026-03-22T00:00:00Z",
   "actors": [
     {
       "threat_actor": "CURLY SPIDER",
       "tlctc_scores": {
-        "TLCTC-01.00": 2,
+        "TLCTC-01.00": 3,
         "TLCTC-02.00": 1,
         "TLCTC-03.00": 1,
         "TLCTC-04.00": 3,
@@ -17,12 +17,12 @@
         "TLCTC-09.00": 4,
         "TLCTC-10.00": 1
       },
-      "sequence": "#09 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #07",
-      "notes": "Vishing/remote-assist to obtain credentials and enroll attacker devices; quick persistence and handoff to BGH operators.",
+      "sequence": "#09 → #07 → #04",
+      "notes": "Spam-bombing + vishing posing as IT support to obtain Quick Assist remote access [#9 Champion]; downloads and executes malicious scripts via curl/PowerShell [#7]; creates backdoor user for persistence [#4]; heavy abuse of legitimate RMM tools and cloud-hosted payloads [#1 High]. Frequently collaborates with WANDERING SPIDER for Black Basta ransomware deployment. Sub-4-minute attack chains observed.",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "Unknown",
       "motivation": [
         "Financial Gain"
@@ -47,20 +47,19 @@
         "TLCTC-09.00": 3,
         "TLCTC-10.00": 1
       },
-      "sequence": "#09 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #07",
-      "notes": "Callback phishing leading to credential abuse and staging of exfil tools (WinSCP/Rclone) for extortion.",
+      "sequence": "#09 → #04 → #01",
+      "notes": "Callback phishing (lure emails about charges/payments prompt victim to call back) [#9 High]; credential abuse for account access [#4]; stages legitimate exfiltration tools WinSCP/Rclone for data theft and extortion [#1]. Ransom demands up to $8M USD. Long-standing Russia-based eCrime adversary.",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
-      "origin_country": "Unknown",
+      "last_updated": "2026-03-22",
+      "origin_country": "Russia",
       "motivation": [
         "Financial Gain"
       ],
       "target_sectors": [
-        "Legal & Professional Services",
-        "Financial Services",
-        "Healthcare"
+        "Legal",
+        "Insurance"
       ]
     },
     {
@@ -77,13 +76,13 @@
         "TLCTC-09.00": 3,
         "TLCTC-10.00": 1
       },
-      "sequence": "#09 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #01",
-      "notes": "Brazil-focused vishing to push RMM, harvest creds, and manipulate business functions (payments) post-access.",
+      "sequence": "#09 → #04 → #01",
+      "notes": "Brazil-focused vishing to direct victims to RMM tools (RustDesk, Supremo) [#9 High]; harvests valid credentials [#4 High]; manipulates victim payment systems for fraudulent wire transfers [#1]. Has attempted to recruit insiders at targeted organizations.",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
-      "origin_country": "Unknown",
+      "last_updated": "2026-03-22",
+      "origin_country": "Brazil",
       "motivation": [
         "Financial Gain"
       ],
@@ -106,12 +105,13 @@
         "TLCTC-09.00": 4,
         "TLCTC-10.00": 1
       },
-      "sequence": "#09 \u00e2\u2020\u2019 #04",
-      "notes": "Help-desk social engineering to reset MFA/passwords; pivots into SSO/SaaS for lateral movement and data theft.",
+      "sequence": "#09 → #04 → #01",
+      "notes": "Help-desk social engineering to reset MFA/passwords [#9 Champion]; pivots into SSO/SaaS for lateral movement and data theft [#4 Champion]; exploits cloud VM management agents, SaaS apps, and credential managers for collection and downstream targeting [#1]. Sent 700K+ smishing messages via compromised SMS distribution app. AITM phishing for MFA bypass [#5]. Used likely LLM-generated scripts. Diminished operational tempo in 2024 but remains prolific.",
       "sources": [
-        "CrowdStrike Global Threat Report 2025"
+        "CrowdStrike Global Threat Report 2025",
+        "CrowdStrike 2024 Threat Hunting Report"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "Unknown",
       "motivation": [
         "Financial Gain"
@@ -121,7 +121,9 @@
         "Telecommunications",
         "Financial Services",
         "Retail & Hospitality",
-        "Gaming"
+        "Gaming",
+        "Academic",
+        "Healthcare"
       ]
     },
     {
@@ -138,12 +140,13 @@
         "TLCTC-09.00": 3,
         "TLCTC-10.00": 1
       },
-      "sequence": "#09 \u00e2\u2020\u2019 #01 \u00e2\u2020\u2019 #04",
-      "notes": "GenAI-augmented personas to gain roles/insider footholds; abuse of business processes followed by identity expansion and malware staging.",
+      "sequence": "#09 → #01 → #04",
+      "notes": "GenAI-augmented fake personas to obtain employment under fraudulent identities [#9 High]; abuse of legitimate insider access (Git, SharePoint, OneDrive exfiltration, RMM tool installation) [#1 High]; identity expansion via backdoor admin users in cloud tenants [#4 High]. Deploys BeaverTail/InvisibleFerret via trojanized Node.js coding challenges [#7 High, #3 Medium]. 304 incidents in 2024, ~40% insider threat. Laptop farms identified in IL, NY, TX, FL. Most insiders motivated by salary revenue for DPRK regime.",
       "sources": [
-        "CrowdStrike Global Threat Report 2025"
+        "CrowdStrike Global Threat Report 2025",
+        "CrowdStrike 2024 Threat Hunting Report"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "North Korea",
       "motivation": [
         "Espionage",
@@ -151,8 +154,15 @@
       ],
       "target_sectors": [
         "Technology",
+        "Financial Services",
         "Aerospace & Defense",
-        "Financial Services"
+        "Education",
+        "Energy",
+        "Manufacturing",
+        "Consulting & Professional Services",
+        "Media",
+        "Retail",
+        "Healthcare"
       ]
     },
     {
@@ -169,12 +179,12 @@
         "TLCTC-09.00": 2,
         "TLCTC-10.00": 1
       },
-      "sequence": "#04 \u00e2\u2020\u2019 #07",
-      "notes": "Big-game-hunting ransomware; often receives initial access from brokers, then deploys Black Basta payloads.",
+      "sequence": "#04 → #07",
+      "notes": "Big-game-hunting ransomware; often receives initial access from brokers (e.g., CURLY SPIDER), then deploys Black Basta payloads [#7 Champion]. Credential-centric lateral movement [#4 High].",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "Unknown",
       "motivation": [
         "Financial Gain"
@@ -200,12 +210,12 @@
         "TLCTC-09.00": 2,
         "TLCTC-10.00": 1
       },
-      "sequence": "#01 \u00e2\u2020\u2019 #03 \u00e2\u2020\u2019 #07",
-      "notes": "Malvertising/SEO-poisoning funnels victims into client-side installs leading to malware (Nitrogen).",
+      "sequence": "#01 → #03 → #07",
+      "notes": "Malvertising via purchased Google/Bing ads (abuse of legitimate ad platforms) [#1]; victims click ads and download from malicious sites [#3 High]; delivers Nitrogen malware [#7 High]. Uses LLM-generated decoy websites to filter non-victim traffic. Filters requests not originating from malicious advertisements.",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "Unknown",
       "motivation": [
         "Financial Gain"
@@ -229,19 +239,19 @@
         "TLCTC-09.00": 1,
         "TLCTC-10.00": 1
       },
-      "sequence": "#02 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #05",
-      "notes": "Internet-facing appliance exploit chains for initial access; identity pivot and occasional MitM for persistence/movement.",
+      "sequence": "#02 → #04",
+      "notes": "Exploits internet-facing appliances, particularly Cisco switches [#2 Champion]; chained CVE-2023-20198 (privilege escalation) + CVE-2023-20273 (command injection) against U.S. telecom and professional services entities. Identity pivot post-exploitation [#4]. MitM capability plausible given telecom targeting [#5 Medium] but not explicitly confirmed in reporting.",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "China",
       "motivation": [
         "Espionage"
       ],
       "target_sectors": [
         "Telecommunications",
-        "Government",
+        "Professional Services",
         "Technology"
       ]
     },
@@ -259,20 +269,23 @@
         "TLCTC-09.00": 1,
         "TLCTC-10.00": 1
       },
-      "sequence": "#02 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #07",
-      "notes": "Web-app exploitation followed by credential expansion and malware tooling for collection/exfiltration.",
+      "sequence": "#02 → #04 → #07",
+      "notes": "Exploits web-facing applications for initial access [#2 High]; credential expansion [#4]; uses combination of unique, shared, and publicly available malware tooling for collection/exfiltration [#7]. Likely facilitates intelligence collection operations.",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "China",
       "motivation": [
         "Espionage"
       ],
       "target_sectors": [
-        "Government",
+        "Financial Services",
+        "Gambling",
         "Technology",
-        "Financial Services"
+        "Academic",
+        "Defense",
+        "Government"
       ]
     },
     {
@@ -289,12 +302,12 @@
         "TLCTC-09.00": 1,
         "TLCTC-10.00": 1
       },
-      "sequence": "#02 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #01",
-      "notes": "Targeted ops against diplomatic/government entities; blends server-side access with identity abuse and business-function misuse.",
+      "sequence": "#02 → #04 → #01",
+      "notes": "Targets Africa- and Middle East-based government entities, particularly in the diplomatic space [#2]; identity abuse [#4]; business-function misuse [#1]. Previously low-capability adversary that has markedly increased OPSEC posture with anonymization techniques.",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "China",
       "motivation": [
         "Espionage"
@@ -317,12 +330,12 @@
         "TLCTC-09.00": 1,
         "TLCTC-10.00": 2
       },
-      "sequence": "#02 \u00e2\u2020\u2019 #05 \u00e2\u2020\u2019 #10",
-      "notes": "Deep telecom network knowledge; leverages compromised telecom infra for routing/relays across regions (supply-chain/partner trust).",
+      "sequence": "#02 → #05 → #10",
+      "notes": "Demonstrates extensive knowledge of telecommunications networks [#2 High]; uses compromised telecom infrastructure for routing/relays across regions (MitM/interception capability) [#5]; leverages inter-provider trust relationships as supply-chain pivot points [#10].",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "China",
       "motivation": [
         "Espionage"
@@ -345,12 +358,12 @@
         "TLCTC-09.00": 1,
         "TLCTC-10.00": 1
       },
-      "sequence": "#02 \u00e2\u2020\u2019 #04 \u00e2\u2020\u2019 #07",
-      "notes": "Targets tech/gaming/energy/telecom plus dissident communities; exploit external services, expand identity, deploy tooling for collection.",
+      "sequence": "#02 → #04 → #07",
+      "notes": "Targets technology, gaming, energy, and telecommunications entities in Taiwan and Indonesia, as well as Hong Kong democracy activists [#2 High]; exploits external services, expands identity [#4], deploys tooling for intelligence collection [#7]. Operations likely intended to facilitate intelligence collection.",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "China",
       "motivation": [
         "Espionage"
@@ -377,12 +390,12 @@
         "TLCTC-09.00": 2,
         "TLCTC-10.00": 1
       },
-      "sequence": "#04 \u00e2\u2020\u2019 #07",
-      "notes": "Credential-centric access and rapid ransomware staging; observed destructive PowerShell usage aligned with genAI patterns.",
+      "sequence": "#04 → #07",
+      "notes": "Credential-centric access and rapid ransomware staging [#4 High, #7 Champion]; observed deploying likely LLM-generated destructive PowerShell script for data destruction on physical hosts.",
       "sources": [
         "CrowdStrike Global Threat Report 2025"
       ],
-      "last_updated": "2025-09-07",
+      "last_updated": "2026-03-22",
       "origin_country": "Unknown",
       "motivation": [
         "Financial Gain"
@@ -392,6 +405,65 @@
         "Healthcare",
         "Financial Services",
         "Manufacturing"
+      ]
+    },
+    {
+      "threat_actor": "PUNK SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #04 → #07",
+      "notes": "Develops and maintains Akira ransomware [#7 Champion]. Exploited CVE-2024-3400 on Palo Alto GlobalProtect VPN for initial access [#2 High]; RDP with service accounts, credential dumping within 12-14 minutes [#4 High]; privilege escalation via ESX Admins group; uses SharpShares, WinRAR, FileZilla, AnyDesk. One of the fastest adversaries observed. First identified April 2023.",
+      "sources": [
+        "CrowdStrike 2024 Threat Hunting Report"
+      ],
+      "last_updated": "2026-03-22",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Manufacturing",
+        "Professional Services",
+        "Financial Services"
+      ]
+    },
+    {
+      "threat_actor": "HORDE PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#04 → #07",
+      "notes": "China-nexus adversary targeting South Asian telecommunications providers. Identity-based initial access via VPN, DCSync credential dumping from multiple accounts [#4 High]; deploys LuaPlug and KEYPLUG implants via DLL side-loading [#7 High]. Searched for LAPS attributes and unrestricted delegation objects. Leveraged 11 compromised user accounts in one observed operation. Living-off-the-land techniques.",
+      "sources": [
+        "CrowdStrike 2024 Threat Hunting Report"
+      ],
+      "last_updated": "2026-03-22",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Telecommunications"
       ]
     }
   ]

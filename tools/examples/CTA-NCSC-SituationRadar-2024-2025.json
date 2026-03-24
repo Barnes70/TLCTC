@@ -1,0 +1,874 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-03-23T00:00:00Z",
+  "actors": [
+    {
+      "threat_actor": "APT29 / Midnight Blizzard",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 3
+      },
+      "notes": "Russia's SVR-linked group. Spear-phishing via compromised diplomatic email accounts and innovative device-code authentication phishing lures for M365 token capture [#9 Champion]; credential and token abuse for persistent access to email, cloud storage [#4 High]; Cobalt Strike deployment [#7]; SolarWinds supply chain history [#10 High]. Targeted French embassies, TeamViewer corporate IT, Microsoft, and US government-adjacent organizations. Storm-2372 designation for device code phishing campaign active since Aug 2024.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC07)",
+        "NCSC Situation Radar February 2025 (TAC07)",
+        "ANSSI CERTFR-2024-CTI-006",
+        "Volexity blog (device code phishing)",
+        "Microsoft Security Blog (Storm-2372)"
+      ],
+      "sequence": "#09 → #04 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Government", "Diplomatic", "Technology"]
+    },
+    {
+      "threat_actor": "Sandworm / Seashell Blizzard",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 2,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Russian GRU group operating BadPilot campaign. Opportunistic exploitation of exposed network devices at near-global scale since 2021 [#2 High]; custom persistence mechanisms [#7 High]; extensive abuse of legitimate RMM tools (Splashtop) and Signal's linked-device feature for message interception [#1 High]; malicious QR codes for Signal compromise [#9 High]; close-access operations using battlefield-captured devices in Ukraine context [#8 Medium]. Devices in Switzerland specifically targeted per Microsoft mapping. Historical sabotage capability (NotPetya, Industroyer).",
+      "sources": [
+        "NCSC Situation Radar February 2025 (TAC07)",
+        "Microsoft Security Blog (BadPilot)",
+        "Google Threat Intelligence Group (Signal targeting)"
+      ],
+      "sequence": "#02 → #07 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Espionage", "Sabotage"],
+      "target_sectors": ["Critical Infrastructure", "Telecommunications", "Government"]
+    },
+    {
+      "threat_actor": "Star Blizzard / Callisto Group",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Russian intelligence-linked group. Innovative two-stage WhatsApp spear-phishing: first email contains intentionally broken QR code, follow-up provides valid QR code linking attacker device to victim's WhatsApp [#9 Champion]; WhatsApp account takeover via linked-device feature abuse [#4 High, #1 Medium]. Impersonated US government officials and targeted individuals linked to the Ukraine conflict. Campaign terminated November 2024. Demonstrates constant capability development.",
+      "sources": [
+        "NCSC Situation Radar January 2025 (TAC07)",
+        "Microsoft Security Blog (Star Blizzard WhatsApp campaign)"
+      ],
+      "sequence": "#09 → #04",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Government", "Civil Society & NGOs"]
+    },
+    {
+      "threat_actor": "Silk Typhoon / APT27",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 3
+      },
+      "notes": "PRC MSS-affiliated actor. Exploited BeyondTrust zero-days to breach US Treasury [#2 High]; abusing stolen API keys and PAM credentials [#4 High]; targeting IT supply chain organizations to reach downstream customer environments [#10 High]; abusing cloud configurations and ORB covert networks [#1 High]. Linked to Yin Kecheng (Shanghai), sanctioned by US Treasury OFAC Jan 2025. USDOJ indictments March 2025.",
+      "sources": [
+        "NCSC Situation Radar January 2025 (TAC07)",
+        "NCSC Situation Radar March 2025 (TAC07)",
+        "US Treasury OFAC sanctions (jy2792)",
+        "Microsoft Security Blog",
+        "USDOJ indictments March 2025"
+      ],
+      "sequence": "#02 → #04 → #10 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "China",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Government", "Technology", "Cloud Services"]
+    },
+    {
+      "threat_actor": "Salt Typhoon / RedMike",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 3,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "PRC MSS-affiliated actor targeting global telecoms. Exploited CVE-2023-20198 and CVE-2023-20273 in Cisco IOS XE at scale, ~1,000 devices attempted Dec 2024–Jan 2025 [#2 Champion]; telecommunications interception capability for intelligence collection [#5 High]; persistent long-term access to telecom infrastructure [#1 High]. Linked to Sichuan Juxinhe Network Technology, sanctioned by US Treasury. Devices in Switzerland targeted per Recorded Future mapping.",
+      "sources": [
+        "NCSC Situation Radar January 2025 (TAC07)",
+        "NCSC Situation Radar February 2025 (TAC07)",
+        "Recorded Future (RedMike research)",
+        "US Treasury OFAC sanctions"
+      ],
+      "sequence": "#02 → #05 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "China",
+      "motivation": ["Espionage", "Surveillance"],
+      "target_sectors": ["Telecommunications", "Government"]
+    },
+    {
+      "threat_actor": "Velvet Ant",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus group with 3-year persistent compromise of East Asian company. Abused F5 BIG-IP load balancers and exploited CVE-2024-20399 (Cisco NX-OS) for edge-device footholds [#2 High]; deployed PlugX RAT in two forms — external C2 variant and internal lateral-movement variant [#7 High]; Impacket for credential harvesting and lateral movement [#4]; leveraged out-of-date F5 devices as persistent footholds [#1].",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC07)",
+        "Sygnia blog"
+      ],
+      "sequence": "#02 → #07 → #04 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "China",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Technology", "Financial Services"]
+    },
+    {
+      "threat_actor": "UNC3886",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus actor specializing in network infrastructure and virtualization exploitation. Zero-day exploits against VMware ESXi and Juniper Junos OS routers [#2 Champion]; Linux rootkits, VMCI backdoors, custom TINYSHELL-based implants on routers [#7 High]; SSH and TACACS+ credential sniffing [#4]; redundant persistence across hypervisors, VMs, and network devices, leveraging ORB networks [#1 High]. Targets end-of-life hardware lacking security monitoring. Juniper advisory refers to this activity as RedPenguin.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC07)",
+        "NCSC Situation Radar March 2025 (TAC07)",
+        "Mandiant / Google Cloud blog",
+        "Juniper advisory (RedPenguin Malware Incident)"
+      ],
+      "sequence": "#02 → #07 → #04",
+      "last_updated": "2026-03-23",
+      "origin_country": "China",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Network Infrastructure", "Telecommunications", "Technology"]
+    },
+    {
+      "threat_actor": "UNC5221",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus actor focused on VPN appliance exploitation. Exploited CVE-2025-0282 in Ivanti Connect Secure [#2 Champion]; RESURGE malware (evolved from SPAWNCHIMERA/SPAWNSLOTH) with reboot survival, web shell creation, and boot disk manipulation [#7 High]; credential harvesting and account creation via web shells [#4]; manipulated integrity checks and modified system files for persistence [#1 High]. CISA malware analysis report issued.",
+      "sources": [
+        "NCSC Situation Radar March 2025 (TAC07)",
+        "CISA Malware Analysis Report ar25-087a",
+        "Google/Mandiant"
+      ],
+      "sequence": "#02 → #07 → #04 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "China",
+      "motivation": ["Espionage"],
+      "target_sectors": ["VPN Infrastructure", "Government", "Technology"]
+    },
+    {
+      "threat_actor": "MirrorFace (APT10-linked)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-linked group sharing ANEL/UPPERCUT backdoor with APT10. Spear-phishing with Expo 2025 lures targeting Central European diplomatic institute [#9 High]; phishing emails with client-side exploits [#3 Medium]; ANEL/UPPERCUT backdoor and customized AsyncRAT deployment [#7 High]. Operation AkaiRyu identified by ESET. Previously focused on Japanese targets, now expanding to European diplomatic entities.",
+      "sources": [
+        "NCSC Situation Radar March 2025 (TAC07)",
+        "ESET (Operation AkaiRyu)",
+        "JSAC January 2025"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "China",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Diplomatic", "Government", "Media"]
+    },
+    {
+      "threat_actor": "ChamelGang",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-linked espionage group that uniquely deploys ransomware for distraction, misattribution, or evidence destruction. Network intrusion for initial access [#2]; long-term credential access during espionage phase [#4]; CatB ransomware deployed at end of operations [#7 High]. Blurs the line between espionage and financially motivated crime, complicating attribution. Targeted the Presidency of Brazil, Indian healthcare, and critical infrastructure in Asia.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC07)",
+        "SentinelOne",
+        "Recorded Future",
+        "TeamT5"
+      ],
+      "sequence": "#02 → #04 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "China",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Critical Infrastructure", "Government", "Healthcare"]
+    },
+    {
+      "threat_actor": "Lazarus Group / TraderTraitor",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "North Korean state-sponsored group. Fake job interview campaigns (ClickFake Interview) on LinkedIn targeting crypto and defense professionals [#9 Champion]; GolangGhost backdoor (Windows/macOS), FrostyFerret password stealer, heavily obfuscated loaders [#7 Champion]; FrostyFerret captures macOS system passwords, credential harvesting from corporate environments [#4 High]; ClickFix technique tricks users into executing malicious commands [#3 Medium]. TraderTraitor subgroup executed $1.5B Bybit ETH theft — largest crypto theft in history. Stolen assets dispersed across thousands of Bitcoin addresses.",
+      "sources": [
+        "NCSC Situation Radar February 2025",
+        "NCSC Situation Radar March 2025",
+        "Bitdefender Labs (LinkedIn campaign)",
+        "FBI IC3 PSA PSA250226 (Bybit)",
+        "Sekoia (ClickFake Interview)"
+      ],
+      "sequence": "#09 → #07 → #04",
+      "last_updated": "2026-03-23",
+      "origin_country": "North Korea",
+      "motivation": ["Financial Gain", "Espionage", "IP Theft"],
+      "target_sectors": ["Cryptocurrency", "Technology", "Defense", "Aviation"]
+    },
+    {
+      "threat_actor": "Moonstone Sleet (Storm-1789)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 3
+      },
+      "notes": "North Korean group operating fake companies (C.C. Waterfall, StarGlow Ventures) on LinkedIn, freelancing networks, and Telegram to interact with victims [#9 Champion]; custom malware loaders, malicious games, trojanized PuTTY, Qilin ransomware payloads [#7 High]; publishes malicious npm packages for targets to install [#10 High]; credential harvesting through fake interactions [#4]. First observed nation-state actor deploying RaaS (Qilin) payloads — blurring state/criminal lines. Overlaps with Diamond Sleet and Onyx Sleet.",
+      "sources": [
+        "NCSC Situation Radar March 2025",
+        "Microsoft Security Intelligence",
+        "BleepingComputer"
+      ],
+      "sequence": "#09 → #07 → #04",
+      "last_updated": "2026-03-23",
+      "origin_country": "North Korea",
+      "motivation": ["Financial Gain", "Espionage"],
+      "target_sectors": ["Cryptocurrency", "Technology"]
+    },
+    {
+      "threat_actor": "Akira Ransomware",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Conti-lineage ransomware group active since 2022, one of the principal TAs by victim count. Exploits VPN and edge-device vulnerabilities for initial access [#2 High]; credential abuse and rapid lateral movement [#4 High]; evolved multi-threaded ransomware with disk drive control, process management, and file encryption [#7 Champion]; data exfiltration with legitimate tools [#1]. Relationships with BlackByte, LockBit, Snatch. Rose to fill the post-LockBit/ALPHV vacuum. Consistently observed in Switzerland since May 2023 across all four reporting periods.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC01)",
+        "NCSC Situation Radar January 2025 (TAC01)",
+        "NCSC Situation Radar February 2025 (TAC01)",
+        "NCSC Situation Radar March 2025 (TAC01)"
+      ],
+      "sequence": "#02 → #04 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Healthcare", "Manufacturing", "Services", "Industry"]
+    },
+    {
+      "threat_actor": "Black Basta",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Conti successor group (Cardinal / Storm-1811 / UNC4393). BRUTED automated brute-forcing framework for credential stuffing against edge devices — Cisco, Fortinet, Palo Alto, SonicWall, WatchGuard, Citrix [#4 High]; phishing campaigns confirmed in leaked internal Matrix chat logs [#9 High]; exploited CVE-2024-26169 (Windows Error Reporting) as possible zero-day [#2]; Cobalt Strike, Brute Ratel for C2, ransomware deployment [#7 High]; EDR evasion [#1]. Internal communications leaked (Sept 2023–Sept 2024). Key members: Trump/GG/AA (Oleg Nefedovaka), Lapa, Cortes, YY.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC01)",
+        "NCSC Situation Radar January 2025 (TAC01)",
+        "NCSC Situation Radar February 2025 (TAC01)",
+        "NCSC Situation Radar March 2025 (TAC01)",
+        "EclecticIQ (BRUTED analysis)",
+        "PRODAFT (leaked Matrix chats)"
+      ],
+      "sequence": "#09 → #04 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Healthcare", "Manufacturing", "Financial Services", "Government"]
+    },
+    {
+      "threat_actor": "RansomHub",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Dominant RaaS that rose to fill the LockBit/ALPHV vacuum (launched Feb 2024). Rapid weaponization of zero-days in public-facing applications [#2 High]; first group to deploy EDRKillShifter using BYOVD technique to disable endpoint defenses [#1 High]; ESXi-specific encryptor (C++, derived from Knight), Windows/Linux versions (Go), ChaCha20+Curve25519 encryption, intermittent encryption for speed [#7 Champion]. Attacked Swiss cloud provider Ilem Group (Geneva, Jan 2025) affecting ~15% of 200+ customers. 600+ firms globally in 2024.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC01)",
+        "NCSC Situation Radar January 2025 (TAC01)",
+        "NCSC Situation Radar February 2025 (TAC01)",
+        "NCSC Situation Radar March 2025 (TAC01)",
+        "ESET (EDRKillShifter)",
+        "Group-IB"
+      ],
+      "sequence": "#02 → #01 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["IT & Cloud Services", "Healthcare", "Technology"]
+    },
+    {
+      "threat_actor": "Qilin / Agenda",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "RaaS operator. Claimed zero-day exploitation for initial access [#2]; ransomware deployment and data exfiltration [#7 High]; credential use for lateral movement [#4]. Caused critical incident at London hospitals via Synnovis pathology provider (June 2024). Notable for being first RaaS to partner with a nation-state affiliate — North Korean Moonstone Sleet deploys Qilin payloads.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC01)",
+        "NCSC Situation Radar March 2025 (TAC01)",
+        "Microsoft Security Intelligence"
+      ],
+      "sequence": "#02 → #04 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Healthcare", "Critical Infrastructure"]
+    },
+    {
+      "threat_actor": "BlackSuit (prev. Royal)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 2
+      },
+      "notes": "Conti-lineage ransomware group. Fake IT support calls to gain unauthorized access at car dealerships [#9 High]; ransomware deployment [#7 High]; supply chain amplification — attack on SaaS provider CDK Global cascaded to 15,000+ downstream car dealerships [#10 Medium]. Also hit NHLS South Africa (healthcare) and Kadokawa Japan (media).",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC01)",
+        "CISA advisory aa23-061a",
+        "BleepingComputer"
+      ],
+      "sequence": "#09 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["IT & Cloud Services", "Healthcare", "Media", "Automotive"]
+    },
+    {
+      "threat_actor": "Medusa Ransomware",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "RaaS distinct from MedusaLocker and Medusa mobile malware. EDR killer tools (EDRKillShifter, EDRSilencer, etc.) using BYOVD to disable endpoint defenses [#1 High]; phishing for initial access [#9 High]; credential-based initial access [#4]; ransomware with 300+ victims as of Feb 2025 [#7 High]. Joint CISA/FBI advisory issued (aa25-071a). Broadly targets critical infrastructure.",
+      "sources": [
+        "NCSC Situation Radar March 2025 (TAC01)",
+        "CISA Advisory aa25-071a",
+        "FBI"
+      ],
+      "sequence": "#09 → #04 → #01 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Healthcare", "Education", "Legal", "Insurance", "Technology", "Manufacturing"]
+    },
+    {
+      "threat_actor": "Ghost / Cring Ransomware",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-based ransomware group exclusively exploiting known CVEs on internet-facing servers with outdated software/firmware [#2 Champion]; rotating ransomware payloads and file extensions to evade detection [#7 High]. No social engineering, no phishing — purely vulnerability-driven. Organizations across 70+ countries affected. CISA advisory AA25-050A issued. Targets entities with poor patching hygiene.",
+      "sources": [
+        "NCSC Situation Radar February 2025 (TAC01)",
+        "CISA Advisory AA25-050A"
+      ],
+      "sequence": "#02 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "China",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Critical Infrastructure", "Healthcare", "Education", "Government", "Technology", "Manufacturing"]
+    },
+    {
+      "threat_actor": "Cl0p",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Russia-attributed data extortion group specializing in mass exploitation of managed file transfer platforms. Serial zero-day exploitation of MFT solutions — MOVEit, GoAnywhere, now Cleo [#2 Champion]; data exfiltration tooling without traditional encryption [#7 High]; mass data theft for extortion [#1]. Notable that fraudsters have been observed impersonating Cl0p to send fake extortion demands to uninvolved organizations.",
+      "sources": [
+        "NCSC Situation Radar March 2025 (TAC01)",
+        "Barracuda Networks",
+        "Infosecurity Magazine"
+      ],
+      "sequence": "#02 → #01 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Financial Services", "Healthcare", "Government", "Technology"]
+    },
+    {
+      "threat_actor": "8Base / Phobos",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Russian nationals operating the Phobos ransomware variant under the 8Base brand. Phishing for initial access [#9]; Phobos ransomware deployment [#7 High]; data exfiltration using legitimate tools [#1]. At least 17 Swiss companies hit between April 2023 and October 2024. Operation Phobos Aetor: 4 Russian nationals arrested in Thailand (Roman Berezhnoy, Egor Nikolaevich Glebov, and others), 27 servers taken down by Europol.",
+      "sources": [
+        "NCSC Situation Radar February 2025 (TAC01)",
+        "Europol press release",
+        "US DOJ announcement"
+      ],
+      "sequence": "#09 → #07 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Services", "Retail", "Construction", "Financial Services"]
+    },
+    {
+      "threat_actor": "FunkSec",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 2,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Dual ransomware/hacktivist group with AI-assisted tool development. AI-generated ransomware encryptor [#7 High]; DDoS tools [#6 Medium]; JQRAXY_HVNC remote desktop tool and funkgenerate password tool [#4]; data brokering [#1]. Likely novice actors leveraging AI to iterate rapidly despite limited technical expertise. 85+ victims claimed by late 2024. Recycled leaked hacktivist data to inflate credentials. Represents the convergence of hacktivism, RaaS, and AI-assisted development.",
+      "sources": [
+        "NCSC Situation Radar January 2025 (TAC01)",
+        "Check Point Research",
+        "The Hacker News"
+      ],
+      "sequence": "#09 → #07 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain", "Information Operations"],
+      "target_sectors": ["Various"]
+    },
+    {
+      "threat_actor": "Codefinger",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Novel ransomware-without-malware technique. Uses stolen/compromised AWS credentials [#4 High] to weaponize AWS's native SSE-C (Server-Side Encryption with Customer-provided keys) feature to encrypt victim S3 data with attacker-controlled key [#1 Champion]. Recovery is impossible without the attacker's key. Classifies purely as #1 Abuse of Functions — no ransomware binary (#7) is deployed. Demonstrates how native cloud features can be weaponized for extortion.",
+      "sources": [
+        "NCSC Situation Radar January 2025 (TAC01)",
+        "Halcyon blog",
+        "Forbes"
+      ],
+      "sequence": "#04 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Cloud Infrastructure"]
+    },
+    {
+      "threat_actor": "Scattered Spider / UNC3944",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "English-speaking financially motivated group (overlaps with 0ktapus, Octo Tempest, Scatter Swine). Social engineering and help-desk manipulation for initial access [#9 Champion]; SaaS credential theft and permissions abuse for lateral movement [#4 High]; data theft via cloud synchronization tools, persistence on virtualization platforms [#1 High]. Active since May 2022, leverages underground Telegram communities for tools and services. Adapted tactics to focus on SaaS/cloud environments.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC01)",
+        "Google Cloud / Mandiant blog"
+      ],
+      "sequence": "#09 → #04 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Technology", "Cloud Services", "Telecommunications"]
+    },
+    {
+      "threat_actor": "ONNX / MRxC0DER (Caffeine rebrand)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 3,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Phishing-as-a-Service platform operated by Arabic-speaking actor MRxC0DER. Phishing emails with PDF/QR code lures impersonating Adobe, Microsoft, HR departments [#9 Champion]; Adversary-in-The-Middle (AiTM) proxy intercepting 2FA codes in real-time [#5 High]; credential and 2FA token harvesting [#4 High]. Previously operated as Caffeine PhaaS. Targets financial institutions and Microsoft 365 accounts. Represents growing sophistication of PhaaS platforms enabling MFA bypass.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC04)",
+        "EclecticIQ blog",
+        "Mandiant (Caffeine report 2022)"
+      ],
+      "sequence": "#09 → #05 → #04",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Financial Services", "Technology"]
+    },
+    {
+      "threat_actor": "V3B / Vssrtje (PhaaS)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 3,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "EU-focused Phishing-as-a-Service platform. Phishing with localized banking templates for 54+ financial institutions, SIM swapping [#9 Champion]; real-time credential and OTP interception [#5 High]; credential, OTP, and PhotoTAN capture [#4 High]. Operated by 'Vssrtje', launched March 2023, with 1,250+ Telegram members. Cash-out via money mule network. Specifically targets EU banking customers and e-commerce.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC04/TAC08)",
+        "Resecurity blog"
+      ],
+      "sequence": "#09 → #05 → #04",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Financial Services"]
+    },
+    {
+      "threat_actor": "LummaStealer operators",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Russian-speaking stealer-as-a-service ecosystem. ClickFix, Fake Captcha, and fake Reddit site lures [#9 High]; victims download and execute malicious payloads from compromised CH websites and GitHub releases (trusted platform abuse) [#3 High]; LummaStealer infostealer delivers additional payloads — SectopRAT, Vidar, Cobalt Strike beacon [#7 High]; credential theft and exfiltration [#4]; GitHub release infrastructure abuse [#1]. Most actively distributed infostealer in Switzerland (Jan–Feb 2025).",
+      "sources": [
+        "NCSC Situation Radar January 2025 (TAC02)",
+        "NCSC Situation Radar February 2025 (TAC02)",
+        "Trend Micro (GitHub delivery)",
+        "NCSC MISP"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Various"]
+    },
+    {
+      "threat_actor": "Belsen Group",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Data broker group. Exploited CVE-2022-40684 zero-day in FortiGate devices to harvest configuration files, IP addresses, and VPN credentials (some in plaintext) from 15,000+ devices [#2 High]; massive credential dump [#4 High]; exfiltrated config files, private keys, firewall rules [#1]. Released entire dump for free on a Tor website as self-promotion. Swiss FortiGate devices included in the dump.",
+      "sources": [
+        "NCSC Situation Radar January 2025",
+        "BleepingComputer",
+        "DoublePulsar analysis"
+      ],
+      "sequence": "#02 → #04 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Network Infrastructure"]
+    },
+    {
+      "threat_actor": "Operation ForumTroll actor",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 4,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Unnamed state-level espionage actor. Emails disguised as invitations from organizers of a scientific/expert forum [#9 High]; zero-day Chrome sandbox escape CVE-2025-2783 chained with additional RCE exploit [#3 Champion]; related vulnerability CVE-2025-2857 subsequently found in Firefox. Targeted Russian media outlets, educational institutions, and government organizations. Discovered by Kaspersky.",
+      "sources": [
+        "NCSC Situation Radar March 2025 (TAC02)",
+        "Kaspersky (Operation ForumTroll)",
+        "The Record"
+      ],
+      "sequence": "#09 → #03 → #07",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Media", "Education", "Government"]
+    },
+    {
+      "threat_actor": "NoName057(16)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 4,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Most prolific pro-Russian hacktivist group. DDoS attacks using custom DDoSia botnet [#6 Champion, #7 Medium for botnet component]. Targeted Swiss government during Ukraine Peace Summit (June 2024), Swiss infrastructure during WEF Davos (January 2025), and French infrastructure. Only limited, short-term effects observed as recommended mitigations proved successful. Attacks shift to other European targets after political events conclude.",
+      "sources": [
+        "NCSC Situation Radar June 2024 (TAC03/TAC06)",
+        "NCSC Situation Radar January 2025 (TAC03)",
+        "NCSC Situation Radar March 2025 (TAC03)"
+      ],
+      "sequence": "#06",
+      "last_updated": "2026-03-23",
+      "origin_country": "Russia",
+      "motivation": ["Information Operations"],
+      "target_sectors": ["Government", "Financial Services", "Telecommunications"]
+    },
+    {
+      "threat_actor": "RooTDoS",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 3,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Pro-Palestine, religiously motivated hacktivist group. DDoS attacks causing ~45 min disruption to Swiss Federal Administration — telephony, Outlook, websites, and specialized applications (Jan 10, 2025) [#6 High]. Previously disrupted Migros Bank ATMs, website, e-banking, and phone service (Jan 6, 2025). Motivated by Swiss face-covering ban (burqa ban) effective Jan 1, 2025. Previously targeted German organizations over Israel support.",
+      "sources": [
+        "NCSC Situation Radar January 2025 (TAC03)"
+      ],
+      "sequence": "#06",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Information Operations"],
+      "target_sectors": ["Government", "Financial Services"]
+    },
+    {
+      "threat_actor": "CyberVolk",
+      "tlctc_scores": {
+        "TLCTC-01.00": 1,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 3,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Hacktivist group representing a concerning evolution beyond traditional DDoS. DDoS attacks remain primary method [#6 High]; but also deploying ransomware and info-stealing malware [#7 Medium, #9 Medium]. Represents the convergence of hacktivism with cybercrime — blending ideological motivation with destructive and financially motivated tooling. Geopolitically motivated, pro-Russian alignment.",
+      "sources": [
+        "NCSC Situation Radar January 2025 (TAC06)",
+        "NCSC Situation Radar February 2025 (TAC06)",
+        "NCSC Situation Radar March 2025 (TAC06)"
+      ],
+      "sequence": "#06",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Information Operations"],
+      "target_sectors": ["Government", "Critical Infrastructure"]
+    },
+    {
+      "threat_actor": "Head Mare & Twelve",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 2
+      },
+      "notes": "Collaborating pro-Ukrainian hacktivist groups targeting Russian state and private companies. Phishing emails with exploits for initial access [#9 High]; client-side exploitation [#3 Medium]; shared CobInt backdoor, PowerShell C2 scripts (mcdrive.ps1), and tunneling scripts [#7 High]; compromising contractors to reach target infrastructure [#10 Medium]; shared C2 infrastructure [#1 Medium]. Notable for cross-group collaboration — distinct groups sharing tools, backdoors, and infrastructure.",
+      "sources": [
+        "NCSC Situation Radar March 2025 (TAC06)",
+        "Kaspersky (Head Mare / Twelve collaboration analysis)"
+      ],
+      "sequence": "#09 → #03 → #07 → #01",
+      "last_updated": "2026-03-23",
+      "origin_country": "Unknown",
+      "motivation": ["Information Operations"],
+      "target_sectors": ["Government", "Defense", "Critical Infrastructure"]
+    }
+  ]
+}

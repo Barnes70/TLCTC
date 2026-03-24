@@ -23,6 +23,9 @@ venv/
 # Node
 node_modules/
 
+# Input files (not for repo)
+input4new/
+
 # Build artifacts
 dist/
 build/
