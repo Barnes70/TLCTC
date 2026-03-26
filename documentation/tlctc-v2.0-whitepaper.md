@@ -204,18 +204,20 @@ This anchor prevents the most common category error in cybersecurity language: u
 
 A Bow-Tie model represents risk as a structure with five elements:
 
-| Element | Position | Description |
-| --- | --- | --- |
-| **Threats** | Left side (cause) | Initiating forces that exploit vulnerabilities and can trigger the central event |
-| **Preventive Controls** | Left side | Barriers that reduce likelihood of threats reaching the central event (IDENTIFY/PROTECT) |
-| **Central Event** | Knot | The decisive loss-of-control state (DETECT) |
-| **Mitigating Controls** | Right side | Barriers that detect, contain, reduce impact, or enable recovery (RESPOND/RECOVER) |
-| **Consequences** | Right side (effect) | What results after the central event, including technical and business impact (event chains) |
+| Element | Abbreviation | Position | Description |
+| --- | --- | --- | --- |
+| **Threats** | — | Left side (cause) | Initiating forces that exploit vulnerabilities and can trigger the central event |
+| **Preventive Controls** | — | Left side | Barriers that reduce likelihood of threats reaching the central event (IDENTIFY/PROTECT) |
+| **System Risk Event** | **SRE** | Knot | The decisive loss-of-control state — Loss of Control / System Compromise (DETECT) |
+| **Mitigating Controls** | — | Right side | Barriers that detect, contain, reduce impact, or enable recovery (RESPOND/RECOVER) |
+| **Data Risk Events** | **DRE** | Right side (effect) | Loss of Confidentiality, Integrity, or Availability/Accessibility |
+| **Business Risk Events** | **BRE** | Right side (effect) | Business-level consequences cascading from DREs (event chains) |
 
 In TLCTC:
 
 - The **threat** element is implemented as the **10 Top Level Cyber Threat Clusters**, each defined by exactly one **generic vulnerability**. This is the only place threats are classified.
-- **Consequences** are recorded as **Data Risk Events** (Loss of Confidentiality, Integrity, or Availability) and subsequent business risk events and impacts. Outcomes are never threat categories.
+- The **central event** is the **System Risk Event (SRE)** — Loss of Control / System Compromise.
+- **Consequences** follow the event chain **SRE → DRE → BRE\***: Data Risk Events record technical outcomes (Loss of C/I/A); Business Risk Events record cascading business-level consequences. Outcomes are never threat categories.
 - **Controls** are mapped to their position in a Bow-Tie Event: preventive controls reduce likelihood of cluster steps; mitigating controls address detection, response, and recovery after compromise.
 
 ---
@@ -278,6 +280,50 @@ The framework accommodates both patterns. The central event serves as the pivot 
 - **Effect question:** *What consequences occurred? (Which Data Risk Events followed?)*
 
 This separation enables precise incident learning: the same outcome (e.g., "data exposure") can result from different causes, and TLCTC forces analysis to name the cause-side steps consistently.
+
+---
+
+### 1.4.3.1 The Consequence Chain: SRE → DRE → BRE*
+
+![The Consequence Chain](images/tlctc-consequence-chain.svg)
+*Figure 1.4.3.1 — The Consequence Chain. Every node is a risk event. Every Δt is a detection window. All 6 NIST CSF functions apply at each point. BRE chain length is organization-dependent.*
+
+The consequence side of the Bow-Tie follows a structured event chain with three event types:
+
+> **SRE → DRE → BRE\***
+> *(System Risk Event → Data Risk Event → Business Risk Event(s))*
+
+| Event Type | Abbreviation | Definition | Examples |
+| --- | --- | --- | --- |
+| **System Risk Event** | SRE | Loss of Control / System Compromise — the central Bow-Tie event | Attacker achieves RCE, persistent access established |
+| **Data Risk Event** | DRE | Loss of Confidentiality, Integrity, or Availability/Accessibility | Data exfiltrated `[DRE: C]`, records modified `[DRE: I]`, service encrypted `[DRE: Ac]` |
+| **Business Risk Event** | BRE | A discrete, observable business-level event triggered by a DRE or a preceding BRE | Regulatory notification triggered, service outage declared, media coverage begins, customer churn measured, fine imposed |
+
+**BRE Chaining.** Business Risk Events may cascade, with each BRE triggering subsequent BREs. The chain length is organization- and incident-dependent:
+
+```
+SRE → DRE → BRE₁ → BRE₂ → BRE₃ → ... → BREₙ
+```
+
+Example — credential-based data breach:
+
+```
+SRE (system compromise)
+ → DRE [C] (customer database exfiltrated)
+  → BRE₁ (data published on leak site)
+   → BRE₂ (GDPR notification obligation triggered)
+    → BRE₃ (media reports breach — reputation event)
+     → BRE₄ (customer churn accelerates)
+      → BRE₅ (regulatory fine imposed)
+```
+
+**Business Impact (BI) as a role, not a separate type.** An organization's **Risk Appetite** determines at which point a BRE is designated as the terminal **Business Impact (BI)** — the consequence threshold beyond which further causal decomposition is no longer operationally useful. What constitutes BI for one organization may be a mid-chain BRE for another. BI is therefore a **role** a BRE can hold, not a distinct event category.
+
+**Key properties of the consequence chain:**
+
+- Every transition (SRE→DRE, DRE→BRE, BRE→BRE) has its own **Δt** — a detection and intervention window where all six NIST CSF functions (GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER) apply.
+- Not every SRE leads to a DRE (detection may intervene at the central event), and not every DRE leads to a BRE (containment may limit business impact). Controls at each transition point can break the chain.
+- The consequence chain mirrors the cause side: just as attack paths are variable-length sequences of cluster steps (`#9 → #4 → #1 → #7`), consequence chains are variable-length sequences of risk events (`SRE → DRE → BRE₁ → ... → BREₙ`).
 
 ---
 

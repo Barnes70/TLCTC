@@ -161,13 +161,21 @@ A class of implementation flaw where a program writes data beyond the boundaries
 
 See also: Exploiting Server (#2), Exploiting Client (#3), Implementation Flaw
 
-### Business Risk Event
+### Business Risk Event (BRE)
 
-An event on the consequence side of the Bow-Tie model that results from Data Risk Events cascading into business-level impacts. Business Risk Events include financial losses, reputational damage, operational disruptions, regulatory fines, and legal consequences. They represent the ultimate impact chain: Threat → System Compromise → Data Risk Event → Business Risk Event(s).
+A discrete, observable business-level event on the consequence side of the Bow-Tie model, triggered by a Data Risk Event or by a preceding BRE. Examples include regulatory notification obligations, service outage declarations, media coverage, customer churn, and regulatory fines. BREs may **chain**: each BRE can trigger subsequent BREs, forming a variable-length consequence sequence (`SRE → DRE → BRE₁ → BRE₂ → ... → BREₙ`). Each BRE→BRE transition has its own Δt representing a detection and intervention window. An organization's Risk Appetite determines at which point a BRE is designated as the terminal **Business Impact (BI)** — BI is a role a BRE can hold, not a separate event category.
 
-**Reference:** V1.9.1 §The Anatomy of Risk
+**Reference:** §1.4.3.1 (The Consequence Chain), V1.9.1 §The Anatomy of Risk
 
-See also: Data Risk Event (DRE), Consequences, Event Chain
+See also: System Risk Event (SRE), Data Risk Event (DRE), Business Impact (BI), Event Chain, Consequences
+
+### Business Impact (BI)
+
+A **role** assigned to the terminal Business Risk Event in a consequence chain — the BRE beyond which further causal decomposition is no longer operationally useful for a given organization. BI is not a separate event category; it is the point in the BRE chain where an organization's **Risk Appetite** boundary is reached. What constitutes BI for one organization may be a mid-chain BRE for another: a €50K regulatory fine may be terminal impact for a startup but a mid-chain event for a multinational. The BI designation is therefore context-dependent and organization-specific.
+
+**Reference:** §1.4.3.1 (The Consequence Chain)
+
+See also: Business Risk Event (BRE), Risk Appetite, Event Chain
 
 ### BxIs (Base Level Indicators)
 
@@ -302,7 +310,9 @@ The probability of occurrence of a cyber event in which control over IT systems 
 
 ### Cyber Risk Event
 
-A potential occurrence that could lead to a system breach or compromise. Distinguished from Cyber Incidents (which have already occurred) and Data Risk Events (which are consequences). The central event in the Cyber Bow-Tie model is "Loss of Control" or "System Compromise".
+A potential occurrence that could lead to a system breach or compromise. Distinguished from Cyber Incidents (which have already occurred) and Data Risk Events (which are consequences). The central event in the Cyber Bow-Tie model is the **System Risk Event (SRE)** — "Loss of Control" or "System Compromise".
+
+See also: System Risk Event (SRE)
 
 ### CWE (Common Weakness Enumeration) *(Industry Term)*
 
@@ -515,11 +525,11 @@ See also: Fast Velocity Class, SIEM, SOAR
 
 ### Event Chain
 
-A causal sequence where one outcome event triggers subsequent events, cascading from the central event through Data Risk Events to Business Risk Events. In the Bow-Tie model, event chains explain how a single system compromise can propagate into multiple regulatory, financial, and operational consequences. Example: System Compromise (E1) → Data Breach involving PII (E2) → GDPR notification obligation (E3a) + NIS2 incident report (E3b). Understanding event chains is critical for designing Respond/Recover controls and regulatory compliance workflows.
+A causal sequence where one outcome event triggers subsequent events, following the consequence chain **SRE → DRE → BRE\***. The chain cascades from the System Risk Event (central event) through Data Risk Events to one or more Business Risk Events. BREs may themselves chain (`BRE₁ → BRE₂ → ... → BREₙ`), with each transition having its own Δt representing a detection and intervention window where all six NIST CSF functions apply. Example: System Compromise (SRE) → Data Breach involving PII (DRE [C]) → GDPR notification obligation (BRE₁) + NIS2 incident report (BRE₂) → Regulatory fine (BRE₃). Understanding event chains is critical for designing Respond/Recover controls and regulatory compliance workflows.
 
-**Reference:** V1.9.1 §Data Risk Event Types, §Clarification on Central Event Position
+**Reference:** §1.4.3.1 (The Consequence Chain), V1.9.1 §Data Risk Event Types, §Clarification on Central Event Position
 
-See also: Eₙ Event Notation, RS Container, Propagated PR
+See also: System Risk Event (SRE), Data Risk Event (DRE), Business Risk Event (BRE), Business Impact (BI), Eₙ Event Notation, RS Container, Propagated PR
 
 ### Evil Maid Attack *(Industry Term)*
 
@@ -733,9 +743,11 @@ A Data Risk Event outcome where an attacker gains unauthorized access to data. F
 
 ### Loss of Control / System Compromise
 
-The central event in the Cyber Bow-Tie model, representing the point at which the attacker achieves unauthorized control over a system's behavior, privileges, data, or trust relationships. This serves as the pivot point between threat realization (cause) and potential consequences (effect). Some attacks may have delayed data risk events (creating a detection window), while others lead to immediate data risk events. Examples: A server exploit (#2) enabling remote code execution leading to malware (#7) represents loss of control before any data breach occurs. In contrast, successful SQL injection (#2) can immediately result in Loss of Confidentiality.
+The central event in the Cyber Bow-Tie model, abbreviated **SRE** (System Risk Event), representing the point at which the attacker achieves unauthorized control over a system's behavior, privileges, data, or trust relationships. This serves as the pivot point between threat realization (cause) and potential consequences (effect). The SRE is the first event in the consequence chain: **SRE → DRE → BRE\***. Some attacks may have delayed data risk events (creating a detection window), while others lead to immediate data risk events. Examples: A server exploit (#2) enabling remote code execution leading to malware (#7) represents loss of control before any data breach occurs. In contrast, successful SQL injection (#2) can immediately result in Loss of Confidentiality.
 
-**Reference:** §1.4.3 (Central Event)
+**Reference:** §1.4.3 (Central Event), §1.4.3.1 (The Consequence Chain)
+
+See also: System Risk Event (SRE), Data Risk Event (DRE), Business Risk Event (BRE)
 
 ### Loss of Integrity (LoI)
 
@@ -1294,6 +1306,14 @@ A category of security tools that enable automated incident response through pre
 
 See also: Fast Velocity Class, EDR, SIEM
 
+### System Risk Event (SRE)
+
+The central event in the TLCTC Cyber Bow-Tie model: **Loss of Control / System Compromise**. The SRE is the pivot point between the cause side (threat clusters exploiting generic vulnerabilities) and the consequence side (data and business risk events). It is the first event in the consequence chain **SRE → DRE → BRE\***, where each transition has its own Δt representing a detection and intervention window. Not every SRE leads to a DRE — detection and containment at the central event can break the chain before data-level consequences materialize.
+
+**Reference:** §1.4.3 (Central Event), §1.4.3.1 (The Consequence Chain)
+
+See also: Loss of Control / System Compromise, Data Risk Event (DRE), Business Risk Event (BRE)
+
 ### Social Engineering (#9)
 
 A threat cluster where an attacker psychologically manipulates individuals into performing actions counter to their or their organization's best interests, such as divulging confidential information, granting access, executing code, or bypassing security procedures. The generic vulnerability is human psychological factors: gullibility, trust, ignorance, fear, urgency, authority bias, curiosity, or general compromisability. Often serves as the initial vector enabling other threat clusters (e.g., #9→#4 for credential harvesting, #9→#7 for malware installation, #9→#1 for feature misconfiguration).
@@ -1390,7 +1410,7 @@ A top-level threat cluster on the cause side of the bow-tie, where an attacker c
 
 ### System Compromise
 
-Alternative term for "Loss of Control" in the Cyber Bow-Tie model, representing the central cyber risk event where an attacker gains unauthorized control over a system through exploitation of one or more threat clusters.
+Alternative term for "Loss of Control" in the Cyber Bow-Tie model. See **System Risk Event (SRE)** and **Loss of Control / System Compromise**.
 
 ---
 

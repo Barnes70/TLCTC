@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1020 235" xmlns="http://www.w3.org/2000/svg" style="font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">
+    <defs>
+        <marker id="chainArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+        </marker>
+        <filter id="shadow" x="-5%" y="-5%" width="110%" height="120%">
+            <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/>
+        </filter>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1020" height="235" fill="#f8f9fa" rx="6"/>
+
+    <!-- Title -->
+    <text x="510" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">The Consequence Chain: SRE → DRE → BRE*</text>
+
+    <!-- ======================== -->
+    <!-- CAUSE SIDE               -->
+    <!-- ======================== -->
+
+    <!-- Threat node -->
+    <g transform="translate(30, 48)">
+        <rect x="0" y="0" width="120" height="56" rx="8" fill="#ffffff" stroke="#1e3a5f" stroke-width="2" filter="url(#shadow)"/>
+        <text x="60" y="24" text-anchor="middle" font-weight="700" font-size="12" fill="#1e3a5f">Threat</text>
+        <text x="60" y="40" text-anchor="middle" font-size="9.5" fill="#6b7280">Clusters #1–10</text>
+    </g>
+
+    <!-- Arrow: Threat → SRE -->
+    <line x1="150" y1="76" x2="187" y2="76" stroke="#6b7280" stroke-width="1.8" marker-end="url(#chainArrow)"/>
+    <text x="168" y="64" text-anchor="middle" font-size="9" font-weight="700" fill="#6b7280">Δt</text>
+
+    <!-- ======================== -->
+    <!-- CONSEQUENCE SIDE         -->
+    <!-- ======================== -->
+
+    <!-- SRE node -->
+    <g transform="translate(195, 48)">
+        <rect x="0" y="0" width="120" height="56" rx="8" fill="#fff5f5" stroke="#c00000" stroke-width="2" filter="url(#shadow)"/>
+        <text x="60" y="20" text-anchor="middle" font-weight="700" font-size="12" fill="#c00000">SRE</text>
+        <text x="60" y="34" text-anchor="middle" font-size="8.5" fill="#4b5563">System Risk Event</text>
+        <text x="60" y="46" text-anchor="middle" font-size="8" fill="#9ca3af">Loss of Control</text>
+    </g>
+
+    <!-- Arrow: SRE → DRE -->
+    <line x1="315" y1="76" x2="352" y2="76" stroke="#6b7280" stroke-width="1.8" marker-end="url(#chainArrow)"/>
+    <text x="333" y="64" text-anchor="middle" font-size="9" font-weight="700" fill="#6b7280">Δt</text>
+
+    <!-- DRE node -->
+    <g transform="translate(360, 48)">
+        <rect x="0" y="0" width="120" height="56" rx="8" fill="#fff8f0" stroke="#c04000" stroke-width="2" filter="url(#shadow)"/>
+        <text x="60" y="20" text-anchor="middle" font-weight="700" font-size="12" fill="#c04000">DRE</text>
+        <text x="60" y="34" text-anchor="middle" font-size="8.5" fill="#4b5563">Data Risk Event</text>
+        <text x="60" y="46" text-anchor="middle" font-size="8" fill="#9ca3af">C, I, or A</text>
+    </g>
+
+    <!-- Arrow: DRE → BRE₁ -->
+    <line x1="480" y1="76" x2="517" y2="76" stroke="#6b7280" stroke-width="1.8" marker-end="url(#chainArrow)"/>
+    <text x="498" y="64" text-anchor="middle" font-size="9" font-weight="700" fill="#6b7280">Δt</text>
+
+    <!-- BRE₁ node -->
+    <g transform="translate(525, 48)">
+        <rect x="0" y="0" width="100" height="56" rx="8" fill="#fffbeb" stroke="#92730c" stroke-width="2" filter="url(#shadow)"/>
+        <text x="50" y="20" text-anchor="middle" font-weight="700" font-size="12" fill="#78650b">BRE₁</text>
+        <text x="50" y="34" text-anchor="middle" font-size="8.5" fill="#4b5563">Business Risk</text>
+        <text x="50" y="46" text-anchor="middle" font-size="8" fill="#9ca3af">Event</text>
+    </g>
+
+    <!-- Arrow: BRE₁ → BRE₂ -->
+    <line x1="625" y1="76" x2="652" y2="76" stroke="#6b7280" stroke-width="1.8" marker-end="url(#chainArrow)"/>
+    <text x="638" y="64" text-anchor="middle" font-size="9" font-weight="700" fill="#6b7280">Δt</text>
+
+    <!-- BRE₂ node -->
+    <g transform="translate(660, 48)">
+        <rect x="0" y="0" width="100" height="56" rx="8" fill="#fffbeb" stroke="#92730c" stroke-width="2" filter="url(#shadow)"/>
+        <text x="50" y="20" text-anchor="middle" font-weight="700" font-size="12" fill="#78650b">BRE₂</text>
+        <text x="50" y="34" text-anchor="middle" font-size="8.5" fill="#4b5563">Business Risk</text>
+        <text x="50" y="46" text-anchor="middle" font-size="8" fill="#9ca3af">Event</text>
+    </g>
+
+    <!-- Arrow: BRE₂ → BREₙ -->
+    <line x1="760" y1="76" x2="772" y2="76" stroke="#6b7280" stroke-width="1.8" stroke-dasharray="3 2"/>
+    <text x="783" y="80" text-anchor="middle" font-size="12" fill="#6b7280">···</text>
+    <line x1="794" y1="76" x2="817" y2="76" stroke="#6b7280" stroke-width="1.8" marker-end="url(#chainArrow)"/>
+    <text x="790" y="64" text-anchor="middle" font-size="9" font-weight="700" fill="#6b7280">Δt</text>
+
+    <!-- BREₙ node (BI role) -->
+    <g transform="translate(825, 48)">
+        <rect x="0" y="0" width="100" height="56" rx="8" fill="#fffbeb" stroke="#92730c" stroke-width="2.5" filter="url(#shadow)"/>
+        <text x="50" y="20" text-anchor="middle" font-weight="700" font-size="12" fill="#78650b">BREₙ</text>
+        <text x="50" y="34" text-anchor="middle" font-size="8.5" fill="#4b5563">Terminal</text>
+        <text x="50" y="46" text-anchor="middle" font-size="8" fill="#9ca3af">= BI (org-defined)</text>
+    </g>
+
+    <!-- BI annotation bracket -->
+    <path d="M 830 106 L 830 116 L 920 116 L 920 106" fill="none" stroke="#78650b" stroke-width="1" stroke-dasharray="3 2"/>
+    <text x="875" y="128" text-anchor="middle" font-size="8" font-style="italic" fill="#78650b">Risk Appetite boundary</text>
+
+    <!-- ======================== -->
+    <!-- 6 NIST FUNCTIONS LABELS  -->
+    <!-- ======================== -->
+    <text x="255" y="118" text-anchor="middle" font-size="8" fill="#9ca3af">↑ 6 NIST functions</text>
+    <text x="420" y="118" text-anchor="middle" font-size="8" fill="#9ca3af">↑ 6 NIST functions</text>
+    <text x="575" y="118" text-anchor="middle" font-size="8" fill="#9ca3af">↑ 6 NIST functions</text>
+    <text x="710" y="118" text-anchor="middle" font-size="8" fill="#9ca3af">↑ 6 NIST functions</text>
+    <text x="875" y="118" text-anchor="middle" font-size="8" fill="#9ca3af">↑ 6 NIST functions</text>
+
+    <!-- ======================== -->
+    <!-- CAUSE / CONSEQUENCE ZONE -->
+    <!-- ======================== -->
+    <line x1="172" y1="38" x2="172" y2="140" stroke="#6b7280" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.5"/>
+    <text x="90" y="146" text-anchor="middle" font-size="8" font-weight="600" fill="#1e3a5f" opacity="0.7">CAUSE SIDE</text>
+    <text x="590" y="146" text-anchor="middle" font-size="8" font-weight="600" fill="#c04000" opacity="0.7">CONSEQUENCE SIDE</text>
+
+    <!-- ======================== -->
+    <!-- GOVERN BAR               -->
+    <!-- ======================== -->
+    <rect x="30" y="160" width="895" height="26" rx="5" fill="#1e3a5f" fill-opacity="0.08" stroke="#1e3a5f" stroke-width="0.8" stroke-opacity="0.25"/>
+    <text x="477" y="177" text-anchor="middle" font-size="10" font-weight="700" fill="#1e3a5f" opacity="0.8">GOVERN (Cross-cutting: Risk Appetite, Responsibilities, Metrics)</text>
+
+    <!-- ======================== -->
+    <!-- Caption                  -->
+    <!-- ======================== -->
+    <text x="510" y="205" text-anchor="middle" font-size="9" fill="#6b7280">Every node is a risk event. Every Δt is a detection window. All 6 NIST CSF functions apply at each point.</text>
+    <text x="510" y="218" text-anchor="middle" font-size="9" fill="#6b7280">BRE chain length is organization- and incident-dependent. The terminal BRE is designated BI by the organization's Risk Appetite.</text>
+</svg>
