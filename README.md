@@ -367,7 +367,7 @@ tlctc/
 │   ├── tlctc-v2.0-whitepaper.md              # Canonical V2.0 White Paper
 │   ├── tlctc-glossary.md                     # Comprehensive Definitions
 │   ├── npm-supply-chain-blog-final.md        # npm supply chain threat analysis
-│   ├── json-architecture.pdf                 # JSON Architecture Specification
+│   ├── tlctc-v2.0-json-architecture.md       # JSON Architecture Specification
 │   ├── why-exactly-ten.pdf                   # Framework Architecture Rationale
 │   └── images/                               # Diagrams and visual assets
 │       ├── tlctc-bowtie-anchor-diagram.svg
