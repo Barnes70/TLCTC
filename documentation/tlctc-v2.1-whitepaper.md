@@ -4,7 +4,7 @@
 
 # Top Level Cyber Threat Clusters (TLCTC)
 
-## Version 2.0 — Canonical Definitions
+## Version 2.1 — Canonical Definitions
 
 &nbsp;
 
@@ -22,7 +22,7 @@ March 2026
 
 ## Abstract
 
-Despite the proliferation of cybersecurity standards bearing "Cyber" in their names—from ISO/IEC 27001 to NIST CSF 2.0, CMMC 2.0, and EU regulations—a comprehensive analysis reveals a critical gap: the absence of a unified, cause-oriented cyber threat taxonomy that enables consistent risk assessment across organizations and sectors. Top Level Cyber Threat Clusters (TLCTC) addresses this foundational deficit by providing a cause-oriented, actor-agnostic framework that establishes a consistent language for describing cyber risk through ten non-overlapping cyber threat clusters spanning human, physical, and digital domains. Each cluster classifies a distinct attack vector according to the generic vulnerability it initially targets, enabling sequential expression of real attack paths from initial compromise to follow-on steps—without conflating threats with outcomes such as data loss, fraud, or service disruption. By separating a strategic management view (cluster-level risk and generic vulnerabilities) from an operational security view (concrete vulnerabilities, techniques, and procedures), TLCTC creates a stable backbone for governance, control design, threat intelligence, and incident learning. Its primary value is semantic clarity: TLCTC reduces ambiguity across stakeholders and makes complex cyber security discussions comparable, measurable, and decision-ready across technologies, environments, and organizations—providing the taxonomic foundation that existing "cyber" standards conspicuously lack.
+Despite the proliferation of cybersecurity standards bearing "Cyber" in their names—from ISO/IEC 27001 to NIST CSF 2.0, CMMC 2.0, and EU regulations—a comprehensive analysis reveals a critical gap: the absence of a unified, cause-oriented cyber threat taxonomy that enables consistent risk assessment across organizations and sectors. Top Level Cyber Threat Clusters (TLCTC) addresses this foundational deficit by providing a cause-oriented, actor-agnostic framework that establishes a consistent language for describing cyber risk through ten non-overlapping cyber threat clusters spanning human, physical, and digital domains. Each cluster classifies a distinct attack vector according to the generic vulnerability it initially targets, enabling sequential expression of real attack paths from initial compromise to follow-on steps—without conflating threats with outcomes such as data loss, fraud, or service disruption. By separating a strategic management view (cluster-level risk and generic vulnerabilities) from an operational security view (concrete vulnerabilities, techniques, and procedures), TLCTC creates a stable backbone for governance, control design, threat intelligence, and incident learning. Its primary value is semantic clarity: TLCTC reduces ambiguity across stakeholders and makes complex cybersecurity discussions comparable, measurable, and decision-ready across technologies, environments, and organizations—providing the taxonomic foundation that existing "cyber" standards conspicuously lack.
 
 ## PART I: THE TAXONOMY
 
@@ -201,7 +201,7 @@ This document provides **normative** wording for the 10 TLCTC clusters, designed
 
 ---
 
-This section defines **how to classify** any observed or hypothesized attacker action into TLCTC. It is the **mandatory grammar** for classification and **MUST be applied before** consulting individual cluster definitions in Sections 2.1–2.10.
+This section defines **how to classify** any observed or hypothesized attacker action into TLCTC. It is the **mandatory grammar** for classification and **MUST be applied before** consulting individual cluster definitions in the individual cluster definitions below.
 
 The classification grammar consists of:
 
@@ -214,7 +214,7 @@ The classification grammar consists of:
 - **Topology classification** — bridge vs internal determination
 - **Minimal classification procedure** — the operational workflow
 
-> **Prerequisite:** This section assumes familiarity with the foundational axioms defined in Section 1.2. In particular, Axiom VI (one step = one generic vulnerability = one cluster) and Axiom VII (attack vectors are defined by the initial generic vulnerability) are referenced throughout. Axiom I (no system-type differentiation) and Axiom III (threats are causes, not outcomes) define the scope and separation constraints used by this grammar.
+> **Prerequisite:** This section assumes familiarity with the foundational axioms defined in Section 2. In particular, Axiom VI (one step = one generic vulnerability = one cluster) and Axiom VII (attack vectors are defined by the initial generic vulnerability) are referenced throughout. Axiom I (no system-type differentiation) and Axiom III (threats are causes, not outcomes) define the scope and separation constraints used by this grammar.
 
 ---
 
@@ -1638,7 +1638,7 @@ Threat topology is essential for **control ownership** and **defense alignment**
 - **Internal threats** can be primarily addressed within the **Software security** control regime.
 - **Bridge threats** require controls in **multiple regimes** (human, physical, third-party governance) and often involve **organizational handoffs**.
 
-> **Reminder:** Topology does **not** change cluster classification. Classification remains anchored in the **initial generic vulnerability** per Section 2.0.
+> **Reminder:** Topology does **not** change cluster classification. Classification remains anchored in the **initial generic vulnerability** per the Section 4 classification grammar.
 
 ---
 
@@ -1840,7 +1840,7 @@ Example:
 
 #### T-4 — Topology Does Not Replace Classification
 
-Bridge/internal topology **MUST NOT** be used to decide the cluster. First classify the step per Section 2.0; then annotate topology/boundaries if applicable.
+Bridge/internal topology **MUST NOT** be used to decide the cluster. First classify the step per the Section 4 classification grammar; then annotate topology/boundaries if applicable.
 
 ---
 
@@ -2127,11 +2127,11 @@ The threat category is always the cause-side exploited generic vulnerability (cl
 
 Because TLCTC isolates cause-side steps, each step can carry additional attributes without confusing cause with consequence:
 
-- **Attack Velocity (Δt):** Time between successive cluster steps (see Section 4)
-- **Domain Boundaries (||):** Points where responsibility spheres change (see Section 5)
+- **Attack Velocity (Δt):** Time between successive cluster steps (see Section 12)
+- **Domain Boundaries (||):** Points where responsibility spheres change (see Sections 5 and 11.3)
 - **Confidence annotations:** Evidence strength for each step
 
-This separation is foundational to the advanced notation and analysis capabilities introduced in Part I Sections 3–5.
+This separation is foundational to the advanced notation and analysis capabilities introduced in Sections 5, 11, and 12.
 
 ---
 
@@ -2162,7 +2162,109 @@ The rules established in this section—cause-side classification, separate outc
 
 ## 7. From Functions to Control Objectives: Why NIST CSF Needs an Event Lifecycle Structure
 
-*[Section to be written — dedicated framing for the NIST CSF restructuring into event lifecycle control objectives]*
+NIST CSF gives organizations a stable **verb set** for cybersecurity management: **Govern, Identify, Protect, Detect, Respond, Recover**. That is valuable, but verbs alone do not tell us **which event, transition, or control objective** they are attached to. Without an event anchor, teams routinely mix together weaknesses, realized attack steps, compromise, data impact, and business consequences inside the same control discussion. The result is semantic drift: the same control may be described as preventive in one context, detective in another, and responsive in a third—without anyone stating **which point in the event chain** is actually being addressed.
+
+TLCTC resolves the **cause language** problem by naming the generic vulnerability exploited in each step (`#1`–`#10`). The Bow-Tie anchor in Section 6 resolves the **event structure** problem by separating:
+
+- **cause-side threat steps** (TLCTC clusters / attack paths)
+- the **central event** (*Loss of Control / System Compromise*)
+- **Data Risk Events** (`C`, `I`, `A`, optionally `Av` / `Ac`)
+- downstream **Business Risk Events** and terminal **Business Impact**
+
+This event-centered structure is the missing frame that turns the CSF functions from a useful list of verbs into a precise **control-objective language**.
+
+---
+
+### 7.1 The problem: functions without event anchors create ambiguity
+
+A function-only interpretation of NIST CSF sounds tidy, but it leaves several critical questions unanswered:
+
+- **Identify what?** A weakness, an exposed attack surface, a realized compromise, or a business consequence?
+- **Protect against what?** A cluster step, a loss-of-control condition, or an impact chain?
+- **Detect when?** Before compromise, at compromise, or after data loss has already begun?
+- **Respond to what exactly?** A technical step, the central event, or a business disruption?
+- **Recover to which state?** Restored service, restored trustworthy system state, or reduced recurrence probability?
+
+These are not semantic niceties. They determine ownership, measurement, and whether post-incident learning remains comparable. If a control statement does not identify its event target, different teams will map the same problem differently and the control model becomes non-auditable.
+
+---
+
+### 7.2 The required anchor: the cyber event lifecycle
+
+For cyber risk, the natural anchor is an **event lifecycle** derived from the Bow-Tie structure:
+
+`Threat Step(s) (#1–#10) → Loss of Control / System Compromise → Data Risk Event(s) → Business Risk Event chain → Terminal Business Impact`
+
+This structure matters because each node answers a different management question:
+
+| Lifecycle point | Primary management question | Typical control emphasis |
+| --- | --- | --- |
+| Threat exposure / precondition | *Which generic vulnerability is present?* | GOV, ID, PR |
+| Threat step realized | *Did the attacker exploit the cluster step?* | DE, RS |
+| Loss of Control / System Compromise | *Has the attacker achieved unauthorized control?* | DE, RS |
+| Data Risk Event | *What confidentiality / integrity / availability / accessibility effect occurred?* | RS, RC |
+| Business Risk Event chain | *What operational or commercial consequences are unfolding?* | GV, RS, RC |
+| Post-event improvement | *What must change to reduce recurrence?* | GV, ID, PR, RC |
+
+The table shows **primary emphasis**, not exclusivity. In a mature program, all six CSF functions can be applied across the lifecycle. But they become meaningful only when anchored to a **specific node or transition**.
+
+---
+
+### 7.3 Why the central event matters
+
+The central event **Loss of Control / System Compromise** is the decisive pivot. It separates:
+
+- **threat realization** from
+- **consequence realization**
+
+That separation is operationally essential for NIST CSF interpretation. A control may fail to prevent `#2 Exploiting Server`, yet still succeed in detecting compromise before a Data Risk Event occurs. Conversely, an organization may detect a business outage quickly while having failed much earlier at threat identification, prevention, and compromise detection.
+
+Without the central event, teams collapse these different control objectives into outcome labels such as “breach prevention” or “ransomware response,” which obscures where the control should actually act. With the central event in place, the function logic becomes far clearer:
+
+- **IDENTIFY / PROTECT** primarily shape the left side of the Bow-Tie
+- **DETECT** evaluates whether the organization can recognize the relevant event or transition in time
+- **RESPOND** targets containment and eradication once the relevant event has materialized
+- **RECOVER** restores trustworthy capability and reduces recurrence
+- **GOVERN** provides the cross-cutting ownership, accountability, assurance, and risk appetite structure for the whole chain
+
+---
+
+### 7.4 Δt turns lifecycle structure into measurable control objectives
+
+An event lifecycle becomes operationally powerful when paired with **Attack Velocity (Δt)**. Each transition between adjacent steps creates a finite defensive window. That means controls are not judged only by whether they exist, but by whether they act **fast enough** relative to attacker movement.
+
+Examples:
+
+- A control that detects `#4 Identity Theft` after the attacker has already executed `#1 → #7` did not fail at detection in the abstract; it failed against the **available Δt window**.
+- A response playbook that contains malware after the first Data Risk Event may still be valuable, but it belongs to a different lifecycle point than the detective control that should have interrupted the earlier transition.
+
+Therefore, an event lifecycle structure is not just cleaner terminology. It is the prerequisite for **measurable control effectiveness**.
+
+---
+
+### 7.5 The resulting control-objective grammar
+
+Once TLCTC clusters and the event lifecycle are combined, control objectives can be written in a much more rigorous form:
+
+> **[CSF Function] + [Lifecycle Point / Transition] + [TLCTC Cluster or Event Node] + [Objective]**
+
+Examples:
+
+- **IDENTIFY** weaknesses enabling `#2 Exploiting Server` on internet-facing services
+- **PROTECT** against credential misuse in `#4 Identity Theft`
+- **DETECT** the transition from `#9` to `#4` before Loss of Control occurs
+- **RESPOND** to `#7 Malware` execution after compromise is confirmed
+- **RECOVER** business capability after `[DRE: Ac]` caused by a ransomware chain
+
+This grammar preserves the distinction between **cause**, **event**, and **effect**, while still fitting naturally into the CSF model.
+
+---
+
+### 7.6 Consequence for framework design
+
+The implication is straightforward: **NIST CSF needs an event lifecycle structure if it is to be used as a precise cyber control language rather than as a high-level activity checklist.** TLCTC provides the cause-side taxonomy. The Bow-Tie provides the lifecycle anchor. Together they allow CSF functions to be attached to the right point in the chain, measured against the right transition, and reviewed after incidents without semantic drift.
+
+This is why the next chapter maps TLCTC clusters into a **TLCTC × NIST CSF** control matrix: the matrix only becomes operationally meaningful once the functions are interpreted against an explicit event lifecycle.
 
 ---
 
@@ -2248,7 +2350,7 @@ Use this template for each cluster `#X`:
 - The remaining functions describe how that governance is implemented operationally for the cluster.
 - Local Controls are implemented at the asset, application, or system level.
 - Umbrella Controls are shared, enterprise-wide capabilities that support multiple clusters.
-- “Local vs Umbrella” is explained in Section 8.2.
+- “Local vs Umbrella” is explained in Section 9.
 
 #### 8.1.5 Worked example: `#2 Exploiting Server`
 
@@ -2288,7 +2390,7 @@ For any incident record with a TLCTC attack path (e.g., `#9 → #7 → #4 → (#
    - Which controls should have prevented the step?
    - Which controls should have detected it *before the next step*?
    - Which response control should have contained it?
-3. Add **Δt** where known to evaluate whether detection/response was fast enough (see 8.3.4).
+3. Add **Δt** where known to evaluate whether detection/response was fast enough (see Section 12).
 
 This makes post-incident reviews comparable across incidents: the same cluster step always maps to the same objective structure.
 
@@ -2656,7 +2758,7 @@ This notation enables precise velocity measurement per transition and DCS calcul
 
 ## 11. Attack Path Notation
 
-This section defines the **syntax and semantics** for expressing TLCTC attack sequences as compact, shareable strings. It is **pure notation mechanics**—cluster **classification decisions** are defined in **Section 2.0**.
+This section defines the **syntax and semantics** for expressing TLCTC attack sequences as compact, shareable strings. It is **pure notation mechanics**—cluster **classification decisions** are defined in **Section 4**.
 
 > **Reminder:** An attack path expresses **cause-side attacker steps** (threats exploiting generic vulnerabilities). Outcomes (e.g., data loss) are recorded separately as **Data Risk Events (DRE)** and **MUST NOT** be used as step substitutes.
 
@@ -2668,7 +2770,7 @@ This section defines the **syntax and semantics** for expressing TLCTC attack se
 
 A **TLCTC attack path** is an **ordered list** of **Attack Steps** written as a sequence of cluster references connected by operators.
 
-- Each **Attack Step MUST map to exactly one TLCTC cluster**, representing the **initial generic vulnerability exploited** in that step (see Section 2.0 and Axiom VI).
+- Each **Attack Step MUST map to exactly one TLCTC cluster**, representing the **initial generic vulnerability exploited** in that step (see Section 4 and Axiom VI).
 - The same cluster **MAY** appear multiple times in a single path (retries, re-entry, multiple systems, repeated actions).
 
 #### 11.0.2 Granularity Rules
@@ -3180,8 +3282,8 @@ This section defines **Attack Velocity (Δt)** as a **temporal dimension** of TL
 
 Attack Velocity answers a different question than classification:
 
-- **Section 2.0** answers: *“What generic vulnerability was exploited?”* (cluster)
-- **Section 3** answers: *“In what order did steps occur?”* (notation)
+- **Section 4** answers: *“What generic vulnerability was exploited?”* (cluster)
+- **Section 11** answers: *“In what order did steps occur?”* (notation)
 - **This section** answers: *“How much time passed between steps?”* (Δt)
 
 Δt is a **performance-relevant** property: it describes the defender’s available time window between adjacent attacker steps. Δt does **not** change cluster classification.
@@ -3506,7 +3608,7 @@ If some Δt values are unknown:
 
 ## 13. Architectural Application
 
-TLCTC Framework — Version 2.0
+TLCTC Framework — Version 2.1
 
 ### 13.1 Introduction
 
@@ -5299,7 +5401,7 @@ Related Resources
   - Comparative radar views across sectors or missions
 - Guardrails:
   - Threat actors are **not** clusters; they **use** clusters (Axiom IV)
-  - Cluster classification remains evidence-driven via Section 2.0 grammar
+  - Cluster classification remains evidence-driven via Section 4 classification grammar
 
 **Remarks:**
 
@@ -5314,15 +5416,15 @@ Related Resources
 
 ## Appendix A — Glossary
 
-The complete TLCTC V2.0 glossary is maintained as a standalone reference document:
+The complete TLCTC v2.0 / v2.1 glossary is provided as a companion reference document:
 
-**[tlctc-glossary.md](tlctc-glossary.md)**
+**[tlctc-glossary.pdf](tlctc-glossary.pdf)**
 
-This glossary contains all defined terms from the TLCTC framework specification V2.0, organized alphabetically. Each entry includes cross-references to the section(s) where the term is normatively defined or substantively discussed in this whitepaper. The glossary merges definitions from both the canonical whitepaper and the extended framework documentation to provide a single, comprehensive reference.
+This glossary contains the defined TLCTC terms used across the framework documentation, organized alphabetically with cross-references to the relevant sections in this white paper. It serves as a companion reference and does not replace the normative definitions in this specification.
 
 ---
 
-*TLCTC Framework — Version 2.1 Outlook -*
+*TLCTC Framework — Version 2.1*
 
 ---
 
@@ -5337,9 +5439,9 @@ This glossary contains all defined terms from the TLCTC framework specification 
 **Content:**
 
 - Short, canonical scenarios designed to validate:
-  - Cluster classification (Section 2.0)
-  - Notation correctness (Section 3)
-  - Boundary handling (Sections 3 & 5)
+  - Cluster classification (Section 4)
+  - Notation correctness (Section 11)
+  - Boundary handling (Sections 11 & 5)
   - Mandatory recordings (e.g., #7 on FEC execution)
 - Each vector includes:
   - Scenario (minimal)
@@ -5356,7 +5458,7 @@ This glossary contains all defined terms from the TLCTC framework specification 
 
 #### B2 Case Studies *(Non-Normative / Evolvable)*
 
-**Content: (Part of Version 2.1)**
+**Content:**
 
 - Longer narrative examples (campaigns, incidents) showing:
   - Expanded paths with confidence annotations
@@ -5542,14 +5644,14 @@ Each example is written as:
   - Deprecated terminology
 
 - Changes from V2.0 to V2.1 *(additive, backward-compatible)*
-  - **Transit Boundary Operator (`⇒`):** New operator to annotate responsibility spheres that relay/carry attacks without being source or target (§3.3.5)
-  - **Intra-System Boundary Operator (`|...|`):** New operator to annotate boundary crossings within a single host — sandbox escapes, privilege escalation, process injection, VM escape (§3.3.6)
-  - **R-TRANSIT-3:** Vendor code on target device is NOT transit; classify by R-ROLE (§2.2.4)
-  - **R-INTRA-7:** Intra-system boundaries never change cluster classification (§2.2.4)
-  - **R-INTRA-9:** `memory` boundary type reserved/deferred (§2.2.4)
-  - Updated ABNF grammar to include transit arrow (`⇒`), `SPHERE_LIST`, and `INTRA_BOUNDARY` productions (§3.7)
-  - Updated conformance rules to recognize V2.1 operators (§3.6)
+  - **Transit Boundary Operator (`⇒`):** New operator to annotate responsibility spheres that relay/carry attacks without being source or target (Section 11.3.5)
+  - **Intra-System Boundary Operator (`|...|`):** New operator to annotate boundary crossings within a single host — sandbox escapes, privilege escalation, process injection, VM escape (Section 11.3.6)
+  - **R-TRANSIT-3:** Vendor code on target device is NOT transit; classify by R-ROLE (Section 4.2.4)
+  - **R-INTRA-7:** Intra-system boundaries never change cluster classification (Section 4.2.4)
+  - **R-INTRA-9:** `memory` boundary type reserved/deferred (Section 4.2.4)
+  - Updated ABNF grammar to include transit arrow (`⇒`), `SPHERE_LIST`, and `INTRA_BOUNDARY` productions (Section 11.7)
+  - Updated conformance rules to recognize V2.1 operators (Section 11.6)
 
 ---
 
-*TLCTC Framework — Version 2.0 / 2.1*
+*TLCTC Framework — Version 2.1*
