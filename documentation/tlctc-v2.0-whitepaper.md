@@ -701,6 +701,75 @@ TLCTC provides two equivalent identifiers for the same cluster, serving differen
 | `#9` | `TLCTC-09.00` | Social Engineering |
 | `#10` | `TLCTC-10.00` | Supply Chain Attack |
 
+##### Hierarchical Sub-Cluster Convention
+
+The two-digit suffix `YY` in `TLCTC-XX.YY` **SHOULD** be interpreted hierarchically rather than as a flat counter:
+
+| Position | Meaning | Range |
+| --- | --- | --- |
+| `TLCTC-XX.00` | Top-level cluster (reserved, immutable) | — |
+| `TLCTC-XX.Y0` (tens digit `Y`, ones digit `0`) | **Sub-cluster** — a vector class within the cluster | `.10` – `.90` (9 slots) |
+| `TLCTC-XX.YZ` (ones digit `Z ≠ 0`) | **Refinement** — a specialization within the sub-cluster | `.Y1` – `.Y9` (9 per sub-cluster) |
+
+This convention yields **81 operational positions** per cluster (9 sub-clusters × 9 refinements). At the strategic layer, the corresponding shorthand is `#X.Y` (e.g., `#8.1` maps to `TLCTC-08.10`).
+
+> **Design Principle:** Every sub-cluster **MUST** answer the question: *"Through which vector does the attacker reach the same generic vulnerability?"* If the answer requires a different generic vulnerability, it belongs in a different cluster. If it is the same vulnerability reached through a different architectural path or physical mechanism, that is a legitimate sub-cluster.
+
+##### Reference Sub-Cluster Definitions
+
+The following four clusters have been refined into sub-cluster vectors. Each decomposition preserves the top-level generic vulnerability and distinguishes vectors by architectural path or physical mechanism. The remaining six clusters (`#1`, `#4`, `#5`, `#6`, `#7`, `#9`) have analytically feasible decompositions but are left open for community refinement and empirical validation.
+
+**#2 Exploiting Server** — *Generic vulnerability: Code imperfection in server-side software.*
+
+The three vectors decompose *where in the server's software architecture* the imperfection resides.
+
+| Operational ID | Strategic | Vector | Description |
+| --- | --- | --- | --- |
+| `TLCTC-02.00` | `#2` | *(top-level, reserved)* | Exploiting Server |
+| `TLCTC-02.10` | `#2.1` | Protocol vector | Server-side protocol handling flaws |
+| `TLCTC-02.20` | `#2.2` | Core function vector | Internal processing / parsing flaws |
+| `TLCTC-02.30` | `#2.3` | External handler vector | Delegated processing flaws |
+
+*Examples:* A Heartbleed exploit targeting the server's TLS implementation is `#2.1`. An SQL injection through the application's query parser is `#2.2`. A vulnerability in a server-side PHP engine or Apache module is `#2.3`.
+
+**#3 Exploiting Client** — *Generic vulnerability: Code imperfection in client-side software.*
+
+The same three-vector structure mirrors `#2`. This falls directly out of Axiom VII (client-server as the fundamental interaction model). The three vectors decompose the same architectural layers, on the other side of the interaction.
+
+| Operational ID | Strategic | Vector | Description |
+| --- | --- | --- | --- |
+| `TLCTC-03.00` | `#3` | *(top-level, reserved)* | Exploiting Client |
+| `TLCTC-03.10` | `#3.1` | Protocol vector | Client-side protocol handling flaws |
+| `TLCTC-03.20` | `#3.2` | Core function vector | Internal processing / parsing flaws |
+| `TLCTC-03.30` | `#3.3` | External handler vector | Delegated processing flaws |
+
+The structural symmetry between `#2` and `#3` produces a 2×3 matrix of exploit vectors — server/client × protocol/core/handler — that is complete by construction. Any code exploit on any networked software component maps to exactly one cell.
+
+**#8 Physical Attack** — *Generic vulnerability: Physical accessibility of IT assets.*
+
+The two vectors decompose the *physical mechanism of interaction*.
+
+| Operational ID | Strategic | Vector | Description |
+| --- | --- | --- | --- |
+| `TLCTC-08.00` | `#8` | *(top-level, reserved)* | Physical Attack |
+| `TLCTC-08.10` | `#8.1` | Mechanical vector | Physical contact with matter |
+| `TLCTC-08.20` | `#8.2` | Signal vector | Energy propagation, no contact required |
+
+*Mechanical* means the attacker physically touches or manipulates hardware: tampering, theft, intrusion into secure areas. *Signal* means the attacker exploits energy emissions or environmental conditions without direct contact: electromagnetic side-channels (TEMPEST), acoustic attacks, environmental manipulation. The distinction is falsifiable — it is physics, not interpretation — and maps to categorically different control regimes (physical access controls vs. signal shielding and emission standards).
+
+**#10 Supply Chain Attack** — *Generic vulnerability: Necessary trust in third-party components, services, and processes.*
+
+The three vectors decompose the *temporal phase and medium* through which the trust relationship is exploited.
+
+| Operational ID | Strategic | Vector | Description |
+| --- | --- | --- | --- |
+| `TLCTC-10.00` | `#10` | *(top-level, reserved)* | Supply Chain Attack |
+| `TLCTC-10.10` | `#10.1` | Update vector | Post-deployment, active delivery channel |
+| `TLCTC-10.20` | `#10.2` | Development vector | Pre-deployment, silent insertion |
+| `TLCTC-10.30` | `#10.3` | Hardware vector | Physical component supply chain |
+
+*Examples:* A compromised software update pushed to customers is `#10.1`. A backdoor injected into a build pipeline or malicious library dependency is `#10.2`. A hardware implant introduced during manufacturing is `#10.3`. The SolarWinds 2020 incident passes through `#10.1` at the trust acceptance event — the moment the organization's infrastructure accepts the compromised update because it trusts the vendor's distribution channel.
+
 ---
 
 #### 2.2.2 Global Definitions
@@ -1718,8 +1787,10 @@ Record:
 | Layer | Format | Example |
 | --- | --- | --- |
 | Strategic | `#X` | `#4` |
+| Strategic (sub-cluster) | `#X.Y` | `#8.1` |
 | Operational (top-level) | `TLCTC-XX.00` | `TLCTC-04.00` |
-| Operational (sub-cluster) | `TLCTC-XX.YY` | `TLCTC-10.02` |
+| Operational (sub-cluster) | `TLCTC-XX.Y0` | `TLCTC-10.10` |
+| Operational (refinement) | `TLCTC-XX.YZ` | `TLCTC-02.21` |
 
 ##### Data Risk Event Notation
 
