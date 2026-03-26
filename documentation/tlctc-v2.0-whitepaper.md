@@ -1,8 +1,26 @@
-# Top Level Cyber Threat Clusters (TLCTC) — Version 2.0 — Canonical Definitions
+&nbsp;
 
-*Author: Bernhard Kreinz | Last Updated: 20 Feb 2026*
+&nbsp;
 
-Abstract
+# Top Level Cyber Threat Clusters (TLCTC)
+
+## Version 2.0 — Canonical Definitions
+
+&nbsp;
+
+**Bernhard Kreinz**
+
+&nbsp;
+
+March 2026
+
+&nbsp;
+
+---
+
+&nbsp;
+
+## Abstract
 
 Despite the proliferation of cybersecurity standards bearing "Cyber" in their names—from ISO/IEC 27001 to NIST CSF 2.0, CMMC 2.0, and EU regulations—a comprehensive analysis reveals a critical gap: the absence of a unified, cause-oriented cyber threat taxonomy that enables consistent risk assessment across organizations and sectors. Top Level Cyber Threat Clusters (TLCTC) addresses this foundational deficit by providing a cause-oriented, actor-agnostic framework that establishes a consistent language for describing cyber risk through ten non-overlapping cyber threat clusters spanning human, physical, and digital domains. Each cluster classifies a distinct attack vector according to the generic vulnerability it initially targets, enabling sequential expression of real attack paths from initial compromise to follow-on steps—without conflating threats with outcomes such as data loss, fraud, or service disruption. By separating a strategic management view (cluster-level risk and generic vulnerabilities) from an operational security view (concrete vulnerabilities, techniques, and procedures), TLCTC creates a stable backbone for governance, control design, threat intelligence, and incident learning. Its primary value is semantic clarity: TLCTC reduces ambiguity across stakeholders and makes complex cyber security discussions comparable, measurable, and decision-ready across technologies, environments, and organizations—providing the taxonomic foundation that existing "cyber" standards conspicuously lack.
 

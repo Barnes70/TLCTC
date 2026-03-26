@@ -1,11 +1,11 @@
 # TLCTC Framework Glossary — Version 2.0 / 2.1
 
 *Comprehensive definitions and concepts for the Top Level Cyber Threat Clusters framework.*
-*Author: Bernhard Kreinz | Last Updated: 24 Mar 2026*
+*Author: Bernhard Kreinz | Last Updated: 25 Mar 2026*
 
 ---
 
-This glossary contains all defined terms from the TLCTC framework specification V2.0, organized alphabetically, including additive V2.1 boundary extensions. Each entry includes cross-references to the section(s) where the term is normatively defined or substantively discussed in the whitepaper. V2.1 additions are marked with *(V2.1)*.
+This glossary contains all defined terms from the TLCTC framework specification V2.0, organized alphabetically, including additive V2.1 boundary extensions and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Each entry includes cross-references to the section(s) where the term is normatively defined or substantively discussed in the whitepaper. V2.1 additions are marked with *(V2.1)*. Industry terms commonly used in the field are marked with *(Industry Term)*.
 
 ---
 
@@ -69,6 +69,42 @@ A foundational premise that defines what terms mean and what kinds of statements
 
 ---
 
+## A (continued — Industry Terms)
+
+### Adware *(Industry Term)*
+
+A type of malware that delivers unwanted advertisements, often bundled with legitimate software. In TLCTC: maps to `#7 Malware` — the software environment's designed execution capability is abused to run foreign advertising code. Adware that arrives via a compromised software package may involve a `#10 → #7` sequence.
+
+See also: Malware (#7), Supply Chain Attack (#10)
+
+### AI / AGI / ASI (Positioning in TLCTC)
+
+Artificial Intelligence, Artificial General Intelligence, and Artificial Super Intelligence occupy three distinct roles in the TLCTC framework:
+
+- **As an IT system:** AI is exposed to the same 10 threat clusters as any other IT system (software + hardware).
+- **As a tool:** AI enhances the capabilities of both threat actors AND defenders.
+- **As AGI/ASI:** Would become a powerful threat actor OR defender in its own right.
+
+AI systems do not create new threat clusters — they are subject to the existing 10 clusters and may amplify their exploitation.
+
+**Reference:** V1.9.1 Clarifications
+
+### Amplification Attack *(Industry Term)*
+
+A flooding technique where an attacker sends small requests to third-party services (e.g., NTP, DNS, memcached) that respond with disproportionately large replies directed at the victim. In TLCTC: maps to `#6 Flooding Attack` — the primary mechanism is volume exceeding finite capacity. The abuse of the amplification service itself may additionally involve `#1 Abuse of Functions`.
+
+See also: Flooding Attack (#6), DDoS
+
+### ARP Spoofing *(Industry Term)*
+
+A technique where an attacker sends falsified ARP (Address Resolution Protocol) messages on a local network, linking the attacker's MAC address to a legitimate IP address. In TLCTC: the ARP spoofing itself is `#1 Abuse of Functions` (abusing a legitimate network protocol without exploiting an implementation flaw). ARP spoofing typically leads to a Man in the Middle position, making the full sequence `#1 → #5`.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#1)
+
+See also: Man in the Middle (#5), DNS Spoofing, SSL Stripping
+
+---
+
 ## B
 
 ### Bounded Δt
@@ -95,6 +131,44 @@ A step-level instance of a bridge cluster that crosses a specific domain boundar
 
 **Reference:** §2.2.2 (Global Definitions), §5.1.6
 
+### BGP Hijacking *(Industry Term)*
+
+A technique where an attacker manipulates Border Gateway Protocol routing tables to redirect internet traffic through attacker-controlled infrastructure. In TLCTC: the BGP manipulation itself is `#1 Abuse of Functions` (abusing legitimate protocol functionality, not an implementation flaw). BGP hijacking typically leads to a Man in the Middle position, making the full sequence `#1 → #5`.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#1)
+
+See also: ARP Spoofing, DNS Spoofing, Man in the Middle (#5)
+
+### Botnet *(Industry Term)*
+
+A network of compromised devices ("bots" or "zombies") controlled by an attacker, typically used to amplify attack capabilities. In TLCTC: the botnet itself is the result of prior `#7 Malware` infections on each device. When a botnet is used for flooding, the attack maps to `#6 Flooding Attack`. The full lifecycle may involve: `#9 → #7` (social engineering delivering malware to build the botnet), then `#6` (coordinated flooding from the botnet).
+
+See also: Flooding Attack (#6), Malware (#7), DDoS
+
+### Brute-Force Attack *(Industry Term)*
+
+A method of systematically trying all possible credential combinations (passwords, PINs, encryption keys) to gain unauthorized access. In TLCTC: maps to `#4 Identity Theft` — the attacker is attempting to derive and use credentials to impersonate a legitimate identity. The generic vulnerability exploited is weak credential protection (e.g., lack of account lockout, short password requirements).
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#4)
+
+See also: Identity Theft (#4), Password Spraying, Credential / Identity Artifact
+
+### Buffer Overflow *(Industry Term)*
+
+A class of implementation flaw where a program writes data beyond the boundaries of allocated memory, potentially allowing an attacker to execute arbitrary code or crash the application. In TLCTC: maps to `#2 Exploiting Server` or `#3 Exploiting Client` depending on whether the vulnerable component is in a server role (accepting inbound requests) or client role (consuming external responses) per R-ROLE. Buffer overflows create an unintended data→code transition.
+
+**Reference:** V1.9.1 §Definitions (#2, #3), Buzz-Word Refinement
+
+See also: Exploiting Server (#2), Exploiting Client (#3), Implementation Flaw
+
+### Business Risk Event
+
+An event on the consequence side of the Bow-Tie model that results from Data Risk Events cascading into business-level impacts. Business Risk Events include financial losses, reputational damage, operational disruptions, regulatory fines, and legal consequences. They represent the ultimate impact chain: Threat → System Compromise → Data Risk Event → Business Risk Event(s).
+
+**Reference:** V1.9.1 §The Anatomy of Risk
+
+See also: Data Risk Event (DRE), Consequences, Event Chain
+
 ### BxIs (Base Level Indicators)
 
 The lowest level of indicators that still make operational sense, representing metrics at the operational level directly translated into measurable values. Part of the hierarchical KxI framework (KRIs, KCIs, KPIs).
@@ -102,6 +176,35 @@ The lowest level of indicators that still make operational sense, representing m
 ---
 
 ## C
+
+### BEC (Business Email Compromise) / CEO Fraud *(Industry Term)*
+
+A social engineering attack where an adversary impersonates a senior executive or trusted business partner (often via compromised or spoofed email) to trick employees into transferring funds, revealing sensitive information, or taking other harmful actions. In TLCTC: the manipulation of the human target maps to `#9 Social Engineering`. If the attacker uses compromised email credentials, the email access maps to `#4 Identity Theft`. Typical sequences: `#9 → #1` (social engineering leading to function abuse, e.g., wire transfer) or `#4 → #9 → #1` (stolen credentials enabling impersonation for social engineering leading to function abuse).
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#9 — "CEO Fraud", "Invoice Manipulation Fraud (BEC Fraud)")
+
+See also: Social Engineering (#9), Whaling, Phishing
+
+### Call-Level Mapping Rule
+
+A TLCTC classification principle for function-call-level threat analysis:
+
+- **Parameter tampering**, unauthorized function selection, or misuse of valid functions without executing foreign code → always `#1 Abuse of Functions`.
+- **Presentation of identity artifacts** at call time (e.g., stolen API keys, session tokens, cookies, Kerberos tickets) to impersonate a subject → always `#4 Identity Theft`.
+
+This rule prevents overlap between logic misuse (`#1`) and identity presentation/use (`#4`) at the function call level, where the caller acts as "client" and the called function as "server".
+
+**Reference:** V1.9.1 §Concept Applicability (At Function Call Level)
+
+See also: Abuse of Functions (#1), Identity Theft (#4)
+
+### CAPEC (Common Attack Pattern Enumeration and Classification) *(Industry Term)*
+
+A MITRE-maintained dictionary of known attack patterns, each describing a method of exploiting known weaknesses. In TLCTC: CAPEC patterns are operational-level detail that map to the strategic-level TLCTC clusters. CAPEC complements CWE (weaknesses) and CVE (specific vulnerabilities) in the conceptual hierarchy, and TLCTC proposes bridging from NIST to the extended MITRE world (ATT&CK, CWE, CAPEC, CVE) through the 10 clusters.
+
+**Reference:** V1.9.1 §Standardizing Strategic Cybersecurity
+
+See also: CWE, CVE, MITRE ATT&CK, Techniques (TTPs)
 
 ### Capacity Exhaustion
 
@@ -201,9 +304,34 @@ The probability of occurrence of a cyber event in which control over IT systems 
 
 A potential occurrence that could lead to a system breach or compromise. Distinguished from Cyber Incidents (which have already occurred) and Data Risk Events (which are consequences). The central event in the Cyber Bow-Tie model is "Loss of Control" or "System Compromise".
 
+### CWE (Common Weakness Enumeration) *(Industry Term)*
+
+A community-developed list of common software and hardware weakness types maintained by MITRE. CWE categorizes the underlying flaws, bugs, or errors (weaknesses) that enable vulnerabilities to exist — e.g., CWE-89 for SQL Injection weakness, CWE-119 for buffer overflow weakness. In the TLCTC conceptual hierarchy: **Weakness (CWE) → Specific Vulnerability (CVE) → Generic Vulnerability (TLCTC) → Threat Cluster (#1–#10)**. CWE provides granular weakness taxonomy at the code level for developers; TLCTC operates at the strategic level by grouping all resulting vulnerabilities into 10 generic vulnerability categories.
+
+See also: Vulnerability, Weakness, CVE, Generic Vulnerability
+
 ### Cyber Threat Radar
 
 A visualization tool based on the TLCTC framework that displays threat distribution across different domains (organizational, state, or sector levels). Uses radar chart format to show impact levels (High/Red, Medium/Orange, Low/Gray, Latent) and movement indicators (▲ increasing, ▼ decreasing) for each of the 10 threat clusters. Enables strategic overview, comparative analysis, and standardized threat communication across organizations and borders.
+
+### Command Injection *(Industry Term)*
+
+An attack where an attacker injects operating system commands into an application that passes user input to a system shell. In TLCTC: maps to `#2 Exploiting Server` or `#3 Exploiting Client` per R-ROLE — this is an implementation flaw (failure to sanitize input) that creates an unintended data→code transition. The execution of the injected commands constitutes Foreign Executable Content, so the full sequence is typically `#2 → #7` or `#3 → #7`.
+
+See also: Exploiting Server (#2), SQL Injection, Foreign Executable Content (FEC)
+
+### Cross-Site Scripting (XSS) *(Industry Term)*
+
+A class of implementation flaw where an application includes untrusted data in web output without proper validation or encoding, allowing attacker-controlled scripts to execute in a victim's browser. In TLCTC:
+
+- **Stored/Reflected XSS** (server fails to encode output): `#2 Exploiting Server` — the flaw is in server-side code.
+- **DOM-Based XSS** (client script processes data unsafely): `#3 Exploiting Client` — the flaw is in client-side code.
+
+In both cases, the XSS creates an unintended data→code transition via an implementation flaw.
+
+**Reference:** V1.9.1 §Definitions (#2, #3), Buzz-Word Refinement
+
+See also: Exploiting Server (#2), Exploiting Client (#3), Implementation Flaw
 
 ---
 
@@ -271,6 +399,66 @@ Notation: `||[context][@Source→@Target]||`. Used to explicitly mark where an a
 
 **Reference:** §2.2.2 (Global Definitions), §3.3 (Domain Boundary Operator), §5.3
 
+### DAST (Dynamic Application Security Testing) *(Industry Term)*
+
+A testing methodology that analyzes a running application by simulating attacks against it to identify security vulnerabilities. In TLCTC: DAST is a **preventive control** (IDENTIFY/PROTECT) primarily targeting `#2 Exploiting Server` and `#3 Exploiting Client` by discovering implementation flaws in deployed applications.
+
+See also: SAST, Control, Exploiting Server (#2), Exploiting Client (#3)
+
+### DDoS (Distributed Denial of Service) *(Industry Term)*
+
+An attack where multiple compromised systems (typically a botnet) simultaneously flood a target with traffic or requests. In TLCTC: maps to `#6 Flooding Attack` — the primary mechanism is volume or intensity exceeding finite capacity. The "distributed" aspect describes the attack infrastructure, not the generic vulnerability. Sub-types include SYN Flood, UDP Flood, HTTP Flood, ICMP Flooding, NTP/DNS Amplification, and Slowloris. The underlying botnet is the result of prior `#7 Malware` infections.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#6)
+
+See also: Flooding Attack (#6), Botnet, SYN Flood, Amplification Attack
+
+### Defense-in-Depth *(Industry Term)*
+
+A security strategy employing multiple layers of controls so that if one layer fails, another provides protection. In TLCTC: defense-in-depth means implementing controls at multiple points along potential attack paths — both Local Controls (specific systems) and Umbrella Controls (groups of systems) — and across NIST CSF functions (Identify, Protect, Detect, Respond, Recover) for each relevant threat cluster. The interplay between different threat clusters (e.g., `#9` potentially circumventing `#4` controls) necessitates a holistic, defense-in-depth approach.
+
+**Reference:** V1.9.1 §The Anatomy of Risk
+
+See also: Local Controls, Umbrella Controls, Control
+
+### Directory Traversal *(Industry Term)*
+
+An attack where an attacker manipulates file path references (e.g., using `../` sequences) to access files or directories outside the intended scope. In TLCTC: maps to `#2 Exploiting Server` — an implementation flaw in how the server-side code handles file path input, enabling unauthorized access. The flaw is in server-side source code (failure to validate/sanitize path references).
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#2)
+
+See also: Exploiting Server (#2), Implementation Flaw
+
+### DNS Spoofing *(Industry Term)*
+
+A technique where an attacker corrupts DNS resolution to redirect traffic to attacker-controlled infrastructure. In TLCTC: the DNS spoofing itself is `#1 Abuse of Functions` (abusing legitimate DNS protocol functionality without exploiting a code flaw). DNS spoofing typically leads to a Man in the Middle position, making the full sequence `#1 → #5`. Note: if the attacker exploits an implementation flaw in a DNS server (e.g., cache poisoning via a code bug), the initial step maps to `#2 Exploiting Server` instead.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#1)
+
+See also: ARP Spoofing, BGP Hijacking, Man in the Middle (#5)
+
+### Domain Squatting *(Industry Term)*
+
+Registering domain names similar to legitimate ones (typosquatting, homograph attacks) to deceive users into visiting attacker-controlled websites. In TLCTC: the domain registration is infrastructure setup (not itself a cluster step). When used to harvest credentials via fake login pages, the attack maps to `#9 Social Engineering` (luring the user) → `#4 Identity Theft` (using the stolen credentials). When used to deliver malware, the sequence may be `#9 → #3` or `#9 → #7`.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#4)
+
+See also: Phishing, Social Engineering (#9), Typosquatting
+
+### DORA (Digital Operational Resilience Act) *(Industry Term)*
+
+An EU regulation establishing ICT risk management requirements for financial entities. Like NIS2, DORA emphasizes incident reporting but lacks a unified threat categorization system. The TLCTC framework addresses this gap by providing a standardized taxonomy that supports compliance with DORA's requirements for threat classification and incident reporting. DORA requirements can be mapped as Regulatory Trigger Points in the TLCTC event chain model.
+
+See also: NIS2, Regulatory Trigger Point, Eₙ Event Notation
+
+### Drive-By Download *(Industry Term)*
+
+An attack where malware is automatically downloaded and potentially executed when a user visits a compromised or malicious website, typically by exploiting a browser or plugin vulnerability. In TLCTC: maps to `#3 Exploiting Client` (browser vulnerability exploited) → `#7 Malware` (payload execution). If the user was lured to the site via social engineering, the full sequence is `#9 → #3 → #7`.
+
+**Reference:** V1.9.1 §F (Edge-Case Resolution)
+
+See also: Exploiting Client (#3), Malware (#7), Watering Hole Attack
+
 ### Dual-Use Tool
 
 A legitimate administrative utility that can be used for both legitimate administrative purposes and malicious activities when invoked by an attacker. Examples include PowerShell, PsExec, WMI, and remote administration tools. In TLCTC: invocation/abuse of the tool may be `#1` (if no implementation flaw is exploited), while the actual execution of attacker-controlled FEC through that tool is `#7`, resulting in a `#1 → #7` sequence.
@@ -319,6 +507,28 @@ A threat cluster where an attacker targets and leverages flaws originating direc
 
 A threat cluster where an attacker targets and leverages flaws originating directly within the server-side application's source code implementation. These vulnerabilities allow manipulation of server behavior or unauthorized access using Exploit Code, forcing a data→code transition where exploit code executes as new, foreign code in the server context. The generic vulnerability is the presence of exploitable flaws within server-side source code implementation stemming from insecure coding practices.
 
+### EDR (Endpoint Detection and Response) *(Industry Term)*
+
+A category of security tools that monitor endpoint devices for suspicious activity and provide automated response capabilities. In the TLCTC velocity model, EDR is a critical control for the **Fast Velocity Class** (minutes) where automated containment is necessary because human analyst response times are insufficient. EDR is particularly relevant for controlling `#3 Exploiting Client` and `#7 Malware` at the endpoint level.
+
+See also: Fast Velocity Class, SIEM, SOAR
+
+### Event Chain
+
+A causal sequence where one outcome event triggers subsequent events, cascading from the central event through Data Risk Events to Business Risk Events. In the Bow-Tie model, event chains explain how a single system compromise can propagate into multiple regulatory, financial, and operational consequences. Example: System Compromise (E1) → Data Breach involving PII (E2) → GDPR notification obligation (E3a) + NIS2 incident report (E3b). Understanding event chains is critical for designing Respond/Recover controls and regulatory compliance workflows.
+
+**Reference:** V1.9.1 §Data Risk Event Types, §Clarification on Central Event Position
+
+See also: Eₙ Event Notation, RS Container, Propagated PR
+
+### Evil Maid Attack *(Industry Term)*
+
+A physical attack where an adversary with brief unsupervised access to a device (e.g., left in a hotel room) tampers with it — installing hardware keyloggers, modifying boot loaders, or extracting encryption keys. In TLCTC: the physical access step maps to `#8 Physical Attack`. Subsequent technical steps map to their respective clusters: installing a keylogger = `#8 → #7`, extracting credentials from the device = `#8 → #4`.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#8)
+
+See also: Physical Attack (#8), USB Baiting
+
 ---
 
 ## F
@@ -330,6 +540,12 @@ A velocity classification where attack progression occurs within minutes. Typica
 ### Flooding Attack (#6)
 
 A threat cluster where an attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to disruption, degradation, or denial of service for legitimate users. The generic vulnerability is the finite capacity limitations inherent in any system component (network bandwidth, CPU, memory, storage, database limits, application quotas, API rate limits, process/thread pools). Outcome is typically Loss of Availability.
+
+### Fileless Execution / Fileless Malware *(Industry Term)*
+
+An attack technique where malicious code executes entirely in memory without writing traditional files to disk, often using legitimate system tools (PowerShell, WMI, .NET reflection) as execution vehicles. In TLCTC: fileless execution still maps to `#7 Malware` — the FEC definition explicitly includes in-memory execution, interpreted code, and reflective loading with no "on-disk" requirement. The invocation of the legitimate tool to enable fileless execution may be `#1 Abuse of Functions`, making the typical sequence `#1 → #7`.
+
+See also: Foreign Executable Content (FEC), Living Off the Land / LOLBAS, Dual-Use Tool
 
 ### Foreign Executable Content (FEC)
 
@@ -347,9 +563,13 @@ The static, universal component of the TLCTC JSON architecture containing threat
 
 ### Generic Vulnerability
 
-The single root-level vulnerability category defining a cluster. For every generic vulnerability, there is exactly one TLCTC cluster (per Axiom VI). Generic vulnerabilities are stable across technologies and implementations, persisting regardless of specific IT system types, software implementations, or evolving attack techniques. The 10 generic vulnerabilities are: functional scope/trust (#1), server-side implementation flaws (#2), client-side implementation flaws (#3), identity-artifact binding (#4), lack of end-to-end communication protection (#5), finite capacity limitations (#6), designed execution capability (#7), physical accessibility (#8), human psychological factors (#9), and third-party trust dependencies (#10).
+The single root-level vulnerability category defining a cluster — the **strategic-level attack surface** towards a specific class of threats. For every generic vulnerability, there is exactly one TLCTC cluster (per Axiom VI). The generic vulnerability is what the threat cluster targets: it is the exposed surface that enables the attack vector and through which the attack path proceeds. Generic vulnerabilities are stable across technologies and implementations, persisting regardless of specific IT system types, software implementations, or evolving attack techniques. All specific vulnerabilities (CVEs) are instances of a generic vulnerability; all generic vulnerabilities map to exactly one threat cluster.
+
+The 10 generic vulnerabilities (attack surfaces) are: functional scope/trust (#1), server-side implementation flaws (#2), client-side implementation flaws (#3), identity-artifact binding (#4), lack of end-to-end communication protection (#5), finite capacity limitations (#6), designed execution capability (#7), physical accessibility (#8), human psychological factors (#9), and third-party trust dependencies (#10).
 
 **Reference:** §2.2.2 (Global Definitions), §2.2.7 (Step 2), Axiom VI (§1.2)
+
+See also: Vulnerability, Attack Vector, Attack Surface Analysis
 
 ### GOVERN (GV)
 
@@ -357,7 +577,23 @@ The governance function in NIST CSF 2.0, operating at a strategic level to estab
 
 ---
 
+## H
+
+### HTTP Flood *(Industry Term)*
+
+An application-layer denial of service attack that overwhelms a web server with seemingly legitimate HTTP requests. In TLCTC: maps to `#6 Flooding Attack` — the primary mechanism is volume exceeding finite capacity at the application layer. Distinguished from implementation-flaw-based DoS (which maps to `#2` or `#3` per R-FLOOD).
+
+See also: Flooding Attack (#6), DDoS, Slowloris, SYN Flood
+
+---
+
 ## I
+
+### ICMP Flooding *(Industry Term)*
+
+A network-layer denial of service attack that overwhelms a target with ICMP echo request (ping) packets. In TLCTC: maps to `#6 Flooding Attack` — volume exceeding finite network capacity.
+
+See also: Flooding Attack (#6), DDoS
 
 ### Identity Theft (#4)
 
@@ -391,6 +627,14 @@ The dynamic component of the TLCTC JSON architecture containing specific attack 
 A TLCTC cluster that operates primarily **within the software domain's** attack surfaces, without inherently crossing to a different responsibility sphere. Internal clusters are: `#1` through `#7`.
 
 **Reference:** §2.2.2 (Global Definitions), §5.1.5, §5.2 (Topology Classification)
+
+### Insecure Deserialization *(Industry Term)*
+
+A class of implementation flaw where an application deserializes untrusted data without proper validation, potentially allowing arbitrary code execution or object manipulation. In TLCTC: maps to `#2 Exploiting Server` or `#3 Exploiting Client` depending on the role of the vulnerable component per R-ROLE. The deserialization flaw creates an unintended data→code transition via an implementation defect.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#2, #3)
+
+See also: Exploiting Server (#2), Exploiting Client (#3), Implementation Flaw
 
 ### Intra-System Boundary Operator (|...|) *(V2.1)*
 
@@ -429,6 +673,22 @@ A measurable value demonstrating the outcome and performance of security process
 
 A leading indicator demonstrating the potential for a future cyber threat. KRIs show possible risks before a threat occurs and must be observed in a meaningful timeframe. Example: "Number of unpatched critical vulnerabilities older than 7 days" indicates how processes handle critical vulnerabilities, helping identify, understand, and prioritize security efforts to prevent incidents.
 
+### Keylogger *(Industry Term)*
+
+Malware (software) or a hardware device that records keystrokes to capture sensitive information such as passwords, credit card numbers, or other data. In TLCTC: a software keylogger maps to `#7 Malware` (foreign code executing via the environment's designed execution capability). A hardware keylogger maps to `#8 Physical Attack` (physical device installation). Captured credentials that are subsequently used map to `#4 Identity Theft`. Typical sequence: `#7 → #4` (software keylogger) or `#8 → #4` (hardware keylogger).
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#7, #8)
+
+See also: Malware (#7), Physical Attack (#8), Identity Theft (#4)
+
+### Kill Chain *(Industry Term)*
+
+A model describing the stages of a cyber attack from reconnaissance through exploitation to objective completion (originally Lockheed Martin Cyber Kill Chain). In TLCTC: the kill chain concept is complementary to — but not a classification criterion for — the TLCTC framework. TLCTC classifies each step by the generic vulnerability exploited (cause-oriented), while kill chain models describe the phase of the attack (process-oriented). Attack paths in TLCTC notation (`#X → #Y → #Z`) naturally encode the kill chain progression without requiring a separate phase model.
+
+**Reference:** V1.9.1 §F (Oversimplification)
+
+See also: Attack Path, Sequence, MITRE ATT&CK
+
 ### KxI Framework
 
 The integrated hierarchical framework of Key Risk Indicators (KRIs), Key Control Indicators (KCIs), and Key Performance Indicators (KPIs), providing a practical mechanism to operationalize the 10 Top Level Cyber Threat Clusters. Each threat cluster has associated KRI, KCI, and KPI values for managing cyber risk and measuring overall cybersecurity program performance. Base Level Indicators (BxIs) represent the lowest operational level that still makes sense.
@@ -446,6 +706,14 @@ A velocity classification where attack progression occurs over days to months. T
 An attack technique using only software functions and binaries already present on a (potentially compromised) system, invoked with legitimate inputs/parameters, without introducing foreign code initially. Legitimate system binaries are used to execute attacker-controlled content. In TLCTC: the invocation of the legitimate binary may be `#1` (if no implementation flaw is exploited), while the execution of attacker-controlled content through it is `#7`. The sequence `#1 → #7` applies. Examples: Using cmd.exe, PowerShell, WMI, or Task Scheduler to execute attacker-controlled scripts.
 
 **Reference:** §2.2.4 (R-EXEC, LOLBAS Clarification)
+
+### Lateral Movement *(Industry Term)*
+
+The techniques an attacker uses to progressively move through a network after initial compromise, seeking higher-value targets and expanded access. In TLCTC: lateral movement is not a single cluster — it is an attack path composed of multiple sequential steps. Typical lateral movement sequences include: `#4 → #1` (using stolen credentials to access another system's functions), `#4 → #7` (deploying malware on additional systems using stolen credentials), or `#1 → #7` (abusing legitimate remote tools to execute code on other systems). Each step in lateral movement maps to its own cluster based on the generic vulnerability exploited.
+
+**Reference:** V1.9.1 §Bridging Strategy and Operations, §E (Real World Examples)
+
+See also: Attack Path, Sequence, Identity Theft (#4)
 
 ### Local Controls
 
@@ -485,6 +753,18 @@ Code written with harmful intent, distinguished in TLCTC between:
 - **Malware Code:** Operates within expected execution paths for harmful purposes (#7)
 - **Malware Software:** Comprehensive suite of tools (foreign code) that may incorporate multiple techniques, including exploit capabilities
 
+### Malvertising *(Industry Term)*
+
+The use of online advertising to distribute malware or redirect users to malicious websites. In TLCTC: malvertising is a **delivery vector**, not a distinct threat category. It can deploy either exploits or malware depending on the attacker's strategy:
+
+- If it exploits a browser/plugin vulnerability: `#3 Exploiting Client` → `#7 Malware`
+- If it delivers malware directly (e.g., fake download): `#9 Social Engineering` → `#7 Malware`
+- If it redirects to a credential-harvesting site: `#9 Social Engineering` → `#4 Identity Theft`
+
+**Reference:** V1.9.1 Clarifications, Buzz-Word Refinement (#3)
+
+See also: Drive-By Download, Watering Hole Attack, Phishing
+
 ### Malware (#7)
 
 A threat cluster where an attacker abuses the inherent ability of a software environment to execute foreign executable content, including inherently malicious Malware Code or legitimate tools/scripts when they execute attacker-controlled or otherwise foreign code ("dual-use"). The generic vulnerability is the software environment's designed capability to execute potentially untrusted 'foreign' code, scripts, or binaries. Distinguished from #2/#3 which use Exploit Code targeting implementation flaws, and from #1 which manipulates existing functions without executing foreign code/scripts/binaries.
@@ -507,6 +787,21 @@ In the Bow-Tie model: barriers on the right (effect) side that detect, contain, 
 
 A globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. In the TLCTC framework, MITRE techniques are considered operational-level detail that map to the strategic-level threat clusters. TLCTC V2.0 proposes enhancement through adding cluster mappings and typical velocity attributes to techniques.
 
+### MFA Bombing / MFA Fatigue *(Industry Term)*
+
+An authentication bypass technique where an attacker, having obtained valid credentials, repeatedly triggers MFA push notifications to overwhelm the user into accidentally approving one. In TLCTC, this is a four-step sequence: `#4 → #1 → #9 → #4`:
+
+1. **#4 Identity Theft:** Attacker uses stolen userID/password
+2. **#1 Abuse of Functions:** Repeatedly triggering legitimate MFA challenge requests (abusing intended functionality, not a code flaw)
+3. **#9 Social Engineering:** Psychologically manipulating the user through fatigue/annoyance into approving a request
+4. **#4 Identity Theft:** Successfully obtaining and using the MFA token to complete authentication
+
+This example demonstrates how TLCTC decomposes a single "buzzword attack" into its constituent generic vulnerabilities.
+
+**Reference:** V1.9.1 §Attack Path Notation (MFA Bombing Example)
+
+See also: Identity Theft (#4), Abuse of Functions (#1), Social Engineering (#9)
+
 ### MitM Position
 
 A controlled point on a communication path that enables interception, observation, modification, injection, replay, or protocol downgrade/stripping. The attacker has achieved the ability to influence communication between two endpoints.
@@ -520,6 +815,14 @@ A controlled point on a communication path that enables interception, observatio
 ### NIST CSF (Cybersecurity Framework)
 
 The National Institute of Standards and Technology Cybersecurity Framework providing guidelines for managing cybersecurity risk. The TLCTC framework integrates with NIST CSF by mapping the 10 threat clusters to the five core functions (Identify, Protect, Detect, Respond, Recover) and the GOVERN function in CSF 2.0. TLCTC proposes formal adoption of the 10 clusters as the standard taxonomy for Threat Identification in the ID.RA (Risk Assessment) category.
+
+### NIS2 (Network and Information Security Directive 2) *(Industry Term)*
+
+The EU directive establishing cybersecurity risk management and incident reporting obligations for essential and important entities. In TLCTC: NIS2 is an **incident-triggered regulation** — its reporting obligations activate at E1 (Significant Incident / System Compromise) regardless of whether personal data is involved. This contrasts with GDPR, which is **data-triggered** (activates at E2 when PII is affected). NIS2 Art. 23 requires a 24-hour early warning, creating a shorter event chain length (E1→E3b = 2 events) compared to GDPR's 72-hour notification timeline (E1→E2→E3a = 3 events).
+
+**Reference:** V1.9.1 §Cyber Threat Radars
+
+See also: DORA, Regulatory Trigger Point, Event Chain Length, Eₙ Event Notation
 
 ### Normative Keywords
 
@@ -552,11 +855,42 @@ The detailed implementation level where security controls are implemented, monit
 
 **Reference:** §2.2.1 (Two-Layer Naming Convention)
 
+### Operational Risk (OpRisk) *(Industry Term)*
+
+The broader category of risks arising from inadequate or failed internal processes, people, and systems, or from external events. In TLCTC: cyber risks are explicitly defined as a **subset** of operational risks. While cyber risk management focuses on threats from unauthorized or unknown entities (covered by the 10 TLCTC clusters), comprehensive risk management must also consider traditional IT risks (e.g., "software failure", "error in use", "abuse of rights" by authorized actors), compliance risks, and third-party risks. Actions of authorized actors should be managed under separate OpRisk categories unless they attempt to breach authorization boundaries, which then falls within cyber risk scope.
+
+**Reference:** V1.9.1 §Introduction
+
+See also: Cyber Risk, Business Risk Event
+
 ### Operational Security Layer
 
 The layer of TLCTC that addresses specific vulnerabilities, techniques, and procedures. Contains concrete vulnerabilities (CVEs), operational techniques (TTPs), and indicators used in detection, response, and engineering. Corresponds to `TLCTC-XX.YY` where YY ≠ 00.
 
 **Reference:** Axiom VIII (§1.2), §2.2.1
+
+### OAuth Attack *(Industry Term — Decomposition Required)*
+
+A commonly used but imprecise term that conflates multiple distinct attack mechanisms targeting OAuth implementations. In TLCTC, the framework's precision requirement reveals that "OAuth attack" must be decomposed into its specific mechanism:
+
+- **Misconfigured redirect_uri:** `#1 Abuse of Functions` (abusing legitimate OAuth functionality via configuration)
+- **XSS stealing OAuth tokens:** `#3 Exploiting Client` → `#4 Identity Theft`
+- **Phishing OAuth consent:** `#9 Social Engineering` → `#4 Identity Theft`
+- **Authorization code injection:** `#1` (if design abuse) or `#2` (if server-side validation flaw)
+
+This decomposition is not creating ambiguity — it is exposing the security industry's imprecise terminology and enabling more targeted control implementation.
+
+**Reference:** V1.9.1 §F (Industry Term Decomposition)
+
+See also: Identity Theft (#4), Abuse of Functions (#1), Exploiting Client (#3)
+
+### OWASP (Open Worldwide Application Security Project) *(Industry Term)*
+
+A nonprofit foundation providing freely available resources for web application security, including the OWASP Top 10 list of critical web application security risks. In TLCTC: OWASP risks and testing methodologies are considered operational-level detail. The OWASP Top 10 categories map to TLCTC clusters — e.g., "Injection" maps to `#2`/`#3`, "Broken Authentication" maps to `#4`, "Security Misconfiguration" maps to `#1`. TLCTC notes that OWASP (like STRIDE) is "per se incomplete" and recommends always starting threat assessment with the 10 TLCTC clusters.
+
+**Reference:** V1.9.1 §Operational Layer
+
+See also: STRIDE, Sub-Threat, Operational Layer
 
 ---
 
@@ -574,12 +908,67 @@ Two or more clusters occurring simultaneously or in tight coordination within th
 
 **Reference:** §2.2.2 (Global Definitions), §3.2 (Parallel Operator)
 
+### Pass-the-Hash / Pass-the-Ticket *(Industry Term)*
+
+Attack techniques where an attacker uses captured NTLM hashes (Pass-the-Hash) or Kerberos tickets (Pass-the-Ticket) to authenticate as a legitimate user without knowing the actual password. In TLCTC: the **acquisition** of the hash/ticket maps to the enabling cluster (e.g., `#7` if extracted by malware, `#1` if via lsass dump using a legitimate tool). The **use** of the hash/ticket to authenticate always maps to `#4 Identity Theft` per R-CRED.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#4)
+
+See also: Identity Theft (#4), Credential Acquisition, Credential Application
+
+### Password Spraying *(Industry Term)*
+
+An attack that tries a small number of commonly used passwords against many accounts simultaneously, avoiding account lockout thresholds. In TLCTC: maps to `#4 Identity Theft` — the attacker is attempting to derive valid credentials to impersonate a legitimate identity. The generic vulnerability is weak credential protection (predictable passwords, lack of MFA).
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#4)
+
+See also: Identity Theft (#4), Brute-Force Attack
+
+### Patient Zero *(Industry Term)*
+
+In TLCTC context: the first system compromised in an attack, representing the initial entry point before lateral movement occurs. Patient Zero systems are critical because they are typically exposed systems that cannot be fully protected by Umbrella Controls alone and require robust Local Controls. After Patient Zero compromise, attacks follow the lateral movement paradigm through the internal network.
+
+**Reference:** V1.9.1 §A (Umbrella Controls)
+
+See also: Local Controls, Umbrella Controls, Lateral Movement
+
+### Phishing *(Industry Term)*
+
+A social engineering technique using deceptive communications (email, SMS, voice) to trick individuals into taking actions that compromise security. In TLCTC: phishing is the **delivery vector**, not a distinct threat category. The phishing lure/deception phase maps to `#9 Social Engineering`. Subsequent steps map to their respective clusters depending on the payload:
+
+- Credential harvesting: `#9 → #4` (phishing → identity theft)
+- Malware delivery: `#9 → #7` (phishing → malware execution)
+- Browser exploit: `#9 → #3` (phishing → client exploitation)
+- Feature misconfiguration: `#9 → #1` (phishing → abuse of functions)
+
+Variants include Spear Phishing, Whaling, Vishing, and Smishing.
+
+**Reference:** V1.9.1 Clarifications, Buzz-Word Refinement (#9)
+
+See also: Social Engineering (#9), Spear Phishing, Vishing, Smishing
+
 ### Physical Attack (#8)
 
 A threat cluster where an attacker gains unauthorized physical interaction with or causes physical interference to hardware, devices, facilities, or data transmission media (including wireless signals). The generic vulnerability is the physical accessibility of hardware, facilities, and communication media, and the exploitability of Layer 1 (Physical Layer) communications and hardware interfaces. Encompasses two main types:
 
 - **Direct Physical Access Attacks (#8.1):** Require physical touch or direct interaction (tampering, theft, physical intrusion, unauthorized device connection)
 - **Indirect Physical Access Attacks (#8.2):** Exploit physical properties without direct contact (TEMPEST, signal jamming, acoustic attacks, environmental disruption)
+
+### Pineapple Attack *(Industry Term)*
+
+An attack using a Wi-Fi Pineapple (or similar rogue access point device) to create fake wireless networks that victims connect to, enabling traffic interception. In TLCTC: the physical deployment of the device maps to `#8 Physical Attack` (requiring physical proximity). Once victims connect, the attacker gains a MitM position — exploitation of that position maps to `#5 Man in the Middle`. The full sequence is `#8 → #5`. Some variants also involve `#4` (faking SSID identity).
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#5)
+
+See also: Physical Attack (#8), Man in the Middle (#5), Rogue Hotspot
+
+### Ping of Death *(Industry Term)*
+
+A denial-of-service attack that sends malformed or oversized ICMP packets to crash or destabilize a target system. In TLCTC: if the crash results from an implementation flaw (buffer overflow in ICMP handling), maps to `#2 Exploiting Server` or `#3 Exploiting Client` per R-ROLE and R-FLOOD. If the primary mechanism is volume-based, maps to `#6 Flooding Attack`.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#2)
+
+See also: Flooding Attack (#6), Implementation Defect (Availability Context)
 
 ### Position Acquisition vs Position Exploitation
 
@@ -592,6 +981,42 @@ For `#5 Man in the Middle`: **Gaining** a MitM position maps to another cluster 
 In the Bow-Tie model: barriers on the left (cause) side that reduce likelihood of threats reaching the central event. Corresponds to NIST CSF functions: IDENTIFY, PROTECT.
 
 **Reference:** §1.4.1 (Bow-Tie Structure)
+
+### Pretexting *(Industry Term)*
+
+A social engineering technique where an attacker creates a fabricated scenario (pretext) to manipulate a target into divulging information or performing actions. In TLCTC: maps to `#9 Social Engineering` — the generic vulnerability is human psychological factors (trust, authority bias). Pretexting is a sub-threat of `#9`; any subsequent technical steps map to their own clusters.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#9)
+
+See also: Social Engineering (#9), Phishing
+
+### Privilege Escalation *(Industry Term)*
+
+A commonly used but multi-faceted term describing an attacker gaining higher-level permissions than initially authorized. In TLCTC: privilege escalation is **not a single cluster** — it maps to different clusters depending on the technique employed:
+
+- **Via software vulnerability** (buffer overflow, injection flaw): `#2 Exploiting Server` or `#3 Exploiting Client` per R-ROLE
+- **Via misuse of legitimate features** (misconfiguration, overly permissive defaults): `#1 Abuse of Functions`
+- **Via stolen credentials** (using admin credentials): `#4 Identity Theft`
+- **Via social engineering** (manipulating users into granting access): `#9 Social Engineering`
+
+Distinguishing the underlying technique allows for more targeted control implementation. The Intra-System Boundary Operator (`|[privilege][@from→@to]|`) can annotate privilege escalation in attack paths without changing cluster classification.
+
+**Reference:** V1.9.1 Clarifications
+
+See also: Abuse of Functions (#1), Exploiting Server (#2), Identity Theft (#4), Intra-System Boundary Operator
+
+### Process Injection *(Industry Term)*
+
+A technique where an attacker inserts code into the address space of another running process. In TLCTC: process injection maps to different clusters depending on the mechanism:
+
+- **Via designed features** (debugging APIs, DLL injection via legitimate Windows functionality): `#1 Abuse of Functions` — the injection capability was intentionally designed.
+- **Via implementation flaws** (buffer overflows enabling code injection): `#2 Exploiting Server` or `#3 Exploiting Client` — the injection was never intended.
+
+The key distinction is whether the injection vector was a designed feature being misused versus an underlying software vulnerability being exploited.
+
+**Reference:** V1.9.1 Clarifications
+
+See also: Abuse of Functions (#1), Exploiting Server (#2), Implementation Flaw
 
 ### Programmer
 
@@ -721,9 +1146,97 @@ The logical collection of RESPOND-function controls and actions for a specific e
 
 Notation: `RS(Eₙ) = { Response } ∪ { Propagated PR(Eₙ₊₁) } ∪ { Propagated PR(Eₙ₊ₓ) }`. Example: RS(E1) for a ransomware incident may contain both incident containment actions AND propagated GDPR/NIS2 notification controls, each with distinct timelines and reporting authorities. Aligns with NIST CSF RESPOND function. See also: Propagated PR, Regulatory Trigger Point.
 
+### Ransomware *(Industry Term)*
+
+Malware that encrypts a victim's data and demands payment for the decryption key. In TLCTC: the execution of the ransomware binary maps to `#7 Malware` (foreign code executed via designed execution capability). The resulting data encryption is a Data Risk Event: `[DRE: Ac]` (Loss of Accessibility — data exists but is unusable). Note: this is Loss of **Accessibility**, not Loss of Availability (the encrypted files still exist on disk). A full ransomware attack path typically involves multiple clusters, e.g., `#9 → #7 → #7 → #4 → (#1 + #7)` as seen in the Emotet/Ryuk case study.
+
+**Reference:** V1.9.1 §Definitions (#7), §Data Risk Event Types, §E (Emotet@Heise)
+
+See also: Malware (#7), Accessibility (Data Risk Event), Loss of Accessibility
+
+### RCE (Remote Code Execution) *(Industry Term — Decomposition Required)*
+
+A commonly used but imprecise term describing CVEs that enable an attacker to execute arbitrary code on a remote target. In TLCTC, "RCE" always conflates the vulnerability with its exploitation and MUST be decomposed:
+
+- The **vulnerability** that enables execution: `#2 Exploiting Server` (server-side flaw) or `#3 Exploiting Client` (client-side flaw)
+- The **actual execution** of foreign code: `#7 Malware`
+- Correct notation: `#2 → #7` or `#3 → #7`
+
+This decomposition is essential because it identifies two distinct generic vulnerabilities being exploited, each requiring different controls.
+
+**Reference:** V1.9.1 §F (Industry Term Decomposition)
+
+See also: Exploiting Server (#2), Exploiting Client (#3), Malware (#7)
+
+### RFID Skimming *(Industry Term)*
+
+The unauthorized reading of RFID (Radio-Frequency Identification) chips from proximity, typically to clone access cards or extract stored data. In TLCTC: maps to `#8 Physical Attack` (specifically `#8.2 Indirect Physical Access`) — the attacker exploits physical properties (radio frequency emanations) without direct contact with the target device.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#8)
+
+See also: Physical Attack (#8), TEMPEST
+
+### Risk Appetite / Risk Tolerance *(Industry Term)*
+
+**Risk Appetite:** The level and type of cyber risk an organization is willing to accept in pursuit of its objectives. **Risk Tolerance:** The acceptable deviation from the defined risk appetite. In TLCTC: risk appetite and tolerance should be defined per threat cluster, enabling differentiated risk treatment. For example, an organization may have zero tolerance for `#10 Supply Chain` risks in critical infrastructure but moderate tolerance for `#6 Flooding` risks with adequate DDoS mitigation in place. Risk appetite is a Strategic Management Layer concern that informs operational priorities.
+
+**Reference:** V1.9.1 §Strategic Management Layer
+
+See also: Strategic Management Layer, GOVERN (GV)
+
+### Rogue Hotspot *(Industry Term)*
+
+A fraudulent Wi-Fi access point set up by an attacker to intercept traffic from unsuspecting users. In TLCTC: the physical deployment of the rogue access point maps to `#8 Physical Attack` (physical proximity required). Interception of traffic through the rogue AP maps to `#5 Man in the Middle`. If the attacker fakes an SSID to impersonate a legitimate network, that may additionally involve `#4` (identity impersonation). Typical sequence: `#8 → #5`.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#5)
+
+See also: Pineapple Attack, Man in the Middle (#5), Physical Attack (#8)
+
+### Rootkit *(Industry Term)*
+
+Malware designed to provide continued privileged access to a system while actively hiding its presence. In TLCTC: maps to `#7 Malware` — the rootkit is foreign executable content running via the system's designed execution capability. The persistence and stealth mechanisms are operational details within the `#7` cluster.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#7)
+
+See also: Malware (#7), Spyware
+
 ---
 
 ## S
+
+### SAST (Static Application Security Testing) *(Industry Term)*
+
+A testing methodology that analyzes application source code, bytecode, or binary code for security vulnerabilities without executing the program. In TLCTC: SAST is a **preventive control** (IDENTIFY/PROTECT) primarily targeting `#2 Exploiting Server` and `#3 Exploiting Client` by identifying implementation flaws before deployment.
+
+See also: DAST, Control, Exploiting Server (#2), Exploiting Client (#3)
+
+### SBOM (Software Bill of Materials) *(Industry Term)*
+
+A formal, machine-readable inventory of all software components, libraries, and dependencies used in a software product. In TLCTC: SBOM is a critical control for `#10 Supply Chain Attack` — it enables organizations to identify and track third-party components, verify their integrity, and rapidly assess exposure when vulnerabilities are discovered in dependencies.
+
+See also: Supply Chain Attack (#10), SCA, Third-Party Trust Link
+
+### SCA (Software Composition Analysis) *(Industry Term)*
+
+Automated tools that identify open-source and third-party components in a codebase, flagging known vulnerabilities and license compliance issues. In TLCTC: SCA is a preventive control for `#10 Supply Chain Attack`, enabling detection of vulnerable or malicious dependencies before they are integrated into production systems.
+
+See also: Supply Chain Attack (#10), SBOM
+
+### Scope of Server Software
+
+In TLCTC: includes Server APIs, incorporated Library APIs, Socket APIs, and Local APIs that run on server-side systems to provide services and resources to clients. The scope defines the attack surface for `#2 Exploiting Server`.
+
+**Reference:** V1.9.1 Clarifications
+
+See also: Exploiting Server (#2), Scope of Client Software
+
+### Scope of Client Software
+
+In TLCTC: encompasses Client APIs, incorporated Library APIs, Socket APIs, and Local APIs that operate on the client side of a communication. The scope defines the attack surface for `#3 Exploiting Client`. Client software includes web browsers, mobile apps, desktop applications, document readers, command-line clients, client libraries, API consumers, and background services acting as clients.
+
+**Reference:** V1.9.1 Clarifications
+
+See also: Exploiting Client (#3), Scope of Server Software
 
 ### Secure Software Development Life Cycle (SSDLC)
 
@@ -745,13 +1258,105 @@ A component that **accepts and handles inbound requests or stimuli** relative to
 
 **Reference:** §2.2.2 (Global Definitions), R-ROLE (§2.2.4)
 
+### Session Hijacking *(Industry Term)*
+
+An attack where an adversary takes over an active session by stealing or predicting session tokens/cookies. In TLCTC: the **acquisition** of the session token maps to the enabling cluster (e.g., `#5` if intercepted via MitM, `#3` if stolen via XSS, `#7` if captured by malware). The **use** of the stolen session to impersonate the legitimate user always maps to `#4 Identity Theft` per R-CRED.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#4)
+
+See also: Identity Theft (#4), Credential Acquisition, Credential Application
+
+### SIEM (Security Information and Event Management) *(Industry Term)*
+
+A category of security tools that aggregate and analyze log data from across an organization's infrastructure to detect security events. In the TLCTC velocity model, SIEM is the primary detection tool for the **Medium Velocity Class** (hours) where analyst triage is feasible. SIEM uses operational notation (`TLCTC-XX.YY`) for correlation rules, while dashboards may display strategic notation (`#X`) for SOC managers.
+
+See also: Medium Velocity Class, EDR, SOAR, Notation Systems
+
+### Slowloris *(Industry Term)*
+
+An application-layer denial of service attack that holds many connections to the target web server open by sending partial HTTP requests, slowly exhausting server connection resources. In TLCTC: maps to `#6 Flooding Attack` — the primary mechanism is exhausting finite connection/thread pool capacity. Although each individual request is small, the aggregate effect overwhelms the server's connection handling capacity.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#6)
+
+See also: Flooding Attack (#6), DDoS, HTTP Flood
+
+### Smishing *(Industry Term)*
+
+Social engineering attacks delivered via SMS text messages. In TLCTC: maps to `#9 Social Engineering` — the delivery channel (SMS) does not change the cluster classification. Subsequent steps map to their respective clusters (e.g., `#9 → #4` for credential harvesting, `#9 → #7` for malware delivery).
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#9)
+
+See also: Social Engineering (#9), Phishing, Vishing
+
+### SOAR (Security Orchestration, Automation, and Response) *(Industry Term)*
+
+A category of security tools that enable automated incident response through predefined playbooks. In the TLCTC velocity model, SOAR is critical for the **Fast Velocity Class** (minutes) where automated containment is necessary because human analyst response times are insufficient. SOAR playbooks can be structured around TLCTC attack paths to automate response actions specific to detected cluster sequences.
+
+See also: Fast Velocity Class, EDR, SIEM
+
 ### Social Engineering (#9)
 
 A threat cluster where an attacker psychologically manipulates individuals into performing actions counter to their or their organization's best interests, such as divulging confidential information, granting access, executing code, or bypassing security procedures. The generic vulnerability is human psychological factors: gullibility, trust, ignorance, fear, urgency, authority bias, curiosity, or general compromisability. Often serves as the initial vector enabling other threat clusters (e.g., #9→#4 for credential harvesting, #9→#7 for malware installation, #9→#1 for feature misconfiguration).
 
+### Spear Phishing *(Industry Term)*
+
+A targeted social engineering attack directed at specific individuals or organizations, using personalized information to increase credibility. Variants include **Whaling** (targeting senior executives). In TLCTC: maps to `#9 Social Engineering` — the targeting precision is an operational detail but does not change the cluster. Subsequent steps map to their respective clusters based on the payload delivered.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#9)
+
+See also: Social Engineering (#9), Phishing, Whaling
+
+### Spyware *(Industry Term)*
+
+Malware that covertly monitors user activity, collects data (keystrokes, browsing history, credentials), and transmits it to the attacker. In TLCTC: maps to `#7 Malware` — foreign code executing via the system's designed execution capability. The data collection constitutes a Data Risk Event: `[DRE: C]` (Loss of Confidentiality). If collected credentials are subsequently used, an additional `#4 Identity Theft` step applies.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#7)
+
+See also: Malware (#7), Keylogger, Trojan
+
+### SQL Injection *(Industry Term)*
+
+An implementation flaw where an attacker inserts malicious SQL statements into application queries through unvalidated input, enabling unauthorized database access. In TLCTC: maps to `#2 Exploiting Server` — a coding flaw in server-side query building that creates an unintended data→code transition. SQL injection can lead to immediate Data Risk Events: `[DRE: C]` (data exfiltration), `[DRE: I]` (data modification), or `[DRE: Av]` (data deletion).
+
+**Reference:** V1.9.1 §Definitions (#2), Buzz-Word Refinement
+
+See also: Exploiting Server (#2), Implementation Flaw, Command Injection
+
+### SSRF (Server-Side Request Forgery) *(Industry Term)*
+
+An implementation flaw where an attacker induces the server to make requests to unintended locations, potentially accessing internal resources or services. In TLCTC: maps to `#2 Exploiting Server` — a coding flaw in how server-side code processes URL input. The server is in "server role" (accepting inbound requests) and the flaw is in its implementation.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#2)
+
+See also: Exploiting Server (#2), Implementation Flaw
+
+### SSL Stripping *(Industry Term)*
+
+A MitM technique where an attacker downgrades HTTPS connections to HTTP by intercepting and modifying communication between client and server. In TLCTC: SSL stripping is an action performed from a MitM position and maps to `#5 Man in the Middle` (exploiting the controlled communication path to perform a protocol downgrade). The attacker must already have the MitM position (gained via `#1` ARP spoofing, `#8` physical access, etc.), making the full sequence e.g., `#1 → #5`.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#1)
+
+See also: Man in the Middle (#5), ARP Spoofing, Position Acquisition vs Position Exploitation
+
 ### STIX (Structured Threat Information Expression)
 
 A standardized language for representing cyber threat information. TLCTC V2.0 proposes enhancement by introducing TLCTC clusters as a new STIX Domain Object, adding attack path sequence objects, and enhancing attack pattern objects with cluster mappings, enabling standardized high-level threat categorization and attack sequence representation in threat intelligence sharing.
+
+### STRIDE *(Industry Term)*
+
+A threat modeling methodology developed by Microsoft that categorizes threats into six types: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege. In TLCTC: STRIDE is considered "per se incomplete" — it conflates causes with outcomes (e.g., "Information Disclosure" is an outcome/DRE, not a cause) and lacks coverage of human and physical threat vectors. TLCTC's cause-oriented 10-cluster model provides a more logically consistent foundation, and TLCTC recommends always starting threat assessment with its clusters rather than STRIDE alone.
+
+**Reference:** V1.9.1 §Standardizing Strategic Cybersecurity, §Operational Layer
+
+See also: OWASP, TLCTC
+
+### SYN Flood *(Industry Term)*
+
+A network-layer denial of service attack that exploits the TCP three-way handshake by sending many SYN requests without completing the handshake, exhausting the target's connection table. In TLCTC: maps to `#6 Flooding Attack` — volume exceeding finite connection capacity.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#6)
+
+See also: Flooding Attack (#6), DDoS, UDP Flood
 
 ### Strategic Layer (Human-First)
 
@@ -790,6 +1395,14 @@ Alternative term for "Loss of Control" in the Cyber Bow-Tie model, representing 
 ---
 
 ## T
+
+### Tailgating *(Industry Term)*
+
+A physical social engineering technique where an unauthorized person follows an authorized person through a secured entrance. In TLCTC: maps to `#9 Social Engineering` when it relies on human psychology (politeness, trust) to gain access. If the entry is forced without social manipulation (e.g., slipping through a door), it maps to `#8 Physical Attack`. Subsequent technical exploitation maps to its own cluster.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#9)
+
+See also: Social Engineering (#9), Physical Attack (#8)
 
 ### Techniques (TTPs)
 
@@ -849,6 +1462,38 @@ Precedence rules applied when a step appears to fit multiple clusters. Applied i
 
 **Reference:** §2.2.5 (Tie-Breaker / Precedence Rules)
 
+### TEMPEST *(Industry Term)*
+
+A codename for standards and techniques related to electromagnetic emanation security — both the interception of unintentional electromagnetic emissions from electronic equipment and the shielding against such interception. In TLCTC: TEMPEST attacks map to `#8 Physical Attack` (specifically `#8.2 Indirect Physical Access`) — exploiting physical emanation properties without direct contact with the target device. Related techniques include Van Eck Phreaking.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#8)
+
+See also: Physical Attack (#8), Van Eck Phreaking, RFID Skimming
+
+### Token Hijacking *(Industry Term)*
+
+The theft or manipulation of authentication tokens (OAuth tokens, session tokens, API keys, bearer tokens) to gain unauthorized access. In TLCTC: the **acquisition** of the token maps to the enabling cluster per R-CRED (e.g., `#3` via XSS, `#5` via MitM interception, `#7` via malware). The **use** of the stolen token to authenticate always maps to `#4 Identity Theft`.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#4)
+
+See also: Identity Theft (#4), Session Hijacking, Credential Application
+
+### Trojan *(Industry Term)*
+
+Malware disguised as legitimate software to trick users into installing it. In TLCTC: the execution of the trojan maps to `#7 Malware` (foreign code running via designed execution capability). The deception that leads to installation typically involves `#9 Social Engineering` (tricking the user). Full sequence: `#9 → #7`. The trojan may then perform various malicious actions that map to additional clusters (e.g., credential stealing → `#4`, data exfiltration → `[DRE: C]`).
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#7)
+
+See also: Malware (#7), Social Engineering (#9)
+
+### Typosquatting *(Industry Term)*
+
+Registering domain names or package names that are slight misspellings of legitimate ones to deceive users or automated systems. In TLCTC: when used for malicious package publication (e.g., npm typosquatting), maps to `#1 Abuse of Functions` (abusing the publish functionality) → `#10 Supply Chain Attack` (trust boundary crossing) → `#7 Malware` (code execution at consumer). When used for phishing domains, see Domain Squatting.
+
+**Reference:** V1.9.1 §Attack Path Notation (Example 3)
+
+See also: Domain Squatting, Supply Chain Attack (#10), Abuse of Functions (#1)
+
 ### TLCTC (Top Level Cyber Threat Clusters)
 
 A pragmatic and structured framework for targeted threat identification that provides a universal approach to cybersecurity applicable across diverse IT systems and contexts. The framework consists of 10 distinct, non-overlapping threat clusters based on generic vulnerabilities, each with strategic and operational applications. The 10 Top Level Cyber Threat Clusters are:
@@ -901,6 +1546,14 @@ The TLCTC structure distinguishing between:
 
 ## U
 
+### UDP Flood *(Industry Term)*
+
+A network-layer denial of service attack that overwhelms a target with UDP packets, consuming bandwidth and processing resources. In TLCTC: maps to `#6 Flooding Attack` — volume exceeding finite network/processing capacity.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#6)
+
+See also: Flooding Attack (#6), DDoS, SYN Flood
+
 ### Umbrella Controls
 
 Security measures that provide protection for groups of IT systems within their scope, such as firewalls, proxies, network zones, or external network filters. These contrast with Local Controls that protect specific systems directly. Important consideration: Umbrella controls provide protection only for specific 'Groups of IT-Systems' within their scope and cannot effectively protect all exposed systems (e.g., a firewall protects 'inner IT-Systems' but not directly exposed ones).
@@ -910,6 +1563,14 @@ Security measures that provide protection for groups of IT systems within their 
 A Δt value where no supported time statement can be made. Notation: `Δt=?`.
 
 **Reference:** §4.0.3, §4.2.3
+
+### USB Baiting *(Industry Term)*
+
+A physical attack where an attacker leaves malicious USB devices in locations where targets are likely to find and connect them (parking lots, lobbies, conference rooms). In TLCTC: the physical placement of the USB device maps to `#8 Physical Attack`. If the victim is induced by curiosity to plug it in, social engineering is also involved (`#9`). The execution of malicious code from the device maps to `#7 Malware`. Typical sequence: `#8 → #7` or `#9 → #8 → #7`.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#8)
+
+See also: Physical Attack (#8), Malware (#7), Evil Maid Attack
 
 ---
 
@@ -932,23 +1593,69 @@ Categorical labels for Δt ranges that describe the defender's feasible response
 
 **Reference:** §4.4 (Operational Velocity Classes)
 
+### Van Eck Phreaking *(Industry Term)*
+
+A technique for eavesdropping on the contents of a CRT or LCD display by detecting and decoding the electromagnetic emissions produced by the display. In TLCTC: maps to `#8 Physical Attack` (specifically `#8.2 Indirect Physical Access`) — exploiting electromagnetic emanation properties without direct physical contact.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#8)
+
+See also: Physical Attack (#8), TEMPEST
+
 ### Vertical Stack Application
 
 The implementation of TLCTC across the layered architecture of IT systems (from application level to hardware), analyzing client/server roles at each protection ring boundary (e.g., Ring 3 to Ring 0) and directional vulnerabilities.
 
+### Vishing *(Industry Term)*
+
+Social engineering attacks delivered via voice calls (phone). In TLCTC: maps to `#9 Social Engineering` — the delivery channel (voice) does not change the cluster classification. Subsequent steps map to their respective clusters.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#9)
+
+See also: Social Engineering (#9), Phishing, Smishing
+
 ### Vulnerability
 
-An exploitable condition or weakness in a system that can be leveraged by a threat actor to compromise security. In the TLCTC framework, vulnerabilities exist in a hierarchical relationship: specific vulnerabilities (like individual CVEs) are instances of generic vulnerabilities, which in turn define the 10 Top Level Cyber Threat Clusters (Axiom I).
+An exploitable condition in a system that constitutes the **attack surface towards a threat**. A vulnerability is what the threat "sees" and targets — it is the exposed surface that enables the attack vector and, through it, the attack path. Without the vulnerability, the threat has no point of entry; with it, the threat has a viable route from cause to compromise.
 
-**Conceptual hierarchy:** Weakness (CWE) → Specific Vulnerability (CVE) → Generic Vulnerability (TLCTC) → Threat Cluster (#1-#10).
+In the TLCTC Bow-Tie model this relationship is structural: each of the 10 threat clusters is defined by exactly one **generic vulnerability** (Axiom I). The generic vulnerability is the attack surface that the threat cluster exploits. It is what makes the attack vector possible and what the attack path traverses. Controls exist to reduce or eliminate this exposed surface — preventive controls on the left side of the Bow-Tie shrink the attack surface; the vulnerability that remains is the residual exposure the threat can still reach.
 
-**Critical distinction:** A vulnerability is an exploitable condition that exists in a system, while a weakness is the underlying flaw, bug, or error that enables that vulnerability to exist. TLCTC focuses on categorizing the generic vulnerabilities that all specific vulnerabilities map to.
+**Conceptual hierarchy:** Weakness (CWE) → Specific Vulnerability (CVE) → Generic Vulnerability (TLCTC) → Threat Cluster (#1–#10).
 
-See also: Generic Vulnerability, Weakness, CVE, Threat Cluster
+- A **weakness** (CWE) is the underlying flaw, bug, or error that creates the condition.
+- A **specific vulnerability** (CVE) is a concrete, exploitable instance of that condition in a particular product or version.
+- A **generic vulnerability** (TLCTC) is the universal, technology-independent category of attack surface that all specific vulnerabilities of the same nature map to.
+- A **threat cluster** is the set of threats that target that generic attack surface.
+
+**Example:** A coding error that fails to validate input (weakness / CWE-89) creates a SQL injection vulnerability (specific vulnerability / CVE-xxxx-yyyy) in a web application. That vulnerability is the attack surface towards `#2 Exploiting Server` — the exposed surface through which the attacker's exploit code enters. The attack vector is defined by this initial generic vulnerability (Axiom VII), and the attack path proceeds from there (e.g., `#2 → #7 → #4`).
+
+**Critical distinction:** A vulnerability is an exploitable condition that exists in a system, while a weakness is the underlying flaw, bug, or error that enables that vulnerability to exist. TLCTC focuses on categorizing the generic vulnerabilities — the fundamental attack surfaces — that all specific vulnerabilities map to.
+
+See also: Generic Vulnerability, Weakness, CVE, Threat Cluster, Attack Vector, Attack Path, Bow-Tie Model
 
 ---
 
 ## W
+
+### WAF (Web Application Firewall) *(Industry Term)*
+
+A security control that monitors, filters, and blocks HTTP traffic to and from a web application. In TLCTC: WAF is an **Umbrella Control** primarily targeting `#2 Exploiting Server` — it provides a protective layer against common server-side exploitation techniques (SQL injection, XSS, etc.) for web applications within its scope. WAFs cannot protect against all threat clusters and should be part of a defense-in-depth strategy.
+
+See also: Umbrella Controls, Exploiting Server (#2), Defense-in-Depth
+
+### Watering Hole Attack *(Industry Term)*
+
+An attack where an adversary compromises a website frequently visited by the target group, then uses the compromised site to deliver exploits or malware to visitors. In TLCTC: the attack decomposes into multiple steps depending on the method:
+
+- Compromising the website: maps to its own cluster (e.g., `#2 Exploiting Server`, `#4 Identity Theft`)
+- Luring users to visit: `#9 Social Engineering` (if actively lured) or implicit via the site's normal traffic
+- Exploiting visitor's browser: `#3 Exploiting Client`
+- Delivering malware: `#7 Malware`
+
+Typical sequence: `#3 → #7` (for the victim's perspective) or the full chain from attacker's perspective.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#3)
+
+See also: Exploiting Client (#3), Drive-By Download, Malvertising
 
 ### Weakness
 
@@ -961,6 +1668,34 @@ A flaw, bug, or error in software, hardware, or processes that enables vulnerabi
 **Relationship to TLCTC:** While CWE provides granular weakness taxonomy at the code level for developers, TLCTC operates at the strategic level by grouping all resulting vulnerabilities into 10 generic vulnerability categories that define the threat clusters. Both frameworks are complementary.
 
 See also: Vulnerability, Generic Vulnerability, CVE, CWE, Threat Cluster, Coder, Programmer
+
+### Whaling *(Industry Term)*
+
+A targeted phishing attack aimed specifically at senior executives or high-value targets within an organization. In TLCTC: maps to `#9 Social Engineering` — the seniority of the target is an operational detail that does not change the cluster classification. Often used in BEC (Business Email Compromise) / CEO Fraud scenarios. Subsequent steps map to their respective clusters.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#9)
+
+See also: Social Engineering (#9), Spear Phishing, Phishing
+
+### Worm *(Industry Term)*
+
+Self-replicating malware that spreads across networks without requiring user interaction, typically by exploiting vulnerabilities in network-accessible services. In TLCTC: the exploitation of the vulnerability maps to `#2 Exploiting Server` (or `#3 Exploiting Client`), and the execution of the worm payload maps to `#7 Malware`. Wormable exploits are characteristic of the **Realtime Velocity Class** (seconds/milliseconds) — e.g., EternalBlue — where architecture and hardening are the only effective controls because detection/response cannot keep pace.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#7), Realtime Velocity Class
+
+See also: Malware (#7), Exploiting Server (#2), Realtime Velocity Class
+
+---
+
+## X
+
+### XXE (XML External Entity) Injection *(Industry Term)*
+
+An implementation flaw where an application processes XML input containing references to external entities, potentially leading to data disclosure, SSRF, or denial of service. In TLCTC: maps to `#2 Exploiting Server` (or `#3 Exploiting Client` per R-ROLE) — a coding flaw in XML parsing that creates an unintended data→code transition.
+
+**Reference:** V1.9.1 Buzz-Word Refinement (#2)
+
+See also: Exploiting Server (#2), SSRF, Implementation Flaw
 
 ---
 
