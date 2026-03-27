@@ -1,0 +1,395 @@
+{
+  "metadata": {
+    "assessment_id": "FAIR-SCATTERED-SPIDER-2024-001",
+    "analyst": "Security Risk Team",
+    "analyst_confidence": "medium",
+    "tlctc_version": "2.0",
+    "fair_version": "3.0",
+    "attack_path_ref": "scattered-spider-2024.json",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "assessment_date": "2025-12-14T10:00:00Z",
+    "time_horizon": "1y",
+    "currency": "USD",
+    "notes": "Risk assessment for identity-driven attack scenario based on SCATTERED SPIDER TTPs. Demonstrates TLCTC-FAIR Layer 4 integration with VWCE, SCF, and PVA."
+  },
+  "scenario": {
+    "scenario_id": "SCATTERED-SPIDER-IDENTITY",
+    "title": "Identity-driven attack via help desk social engineering",
+    "threat_community": "Organized cybercriminal group (SCATTERED SPIDER / 0ktapus)",
+    "asset_at_risk": "Enterprise identity infrastructure and production data",
+    "method": "Social engineering → credential theft → lateral movement → ransomware",
+    "effect": "Data exfiltration and business interruption via ransomware deployment",
+    "attack_path_notation": "#9 ||[human][@External→@Org(HelpDesk)]|| →[Δt<1m] #4 →[Δt=2-5m] #1 →[Δt=hours] #4 →[Δt<24h] #7 + [DRE: C, A]",
+    "notes": "Based on publicly documented SCATTERED SPIDER campaigns (CrowdStrike 2024/2025 reports)."
+  },
+  "fair_factors": {
+    "loss_event_frequency": {
+      "threat_event_frequency": {
+        "contact_frequency": {
+          "distribution": "pert",
+          "minimum": 1,
+          "most_likely": 4,
+          "maximum": 12,
+          "confidence": 4,
+          "unit": "events_per_year",
+          "notes": "Help desk contact attempts by SCATTERED SPIDER or similar threat actors targeting this organization. Based on industry threat intelligence frequency for mid-large enterprises."
+        },
+        "probability_of_action": {
+          "distribution": "pert",
+          "minimum": 0.6,
+          "most_likely": 0.85,
+          "maximum": 0.95,
+          "confidence": 4,
+          "notes": "High motivation: organized crime with demonstrated financial motive and established playbooks."
+        }
+      },
+      "susceptibility": {
+        "threat_capability": {
+          "distribution": "pert",
+          "minimum": 60,
+          "most_likely": 80,
+          "maximum": 95,
+          "confidence": 3,
+          "unit": "percentile",
+          "notes": "Sophisticated threat actor with demonstrated social engineering expertise, SIM swapping capability, and identity infrastructure knowledge."
+        },
+        "resistance_strength": {
+          "distribution": "pert",
+          "minimum": 30,
+          "most_likely": 50,
+          "maximum": 70,
+          "confidence": 3,
+          "unit": "percentile",
+          "notes": "Standard identity controls in place. Help desk verification procedures exist but are bypassable via vishing. MFA deployed but not phishing-resistant FIDO2."
+        }
+      }
+    },
+    "loss_magnitude": {
+      "primary_loss": {
+        "distribution": "lognormal",
+        "low": 500000,
+        "high": 25000000,
+        "unit": "USD",
+        "forms_of_loss": {
+          "productivity": {
+            "distribution": "lognormal",
+            "low": 200000,
+            "high": 10000000,
+            "notes": "Business interruption from ransomware deployment. Duration: 3–14 days based on comparable incidents."
+          },
+          "response": {
+            "distribution": "lognormal",
+            "low": 150000,
+            "high": 5000000,
+            "notes": "Incident response retainer, forensics, legal counsel, breach notification costs."
+          },
+          "replacement": {
+            "distribution": "lognormal",
+            "low": 50000,
+            "high": 2000000,
+            "notes": "System rebuild, reimage, identity infrastructure reset costs."
+          }
+        },
+        "notes": "Primary loss dominated by productivity impact (business interruption from ransomware)."
+      },
+      "secondary_loss": {
+        "secondary_loss_event_frequency": {
+          "distribution": "pert",
+          "minimum": 0.5,
+          "most_likely": 0.8,
+          "maximum": 1.0,
+          "confidence": 4,
+          "notes": "High probability of regulatory and media attention for ransomware + data exfiltration event."
+        },
+        "secondary_loss_magnitude": {
+          "distribution": "lognormal",
+          "low": 1000000,
+          "high": 50000000,
+          "unit": "USD",
+          "forms_of_loss": {
+            "fines_and_judgments": {
+              "distribution": "lognormal",
+              "low": 500000,
+              "high": 20000000,
+              "notes": "GDPR, state breach notification penalties, potential class action settlement."
+            },
+            "reputation": {
+              "distribution": "lognormal",
+              "low": 200000,
+              "high": 15000000,
+              "notes": "Customer churn, brand damage, elevated insurance premiums."
+            },
+            "competitive_advantage": {
+              "distribution": "lognormal",
+              "low": 100000,
+              "high": 10000000,
+              "notes": "Exfiltrated proprietary data and trade secrets (DRE: C)."
+            }
+          },
+          "notes": "Secondary loss driven by regulatory fines and reputation damage."
+        }
+      }
+    }
+  },
+  "tlctc_enhancements": {
+    "sequence_complexity_factor": {
+      "path_length": 5,
+      "parallel_group_count": 0,
+      "velocity_classes_observed": ["VC-2", "VC-3", "VC-4"],
+      "velocity_variance": "high",
+      "scf_value": 0.72,
+      "notes": "5-step path with 3 distinct Velocity Classes (VC-4, VC-3, VC-2). High variance indicates attacker must operate across real-time, operational, and tactical tempos. SCF = 0.85 × (1 + log(5)) × 0.65 ≈ 0.72."
+    },
+    "path_variance_analysis": [
+      {
+        "path_id": "primary",
+        "attack_path_ref": "scattered-spider-2024.json",
+        "notation": "#9 ||[human][@External→@Org(HelpDesk)]|| →[Δt<1m] #4 →[Δt=2-5m] #1 →[Δt=hours] #4 →[Δt<24h] #7 + [DRE: C, A]",
+        "path_probability": 0.60,
+        "notes": "Primary observed attack path: help desk vishing."
+      },
+      {
+        "path_id": "alt-it-targeting",
+        "attack_path_ref": null,
+        "notation": "#9 ||[human][@External→@Org(IT)]|| →[Δt=1h] #4 →[Δt=30m] #1 →[Δt=2d] #7 + [DRE: C, A]",
+        "path_probability": 0.25,
+        "notes": "Alternative: targeting IT staff directly. Slower velocity, bypasses help desk controls but requires higher social engineering specificity."
+      },
+      {
+        "path_id": "alt-exploit-driven",
+        "attack_path_ref": null,
+        "notation": "#3 →[Δt=instant] #7 →[Δt=5m] #4 →[Δt=1h] #1 + [DRE: C, A]",
+        "path_probability": 0.15,
+        "notes": "Alternative: exploit-driven initial access without social engineering. Requires 0-day or unpatched client-side vulnerability. Lower probability but different control surface."
+      }
+    ],
+    "notes": "Path probabilities sum to 1.0. No compound threat multipliers — the primary path has no parallel execution groups."
+  },
+  "control_analysis": {
+    "transition_controls": [
+      {
+        "from_step": "s1-vishing",
+        "to_step": "s2-account-takeover",
+        "delta_t": "<1m",
+        "velocity_class": "VC-4",
+        "controls": [
+          {
+            "control_id": "ctrl-sat-01",
+            "control_name": "Security Awareness Training",
+            "nist_function": "PR",
+            "fair_cam_domain": "prevention",
+            "fair_cam_subdomain": "resistance",
+            "fair_factor_affected": "resistance_strength",
+            "base_effectiveness": 0.70,
+            "vc_applicability": 0.10,
+            "vwce": 0.07,
+            "rationale": "Awareness training has high base effectiveness against #9 Social Engineering in deliberative scenarios. At VC-4 velocity, the help desk agent has <1 minute to recognize the vishing attempt while under social pressure. Urgency and authority cues bypass trained responses.",
+            "notes": "Consider supplementing with technical controls that remove the decision from the human."
+          },
+          {
+            "control_id": "ctrl-mfa-01",
+            "control_name": "Multi-Factor Authentication (Standard OTP)",
+            "nist_function": "PR",
+            "fair_cam_domain": "prevention",
+            "fair_cam_subdomain": "resistance",
+            "fair_factor_affected": "resistance_strength",
+            "base_effectiveness": 0.85,
+            "vc_applicability": 0.30,
+            "vwce": 0.255,
+            "rationale": "MFA provides high resistance against credential-only attacks. However, the help desk password/MFA reset process creates a social engineering bypass path. At VC-4, the attacker socially engineers the MFA reset before the legitimate user notices or can respond.",
+            "notes": "Phishing-resistant FIDO2 would raise vc_applicability to 0.90 (cannot be socially engineered)."
+          },
+          {
+            "control_id": "ctrl-siem-01",
+            "control_name": "SIEM Identity Anomaly Detection",
+            "nist_function": "DE",
+            "fair_cam_domain": "detection",
+            "fair_cam_subdomain": "recognition",
+            "fair_factor_affected": "detection_effectiveness",
+            "base_effectiveness": 0.60,
+            "vc_applicability": 0.05,
+            "vwce": 0.03,
+            "rationale": "SIEM alerting for unusual help desk activity is effective at VC-1/VC-2 timescales where analysts can triage. At VC-4, the transition completes before an alert fires, is triaged, and triggers a response action.",
+            "notes": ""
+          },
+          {
+            "control_id": "ctrl-hd-callback-01",
+            "control_name": "Help Desk Callback Verification",
+            "nist_function": "PR",
+            "fair_cam_domain": "prevention",
+            "fair_cam_subdomain": "resistance",
+            "fair_factor_affected": "resistance_strength",
+            "base_effectiveness": 0.80,
+            "vc_applicability": 0.70,
+            "vwce": 0.56,
+            "rationale": "Requiring callback to a verified number introduces a procedural delay that is structurally resistant to VC-4 social engineering. The callback itself converts the transition from VC-4 to VC-2, buying detection time. Applicability is not 1.0 because procedures can be bypassed under operational pressure.",
+            "notes": "This control works by changing the Velocity Class of the transition itself — a key VWCE insight."
+          }
+        ],
+        "notes": "Critical transition: the #9→#4 bridge crossing at VC-4 is the highest-risk point. Only architectural/procedural controls that eliminate the human decision point or slow the transition are structurally effective."
+      },
+      {
+        "from_step": "s2-account-takeover",
+        "to_step": "s3-mfa-registration",
+        "delta_t": "2-5m",
+        "velocity_class": "VC-3",
+        "controls": [
+          {
+            "control_id": "ctrl-edr-01",
+            "control_name": "EDR Behavioral Detection",
+            "nist_function": "DE",
+            "fair_cam_domain": "detection",
+            "fair_cam_subdomain": "monitoring",
+            "fair_factor_affected": "detection_effectiveness",
+            "base_effectiveness": 0.80,
+            "vc_applicability": 0.75,
+            "vwce": 0.60,
+            "rationale": "EDR/SOAR automation can detect suspicious MFA device registration within minutes. VC-3 is within the operational response window for automated playbooks.",
+            "notes": ""
+          },
+          {
+            "control_id": "ctrl-mfa-reg-01",
+            "control_name": "MFA Registration Approval Workflow",
+            "nist_function": "PR",
+            "fair_cam_domain": "prevention",
+            "fair_cam_subdomain": "resistance",
+            "fair_factor_affected": "resistance_strength",
+            "base_effectiveness": 0.90,
+            "vc_applicability": 0.85,
+            "vwce": 0.765,
+            "rationale": "Requiring manager/admin approval for new MFA device registration introduces a gate that is effective at VC-3. The approval workflow creates a human-in-the-loop checkpoint independent of the attacker's tempo.",
+            "notes": ""
+          }
+        ],
+        "notes": "VC-3 transition allows both automated detection and procedural prevention controls to be effective."
+      },
+      {
+        "from_step": "s3-mfa-registration",
+        "to_step": "s4-lateral-movement",
+        "delta_t": "hours",
+        "velocity_class": "VC-2",
+        "controls": [
+          {
+            "control_id": "ctrl-siem-02",
+            "control_name": "SIEM Lateral Movement Detection",
+            "nist_function": "DE",
+            "fair_cam_domain": "detection",
+            "fair_cam_subdomain": "recognition",
+            "fair_factor_affected": "detection_effectiveness",
+            "base_effectiveness": 0.70,
+            "vc_applicability": 0.80,
+            "vwce": 0.56,
+            "rationale": "At VC-2 (hours), SIEM correlation rules have sufficient time to detect credential abuse patterns and alert analysts for triage.",
+            "notes": ""
+          },
+          {
+            "control_id": "ctrl-pam-01",
+            "control_name": "Privileged Access Management (PAM)",
+            "nist_function": "PR",
+            "fair_cam_domain": "prevention",
+            "fair_cam_subdomain": "resistance",
+            "fair_factor_affected": "resistance_strength",
+            "base_effectiveness": 0.85,
+            "vc_applicability": 0.85,
+            "vwce": 0.7225,
+            "rationale": "PAM vaulting and session monitoring prevents direct ntds.dit extraction by requiring checkout and approval for privileged operations. Effective at VC-2 timescales.",
+            "notes": ""
+          }
+        ],
+        "notes": "VC-2 transition. Both detection and prevention controls are within their operational window."
+      },
+      {
+        "from_step": "s4-lateral-movement",
+        "to_step": "s5-ransomware",
+        "delta_t": "<24h",
+        "velocity_class": "VC-2",
+        "controls": [
+          {
+            "control_id": "ctrl-edr-02",
+            "control_name": "EDR Ransomware Prevention",
+            "nist_function": "DE",
+            "fair_cam_domain": "detection",
+            "fair_cam_subdomain": "monitoring",
+            "fair_factor_affected": "detection_effectiveness",
+            "base_effectiveness": 0.85,
+            "vc_applicability": 0.85,
+            "vwce": 0.7225,
+            "rationale": "Modern EDR with anti-ransomware behavioral detection. At VC-2, both automated and analyst-driven responses are viable.",
+            "notes": ""
+          },
+          {
+            "control_id": "ctrl-backup-01",
+            "control_name": "Immutable Backup & Recovery",
+            "nist_function": "RC",
+            "fair_cam_domain": "response",
+            "fair_cam_subdomain": "recovery",
+            "fair_factor_affected": "loss_magnitude",
+            "base_effectiveness": 0.90,
+            "vc_applicability": 0.90,
+            "vwce": 0.81,
+            "rationale": "Immutable backups reduce loss magnitude regardless of velocity. Recovery time affects productivity loss but the data itself is preserved.",
+            "notes": ""
+          },
+          {
+            "control_id": "ctrl-seg-01",
+            "control_name": "Network Segmentation / Microsegmentation",
+            "nist_function": "RS",
+            "fair_cam_domain": "response",
+            "fair_cam_subdomain": "containment",
+            "fair_factor_affected": "loss_magnitude",
+            "base_effectiveness": 0.75,
+            "vc_applicability": 0.90,
+            "vwce": 0.675,
+            "rationale": "Architectural control: segmentation limits blast radius regardless of attack velocity. Containment is structural, not speed-dependent.",
+            "notes": ""
+          }
+        ],
+        "notes": "Final transition before impact. Recovery and containment controls reduce loss magnitude even if prevention fails upstream."
+      }
+    ],
+    "scenario_level_summary": {
+      "highest_risk_transition": {
+        "from_step": "s1-vishing",
+        "to_step": "s2-account-takeover",
+        "velocity_class": "VC-4",
+        "max_vwce": 0.56,
+        "notes": "The #9→#4 transition at VC-4 is the critical vulnerability. Best available control (callback verification) achieves only 0.56 VWCE. Upgrading to phishing-resistant FIDO2 MFA would raise max VWCE to 0.81."
+      },
+      "control_coverage_by_nist_function": {
+        "GV": { "controls_count": 0, "avg_vwce": null },
+        "ID": { "controls_count": 0, "avg_vwce": null },
+        "PR": { "controls_count": 5, "avg_vwce": 0.47 },
+        "DE": { "controls_count": 4, "avg_vwce": 0.48 },
+        "RS": { "controls_count": 1, "avg_vwce": 0.675 },
+        "RC": { "controls_count": 1, "avg_vwce": 0.81 }
+      },
+      "notes": "Protect and Detect functions have the most controls but lowest average VWCE — driven by the VC-4 entry transition degrading effectiveness. Respond and Recover controls maintain high VWCE because they are architectural/structural."
+    }
+  },
+  "results": {
+    "annualized_loss_exposure": {
+      "distribution": "lognormal",
+      "low": 750000,
+      "high": 35000000,
+      "unit": "USD",
+      "notes": "ALE incorporating SCF (0.72) and VWCE adjustments. 90% confidence interval."
+    },
+    "enhanced_fair_risk_score": {
+      "base_fair_ale": { "low": 1200000, "high": 45000000 },
+      "scf_adjusted_ale": { "low": 864000, "high": 32400000 },
+      "ctm_adjustment": null,
+      "vwce_adjustment_factor": 0.82,
+      "final_ale": { "low": 750000, "high": 35000000 },
+      "notes": "SCF reduces LEF by 28% (5-step path complexity). VWCE reveals VC-4 entry transition degrades Protect controls, partially offsetting the SCF reduction by increasing effective susceptibility."
+    },
+    "loss_exceedance_curve": [
+      { "threshold": 1000000, "probability": 0.78 },
+      { "threshold": 5000000, "probability": 0.52 },
+      { "threshold": 10000000, "probability": 0.31 },
+      { "threshold": 25000000, "probability": 0.12 },
+      { "threshold": 50000000, "probability": 0.04 }
+    ],
+    "monte_carlo_iterations": 100000,
+    "notes": "52% probability of exceeding $5M in annualized loss. Primary risk driver: VC-4 entry transition with degraded Protect controls."
+  }
+}

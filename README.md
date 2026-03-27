@@ -300,6 +300,7 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 | **Layer 1 — Framework Definition** | Immutable "dictionary": clusters, axioms, rule IDs, topology types | `tlctc-framework.schema.json` / `tlctc-framework.v2.0.json` | Universal | Rarely (framework evolution) |
 | **Layer 2 — Reference Registry** | Reusable reference objects: responsibility spheres, boundary contexts, intra-system boundary types (v2.1) | `tlctc-reference.schema.json` / `@Org-registry.vX.Y.Z.json` | Organization-specific | Occasionally (org changes) |
 | **Layer 3 — Attack Path Instances** | Specific incidents: sequences, parallel groups, Δt, boundary annotations, DREs | `tlctc-attack-path.schema.json` / `incident-<id>.json` | Per-incident | Constantly (new incidents) |
+| **Layer 4 — FAIR Risk Quantification** | Financial risk modeling: FAIR factor estimates, VWCE, SCF, CTM, PVA | `tlctc-fair-risk.schema.json` / `<scenario>-fair.json` | Per-scenario | Per-assessment |
 
 ### Design Principles
 
@@ -358,15 +359,20 @@ tlctc/
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
 │   │   └── example-registry.json             # Example org-specific registry
-│   └── layer-3/                              # Attack Path Instances (Dynamic)
-│       ├── tlctc-attack-path.schema.json     # Schema for attack path instances
+│   ├── layer-3/                              # Attack Path Instances (Dynamic)
+│   │   ├── tlctc-attack-path.schema.json     # Schema for attack path instances
+│   │   └── examples/
+│   │       ├── solarwinds-2020.json          # SolarWinds supply chain incident
+│   │       └── chalk-debug-2025.json         # npm phishing campaign incident
+│   └── layer-4/                              # FAIR Risk Quantification (Risk)
+│       ├── tlctc-fair-risk.schema.json       # Schema for FAIR risk assessment instances
 │       └── examples/
-│           ├── solarwinds-2020.json          # SolarWinds supply chain incident
-│           └── chalk-debug-2025.json         # npm phishing campaign incident
+│           └── scattered-spider-2024-fair.json # SCATTERED SPIDER FAIR risk assessment
 ├── documentation/
 │   ├── tlctc-v2.0-whitepaper.md              # Canonical V2.0 White Paper
 │   ├── tlctc-glossary.md                     # Comprehensive Definitions
 │   ├── npm-supply-chain-blog-final.md        # npm supply chain threat analysis
+│   ├── tlctc-fair-integration-proposal.md    # FAIR integration proposal (Layer 4 spec)
 │   ├── tlctc-v2.0-json-architecture.md       # JSON Architecture Specification
 │   ├── why-exactly-ten.pdf                   # Framework Architecture Rationale
 │   └── images/                               # Diagrams and visual assets

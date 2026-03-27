@@ -1,0 +1,516 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TLCTC Layer 4: FAIR Risk Quantification — Schema",
+  "description": "Validates TLCTC-FAIR risk quantification instances. Bridges Layer 3 attack path analysis with FAIR risk modeling, incorporating Velocity-Weighted Control Effectiveness (VWCE), Sequence Complexity Factor (SCF), Compound Threat Multipliers (CTM), and Path Variance Analysis (PVA).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metadata", "scenario", "fair_factors"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assessment_id", "analyst_confidence", "tlctc_version", "fair_version", "attack_path_ref", "assessment_date", "time_horizon", "currency"],
+      "properties": {
+        "assessment_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,127}$",
+          "description": "Unique identifier for this risk assessment."
+        },
+        "analyst": { "type": "string", "description": "Analyst or team performing the assessment." },
+        "analyst_confidence": { "type": "string", "enum": ["low", "medium", "high"] },
+        "tlctc_version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+        "fair_version": { "type": "string", "pattern": "^\\d+\\.\\d+$", "description": "FAIR Model version used (e.g., '3.0')." },
+        "attack_path_ref": { "type": "string", "description": "Identifier/filename for the Layer 3 attack path instance." },
+        "attack_path_sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$", "description": "SHA256 hash of the referenced Layer 3 file for integrity verification." },
+        "framework_ref": { "type": "string", "description": "Identifier/filename for the Layer 1 framework definition used." },
+        "assessment_date": { "type": "string", "format": "date-time" },
+        "time_horizon": {
+          "type": "string",
+          "pattern": "^\\d+(y|mo|w|d)$",
+          "description": "Period over which frequency estimates apply (e.g., '1y', '6mo')."
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "ISO 4217 currency code for all monetary values."
+        },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenario_id", "title", "threat_community", "asset_at_risk", "effect"],
+      "description": "FAIR Cyber Risk Scenario definition, aligned with FAIR-CRS (Feb 2025).",
+      "properties": {
+        "scenario_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,127}$"
+        },
+        "title": { "type": "string", "description": "Human-readable scenario title." },
+        "threat_community": { "type": "string", "description": "Description of the threat agent community (FAIR-CRS Threat element)." },
+        "asset_at_risk": { "type": "string", "description": "Business-critical asset(s) targeted (FAIR-CRS Asset element)." },
+        "method": { "type": "string", "description": "Attack method summary (FAIR-CRS Method element)." },
+        "effect": { "type": "string", "description": "Business loss type (FAIR-CRS Effect element)." },
+        "attack_path_notation": {
+          "type": "string",
+          "description": "Full TLCTC v2.0 attack path notation string for human readability. Informational only — authoritative path data lives in the Layer 3 reference."
+        },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      }
+    },
+    "fair_factors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["loss_event_frequency", "loss_magnitude"],
+      "description": "Complete FAIR risk decomposition tree with calibrated distribution estimates.",
+      "properties": {
+        "loss_event_frequency": { "$ref": "#/definitions/loss_event_frequency" },
+        "loss_magnitude": { "$ref": "#/definitions/loss_magnitude" },
+        "extensions": { "type": "object" }
+      }
+    },
+    "tlctc_enhancements": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "TLCTC-specific risk enhancement factors derived from the Layer 3 attack path structure.",
+      "properties": {
+        "sequence_complexity_factor": { "$ref": "#/definitions/sequence_complexity_factor" },
+        "compound_threat_multipliers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/compound_threat_multiplier" }
+        },
+        "path_variance_analysis": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/path_variant" },
+          "description": "Alternative attack paths with relative probabilities for weighted risk aggregation."
+        },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      }
+    },
+    "control_analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "NIST CSF → FAIR-CAM → VWCE control effectiveness analysis, structured per attack path transition.",
+      "properties": {
+        "transition_controls": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/transition_control_set" },
+          "description": "Per-transition control effectiveness analysis. Each entry covers one Δt transition in the attack path."
+        },
+        "scenario_level_summary": { "$ref": "#/definitions/scenario_level_summary" },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      }
+    },
+    "results": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Computed outputs from the FAIR+TLCTC risk analysis.",
+      "properties": {
+        "annualized_loss_exposure": { "$ref": "#/definitions/lognormal_distribution" },
+        "enhanced_fair_risk_score": { "$ref": "#/definitions/enhanced_risk_score" },
+        "loss_exceedance_curve": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/loss_exceedance_point" },
+          "description": "Probability of exceeding each loss threshold."
+        },
+        "monte_carlo_iterations": {
+          "type": "integer",
+          "minimum": 1000,
+          "description": "Number of Monte Carlo iterations used to compute results."
+        },
+        "notes": { "type": "string" },
+        "extensions": { "type": "object" }
+      }
+    },
+    "extensions": { "type": "object" }
+  },
+  "definitions": {
+    "pert_distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["distribution", "minimum", "most_likely", "maximum"],
+      "description": "Beta-PERT distribution for calibrated frequency/probability estimation.",
+      "properties": {
+        "distribution": { "type": "string", "const": "pert" },
+        "minimum": { "type": "number", "description": "Lower bound of the 90% confidence interval." },
+        "most_likely": { "type": "number", "description": "Mode — the single most likely value." },
+        "maximum": { "type": "number", "description": "Upper bound of the 90% confidence interval." },
+        "confidence": {
+          "type": "number",
+          "minimum": 1,
+          "default": 4,
+          "description": "Kurtosis parameter (default 4). Higher values = sharper peak around most_likely."
+        },
+        "unit": { "type": "string", "description": "Unit of measurement (e.g., 'events_per_year', 'percentile')." },
+        "notes": { "type": "string" }
+      }
+    },
+    "lognormal_distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["distribution", "low", "high"],
+      "description": "Lognormal distribution for calibrated magnitude estimation. Low/high represent 5th/95th percentiles.",
+      "properties": {
+        "distribution": { "type": "string", "const": "lognormal" },
+        "low": { "type": "number", "minimum": 0, "description": "5th percentile value." },
+        "high": { "type": "number", "minimum": 0, "description": "95th percentile value." },
+        "unit": { "type": "string", "description": "Unit of measurement (e.g., 'USD', 'EUR')." },
+        "notes": { "type": "string" }
+      }
+    },
+    "loss_event_frequency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["threat_event_frequency", "susceptibility"],
+      "description": "LEF = TEF × Susceptibility",
+      "properties": {
+        "threat_event_frequency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["contact_frequency", "probability_of_action"],
+          "description": "TEF = CF × PoA",
+          "properties": {
+            "contact_frequency": { "$ref": "#/definitions/pert_distribution" },
+            "probability_of_action": { "$ref": "#/definitions/pert_distribution" }
+          }
+        },
+        "susceptibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["threat_capability", "resistance_strength"],
+          "description": "Susceptibility = P(TCap > RS). Both measured as percentiles (0–100) against the full threat community continuum.",
+          "properties": {
+            "threat_capability": { "$ref": "#/definitions/pert_distribution" },
+            "resistance_strength": { "$ref": "#/definitions/pert_distribution" }
+          }
+        }
+      }
+    },
+    "forms_of_loss": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "FAIR's six Forms of Loss. Include only applicable forms.",
+      "properties": {
+        "productivity": { "$ref": "#/definitions/lognormal_distribution" },
+        "response": { "$ref": "#/definitions/lognormal_distribution" },
+        "replacement": { "$ref": "#/definitions/lognormal_distribution" },
+        "competitive_advantage": { "$ref": "#/definitions/lognormal_distribution" },
+        "fines_and_judgments": { "$ref": "#/definitions/lognormal_distribution" },
+        "reputation": { "$ref": "#/definitions/lognormal_distribution" }
+      }
+    },
+    "loss_magnitude": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary_loss"],
+      "description": "LM = PLM + SL",
+      "properties": {
+        "primary_loss": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["distribution", "low", "high"],
+          "description": "Primary Loss Magnitude — direct costs from the loss event.",
+          "properties": {
+            "distribution": { "type": "string", "const": "lognormal" },
+            "low": { "type": "number", "minimum": 0 },
+            "high": { "type": "number", "minimum": 0 },
+            "unit": { "type": "string" },
+            "forms_of_loss": { "$ref": "#/definitions/forms_of_loss" },
+            "notes": { "type": "string" }
+          }
+        },
+        "secondary_loss": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "SL = SLEF × SLM",
+          "properties": {
+            "secondary_loss_event_frequency": { "$ref": "#/definitions/pert_distribution" },
+            "secondary_loss_magnitude": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["distribution", "low", "high"],
+              "description": "Secondary Loss Magnitude — costs from secondary stakeholder reactions.",
+              "properties": {
+                "distribution": { "type": "string", "const": "lognormal" },
+                "low": { "type": "number", "minimum": 0 },
+                "high": { "type": "number", "minimum": 0 },
+                "unit": { "type": "string" },
+                "forms_of_loss": { "$ref": "#/definitions/forms_of_loss" },
+                "notes": { "type": "string" }
+              }
+            },
+            "notes": { "type": "string" }
+          }
+        }
+      }
+    },
+    "velocity_class": {
+      "type": "string",
+      "enum": ["VC-1", "VC-2", "VC-3", "VC-4"],
+      "description": "VC-1: days–months (strategic), VC-2: hours (tactical), VC-3: minutes (operational), VC-4: seconds–ms (real-time)."
+    },
+    "nist_function": {
+      "type": "string",
+      "enum": ["GV", "ID", "PR", "DE", "RS", "RC"],
+      "description": "NIST CSF 2.0 function: GV=Govern, ID=Identify, PR=Protect, DE=Detect, RS=Respond, RC=Recover."
+    },
+    "fair_cam_domain": {
+      "type": "string",
+      "enum": ["prevention", "detection", "response", "variance_management", "decision_support"],
+      "description": "FAIR-CAM v1.0 control domain."
+    },
+    "fair_cam_subdomain": {
+      "type": "string",
+      "enum": [
+        "avoidance", "deterrence", "resistance",
+        "visibility", "monitoring", "recognition",
+        "containment", "recovery", "remediation",
+        "variance_prevention", "variance_identification", "variance_correction",
+        "decision_alignment"
+      ],
+      "description": "FAIR-CAM v1.0 control sub-domain."
+    },
+    "step_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
+      "description": "Reference to a step_id in the Layer 3 attack path instance."
+    },
+    "sequence_complexity_factor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path_length", "scf_value"],
+      "description": "SCF accounts for multi-step attack path complexity. Values < 1.0 reduce effective LEF; > 1.0 indicates amplification.",
+      "properties": {
+        "path_length": { "type": "integer", "minimum": 1, "description": "Number of sequential steps in the attack path." },
+        "parallel_group_count": { "type": "integer", "minimum": 0, "description": "Number of parallel execution groups in the path." },
+        "velocity_classes_observed": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/velocity_class" },
+          "uniqueItems": true,
+          "description": "Distinct Velocity Classes present across path transitions."
+        },
+        "velocity_variance": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "Qualitative variance across observed Velocity Classes. Low: 1 VC, Medium: 2 VCs, High: 3–4 VCs."
+        },
+        "scf_value": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Computed SCF multiplier applied to LEF."
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "compound_threat_multiplier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clusters", "synergy_factor"],
+      "description": "CTM for a parallel execution group. synergy_factor 1.0 = independent, >1.0 = synergistic, <1.0 = interference.",
+      "properties": {
+        "group_ref": {
+          "type": "string",
+          "description": "Reference to a parallel group_id in the Layer 3 attack path instance."
+        },
+        "clusters": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/cluster_id" },
+          "minItems": 2,
+          "description": "Clusters executing in parallel within this group."
+        },
+        "synergy_factor": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Multiplier: 1.0 = independent, >1.0 = synergistic, <1.0 = interference."
+        },
+        "rationale": { "type": "string", "description": "Explanation of the synergy/interference mechanism." },
+        "notes": { "type": "string" }
+      }
+    },
+    "cluster_id": {
+      "type": "string",
+      "pattern": "^(#[1-9]|#10|TLCTC-(0[1-9]|10)\\.[0-9]{2})$",
+      "description": "Strategic: #X (1..10) or Operational: TLCTC-XX.YY"
+    },
+    "path_variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path_id", "path_probability"],
+      "description": "An alternative attack path with its relative probability.",
+      "properties": {
+        "path_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "attack_path_ref": {
+          "type": ["string", "null"],
+          "description": "Reference to a Layer 3 instance, or null if the path is hypothetical."
+        },
+        "notation": {
+          "type": "string",
+          "description": "TLCTC v2.0 attack path notation for this variant."
+        },
+        "path_probability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Relative probability of this path variant. All path_probability values should sum to <= 1.0."
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "transition_control_set": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from_step", "to_step", "velocity_class", "controls"],
+      "description": "Control effectiveness analysis for a single transition between attack path steps.",
+      "properties": {
+        "from_step": { "$ref": "#/definitions/step_id" },
+        "to_step": { "$ref": "#/definitions/step_id" },
+        "delta_t": { "type": "string", "description": "Observed or estimated Δt for this transition." },
+        "velocity_class": { "$ref": "#/definitions/velocity_class" },
+        "controls": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/control_effectiveness" },
+          "description": "Controls applicable to this transition with VWCE ratings."
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "control_effectiveness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["control_id", "control_name", "nist_function", "fair_cam_domain", "fair_cam_subdomain", "base_effectiveness", "vc_applicability", "vwce"],
+      "description": "A single control's Velocity-Weighted effectiveness for a specific transition.",
+      "properties": {
+        "control_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
+          "description": "Organization-specific control identifier."
+        },
+        "control_name": { "type": "string" },
+        "nist_function": { "$ref": "#/definitions/nist_function" },
+        "fair_cam_domain": { "$ref": "#/definitions/fair_cam_domain" },
+        "fair_cam_subdomain": { "$ref": "#/definitions/fair_cam_subdomain" },
+        "fair_factor_affected": {
+          "type": "string",
+          "enum": [
+            "contact_frequency",
+            "probability_of_action",
+            "resistance_strength",
+            "threat_capability",
+            "detection_effectiveness",
+            "loss_magnitude",
+            "control_reliability"
+          ],
+          "description": "The FAIR factor this control primarily affects."
+        },
+        "base_effectiveness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Inherent control effectiveness irrespective of attack speed (0.0–1.0)."
+        },
+        "vc_applicability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Factor reflecting structural viability at the transition's Velocity Class (0.0–1.0)."
+        },
+        "vwce": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Velocity-Weighted Control Effectiveness = base_effectiveness × vc_applicability."
+        },
+        "rationale": { "type": "string", "description": "Explanation of effectiveness and VC applicability ratings." },
+        "notes": { "type": "string" }
+      }
+    },
+    "scenario_level_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Scenario-wide control analysis summary.",
+      "properties": {
+        "highest_risk_transition": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from_step": { "$ref": "#/definitions/step_id" },
+            "to_step": { "$ref": "#/definitions/step_id" },
+            "velocity_class": { "$ref": "#/definitions/velocity_class" },
+            "max_vwce": { "type": "number", "minimum": 0, "maximum": 1, "description": "Highest VWCE among controls at this transition." },
+            "notes": { "type": "string" }
+          }
+        },
+        "control_coverage_by_nist_function": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Aggregate control coverage per NIST CSF 2.0 function.",
+          "properties": {
+            "GV": { "$ref": "#/definitions/nist_function_coverage" },
+            "ID": { "$ref": "#/definitions/nist_function_coverage" },
+            "PR": { "$ref": "#/definitions/nist_function_coverage" },
+            "DE": { "$ref": "#/definitions/nist_function_coverage" },
+            "RS": { "$ref": "#/definitions/nist_function_coverage" },
+            "RC": { "$ref": "#/definitions/nist_function_coverage" }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "nist_function_coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "controls_count": { "type": "integer", "minimum": 0 },
+        "avg_vwce": { "type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Average VWCE across all controls in this function. Null if no controls." }
+      }
+    },
+    "enhanced_risk_score": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Breakdown of the enhanced FAIR risk score with TLCTC adjustments.",
+      "properties": {
+        "base_fair_ale": { "$ref": "#/definitions/monetary_range" },
+        "scf_adjusted_ale": { "$ref": "#/definitions/monetary_range" },
+        "ctm_adjustment": {
+          "type": ["number", "null"],
+          "description": "Aggregate CTM multiplier, or null if no parallel groups."
+        },
+        "vwce_adjustment_factor": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "description": "Aggregate VWCE impact on susceptibility/loss magnitude."
+        },
+        "final_ale": { "$ref": "#/definitions/monetary_range" },
+        "notes": { "type": "string" }
+      }
+    },
+    "monetary_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["low", "high"],
+      "description": "5th/95th percentile monetary range.",
+      "properties": {
+        "low": { "type": "number", "minimum": 0 },
+        "high": { "type": "number", "minimum": 0 }
+      }
+    },
+    "loss_exceedance_point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["threshold", "probability"],
+      "description": "A single point on the loss exceedance curve.",
+      "properties": {
+        "threshold": { "type": "number", "minimum": 0, "description": "Loss threshold value in the assessment currency." },
+        "probability": { "type": "number", "minimum": 0, "maximum": 1, "description": "Probability of exceeding this threshold." }
+      }
+    }
+  }
+}
