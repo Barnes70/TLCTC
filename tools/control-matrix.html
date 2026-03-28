@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLCTC Control Matrix Manager</title>
+    <meta name="description" content="Manage your cyber security control maturity across the 10 TLCTC clusters and 6 NIST CSF functions. Document Local and Umbrella controls per environment.">
+
+    <script src="/vendor/react/18.3.1/react.development.js"></script>
+    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
+    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
+    <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
+    <script src="/vendor/lucide/0.469.0/lucide.min.js"></script>
+    <script src="/vendor/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="/vendor/fonts/google-fonts.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+                        secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+                        muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+                        accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+                        card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+                        destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
+                    },
+                },
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --radius: 0.75rem;
+                --background: 210 40% 98%;
+                --foreground: 222 47% 11%;
+                --card: 0 0% 100%;
+                --card-foreground: 222 47% 11%;
+                --primary: 221 83% 53%;
+                --primary-foreground: 210 40% 98%;
+                --secondary: 210 40% 96.1%;
+                --secondary-foreground: 222 47% 11%;
+                --muted: 210 40% 96.1%;
+                --muted-foreground: 215.4 16.3% 46.9%;
+                --accent: 210 40% 96.1%;
+                --accent-foreground: 222 47% 11%;
+                --destructive: 0 84.2% 60.2%;
+                --destructive-foreground: 210 40% 98%;
+                --border: 214.3 31.8% 91.4%;
+                --input: 214.3 31.8% 91.4%;
+                --ring: 221 83% 53%;
+            }
+            .dark {
+                --background: 222 47% 11%;
+                --foreground: 210 40% 98%;
+                --card: 217 33% 17%;
+                --card-foreground: 210 40% 98%;
+                --primary: 217 91% 60%;
+                --primary-foreground: 222 47% 11%;
+                --secondary: 217 33% 17%;
+                --secondary-foreground: 210 40% 98%;
+                --muted: 217 33% 17%;
+                --muted-foreground: 215 20.2% 65.1%;
+                --accent: 217 33% 17%;
+                --accent-foreground: 210 40% 98%;
+                --destructive: 0 63% 31%;
+                --destructive-foreground: 210 40% 98%;
+                --border: 217 33% 17%;
+                --input: 217 33% 17%;
+                --ring: 224 76% 48%;
+            }
+        }
+        @layer components {
+            .glass-header { @apply bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-40; }
+            .card { @apply bg-card text-card-foreground rounded-xl border border-border shadow-lg; }
+            .input-ctrl { @apply w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring text-foreground; }
+            .app-btn { @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg px-4 py-2 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background text-sm; }
+            .app-btn-primary { @apply bg-primary text-primary-foreground hover:opacity-90; }
+            .app-btn-secondary { @apply bg-secondary text-secondary-foreground hover:opacity-90; }
+            .app-btn-outline { @apply border border-border hover:bg-accent; }
+            .app-btn-danger { @apply bg-destructive text-destructive-foreground hover:opacity-90; }
+            .app-btn-sm { @apply text-xs px-2.5 py-1.5 rounded-md; }
+            .app-btn-xs { @apply text-[11px] px-1.5 py-1 rounded; }
+            .modal-overlay { @apply fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm; }
+            .modal-content { @apply bg-card rounded-xl shadow-2xl w-full max-w-2xl p-6 max-h-[85vh] overflow-y-auto; }
+            .tooltip-wrap { @apply relative; }
+            .tooltip-wrap .tip { @apply invisible opacity-0 absolute z-50 bg-foreground text-background text-xs px-2 py-1 rounded whitespace-nowrap bottom-full left-1/2 -translate-x-1/2 mb-1 transition-all duration-150 pointer-events-none; }
+            .tooltip-wrap:hover .tip { @apply visible opacity-100; }
+        }
+    </style>
+
+    <style>
+        .matrix-cell { transition: transform 0.1s, box-shadow 0.15s; cursor: pointer; }
+        .matrix-cell:hover { transform: scale(1.08); box-shadow: 0 0 0 2px hsl(var(--primary)); z-index: 5; position: relative; }
+        .matrix-cell.active-cell { box-shadow: 0 0 0 3px hsl(var(--primary)); z-index: 6; position: relative; }
+        .detail-panel { transition: transform 0.25s ease-out, opacity 0.2s ease-out; }
+        .detail-panel.open { transform: translateX(0); opacity: 1; }
+        .detail-panel.closed { transform: translateX(100%); opacity: 0; pointer-events: none; }
+        .gap-highlight { opacity: 0.85; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground min-h-screen font-sans antialiased flex flex-col">
+    <div id="root"></div>
+
+    <script type="text/babel">
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+// ═══════════════════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════════════════
+
+const CLUSTERS = [
+    { id: 1,  opId: 'TLCTC-01.00', name: 'Abuse of Functions',  abbr: 'AoF', topology: 'internal', genericVuln: 'The inherent trust, scope, and complexity designed into software functionality and configuration' },
+    { id: 2,  opId: 'TLCTC-02.00', name: 'Exploiting Server',   abbr: 'ExS', topology: 'internal', genericVuln: 'Server-side implementation flaws enable unintended behavior' },
+    { id: 3,  opId: 'TLCTC-03.00', name: 'Exploiting Client',   abbr: 'ExC', topology: 'internal', genericVuln: 'Client-side implementation flaws enable unintended behavior' },
+    { id: 4,  opId: 'TLCTC-04.00', name: 'Identity Theft',      abbr: 'IdT', topology: 'internal', genericVuln: 'Weak identity management processes and credential protection mechanisms' },
+    { id: 5,  opId: 'TLCTC-05.00', name: 'Man in the Middle',   abbr: 'MitM', topology: 'internal', genericVuln: 'The lack of sufficient control, integrity protection, or confidentiality over the communication channel' },
+    { id: 6,  opId: 'TLCTC-06.00', name: 'Flooding Attack',     abbr: 'Fld', topology: 'internal', genericVuln: 'Finite capacity limitations inherent in any system component' },
+    { id: 7,  opId: 'TLCTC-07.00', name: 'Malware',             abbr: 'Mlw', topology: 'internal', genericVuln: "The software environment's designed capability to execute potentially untrusted foreign code" },
+    { id: 8,  opId: 'TLCTC-08.00', name: 'Physical Attack',     abbr: 'Phy', topology: 'bridge',   genericVuln: 'Physical accessibility of infrastructure and exploitability of physical-layer properties' },
+    { id: 9,  opId: 'TLCTC-09.00', name: 'Social Engineering',  abbr: 'SE',  topology: 'bridge',   genericVuln: 'Humans can be influenced into unsafe actions or decisions' },
+    { id: 10, opId: 'TLCTC-10.00', name: 'Supply Chain Attack', abbr: 'SCA', topology: 'bridge',   genericVuln: 'Trust in third-party components and update channels can be subverted' },
+];
+
+const CSF_FUNCTIONS = [
+    { id: 'GV', name: 'GOVERN',   color: '#8b5cf6', desc: 'Set direction, accountability, ownership, risk appetite, assurance' },
+    { id: 'ID', name: 'IDENTIFY', color: '#3b82f6', desc: 'Find weaknesses and exposure enabling the threat' },
+    { id: 'PR', name: 'PROTECT',  color: '#22c55e', desc: 'Prevent or reduce likelihood of the threat step' },
+    { id: 'DE', name: 'DETECT',   color: '#eab308', desc: 'Detect the threat step or loss-of-control condition early' },
+    { id: 'RS', name: 'RESPOND',  color: '#f97316', desc: 'Contain and eradicate the realized threat step' },
+    { id: 'RC', name: 'RECOVER',  color: '#06b6d4', desc: 'Restore capability and reduce recurrence' },
+];
+
+const CONTROL_TYPES = [
+    { id: 'local', name: 'Local', abbr: 'L', desc: 'Asset-specific or system-specific controls' },
+    { id: 'umbrella', name: 'Umbrella', abbr: 'U', desc: 'Enterprise-wide, shared capabilities' },
+];
+
+const MATURITY_LEVELS = [
+    { value: 0, label: 'Not Implemented', abbr: 'N/I', color: '#ef4444', bg: '#fef2f2', darkBg: '#450a0a' },
+    { value: 1, label: 'Initial',         abbr: 'Ini', color: '#f97316', bg: '#fff7ed', darkBg: '#431407' },
+    { value: 2, label: 'Developing',      abbr: 'Dev', color: '#eab308', bg: '#fefce8', darkBg: '#422006' },
+    { value: 3, label: 'Defined',         abbr: 'Def', color: '#84cc16', bg: '#f7fee7', darkBg: '#1a2e05' },
+    { value: 4, label: 'Managed',         abbr: 'Mgd', color: '#22c55e', bg: '#f0fdf4', darkBg: '#052e16' },
+    { value: 5, label: 'Optimizing',      abbr: 'Opt', color: '#059669', bg: '#ecfdf5', darkBg: '#022c22' },
+];
+
+const CONTROL_KINDS = [
+    { id: 'tech', label: 'Technical', color: '#3b82f6' },
+    { id: 'org',  label: 'Organizational', color: '#8b5cf6' },
+];
+
+const SHARED_SCOPES = [
+    { id: 'all',            label: 'All' },
+    { id: 'applications',   label: 'Applications' },
+    { id: 'platform',       label: 'Platform' },
+    { id: 'infra-sw',       label: 'Infrastructure (SW)' },
+    { id: 'infra-hw',       label: 'Infrastructure (HW)' },
+];
+
+const TASK_STATUSES = [
+    { id: 'open',        label: 'Open',        color: '#64748b', icon: 'circle' },
+    { id: 'in-progress', label: 'In Progress', color: '#3b82f6', icon: 'loader' },
+    { id: 'blocked',     label: 'Blocked',     color: '#ef4444', icon: 'alert-circle' },
+    { id: 'done',        label: 'Done',        color: '#22c55e', icon: 'check-circle' },
+];
+
+const STORAGE_KEY = 'tlctc-control-matrix-v1';
+
+// ═══════════════════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════════════════
+
+const genId = () => 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const cellKey = (clusterId, funcId) => `${clusterId}-${funcId}`;
+
+function getMaturityColor(value) {
+    if (value === null || value === undefined) return '#94a3b8';
+    return MATURITY_LEVELS[value]?.color || '#94a3b8';
+}
+
+function getMaturityBg(value, dark) {
+    if (value === null || value === undefined) return dark ? '#1e293b' : '#f1f5f9';
+    const ml = MATURITY_LEVELS[value];
+    return dark ? (ml?.darkBg || '#1e293b') : (ml?.bg || '#f1f5f9');
+}
+
+function computeTypeMaturity(controls) {
+    if (!controls || controls.length === 0) return null;
+    const vals = controls.map(c => c.maturity).filter(m => m !== null && m !== undefined);
+    return vals.length === 0 ? null : Math.min(...vals);
+}
+
+function computeCellMaturity(cell) {
+    if (!cell) return { local: null, umbrella: null, overall: null };
+    const lm = computeTypeMaturity(cell.local);
+    const um = computeTypeMaturity(cell.umbrella);
+    const all = [lm, um].filter(v => v !== null);
+    return { local: lm, umbrella: um, overall: all.length > 0 ? Math.min(...all) : null };
+}
+
+function computeAggregated(environments, ck, type) {
+    const vals = environments.map(env => {
+        const cell = env.cells[ck];
+        if (!cell) return null;
+        return type ? computeTypeMaturity(cell[type]) : computeCellMaturity(cell).overall;
+    }).filter(v => v !== null);
+    return vals.length > 0 ? Math.min(...vals) : null;
+}
+
+function createEmptyEnvironment(name) {
+    return { id: genId(), name, cells: {} };
+}
+
+function createDefaultState() {
+    return {
+        orgName: 'My Organization',
+        targetMaturity: 3,
+        environments: [createEmptyEnvironment('Default')],
+        sharedControls: [],
+        createdAt: new Date().toISOString().split('T')[0],
+    };
+}
+
+function loadState() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+    } catch(e) { console.warn('Failed to load state', e); }
+    return createDefaultState();
+}
+
+function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) { console.warn('Failed to save', e); }
+}
+
+function countControls(env) {
+    let local = 0, umbrella = 0;
+    Object.values(env.cells).forEach(cell => {
+        local += (cell.local || []).length;
+        umbrella += (cell.umbrella || []).length;
+    });
+    return { local, umbrella, total: local + umbrella };
+}
+
+function countDocumentedCells(env) {
+    let count = 0;
+    CLUSTERS.forEach(cl => {
+        CSF_FUNCTIONS.forEach(fn => {
+            CONTROL_TYPES.forEach(ct => {
+                const cell = env.cells[cellKey(cl.id, fn.id)];
+                if (cell && cell[ct.id] && cell[ct.id].length > 0) count++;
+            });
+        });
+    });
+    return count;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ICON HELPER
+// ═══════════════════════════════════════════════════════════════════
+
+function Icon({ name, size = 16, className = '' }) {
+    const ref = useRef(null);
+    useEffect(() => {
+        if (ref.current && lucide?.icons?.[name]) {
+            const [tag, attrs, children] = lucide.icons[name];
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', tag);
+            Object.entries({ ...attrs, width: size, height: size, class: className }).forEach(([k, v]) => svg.setAttribute(k, v));
+            children.forEach(([cTag, cAttrs]) => {
+                const el = document.createElementNS('http://www.w3.org/2000/svg', cTag);
+                Object.entries(cAttrs).forEach(([k, v]) => el.setAttribute(k, v));
+                svg.appendChild(el);
+            });
+            ref.current.innerHTML = '';
+            ref.current.appendChild(svg);
+        }
+    }, [name, size, className]);
+    return <span ref={ref} className="inline-flex items-center justify-center" />;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATURITY BADGE
+// ═══════════════════════════════════════════════════════════════════
+
+function MaturityBadge({ value, size = 'md' }) {
+    const ml = value !== null && value !== undefined ? MATURITY_LEVELS[value] : null;
+    const sizeClasses = size === 'sm' ? 'text-[10px] px-1.5 py-0.5' : size === 'lg' ? 'text-sm px-3 py-1' : 'text-xs px-2 py-0.5';
+    return (
+        <span className={`inline-flex items-center font-bold rounded-full ${sizeClasses}`}
+              style={{ backgroundColor: ml ? ml.color + '22' : '#94a3b822', color: ml ? ml.color : '#94a3b8', border: `1px solid ${ml ? ml.color + '44' : '#94a3b844'}` }}>
+            {ml ? ml.value : '—'}
+        </span>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// HEADER DROPDOWN
+// ═══════════════════════════════════════════════════════════════════
+
+function HeaderDropdown({ label, icon, items }) {
+    const [open, setOpen] = useState(false);
+    const ref = useRef(null);
+    useEffect(() => {
+        if (!open) return;
+        const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, [open]);
+    return (
+        <div className="relative" ref={ref}>
+            <button onClick={() => setOpen(o => !o)} className="app-btn app-btn-outline app-btn-sm gap-1">
+                <Icon name={icon} size={14} /> <span className="hidden sm:inline">{label}</span>
+                <Icon name="chevron-down" size={12} />
+            </button>
+            {open && (
+                <div className="absolute right-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[180px]">
+                    {items.map((item, i) => item.divider ? (
+                        <div key={i} className="border-t border-border my-1" />
+                    ) : (
+                        <button key={i} onClick={() => { item.action(); setOpen(false); }}
+                                className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2">
+                            <Icon name={item.icon} size={13} /> {item.label}
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// HEADER
+// ═══════════════════════════════════════════════════════════════════
+
+function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onShowSharedControls, sharedControlCount, onReport }) {
+    return (
+        <header className="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
+            <div className="flex items-center gap-3">
+                <a href="/index.html" className="flex items-center gap-2 group">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
+                        <img src="/images/logo-small.png" alt="Logo" className="h-full w-full object-contain p-1"
+                             onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }} />
+                        <span style={{display:'none'}}><Icon name="shield" size={20} /></span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="font-display font-bold text-lg leading-tight">TLCTC</span>
+                        <span className="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+                    </div>
+                </a>
+            </div>
+            <nav className="hidden lg:flex items-center gap-6">
+                <a href="threat-modeling.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Modeling</a>
+                <a href="attack-path-architect.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Attack Path</a>
+                <a href="actor-profile-designer.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Actor Profiler</a>
+                <a href="radar-tlctc-app.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Radar</a>
+                <a href="control-matrix.html" className="text-sm font-semibold text-foreground transition-colors">Control Matrix</a>
+                <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">TLCTC.net <Icon name="external-link" size={12} /></a>
+            </nav>
+            <div className="flex items-center gap-2">
+                <button onClick={onShowSharedControls} className="app-btn app-btn-outline app-btn-sm gap-1" title="Shared Controls Library — define and link controls across clusters">
+                    <Icon name="link" size={14} /> <span className="hidden sm:inline">Shared</span>
+                    {sharedControlCount > 0 && <span className="bg-amber-500 text-white text-[10px] px-1.5 rounded-full font-bold">{sharedControlCount}</span>}
+                </button>
+                <HeaderDropdown label="Reports" icon="file-text" items={[
+                    { label: 'Maturity Report', icon: 'bar-chart-3', action: () => onReport('maturity') },
+                    { label: 'Task Report', icon: 'list-checks', action: () => onReport('tasks') },
+                    { divider: true },
+                    { label: 'Export PNG', icon: 'image', action: onExportPNG },
+                ]} />
+                <button onClick={onExportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Export JSON">
+                    <Icon name="download" size={14} /> <span className="hidden sm:inline">Export</span>
+                </button>
+                <button onClick={onImportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON">
+                    <Icon name="upload" size={14} /> <span className="hidden sm:inline">Import</span>
+                </button>
+                <button onClick={onToggleDark} className="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Toggle theme">
+                    <Icon name={darkMode ? 'sun' : 'moon'} size={16} />
+                </button>
+            </div>
+        </header>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SUMMARY BAR
+// ═══════════════════════════════════════════════════════════════════
+
+function SummaryBar({ orgName, onOrgNameChange, targetMaturity, onTargetChange, environments, activeEnvId }) {
+    const totalCells = CLUSTERS.length * CSF_FUNCTIONS.length * CONTROL_TYPES.length; // 120
+    const isAgg = activeEnvId === 'aggregated';
+
+    const stats = useMemo(() => {
+        if (isAgg) {
+            let documented = 0, belowTarget = 0, maturities = [];
+            CLUSTERS.forEach(cl => CSF_FUNCTIONS.forEach(fn => CONTROL_TYPES.forEach(ct => {
+                const m = computeAggregated(environments, cellKey(cl.id, fn.id), ct.id);
+                if (m !== null) {
+                    documented++;
+                    maturities.push(m);
+                    if (m < targetMaturity) belowTarget++;
+                }
+            })));
+            const avg = maturities.length > 0 ? (maturities.reduce((a,b) => a+b, 0) / maturities.length).toFixed(1) : '—';
+            const worst = maturities.length > 0 ? Math.min(...maturities) : null;
+            return { documented, belowTarget, avg, worst, totalControls: '—' };
+        }
+        const env = environments.find(e => e.id === activeEnvId);
+        if (!env) return { documented: 0, belowTarget: 0, avg: '—', worst: null, totalControls: 0 };
+        const dc = countDocumentedCells(env);
+        const cc = countControls(env);
+        let belowTarget = 0, maturities = [];
+        CLUSTERS.forEach(cl => CSF_FUNCTIONS.forEach(fn => CONTROL_TYPES.forEach(ct => {
+            const cell = env.cells[cellKey(cl.id, fn.id)];
+            const m = cell ? computeTypeMaturity(cell[ct.id]) : null;
+            if (m !== null) {
+                maturities.push(m);
+                if (m < targetMaturity) belowTarget++;
+            }
+        })));
+        const avg = maturities.length > 0 ? (maturities.reduce((a,b) => a+b, 0) / maturities.length).toFixed(1) : '—';
+        const worst = maturities.length > 0 ? Math.min(...maturities) : null;
+        return { documented: dc, belowTarget, avg, worst, totalControls: cc.total };
+    }, [environments, activeEnvId, targetMaturity, isAgg]);
+
+    const coverage = ((stats.documented / totalCells) * 100).toFixed(0);
+
+    return (
+        <div className="px-4 sm:px-6 py-3 border-b border-border flex flex-wrap items-center gap-x-6 gap-y-2 text-sm no-print">
+            <div className="flex items-center gap-2">
+                <label className="text-muted-foreground font-medium">Organization:</label>
+                <input type="text" value={orgName} onChange={e => onOrgNameChange(e.target.value)}
+                       className="input-ctrl py-1 px-2 w-48 font-semibold" />
+            </div>
+            <div className="flex items-center gap-2">
+                <label className="text-muted-foreground font-medium">Target Maturity:</label>
+                <select value={targetMaturity} onChange={e => onTargetChange(Number(e.target.value))}
+                        className="input-ctrl py-1 px-2 w-auto">
+                    {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                </select>
+            </div>
+            <div className="flex items-center gap-4 ml-auto text-xs">
+                <div className="tooltip-wrap">
+                    <span className="font-semibold" style={{ color: coverage >= 80 ? '#22c55e' : coverage >= 40 ? '#eab308' : '#ef4444' }}>
+                        {stats.documented}/{totalCells}
+                    </span>
+                    <span className="text-muted-foreground ml-1">coverage ({coverage}%)</span>
+                    <span className="tip">Control areas with at least one documented control</span>
+                </div>
+                {stats.totalControls !== '—' && (
+                    <div><span className="font-semibold">{stats.totalControls}</span> <span className="text-muted-foreground">controls</span></div>
+                )}
+                <div className="tooltip-wrap">
+                    <span className="font-semibold">{stats.avg}</span>
+                    <span className="text-muted-foreground ml-1">avg maturity</span>
+                    <span className="tip">Average across all documented control areas</span>
+                </div>
+                {stats.belowTarget > 0 && (
+                    <div className="tooltip-wrap">
+                        <span className="font-semibold text-destructive gap-highlight">{stats.belowTarget}</span>
+                        <span className="text-muted-foreground ml-1">gaps</span>
+                        <span className="tip">Control areas below target maturity of {targetMaturity}</span>
+                    </div>
+                )}
+                {stats.worst !== null && (
+                    <div className="flex items-center gap-1">
+                        <span className="text-muted-foreground">Worst:</span>
+                        <MaturityBadge value={stats.worst} size="sm" />
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ENVIRONMENT TABS
+// ═══════════════════════════════════════════════════════════════════
+
+function EnvironmentTabs({ environments, activeEnvId, onSelect, onAdd, onRename, onDuplicate, onRemove }) {
+    const [editingId, setEditingId] = useState(null);
+    const [editName, setEditName] = useState('');
+    const [menuId, setMenuId] = useState(null);
+
+    const startRename = (env) => { setEditingId(env.id); setEditName(env.name); setMenuId(null); };
+    const commitRename = () => { if (editName.trim()) onRename(editingId, editName.trim()); setEditingId(null); };
+
+    return (
+        <div className="px-4 sm:px-6 py-2 border-b border-border flex items-center gap-1 overflow-x-auto no-print">
+            <button onClick={() => onSelect('aggregated')}
+                    className={`app-btn app-btn-sm rounded-full ${activeEnvId === 'aggregated' ? 'app-btn-primary' : 'app-btn-outline'}`}>
+                <Icon name="layers" size={13} /> Aggregated
+            </button>
+            <div className="w-px h-6 bg-border mx-1" />
+            {environments.map(env => (
+                <div key={env.id} className="relative flex items-center">
+                    {editingId === env.id ? (
+                        <input autoFocus value={editName} onChange={e => setEditName(e.target.value)}
+                               onBlur={commitRename} onKeyDown={e => e.key === 'Enter' && commitRename()}
+                               className="input-ctrl py-1 px-2 text-xs w-32" />
+                    ) : (
+                        <button onClick={() => onSelect(env.id)}
+                                onContextMenu={(e) => { e.preventDefault(); setMenuId(menuId === env.id ? null : env.id); }}
+                                className={`app-btn app-btn-sm rounded-full ${activeEnvId === env.id ? 'app-btn-primary' : 'app-btn-outline'}`}>
+                            {env.name}
+                        </button>
+                    )}
+                    {activeEnvId === env.id && editingId !== env.id && (
+                        <button onClick={() => setMenuId(menuId === env.id ? null : env.id)}
+                                className="ml-0.5 p-0.5 rounded hover:bg-accent">
+                            <Icon name="more-vertical" size={12} />
+                        </button>
+                    )}
+                    {menuId === env.id && (
+                        <div className="absolute top-full left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-30 py-1 min-w-[140px]">
+                            <button onClick={() => startRename(env)} className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2">
+                                <Icon name="pencil" size={12} /> Rename
+                            </button>
+                            <button onClick={() => { onDuplicate(env.id); setMenuId(null); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2">
+                                <Icon name="copy" size={12} /> Duplicate
+                            </button>
+                            {environments.length > 1 && (
+                                <button onClick={() => { if (confirm(`Delete environment "${env.name}"?`)) { onRemove(env.id); setMenuId(null); } }}
+                                        className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent text-destructive flex items-center gap-2">
+                                    <Icon name="trash-2" size={12} /> Delete
+                                </button>
+                            )}
+                        </div>
+                    )}
+                </div>
+            ))}
+            <button onClick={onAdd} className="app-btn app-btn-sm app-btn-outline rounded-full gap-1 ml-1">
+                <Icon name="plus" size={13} /> Environment
+            </button>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATRIX CELL (split L/U)
+// ═══════════════════════════════════════════════════════════════════
+
+function MatrixCell({ clusterId, funcId, localMat, umbrellaMat, targetMaturity, isAgg, isSelected, onClick, darkMode }) {
+    const isGapL = localMat !== null && localMat < targetMaturity;
+    const isGapU = umbrellaMat !== null && umbrellaMat < targetMaturity;
+    const active = isSelected ? ' active-cell' : '';
+
+    const renderHalf = (mat, type, isGap) => {
+        const ml = mat !== null ? MATURITY_LEVELS[mat] : null;
+        const bg = ml ? ml.color : (darkMode ? '#334155' : '#e2e8f0');
+        const textColor = ml ? (mat <= 1 ? '#fff' : (mat <= 2 ? '#422006' : '#fff')) : (darkMode ? '#64748b' : '#94a3b8');
+        return (
+            <div className={`flex-1 flex flex-col items-center justify-center ${isGap ? 'gap-highlight' : ''}`}
+                 style={{ backgroundColor: bg + (ml ? 'cc' : ''), minHeight: 40 }}
+                 title={`#${clusterId} ${CLUSTERS[clusterId-1].name} × ${funcId} ${type}\nMaturity: ${mat !== null ? mat + ' — ' + MATURITY_LEVELS[mat].label : 'No controls'}`}>
+                <span className="text-[9px] font-bold opacity-70" style={{ color: textColor }}>{type[0]}</span>
+                <span className="text-sm font-bold" style={{ color: textColor }}>{mat !== null ? mat : '—'}</span>
+            </div>
+        );
+    };
+
+    return (
+        <div className={`matrix-cell rounded-md overflow-hidden flex border border-border/50${active}`}
+             onClick={onClick} role="button" tabIndex={0} onKeyDown={e => e.key === 'Enter' && onClick()}>
+            {renderHalf(localMat, 'Local', isGapL)}
+            <div className="w-px" style={{ backgroundColor: darkMode ? '#475569' : '#cbd5e1' }} />
+            {renderHalf(umbrellaMat, 'Umbrella', isGapU)}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CONTROL MATRIX GRID
+// ═══════════════════════════════════════════════════════════════════
+
+function ControlMatrix({ environments, activeEnvId, targetMaturity, selectedCell, onCellClick, darkMode, matrixRef }) {
+    const isAgg = activeEnvId === 'aggregated';
+    const env = isAgg ? null : environments.find(e => e.id === activeEnvId);
+
+    const getMaturities = (clusterId, funcId) => {
+        const ck = cellKey(clusterId, funcId);
+        if (isAgg) {
+            return {
+                local: computeAggregated(environments, ck, 'local'),
+                umbrella: computeAggregated(environments, ck, 'umbrella'),
+            };
+        }
+        if (!env) return { local: null, umbrella: null };
+        const cell = env.cells[ck];
+        return {
+            local: cell ? computeTypeMaturity(cell.local) : null,
+            umbrella: cell ? computeTypeMaturity(cell.umbrella) : null,
+        };
+    };
+
+    // Row aggregates (worst across all CSF functions)
+    const getRowMin = (clusterId) => {
+        const vals = CSF_FUNCTIONS.flatMap(fn => {
+            const m = getMaturities(clusterId, fn.id);
+            return [m.local, m.umbrella].filter(v => v !== null);
+        });
+        return vals.length > 0 ? Math.min(...vals) : null;
+    };
+
+    // Column aggregates (worst across all clusters)
+    const getColMin = (funcId) => {
+        const vals = CLUSTERS.flatMap(cl => {
+            const m = getMaturities(cl.id, funcId);
+            return [m.local, m.umbrella].filter(v => v !== null);
+        });
+        return vals.length > 0 ? Math.min(...vals) : null;
+    };
+
+    // Overall
+    const overallMin = (() => {
+        const vals = CLUSTERS.flatMap(cl => CSF_FUNCTIONS.flatMap(fn => {
+            const m = getMaturities(cl.id, fn.id);
+            return [m.local, m.umbrella].filter(v => v !== null);
+        }));
+        return vals.length > 0 ? Math.min(...vals) : null;
+    })();
+
+    return (
+        <div ref={matrixRef} className="p-4 sm:p-6 overflow-x-auto">
+            <div className="inline-block min-w-full">
+                <table className="border-separate" style={{ borderSpacing: '3px' }}>
+                    <thead>
+                        <tr>
+                            <th className="w-36 min-w-[144px]" />
+                            {CSF_FUNCTIONS.map(fn => (
+                                <th key={fn.id} className="text-center px-1 pb-2 min-w-[100px]">
+                                    <div className="tooltip-wrap">
+                                        <div className="text-xs font-bold" style={{ color: fn.color }}>{fn.name}</div>
+                                        <div className="text-[10px] text-muted-foreground">{fn.id}</div>
+                                        <div className="flex justify-center gap-0.5 mt-0.5">
+                                            <span className="text-[8px] px-1 rounded bg-muted text-muted-foreground">L</span>
+                                            <span className="text-[8px] px-1 rounded bg-muted text-muted-foreground">U</span>
+                                        </div>
+                                        <span className="tip">{fn.desc}</span>
+                                    </div>
+                                </th>
+                            ))}
+                            <th className="text-center px-2 min-w-[50px]">
+                                <div className="text-[10px] text-muted-foreground font-semibold">MIN</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {CLUSTERS.map(cl => {
+                            const rowMin = getRowMin(cl.id);
+                            return (
+                                <tr key={cl.id}>
+                                    <td className="pr-2 py-0.5">
+                                        <div className="tooltip-wrap">
+                                            <div className="flex items-center gap-1.5">
+                                                <span className={`inline-flex items-center justify-center w-6 h-6 rounded text-[10px] font-bold text-white ${cl.topology === 'bridge' ? 'bg-amber-600' : 'bg-blue-600'}`}>
+                                                    {cl.id}
+                                                </span>
+                                                <div className="flex flex-col">
+                                                    <span className="text-xs font-semibold leading-tight truncate max-w-[110px]">{cl.name}</span>
+                                                    <span className="text-[9px] text-muted-foreground">{cl.topology}</span>
+                                                </div>
+                                            </div>
+                                            <span className="tip" style={{ whiteSpace: 'normal', maxWidth: 280, left: '100%', bottom: 'auto', transform: 'none', marginLeft: 8, marginBottom: 0 }}>
+                                                {cl.genericVuln}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    {CSF_FUNCTIONS.map(fn => {
+                                        const m = getMaturities(cl.id, fn.id);
+                                        const isSel = selectedCell && selectedCell.clusterId === cl.id && selectedCell.funcId === fn.id;
+                                        return (
+                                            <td key={fn.id} className="p-0">
+                                                <MatrixCell
+                                                    clusterId={cl.id} funcId={fn.id}
+                                                    localMat={m.local} umbrellaMat={m.umbrella}
+                                                    targetMaturity={targetMaturity}
+                                                    isAgg={isAgg} isSelected={isSel}
+                                                    onClick={() => onCellClick(cl.id, fn.id)}
+                                                    darkMode={darkMode}
+                                                />
+                                            </td>
+                                        );
+                                    })}
+                                    <td className="text-center">
+                                        <MaturityBadge value={rowMin} size="sm" />
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                        <tr>
+                            <td className="text-right pr-2 text-[10px] text-muted-foreground font-semibold">COL MIN</td>
+                            {CSF_FUNCTIONS.map(fn => (
+                                <td key={fn.id} className="text-center py-1">
+                                    <MaturityBadge value={getColMin(fn.id)} size="sm" />
+                                </td>
+                            ))}
+                            <td className="text-center py-1">
+                                <MaturityBadge value={overallMin} size="lg" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CONTROL CARD
+// ═══════════════════════════════════════════════════════════════════
+
+function ControlCard({ control, onUpdate, onDelete, targetMaturity }) {
+    const [expanded, setExpanded] = useState(!control.name);
+    const isGap = control.maturity < targetMaturity;
+    const kind = CONTROL_KINDS.find(k => k.id === control.kind);
+    const toggle = () => setExpanded(e => !e);
+
+    return (
+        <div className={`bg-muted/50 rounded-lg border ${isGap ? 'border-destructive/40' : 'border-border'} p-3`}>
+            <div className="flex items-start gap-2 cursor-pointer select-none" onClick={toggle} role="button">
+                <MaturityBadge value={control.maturity} size="sm" />
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-semibold truncate">{control.name || 'Unnamed Control'}</span>
+                        {kind && (
+                            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: kind.color + '22', color: kind.color }}>
+                                {kind.label}
+                            </span>
+                        )}
+                    </div>
+                    {control.ownerName && <div className="text-[11px] text-muted-foreground mt-0.5">Owner: {control.ownerName}{control.ownerOrgChart ? ` (${control.ownerOrgChart})` : ''}</div>}
+                </div>
+                <div className="flex items-center gap-0.5 flex-shrink-0">
+                    {control.linkJira && (
+                        <a href={control.linkJira} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
+                           className="p-1 hover:bg-accent rounded text-blue-500" title="Open Jira">
+                            <Icon name="ticket" size={13} />
+                        </a>
+                    )}
+                    {control.linkMore && (
+                        <a href={control.linkMore} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
+                           className="p-1 hover:bg-accent rounded text-blue-500" title="More info">
+                            <Icon name="external-link" size={13} />
+                        </a>
+                    )}
+                    <span className="p-1 hover:bg-accent rounded">
+                        <Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={14} />
+                    </span>
+                </div>
+            </div>
+            {expanded && (
+                <div className="mt-3 space-y-2 text-sm">
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Name *</label>
+                        <input type="text" value={control.name} onChange={e => onUpdate({ ...control, name: e.target.value })}
+                               className="input-ctrl py-1 text-sm" placeholder="Control name" />
+                    </div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Description</label>
+                        <textarea value={control.description || ''} onChange={e => onUpdate({ ...control, description: e.target.value })}
+                                  className="input-ctrl py-1 text-sm resize-none" rows={2} placeholder="What does this control do?" />
+                    </div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to More</label>
+                        <input type="url" value={control.linkMore || ''} onChange={e => onUpdate({ ...control, linkMore: e.target.value })}
+                               className="input-ctrl py-1 text-sm" placeholder="https://..." />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Name</label>
+                            <input type="text" value={control.ownerName || ''} onChange={e => onUpdate({ ...control, ownerName: e.target.value })}
+                                   className="input-ctrl py-1 text-sm" placeholder="Person or team" />
+                        </div>
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Org-Chart Name</label>
+                            <input type="text" value={control.ownerOrgChart || ''} onChange={e => onUpdate({ ...control, ownerOrgChart: e.target.value })}
+                                   className="input-ctrl py-1 text-sm" placeholder="Department, unit, role..." />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Type</label>
+                            <select value={control.kind || ''} onChange={e => onUpdate({ ...control, kind: e.target.value || '' })} className="input-ctrl py-1 text-sm">
+                                <option value="">— not set —</option>
+                                {CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Maturity</label>
+                            <select value={control.maturity} onChange={e => onUpdate({ ...control, maturity: Number(e.target.value) })} className="input-ctrl py-1 text-sm">
+                                {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to Jira</label>
+                        <input type="url" value={control.linkJira || ''} onChange={e => onUpdate({ ...control, linkJira: e.target.value })}
+                               className="input-ctrl py-1 text-sm" placeholder="https://jira.example.com/browse/..." />
+                    </div>
+                    <div className="flex justify-end pt-1">
+                        <button onClick={() => { if (confirm('Delete this control?')) onDelete(control.id); }}
+                                className="app-btn app-btn-danger app-btn-xs gap-1">
+                            <Icon name="trash-2" size={11} /> Delete
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SHARED CONTROL REFERENCE CARD (rendered inside a cell)
+// ═══════════════════════════════════════════════════════════════════
+
+function SharedRefCard({ reference, sharedControl, onUpdateMaturity, onUpdateSharedControl, onUnlink, targetMaturity }) {
+    if (!sharedControl) return null;
+    const [expanded, setExpanded] = useState(false);
+    const isGap = reference.maturity < targetMaturity;
+    const kind = CONTROL_KINDS.find(k => k.id === sharedControl.kind);
+    const toggle = () => setExpanded(e => !e);
+    const updateField = (field, value) => onUpdateSharedControl({ ...sharedControl, [field]: value });
+
+    return (
+        <div className={`rounded-lg border-2 ${isGap ? 'border-destructive/40' : 'border-amber-500/30'} bg-amber-500/5 p-3`}>
+            <div className="flex items-start gap-2 cursor-pointer select-none" onClick={toggle} role="button">
+                <span className="text-amber-500 mt-0.5"><Icon name="link" size={15} /></span>
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-semibold truncate">{sharedControl.name}</span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded-full font-bold bg-amber-500/20 text-amber-600">SHARED</span>
+                        {kind && (
+                            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: kind.color + '22', color: kind.color }}>
+                                {kind.label}
+                            </span>
+                        )}
+                        {sharedControl.scope && (
+                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-slate-500/15 text-slate-600">
+                                {SHARED_SCOPES.find(s => s.id === sharedControl.scope)?.label || sharedControl.scope}
+                            </span>
+                        )}
+                    </div>
+                    {sharedControl.ownerName && <div className="text-[11px] text-muted-foreground mt-0.5">Owner: {sharedControl.ownerName}{sharedControl.ownerOrgChart ? ` (${sharedControl.ownerOrgChart})` : ''}</div>}
+                    {!expanded && sharedControl.description && <div className="text-[11px] text-muted-foreground mt-0.5 line-clamp-2">{sharedControl.description}</div>}
+                </div>
+                <div className="flex items-center gap-0.5 flex-shrink-0">
+                    {sharedControl.linkJira && (
+                        <a href={sharedControl.linkJira} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="p-1 hover:bg-accent rounded text-blue-500" title="Open Jira"><Icon name="ticket" size={13} /></a>
+                    )}
+                    {sharedControl.linkMore && (
+                        <a href={sharedControl.linkMore} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="p-1 hover:bg-accent rounded text-blue-500" title="More info"><Icon name="external-link" size={13} /></a>
+                    )}
+                    <span className="p-1 hover:bg-accent rounded">
+                        <Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={14} />
+                    </span>
+                </div>
+            </div>
+
+            {/* Maturity row — always visible */}
+            <div className="mt-3 flex items-center gap-2 bg-background/50 rounded-md p-2">
+                <label className="text-[11px] font-semibold text-foreground whitespace-nowrap">Maturity here:</label>
+                <MaturityBadge value={reference.maturity} size="sm" />
+                <select value={reference.maturity} onChange={e => onUpdateMaturity(Number(e.target.value))}
+                        className="input-ctrl py-1 px-2 text-sm flex-1">
+                    {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                </select>
+                <button onClick={() => { if (confirm('Unlink this shared control from this cell?')) onUnlink(); }}
+                        className="app-btn app-btn-xs app-btn-outline gap-1 text-muted-foreground flex-shrink-0">
+                    <Icon name="unlink" size={11} /> Unlink
+                </button>
+            </div>
+
+            {/* Expanded: full shared control editing */}
+            {expanded && (
+                <div className="mt-3 space-y-2 text-sm border-t border-amber-500/20 pt-3">
+                    <div className="text-[10px] font-bold text-amber-600 uppercase tracking-wider">Edit Shared Control (changes apply everywhere this control is linked)</div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Name *</label>
+                        <input type="text" value={sharedControl.name} onChange={e => updateField('name', e.target.value)}
+                               className="input-ctrl py-1 text-sm" placeholder="Control name" />
+                    </div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Description</label>
+                        <textarea value={sharedControl.description || ''} onChange={e => updateField('description', e.target.value)}
+                                  className="input-ctrl py-1 text-sm resize-none" rows={2} placeholder="What does this control do?" />
+                    </div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to More</label>
+                        <input type="url" value={sharedControl.linkMore || ''} onChange={e => updateField('linkMore', e.target.value)}
+                               className="input-ctrl py-1 text-sm" placeholder="https://..." />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Name</label>
+                            <input type="text" value={sharedControl.ownerName || ''} onChange={e => updateField('ownerName', e.target.value)}
+                                   className="input-ctrl py-1 text-sm" placeholder="Person or team" />
+                        </div>
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Org-Chart Name</label>
+                            <input type="text" value={sharedControl.ownerOrgChart || ''} onChange={e => updateField('ownerOrgChart', e.target.value)}
+                                   className="input-ctrl py-1 text-sm" placeholder="Department, unit, role..." />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Type</label>
+                            <select value={sharedControl.kind || ''} onChange={e => updateField('kind', e.target.value)} className="input-ctrl py-1 text-sm">
+                                <option value="">— not set —</option>
+                                {CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Scope</label>
+                            <select value={sharedControl.scope || ''} onChange={e => updateField('scope', e.target.value)} className="input-ctrl py-1 text-sm">
+                                <option value="">— not set —</option>
+                                {SHARED_SCOPES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to Jira</label>
+                            <input type="url" value={sharedControl.linkJira || ''} onChange={e => updateField('linkJira', e.target.value)}
+                                   className="input-ctrl py-1 text-sm" placeholder="https://jira..." />
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SHARED CONTROLS LIBRARY MODAL
+// ═══════════════════════════════════════════════════════════════════
+
+function SharedControlsLibrary({ sharedControls, environments, onAdd, onUpdate, onDelete, onLink, onUnlink, onClose }) {
+    const [editId, setEditId] = useState(null);
+    const [form, setForm] = useState({});
+    const [quickLinkId, setQuickLinkId] = useState(null);
+
+    const startEdit = (sc) => { setEditId(sc ? sc.id : 'new'); setForm(sc ? { ...sc } : { id: genId(), name: '', description: '', linkMore: '', ownerName: '', ownerOrgChart: '', kind: '', scope: '', linkJira: '' }); };
+    const saveForm = () => {
+        if (!form.name?.trim()) return;
+        if (editId === 'new') onAdd(form);
+        else onUpdate(form);
+        setEditId(null);
+    };
+
+    // Count references across all environments
+    const countRefs = (scId) => {
+        let count = 0;
+        environments.forEach(env => {
+            Object.values(env.cells).forEach(cell => {
+                (cell.umbrella || []).forEach(c => { if (c.sharedControlId === scId) count++; });
+            });
+        });
+        return count;
+    };
+
+    // Check if a shared control is linked to a specific env+cell
+    const isLinked = (scId, envId, ck) => {
+        const env = environments.find(e => e.id === envId);
+        if (!env) return false;
+        const cell = env.cells[ck];
+        if (!cell) return false;
+        return (cell.umbrella || []).some(c => c.sharedControlId === scId);
+    };
+
+    // Collect all cell keys where a shared control is referenced
+    const getRefs = (scId) => {
+        const refs = [];
+        environments.forEach(env => {
+            Object.entries(env.cells).forEach(([ck, cell]) => {
+                (cell.umbrella || []).forEach(c => {
+                    if (c.sharedControlId === scId) {
+                        const [cid, fid] = ck.split('-');
+                        refs.push({ envName: env.name, cluster: CLUSTERS[Number(cid)-1], func: CSF_FUNCTIONS.find(f=>f.id===fid), type: 'umbrella', maturity: c.maturity });
+                    }
+                });
+            });
+        });
+        return refs;
+    };
+
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content" style={{ maxWidth: 720 }} onClick={e => e.stopPropagation()}>
+                <div className="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 className="font-display font-bold text-lg flex items-center gap-2">
+                            <Icon name="link" size={20} /> Shared Controls Library
+                        </h2>
+                        <p className="text-xs text-muted-foreground mt-1">Define controls once, link to many cells. Each link has its own maturity rating.</p>
+                    </div>
+                    <button onClick={onClose} className="p-1 hover:bg-accent rounded"><Icon name="x" size={18} /></button>
+                </div>
+
+                {editId ? (
+                    <div className="space-y-3 bg-muted/50 rounded-lg border border-border p-4">
+                        <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{editId === 'new' ? 'New Shared Control' : 'Edit Shared Control'}</div>
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Name *</label>
+                            <input type="text" value={form.name || ''} onChange={e => setForm({...form, name: e.target.value})}
+                                   className="input-ctrl py-1 text-sm" placeholder="e.g. SIEM (Splunk), EDR (CrowdStrike), WAF (Cloudflare)" autoFocus />
+                        </div>
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Description</label>
+                            <textarea value={form.description || ''} onChange={e => setForm({...form, description: e.target.value})}
+                                      className="input-ctrl py-1 text-sm resize-none" rows={2} />
+                        </div>
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to More</label>
+                            <input type="url" value={form.linkMore || ''} onChange={e => setForm({...form, linkMore: e.target.value})} className="input-ctrl py-1 text-sm" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Name</label>
+                                <input type="text" value={form.ownerName || ''} onChange={e => setForm({...form, ownerName: e.target.value})} className="input-ctrl py-1 text-sm" />
+                            </div>
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Org-Chart Name</label>
+                                <input type="text" value={form.ownerOrgChart || ''} onChange={e => setForm({...form, ownerOrgChart: e.target.value})} className="input-ctrl py-1 text-sm" />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Type</label>
+                                <select value={form.kind || ''} onChange={e => setForm({...form, kind: e.target.value})} className="input-ctrl py-1 text-sm">
+                                    <option value="">— not set —</option>
+                                    {CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Scope</label>
+                                <select value={form.scope || ''} onChange={e => setForm({...form, scope: e.target.value})} className="input-ctrl py-1 text-sm">
+                                    <option value="">— not set —</option>
+                                    {SHARED_SCOPES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to Jira</label>
+                                <input type="url" value={form.linkJira || ''} onChange={e => setForm({...form, linkJira: e.target.value})} className="input-ctrl py-1 text-sm" />
+                            </div>
+                        </div>
+                        <div className="flex justify-end gap-2 pt-2">
+                            <button onClick={() => setEditId(null)} className="app-btn app-btn-outline app-btn-sm">Cancel</button>
+                            <button onClick={saveForm} disabled={!form.name?.trim()} className="app-btn app-btn-primary app-btn-sm">
+                                <Icon name="check" size={13} /> Save
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <div className="space-y-3 max-h-[55vh] overflow-y-auto">
+                            {sharedControls.length === 0 ? (
+                                <div className="text-center py-8 text-muted-foreground">
+                                    <Icon name="link" size={32} />
+                                    <p className="mt-2 text-sm">No shared controls yet.</p>
+                                    <p className="text-xs">Create shared controls for tools that span multiple clusters (SIEM, EDR, WAF, IAM, etc.)</p>
+                                </div>
+                            ) : sharedControls.map(sc => {
+                                const refCount = countRefs(sc.id);
+                                const refs = getRefs(sc.id);
+                                const kind = CONTROL_KINDS.find(k => k.id === sc.kind);
+                                return (
+                                    <div key={sc.id} className="bg-muted/50 rounded-lg border border-border p-3">
+                                        <div className="flex items-start gap-2">
+                                            <span className="text-amber-500 mt-0.5"><Icon name="link" size={15} /></span>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-2 flex-wrap">
+                                                    <span className="text-sm font-semibold">{sc.name}</span>
+                                                    {kind && <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: kind.color + '22', color: kind.color }}>{kind.label}</span>}
+                                                    {sc.scope && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-slate-500/15 text-slate-600">{SHARED_SCOPES.find(s=>s.id===sc.scope)?.label || sc.scope}</span>}
+                                                    <span className="text-[10px] text-muted-foreground">{refCount} link{refCount !== 1 ? 's' : ''}</span>
+                                                </div>
+                                                {sc.ownerName && <div className="text-[11px] text-muted-foreground">Owner: {sc.ownerName}{sc.ownerOrgChart ? ` (${sc.ownerOrgChart})` : ''}</div>}
+                                                {sc.description && <div className="text-[11px] text-muted-foreground mt-0.5">{sc.description}</div>}
+                                                {refs.length > 0 && (
+                                                    <div className="mt-2 flex flex-wrap gap-1">
+                                                        {refs.map((r, i) => (
+                                                            <span key={i} className="inline-flex items-center gap-1 text-[9px] px-1.5 py-0.5 rounded bg-background border border-border">
+                                                                <span className="font-bold">#{r.cluster.id}</span>
+                                                                <span style={{color: r.func.color}}>{r.func.id}</span>
+                                                                <span className="text-muted-foreground">{r.type[0].toUpperCase()}</span>
+                                                                <MaturityBadge value={r.maturity} size="sm" />
+                                                                {environments.length > 1 && <span className="text-muted-foreground">{r.envName}</span>}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-1 flex-shrink-0">
+                                                <button onClick={() => setQuickLinkId(quickLinkId === sc.id ? null : sc.id)}
+                                                        className={`p-1 hover:bg-accent rounded ${quickLinkId === sc.id ? 'bg-amber-500/20 text-amber-600' : 'text-amber-500'}`} title="Quick Link to cells">
+                                                    <Icon name="grid" size={13} /></button>
+                                                <button onClick={() => startEdit(sc)} className="p-1 hover:bg-accent rounded" title="Edit"><Icon name="pencil" size={13} /></button>
+                                                <button onClick={() => { if (confirm(`Delete "${sc.name}"?${refCount > 0 ? ` This will also remove ${refCount} link(s) from cells.` : ''}`)) onDelete(sc.id); }}
+                                                        className="p-1 hover:bg-accent rounded text-destructive" title="Delete"><Icon name="trash-2" size={13} /></button>
+                                            </div>
+                                        </div>
+                                        {quickLinkId === sc.id && (
+                                            <div className="mt-3 pt-3 border-t border-border">
+                                                <div className="text-[10px] font-bold text-amber-600 uppercase tracking-wider mb-2">Quick Link — click cells to toggle</div>
+                                                {environments.map(env => (
+                                                    <div key={env.id} className="mb-2">
+                                                        {environments.length > 1 && <div className="text-[10px] font-semibold text-muted-foreground mb-1">{env.name}</div>}
+                                                        <div className="grid gap-0.5" style={{ gridTemplateColumns: 'auto repeat(6, 1fr)' }}>
+                                                            <div />
+                                                            {CSF_FUNCTIONS.map(fn => (
+                                                                <div key={fn.id} className="text-center text-[8px] font-bold" style={{color: fn.color}}>{fn.id}</div>
+                                                            ))}
+                                                            {CLUSTERS.map(cl => (
+                                                                <React.Fragment key={cl.id}>
+                                                                    <div className="text-[9px] font-semibold pr-1 truncate" title={cl.name}>#{cl.id}</div>
+                                                                    {CSF_FUNCTIONS.map(fn => {
+                                                                        const ck = cellKey(cl.id, fn.id);
+                                                                        const linked = isLinked(sc.id, env.id, ck);
+                                                                        return (
+                                                                            <button key={fn.id} onClick={() => linked ? onUnlink(env.id, ck, sc.id) : onLink(env.id, ck, sc.id)}
+                                                                                    className={`h-5 rounded-sm text-[9px] font-bold transition-colors ${linked ? 'bg-amber-500 text-white hover:bg-amber-600' : 'bg-muted hover:bg-accent border border-border/50'}`}>
+                                                                                {linked ? '\u2713' : ''}
+                                                                            </button>
+                                                                        );
+                                                                    })}
+                                                                </React.Fragment>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="mt-4 flex justify-end">
+                            <button onClick={() => startEdit(null)} className="app-btn app-btn-primary app-btn-sm gap-1">
+                                <Icon name="plus" size={13} /> New Shared Control
+                            </button>
+                        </div>
+                    </>
+                )}
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CELL DETAIL PANEL
+// ═══════════════════════════════════════════════════════════════════
+
+function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturity, sharedControls, onUpdateCell, onUpdateCellMeta, onAddSharedControl, onUpdateSharedControl, onClose }) {
+    if (!selectedCell) return null;
+    const { clusterId, funcId } = selectedCell;
+    const cluster = CLUSTERS[clusterId - 1];
+    const func = CSF_FUNCTIONS.find(f => f.id === funcId);
+    const ck = cellKey(clusterId, funcId);
+    const isAgg = activeEnvId === 'aggregated';
+
+    const addControl = (envId, type) => {
+        const newCtrl = { id: genId(), name: '', description: '', linkMore: '', ownerName: '', ownerOrgChart: '', kind: '', maturity: 0, linkJira: '' };
+        onUpdateCell(envId, ck, type, (controls) => [...controls, newCtrl]);
+    };
+
+    const linkShared = (envId, type, scId) => {
+        onUpdateCell(envId, ck, type, (controls) => [...controls, { id: genId(), sharedControlId: scId, maturity: 0 }]);
+    };
+
+    const updateControl = (envId, type, updated) => {
+        onUpdateCell(envId, ck, type, (controls) => controls.map(c => c.id === updated.id ? updated : c));
+    };
+
+    const deleteControl = (envId, type, ctrlId) => {
+        onUpdateCell(envId, ck, type, (controls) => controls.filter(c => c.id !== ctrlId));
+    };
+
+    const [linkMenuOpen, setLinkMenuOpen] = useState(null); // "envId"
+    const [inlineSharedForm, setInlineSharedForm] = useState(null); // { envId, form }
+
+    const startInlineShared = (envId) => {
+        setInlineSharedForm({ envId, form: { id: genId(), name: '', description: '', linkMore: '', ownerName: '', ownerOrgChart: '', kind: '', scope: '', linkJira: '' } });
+        setLinkMenuOpen(null);
+    };
+    const saveInlineShared = () => {
+        if (!inlineSharedForm?.form.name?.trim()) return;
+        onAddSharedControl(inlineSharedForm.form);
+        linkShared(inlineSharedForm.envId, 'umbrella', inlineSharedForm.form.id);
+        setInlineSharedForm(null);
+    };
+
+    const renderEnvSection = (env) => {
+        const cell = env.cells[ck] || { local: [], umbrella: [] };
+        const menuKey = env.id;
+        return (
+            <div key={env.id} className="mb-4">
+                {isAgg && <div className="text-xs font-bold text-muted-foreground mb-2 uppercase tracking-wider">{env.name}</div>}
+                {CONTROL_TYPES.map(ct => {
+                    const controls = cell[ct.id] || [];
+                    const directControls = controls.filter(c => !c.sharedControlId);
+                    const sharedRefs = controls.filter(c => c.sharedControlId);
+                    const typeMat = computeTypeMaturity(controls);
+                    const isUmbrella = ct.id === 'umbrella';
+                    const linkedScIds = new Set(sharedRefs.map(r => r.sharedControlId));
+                    const availableShared = sharedControls.filter(sc => !linkedScIds.has(sc.id));
+
+                    return (
+                        <div key={ct.id} className="mb-4">
+                            <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2">
+                                    <span className={`text-xs font-bold px-2 py-0.5 rounded ${isUmbrella ? 'bg-purple-500/15 text-purple-600' : 'bg-blue-500/15 text-blue-600'}`}>
+                                        {ct.name} Controls
+                                    </span>
+                                    <MaturityBadge value={typeMat} size="sm" />
+                                    <span className="text-[10px] text-muted-foreground">({controls.length})</span>
+                                </div>
+                                {!isAgg && (
+                                    <div className="flex items-center gap-1">
+                                        {isUmbrella && (
+                                            <div className="relative">
+                                                <button onClick={() => setLinkMenuOpen(linkMenuOpen === menuKey ? null : menuKey)}
+                                                        className="app-btn app-btn-outline app-btn-xs gap-1 text-amber-600"
+                                                        title="Link an existing shared control or create a new one">
+                                                    <Icon name="link" size={11} /> Link Shared
+                                                </button>
+                                                {linkMenuOpen === menuKey && (
+                                                    <div className="absolute right-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-40 py-1 min-w-[250px] max-h-56 overflow-y-auto">
+                                                        {availableShared.length > 0 && (
+                                                            <div className="px-3 py-1 text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Existing shared controls</div>
+                                                        )}
+                                                        {availableShared.map(sc => (
+                                                            <button key={sc.id} onClick={() => { linkShared(env.id, 'umbrella', sc.id); setLinkMenuOpen(null); }}
+                                                                    className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2">
+                                                                <Icon name="link" size={11} className="text-amber-500" />
+                                                                <span className="truncate font-medium">{sc.name}</span>
+                                                                {sc.scope && <span className="text-[9px] text-muted-foreground">({SHARED_SCOPES.find(s=>s.id===sc.scope)?.label || sc.scope})</span>}
+                                                            </button>
+                                                        ))}
+                                                        {availableShared.length > 0 && sharedControls.length > 0 && availableShared.length < sharedControls.length && (
+                                                            <div className="px-3 py-1 text-[9px] text-muted-foreground italic">({sharedControls.length - availableShared.length} already linked)</div>
+                                                        )}
+                                                        <div className="border-t border-border mt-1 pt-1">
+                                                            <button onClick={() => startInlineShared(env.id)}
+                                                                    className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2 font-medium text-primary">
+                                                                <Icon name="plus" size={11} /> Create new shared control…
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                        <button onClick={() => addControl(env.id, ct.id)} className="app-btn app-btn-outline app-btn-xs gap-1">
+                                            <Icon name="plus" size={11} /> New
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Inline shared control creation form */}
+                            {isUmbrella && inlineSharedForm?.envId === env.id && (
+                                <div className="mb-3 space-y-2 bg-amber-500/5 border-2 border-amber-500/30 rounded-lg p-3">
+                                    <div className="text-[10px] font-bold text-amber-600 uppercase tracking-wider flex items-center gap-1">
+                                        <Icon name="plus" size={11} /> New Shared Control
+                                    </div>
+                                    <input type="text" value={inlineSharedForm.form.name} autoFocus
+                                           onChange={e => setInlineSharedForm(prev => ({...prev, form: {...prev.form, name: e.target.value}}))}
+                                           className="input-ctrl py-1 text-sm" placeholder="Name (e.g. SIEM, EDR, WAF) *" />
+                                    <textarea value={inlineSharedForm.form.description}
+                                              onChange={e => setInlineSharedForm(prev => ({...prev, form: {...prev.form, description: e.target.value}}))}
+                                              className="input-ctrl py-1 text-sm resize-none" rows={2} placeholder="Description (optional)" />
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div>
+                                            <label className="text-[10px] text-muted-foreground">Type</label>
+                                            <select value={inlineSharedForm.form.kind}
+                                                    onChange={e => setInlineSharedForm(prev => ({...prev, form: {...prev.form, kind: e.target.value}}))}
+                                                    className="input-ctrl py-1 text-sm">
+                                                <option value="">— not set —</option>
+                                                {CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] text-muted-foreground">Scope</label>
+                                            <select value={inlineSharedForm.form.scope}
+                                                    onChange={e => setInlineSharedForm(prev => ({...prev, form: {...prev.form, scope: e.target.value}}))}
+                                                    className="input-ctrl py-1 text-sm">
+                                                <option value="">— not set —</option>
+                                                {SHARED_SCOPES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <input type="text" value={inlineSharedForm.form.ownerName}
+                                               onChange={e => setInlineSharedForm(prev => ({...prev, form: {...prev.form, ownerName: e.target.value}}))}
+                                               className="input-ctrl py-1 text-sm" placeholder="Owner Name" />
+                                        <input type="text" value={inlineSharedForm.form.ownerOrgChart}
+                                               onChange={e => setInlineSharedForm(prev => ({...prev, form: {...prev.form, ownerOrgChart: e.target.value}}))}
+                                               className="input-ctrl py-1 text-sm" placeholder="Owner Org-Chart" />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <input type="url" value={inlineSharedForm.form.linkMore}
+                                               onChange={e => setInlineSharedForm(prev => ({...prev, form: {...prev.form, linkMore: e.target.value}}))}
+                                               className="input-ctrl py-1 text-sm" placeholder="Link to More (URL)" />
+                                        <input type="url" value={inlineSharedForm.form.linkJira}
+                                               onChange={e => setInlineSharedForm(prev => ({...prev, form: {...prev.form, linkJira: e.target.value}}))}
+                                               className="input-ctrl py-1 text-sm" placeholder="Link to Jira (URL)" />
+                                    </div>
+                                    <div className="flex justify-end gap-2 pt-1">
+                                        <button onClick={() => setInlineSharedForm(null)} className="app-btn app-btn-outline app-btn-xs">Cancel</button>
+                                        <button onClick={saveInlineShared} disabled={!inlineSharedForm.form.name?.trim()}
+                                                className="app-btn app-btn-primary app-btn-xs gap-1">
+                                            <Icon name="check" size={11} /> Create & Link
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="space-y-2">
+                                {controls.length === 0 && !(isUmbrella && inlineSharedForm?.envId === env.id) ? (
+                                    <div className="text-xs text-muted-foreground italic py-2 text-center border border-dashed border-border rounded-lg">
+                                        No {ct.name.toLowerCase()} controls documented
+                                    </div>
+                                ) : (<>
+                                    {directControls.map(ctrl => (
+                                        <ControlCard key={ctrl.id} control={ctrl} targetMaturity={targetMaturity}
+                                                     onUpdate={(updated) => updateControl(env.id, ct.id, updated)}
+                                                     onDelete={(ctrlId) => deleteControl(env.id, ct.id, ctrlId)} />
+                                    ))}
+                                    {isUmbrella && sharedRefs.map(ref_ => {
+                                        const sc = sharedControls.find(s => s.id === ref_.sharedControlId);
+                                        return (
+                                            <SharedRefCard key={ref_.id} reference={ref_} sharedControl={sc} targetMaturity={targetMaturity}
+                                                           onUpdateMaturity={(m) => updateControl(env.id, 'umbrella', { ...ref_, maturity: m })}
+                                                           onUpdateSharedControl={onUpdateSharedControl}
+                                                           onUnlink={() => deleteControl(env.id, 'umbrella', ref_.id)} />
+                                        );
+                                    })}
+                                </>)}
+                            </div>
+                        </div>
+                    );
+                })}
+                {isAgg && <hr className="border-border my-3" />}
+            </div>
+        );
+    };
+
+    const envsToShow = isAgg ? environments : environments.filter(e => e.id === activeEnvId);
+
+    return (
+        <div className="detail-panel open fixed right-0 top-14 bottom-0 w-full sm:w-[460px] bg-card border-l border-border shadow-2xl z-30 flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b border-border flex-shrink-0">
+                <div>
+                    <div className="flex items-center gap-2">
+                        <span className={`inline-flex items-center justify-center w-7 h-7 rounded text-xs font-bold text-white ${cluster.topology === 'bridge' ? 'bg-amber-600' : 'bg-blue-600'}`}>
+                            #{clusterId}
+                        </span>
+                        <span className="font-display font-bold">{cluster.name}</span>
+                        <span className="text-lg font-light text-muted-foreground">×</span>
+                        <span className="font-bold" style={{ color: func.color }}>{func.name}</span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{func.desc} — for threats caused by: {cluster.genericVuln.toLowerCase()}</p>
+                </div>
+                <button onClick={onClose} className="p-2 hover:bg-destructive/10 hover:text-destructive rounded-lg flex-shrink-0 border border-border" title="Close panel">
+                    <Icon name="x" size={20} />
+                </button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4">
+                {envsToShow.map(renderEnvSection)}
+
+                {/* Notes & Tasks — per cell per environment */}
+                {!isAgg && envsToShow.map(env => {
+                    const cell = env.cells[ck] || {};
+                    const comments = cell.comments || '';
+                    const tasks = cell.tasks || [];
+
+                    const updateComments = (val) => onUpdateCellMeta(env.id, ck, { comments: val });
+                    const addTask = () => onUpdateCellMeta(env.id, ck, { tasks: [...tasks, { id: genId(), description: '', owner: '', dueDate: '', status: 'open' }] });
+                    const updateTask = (taskId, field, val) => onUpdateCellMeta(env.id, ck, { tasks: tasks.map(t => t.id === taskId ? { ...t, [field]: val } : t) });
+                    const deleteTask = (taskId) => onUpdateCellMeta(env.id, ck, { tasks: tasks.filter(t => t.id !== taskId) });
+
+                    return (
+                        <div key={'notes-' + env.id} className="mt-2 pt-3 border-t border-border">
+                            <div className="mb-3">
+                                <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1 mb-1.5">
+                                    <Icon name="message-square" size={12} /> Notes
+                                </label>
+                                <textarea value={comments} onChange={e => updateComments(e.target.value)}
+                                          className="input-ctrl py-1.5 text-sm resize-none" rows={2} placeholder="Comments, observations, decisions..." />
+                            </div>
+                            <div>
+                                <div className="flex items-center justify-between mb-1.5">
+                                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
+                                        <Icon name="list-checks" size={12} /> Tasks
+                                    </label>
+                                    <button onClick={addTask} className="app-btn app-btn-outline app-btn-xs gap-1">
+                                        <Icon name="plus" size={11} /> Add Task
+                                    </button>
+                                </div>
+                                {tasks.length === 0 ? (
+                                    <div className="text-xs text-muted-foreground italic py-2 text-center border border-dashed border-border rounded-lg">
+                                        No tasks — add tasks to track gap remediation
+                                    </div>
+                                ) : (
+                                    <div className="space-y-2">
+                                        {tasks.map(task => {
+                                            const st = TASK_STATUSES.find(s => s.id === task.status) || TASK_STATUSES[0];
+                                            const overdue = task.dueDate && task.status !== 'done' && new Date(task.dueDate) < new Date();
+                                            return (
+                                                <div key={task.id} className={`bg-muted/50 rounded-lg border p-2.5 space-y-1.5 ${overdue ? 'border-destructive/50' : 'border-border'}`}>
+                                                    <div className="flex items-start gap-1.5">
+                                                        <span style={{color: st.color}} className="mt-0.5"><Icon name={st.icon} size={14} /></span>
+                                                        <input type="text" value={task.description} onChange={e => updateTask(task.id, 'description', e.target.value)}
+                                                               className="input-ctrl py-0.5 text-sm flex-1" placeholder="Task description..." />
+                                                        <button onClick={() => { if (confirm('Delete this task?')) deleteTask(task.id); }}
+                                                                className="p-0.5 hover:bg-accent rounded text-muted-foreground flex-shrink-0">
+                                                            <Icon name="trash-2" size={12} />
+                                                        </button>
+                                                    </div>
+                                                    <div className="grid grid-cols-3 gap-1.5">
+                                                        <input type="text" value={task.owner || ''} onChange={e => updateTask(task.id, 'owner', e.target.value)}
+                                                               className="input-ctrl py-0.5 text-[11px]" placeholder="Owner" />
+                                                        <input type="date" value={task.dueDate || ''} onChange={e => updateTask(task.id, 'dueDate', e.target.value)}
+                                                               className={`input-ctrl py-0.5 text-[11px] ${overdue ? 'text-destructive font-semibold' : ''}`} />
+                                                        <select value={task.status} onChange={e => updateTask(task.id, 'status', e.target.value)}
+                                                                className="input-ctrl py-0.5 text-[11px]" style={{color: st.color}}>
+                                                            {TASK_STATUSES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// IMPORT MODAL
+// ═══════════════════════════════════════════════════════════════════
+
+function ImportModal({ onClose, onImport }) {
+    const [text, setText] = useState('');
+    const [error, setError] = useState('');
+    const [dragOver, setDragOver] = useState(false);
+    const fileRef = useRef(null);
+
+    const handleImport = () => {
+        try {
+            const data = JSON.parse(text);
+            if (!data.environments || !Array.isArray(data.environments)) throw new Error('Invalid format: missing environments array');
+            onImport(data);
+            onClose();
+        } catch (e) { setError(e.message); }
+    };
+
+    const handleFile = (file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => { setText(e.target.result); setError(''); };
+        reader.readAsText(file);
+    };
+
+    const handleDrop = (e) => { e.preventDefault(); setDragOver(false); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); };
+
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="font-display font-bold text-lg">Import Control Matrix</h2>
+                    <button onClick={onClose} className="p-1 hover:bg-accent rounded"><Icon name="x" size={18} /></button>
+                </div>
+                <div className={`border-2 border-dashed rounded-lg p-6 text-center mb-3 ${dragOver ? 'border-primary bg-primary/5' : 'border-border'}`}
+                     onDragOver={e => { e.preventDefault(); setDragOver(true); }} onDragLeave={() => setDragOver(false)} onDrop={handleDrop}>
+                    <Icon name="upload" size={24} />
+                    <p className="text-sm text-muted-foreground mt-2">Drag & drop a JSON file here, or</p>
+                    <button onClick={() => fileRef.current?.click()} className="app-btn app-btn-outline app-btn-sm mt-2">Browse Files</button>
+                    <input ref={fileRef} type="file" accept=".json" className="hidden" onChange={e => e.target.files[0] && handleFile(e.target.files[0])} />
+                </div>
+                <textarea value={text} onChange={e => { setText(e.target.value); setError(''); }}
+                          className="input-ctrl font-mono text-xs h-48 resize-none mb-3" placeholder="Or paste JSON here..." />
+                {error && <div className="text-destructive text-xs mb-3 bg-destructive/10 p-2 rounded">{error}</div>}
+                <div className="flex justify-end gap-2">
+                    <button onClick={onClose} className="app-btn app-btn-outline">Cancel</button>
+                    <button onClick={handleImport} disabled={!text.trim()} className="app-btn app-btn-primary">
+                        <Icon name="upload" size={14} /> Import
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATURITY LEGEND
+// ═══════════════════════════════════════════════════════════════════
+
+function MaturityLegend({ targetMaturity }) {
+    return (
+        <div className="px-4 sm:px-6 pb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] no-print">
+            <span className="text-muted-foreground font-medium">Maturity:</span>
+            {MATURITY_LEVELS.map(ml => (
+                <div key={ml.value} className="flex items-center gap-1">
+                    <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: ml.color }} />
+                    <span className={ml.value === targetMaturity ? 'font-bold underline' : 'text-muted-foreground'}>
+                        {ml.value} {ml.label}
+                    </span>
+                </div>
+            ))}
+            <div className="flex items-center gap-1 ml-2">
+                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: '#94a3b8' }} />
+                <span className="text-muted-foreground">— No controls</span>
+            </div>
+            <div className="flex items-center gap-1 ml-2">
+                <span className="text-[9px] px-1 rounded bg-blue-500/15 text-blue-600 font-bold">L</span>
+                <span className="text-muted-foreground">Local</span>
+                <span className="text-[9px] px-1 rounded bg-purple-500/15 text-purple-600 font-bold ml-1">U</span>
+                <span className="text-muted-foreground">Umbrella</span>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// QUICK ASSESS MODAL
+// ═══════════════════════════════════════════════════════════════════
+
+function QuickAssessModal({ onClose, environments, activeEnvId, sharedControls, onBulkMaturity, onLinkShared }) {
+    const [tab, setTab] = useState('maturity'); // maturity, shared
+    const [scope, setScope] = useState('cluster'); // cluster, function, all
+    const [clusterId, setClusterId] = useState(1);
+    const [funcId, setFuncId] = useState('GV');
+    const [controlType, setControlType] = useState('both');
+    const [maturity, setMaturity] = useState(0);
+    const [selectedShared, setSelectedShared] = useState('');
+
+    const env = environments.find(e => e.id === activeEnvId);
+    if (!env) return null;
+
+    const getTargetCells = () => {
+        const clusters = scope === 'cluster' ? [clusterId] : CLUSTERS.map(c => c.id);
+        const funcs = scope === 'function' ? [funcId] : CSF_FUNCTIONS.map(f => f.id);
+        const cells = [];
+        clusters.forEach(cid => funcs.forEach(fid => cells.push(cellKey(cid, fid))));
+        return cells;
+    };
+
+    const handleMaturityApply = () => {
+        const cells = getTargetCells();
+        const types = controlType === 'both' ? ['local', 'umbrella'] : [controlType];
+        const updates = [];
+        cells.forEach(ck => {
+            types.forEach(type => {
+                const cell = env.cells[ck];
+                const controls = cell ? (cell[type] || []) : [];
+                if (controls.length > 0) {
+                    updates.push({ ck, type, action: 'update', maturity });
+                }
+            });
+        });
+        if (updates.length === 0) {
+            alert('No existing controls found in the selected scope. Add controls to cells first, then use Quick Assess to set their maturity.');
+            return;
+        }
+        onBulkMaturity(activeEnvId, updates);
+        onClose();
+    };
+
+    const handleSharedApply = () => {
+        if (!selectedShared) return;
+        const cells = getTargetCells();
+        cells.forEach(ck => onLinkShared(activeEnvId, ck, selectedShared));
+        onClose();
+    };
+
+    const cellCount = getTargetCells().length;
+
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="font-display font-bold text-lg">Quick Assess</h2>
+                    <button onClick={onClose} className="p-1 hover:bg-accent rounded"><Icon name="x" size={18} /></button>
+                </div>
+
+                <div className="flex gap-1 mb-4 bg-muted rounded-lg p-1">
+                    <button onClick={() => setTab('maturity')} className={`flex-1 app-btn app-btn-sm ${tab === 'maturity' ? 'app-btn-primary' : ''}`}>
+                        <Icon name="bar-chart-3" size={13} /> Set Maturity
+                    </button>
+                    <button onClick={() => setTab('shared')} className={`flex-1 app-btn app-btn-sm ${tab === 'shared' ? 'app-btn-primary' : ''}`}>
+                        <Icon name="link" size={13} /> Link Shared Control
+                    </button>
+                </div>
+
+                <div className="space-y-3">
+                    <div>
+                        <label className="text-xs font-medium text-muted-foreground block mb-1">Scope</label>
+                        <div className="flex gap-2">
+                            {[{v:'cluster',l:'Cluster Row'},{v:'function',l:'CSF Column'},{v:'all',l:'All Cells'}].map(o => (
+                                <button key={o.v} onClick={() => setScope(o.v)}
+                                        className={`app-btn app-btn-sm ${scope === o.v ? 'app-btn-primary' : 'app-btn-outline'}`}>{o.l}</button>
+                            ))}
+                        </div>
+                    </div>
+                    {scope === 'cluster' && (
+                        <div>
+                            <label className="text-xs font-medium text-muted-foreground block mb-1">Cluster</label>
+                            <select value={clusterId} onChange={e => setClusterId(Number(e.target.value))} className="input-ctrl text-sm">
+                                {CLUSTERS.map(c => <option key={c.id} value={c.id}>#{c.id} {c.name}</option>)}
+                            </select>
+                        </div>
+                    )}
+                    {scope === 'function' && (
+                        <div>
+                            <label className="text-xs font-medium text-muted-foreground block mb-1">CSF Function</label>
+                            <select value={funcId} onChange={e => setFuncId(e.target.value)} className="input-ctrl text-sm">
+                                {CSF_FUNCTIONS.map(f => <option key={f.id} value={f.id}>{f.name} ({f.id})</option>)}
+                            </select>
+                        </div>
+                    )}
+
+                    {tab === 'maturity' ? (<>
+                        <p className="text-xs text-muted-foreground">Update maturity on all existing controls in the selected scope. Does not create new controls.</p>
+                        <div className="grid grid-cols-2 gap-3">
+                            <div>
+                                <label className="text-xs font-medium text-muted-foreground block mb-1">Control Type</label>
+                                <select value={controlType} onChange={e => setControlType(e.target.value)} className="input-ctrl text-sm">
+                                    <option value="both">Both (Local & Umbrella)</option>
+                                    <option value="local">Local Only</option>
+                                    <option value="umbrella">Umbrella Only</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="text-xs font-medium text-muted-foreground block mb-1">Set Maturity To</label>
+                                <select value={maturity} onChange={e => setMaturity(Number(e.target.value))} className="input-ctrl text-sm">
+                                    {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                    </>) : (<>
+                        <p className="text-xs text-muted-foreground">Link a shared control to {cellCount} umbrella cell{cellCount !== 1 ? 's' : ''} at once. Already linked cells are skipped.</p>
+                        <div>
+                            <label className="text-xs font-medium text-muted-foreground block mb-1">Shared Control</label>
+                            {sharedControls.length === 0 ? (
+                                <div className="text-xs text-muted-foreground italic py-2">No shared controls defined yet. Create one in the Shared Controls Library first.</div>
+                            ) : (
+                                <select value={selectedShared} onChange={e => setSelectedShared(e.target.value)} className="input-ctrl text-sm">
+                                    <option value="">— select shared control —</option>
+                                    {sharedControls.map(sc => (
+                                        <option key={sc.id} value={sc.id}>{sc.name}{sc.scope ? ' (' + (SHARED_SCOPES.find(s=>s.id===sc.scope)?.label || sc.scope) + ')' : ''}</option>
+                                    ))}
+                                </select>
+                            )}
+                        </div>
+                    </>)}
+                </div>
+                <div className="flex justify-end gap-2 mt-6">
+                    <button onClick={onClose} className="app-btn app-btn-outline">Cancel</button>
+                    {tab === 'maturity' ? (
+                        <button onClick={handleMaturityApply} className="app-btn app-btn-primary">
+                            <Icon name="zap" size={14} /> Set Maturity ({cellCount} cells)
+                        </button>
+                    ) : (
+                        <button onClick={handleSharedApply} disabled={!selectedShared} className="app-btn app-btn-primary">
+                            <Icon name="link" size={14} /> Link to {cellCount} cells
+                        </button>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MAIN APP
+// ═══════════════════════════════════════════════════════════════════
+
+function App() {
+    const [state, setState] = useState(() => loadState());
+    const [activeEnvId, setActiveEnvId] = useState(() => state.environments[0]?.id || 'aggregated');
+    const [selectedCell, setSelectedCell] = useState(null);
+    const [darkMode, setDarkMode] = useState(() => {
+        const saved = localStorage.getItem('tlctc-cm-dark');
+        if (saved !== null) return saved === 'true';
+        return window.matchMedia?.('(prefers-color-scheme: dark)').matches || false;
+    });
+    const [showImport, setShowImport] = useState(false);
+    const [showQuickAssess, setShowQuickAssess] = useState(false);
+    const [showSharedLibrary, setShowSharedLibrary] = useState(false);
+    const matrixRef = useRef(null);
+
+    // Persist state
+    useEffect(() => { saveState(state); }, [state]);
+
+    // Dark mode class
+    useEffect(() => {
+        document.documentElement.classList.toggle('dark', darkMode);
+        localStorage.setItem('tlctc-cm-dark', darkMode);
+    }, [darkMode]);
+
+    // Keyboard shortcuts
+    useEffect(() => {
+        const handler = (e) => {
+            if (e.key === 'Escape') setSelectedCell(null);
+        };
+        window.addEventListener('keydown', handler);
+        return () => window.removeEventListener('keydown', handler);
+    }, []);
+
+    // Ensure activeEnvId is valid
+    useEffect(() => {
+        if (activeEnvId !== 'aggregated' && !state.environments.find(e => e.id === activeEnvId)) {
+            setActiveEnvId(state.environments[0]?.id || 'aggregated');
+        }
+    }, [state.environments, activeEnvId]);
+
+    // State updaters
+    const updateState = (updates) => setState(prev => ({ ...prev, ...updates, lastModified: new Date().toISOString().split('T')[0] }));
+
+    const updateEnvironment = (envId, updater) => {
+        setState(prev => ({
+            ...prev,
+            lastModified: new Date().toISOString().split('T')[0],
+            environments: prev.environments.map(env => env.id === envId ? updater(env) : env),
+        }));
+    };
+
+    const addEnvironment = () => {
+        const name = prompt('Environment name:', `Environment ${state.environments.length + 1}`);
+        if (!name?.trim()) return;
+        const newEnv = createEmptyEnvironment(name.trim());
+        setState(prev => ({ ...prev, environments: [...prev.environments, newEnv] }));
+        setActiveEnvId(newEnv.id);
+    };
+
+    const renameEnvironment = (envId, name) => {
+        updateEnvironment(envId, env => ({ ...env, name }));
+    };
+
+    const duplicateEnvironment = (envId) => {
+        const source = state.environments.find(e => e.id === envId);
+        if (!source) return;
+        const newEnv = { ...JSON.parse(JSON.stringify(source)), id: genId(), name: source.name + ' (Copy)' };
+        setState(prev => ({ ...prev, environments: [...prev.environments, newEnv] }));
+        setActiveEnvId(newEnv.id);
+    };
+
+    const removeEnvironment = (envId) => {
+        setState(prev => ({ ...prev, environments: prev.environments.filter(e => e.id !== envId) }));
+    };
+
+    // Shared controls CRUD
+    const addSharedControl = (sc) => setState(prev => ({ ...prev, sharedControls: [...(prev.sharedControls || []), sc] }));
+    const updateSharedControl = (sc) => setState(prev => ({ ...prev, sharedControls: (prev.sharedControls || []).map(s => s.id === sc.id ? sc : s) }));
+    const deleteSharedControl = (scId) => {
+        setState(prev => {
+            // Remove from library and purge all references from umbrella arrays
+            const environments = prev.environments.map(env => ({
+                ...env,
+                cells: Object.fromEntries(Object.entries(env.cells).map(([ck, cell]) => [ck, {
+                    ...cell,
+                    umbrella: (cell.umbrella || []).filter(c => c.sharedControlId !== scId),
+                }]))
+            }));
+            return { ...prev, sharedControls: (prev.sharedControls || []).filter(s => s.id !== scId), environments };
+        });
+    };
+
+    const linkSharedToCell = (envId, ck, scId) => {
+        updateEnvironment(envId, env => {
+            const cell = env.cells[ck] || { local: [], umbrella: [] };
+            const already = (cell.umbrella || []).some(c => c.sharedControlId === scId);
+            if (already) return env;
+            return { ...env, cells: { ...env.cells, [ck]: { ...cell, umbrella: [...(cell.umbrella || []), { id: genId(), sharedControlId: scId, maturity: 0 }] } } };
+        });
+    };
+    const unlinkSharedFromCell = (envId, ck, scId) => {
+        updateEnvironment(envId, env => {
+            const cell = env.cells[ck] || { local: [], umbrella: [] };
+            return { ...env, cells: { ...env.cells, [ck]: { ...cell, umbrella: (cell.umbrella || []).filter(c => c.sharedControlId !== scId) } } };
+        });
+    };
+
+    const handleCellUpdate = (envId, ck, type, updater) => {
+        updateEnvironment(envId, env => {
+            const cell = env.cells[ck] || { local: [], umbrella: [] };
+            return {
+                ...env,
+                cells: { ...env.cells, [ck]: { ...cell, [type]: updater(cell[type] || []) } },
+            };
+        });
+    };
+
+    const handleCellMeta = (envId, ck, meta) => {
+        updateEnvironment(envId, env => {
+            const cell = env.cells[ck] || { local: [], umbrella: [] };
+            return {
+                ...env,
+                cells: { ...env.cells, [ck]: { ...cell, ...meta } },
+            };
+        });
+    };
+
+    const handleBulkMaturity = (envId, updates) => {
+        updateEnvironment(envId, env => {
+            const cells = { ...env.cells };
+            updates.forEach(({ ck, type, maturity }) => {
+                const cell = cells[ck] || { local: [], umbrella: [] };
+                cells[ck] = { ...cell, [type]: (cell[type] || []).map(c => ({ ...c, maturity })) };
+            });
+            return { ...env, cells };
+        });
+    };
+
+    // Export JSON
+    const exportJSON = () => {
+        const exportData = {
+            version: '1.0.0',
+            tool: 'TLCTC Control Matrix Manager',
+            exportDate: new Date().toISOString(),
+            ...state,
+        };
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `tlctc-control-matrix-${state.orgName.replace(/\s+/g, '-').toLowerCase()}-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    // Import JSON
+    const handleImport = (data) => {
+        const newState = {
+            orgName: data.orgName || data.organizationName || 'Imported',
+            targetMaturity: data.targetMaturity ?? 3,
+            environments: data.environments || [],
+            sharedControls: data.sharedControls || [],
+            createdAt: data.createdAt || new Date().toISOString().split('T')[0],
+        };
+        setState(newState);
+        setActiveEnvId(newState.environments[0]?.id || 'aggregated');
+        setSelectedCell(null);
+    };
+
+    // Export PNG
+    const exportPNG = async () => {
+        if (!matrixRef.current) return;
+        const table = matrixRef.current.querySelector('table');
+        if (!table) return;
+
+        // Temporarily expand for clean export: remove truncation, widen first col
+        const truncated = table.querySelectorAll('.truncate');
+        truncated.forEach(el => {
+            el.classList.remove('truncate');
+            el.dataset.pngRestore = 'truncate';
+            if (el.style.maxWidth || el.className.includes('max-w-')) {
+                el.dataset.pngMaxW = el.style.maxWidth;
+                el.style.maxWidth = 'none';
+            }
+        });
+        // Remove max-w-[110px] overrides (Tailwind utility baked into style)
+        const maxWEls = table.querySelectorAll('[class*="max-w-"]');
+        maxWEls.forEach(el => {
+            el.dataset.pngClasses = el.className;
+            el.className = el.className.replace(/max-w-\[\d+px\]/g, '');
+        });
+        // Hide tooltip spans
+        const tips = table.querySelectorAll('.tip');
+        tips.forEach(el => { el.dataset.pngDisplay = el.style.display; el.style.display = 'none'; });
+
+        const origPad = table.style.padding;
+        table.style.padding = '20px';
+
+        try {
+            const canvas = await html2canvas(table, {
+                backgroundColor: darkMode ? '#1e293b' : '#f8fafc',
+                scale: 2,
+                logging: false,
+            });
+            const a = document.createElement('a');
+            a.download = `tlctc-control-matrix-${new Date().toISOString().split('T')[0]}.png`;
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+        } catch (e) { alert('PNG export failed: ' + e.message); }
+
+        // Restore everything
+        truncated.forEach(el => { el.classList.add('truncate'); delete el.dataset.pngRestore; });
+        maxWEls.forEach(el => { if (el.dataset.pngClasses) { el.className = el.dataset.pngClasses; delete el.dataset.pngClasses; } });
+        tips.forEach(el => { el.style.display = el.dataset.pngDisplay || ''; delete el.dataset.pngDisplay; });
+        table.style.padding = origPad;
+    };
+
+    const generateReport = (type) => {
+        const date = new Date().toISOString().split('T')[0];
+        const orgName = state.orgName || 'Organization';
+        const envs = state.environments;
+        const target = state.targetMaturity;
+        // Helper: closing tags must use <\/ to avoid breaking the outer <script> parser
+        const C = t => '<' + '/' + t + '>';
+        const css = '<style>' +
+            '* { margin: 0; padding: 0; box-sizing: border-box; } ' +
+            "body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 32px; color: #1e293b; font-size: 13px; line-height: 1.5; } " +
+            'h1 { font-size: 20px; margin-bottom: 4px; } h2 { font-size: 16px; margin: 24px 0 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; } ' +
+            'h3 { font-size: 13px; margin: 12px 0 4px; } ' +
+            '.meta { color: #64748b; font-size: 12px; margin-bottom: 20px; } ' +
+            'table { border-collapse: collapse; width: 100%; margin: 8px 0 16px; font-size: 12px; } ' +
+            'th, td { border: 1px solid #e2e8f0; padding: 5px 8px; text-align: left; } ' +
+            'th { background: #f1f5f9; font-weight: 600; } ' +
+            '.status { display: inline-block; padding: 1px 8px; border-radius: 9px; font-size: 11px; font-weight: 600; } ' +
+            '.status-open { background: #f1f5f9; color: #64748b; } ' +
+            '.status-in-progress { background: #dbeafe; color: #2563eb; } ' +
+            '.status-blocked { background: #fef2f2; color: #dc2626; } ' +
+            '.status-done { background: #f0fdf4; color: #16a34a; } ' +
+            '.overdue { color: #dc2626; font-weight: 600; } ' +
+            '.gap { background: #fef2f2; } .ok { background: #f0fdf4; } ' +
+            '.mat-0 { color: #ef4444; } .mat-1 { color: #f97316; } .mat-2 { color: #eab308; } ' +
+            '.mat-3 { color: #84cc16; } .mat-4 { color: #22c55e; } .mat-5 { color: #059669; } ' +
+            '.badge { font-weight: 700; } ' +
+            '.summary-box { display: inline-block; padding: 8px 16px; margin: 4px 8px 4px 0; border-radius: 8px; border: 1px solid #e2e8f0; } ' +
+            '.summary-box .num { font-size: 22px; font-weight: 700; } .summary-box .lbl { font-size: 11px; color: #64748b; } ' +
+            '.cluster-tag { display: inline-block; padding: 1px 6px; border-radius: 4px; color: white; font-size: 11px; font-weight: 700; margin-right: 4px; } ' +
+            '.cluster-internal { background: #2563eb; } .cluster-bridge { background: #d97706; } ' +
+            '@media print { body { padding: 16px; } }' +
+            C('style');
+
+        const docHead = (title) => '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + title + C('title') + css + C('head') + '<body>';
+        const docEnd = C('body') + C('html');
+
+        let html = '';
+
+        if (type === 'maturity') {
+            html = docHead('Maturity Report — ' + orgName);
+            html += '<h1>Maturity Report' + C('h1') + '<div class="meta">' + orgName + ' — Generated ' + date + ' — Target Maturity: ' + target + C('div');
+
+            envs.forEach(env => {
+                html += '<h2>Environment: ' + env.name + C('h2');
+                let totalCells = 0, gapCells = 0, documentedCells = 0;
+
+                html += '<table><tr><th>Cluster' + C('th');
+                CSF_FUNCTIONS.forEach(fn => { html += '<th style="color:' + fn.color + '">' + fn.id + C('th'); });
+                html += '<th>Row Min' + C('th') + C('tr');
+
+                CLUSTERS.forEach(cl => {
+                    html += '<tr><td><span class="cluster-tag cluster-' + cl.topology + '">#' + cl.id + C('span') + ' ' + cl.name + C('td');
+                    let rowVals = [];
+                    CSF_FUNCTIONS.forEach(fn => {
+                        const ck = cellKey(cl.id, fn.id);
+                        const cell = env.cells[ck] || { local: [], umbrella: [] };
+                        const allControls = [...(cell.local || []), ...(cell.umbrella || [])];
+                        if (allControls.length > 0) {
+                            documentedCells++;
+                            const matVals = allControls.map(c => typeof c.maturity === 'number' ? c.maturity : 0);
+                            const worst = Math.min(...matVals);
+                            rowVals.push(worst);
+                            totalCells++;
+                            const isGap = worst < target;
+                            if (isGap) gapCells++;
+                            html += '<td class="' + (isGap ? 'gap' : 'ok') + '"><span class="badge mat-' + worst + '">' + worst + C('span') + ' (' + allControls.length + ' ctrl)' + C('td');
+                        } else {
+                            totalCells++;
+                            html += '<td style="color:#94a3b8">\u2014' + C('td');
+                        }
+                    });
+                    const rowMin = rowVals.length > 0 ? Math.min(...rowVals) : null;
+                    html += '<td><span class="badge' + (rowMin !== null ? ' mat-' + rowMin : '') + '">' + (rowMin !== null ? rowMin : '\u2014') + C('span') + C('td') + C('tr');
+                });
+                html += C('table');
+
+                html += '<div>';
+                html += '<div class="summary-box"><div class="num">' + documentedCells + C('div') + '<div class="lbl">Documented Cells' + C('div') + C('div');
+                html += '<div class="summary-box"><div class="num" style="color:#ef4444">' + gapCells + C('div') + '<div class="lbl">Below Target (' + target + ')' + C('div') + C('div');
+                html += '<div class="summary-box"><div class="num">' + (totalCells - documentedCells) + C('div') + '<div class="lbl">Undocumented' + C('div') + C('div');
+                html += C('div');
+
+                const gaps = [];
+                CLUSTERS.forEach(cl => CSF_FUNCTIONS.forEach(fn => {
+                    const ck = cellKey(cl.id, fn.id);
+                    const cell = env.cells[ck] || { local: [], umbrella: [] };
+                    const allControls = [...(cell.local || []), ...(cell.umbrella || [])];
+                    allControls.forEach(c => {
+                        if (typeof c.maturity === 'number' && c.maturity < target) {
+                            const name = c.sharedControlId ? ((state.sharedControls || []).find(s => s.id === c.sharedControlId)?.name || 'Shared') : (c.name || 'Unnamed');
+                            gaps.push({ cluster: '#' + cl.id + ' ' + cl.name, func: fn.id, name, maturity: c.maturity, gap: target - c.maturity });
+                        }
+                    });
+                }));
+                if (gaps.length > 0) {
+                    html += '<h3>Gap Details (controls below target)' + C('h3');
+                    html += '<table><tr><th>Cluster' + C('th') + '<th>Function' + C('th') + '<th>Control' + C('th') + '<th>Maturity' + C('th') + '<th>Gap' + C('th') + C('tr');
+                    gaps.sort((a, b) => a.maturity - b.maturity).forEach(g => {
+                        html += '<tr class="gap"><td>' + g.cluster + C('td') + '<td>' + g.func + C('td') + '<td>' + g.name + C('td') + '<td class="badge mat-' + g.maturity + '">' + g.maturity + C('td') + '<td>' + g.gap + C('td') + C('tr');
+                    });
+                    html += C('table');
+                }
+            });
+            html += docEnd;
+
+        } else if (type === 'tasks') {
+            html = docHead('Task Report — ' + orgName);
+            html += '<h1>Task Report' + C('h1') + '<div class="meta">' + orgName + ' — Generated ' + date + C('div');
+
+            let allTasks = [];
+            envs.forEach(env => {
+                Object.entries(env.cells).forEach(([ck, cell]) => {
+                    (cell.tasks || []).forEach(task => {
+                        const [cid, fid] = ck.split('-');
+                        const cl = CLUSTERS[Number(cid) - 1];
+                        allTasks.push({ ...task, envName: env.name, cluster: cl, funcId: fid, comments: cell.comments || '' });
+                    });
+                });
+            });
+
+            const byStatus = {};
+            TASK_STATUSES.forEach(s => { byStatus[s.id] = allTasks.filter(t => t.status === s.id).length; });
+            const overdue = allTasks.filter(t => t.dueDate && t.status !== 'done' && new Date(t.dueDate) < new Date()).length;
+
+            html += '<div>';
+            html += '<div class="summary-box"><div class="num">' + allTasks.length + C('div') + '<div class="lbl">Total Tasks' + C('div') + C('div');
+            TASK_STATUSES.forEach(s => {
+                html += '<div class="summary-box"><div class="num" style="color:' + s.color + '">' + byStatus[s.id] + C('div') + '<div class="lbl">' + s.label + C('div') + C('div');
+            });
+            if (overdue > 0) html += '<div class="summary-box"><div class="num" style="color:#dc2626">' + overdue + C('div') + '<div class="lbl">Overdue' + C('div') + C('div');
+            html += C('div');
+
+            if (allTasks.length === 0) {
+                html += '<p style="margin-top:16px;color:#64748b;">No tasks found across any environment.' + C('p');
+            } else {
+                TASK_STATUSES.forEach(st => {
+                    const tasks = allTasks.filter(t => t.status === st.id);
+                    if (tasks.length === 0) return;
+                    html += '<h2>' + st.label + ' (' + tasks.length + ')' + C('h2');
+                    html += '<table><tr><th>Task' + C('th') + '<th>Owner' + C('th') + '<th>Due Date' + C('th') + '<th>Cluster' + C('th') + '<th>Function' + C('th') + '<th>Environment' + C('th') + C('tr');
+                    tasks.sort((a, b) => (a.dueDate || '9999') < (b.dueDate || '9999') ? -1 : 1).forEach(t => {
+                        const od = t.dueDate && t.status !== 'done' && new Date(t.dueDate) < new Date() ? ' overdue' : '';
+                        html += '<tr><td>' + (t.description || '<em>No description' + C('em')) + C('td') + '<td>' + (t.owner || '\u2014') + C('td');
+                        html += '<td class="' + od + '">' + (t.dueDate || '\u2014') + C('td');
+                        html += '<td><span class="cluster-tag cluster-' + t.cluster.topology + '">#' + t.cluster.id + C('span') + ' ' + t.cluster.name + C('td');
+                        html += '<td>' + t.funcId + C('td') + '<td>' + t.envName + C('td') + C('tr');
+                    });
+                    html += C('table');
+                });
+
+                const owners = [...new Set(allTasks.map(t => t.owner || 'Unassigned'))].sort();
+                html += '<h2>By Owner' + C('h2');
+                owners.forEach(owner => {
+                    const tasks = allTasks.filter(t => (t.owner || 'Unassigned') === owner);
+                    const openCount = tasks.filter(t => t.status !== 'done').length;
+                    html += '<h3>' + owner + ' \u2014 ' + openCount + ' open, ' + (tasks.length - openCount) + ' done' + C('h3');
+                    html += '<table><tr><th>Task' + C('th') + '<th>Status' + C('th') + '<th>Due Date' + C('th') + '<th>Cell' + C('th') + C('tr');
+                    tasks.forEach(t => {
+                        const st = TASK_STATUSES.find(s => s.id === t.status) || TASK_STATUSES[0];
+                        const od = t.dueDate && t.status !== 'done' && new Date(t.dueDate) < new Date() ? ' overdue' : '';
+                        html += '<tr><td>' + (t.description || '<em>No description' + C('em')) + C('td');
+                        html += '<td><span class="status status-' + t.status + '">' + st.label + C('span') + C('td');
+                        html += '<td class="' + od + '">' + (t.dueDate || '\u2014') + C('td');
+                        html += '<td>#' + t.cluster.id + ' ' + t.cluster.name + ' \u00d7 ' + t.funcId + ' (' + t.envName + ')' + C('td') + C('tr');
+                    });
+                    html += C('table');
+                });
+            }
+            html += docEnd;
+        }
+
+        const w = window.open('', '_blank');
+        if (w) { w.document.write(html); w.document.close(); }
+        else alert('Please allow popups to view reports.');
+    };
+
+    const handleCellClick = (clusterId, funcId) => {
+        if (selectedCell && selectedCell.clusterId === clusterId && selectedCell.funcId === funcId) {
+            setSelectedCell(null);
+        } else {
+            setSelectedCell({ clusterId, funcId });
+        }
+    };
+
+    return (
+        <div className="flex flex-col min-h-screen">
+            <Header orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
+                    darkMode={darkMode} onToggleDark={() => setDarkMode(d => !d)}
+                    onExportJSON={exportJSON} onImportJSON={() => setShowImport(true)} onExportPNG={exportPNG}
+                    onReport={generateReport}
+                    onShowSharedControls={() => setShowSharedLibrary(true)}
+                    sharedControlCount={(state.sharedControls || []).length} />
+
+            <SummaryBar orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
+                        targetMaturity={state.targetMaturity} onTargetChange={v => updateState({ targetMaturity: v })}
+                        environments={state.environments} activeEnvId={activeEnvId} />
+
+            <EnvironmentTabs environments={state.environments} activeEnvId={activeEnvId}
+                            onSelect={setActiveEnvId} onAdd={addEnvironment}
+                            onRename={renameEnvironment} onDuplicate={duplicateEnvironment} onRemove={removeEnvironment} />
+
+            <div className="flex items-center justify-between px-4 sm:px-6 pt-3 no-print">
+                <h2 className="font-display font-bold text-base flex items-center gap-2">
+                    <Icon name="grid-3x3" size={18} />
+                    {activeEnvId === 'aggregated' ? 'Aggregated View (Worst-Case)' :
+                     state.environments.find(e => e.id === activeEnvId)?.name || 'Matrix'}
+                </h2>
+                {activeEnvId !== 'aggregated' && (
+                    <button onClick={() => setShowQuickAssess(true)} className="app-btn app-btn-outline app-btn-sm gap-1">
+                        <Icon name="zap" size={13} /> Quick Assess
+                    </button>
+                )}
+            </div>
+
+            <MaturityLegend targetMaturity={state.targetMaturity} />
+
+            <div className="flex-1 relative">
+                <ControlMatrix environments={state.environments} activeEnvId={activeEnvId}
+                               targetMaturity={state.targetMaturity} selectedCell={selectedCell}
+                               onCellClick={handleCellClick} darkMode={darkMode} matrixRef={matrixRef} />
+
+                {selectedCell && (
+                    <CellDetailPanel selectedCell={selectedCell} environments={state.environments}
+                                     activeEnvId={activeEnvId} targetMaturity={state.targetMaturity}
+                                     sharedControls={state.sharedControls || []}
+                                     onUpdateCell={handleCellUpdate} onUpdateCellMeta={handleCellMeta}
+                                     onAddSharedControl={addSharedControl} onUpdateSharedControl={updateSharedControl}
+                                     onClose={() => setSelectedCell(null)} />
+                )}
+            </div>
+
+            <footer className="px-4 sm:px-6 py-3 border-t border-border text-center text-xs text-muted-foreground no-print">
+                TLCTC Control Matrix Manager — 10 Clusters × 6 CSF Functions × 2 Control Types = 120 Control Areas — Data stored in browser localStorage
+            </footer>
+
+            {showImport && <ImportModal onClose={() => setShowImport(false)} onImport={handleImport} />}
+            {showQuickAssess && <QuickAssessModal onClose={() => setShowQuickAssess(false)} environments={state.environments} activeEnvId={activeEnvId}
+                                                    sharedControls={state.sharedControls || []} onBulkMaturity={handleBulkMaturity} onLinkShared={linkSharedToCell} />}
+            {showSharedLibrary && <SharedControlsLibrary sharedControls={state.sharedControls || []} environments={state.environments}
+                                                          onAdd={addSharedControl} onUpdate={updateSharedControl} onDelete={deleteSharedControl}
+                                                          onLink={linkSharedToCell} onUnlink={unlinkSharedFromCell}
+                                                          onClose={() => setShowSharedLibrary(false)} />}
+        </div>
+    );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -10,6 +10,7 @@ Standalone, self-contained HTML applications that implement the TLCTC framework.
 | **Attack Path Architect** | [`attack-path-architect.html`](attack-path-architect.html) | Document cyber incidents as TLCTC attack paths with velocity analysis, MITRE/CVE references, DRE outcomes, and compliant JSON export for CTI exchange |
 | **Actor Profile Designer** | [`actor-profile-designer.html`](actor-profile-designer.html) | Build threat actor capability profiles scored across all 10 TLCTC clusters, link observed incidents, compare actors side-by-side, and export for CTI sharing |
 | **Threat Radar** | [`radar-tlctc-app.html`](radar-tlctc-app.html) | Interactive threat radar visualization with configurable sectors, zone thresholds, trend tracking (old vs current values), report/tolerance flags, and PNG export with optional legend |
+| **Control Matrix** | [`control-matrix.html`](control-matrix.html) | NIST CSF 2.0 × TLCTC control matrix for mapping controls across all 10 clusters and 6 CSF functions, with maturity scoring, multi-environment support, shared controls library, and reporting |
 
 ## How to Use
 

@@ -386,6 +386,7 @@ tlctc/
 │   ├── attack-path-architect.html            # Incident attack path documentation & CTI exchange
 │   ├── actor-profile-designer.html           # Threat actor capability profiling & comparison
 │   ├── radar-tlctc-app.html                  # Interactive threat radar visualization & assessment
+│   ├── control-matrix.html                   # NIST CSF 2.0 × TLCTC control matrix with maturity scoring
 │   └── examples/                             # Starter templates & real-world example datasets
 │       ├── template-threat-model.json        # Blank threat model starter
 │       ├── template-attack-path.json         # Blank attack path starter
