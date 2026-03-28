@@ -11,6 +11,7 @@ Standalone, self-contained HTML applications that implement the TLCTC framework.
 | **Actor Profile Designer** | [`actor-profile-designer.html`](actor-profile-designer.html) | Build threat actor capability profiles scored across all 10 TLCTC clusters, link observed incidents, compare actors side-by-side, and export for CTI sharing |
 | **Threat Radar** | [`radar-tlctc-app.html`](radar-tlctc-app.html) | Interactive threat radar visualization with configurable sectors, zone thresholds, trend tracking (old vs current values), report/tolerance flags, and PNG export with optional legend |
 | **Control Matrix** | [`control-matrix.html`](control-matrix.html) | NIST CSF 2.0 × TLCTC control matrix for mapping controls across all 10 clusters and 6 CSF functions, with maturity scoring, multi-environment support, shared controls library, and reporting |
+| **CBP** | [`cbp-app.html`](cbp-app.html) | Capability-Based Planning — map organizational capabilities across 10 TLCTC clusters × 6 CSF functions, with maturity at the capability level, three component types (Controls, Workforce, Governance), gap analysis, and multi-environment support |
 
 ## How to Use
 
@@ -28,6 +29,7 @@ Starter templates are provided in [`examples/`](examples/) for each tool. Import
 | [`template-attack-path.json`](examples/template-attack-path.json) | Attack Path Architect | 4-step phishing→credential→malware→exfil path with instructional descriptions |
 | [`template-threat-model.json`](examples/template-threat-model.json) | Threat Modeling | 3-component web app (browser, API, database) with group, interfaces, and threat register |
 | [`template-actor-profile.json`](examples/template-actor-profile.json) | Actor Profile Designer | 3 actor archetypes: blank template, nation-state APT, ransomware operator |
+| [`cbp-starter.json`](cbp-starter.json) | CBP | Pre-populated capability matrix with all 60 capabilities (names, control objectives, starter components) |
 
 ### Example Data Files
 
@@ -292,6 +294,70 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
 - **zoneLimits** define the thresholds that place bubbles into latent/low/medium/high zones per cluster.
 - **Flags** mark clusters for special attention: `toBeReported` (!) and `riskToleranceCrashed` (⚡).
 - Multiple analytical perspectives from one report (by sector, by actor, by CIA, by asset type) are modeled as separate JSON files with different sector configurations.
+
+### CBP (Capability-Based Planning)
+
+**Schema identifier:** Internal format
+
+```jsonc
+{
+  "version": "1.0.0",
+  "tool": "TLCTC CBP App",
+  "exportDate": "ISO-8601",
+  "orgName": "Organization Name",
+  "targetMaturity": 3,                        // 0–5 target maturity level
+  "environments": [{
+    "id": "unique-id",
+    "name": "Environment Name",
+    "cells": {
+      "1-GV": {                               // key = {clusterId}-{csfFunction}
+        "capability": {
+          "id": "unique-id",
+          "name": "Capability Name",           // e.g., "Function Governance"
+          "controlObjective": "What must be true for this capability to be effective",
+          "maturity": 0,                       // 0–5, assessed at capability level
+          "components": {
+            "controls": [{                     // technical + organizational measures
+              "id": "unique-id",
+              "name": "Control name",
+              "description": "...",
+              "kind": "tech | org",            // technical or organizational
+              "status": "open | in-progress | done | not-applicable"
+            }],
+            "workforce": [{                    // roles and competencies
+              "id": "unique-id",
+              "name": "Role or competency name",
+              "description": "...",
+              "status": "open | in-progress | done | not-applicable"
+            }],
+            "governance": [{                   // ownership and assurance
+              "id": "unique-id",
+              "name": "Governance mechanism",
+              "description": "...",
+              "status": "open | in-progress | done | not-applicable"
+            }]
+          },
+          "subCapabilities": [{                // optional nested decomposition
+            "id": "unique-id",
+            "name": "Sub-capability name",
+            "controlObjective": "...",
+            "maturity": 0,
+            "notes": ""
+          }],
+          "notes": ""
+        }
+      }
+    }
+  }]
+}
+```
+
+**Key concepts:**
+- Each cell (cluster × CSF function) holds exactly **one capability** — not a list of controls.
+- **Maturity is assessed at the capability level**, not per individual component. Components have a `status` field instead.
+- Three **component types**: Controls (what delivers it), Workforce (who operates it), Governance (who assures it).
+- **Sub-capabilities** allow optional decomposition without deep nesting.
+- Cell keys follow the pattern `{clusterId}-{funcId}` (e.g., `"7-DE"` for Malware × Detect).
 
 ## Technology
 

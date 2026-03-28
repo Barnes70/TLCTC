@@ -1,0 +1,1442 @@
+{
+  "version": "1.0.0",
+  "tool": "TLCTC CBP App",
+  "exportDate": "2026-03-28T00:00:00.000Z",
+  "orgName": "Starter Template",
+  "targetMaturity": 3,
+  "environments": [
+    {
+      "id": "env-starter",
+      "name": "Starter Template",
+      "cells": {
+        "1-GV": {
+          "capability": {
+            "id": "cap-1-gv",
+            "name": "Function Abuse Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for abuse of legitimate functions are defined at board level, with ownership, change authority, and escalation paths established.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-1-gv-1", "name": "Risk appetite statement for function abuse", "description": "Board-approved statement defining acceptable residual risk from misuse of legitimate system functions (e.g., bulk export, admin overrides).", "kind": "org", "status": "open" },
+                { "id": "ctl-1-gv-2", "name": "Risk tolerance thresholds for function abuse", "description": "Quantified boundaries: max acceptable number of unmonitored privileged functions, max time-to-detect for anomalous function usage, max acceptable coverage gaps.", "kind": "org", "status": "open" },
+                { "id": "ctl-1-gv-3", "name": "Define system ownership for all critical assets", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-1-gv-4", "name": "Assign configuration change approval authority", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-1-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for function abuse; reviews annually or after material incidents.", "status": "open" },
+                { "id": "wf-1-gv-2", "name": "CRO / CISO", "description": "Translates appetite into measurable tolerance thresholds; reports tolerance breaches to Board.", "status": "open" },
+                { "id": "wf-1-gv-3", "name": "CIO", "description": "Ensures function inventories and change authorities align with stated risk tolerance.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-1-gv-1", "name": "Annual risk appetite review for function abuse", "description": "Board-level review of appetite statement, informed by incident trends and business changes.", "status": "open" },
+                { "id": "gov-1-gv-2", "name": "Tolerance breach escalation procedure", "description": "Automatic escalation to CRO/CISO when tolerance thresholds are exceeded; Board notification within 48h for material breaches.", "status": "open" },
+                { "id": "gov-1-gv-3", "name": "Configuration change board charter", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "1-ID": {
+          "capability": {
+            "id": "cap-1-id",
+            "name": "Function Surface Mapping",
+            "controlObjective": "All exposed functions, administrative interfaces, and configurable features are inventoried with their intended scope and trust level.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-1-id-1", "name": "Maintain function and feature inventory", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-1-id-2", "name": "Map administrative interfaces and exposed APIs", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-1-id-3", "name": "Red team exercises targeting function abuse scenarios", "description": "Adversary simulation exercises that test the full attack chain: can an attacker discover, reach, and misuse legitimate functions (bulk export, admin overrides, API abuse) to achieve objectives?", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-1-id-1", "name": "Application Architects", "description": "", "status": "open" },
+                { "id": "wf-1-id-2", "name": "Red Team Operators", "description": "Plan and execute adversary simulation exercises across the function abuse attack surface; produce findings mapped to TLCTC cluster #1.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-1-id-1", "name": "Annual function surface review", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "1-PR": {
+          "capability": {
+            "id": "cap-1-pr",
+            "name": "Function Hardening",
+            "controlObjective": "Unnecessary functions, features, ports, and default configurations are disabled or restricted to prevent misuse.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-1-pr-1", "name": "Disable unnecessary features and default accounts", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-1-pr-2", "name": "Enforce least-privilege function access", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-1-pr-3", "name": "Apply CIS benchmark hardening", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-1-pr-1", "name": "System Administrators", "description": "", "status": "open" },
+                { "id": "wf-1-pr-2", "name": "Security Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-1-pr-1", "name": "Hardening baseline compliance tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "1-DE": {
+          "capability": {
+            "id": "cap-1-de",
+            "name": "Function Misuse Detection",
+            "controlObjective": "Anomalous usage patterns of legitimate functions are detected in near-real-time.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-1-de-1", "name": "Monitor bulk operations and off-hours admin actions", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-1-de-2", "name": "Detect configuration drift from baseline", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-1-de-1", "name": "SOC Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-1-de-1", "name": "Detection rule review cadence", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "1-RS": {
+          "capability": {
+            "id": "cap-1-rs",
+            "name": "Function Abuse Containment",
+            "controlObjective": "When function misuse is confirmed, affected features can be isolated and abuse pathways blocked within defined SLAs.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-1-rs-1", "name": "Automated session termination on abuse detection", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-1-rs-2", "name": "Feature isolation playbook", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-1-rs-1", "name": "Incident Responders", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-1-rs-1", "name": "Containment SLA definition and tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "1-RC": {
+          "capability": {
+            "id": "cap-1-rc",
+            "name": "Function Abuse Recovery",
+            "controlObjective": "After a function-abuse incident, hardened baselines are restored and controls are strengthened to prevent recurrence.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-1-rc-1", "name": "Restore hardened configuration baseline", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-1-rc-2", "name": "Post-incident hardening review", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-1-rc-1", "name": "Recovery Coordinators", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-1-rc-1", "name": "Lessons learned process for function abuse", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "2-GV": {
+          "capability": {
+            "id": "cap-2-gv",
+            "name": "Server Exploitation Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for server-side exploitation are defined at board level, with SDLC policies, patching SLAs, and code-review requirements aligned to stated thresholds.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-2-gv-1", "name": "Risk appetite statement for server exploitation", "description": "Board-approved statement defining acceptable residual risk from server-side vulnerabilities (e.g., unpatched critical CVEs, code injection flaws).", "kind": "org", "status": "open" },
+                { "id": "ctl-2-gv-2", "name": "Risk tolerance thresholds for server exploitation", "description": "Quantified boundaries: max patching SLA by severity (Critical <24h, High <72h), max acceptable open critical vulnerabilities, max code-review bypass rate.", "kind": "org", "status": "open" },
+                { "id": "ctl-2-gv-3", "name": "Establish SDLC policy with mandatory code review", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-2-gv-4", "name": "Define patching SLAs by severity", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-2-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for server exploitation; reviews annually or after critical server-side incidents.", "status": "open" },
+                { "id": "wf-2-gv-2", "name": "CRO / CISO", "description": "Defines tolerance thresholds for patching, vulnerability exposure, and code quality; escalates breaches.", "status": "open" },
+                { "id": "wf-2-gv-3", "name": "CIO / CTO", "description": "Ensures SDLC processes and infrastructure patching meet tolerance thresholds.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-2-gv-1", "name": "Annual risk appetite review for server exploitation", "description": "Board-level review informed by vulnerability trends, penetration test results, and patching compliance.", "status": "open" },
+                { "id": "gov-2-gv-2", "name": "Tolerance breach escalation procedure", "description": "Automatic escalation when patching SLAs are missed or critical vulnerability count exceeds threshold.", "status": "open" },
+                { "id": "gov-2-gv-3", "name": "SDLC compliance audit schedule", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "2-ID": {
+          "capability": {
+            "id": "cap-2-id",
+            "name": "Server Vulnerability Assessment",
+            "controlObjective": "Server-side applications, frameworks, and services are continuously scanned for implementation flaws and known vulnerabilities.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-2-id-1", "name": "Continuous vulnerability scanning of server components", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-2-id-2", "name": "DAST scanning in CI/CD pipeline", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-2-id-3", "name": "Application penetration testing", "description": "Scheduled and ad-hoc penetration tests of server-side applications, APIs, and services to discover exploitable implementation flaws beyond automated scanner coverage.", "kind": "tech", "status": "open" },
+                { "id": "ctl-2-id-4", "name": "Bug bounty program for web-facing assets", "description": "Crowd-sourced vulnerability discovery program covering public-facing web applications and APIs, with defined scope, severity-based payouts, and triage SLAs.", "kind": "org", "status": "open" },
+                { "id": "ctl-2-id-5", "name": "SAST scanning in CI/CD pipeline", "description": "Static Application Security Testing integrated into build pipelines to identify injection flaws, insecure deserialization, and other code-level vulnerabilities before deployment.", "kind": "tech", "status": "open" },
+                { "id": "ctl-2-id-6", "name": "Security-focused code review for high-risk changes", "description": "All changes to authentication, authorization, input handling, and cryptographic code are reviewed by an AppSec engineer to identify security flaws before merge.", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-2-id-1", "name": "Vulnerability Analysts", "description": "", "status": "open" },
+                { "id": "wf-2-id-2", "name": "Penetration Testers", "description": "Conduct manual server-side penetration tests; validate vulnerability scanner findings; produce remediation-prioritized reports.", "status": "open" },
+                { "id": "wf-2-id-3", "name": "Bug Bounty Program Manager", "description": "Manages bug bounty scope, triage, researcher relations, and payout authorization; escalates critical findings to vulnerability management.", "status": "open" },
+                { "id": "wf-2-id-4", "name": "AppSec Engineers", "description": "Perform security-focused code reviews; maintain SAST rulesets and triage findings; identify code-level vulnerabilities across server-side applications.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-2-id-1", "name": "Vulnerability management KPI tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "2-PR": {
+          "capability": {
+            "id": "cap-2-pr",
+            "name": "Server-Side Exploit Prevention",
+            "controlObjective": "Server code is protected through input validation, secure coding standards, WAF/RASP, and timely patching.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-2-pr-1", "name": "Web Application Firewall deployment", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-2-pr-2", "name": "Input validation and output encoding standards", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-2-pr-3", "name": "Timely patching of known server vulnerabilities", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-2-pr-1", "name": "Secure Developers", "description": "", "status": "open" },
+                { "id": "wf-2-pr-2", "name": "Platform Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-2-pr-1", "name": "Patch compliance reporting", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "2-DE": {
+          "capability": {
+            "id": "cap-2-de",
+            "name": "Server Exploit Detection",
+            "controlObjective": "Exploitation attempts against server-side applications are detected through log analysis, intrusion detection, and anomaly alerting.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-2-de-1", "name": "IDS/IPS monitoring of server traffic", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-2-de-2", "name": "Server application log correlation", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-2-de-1", "name": "SOC Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-2-de-1", "name": "Detection coverage mapping against server threats", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "2-RS": {
+          "capability": {
+            "id": "cap-2-rs",
+            "name": "Server Compromise Response",
+            "controlObjective": "Confirmed server-side exploitation triggers isolation of affected services, forensic preservation, and coordinated incident response.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-2-rs-1", "name": "Server isolation automation", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-2-rs-2", "name": "Forensic evidence preservation procedure", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-2-rs-1", "name": "Incident Responders", "description": "", "status": "open" },
+                { "id": "wf-2-rs-2", "name": "Forensic Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-2-rs-1", "name": "Server incident response playbook maintenance", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "2-RC": {
+          "capability": {
+            "id": "cap-2-rc",
+            "name": "Server Exploit Recovery",
+            "controlObjective": "Compromised servers are rebuilt from trusted baselines, root-cause patches are deployed, and post-incident reviews improve defenses.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-2-rc-1", "name": "Rebuild from trusted server images", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-2-rc-2", "name": "Root-cause patch deployment verification", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-2-rc-1", "name": "Platform Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-2-rc-1", "name": "Post-incident review and improvement tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "3-GV": {
+          "capability": {
+            "id": "cap-3-gv",
+            "name": "Client Exploitation Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for client-side exploitation are defined at board level, with endpoint standards, browser policies, and BYOD boundaries aligned to stated thresholds.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-3-gv-1", "name": "Risk appetite statement for client exploitation", "description": "Board-approved statement defining acceptable residual risk from client-side attacks (e.g., browser exploits, malicious documents, plugin vulnerabilities).", "kind": "org", "status": "open" },
+                { "id": "ctl-3-gv-2", "name": "Risk tolerance thresholds for client exploitation", "description": "Quantified boundaries: max unmanaged endpoints (%), max browser/plugin patch lag (days), max BYOD without MDM enrollment.", "kind": "org", "status": "open" },
+                { "id": "ctl-3-gv-3", "name": "Approved client software list and enforcement", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-3-gv-4", "name": "Browser security configuration policy", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-3-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for client exploitation; reviews annually or after endpoint-originating breaches.", "status": "open" },
+                { "id": "wf-3-gv-2", "name": "CRO / CISO", "description": "Sets tolerance for unmanaged endpoints, patch lag, and BYOD exposure; reports deviations.", "status": "open" },
+                { "id": "wf-3-gv-3", "name": "CIO", "description": "Ensures endpoint fleet management and client software policies meet stated tolerances.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-3-gv-1", "name": "Annual risk appetite review for client exploitation", "description": "Board-level review informed by endpoint incident data, BYOD growth, and patch compliance metrics.", "status": "open" },
+                { "id": "gov-3-gv-2", "name": "Tolerance breach escalation procedure", "description": "Escalation when unmanaged endpoint ratio or patch lag exceeds tolerance.", "status": "open" },
+                { "id": "gov-3-gv-3", "name": "Client software approval process", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "3-ID": {
+          "capability": {
+            "id": "cap-3-id",
+            "name": "Client Vulnerability Assessment",
+            "controlObjective": "Client-side software is inventoried and continuously assessed for known vulnerabilities.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-3-id-1", "name": "Client software inventory and version tracking", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-3-id-2", "name": "Endpoint vulnerability scanning", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-3-id-3", "name": "Client-side penetration testing", "description": "Targeted testing of browser-based applications, desktop clients, and mobile apps for client-side exploitation vectors (XSS, DOM manipulation, memory corruption).", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-3-id-1", "name": "Vulnerability Analysts", "description": "", "status": "open" },
+                { "id": "wf-3-id-2", "name": "Penetration Testers", "description": "Conduct client-side penetration tests targeting browser exploits, thick-client vulnerabilities, and mobile application flaws.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-3-id-1", "name": "Client vulnerability remediation tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "3-PR": {
+          "capability": {
+            "id": "cap-3-pr",
+            "name": "Client-Side Exploit Prevention",
+            "controlObjective": "Client applications are hardened through auto-update enforcement, sandboxing, exploit mitigations, and content filtering.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-3-pr-1", "name": "Enforce automatic updates on client software", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-3-pr-2", "name": "Enable exploit mitigations (ASLR, DEP, CFG)", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-3-pr-3", "name": "Web content filtering", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-3-pr-1", "name": "Endpoint Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-3-pr-1", "name": "Client patching compliance metrics", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "3-DE": {
+          "capability": {
+            "id": "cap-3-de",
+            "name": "Client Exploit Detection",
+            "controlObjective": "Exploitation of client-side flaws is detected through endpoint telemetry, behavioral analysis, and EDR alerting.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-3-de-1", "name": "EDR behavioral detection on endpoints", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-3-de-2", "name": "Browser exploit telemetry collection", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-3-de-1", "name": "SOC Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-3-de-1", "name": "Endpoint detection coverage assessment", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "3-RS": {
+          "capability": {
+            "id": "cap-3-rs",
+            "name": "Client Compromise Response",
+            "controlObjective": "Compromised client endpoints are isolated, forensically triaged, and remediated according to incident playbooks.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-3-rs-1", "name": "Endpoint network isolation on detection", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-3-rs-2", "name": "Client forensic triage procedure", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-3-rs-1", "name": "Incident Responders", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-3-rs-1", "name": "Client incident response playbook review", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "3-RC": {
+          "capability": {
+            "id": "cap-3-rc",
+            "name": "Client Exploit Recovery",
+            "controlObjective": "Affected clients are reimaged or restored, user credentials rotated, and preventive controls enhanced.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-3-rc-1", "name": "Client reimage from golden image", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-3-rc-2", "name": "Forced credential rotation for affected users", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-3-rc-1", "name": "Desktop Support", "description": "", "status": "open" },
+                { "id": "wf-3-rc-2", "name": "Identity Administrators", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-3-rc-1", "name": "Client recovery SLA tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "4-GV": {
+          "capability": {
+            "id": "cap-4-gv",
+            "name": "Identity Theft Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for identity theft and credential compromise are defined at board level, with identity lifecycle policies, MFA mandates, and access review cadences aligned to thresholds.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-4-gv-1", "name": "Risk appetite statement for identity theft", "description": "Board-approved statement defining acceptable residual risk from credential compromise and identity impersonation (e.g., account takeover, privilege escalation via stolen credentials).", "kind": "org", "status": "open" },
+                { "id": "ctl-4-gv-2", "name": "Risk tolerance thresholds for identity theft", "description": "Quantified boundaries: max accounts without MFA (%), max orphaned accounts, max access review overdue (days), max shared/service accounts without rotation.", "kind": "org", "status": "open" },
+                { "id": "ctl-4-gv-3", "name": "Identity lifecycle management policy", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-4-gv-4", "name": "MFA enforcement policy", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-4-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for identity compromise; reviews annually or after credential-based breaches.", "status": "open" },
+                { "id": "wf-4-gv-2", "name": "CEO / CRO", "description": "Accountable for organizational identity risk posture; ensures tolerance thresholds reflect business reality.", "status": "open" },
+                { "id": "wf-4-gv-3", "name": "CISO", "description": "Operationalizes identity risk tolerance into IAM policies, MFA coverage targets, and access review SLAs.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-4-gv-1", "name": "Annual risk appetite review for identity theft", "description": "Board-level review informed by credential incident trends, MFA adoption rates, and access review compliance.", "status": "open" },
+                { "id": "gov-4-gv-2", "name": "Tolerance breach escalation procedure", "description": "Escalation when MFA coverage drops below threshold or orphaned accounts exceed limit.", "status": "open" },
+                { "id": "gov-4-gv-3", "name": "Identity governance committee charter", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "4-ID": {
+          "capability": {
+            "id": "cap-4-id",
+            "name": "Identity Exposure Assessment",
+            "controlObjective": "All credentials, service accounts, API keys, and authentication mechanisms are inventoried and assessed for weakness or over-privilege.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-4-id-1", "name": "Credential and service account inventory", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-4-id-2", "name": "Privileged access discovery and review", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-4-id-1", "name": "IAM Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-4-id-1", "name": "Quarterly access recertification process", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "4-PR": {
+          "capability": {
+            "id": "cap-4-pr",
+            "name": "Credential Protection",
+            "controlObjective": "Credentials are protected through MFA, password policy enforcement, privileged access management, and secrets vaulting.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-4-pr-1", "name": "Multi-factor authentication enforcement", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-4-pr-2", "name": "Privileged Access Management (PAM) solution", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-4-pr-3", "name": "Secrets vault for API keys and certificates", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-4-pr-1", "name": "IAM Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-4-pr-1", "name": "PAM policy and exception tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "4-DE": {
+          "capability": {
+            "id": "cap-4-de",
+            "name": "Credential Misuse Detection",
+            "controlObjective": "Unauthorized credential use is detected through identity analytics.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-4-de-1", "name": "Impossible travel and anomalous login detection", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-4-de-2", "name": "Dormant account activation alerting", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-4-de-1", "name": "SOC Analysts", "description": "", "status": "open" },
+                { "id": "wf-4-de-2", "name": "IAM Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-4-de-1", "name": "Identity threat detection rule tuning cadence", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "4-RS": {
+          "capability": {
+            "id": "cap-4-rs",
+            "name": "Identity Compromise Response",
+            "controlObjective": "Compromised identities are immediately disabled, sessions revoked, and credential resets enforced.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-4-rs-1", "name": "Automated account disable on compromise detection", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-4-rs-2", "name": "Global session revocation capability", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-4-rs-1", "name": "Incident Responders", "description": "", "status": "open" },
+                { "id": "wf-4-rs-2", "name": "IAM Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-4-rs-1", "name": "Identity incident response SLA", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "4-RC": {
+          "capability": {
+            "id": "cap-4-rc",
+            "name": "Identity Recovery",
+            "controlObjective": "After identity compromise, accounts are re-provisioned with strengthened authentication and access reviews are accelerated.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-4-rc-1", "name": "Secure re-provisioning with strengthened MFA", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-4-rc-2", "name": "Post-incident accelerated access review", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-4-rc-1", "name": "IAM Administrators", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-4-rc-1", "name": "Identity recovery and re-provisioning checklist", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "5-GV": {
+          "capability": {
+            "id": "cap-5-gv",
+            "name": "Man-in-the-Middle Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for interception and tampering of communications are defined at board level, with encryption standards, certificate management, and protocol policies aligned to thresholds.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-5-gv-1", "name": "Risk appetite statement for channel interception", "description": "Board-approved statement defining acceptable residual risk from MitM attacks (e.g., traffic interception, certificate spoofing, protocol downgrade).", "kind": "org", "status": "open" },
+                { "id": "ctl-5-gv-2", "name": "Risk tolerance thresholds for channel interception", "description": "Quantified boundaries: max services without TLS (count), max expired/self-signed certificates, max legacy protocol exposure (% of traffic).", "kind": "org", "status": "open" },
+                { "id": "ctl-5-gv-3", "name": "Encryption standards policy (TLS 1.2+ minimum)", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-5-gv-4", "name": "Certificate lifecycle management policy", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-5-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for channel interception; reviews annually or after MitM-related incidents.", "status": "open" },
+                { "id": "wf-5-gv-2", "name": "CRO / CISO", "description": "Sets tolerance for encryption coverage, certificate hygiene, and protocol exposure; reports breaches.", "status": "open" },
+                { "id": "wf-5-gv-3", "name": "CTO", "description": "Ensures architecture decisions and protocol choices align with stated channel integrity tolerance.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-5-gv-1", "name": "Annual risk appetite review for channel interception", "description": "Board-level review informed by certificate inventory, TLS coverage metrics, and protocol audit results.", "status": "open" },
+                { "id": "gov-5-gv-2", "name": "Tolerance breach escalation procedure", "description": "Escalation when unencrypted services or expired certificates exceed threshold.", "status": "open" },
+                { "id": "gov-5-gv-3", "name": "Cryptographic standards review board", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "5-ID": {
+          "capability": {
+            "id": "cap-5-id",
+            "name": "Channel Vulnerability Assessment",
+            "controlObjective": "Communication channels are assessed for weak encryption, improper certificate validation, and interception susceptibility.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-5-id-1", "name": "TLS configuration scanning", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-5-id-2", "name": "Certificate transparency monitoring", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-5-id-3", "name": "Network penetration testing for MitM susceptibility", "description": "Targeted tests for ARP spoofing, DNS poisoning, TLS downgrade, and rogue AP attacks on internal and edge networks.", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-5-id-1", "name": "Security Assessors", "description": "", "status": "open" },
+                { "id": "wf-5-id-2", "name": "Penetration Testers (Network)", "description": "Conduct network-layer penetration tests focused on interception and channel integrity weaknesses.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-5-id-1", "name": "Annual cryptographic posture assessment", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "5-PR": {
+          "capability": {
+            "id": "cap-5-pr",
+            "name": "Channel Protection",
+            "controlObjective": "All communication channels use strong encryption, mutual authentication, and certificate pinning where applicable.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-5-pr-1", "name": "Enforce TLS 1.2+ on all endpoints", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-5-pr-2", "name": "Implement certificate pinning for critical services", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-5-pr-3", "name": "DNSSEC deployment", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-5-pr-1", "name": "Network Engineers", "description": "", "status": "open" },
+                { "id": "wf-5-pr-2", "name": "Security Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-5-pr-1", "name": "TLS compliance monitoring", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "5-DE": {
+          "capability": {
+            "id": "cap-5-de",
+            "name": "Interception Detection",
+            "controlObjective": "Man-in-the-middle indicators are monitored and alerted on.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-5-de-1", "name": "Certificate anomaly detection", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-5-de-2", "name": "ARP spoofing and DNS hijacking monitoring", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-5-de-1", "name": "SOC Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-5-de-1", "name": "MitM detection rule review", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "5-RS": {
+          "capability": {
+            "id": "cap-5-rs",
+            "name": "Interception Response",
+            "controlObjective": "Confirmed interception incidents trigger re-keying, certificate revocation, and exposure assessment.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-5-rs-1", "name": "Emergency certificate revocation procedure", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-5-rs-2", "name": "Traffic rerouting and re-keying playbook", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-5-rs-1", "name": "Incident Responders", "description": "", "status": "open" },
+                { "id": "wf-5-rs-2", "name": "PKI Administrators", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-5-rs-1", "name": "Interception incident response checklist", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "5-RC": {
+          "capability": {
+            "id": "cap-5-rc",
+            "name": "Channel Recovery",
+            "controlObjective": "After an interception incident, compromised channels are re-established with strengthened protections.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-5-rc-1", "name": "Re-establish channels with rotated cryptographic material", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-5-rc-2", "name": "Post-incident channel integrity verification", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-5-rc-1", "name": "Network Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-5-rc-1", "name": "Channel recovery and re-keying documentation", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "6-GV": {
+          "capability": {
+            "id": "cap-6-gv",
+            "name": "Flooding / Availability Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for denial-of-service and resource exhaustion are defined at board level, with capacity planning, rate-limiting, and DDoS response aligned to business continuity requirements.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-6-gv-1", "name": "Risk appetite statement for flooding attacks", "description": "Board-approved statement defining acceptable residual risk from volumetric and application-layer DoS (e.g., max tolerable downtime per incident, acceptable revenue impact).", "kind": "org", "status": "open" },
+                { "id": "ctl-6-gv-2", "name": "Risk tolerance thresholds for flooding attacks", "description": "Quantified boundaries: max acceptable downtime per quarter (hours), max recovery time objective (RTO), min DDoS mitigation capacity vs. baseline traffic.", "kind": "org", "status": "open" },
+                { "id": "ctl-6-gv-3", "name": "Capacity planning policy with growth projections", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-6-gv-4", "name": "DDoS response procedure and escalation matrix", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-6-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for availability loss; links tolerance to revenue impact and SLA commitments.", "status": "open" },
+                { "id": "wf-6-gv-2", "name": "CEO / CFO", "description": "Accountable for business continuity investment decisions; signs off on acceptable downtime vs. mitigation cost trade-offs.", "status": "open" },
+                { "id": "wf-6-gv-3", "name": "CIO / CISO", "description": "Ensures DDoS mitigation capacity and incident response procedures meet board-stated tolerance.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-6-gv-1", "name": "Annual risk appetite review for flooding attacks", "description": "Board-level review informed by downtime incidents, DDoS trends, and business continuity exercise results.", "status": "open" },
+                { "id": "gov-6-gv-2", "name": "Tolerance breach escalation procedure", "description": "Escalation when quarterly downtime exceeds stated tolerance or mitigation capacity falls below threshold.", "status": "open" },
+                { "id": "gov-6-gv-3", "name": "Annual capacity and DDoS readiness review", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "6-ID": {
+          "capability": {
+            "id": "cap-6-id",
+            "name": "Capacity Risk Assessment",
+            "controlObjective": "System components are assessed for finite capacity limitations and single points of failure.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-6-id-1", "name": "Capacity stress testing and bottleneck identification", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-6-id-2", "name": "Single point of failure analysis", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-6-id-1", "name": "Performance Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-6-id-1", "name": "Capacity risk register maintenance", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "6-PR": {
+          "capability": {
+            "id": "cap-6-pr",
+            "name": "Flood Prevention",
+            "controlObjective": "Rate limiting, traffic shaping, CDN buffering, and DDoS mitigation services absorb volumetric attacks.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-6-pr-1", "name": "Rate limiting on all public-facing endpoints", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-6-pr-2", "name": "CDN and DDoS mitigation service deployment", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-6-pr-3", "name": "Auto-scaling configuration", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-6-pr-1", "name": "Network Engineers", "description": "", "status": "open" },
+                { "id": "wf-6-pr-2", "name": "Cloud Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-6-pr-1", "name": "DDoS mitigation service SLA tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "6-DE": {
+          "capability": {
+            "id": "cap-6-de",
+            "name": "Flood Detection",
+            "controlObjective": "Abnormal traffic volumes and resource exhaustion are detected through real-time monitoring.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-6-de-1", "name": "Real-time traffic volume anomaly detection", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-6-de-2", "name": "Resource exhaustion threshold alerting", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-6-de-1", "name": "SOC Analysts", "description": "", "status": "open" },
+                { "id": "wf-6-de-2", "name": "NOC Operators", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-6-de-1", "name": "Flood detection threshold calibration process", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "6-RS": {
+          "capability": {
+            "id": "cap-6-rs",
+            "name": "Flood Mitigation Response",
+            "controlObjective": "Active flooding attacks are mitigated through traffic scrubbing, IP blocking, and upstream provider coordination.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-6-rs-1", "name": "Traffic scrubbing activation playbook", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-6-rs-2", "name": "ISP/upstream provider escalation procedure", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-6-rs-1", "name": "Incident Responders", "description": "", "status": "open" },
+                { "id": "wf-6-rs-2", "name": "Network Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-6-rs-1", "name": "DDoS response drill schedule", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "6-RC": {
+          "capability": {
+            "id": "cap-6-rc",
+            "name": "Flood Recovery",
+            "controlObjective": "After a flooding incident, services are restored to full capacity and mitigation rules are refined.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-6-rc-1", "name": "Service restoration and capacity verification", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-6-rc-2", "name": "Attack pattern analysis and rule update", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-6-rc-1", "name": "Platform Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-6-rc-1", "name": "Post-flood lessons learned and capacity adjustment", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "7-GV": {
+          "capability": {
+            "id": "cap-7-gv",
+            "name": "Malware Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for foreign executable content are defined at board level, with execution control policies, detection coverage mandates, and containment expectations aligned to thresholds.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-7-gv-1", "name": "Risk appetite statement for malware", "description": "Board-approved statement defining acceptable residual risk from foreign executable content (e.g., ransomware, trojans, fileless malware, implants).", "kind": "org", "status": "open" },
+                { "id": "ctl-7-gv-2", "name": "Risk tolerance thresholds for malware", "description": "Quantified boundaries: max endpoints without EDR (%), max time-to-contain (hours), max unscanned file ingestion points, max allowed execution outside whitelists.", "kind": "org", "status": "open" },
+                { "id": "ctl-7-gv-3", "name": "Application whitelisting policy", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-7-gv-4", "name": "Anti-malware coverage requirement", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-7-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for malware; reviews annually or after ransomware/malware incidents.", "status": "open" },
+                { "id": "wf-7-gv-2", "name": "CRO / CISO", "description": "Translates appetite into EDR coverage targets, containment SLAs, and whitelisting enforcement levels.", "status": "open" },
+                { "id": "wf-7-gv-3", "name": "CIO", "description": "Ensures execution environments and endpoint fleet align with malware tolerance thresholds.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-7-gv-1", "name": "Annual risk appetite review for malware", "description": "Board-level review informed by malware incident trends, EDR coverage, and containment time metrics.", "status": "open" },
+                { "id": "gov-7-gv-2", "name": "Tolerance breach escalation procedure", "description": "Escalation when EDR coverage drops below threshold or containment times exceed SLA.", "status": "open" },
+                { "id": "gov-7-gv-3", "name": "Malware defense policy review cycle", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "7-ID": {
+          "capability": {
+            "id": "cap-7-id",
+            "name": "Malware Exposure Assessment",
+            "controlObjective": "Environments are assessed for ability to execute untrusted code, including script engines and uncontrolled software sources.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-7-id-1", "name": "Script engine and macro capability inventory", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-7-id-2", "name": "Uncontrolled software source identification", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-7-id-1", "name": "Security Assessors", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-7-id-1", "name": "Execution surface reduction roadmap", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "7-PR": {
+          "capability": {
+            "id": "cap-7-pr",
+            "name": "Malware Prevention",
+            "controlObjective": "Endpoint protection, application whitelisting, execution controls, and content filtering block foreign executable content.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-7-pr-1", "name": "Next-gen endpoint protection deployment", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-7-pr-2", "name": "Application whitelisting enforcement", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-7-pr-3", "name": "Email and web content filtering for executables", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-7-pr-1", "name": "Endpoint Engineers", "description": "", "status": "open" },
+                { "id": "wf-7-pr-2", "name": "Email Security Administrators", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-7-pr-1", "name": "Anti-malware coverage compliance tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "7-DE": {
+          "capability": {
+            "id": "cap-7-de",
+            "name": "Malware Detection",
+            "controlObjective": "Malicious code execution is detected through signature and behavioral analysis, EDR telemetry, and sandbox detonation.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-7-de-1", "name": "EDR with behavioral analysis", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-7-de-2", "name": "Sandbox detonation of suspicious files", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-7-de-1", "name": "SOC Analysts", "description": "", "status": "open" },
+                { "id": "wf-7-de-2", "name": "Malware Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-7-de-1", "name": "Malware detection efficacy testing", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "7-RS": {
+          "capability": {
+            "id": "cap-7-rs",
+            "name": "Malware Containment & Eradication",
+            "controlObjective": "Confirmed malware infections trigger automated isolation, kill-chain disruption, and coordinated eradication.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-7-rs-1", "name": "Automated endpoint isolation on malware detection", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-7-rs-2", "name": "Kill-chain disruption playbook", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-7-rs-1", "name": "Incident Responders", "description": "", "status": "open" },
+                { "id": "wf-7-rs-2", "name": "Malware Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-7-rs-1", "name": "Malware incident response drill schedule", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "7-RC": {
+          "capability": {
+            "id": "cap-7-rc",
+            "name": "Malware Recovery",
+            "controlObjective": "Infected systems are rebuilt from trusted baselines, IOCs are shared, and prevention controls are hardened.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-7-rc-1", "name": "Rebuild infected systems from trusted images", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-7-rc-2", "name": "IOC extraction and sharing procedure", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-7-rc-1", "name": "Platform Engineers", "description": "", "status": "open" },
+                { "id": "wf-7-rc-2", "name": "Threat Intelligence Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-7-rc-1", "name": "Post-malware recovery verification checklist", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "8-GV": {
+          "capability": {
+            "id": "cap-8-gv",
+            "name": "Physical Attack Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for physical attack vectors are defined at board level, with facility classification, physical access controls, and tamper-detection requirements aligned to thresholds.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-8-gv-1", "name": "Risk appetite statement for physical attacks", "description": "Board-approved statement defining acceptable residual risk from physical intrusion, hardware tampering, and unauthorized facility access.", "kind": "org", "status": "open" },
+                { "id": "ctl-8-gv-2", "name": "Risk tolerance thresholds for physical attacks", "description": "Quantified boundaries: max facilities without access control (count), max tailgating incident rate, max time-to-detect unauthorized physical access (minutes).", "kind": "org", "status": "open" },
+                { "id": "ctl-8-gv-3", "name": "Physical access policy by facility classification", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-8-gv-4", "name": "Hardware tamper-detection requirements", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-8-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for physical attack vectors; reviews annually or after physical security incidents.", "status": "open" },
+                { "id": "wf-8-gv-2", "name": "CEO / COO", "description": "Accountable for facility security investment; balances physical access convenience against security tolerance.", "status": "open" },
+                { "id": "wf-8-gv-3", "name": "CISO", "description": "Ensures physical-cyber convergence: physical access controls aligned with digital asset classification.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-8-gv-1", "name": "Annual risk appetite review for physical attacks", "description": "Board-level review informed by physical incident data, facility audits, and convergence risk assessments.", "status": "open" },
+                { "id": "gov-8-gv-2", "name": "Tolerance breach escalation procedure", "description": "Escalation when unauthorized access events or tailgating rates exceed tolerance.", "status": "open" },
+                { "id": "gov-8-gv-3", "name": "Facility classification review schedule", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "8-ID": {
+          "capability": {
+            "id": "cap-8-id",
+            "name": "Physical Exposure Assessment",
+            "controlObjective": "Facilities, hardware, and physical interfaces are assessed for unauthorized access risk and tampering vulnerability.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-8-id-1", "name": "Physical penetration testing", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-8-id-2", "name": "Hardware asset accessibility audit", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-8-id-1", "name": "Physical Security Assessors", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-8-id-1", "name": "Physical risk assessment cadence", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "8-PR": {
+          "capability": {
+            "id": "cap-8-pr",
+            "name": "Physical Access Protection",
+            "controlObjective": "Physical controls prevent unauthorized physical interaction with infrastructure.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-8-pr-1", "name": "Badge access control on all facilities", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-8-pr-2", "name": "CCTV monitoring of critical areas", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-8-pr-3", "name": "USB/physical port disabling", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-8-pr-1", "name": "Facility Security Officers", "description": "", "status": "open" },
+                { "id": "wf-8-pr-2", "name": "Physical Security Guards", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-8-pr-1", "name": "Physical access review and badge audit", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "8-DE": {
+          "capability": {
+            "id": "cap-8-de",
+            "name": "Physical Intrusion Detection",
+            "controlObjective": "Unauthorized physical access and hardware tampering are detected through surveillance, sensors, and access logs.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-8-de-1", "name": "Motion sensors and intrusion alarms", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-8-de-2", "name": "Physical access log anomaly monitoring", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-8-de-1", "name": "Security Operations Center (Physical)", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-8-de-1", "name": "Physical monitoring coverage assessment", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "8-RS": {
+          "capability": {
+            "id": "cap-8-rs",
+            "name": "Physical Incident Response",
+            "controlObjective": "Confirmed physical security breaches trigger lockdown, law enforcement coordination, and forensic assessment.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-8-rs-1", "name": "Facility lockdown procedure", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-8-rs-2", "name": "Law enforcement coordination protocol", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-8-rs-1", "name": "Physical Security Responders", "description": "", "status": "open" },
+                { "id": "wf-8-rs-2", "name": "Forensic Investigators", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-8-rs-1", "name": "Physical incident escalation matrix", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "8-RC": {
+          "capability": {
+            "id": "cap-8-rc",
+            "name": "Physical Recovery",
+            "controlObjective": "After physical compromise, affected hardware is inspected or replaced and access controls are strengthened.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-8-rc-1", "name": "Hardware integrity inspection post-incident", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-8-rc-2", "name": "Access control strengthening plan", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-8-rc-1", "name": "Facility Managers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-8-rc-1", "name": "Post-physical-incident review and improvement", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "9-GV": {
+          "capability": {
+            "id": "cap-9-gv",
+            "name": "Social Engineering Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for social engineering are defined at board level, with awareness program mandates, phishing simulation thresholds, and reporting requirements aligned to stated boundaries.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-9-gv-1", "name": "Risk appetite statement for social engineering", "description": "Board-approved statement defining acceptable residual risk from social engineering across all channels (email, phone, in-person, SMS, social media).", "kind": "org", "status": "open" },
+                { "id": "ctl-9-gv-2", "name": "Risk tolerance thresholds for social engineering", "description": "Quantified boundaries: max phishing simulation click rate (%), max time-to-report suspicious contacts (hours), max staff without annual awareness training (%).", "kind": "org", "status": "open" },
+                { "id": "ctl-9-gv-3", "name": "Security awareness program policy", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-9-gv-4", "name": "Phishing simulation program requirements", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-9-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for social engineering; reviews annually or after successful SE-based breaches.", "status": "open" },
+                { "id": "wf-9-gv-2", "name": "CEO", "description": "Sets tone from the top on security culture; accountable for organizational human risk posture.", "status": "open" },
+                { "id": "wf-9-gv-3", "name": "CRO / CISO", "description": "Operationalizes SE tolerance into awareness KPIs, simulation thresholds, and reporting SLAs.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-9-gv-1", "name": "Annual risk appetite review for social engineering", "description": "Board-level review informed by phishing simulation results, SE incident trends, and awareness completion rates.", "status": "open" },
+                { "id": "gov-9-gv-2", "name": "Tolerance breach escalation procedure", "description": "Escalation when phishing click rate or training non-compliance exceeds tolerance.", "status": "open" },
+                { "id": "gov-9-gv-3", "name": "Awareness program effectiveness review", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "9-ID": {
+          "capability": {
+            "id": "cap-9-id",
+            "name": "Human Risk Assessment",
+            "controlObjective": "The organization's susceptibility to social engineering is measured through simulations and behavioral profiling.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-9-id-1", "name": "Phishing simulation campaigns", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-9-id-2", "name": "Social engineering susceptibility benchmarking", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-9-id-1", "name": "Security Awareness Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-9-id-1", "name": "Social engineering risk metric tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "9-PR": {
+          "capability": {
+            "id": "cap-9-pr",
+            "name": "Social Engineering Resilience",
+            "controlObjective": "Personnel are trained to recognize and resist manipulation through ongoing awareness programs and verification procedures.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-9-pr-1", "name": "Role-based security awareness training", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-9-pr-2", "name": "Out-of-band verification procedures for sensitive requests", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-9-pr-3", "name": "Easy-access reporting mechanism for suspicious contact", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-9-pr-1", "name": "Security Awareness Trainers", "description": "", "status": "open" },
+                { "id": "wf-9-pr-2", "name": "All Staff (trained)", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-9-pr-1", "name": "Training completion and effectiveness tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "9-DE": {
+          "capability": {
+            "id": "cap-9-de",
+            "name": "Social Engineering Detection",
+            "controlObjective": "Social engineering attempts are detected through user reports, email security gateways, and behavioral signals.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-9-de-1", "name": "Email security gateway with anti-phishing", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-9-de-2", "name": "User-reported phishing triage workflow", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-9-de-1", "name": "SOC Analysts", "description": "", "status": "open" },
+                { "id": "wf-9-de-2", "name": "Email Security Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-9-de-1", "name": "Phishing detection and response metrics", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "9-RS": {
+          "capability": {
+            "id": "cap-9-rs",
+            "name": "Social Engineering Response",
+            "controlObjective": "Confirmed social engineering incidents trigger credential resets, exposure assessment, and attack-vector blocking.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-9-rs-1", "name": "Credential reset for affected users", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-9-rs-2", "name": "Phishing URL/domain blocking", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-9-rs-1", "name": "Incident Responders", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-9-rs-1", "name": "Social engineering incident response playbook", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "9-RC": {
+          "capability": {
+            "id": "cap-9-rc",
+            "name": "Social Engineering Recovery",
+            "controlObjective": "After a social engineering incident, affected users are retrained and organizational processes are strengthened.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-9-rc-1", "name": "Targeted retraining for affected users", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-9-rc-2", "name": "Process review to prevent recurrence", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-9-rc-1", "name": "Security Awareness Lead", "description": "", "status": "open" },
+                { "id": "wf-9-rc-2", "name": "HR Partners", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-9-rc-1", "name": "Post-incident awareness improvement plan", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "10-GV": {
+          "capability": {
+            "id": "cap-10-gv",
+            "name": "Supply Chain Risk Governance",
+            "controlObjective": "Risk appetite and tolerance for supply chain compromise are defined at board level, with third-party risk management, SBOM mandates, and trust acceptance criteria aligned to thresholds.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-10-gv-1", "name": "Risk appetite statement for supply chain attacks", "description": "Board-approved statement defining acceptable residual risk from compromised vendors, dependencies, and trust artifacts (e.g., poisoned updates, backdoored libraries).", "kind": "org", "status": "open" },
+                { "id": "ctl-10-gv-2", "name": "Risk tolerance thresholds for supply chain attacks", "description": "Quantified boundaries: max vendors without security assessment (%), max dependencies without SBOM, max time-to-verify trust artifacts (hours), max unreviewed third-party code paths.", "kind": "org", "status": "open" },
+                { "id": "ctl-10-gv-3", "name": "Third-party risk management policy", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-10-gv-4", "name": "SBOM requirement for all vendors", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-10-gv-1", "name": "Board / Risk Committee", "description": "Approves risk appetite for supply chain compromise; reviews annually or after supply chain incidents (e.g., SolarWinds-class events).", "status": "open" },
+                { "id": "wf-10-gv-2", "name": "CEO / CRO", "description": "Accountable for third-party risk posture; balances vendor ecosystem growth against supply chain tolerance.", "status": "open" },
+                { "id": "wf-10-gv-3", "name": "CISO / CIO", "description": "Ensures vendor assessment coverage, SBOM adoption, and trust verification procedures meet board-stated tolerance.", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-10-gv-1", "name": "Annual risk appetite review for supply chain attacks", "description": "Board-level review informed by vendor incident data, SBOM coverage, and third-party assessment completion rates.", "status": "open" },
+                { "id": "gov-10-gv-2", "name": "Tolerance breach escalation procedure", "description": "Escalation when unassessed vendor ratio or SBOM gaps exceed tolerance.", "status": "open" },
+                { "id": "gov-10-gv-3", "name": "Third-party risk committee charter", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "10-ID": {
+          "capability": {
+            "id": "cap-10-id",
+            "name": "Supply Chain Risk Assessment",
+            "controlObjective": "Third-party components, update channels, and trust relationships are inventoried and assessed for subversion risk.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-10-id-1", "name": "Software composition analysis for all dependencies", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-10-id-2", "name": "Vendor security assessment questionnaire", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-10-id-3", "name": "Security code review of critical open-source dependencies", "description": "Manual or tool-assisted review of source code for high-risk open-source components (cryptographic libraries, auth modules, parsers) to identify backdoors, logic flaws, or undisclosed vulnerabilities beyond CVE databases.", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-10-id-1", "name": "Supply Chain Security Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-10-id-1", "name": "Vendor risk assessment schedule", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "10-PR": {
+          "capability": {
+            "id": "cap-10-pr",
+            "name": "Supply Chain Protection",
+            "controlObjective": "Software supply chain integrity is enforced through code signing verification, dependency pinning, and vendor validation.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-10-pr-1", "name": "Code signing verification for all packages", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-10-pr-2", "name": "Dependency pinning and lock files", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-10-pr-3", "name": "Vendor security certification requirements", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-10-pr-1", "name": "DevSecOps Engineers", "description": "", "status": "open" },
+                { "id": "wf-10-pr-2", "name": "Procurement Security Reviewers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-10-pr-1", "name": "Supply chain integrity compliance tracking", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "10-DE": {
+          "capability": {
+            "id": "cap-10-de",
+            "name": "Supply Chain Compromise Detection",
+            "controlObjective": "Compromised third-party components are detected through integrity verification and threat intelligence.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-10-de-1", "name": "Dependency integrity monitoring and alerting", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-10-de-2", "name": "Threat intelligence feed for supply chain IOCs", "description": "", "kind": "tech", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-10-de-1", "name": "Threat Intelligence Analysts", "description": "", "status": "open" },
+                { "id": "wf-10-de-2", "name": "SOC Analysts", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-10-de-1", "name": "Supply chain threat monitoring coverage", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "10-RS": {
+          "capability": {
+            "id": "cap-10-rs",
+            "name": "Supply Chain Incident Response",
+            "controlObjective": "Confirmed supply chain compromises trigger component isolation, vendor notification, and downstream impact assessment.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-10-rs-1", "name": "Compromised component isolation procedure", "description": "", "kind": "org", "status": "open" },
+                { "id": "ctl-10-rs-2", "name": "Vendor notification and coordination protocol", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-10-rs-1", "name": "Incident Responders", "description": "", "status": "open" },
+                { "id": "wf-10-rs-2", "name": "Vendor Relations", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-10-rs-1", "name": "Supply chain incident response playbook", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        },
+        "10-RC": {
+          "capability": {
+            "id": "cap-10-rc",
+            "name": "Supply Chain Recovery",
+            "controlObjective": "After supply chain compromise, affected components are replaced with verified versions and trust relationships are re-evaluated.",
+            "maturity": 0,
+            "components": {
+              "controls": [
+                { "id": "ctl-10-rc-1", "name": "Replace affected components with verified versions", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-10-rc-2", "name": "Trust relationship re-evaluation process", "description": "", "kind": "org", "status": "open" }
+              ],
+              "workforce": [
+                { "id": "wf-10-rc-1", "name": "DevSecOps Engineers", "description": "", "status": "open" }
+              ],
+              "governance": [
+                { "id": "gov-10-rc-1", "name": "Post-supply-chain-incident trust review", "description": "", "status": "open" }
+              ]
+            },
+            "subCapabilities": [],
+            "notes": ""
+          }
+        }
+      }
+    }
+  ]
+}

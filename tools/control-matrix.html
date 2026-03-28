@@ -350,7 +350,7 @@ function HeaderDropdown({ label, icon, items }) {
 // HEADER
 // ═══════════════════════════════════════════════════════════════════
 
-function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onShowSharedControls, sharedControlCount, onReport }) {
+function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onShowSharedControls, sharedControlCount, onReport, onShowSchema }) {
     return (
         <header className="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
             <div className="flex items-center gap-3">
@@ -372,6 +372,7 @@ function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON
                 <a href="actor-profile-designer.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Actor Profiler</a>
                 <a href="radar-tlctc-app.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Radar</a>
                 <a href="control-matrix.html" className="text-sm font-semibold text-foreground transition-colors">Control Matrix</a>
+                <a href="cbp-app.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">CBP</a>
                 <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">TLCTC.net <Icon name="external-link" size={12} /></a>
             </nav>
             <div className="flex items-center gap-2">
@@ -390,6 +391,9 @@ function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON
                 </button>
                 <button onClick={onImportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON">
                     <Icon name="upload" size={14} /> <span className="hidden sm:inline">Import</span>
+                </button>
+                <button onClick={onShowSchema} className="app-btn app-btn-outline app-btn-sm h-9 w-9 p-0" title="Import JSON Format">
+                    <Icon name="info" size={14} />
                 </button>
                 <button onClick={onToggleDark} className="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Toggle theme">
                     <Icon name={darkMode ? 'sun' : 'moon'} size={16} />
@@ -1457,6 +1461,100 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
 }
 
 // ═══════════════════════════════════════════════════════════════════
+// SCHEMA HELP MODAL
+// ═══════════════════════════════════════════════════════════════════
+
+const IMPORT_SCHEMA_EXAMPLE = `{
+  "orgName": "My Organization",
+  "targetMaturity": 3,
+  "environments": [
+    {
+      "id": "env-1",
+      "name": "Production",
+      "cells": {
+        "7-DE": {
+          "local": [
+            {
+              "id": "ctl-1",
+              "name": "EDR on all endpoints",
+              "description": "Optional longer description",
+              "kind": "tech",
+              "maturity": 3,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            }
+          ],
+          "umbrella": [
+            {
+              "id": "ctl-2",
+              "name": "SIEM correlation rules",
+              "description": "",
+              "kind": "tech",
+              "maturity": 2,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "sharedControls": []
+}`;
+
+function SchemaHelpModal({ onClose }) {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(IMPORT_SCHEMA_EXAMPLE).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        });
+    };
+
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content max-w-2xl" onClick={e => e.stopPropagation()}>
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="font-display font-bold text-lg">Import JSON Format</h2>
+                    <button onClick={onClose} className="p-1 hover:bg-accent rounded"><Icon name="x" size={18} /></button>
+                </div>
+
+                <div className="text-sm text-muted-foreground mb-3 space-y-2">
+                    <p>Paste or drop a JSON file matching this structure into the Import dialog. Minimal required fields are shown below.</p>
+                    <ul className="list-disc list-inside space-y-1 text-xs">
+                        <li><strong>Cell keys</strong> follow the pattern <code className="bg-secondary px-1 rounded">{'"{clusterId}-{funcId}"'}</code> — e.g. <code className="bg-secondary px-1 rounded">"7-DE"</code> for Cluster #7 Malware × Detect</li>
+                        <li><strong>Cluster IDs:</strong> 1–10 &nbsp;|&nbsp; <strong>CSF Functions:</strong> GV, ID, PR, DE, RS, RC</li>
+                        <li><strong>Control types:</strong> <code className="bg-secondary px-1 rounded">"local"</code> (asset-specific) and <code className="bg-secondary px-1 rounded">"umbrella"</code> (enterprise-wide) — both are arrays</li>
+                        <li><strong>kind:</strong> <code className="bg-secondary px-1 rounded">"tech"</code> or <code className="bg-secondary px-1 rounded">"org"</code></li>
+                        <li><strong>maturity:</strong> 0 (Not Implemented) to 5 (Optimizing)</li>
+                        <li>Only populate the cells you need — empty cells are skipped</li>
+                    </ul>
+                </div>
+
+                <div className="relative">
+                    <button onClick={handleCopy}
+                            className="absolute top-2 right-2 app-btn app-btn-outline app-btn-xs gap-1 z-10">
+                        <Icon name={copied ? 'check' : 'copy'} size={12} /> {copied ? 'Copied' : 'Copy'}
+                    </button>
+                    <pre className="bg-secondary/50 border border-border rounded-lg p-4 text-xs font-mono overflow-auto max-h-96 whitespace-pre">
+{IMPORT_SCHEMA_EXAMPLE}
+                    </pre>
+                </div>
+
+                <div className="flex justify-end mt-4">
+                    <button onClick={onClose} className="app-btn app-btn-outline">Close</button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // IMPORT MODAL
 // ═══════════════════════════════════════════════════════════════════
 
@@ -1705,6 +1803,7 @@ function App() {
         return window.matchMedia?.('(prefers-color-scheme: dark)').matches || false;
     });
     const [showImport, setShowImport] = useState(false);
+    const [showSchema, setShowSchema] = useState(false);
     const [showQuickAssess, setShowQuickAssess] = useState(false);
     const [showSharedLibrary, setShowSharedLibrary] = useState(false);
     const matrixRef = useRef(null);
@@ -2102,7 +2201,8 @@ function App() {
                     onExportJSON={exportJSON} onImportJSON={() => setShowImport(true)} onExportPNG={exportPNG}
                     onReport={generateReport}
                     onShowSharedControls={() => setShowSharedLibrary(true)}
-                    sharedControlCount={(state.sharedControls || []).length} />
+                    sharedControlCount={(state.sharedControls || []).length}
+                    onShowSchema={() => setShowSchema(true)} />
 
             <SummaryBar orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
                         targetMaturity={state.targetMaturity} onTargetChange={v => updateState({ targetMaturity: v })}
@@ -2146,6 +2246,7 @@ function App() {
                 TLCTC Control Matrix Manager — 10 Clusters × 6 CSF Functions × 2 Control Types = 120 Control Areas — Data stored in browser localStorage
             </footer>
 
+            {showSchema && <SchemaHelpModal onClose={() => setShowSchema(false)} />}
             {showImport && <ImportModal onClose={() => setShowImport(false)} onImport={handleImport} />}
             {showQuickAssess && <QuickAssessModal onClose={() => setShowQuickAssess(false)} environments={state.environments} activeEnvId={activeEnvId}
                                                     sharedControls={state.sharedControls || []} onBulkMaturity={handleBulkMaturity} onLinkShared={linkSharedToCell} />}

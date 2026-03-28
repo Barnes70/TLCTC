@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLCTC CBP — Capability-Based Planning</title>
+    <meta name="description" content="Capability-Based Planning for cyber security. Map organizational capabilities across the 10 TLCTC clusters and 6 NIST CSF functions. Assess maturity at the capability level.">
+
+    <script src="/vendor/react/18.3.1/react.development.js"></script>
+    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
+    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
+    <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
+    <script src="/vendor/lucide/0.469.0/lucide.min.js"></script>
+    <script src="/vendor/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="/vendor/fonts/google-fonts.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+                        secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+                        muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+                        accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+                        card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+                        destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
+                    },
+                },
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --radius: 0.75rem;
+                --background: 210 40% 98%;
+                --foreground: 222 47% 11%;
+                --card: 0 0% 100%;
+                --card-foreground: 222 47% 11%;
+                --primary: 221 83% 53%;
+                --primary-foreground: 210 40% 98%;
+                --secondary: 210 40% 96.1%;
+                --secondary-foreground: 222 47% 11%;
+                --muted: 210 40% 96.1%;
+                --muted-foreground: 215.4 16.3% 46.9%;
+                --accent: 210 40% 96.1%;
+                --accent-foreground: 222 47% 11%;
+                --destructive: 0 84.2% 60.2%;
+                --destructive-foreground: 210 40% 98%;
+                --border: 214.3 31.8% 91.4%;
+                --input: 214.3 31.8% 91.4%;
+                --ring: 221 83% 53%;
+            }
+            .dark {
+                --background: 222 47% 11%;
+                --foreground: 210 40% 98%;
+                --card: 217 33% 17%;
+                --card-foreground: 210 40% 98%;
+                --primary: 217 91% 60%;
+                --primary-foreground: 222 47% 11%;
+                --secondary: 217 33% 17%;
+                --secondary-foreground: 210 40% 98%;
+                --muted: 217 33% 17%;
+                --muted-foreground: 215 20.2% 65.1%;
+                --accent: 217 33% 17%;
+                --accent-foreground: 210 40% 98%;
+                --destructive: 0 63% 31%;
+                --destructive-foreground: 210 40% 98%;
+                --border: 217 33% 17%;
+                --input: 217 33% 17%;
+                --ring: 224 76% 48%;
+            }
+        }
+        @layer components {
+            .glass-header { @apply bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-40; }
+            .card { @apply bg-card text-card-foreground rounded-xl border border-border shadow-lg; }
+            .input-ctrl { @apply w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring text-foreground; }
+            .app-btn { @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg px-4 py-2 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background text-sm; }
+            .app-btn-primary { @apply bg-primary text-primary-foreground hover:opacity-90; }
+            .app-btn-secondary { @apply bg-secondary text-secondary-foreground hover:opacity-90; }
+            .app-btn-outline { @apply border border-border hover:bg-accent; }
+            .app-btn-danger { @apply bg-destructive text-destructive-foreground hover:opacity-90; }
+            .app-btn-sm { @apply text-xs px-2.5 py-1.5 rounded-md; }
+            .app-btn-xs { @apply text-[11px] px-1.5 py-1 rounded; }
+            .modal-overlay { @apply fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm; }
+            .modal-content { @apply bg-card rounded-xl shadow-2xl w-full max-w-2xl p-6 max-h-[85vh] overflow-y-auto; }
+            .tooltip-wrap { @apply relative; }
+            .tooltip-wrap .tip { @apply invisible opacity-0 absolute z-50 bg-foreground text-background text-xs px-2 py-1 rounded whitespace-nowrap bottom-full left-1/2 -translate-x-1/2 mb-1 transition-all duration-150 pointer-events-none; }
+            .tooltip-wrap:hover .tip { @apply visible opacity-100; }
+        }
+    </style>
+
+    <style>
+        .matrix-cell { transition: transform 0.1s, box-shadow 0.15s; cursor: pointer; }
+        .matrix-cell:hover { transform: scale(1.06); box-shadow: 0 0 0 2px hsl(var(--primary)); z-index: 5; position: relative; }
+        .matrix-cell.active-cell { box-shadow: 0 0 0 3px hsl(var(--primary)); z-index: 6; position: relative; }
+        .detail-panel { transition: transform 0.25s ease-out, opacity 0.2s ease-out; }
+        .detail-panel.open { transform: translateX(0); opacity: 1; }
+        .detail-panel.closed { transform: translateX(100%); opacity: 0; pointer-events: none; }
+        .comp-tab { transition: all 0.15s; }
+        .comp-tab.active { box-shadow: inset 0 -2px 0 currentColor; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground min-h-screen font-sans antialiased flex flex-col">
+    <div id="root"></div>
+
+    <script type="text/babel">
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+// ═══════════════════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════════════════
+
+const CLUSTERS = [
+    { id: 1,  opId: 'TLCTC-01.00', name: 'Abuse of Functions',  abbr: 'AoF', topology: 'internal', genericVuln: 'The inherent trust, scope, and complexity designed into software functionality and configuration' },
+    { id: 2,  opId: 'TLCTC-02.00', name: 'Exploiting Server',   abbr: 'ExS', topology: 'internal', genericVuln: 'Server-side implementation flaws enable unintended behavior' },
+    { id: 3,  opId: 'TLCTC-03.00', name: 'Exploiting Client',   abbr: 'ExC', topology: 'internal', genericVuln: 'Client-side implementation flaws enable unintended behavior' },
+    { id: 4,  opId: 'TLCTC-04.00', name: 'Identity Theft',      abbr: 'IdT', topology: 'internal', genericVuln: 'Weak identity management processes and credential protection mechanisms' },
+    { id: 5,  opId: 'TLCTC-05.00', name: 'Man in the Middle',   abbr: 'MitM', topology: 'internal', genericVuln: 'The lack of sufficient control, integrity protection, or confidentiality over the communication channel' },
+    { id: 6,  opId: 'TLCTC-06.00', name: 'Flooding Attack',     abbr: 'Fld', topology: 'internal', genericVuln: 'Finite capacity limitations inherent in any system component' },
+    { id: 7,  opId: 'TLCTC-07.00', name: 'Malware',             abbr: 'Mlw', topology: 'internal', genericVuln: "The software environment's designed capability to execute potentially untrusted foreign code" },
+    { id: 8,  opId: 'TLCTC-08.00', name: 'Physical Attack',     abbr: 'Phy', topology: 'bridge',   genericVuln: 'Physical accessibility of infrastructure and exploitability of physical-layer properties' },
+    { id: 9,  opId: 'TLCTC-09.00', name: 'Social Engineering',  abbr: 'SE',  topology: 'bridge',   genericVuln: 'Humans can be influenced into unsafe actions or decisions' },
+    { id: 10, opId: 'TLCTC-10.00', name: 'Supply Chain Attack', abbr: 'SCA', topology: 'bridge',   genericVuln: 'Trust in third-party components and update channels can be subverted' },
+];
+
+const CSF_FUNCTIONS = [
+    { id: 'GV', name: 'GOVERN',   color: '#8b5cf6', desc: 'Set direction, accountability, ownership, risk appetite, assurance' },
+    { id: 'ID', name: 'IDENTIFY', color: '#3b82f6', desc: 'Find weaknesses and exposure enabling the threat' },
+    { id: 'PR', name: 'PROTECT',  color: '#22c55e', desc: 'Prevent or reduce likelihood of the threat step' },
+    { id: 'DE', name: 'DETECT',   color: '#eab308', desc: 'Detect the threat step or loss-of-control condition early' },
+    { id: 'RS', name: 'RESPOND',  color: '#f97316', desc: 'Contain and eradicate the realized threat step' },
+    { id: 'RC', name: 'RECOVER',  color: '#06b6d4', desc: 'Restore capability and reduce recurrence' },
+];
+
+const COMPONENT_TYPES = [
+    { id: 'controls',   name: 'Controls',   icon: 'shield',   color: '#3b82f6', desc: 'Technical and organizational measures delivering the capability' },
+    { id: 'workforce',  name: 'Workforce',  icon: 'users',    color: '#8b5cf6', desc: 'Roles and competencies needed to operate the capability' },
+    { id: 'governance', name: 'Governance', icon: 'landmark', color: '#22c55e', desc: 'Ownership, accountability, and assurance mechanisms' },
+];
+
+const MATURITY_LEVELS = [
+    { value: 0, label: 'Not Implemented', abbr: 'N/I', color: '#ef4444', bg: '#fef2f2', darkBg: '#450a0a' },
+    { value: 1, label: 'Initial',         abbr: 'Ini', color: '#f97316', bg: '#fff7ed', darkBg: '#431407' },
+    { value: 2, label: 'Developing',      abbr: 'Dev', color: '#eab308', bg: '#fefce8', darkBg: '#422006' },
+    { value: 3, label: 'Defined',         abbr: 'Def', color: '#84cc16', bg: '#f7fee7', darkBg: '#1a2e05' },
+    { value: 4, label: 'Managed',         abbr: 'Mgd', color: '#22c55e', bg: '#f0fdf4', darkBg: '#052e16' },
+    { value: 5, label: 'Optimizing',      abbr: 'Opt', color: '#059669', bg: '#ecfdf5', darkBg: '#022c22' },
+];
+
+const COMPONENT_STATUSES = [
+    { id: 'open',           label: 'Open',        color: '#64748b', icon: 'circle' },
+    { id: 'in-progress',    label: 'In Progress', color: '#3b82f6', icon: 'loader' },
+    { id: 'done',           label: 'Done',        color: '#22c55e', icon: 'check-circle' },
+    { id: 'not-applicable', label: 'N/A',         color: '#94a3b8', icon: 'minus-circle' },
+];
+
+const CONTROL_KINDS = [
+    { id: 'tech', label: 'Technical',      color: '#3b82f6' },
+    { id: 'org',  label: 'Organizational', color: '#8b5cf6' },
+];
+
+const STORAGE_KEY = 'tlctc-cbp-v1';
+
+// ═══════════════════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════════════════
+
+const genId = () => 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const cellKey = (clusterId, funcId) => `${clusterId}-${funcId}`;
+
+function getMaturityColor(value) {
+    if (value === null || value === undefined) return '#94a3b8';
+    return MATURITY_LEVELS[value]?.color || '#94a3b8';
+}
+
+function getMaturityBg(value, dark) {
+    if (value === null || value === undefined) return dark ? '#1e293b' : '#f1f5f9';
+    const ml = MATURITY_LEVELS[value];
+    return dark ? (ml?.darkBg || '#1e293b') : (ml?.bg || '#f1f5f9');
+}
+
+function getCellMaturity(cell) {
+    if (!cell || !cell.capability) return null;
+    const m = cell.capability.maturity;
+    return (m !== null && m !== undefined) ? m : null;
+}
+
+function computeAggregated(environments, ck) {
+    const vals = environments.map(env => getCellMaturity(env.cells[ck])).filter(v => v !== null);
+    return vals.length > 0 ? Math.min(...vals) : null;
+}
+
+function createEmptyCapability(name, controlObjective) {
+    return {
+        id: genId(),
+        name: name || '',
+        controlObjective: controlObjective || '',
+        maturity: 0,
+        components: { controls: [], workforce: [], governance: [] },
+        subCapabilities: [],
+        notes: '',
+    };
+}
+
+function createEmptyEnvironment(name) {
+    return { id: genId(), name, cells: {} };
+}
+
+function createDefaultState() {
+    return {
+        orgName: 'My Organization',
+        targetMaturity: 3,
+        environments: [createEmptyEnvironment('Default')],
+        createdAt: new Date().toISOString().split('T')[0],
+    };
+}
+
+function loadState() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+    } catch(e) { console.warn('Failed to load state', e); }
+    return createDefaultState();
+}
+
+function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) { console.warn('Failed to save', e); }
+}
+
+function countComponents(env) {
+    let controls = 0, workforce = 0, governance = 0;
+    Object.values(env.cells).forEach(cell => {
+        if (!cell.capability) return;
+        controls += (cell.capability.components.controls || []).length;
+        workforce += (cell.capability.components.workforce || []).length;
+        governance += (cell.capability.components.governance || []).length;
+    });
+    return { controls, workforce, governance, total: controls + workforce + governance };
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ICON HELPER
+// ═══════════════════════════════════════════════════════════════════
+
+function Icon({ name, size = 16, className = '' }) {
+    const ref = useRef(null);
+    useEffect(() => {
+        if (ref.current && lucide?.icons?.[name]) {
+            const [tag, attrs, children] = lucide.icons[name];
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', tag);
+            Object.entries({ ...attrs, width: size, height: size, class: className }).forEach(([k, v]) => svg.setAttribute(k, v));
+            children.forEach(([cTag, cAttrs]) => {
+                const el = document.createElementNS('http://www.w3.org/2000/svg', cTag);
+                Object.entries(cAttrs).forEach(([k, v]) => el.setAttribute(k, v));
+                svg.appendChild(el);
+            });
+            ref.current.innerHTML = '';
+            ref.current.appendChild(svg);
+        }
+    }, [name, size, className]);
+    return <span ref={ref} className="inline-flex items-center justify-center" />;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATURITY BADGE
+// ═══════════════════════════════════════════════════════════════════
+
+function MaturityBadge({ value, size = 'md' }) {
+    const ml = value !== null && value !== undefined ? MATURITY_LEVELS[value] : null;
+    const sizeClasses = size === 'sm' ? 'text-[10px] px-1.5 py-0.5' : size === 'lg' ? 'text-sm px-3 py-1' : 'text-xs px-2 py-0.5';
+    return (
+        <span className={`inline-flex items-center font-bold rounded-full ${sizeClasses}`}
+              style={{ backgroundColor: ml ? ml.color + '22' : '#94a3b822', color: ml ? ml.color : '#94a3b8', border: `1px solid ${ml ? ml.color + '44' : '#94a3b844'}` }}>
+            {ml ? ml.value : '—'}
+        </span>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// HEADER
+// ═══════════════════════════════════════════════════════════════════
+
+function Header({ darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onGapAnalysis, onReport, onLoadStarter }) {
+    return (
+        <header className="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
+            <div className="flex items-center gap-3">
+                <a href="/index.html" className="flex items-center gap-2 group">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
+                        <img src="/images/logo-small.png" alt="Logo" className="h-full w-full object-contain p-1"
+                             onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }} />
+                        <span style={{display:'none'}}><Icon name="shield" size={20} /></span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="font-display font-bold text-lg leading-tight">TLCTC</span>
+                        <span className="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+                    </div>
+                </a>
+            </div>
+            <nav className="hidden lg:flex items-center gap-6">
+                <a href="threat-modeling.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Modeling</a>
+                <a href="attack-path-architect.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Attack Path</a>
+                <a href="actor-profile-designer.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Actor Profiler</a>
+                <a href="radar-tlctc-app.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Radar</a>
+                <a href="control-matrix.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Control Matrix</a>
+                <a href="cbp-app.html" className="text-sm font-semibold text-foreground transition-colors">CBP</a>
+                <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">TLCTC.net <Icon name="external-link" size={12} /></a>
+            </nav>
+            <div className="flex items-center gap-2">
+                <button onClick={onGapAnalysis} className="app-btn app-btn-outline app-btn-sm gap-1" title="Gap Analysis">
+                    <Icon name="bar-chart-3" size={14} /> <span className="hidden sm:inline">Gaps</span>
+                </button>
+                <button onClick={() => onReport('maturity')} className="app-btn app-btn-outline app-btn-sm gap-1" title="Maturity Report">
+                    <Icon name="file-text" size={14} /> <span className="hidden sm:inline">Report</span>
+                </button>
+                <button onClick={onExportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Export JSON">
+                    <Icon name="download" size={14} /> <span className="hidden sm:inline">Export</span>
+                </button>
+                <button onClick={onImportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON">
+                    <Icon name="upload" size={14} /> <span className="hidden sm:inline">Import</span>
+                </button>
+                <button onClick={onLoadStarter} className="app-btn app-btn-outline app-btn-sm gap-1" title="Load Starter Template">
+                    <Icon name="rocket" size={14} /> <span className="hidden sm:inline">Starter</span>
+                </button>
+                <button onClick={onToggleDark} className="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Toggle theme">
+                    <Icon name={darkMode ? 'sun' : 'moon'} size={16} />
+                </button>
+            </div>
+        </header>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SUMMARY BAR
+// ═══════════════════════════════════════════════════════════════════
+
+function SummaryBar({ orgName, onOrgNameChange, targetMaturity, onTargetChange, environments, activeEnvId }) {
+    const totalCells = CLUSTERS.length * CSF_FUNCTIONS.length; // 60
+    const isAgg = activeEnvId === 'aggregated';
+
+    const stats = useMemo(() => {
+        let documented = 0, belowTarget = 0, maturities = [];
+
+        CLUSTERS.forEach(cl => CSF_FUNCTIONS.forEach(fn => {
+            const ck = cellKey(cl.id, fn.id);
+            let m;
+            if (isAgg) {
+                m = computeAggregated(environments, ck);
+            } else {
+                const env = environments.find(e => e.id === activeEnvId);
+                m = env ? getCellMaturity(env.cells[ck]) : null;
+            }
+            if (m !== null) {
+                documented++;
+                maturities.push(m);
+                if (m < targetMaturity) belowTarget++;
+            }
+        }));
+
+        const avg = maturities.length > 0 ? (maturities.reduce((a,b) => a+b, 0) / maturities.length).toFixed(1) : '—';
+        const worst = maturities.length > 0 ? Math.min(...maturities) : null;
+        const totalComps = isAgg ? '—' : (() => {
+            const env = environments.find(e => e.id === activeEnvId);
+            return env ? countComponents(env).total : 0;
+        })();
+
+        return { documented, belowTarget, avg, worst, totalComps };
+    }, [environments, activeEnvId, targetMaturity, isAgg]);
+
+    const coverage = ((stats.documented / totalCells) * 100).toFixed(0);
+
+    return (
+        <div className="px-4 sm:px-6 py-3 border-b border-border flex flex-wrap items-center gap-x-6 gap-y-2 text-sm no-print">
+            <div className="flex items-center gap-2">
+                <label className="text-muted-foreground font-medium">Organization:</label>
+                <input type="text" value={orgName} onChange={e => onOrgNameChange(e.target.value)}
+                       className="input-ctrl py-1 px-2 w-48 font-semibold" />
+            </div>
+            <div className="flex items-center gap-2">
+                <label className="text-muted-foreground font-medium">Target Maturity:</label>
+                <select value={targetMaturity} onChange={e => onTargetChange(Number(e.target.value))}
+                        className="input-ctrl py-1 px-2 w-auto">
+                    {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                </select>
+            </div>
+            <div className="flex items-center gap-4 ml-auto text-xs">
+                <div className="tooltip-wrap">
+                    <span className="font-semibold" style={{ color: coverage >= 80 ? '#22c55e' : coverage >= 40 ? '#eab308' : '#ef4444' }}>
+                        {stats.documented}/{totalCells}
+                    </span>
+                    <span className="text-muted-foreground ml-1">assessed ({coverage}%)</span>
+                    <span className="tip">Capabilities with maturity assessed (maturity > 0 or explicitly set)</span>
+                </div>
+                {stats.totalComps !== '—' && (
+                    <div><span className="font-semibold">{stats.totalComps}</span> <span className="text-muted-foreground">components</span></div>
+                )}
+                <div className="tooltip-wrap">
+                    <span className="font-semibold">{stats.avg}</span>
+                    <span className="text-muted-foreground ml-1">avg maturity</span>
+                    <span className="tip">Average across all assessed capabilities</span>
+                </div>
+                {stats.belowTarget > 0 && (
+                    <div className="tooltip-wrap">
+                        <span className="font-semibold text-destructive">{stats.belowTarget}</span>
+                        <span className="text-muted-foreground ml-1">gaps</span>
+                        <span className="tip">Capabilities below target maturity of {targetMaturity}</span>
+                    </div>
+                )}
+                {stats.worst !== null && (
+                    <div className="flex items-center gap-1">
+                        <span className="text-muted-foreground">Worst:</span>
+                        <MaturityBadge value={stats.worst} size="sm" />
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ENVIRONMENT TABS
+// ═══════════════════════════════════════════════════════════════════
+
+function EnvironmentTabs({ environments, activeEnvId, onSelect, onAdd, onRename, onDuplicate, onRemove }) {
+    const [editingId, setEditingId] = useState(null);
+    const [editName, setEditName] = useState('');
+    const [menuId, setMenuId] = useState(null);
+
+    const startRename = (env) => { setEditingId(env.id); setEditName(env.name); setMenuId(null); };
+    const commitRename = () => { if (editName.trim()) onRename(editingId, editName.trim()); setEditingId(null); };
+
+    return (
+        <div className="px-4 sm:px-6 py-2 border-b border-border flex items-center gap-1 overflow-x-auto no-print">
+            <button onClick={() => onSelect('aggregated')}
+                    className={`app-btn app-btn-sm rounded-full ${activeEnvId === 'aggregated' ? 'app-btn-primary' : 'app-btn-outline'}`}>
+                <Icon name="layers" size={13} /> Aggregated
+            </button>
+            <div className="w-px h-6 bg-border mx-1" />
+            {environments.map(env => (
+                <div key={env.id} className="relative flex items-center">
+                    {editingId === env.id ? (
+                        <input autoFocus value={editName} onChange={e => setEditName(e.target.value)}
+                               onBlur={commitRename} onKeyDown={e => e.key === 'Enter' && commitRename()}
+                               className="input-ctrl py-1 px-2 text-xs w-32" />
+                    ) : (
+                        <button onClick={() => onSelect(env.id)}
+                                onContextMenu={(e) => { e.preventDefault(); setMenuId(menuId === env.id ? null : env.id); }}
+                                className={`app-btn app-btn-sm rounded-full ${activeEnvId === env.id ? 'app-btn-primary' : 'app-btn-outline'}`}>
+                            {env.name}
+                        </button>
+                    )}
+                    {activeEnvId === env.id && editingId !== env.id && (
+                        <button onClick={() => setMenuId(menuId === env.id ? null : env.id)}
+                                className="ml-0.5 p-0.5 rounded hover:bg-accent">
+                            <Icon name="more-vertical" size={12} />
+                        </button>
+                    )}
+                    {menuId === env.id && (
+                        <div className="absolute top-full left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-30 py-1 min-w-[140px]">
+                            <button onClick={() => startRename(env)} className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2">
+                                <Icon name="pencil" size={12} /> Rename
+                            </button>
+                            <button onClick={() => { onDuplicate(env.id); setMenuId(null); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2">
+                                <Icon name="copy" size={12} /> Duplicate
+                            </button>
+                            {environments.length > 1 && (
+                                <button onClick={() => { if (confirm(`Delete environment "${env.name}"?`)) { onRemove(env.id); setMenuId(null); } }}
+                                        className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent text-destructive flex items-center gap-2">
+                                    <Icon name="trash-2" size={12} /> Delete
+                                </button>
+                            )}
+                        </div>
+                    )}
+                </div>
+            ))}
+            <button onClick={onAdd} className="app-btn app-btn-sm app-btn-outline rounded-full gap-1 ml-1">
+                <Icon name="plus" size={13} /> Environment
+            </button>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATRIX CELL (single capability)
+// ═══════════════════════════════════════════════════════════════════
+
+function MatrixCell({ clusterId, funcId, maturity, capName, targetMaturity, isSelected, darkMode }) {
+    const ml = maturity !== null ? MATURITY_LEVELS[maturity] : null;
+    const isGap = maturity !== null && maturity < targetMaturity;
+    const active = isSelected ? ' active-cell' : '';
+    const bg = ml ? ml.color : (darkMode ? '#334155' : '#e2e8f0');
+    const textColor = ml ? (maturity <= 1 ? '#fff' : (maturity <= 2 ? '#422006' : '#fff')) : (darkMode ? '#64748b' : '#94a3b8');
+
+    return (
+        <div className={`matrix-cell rounded-md overflow-hidden flex flex-col items-center justify-center border border-border/50${active}`}
+             style={{ backgroundColor: bg + (ml ? 'cc' : ''), minHeight: 56, minWidth: 100 }}
+             title={`#${clusterId} ${CLUSTERS[clusterId-1].name} × ${CSF_FUNCTIONS.find(f=>f.id===funcId).name}\n${capName || 'No capability'}\nMaturity: ${maturity !== null ? maturity + ' — ' + MATURITY_LEVELS[maturity].label : 'Not set'}`}>
+            <span className="text-[9px] font-semibold leading-tight text-center px-1 truncate w-full" style={{ color: textColor, opacity: 0.85 }}>
+                {capName ? (capName.length > 20 ? capName.slice(0, 18) + '…' : capName) : '—'}
+            </span>
+            <span className="text-lg font-bold" style={{ color: textColor }}>{maturity !== null ? maturity : '—'}</span>
+            {isGap && <span className="text-[8px] font-bold" style={{ color: '#fef2f2' }}>GAP</span>}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CAPABILITY MATRIX GRID
+// ═══════════════════════════════════════════════════════════════════
+
+function CapabilityMatrix({ environments, activeEnvId, targetMaturity, selectedCell, onCellClick, darkMode, matrixRef }) {
+    const isAgg = activeEnvId === 'aggregated';
+    const env = isAgg ? null : environments.find(e => e.id === activeEnvId);
+
+    const getMaturity = (clusterId, funcId) => {
+        const ck = cellKey(clusterId, funcId);
+        if (isAgg) return computeAggregated(environments, ck);
+        if (!env) return null;
+        return getCellMaturity(env.cells[ck]);
+    };
+
+    const getCapName = (clusterId, funcId) => {
+        const ck = cellKey(clusterId, funcId);
+        if (isAgg) {
+            // Show name from first env that has it
+            for (const e of environments) {
+                const cap = e.cells[ck]?.capability;
+                if (cap?.name) return cap.name;
+            }
+            return '';
+        }
+        return env?.cells[ck]?.capability?.name || '';
+    };
+
+    const getRowMin = (clusterId) => {
+        const vals = CSF_FUNCTIONS.map(fn => getMaturity(clusterId, fn.id)).filter(v => v !== null);
+        return vals.length > 0 ? Math.min(...vals) : null;
+    };
+
+    const getColMin = (funcId) => {
+        const vals = CLUSTERS.map(cl => getMaturity(cl.id, funcId)).filter(v => v !== null);
+        return vals.length > 0 ? Math.min(...vals) : null;
+    };
+
+    const overallMin = (() => {
+        const vals = CLUSTERS.flatMap(cl => CSF_FUNCTIONS.map(fn => getMaturity(cl.id, fn.id))).filter(v => v !== null);
+        return vals.length > 0 ? Math.min(...vals) : null;
+    })();
+
+    return (
+        <div ref={matrixRef} className="p-4 sm:p-6 overflow-x-auto">
+            <div className="inline-block min-w-full">
+                <table className="border-separate" style={{ borderSpacing: '3px' }}>
+                    <thead>
+                        <tr>
+                            <th className="w-36 min-w-[144px]" />
+                            {CSF_FUNCTIONS.map(fn => (
+                                <th key={fn.id} className="text-center px-1 pb-2 min-w-[110px]">
+                                    <div className="tooltip-wrap">
+                                        <div className="text-xs font-bold" style={{ color: fn.color }}>{fn.name}</div>
+                                        <div className="text-[10px] text-muted-foreground">{fn.id}</div>
+                                        <span className="tip">{fn.desc}</span>
+                                    </div>
+                                </th>
+                            ))}
+                            <th className="text-center px-2 min-w-[50px]">
+                                <div className="text-[10px] text-muted-foreground font-semibold">MIN</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {CLUSTERS.map(cl => {
+                            const rowMin = getRowMin(cl.id);
+                            return (
+                                <tr key={cl.id}>
+                                    <td className="pr-2 py-0.5">
+                                        <div className="tooltip-wrap">
+                                            <div className="flex items-center gap-1.5">
+                                                <span className={`inline-flex items-center justify-center w-6 h-6 rounded text-[10px] font-bold text-white ${cl.topology === 'bridge' ? 'bg-amber-600' : 'bg-blue-600'}`}>
+                                                    {cl.id}
+                                                </span>
+                                                <div className="flex flex-col">
+                                                    <span className="text-xs font-semibold leading-tight truncate max-w-[110px]">{cl.name}</span>
+                                                    <span className="text-[9px] text-muted-foreground">{cl.topology}</span>
+                                                </div>
+                                            </div>
+                                            <span className="tip" style={{ whiteSpace: 'normal', maxWidth: 280, left: '100%', bottom: 'auto', transform: 'none', marginLeft: 8, marginBottom: 0 }}>
+                                                {cl.genericVuln}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    {CSF_FUNCTIONS.map(fn => {
+                                        const m = getMaturity(cl.id, fn.id);
+                                        const name = getCapName(cl.id, fn.id);
+                                        const isSel = selectedCell && selectedCell.clusterId === cl.id && selectedCell.funcId === fn.id;
+                                        return (
+                                            <td key={fn.id} className="p-0">
+                                                <div onClick={() => onCellClick(cl.id, fn.id)} role="button" tabIndex={0}
+                                                     onKeyDown={e => e.key === 'Enter' && onCellClick(cl.id, fn.id)}>
+                                                    <MatrixCell clusterId={cl.id} funcId={fn.id} maturity={m} capName={name}
+                                                                targetMaturity={targetMaturity} isSelected={isSel} darkMode={darkMode} />
+                                                </div>
+                                            </td>
+                                        );
+                                    })}
+                                    <td className="text-center">
+                                        <MaturityBadge value={rowMin} size="sm" />
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                        <tr>
+                            <td className="text-right pr-2 text-[10px] text-muted-foreground font-semibold">COL MIN</td>
+                            {CSF_FUNCTIONS.map(fn => (
+                                <td key={fn.id} className="text-center py-1">
+                                    <MaturityBadge value={getColMin(fn.id)} size="sm" />
+                                </td>
+                            ))}
+                            <td className="text-center py-1">
+                                <MaturityBadge value={overallMin} size="lg" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// COMPONENT CARD (for controls, workforce, governance items)
+// ═══════════════════════════════════════════════════════════════════
+
+function ComponentCard({ item, compType, onUpdate, onDelete }) {
+    const [expanded, setExpanded] = useState(!item.name);
+    const st = COMPONENT_STATUSES.find(s => s.id === item.status) || COMPONENT_STATUSES[0];
+    const kind = compType === 'controls' ? CONTROL_KINDS.find(k => k.id === item.kind) : null;
+
+    return (
+        <div className="bg-muted/50 rounded-lg border border-border p-3">
+            <div className="flex items-start gap-2 cursor-pointer select-none" onClick={() => setExpanded(e => !e)} role="button">
+                <span style={{ color: st.color }} className="mt-0.5"><Icon name={st.icon} size={14} /></span>
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-semibold truncate">{item.name || 'Unnamed'}</span>
+                        {kind && (
+                            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: kind.color + '22', color: kind.color }}>
+                                {kind.label}
+                            </span>
+                        )}
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: st.color + '22', color: st.color }}>
+                            {st.label}
+                        </span>
+                    </div>
+                </div>
+                <span className="p-1 hover:bg-accent rounded flex-shrink-0">
+                    <Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={14} />
+                </span>
+            </div>
+            {expanded && (
+                <div className="mt-3 space-y-2 text-sm">
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Name *</label>
+                        <input type="text" value={item.name} onChange={e => onUpdate({ ...item, name: e.target.value })}
+                               className="input-ctrl py-1 text-sm" placeholder="Component name" />
+                    </div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Description</label>
+                        <textarea value={item.description || ''} onChange={e => onUpdate({ ...item, description: e.target.value })}
+                                  className="input-ctrl py-1 text-sm resize-none" rows={2} placeholder="Details..." />
+                    </div>
+                    <div className={`grid gap-2 ${compType === 'controls' ? 'grid-cols-2' : ''}`}>
+                        {compType === 'controls' && (
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Kind</label>
+                                <select value={item.kind || ''} onChange={e => onUpdate({ ...item, kind: e.target.value || '' })} className="input-ctrl py-1 text-sm">
+                                    <option value="">-- not set --</option>
+                                    {CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}
+                                </select>
+                            </div>
+                        )}
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Status</label>
+                            <select value={item.status} onChange={e => onUpdate({ ...item, status: e.target.value })} className="input-ctrl py-1 text-sm">
+                                {COMPONENT_STATUSES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="flex justify-end pt-1">
+                        <button onClick={() => { if (confirm('Delete this component?')) onDelete(item.id); }}
+                                className="app-btn app-btn-danger app-btn-xs gap-1">
+                            <Icon name="trash-2" size={11} /> Delete
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SUB-CAPABILITY CARD
+// ═══════════════════════════════════════════════════════════════════
+
+function SubCapabilityCard({ sub, onUpdate, onDelete }) {
+    const [expanded, setExpanded] = useState(false);
+    return (
+        <div className="bg-muted/30 rounded-lg border border-dashed border-border p-3">
+            <div className="flex items-center gap-2 cursor-pointer select-none" onClick={() => setExpanded(e => !e)} role="button">
+                <Icon name="git-branch" size={13} className="text-muted-foreground" />
+                <span className="text-sm font-semibold flex-1 truncate">{sub.name || 'Unnamed sub-capability'}</span>
+                <MaturityBadge value={sub.maturity} size="sm" />
+                <span className="p-1 hover:bg-accent rounded flex-shrink-0">
+                    <Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={14} />
+                </span>
+            </div>
+            {expanded && (
+                <div className="mt-3 space-y-2 text-sm">
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Name</label>
+                        <input type="text" value={sub.name} onChange={e => onUpdate({ ...sub, name: e.target.value })}
+                               className="input-ctrl py-1 text-sm" />
+                    </div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Control Objective</label>
+                        <textarea value={sub.controlObjective || ''} onChange={e => onUpdate({ ...sub, controlObjective: e.target.value })}
+                                  className="input-ctrl py-1 text-sm resize-none" rows={2} />
+                    </div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Maturity</label>
+                        <select value={sub.maturity} onChange={e => onUpdate({ ...sub, maturity: Number(e.target.value) })} className="input-ctrl py-1 text-sm">
+                            {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Notes</label>
+                        <textarea value={sub.notes || ''} onChange={e => onUpdate({ ...sub, notes: e.target.value })}
+                                  className="input-ctrl py-1 text-sm resize-none" rows={2} />
+                    </div>
+                    <div className="flex justify-end pt-1">
+                        <button onClick={() => { if (confirm('Delete this sub-capability?')) onDelete(sub.id); }}
+                                className="app-btn app-btn-danger app-btn-xs gap-1">
+                            <Icon name="trash-2" size={11} /> Delete
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CELL DETAIL PANEL
+// ═══════════════════════════════════════════════════════════════════
+
+function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturity, onUpdateCapability, onClose }) {
+    const [activeTab, setActiveTab] = useState('controls');
+    if (!selectedCell) return null;
+    const { clusterId, funcId } = selectedCell;
+    const cluster = CLUSTERS[clusterId - 1];
+    const func = CSF_FUNCTIONS.find(f => f.id === funcId);
+    const ck = cellKey(clusterId, funcId);
+    const isAgg = activeEnvId === 'aggregated';
+
+    const ensureCapability = (envId) => {
+        const env = environments.find(e => e.id === envId);
+        if (!env) return;
+        const cell = env.cells[ck];
+        if (!cell || !cell.capability) {
+            onUpdateCapability(envId, ck, createEmptyCapability());
+        }
+    };
+
+    const updateCap = (envId, updates) => {
+        const env = environments.find(e => e.id === envId);
+        if (!env) return;
+        const cell = env.cells[ck];
+        const cap = cell?.capability || createEmptyCapability();
+        onUpdateCapability(envId, ck, { ...cap, ...updates });
+    };
+
+    const addComponent = (envId, compType) => {
+        const env = environments.find(e => e.id === envId);
+        const cell = env?.cells[ck];
+        const cap = cell?.capability || createEmptyCapability();
+        const newItem = { id: genId(), name: '', description: '', status: 'open' };
+        if (compType === 'controls') newItem.kind = '';
+        onUpdateCapability(envId, ck, {
+            ...cap,
+            components: { ...cap.components, [compType]: [...(cap.components[compType] || []), newItem] }
+        });
+    };
+
+    const updateComponent = (envId, compType, updated) => {
+        const env = environments.find(e => e.id === envId);
+        const cell = env?.cells[ck];
+        const cap = cell?.capability;
+        if (!cap) return;
+        onUpdateCapability(envId, ck, {
+            ...cap,
+            components: { ...cap.components, [compType]: cap.components[compType].map(c => c.id === updated.id ? updated : c) }
+        });
+    };
+
+    const deleteComponent = (envId, compType, itemId) => {
+        const env = environments.find(e => e.id === envId);
+        const cell = env?.cells[ck];
+        const cap = cell?.capability;
+        if (!cap) return;
+        onUpdateCapability(envId, ck, {
+            ...cap,
+            components: { ...cap.components, [compType]: cap.components[compType].filter(c => c.id !== itemId) }
+        });
+    };
+
+    const addSubCapability = (envId) => {
+        const env = environments.find(e => e.id === envId);
+        const cell = env?.cells[ck];
+        const cap = cell?.capability || createEmptyCapability();
+        const newSub = { id: genId(), name: '', controlObjective: '', maturity: 0, notes: '' };
+        onUpdateCapability(envId, ck, { ...cap, subCapabilities: [...(cap.subCapabilities || []), newSub] });
+    };
+
+    const updateSubCapability = (envId, updated) => {
+        const env = environments.find(e => e.id === envId);
+        const cell = env?.cells[ck];
+        const cap = cell?.capability;
+        if (!cap) return;
+        onUpdateCapability(envId, ck, { ...cap, subCapabilities: cap.subCapabilities.map(s => s.id === updated.id ? updated : s) });
+    };
+
+    const deleteSubCapability = (envId, subId) => {
+        const env = environments.find(e => e.id === envId);
+        const cell = env?.cells[ck];
+        const cap = cell?.capability;
+        if (!cap) return;
+        onUpdateCapability(envId, ck, { ...cap, subCapabilities: cap.subCapabilities.filter(s => s.id !== subId) });
+    };
+
+    const renderEnvSection = (env) => {
+        const cell = env.cells[ck];
+        const cap = cell?.capability;
+
+        if (!cap) {
+            return (
+                <div key={env.id} className="mb-4">
+                    {isAgg && <div className="text-xs font-bold text-muted-foreground mb-2 uppercase tracking-wider">{env.name}</div>}
+                    <div className="text-center py-6 border border-dashed border-border rounded-lg">
+                        <p className="text-sm text-muted-foreground mb-3">No capability defined for this cell.</p>
+                        {!isAgg && (
+                            <button onClick={() => ensureCapability(env.id)} className="app-btn app-btn-primary app-btn-sm gap-1">
+                                <Icon name="plus" size={13} /> Create Capability
+                            </button>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const isGap = cap.maturity < targetMaturity;
+
+        return (
+            <div key={env.id} className="mb-4">
+                {isAgg && <div className="text-xs font-bold text-muted-foreground mb-2 uppercase tracking-wider">{env.name}</div>}
+
+                {/* Capability Header */}
+                <div className={`rounded-lg border p-4 mb-4 ${isGap ? 'border-destructive/40 bg-destructive/5' : 'border-border bg-muted/30'}`}>
+                    <div className="space-y-3">
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Capability Name</label>
+                            <input type="text" value={cap.name} onChange={e => updateCap(env.id, { name: e.target.value })}
+                                   className="input-ctrl py-1.5 text-sm font-semibold" placeholder="Name this capability" disabled={isAgg} />
+                        </div>
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Control Objective</label>
+                            <textarea value={cap.controlObjective} onChange={e => updateCap(env.id, { controlObjective: e.target.value })}
+                                      className="input-ctrl py-1.5 text-sm resize-none" rows={2}
+                                      placeholder="What must be true for this capability to be effective?" disabled={isAgg} />
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <div className="flex-1">
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Capability Maturity</label>
+                                <select value={cap.maturity} onChange={e => updateCap(env.id, { maturity: Number(e.target.value) })}
+                                        className="input-ctrl py-1.5 text-sm" disabled={isAgg}>
+                                    {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                                </select>
+                            </div>
+                            <div className="pt-4">
+                                <MaturityBadge value={cap.maturity} size="lg" />
+                            </div>
+                            {isGap && (
+                                <div className="pt-4 text-xs font-bold text-destructive flex items-center gap-1">
+                                    <Icon name="alert-triangle" size={14} /> Gap: {targetMaturity - cap.maturity}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Component Tabs */}
+                <div className="flex gap-1 mb-3 border-b border-border">
+                    {COMPONENT_TYPES.map(ct => {
+                        const count = (cap.components[ct.id] || []).length;
+                        const isActive = activeTab === ct.id;
+                        return (
+                            <button key={ct.id} onClick={() => setActiveTab(ct.id)}
+                                    className={`comp-tab flex items-center gap-1.5 px-3 py-2 text-xs font-semibold transition-colors ${isActive ? 'active' : 'text-muted-foreground hover:text-foreground'}`}
+                                    style={isActive ? { color: ct.color } : {}}>
+                                <Icon name={ct.icon} size={13} />
+                                {ct.name}
+                                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted">{count}</span>
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {/* Component List */}
+                <div className="space-y-2 mb-4">
+                    {(cap.components[activeTab] || []).length === 0 ? (
+                        <div className="text-xs text-muted-foreground italic py-3 text-center border border-dashed border-border rounded-lg">
+                            No {COMPONENT_TYPES.find(ct => ct.id === activeTab)?.name.toLowerCase()} documented
+                        </div>
+                    ) : (
+                        (cap.components[activeTab] || []).map(item => (
+                            <ComponentCard key={item.id} item={item} compType={activeTab}
+                                           onUpdate={(updated) => updateComponent(env.id, activeTab, updated)}
+                                           onDelete={(itemId) => deleteComponent(env.id, activeTab, itemId)} />
+                        ))
+                    )}
+                    {!isAgg && (
+                        <button onClick={() => addComponent(env.id, activeTab)}
+                                className="app-btn app-btn-outline app-btn-xs gap-1 w-full">
+                            <Icon name="plus" size={11} /> Add {COMPONENT_TYPES.find(ct => ct.id === activeTab)?.name.slice(0, -1) || 'Item'}
+                        </button>
+                    )}
+                </div>
+
+                {/* Sub-Capabilities */}
+                <div className="mb-4">
+                    <div className="flex items-center justify-between mb-2">
+                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
+                            <Icon name="git-branch" size={12} /> Sub-Capabilities ({(cap.subCapabilities || []).length})
+                        </label>
+                        {!isAgg && (
+                            <button onClick={() => addSubCapability(env.id)} className="app-btn app-btn-outline app-btn-xs gap-1">
+                                <Icon name="plus" size={11} /> Add
+                            </button>
+                        )}
+                    </div>
+                    {(cap.subCapabilities || []).length === 0 ? (
+                        <div className="text-xs text-muted-foreground italic py-2 text-center border border-dashed border-border rounded-lg">
+                            No sub-capabilities (optional decomposition)
+                        </div>
+                    ) : (
+                        <div className="space-y-2">
+                            {cap.subCapabilities.map(sub => (
+                                <SubCapabilityCard key={sub.id} sub={sub}
+                                    onUpdate={(updated) => updateSubCapability(env.id, updated)}
+                                    onDelete={(subId) => deleteSubCapability(env.id, subId)} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                {/* Notes */}
+                {!isAgg && (
+                    <div>
+                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1 mb-1.5">
+                            <Icon name="message-square" size={12} /> Notes
+                        </label>
+                        <textarea value={cap.notes || ''} onChange={e => updateCap(env.id, { notes: e.target.value })}
+                                  className="input-ctrl py-1.5 text-sm resize-none" rows={2} placeholder="Comments, observations, decisions..." />
+                    </div>
+                )}
+
+                {isAgg && <hr className="border-border my-3" />}
+            </div>
+        );
+    };
+
+    const envsToShow = isAgg ? environments : environments.filter(e => e.id === activeEnvId);
+
+    return (
+        <div className="detail-panel open fixed right-0 top-14 bottom-0 w-full sm:w-[480px] bg-card border-l border-border shadow-2xl z-30 flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b border-border flex-shrink-0">
+                <div>
+                    <div className="flex items-center gap-2">
+                        <span className={`inline-flex items-center justify-center w-7 h-7 rounded text-xs font-bold text-white ${cluster.topology === 'bridge' ? 'bg-amber-600' : 'bg-blue-600'}`}>
+                            #{clusterId}
+                        </span>
+                        <span className="font-display font-bold">{cluster.name}</span>
+                        <span className="text-lg font-light text-muted-foreground">×</span>
+                        <span className="font-bold" style={{ color: func.color }}>{func.name}</span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{func.desc} — for threats caused by: {cluster.genericVuln.toLowerCase()}</p>
+                </div>
+                <button onClick={onClose} className="p-2 hover:bg-destructive/10 hover:text-destructive rounded-lg flex-shrink-0 border border-border" title="Close panel">
+                    <Icon name="x" size={20} />
+                </button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4">
+                {envsToShow.map(renderEnvSection)}
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// IMPORT MODAL
+// ═══════════════════════════════════════════════════════════════════
+
+function ImportModal({ onClose, onImport }) {
+    const [text, setText] = useState('');
+    const [error, setError] = useState('');
+    const [dragOver, setDragOver] = useState(false);
+    const fileRef = useRef(null);
+
+    const handleImport = () => {
+        try {
+            const data = JSON.parse(text);
+            if (!data.environments || !Array.isArray(data.environments)) throw new Error('Invalid format: missing environments array');
+            onImport(data);
+            onClose();
+        } catch (e) { setError(e.message); }
+    };
+
+    const handleFile = (file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => { setText(e.target.result); setError(''); };
+        reader.readAsText(file);
+    };
+
+    const handleDrop = (e) => { e.preventDefault(); setDragOver(false); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); };
+
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="font-display font-bold text-lg">Import CBP Data</h2>
+                    <button onClick={onClose} className="p-1 hover:bg-accent rounded"><Icon name="x" size={18} /></button>
+                </div>
+                <div className={`border-2 border-dashed rounded-lg p-6 text-center mb-3 ${dragOver ? 'border-primary bg-primary/5' : 'border-border'}`}
+                     onDragOver={e => { e.preventDefault(); setDragOver(true); }} onDragLeave={() => setDragOver(false)} onDrop={handleDrop}>
+                    <Icon name="upload" size={24} />
+                    <p className="text-sm text-muted-foreground mt-2">Drag & drop a JSON file here, or</p>
+                    <button onClick={() => fileRef.current?.click()} className="app-btn app-btn-outline app-btn-sm mt-2">Browse Files</button>
+                    <input ref={fileRef} type="file" accept=".json" className="hidden" onChange={e => e.target.files[0] && handleFile(e.target.files[0])} />
+                </div>
+                <textarea value={text} onChange={e => { setText(e.target.value); setError(''); }}
+                          className="input-ctrl font-mono text-xs h-48 resize-none mb-3" placeholder="Or paste JSON here..." />
+                {error && <div className="text-destructive text-xs mb-3 bg-destructive/10 p-2 rounded">{error}</div>}
+                <div className="flex justify-end gap-2">
+                    <button onClick={onClose} className="app-btn app-btn-outline">Cancel</button>
+                    <button onClick={handleImport} disabled={!text.trim()} className="app-btn app-btn-primary">
+                        <Icon name="upload" size={14} /> Import
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// GAP ANALYSIS MODAL
+// ═══════════════════════════════════════════════════════════════════
+
+function GapAnalysisModal({ onClose, environments, activeEnvId, targetMaturity }) {
+    const [filterCluster, setFilterCluster] = useState('all');
+    const [filterFunc, setFilterFunc] = useState('all');
+
+    const gaps = useMemo(() => {
+        const result = [];
+        const isAgg = activeEnvId === 'aggregated';
+        const envs = isAgg ? environments : environments.filter(e => e.id === activeEnvId);
+
+        CLUSTERS.forEach(cl => {
+            if (filterCluster !== 'all' && cl.id !== Number(filterCluster)) return;
+            CSF_FUNCTIONS.forEach(fn => {
+                if (filterFunc !== 'all' && fn.id !== filterFunc) return;
+                const ck = cellKey(cl.id, fn.id);
+
+                envs.forEach(env => {
+                    const cell = env.cells[ck];
+                    const cap = cell?.capability;
+                    if (!cap) return;
+                    const gap = targetMaturity - cap.maturity;
+                    if (gap > 0) {
+                        result.push({
+                            cluster: cl,
+                            func: fn,
+                            envName: env.name,
+                            capName: cap.name,
+                            maturity: cap.maturity,
+                            target: targetMaturity,
+                            gap,
+                        });
+                    }
+                });
+            });
+        });
+
+        return result.sort((a, b) => b.gap - a.gap);
+    }, [environments, activeEnvId, targetMaturity, filterCluster, filterFunc]);
+
+    const totalGap = gaps.reduce((sum, g) => sum + g.gap, 0);
+    const avgGap = gaps.length > 0 ? (totalGap / gaps.length).toFixed(1) : '0';
+
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content" style={{ maxWidth: 800 }} onClick={e => e.stopPropagation()}>
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="font-display font-bold text-lg flex items-center gap-2">
+                        <Icon name="bar-chart-3" size={20} /> Gap Analysis
+                    </h2>
+                    <button onClick={onClose} className="p-1 hover:bg-accent rounded"><Icon name="x" size={18} /></button>
+                </div>
+
+                {/* Summary */}
+                <div className="flex gap-3 mb-4">
+                    <div className="flex-1 bg-muted/50 rounded-lg border border-border p-3 text-center">
+                        <div className="text-2xl font-bold text-destructive">{gaps.length}</div>
+                        <div className="text-xs text-muted-foreground">Gaps Found</div>
+                    </div>
+                    <div className="flex-1 bg-muted/50 rounded-lg border border-border p-3 text-center">
+                        <div className="text-2xl font-bold">{avgGap}</div>
+                        <div className="text-xs text-muted-foreground">Avg Gap Size</div>
+                    </div>
+                    <div className="flex-1 bg-muted/50 rounded-lg border border-border p-3 text-center">
+                        <div className="text-2xl font-bold" style={{ color: gaps.length > 0 ? getMaturityColor(gaps[0].maturity) : '#22c55e' }}>
+                            {gaps.length > 0 ? gaps[0].maturity : '—'}
+                        </div>
+                        <div className="text-xs text-muted-foreground">Worst Maturity</div>
+                    </div>
+                </div>
+
+                {/* Filters */}
+                <div className="flex gap-3 mb-4">
+                    <div className="flex-1">
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Filter by Cluster</label>
+                        <select value={filterCluster} onChange={e => setFilterCluster(e.target.value)} className="input-ctrl py-1 text-sm">
+                            <option value="all">All Clusters</option>
+                            {CLUSTERS.map(cl => <option key={cl.id} value={cl.id}>#{cl.id} {cl.name}</option>)}
+                        </select>
+                    </div>
+                    <div className="flex-1">
+                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Filter by CSF Function</label>
+                        <select value={filterFunc} onChange={e => setFilterFunc(e.target.value)} className="input-ctrl py-1 text-sm">
+                            <option value="all">All Functions</option>
+                            {CSF_FUNCTIONS.map(fn => <option key={fn.id} value={fn.id}>{fn.name} ({fn.id})</option>)}
+                        </select>
+                    </div>
+                </div>
+
+                {/* Gap Table */}
+                {gaps.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">
+                        <Icon name="check-circle" size={32} />
+                        <p className="mt-2 text-sm font-semibold">No gaps found!</p>
+                        <p className="text-xs">All assessed capabilities meet or exceed target maturity of {targetMaturity}.</p>
+                    </div>
+                ) : (
+                    <div className="max-h-[45vh] overflow-y-auto">
+                        <table className="w-full text-xs">
+                            <thead className="sticky top-0 bg-card">
+                                <tr className="border-b border-border">
+                                    <th className="text-left py-2 px-2 font-semibold">Cluster</th>
+                                    <th className="text-left py-2 px-2 font-semibold">Function</th>
+                                    <th className="text-left py-2 px-2 font-semibold">Capability</th>
+                                    {activeEnvId === 'aggregated' && <th className="text-left py-2 px-2 font-semibold">Env</th>}
+                                    <th className="text-center py-2 px-2 font-semibold">Current</th>
+                                    <th className="text-center py-2 px-2 font-semibold">Target</th>
+                                    <th className="text-center py-2 px-2 font-semibold">Gap</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {gaps.map((g, i) => (
+                                    <tr key={i} className="border-b border-border/50 hover:bg-muted/50">
+                                        <td className="py-1.5 px-2">
+                                            <span className={`inline-flex items-center justify-center w-5 h-5 rounded text-[9px] font-bold text-white mr-1 ${g.cluster.topology === 'bridge' ? 'bg-amber-600' : 'bg-blue-600'}`}>
+                                                {g.cluster.id}
+                                            </span>
+                                            {g.cluster.name}
+                                        </td>
+                                        <td className="py-1.5 px-2" style={{ color: g.func.color }}>{g.func.name}</td>
+                                        <td className="py-1.5 px-2 font-medium">{g.capName || '—'}</td>
+                                        {activeEnvId === 'aggregated' && <td className="py-1.5 px-2 text-muted-foreground">{g.envName}</td>}
+                                        <td className="py-1.5 px-2 text-center"><MaturityBadge value={g.maturity} size="sm" /></td>
+                                        <td className="py-1.5 px-2 text-center"><MaturityBadge value={g.target} size="sm" /></td>
+                                        <td className="py-1.5 px-2 text-center font-bold text-destructive">{g.gap}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATURITY LEGEND
+// ═══════════════════════════════════════════════════════════════════
+
+function MaturityLegend({ targetMaturity }) {
+    return (
+        <div className="px-4 sm:px-6 pb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] no-print">
+            <span className="text-muted-foreground font-medium">Maturity:</span>
+            {MATURITY_LEVELS.map(ml => (
+                <div key={ml.value} className="flex items-center gap-1">
+                    <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: ml.color }} />
+                    <span className={ml.value === targetMaturity ? 'font-bold underline' : 'text-muted-foreground'}>
+                        {ml.value} {ml.label}
+                    </span>
+                </div>
+            ))}
+            <div className="flex items-center gap-1 ml-2">
+                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: '#94a3b8' }} />
+                <span className="text-muted-foreground">— Not set</span>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MAIN APP
+// ═══════════════════════════════════════════════════════════════════
+
+function App() {
+    const [state, setState] = useState(() => loadState());
+    const [activeEnvId, setActiveEnvId] = useState(() => state.environments[0]?.id || 'aggregated');
+    const [selectedCell, setSelectedCell] = useState(null);
+    const [darkMode, setDarkMode] = useState(() => {
+        const saved = localStorage.getItem('tlctc-cbp-dark');
+        if (saved !== null) return saved === 'true';
+        return window.matchMedia?.('(prefers-color-scheme: dark)').matches || false;
+    });
+    const [showImport, setShowImport] = useState(false);
+    const [showGapAnalysis, setShowGapAnalysis] = useState(false);
+    const matrixRef = useRef(null);
+
+    // Persist state
+    useEffect(() => { saveState(state); }, [state]);
+
+    // Dark mode class
+    useEffect(() => {
+        document.documentElement.classList.toggle('dark', darkMode);
+        localStorage.setItem('tlctc-cbp-dark', darkMode);
+    }, [darkMode]);
+
+    // Keyboard shortcuts
+    useEffect(() => {
+        const handler = (e) => {
+            if (e.key === 'Escape') { setSelectedCell(null); setShowGapAnalysis(false); setShowImport(false); }
+        };
+        window.addEventListener('keydown', handler);
+        return () => window.removeEventListener('keydown', handler);
+    }, []);
+
+    // Ensure activeEnvId is valid
+    useEffect(() => {
+        if (activeEnvId !== 'aggregated' && !state.environments.find(e => e.id === activeEnvId)) {
+            setActiveEnvId(state.environments[0]?.id || 'aggregated');
+        }
+    }, [state.environments, activeEnvId]);
+
+    // State updaters
+    const updateState = (updates) => setState(prev => ({ ...prev, ...updates, lastModified: new Date().toISOString().split('T')[0] }));
+
+    const updateEnvironment = (envId, updater) => {
+        setState(prev => ({
+            ...prev,
+            lastModified: new Date().toISOString().split('T')[0],
+            environments: prev.environments.map(env => env.id === envId ? updater(env) : env),
+        }));
+    };
+
+    const addEnvironment = () => {
+        const name = prompt('Environment name:', `Environment ${state.environments.length + 1}`);
+        if (!name?.trim()) return;
+        const newEnv = createEmptyEnvironment(name.trim());
+        setState(prev => ({ ...prev, environments: [...prev.environments, newEnv] }));
+        setActiveEnvId(newEnv.id);
+    };
+
+    const renameEnvironment = (envId, name) => updateEnvironment(envId, env => ({ ...env, name }));
+
+    const duplicateEnvironment = (envId) => {
+        const source = state.environments.find(e => e.id === envId);
+        if (!source) return;
+        const newEnv = { ...JSON.parse(JSON.stringify(source)), id: genId(), name: source.name + ' (Copy)' };
+        setState(prev => ({ ...prev, environments: [...prev.environments, newEnv] }));
+        setActiveEnvId(newEnv.id);
+    };
+
+    const removeEnvironment = (envId) => {
+        setState(prev => ({ ...prev, environments: prev.environments.filter(e => e.id !== envId) }));
+    };
+
+    // Capability CRUD
+    const handleUpdateCapability = (envId, ck, capability) => {
+        updateEnvironment(envId, env => ({
+            ...env,
+            cells: { ...env.cells, [ck]: { ...env.cells[ck], capability } },
+        }));
+    };
+
+    // Export JSON
+    const exportJSON = () => {
+        const exportData = {
+            version: '1.0.0',
+            tool: 'TLCTC CBP App',
+            exportDate: new Date().toISOString(),
+            ...state,
+        };
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `tlctc-cbp-${state.orgName.replace(/\s+/g, '-').toLowerCase()}-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    // Import JSON
+    const handleImport = (data) => {
+        const newState = {
+            orgName: data.orgName || 'Imported',
+            targetMaturity: data.targetMaturity ?? 3,
+            environments: data.environments || [],
+            createdAt: data.createdAt || new Date().toISOString().split('T')[0],
+        };
+        setState(newState);
+        setActiveEnvId(newState.environments[0]?.id || 'aggregated');
+        setSelectedCell(null);
+    };
+
+    // Load starter template
+    const loadStarter = async () => {
+        if (!confirm('Load starter template? This will replace your current data.')) return;
+        try {
+            const resp = await fetch('cbp-starter.json');
+            if (!resp.ok) throw new Error('Could not load cbp-starter.json');
+            const data = await resp.json();
+            handleImport(data);
+        } catch (e) { alert('Failed to load starter data: ' + e.message); }
+    };
+
+    // Export PNG
+    const exportPNG = async () => {
+        if (!matrixRef.current) return;
+        const table = matrixRef.current.querySelector('table');
+        if (!table) return;
+
+        const truncated = table.querySelectorAll('.truncate');
+        truncated.forEach(el => { el.classList.remove('truncate'); el.dataset.pngRestore = 'truncate'; });
+        const maxWEls = table.querySelectorAll('[class*="max-w-"]');
+        maxWEls.forEach(el => { el.dataset.pngClasses = el.className; el.className = el.className.replace(/max-w-\[\d+px\]/g, ''); });
+        const tips = table.querySelectorAll('.tip');
+        tips.forEach(el => { el.dataset.pngDisplay = el.style.display; el.style.display = 'none'; });
+        const origPad = table.style.padding;
+        table.style.padding = '20px';
+
+        try {
+            const canvas = await html2canvas(table, {
+                backgroundColor: darkMode ? '#1e293b' : '#f8fafc',
+                scale: 2,
+                logging: false,
+            });
+            const a = document.createElement('a');
+            a.download = `tlctc-cbp-${new Date().toISOString().split('T')[0]}.png`;
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+        } catch (e) { alert('PNG export failed: ' + e.message); }
+
+        truncated.forEach(el => { el.classList.add('truncate'); delete el.dataset.pngRestore; });
+        maxWEls.forEach(el => { if (el.dataset.pngClasses) { el.className = el.dataset.pngClasses; delete el.dataset.pngClasses; } });
+        tips.forEach(el => { el.style.display = el.dataset.pngDisplay || ''; delete el.dataset.pngDisplay; });
+        table.style.padding = origPad;
+    };
+
+    // Report
+    const generateReport = () => {
+        const date = new Date().toISOString().split('T')[0];
+        const orgName = state.orgName || 'Organization';
+        const envs = state.environments;
+        const target = state.targetMaturity;
+        const C = t => '<' + '/' + t + '>';
+        const css = '<style>' +
+            '* { margin: 0; padding: 0; box-sizing: border-box; } ' +
+            "body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 32px; color: #1e293b; font-size: 13px; line-height: 1.5; } " +
+            'h1 { font-size: 20px; margin-bottom: 4px; } h2 { font-size: 16px; margin: 24px 0 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; } ' +
+            '.meta { color: #64748b; font-size: 12px; margin-bottom: 20px; } ' +
+            'table { border-collapse: collapse; width: 100%; margin: 8px 0 16px; font-size: 12px; } ' +
+            'th, td { border: 1px solid #e2e8f0; padding: 5px 8px; text-align: left; } ' +
+            'th { background: #f1f5f9; font-weight: 600; } ' +
+            '.gap { background: #fef2f2; } .ok { background: #f0fdf4; } ' +
+            '.mat-0 { color: #ef4444; } .mat-1 { color: #f97316; } .mat-2 { color: #eab308; } ' +
+            '.mat-3 { color: #84cc16; } .mat-4 { color: #22c55e; } .mat-5 { color: #059669; } ' +
+            '.badge { font-weight: 700; } ' +
+            '.summary-box { display: inline-block; padding: 8px 16px; margin: 4px 8px 4px 0; border-radius: 8px; border: 1px solid #e2e8f0; } ' +
+            '.summary-box .num { font-size: 22px; font-weight: 700; } .summary-box .lbl { font-size: 11px; color: #64748b; } ' +
+            '.cluster-tag { display: inline-block; padding: 1px 6px; border-radius: 4px; color: white; font-size: 11px; font-weight: 700; margin-right: 4px; } ' +
+            '.cluster-internal { background: #2563eb; } .cluster-bridge { background: #d97706; } ' +
+            '.comp-summary { font-size: 11px; color: #64748b; } ' +
+            '@media print { body { padding: 16px; } }' +
+            C('style');
+
+        const docHead = (title) => '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + title + C('title') + css + C('head') + '<body>';
+        const docEnd = C('body') + C('html');
+
+        let html = docHead('CBP Capability Report — ' + orgName);
+        html += '<h1>Capability-Based Planning Report' + C('h1') + '<div class="meta">' + orgName + ' — Generated ' + date + ' — Target Maturity: ' + target + C('div');
+
+        envs.forEach(env => {
+            html += '<h2>Environment: ' + env.name + C('h2');
+            let gapCount = 0, documented = 0;
+
+            html += '<table><tr><th>Cluster' + C('th');
+            CSF_FUNCTIONS.forEach(fn => { html += '<th style="color:' + fn.color + '">' + fn.id + C('th'); });
+            html += '<th>Row Min' + C('th') + C('tr');
+
+            CLUSTERS.forEach(cl => {
+                html += '<tr><td><span class="cluster-tag cluster-' + cl.topology + '">#' + cl.id + C('span') + ' ' + cl.name + C('td');
+                let rowVals = [];
+                CSF_FUNCTIONS.forEach(fn => {
+                    const ck = cellKey(cl.id, fn.id);
+                    const cell = env.cells[ck];
+                    const cap = cell?.capability;
+                    if (cap) {
+                        documented++;
+                        rowVals.push(cap.maturity);
+                        const isGap = cap.maturity < target;
+                        if (isGap) gapCount++;
+                        const compCount = (cap.components.controls || []).length + (cap.components.workforce || []).length + (cap.components.governance || []).length;
+                        html += '<td class="' + (isGap ? 'gap' : 'ok') + '"><span class="badge mat-' + cap.maturity + '">' + cap.maturity + C('span');
+                        html += '<br><span class="comp-summary">' + (cap.name || '—') + C('span');
+                        html += '<br><span class="comp-summary">' + compCount + ' components' + C('span') + C('td');
+                    } else {
+                        html += '<td style="color:#94a3b8">—' + C('td');
+                    }
+                });
+                const rowMin = rowVals.length > 0 ? Math.min(...rowVals) : null;
+                html += '<td><span class="badge' + (rowMin !== null ? ' mat-' + rowMin : '') + '">' + (rowMin !== null ? rowMin : '—') + C('span') + C('td') + C('tr');
+            });
+            html += C('table');
+
+            html += '<div>';
+            html += '<div class="summary-box"><div class="num">' + documented + C('div') + '<div class="lbl">Capabilities Defined' + C('div') + C('div');
+            html += '<div class="summary-box"><div class="num" style="color:#ef4444">' + gapCount + C('div') + '<div class="lbl">Below Target (' + target + ')' + C('div') + C('div');
+            html += '<div class="summary-box"><div class="num">' + (60 - documented) + C('div') + '<div class="lbl">Not Defined' + C('div') + C('div');
+            html += C('div');
+
+            // Gap details
+            const gaps = [];
+            CLUSTERS.forEach(cl => CSF_FUNCTIONS.forEach(fn => {
+                const ck = cellKey(cl.id, fn.id);
+                const cap = env.cells[ck]?.capability;
+                if (cap && cap.maturity < target) {
+                    gaps.push({ cluster: '#' + cl.id + ' ' + cl.name, func: fn.id, name: cap.name, maturity: cap.maturity, gap: target - cap.maturity });
+                }
+            }));
+            if (gaps.length > 0) {
+                html += '<h2>Gap Details' + C('h2');
+                html += '<table><tr><th>Cluster' + C('th') + '<th>Function' + C('th') + '<th>Capability' + C('th') + '<th>Maturity' + C('th') + '<th>Gap' + C('th') + C('tr');
+                gaps.sort((a, b) => a.maturity - b.maturity).forEach(g => {
+                    html += '<tr class="gap"><td>' + g.cluster + C('td') + '<td>' + g.func + C('td') + '<td>' + (g.name || '—') + C('td') + '<td class="badge mat-' + g.maturity + '">' + g.maturity + C('td') + '<td>' + g.gap + C('td') + C('tr');
+                });
+                html += C('table');
+            }
+        });
+        html += docEnd;
+
+        const w = window.open('', '_blank');
+        if (w) { w.document.write(html); w.document.close(); }
+        else alert('Please allow popups to view reports.');
+    };
+
+    const handleCellClick = (clusterId, funcId) => {
+        if (selectedCell && selectedCell.clusterId === clusterId && selectedCell.funcId === funcId) {
+            setSelectedCell(null);
+        } else {
+            setSelectedCell({ clusterId, funcId });
+        }
+    };
+
+    return (
+        <div className="flex flex-col min-h-screen">
+            <Header darkMode={darkMode} onToggleDark={() => setDarkMode(d => !d)}
+                    onExportJSON={exportJSON} onImportJSON={() => setShowImport(true)} onExportPNG={exportPNG}
+                    onGapAnalysis={() => setShowGapAnalysis(true)} onReport={generateReport}
+                    onLoadStarter={loadStarter} />
+
+            <SummaryBar orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
+                        targetMaturity={state.targetMaturity} onTargetChange={v => updateState({ targetMaturity: v })}
+                        environments={state.environments} activeEnvId={activeEnvId} />
+
+            <EnvironmentTabs environments={state.environments} activeEnvId={activeEnvId}
+                            onSelect={setActiveEnvId} onAdd={addEnvironment}
+                            onRename={renameEnvironment} onDuplicate={duplicateEnvironment} onRemove={removeEnvironment} />
+
+            <div className="flex items-center justify-between px-4 sm:px-6 pt-3 no-print">
+                <h2 className="font-display font-bold text-base flex items-center gap-2">
+                    <Icon name="target" size={18} />
+                    {activeEnvId === 'aggregated' ? 'Aggregated View (Worst-Case)' :
+                     state.environments.find(e => e.id === activeEnvId)?.name || 'Capability Matrix'}
+                </h2>
+                <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                    <span className="font-semibold">10 Clusters</span> <span>×</span>
+                    <span className="font-semibold">6 CSF Functions</span> <span>=</span>
+                    <span className="font-semibold">60 Capabilities</span>
+                </div>
+            </div>
+
+            <MaturityLegend targetMaturity={state.targetMaturity} />
+
+            <div className="flex-1 relative">
+                <CapabilityMatrix environments={state.environments} activeEnvId={activeEnvId}
+                                  targetMaturity={state.targetMaturity} selectedCell={selectedCell}
+                                  onCellClick={handleCellClick} darkMode={darkMode} matrixRef={matrixRef} />
+
+                {selectedCell && (
+                    <CellDetailPanel selectedCell={selectedCell} environments={state.environments}
+                                     activeEnvId={activeEnvId} targetMaturity={state.targetMaturity}
+                                     onUpdateCapability={handleUpdateCapability}
+                                     onClose={() => setSelectedCell(null)} />
+                )}
+            </div>
+
+            <footer className="px-4 sm:px-6 py-3 border-t border-border text-center text-xs text-muted-foreground no-print">
+                TLCTC CBP — Capability-Based Planning — 10 Clusters × 6 CSF Functions = 60 Capabilities — Data stored in browser localStorage
+            </footer>
+
+            {showImport && <ImportModal onClose={() => setShowImport(false)} onImport={handleImport} />}
+            {showGapAnalysis && <GapAnalysisModal onClose={() => setShowGapAnalysis(false)} environments={state.environments}
+                                                    activeEnvId={activeEnvId} targetMaturity={state.targetMaturity} />}
+        </div>
+    );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
