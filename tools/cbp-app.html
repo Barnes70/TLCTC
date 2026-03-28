@@ -445,8 +445,16 @@ function EnvironmentTabs({ environments, activeEnvId, onSelect, onAdd, onRename,
     const startRename = (env) => { setEditingId(env.id); setEditName(env.name); setMenuId(null); };
     const commitRename = () => { if (editName.trim()) onRename(editingId, editName.trim()); setEditingId(null); };
 
+    const menuRef = useRef(null);
+    useEffect(() => {
+        if (!menuId) return;
+        const handleClick = (e) => { if (menuRef.current && !menuRef.current.contains(e.target)) setMenuId(null); };
+        document.addEventListener('mousedown', handleClick);
+        return () => document.removeEventListener('mousedown', handleClick);
+    }, [menuId]);
+
     return (
-        <div className="px-4 sm:px-6 py-2 border-b border-border flex items-center gap-1 overflow-x-auto no-print">
+        <div className="px-4 sm:px-6 py-2 border-b border-border flex flex-wrap items-center gap-1 no-print" style={{ position: 'relative' }}>
             <button onClick={() => onSelect('aggregated')}
                     className={`app-btn app-btn-sm rounded-full ${activeEnvId === 'aggregated' ? 'app-btn-primary' : 'app-btn-outline'}`}>
                 <Icon name="layers" size={13} /> Aggregated
@@ -460,19 +468,18 @@ function EnvironmentTabs({ environments, activeEnvId, onSelect, onAdd, onRename,
                                className="input-ctrl py-1 px-2 text-xs w-32" />
                     ) : (
                         <button onClick={() => onSelect(env.id)}
-                                onContextMenu={(e) => { e.preventDefault(); setMenuId(menuId === env.id ? null : env.id); }}
                                 className={`app-btn app-btn-sm rounded-full ${activeEnvId === env.id ? 'app-btn-primary' : 'app-btn-outline'}`}>
                             {env.name}
                         </button>
                     )}
                     {activeEnvId === env.id && editingId !== env.id && (
                         <button onClick={() => setMenuId(menuId === env.id ? null : env.id)}
-                                className="ml-0.5 p-0.5 rounded hover:bg-accent">
-                            <Icon name="more-vertical" size={12} />
+                                className="ml-1 px-1.5 py-0.5 rounded border border-border hover:bg-accent text-muted-foreground text-xs font-bold leading-none">
+                            &#8942;
                         </button>
                     )}
                     {menuId === env.id && (
-                        <div className="absolute top-full left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-30 py-1 min-w-[140px]">
+                        <div ref={menuRef} className="absolute top-full left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[140px]">
                             <button onClick={() => startRename(env)} className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2">
                                 <Icon name="pencil" size={12} /> Rename
                             </button>
@@ -1310,7 +1317,15 @@ function App() {
     };
 
     const removeEnvironment = (envId) => {
-        setState(prev => ({ ...prev, environments: prev.environments.filter(e => e.id !== envId) }));
+        setState(prev => {
+            const remaining = prev.environments.filter(e => e.id !== envId);
+            return { ...prev, environments: remaining };
+        });
+        if (activeEnvId === envId) {
+            const remaining = state.environments.filter(e => e.id !== envId);
+            setActiveEnvId(remaining.length > 0 ? remaining[0].id : 'aggregated');
+        }
+        setSelectedCell(null);
     };
 
     // Capability CRUD
@@ -1554,7 +1569,7 @@ function App() {
     );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
 </body>
 </html>

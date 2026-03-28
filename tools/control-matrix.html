@@ -509,8 +509,16 @@ function EnvironmentTabs({ environments, activeEnvId, onSelect, onAdd, onRename,
     const startRename = (env) => { setEditingId(env.id); setEditName(env.name); setMenuId(null); };
     const commitRename = () => { if (editName.trim()) onRename(editingId, editName.trim()); setEditingId(null); };
 
+    const menuRef = useRef(null);
+    useEffect(() => {
+        if (!menuId) return;
+        const handleClick = (e) => { if (menuRef.current && !menuRef.current.contains(e.target)) setMenuId(null); };
+        document.addEventListener('mousedown', handleClick);
+        return () => document.removeEventListener('mousedown', handleClick);
+    }, [menuId]);
+
     return (
-        <div className="px-4 sm:px-6 py-2 border-b border-border flex items-center gap-1 overflow-x-auto no-print">
+        <div className="px-4 sm:px-6 py-2 border-b border-border flex flex-wrap items-center gap-1 no-print" style={{ position: 'relative' }}>
             <button onClick={() => onSelect('aggregated')}
                     className={`app-btn app-btn-sm rounded-full ${activeEnvId === 'aggregated' ? 'app-btn-primary' : 'app-btn-outline'}`}>
                 <Icon name="layers" size={13} /> Aggregated
@@ -524,19 +532,18 @@ function EnvironmentTabs({ environments, activeEnvId, onSelect, onAdd, onRename,
                                className="input-ctrl py-1 px-2 text-xs w-32" />
                     ) : (
                         <button onClick={() => onSelect(env.id)}
-                                onContextMenu={(e) => { e.preventDefault(); setMenuId(menuId === env.id ? null : env.id); }}
                                 className={`app-btn app-btn-sm rounded-full ${activeEnvId === env.id ? 'app-btn-primary' : 'app-btn-outline'}`}>
                             {env.name}
                         </button>
                     )}
                     {activeEnvId === env.id && editingId !== env.id && (
                         <button onClick={() => setMenuId(menuId === env.id ? null : env.id)}
-                                className="ml-0.5 p-0.5 rounded hover:bg-accent">
-                            <Icon name="more-vertical" size={12} />
+                                className="ml-1 px-1.5 py-0.5 rounded border border-border hover:bg-accent text-muted-foreground text-xs font-bold leading-none">
+                            &#8942;
                         </button>
                     )}
                     {menuId === env.id && (
-                        <div className="absolute top-full left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-30 py-1 min-w-[140px]">
+                        <div ref={menuRef} className="absolute top-full left-0 mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[140px]">
                             <button onClick={() => startRename(env)} className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2">
                                 <Icon name="pencil" size={12} /> Rename
                             </button>
@@ -564,7 +571,7 @@ function EnvironmentTabs({ environments, activeEnvId, onSelect, onAdd, onRename,
 // MATRIX CELL (split L/U)
 // ═══════════════════════════════════════════════════════════════════
 
-function MatrixCell({ clusterId, funcId, localMat, umbrellaMat, targetMaturity, isAgg, isSelected, onClick, darkMode }) {
+function MatrixCell({ clusterId, funcId, localMat, umbrellaMat, manualOverride, targetMaturity, isAgg, isSelected, onClick, darkMode }) {
     const isGapL = localMat !== null && localMat < targetMaturity;
     const isGapU = umbrellaMat !== null && umbrellaMat < targetMaturity;
     const active = isSelected ? ' active-cell' : '';
@@ -576,7 +583,7 @@ function MatrixCell({ clusterId, funcId, localMat, umbrellaMat, targetMaturity, 
         return (
             <div className={`flex-1 flex flex-col items-center justify-center ${isGap ? 'gap-highlight' : ''}`}
                  style={{ backgroundColor: bg + (ml ? 'cc' : ''), minHeight: 40 }}
-                 title={`#${clusterId} ${CLUSTERS[clusterId-1].name} × ${funcId} ${type}\nMaturity: ${mat !== null ? mat + ' — ' + MATURITY_LEVELS[mat].label : 'No controls'}`}>
+                 title={`#${clusterId} ${CLUSTERS[clusterId-1].name} × ${funcId} ${type}\nMaturity: ${mat !== null ? mat + ' — ' + MATURITY_LEVELS[mat].label : 'No controls'}${manualOverride ? ' (manual override)' : ''}`}>
                 <span className="text-[9px] font-bold opacity-70" style={{ color: textColor }}>{type[0]}</span>
                 <span className="text-sm font-bold" style={{ color: textColor }}>{mat !== null ? mat : '—'}</span>
             </div>
@@ -584,7 +591,7 @@ function MatrixCell({ clusterId, funcId, localMat, umbrellaMat, targetMaturity, 
     };
 
     return (
-        <div className={`matrix-cell rounded-md overflow-hidden flex border border-border/50${active}`}
+        <div className={`matrix-cell rounded-md overflow-hidden flex border ${manualOverride ? 'border-purple-500 border-2 ring-1 ring-purple-500/30' : 'border-border/50'}${active}`}
              onClick={onClick} role="button" tabIndex={0} onKeyDown={e => e.key === 'Enter' && onClick()}>
             {renderHalf(localMat, 'Local', isGapL)}
             <div className="w-px" style={{ backgroundColor: darkMode ? '#475569' : '#cbd5e1' }} />
@@ -601,20 +608,34 @@ function ControlMatrix({ environments, activeEnvId, targetMaturity, selectedCell
     const isAgg = activeEnvId === 'aggregated';
     const env = isAgg ? null : environments.find(e => e.id === activeEnvId);
 
+    const getEffective = (cell) => {
+        if (!cell) return { local: null, umbrella: null, manual: null };
+        const mm = cell.manualMaturity != null ? cell.manualMaturity : null;
+        return {
+            local: mm != null ? mm : computeTypeMaturity(cell.local),
+            umbrella: mm != null ? mm : computeTypeMaturity(cell.umbrella),
+            manual: mm,
+        };
+    };
+
     const getMaturities = (clusterId, funcId) => {
         const ck = cellKey(clusterId, funcId);
         if (isAgg) {
+            // For aggregated: use effective (manual or calculated) per environment, take worst
+            const localVals = [], umbrellaVals = [];
+            environments.forEach(e => {
+                const eff = getEffective(e.cells[ck]);
+                if (eff.local !== null) localVals.push(eff.local);
+                if (eff.umbrella !== null) umbrellaVals.push(eff.umbrella);
+            });
             return {
-                local: computeAggregated(environments, ck, 'local'),
-                umbrella: computeAggregated(environments, ck, 'umbrella'),
+                local: localVals.length > 0 ? Math.min(...localVals) : null,
+                umbrella: umbrellaVals.length > 0 ? Math.min(...umbrellaVals) : null,
+                manual: null,
             };
         }
-        if (!env) return { local: null, umbrella: null };
-        const cell = env.cells[ck];
-        return {
-            local: cell ? computeTypeMaturity(cell.local) : null,
-            umbrella: cell ? computeTypeMaturity(cell.umbrella) : null,
-        };
+        if (!env) return { local: null, umbrella: null, manual: null };
+        return getEffective(env.cells[ck]);
     };
 
     // Row aggregates (worst across all CSF functions)
@@ -698,6 +719,7 @@ function ControlMatrix({ environments, activeEnvId, targetMaturity, selectedCell
                                                 <MatrixCell
                                                     clusterId={cl.id} funcId={fn.id}
                                                     localMat={m.local} umbrellaMat={m.umbrella}
+                                                    manualOverride={m.manual != null}
                                                     targetMaturity={targetMaturity}
                                                     isAgg={isAgg} isSelected={isSel}
                                                     onClick={() => onCellClick(cl.id, fn.id)}
@@ -1388,6 +1410,45 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
                 </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
+                {/* Manual Maturity Override */}
+                {!isAgg && envsToShow.map(env => {
+                    const cell = env.cells[ck] || {};
+                    const calc = computeCellMaturity(cell);
+                    const manual = cell.manualMaturity != null ? cell.manualMaturity : null;
+                    const setManual = (val) => onUpdateCellMeta(env.id, ck, { manualMaturity: val });
+
+                    return (
+                        <div key={'mat-' + env.id} className="mb-4 p-3 bg-muted/50 rounded-lg border border-border">
+                            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1 mb-2">
+                                <Icon name="sliders-horizontal" size={12} /> Maturity Override
+                            </label>
+                            <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xs text-muted-foreground">Calculated:</span>
+                                    <MaturityBadge value={calc.overall} size="sm" />
+                                    <span className="text-[10px] text-muted-foreground">(L:{calc.local ?? '—'} U:{calc.umbrella ?? '—'})</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xs text-muted-foreground">Manual:</span>
+                                    <select value={manual != null ? manual : ''}
+                                            onChange={e => setManual(e.target.value === '' ? null : parseInt(e.target.value))}
+                                            className={`input-ctrl py-0.5 text-sm w-28 ${manual != null ? 'border-purple-500 text-purple-600 font-bold' : ''}`}>
+                                        <option value="">Auto</option>
+                                        {MATURITY_LEVELS.map(ml => (
+                                            <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>
+                                        ))}
+                                    </select>
+                                    {manual != null && (
+                                        <button onClick={() => setManual(null)} className="p-0.5 hover:bg-accent rounded text-muted-foreground" title="Clear override">
+                                            <Icon name="x" size={14} />
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+
                 {envsToShow.map(renderEnvSection)}
 
                 {/* Notes & Tasks — per cell per environment */}
@@ -1868,7 +1929,15 @@ function App() {
     };
 
     const removeEnvironment = (envId) => {
-        setState(prev => ({ ...prev, environments: prev.environments.filter(e => e.id !== envId) }));
+        setState(prev => {
+            const remaining = prev.environments.filter(e => e.id !== envId);
+            return { ...prev, environments: remaining };
+        });
+        if (activeEnvId === envId) {
+            const remaining = state.environments.filter(e => e.id !== envId);
+            setActiveEnvId(remaining.length > 0 ? remaining[0].id : 'aggregated');
+        }
+        setSelectedCell(null);
     };
 
     // Shared controls CRUD
@@ -2273,7 +2342,7 @@ function App() {
     );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
 </body>
 </html>
