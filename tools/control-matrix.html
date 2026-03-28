@@ -350,7 +350,7 @@ function HeaderDropdown({ label, icon, items }) {
 // HEADER
 // ═══════════════════════════════════════════════════════════════════
 
-function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onShowSharedControls, sharedControlCount, onReport, onShowSchema }) {
+function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onShowSharedControls, sharedControlCount, onReport, onShowSchema, onLoadStarter }) {
     return (
         <header className="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
             <div className="flex items-center gap-3">
@@ -391,6 +391,9 @@ function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON
                 </button>
                 <button onClick={onImportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON">
                     <Icon name="upload" size={14} /> <span className="hidden sm:inline">Import</span>
+                </button>
+                <button onClick={onLoadStarter} className="app-btn app-btn-outline app-btn-sm gap-1" title="Load Starter Template">
+                    <Icon name="rocket" size={14} /> <span className="hidden sm:inline">Starter</span>
                 </button>
                 <button onClick={onShowSchema} className="app-btn app-btn-outline app-btn-sm h-9 w-9 p-0" title="Import JSON Format">
                     <Icon name="info" size={14} />
@@ -1962,6 +1965,17 @@ function App() {
         setSelectedCell(null);
     };
 
+    // Load Starter
+    const loadStarter = async () => {
+        if (!confirm('Load starter template? This will replace your current data.')) return;
+        try {
+            const resp = await fetch('control-matrix-starter.json');
+            if (!resp.ok) throw new Error('Could not load control-matrix-starter.json');
+            const data = await resp.json();
+            handleImport(data);
+        } catch (e) { alert('Failed to load starter data: ' + e.message); }
+    };
+
     // Export PNG
     const exportPNG = async () => {
         if (!matrixRef.current) return;
@@ -2202,7 +2216,8 @@ function App() {
                     onReport={generateReport}
                     onShowSharedControls={() => setShowSharedLibrary(true)}
                     sharedControlCount={(state.sharedControls || []).length}
-                    onShowSchema={() => setShowSchema(true)} />
+                    onShowSchema={() => setShowSchema(true)}
+                    onLoadStarter={loadStarter} />
 
             <SummaryBar orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
                         targetMaturity={state.targetMaturity} onTargetChange={v => updateState({ targetMaturity: v })}

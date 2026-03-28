@@ -47,6 +47,28 @@
           ],
           "umbrella": [
             {
+              "id": "ctl-1-gv-ra",
+              "name": "Risk appetite statement for function abuse",
+              "description": "Board-approved statement defining acceptable residual risk from misuse of legitimate system functions (e.g., bulk export, admin overrides, API abuse). Reviewed annually or after material incidents.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-1-gv-rt",
+              "name": "Risk tolerance thresholds for function abuse",
+              "description": "Quantified operational boundaries: max acceptable number of unmonitored privileged functions, max time-to-detect for anomalous function usage, max acceptable coverage gaps in function inventory.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
               "id": "s-4",
               "name": "Quarterly risk review of access rights",
               "description": "",
@@ -489,6 +511,28 @@
             }
           ],
           "umbrella": [
+            {
+              "id": "ctl-2-gv-ra",
+              "name": "Risk appetite statement for server exploitation",
+              "description": "Board-approved statement defining acceptable residual risk from server-side implementation flaws. Covers web applications, APIs, microservices, and backend infrastructure.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-2-gv-rt",
+              "name": "Risk tolerance thresholds for server exploitation",
+              "description": "Quantified operational boundaries: max patching SLA by severity (e.g., Critical: 24h, High: 7d), max acceptable unscanned server assets, max allowable findings from penetration tests before release gate.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
             {
               "id": "s-41",
               "name": "Monthly vuln metrics to management",
@@ -933,6 +977,28 @@
           ],
           "umbrella": [
             {
+              "id": "ctl-3-gv-ra",
+              "name": "Risk appetite statement for client exploitation",
+              "description": "Board-approved statement defining acceptable residual risk from client-side implementation flaws in browsers, desktop applications, and mobile apps.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-3-gv-rt",
+              "name": "Risk tolerance thresholds for client exploitation",
+              "description": "Quantified operational boundaries: max percentage of endpoints without EDR, max acceptable time to deploy critical client patches, max endpoints running unsupported OS/browser versions.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
               "id": "s-78",
               "name": "Track endpoint compliance metrics",
               "description": "",
@@ -1364,6 +1430,28 @@
             }
           ],
           "umbrella": [
+            {
+              "id": "ctl-4-gv-ra",
+              "name": "Risk appetite statement for identity theft",
+              "description": "Board-approved statement defining acceptable residual risk from credential compromise and identity abuse. Covers human and non-human identities (service accounts, API keys, certificates).",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-4-gv-rt",
+              "name": "Risk tolerance thresholds for identity theft",
+              "description": "Quantified operational boundaries: max percentage of accounts without MFA, max age of unrotated service credentials, max dormant accounts before forced review, max privileged accounts without PAM coverage.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
             {
               "id": "s-114",
               "name": "Track MFA adoption metrics",
@@ -1808,6 +1896,28 @@
           ],
           "umbrella": [
             {
+              "id": "ctl-5-gv-ra",
+              "name": "Risk appetite statement for channel interception",
+              "description": "Board-approved statement defining acceptable residual risk from man-in-the-middle attacks on communication channels, including network, API, and inter-service traffic.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-5-gv-rt",
+              "name": "Risk tolerance thresholds for channel interception",
+              "description": "Quantified operational boundaries: minimum TLS version (e.g., 1.2+), max percentage of internal traffic unencrypted, max certificate age before renewal, max time to revoke compromised certificates.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
               "id": "s-151",
               "name": "Track encryption coverage metrics",
               "description": "",
@@ -2250,6 +2360,28 @@
             }
           ],
           "umbrella": [
+            {
+              "id": "ctl-6-gv-ra",
+              "name": "Risk appetite statement for flooding attacks",
+              "description": "Board-approved statement defining acceptable residual risk from denial-of-service and resource exhaustion attacks against organizational services.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-6-gv-rt",
+              "name": "Risk tolerance thresholds for flooding attacks",
+              "description": "Quantified operational boundaries: max acceptable downtime per incident (e.g., 15 min for Tier-1 services), max time-to-mitigate for volumetric DDoS, minimum capacity headroom above peak load (e.g., 3x).",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
             {
               "id": "s-188",
               "name": "Track uptime metrics",
@@ -2694,6 +2826,28 @@
           ],
           "umbrella": [
             {
+              "id": "ctl-7-gv-ra",
+              "name": "Risk appetite statement for malware",
+              "description": "Board-approved statement defining acceptable residual risk from foreign executable content, covering endpoints, servers, email, and removable media vectors.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-7-gv-rt",
+              "name": "Risk tolerance thresholds for malware",
+              "description": "Quantified operational boundaries: max endpoints without next-gen AV/EDR, max percentage of systems without application whitelisting, max time-to-contain after malware detection (e.g., 15 min auto-isolate).",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
               "id": "s-225",
               "name": "Track EDR coverage metrics",
               "description": "",
@@ -3136,6 +3290,28 @@
             }
           ],
           "umbrella": [
+            {
+              "id": "ctl-8-gv-ra",
+              "name": "Risk appetite statement for physical attacks",
+              "description": "Board-approved statement defining acceptable residual risk from physical access exploitation, hardware tampering, and facility intrusion.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-8-gv-rt",
+              "name": "Risk tolerance thresholds for physical attacks",
+              "description": "Quantified operational boundaries: max facilities without badge access, max server rooms without CCTV, max time to detect unauthorized physical access, max endpoints with enabled USB/physical ports in high-security zones.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
             {
               "id": "s-262",
               "name": "Track device inventory compliance",
@@ -3580,6 +3756,28 @@
           ],
           "umbrella": [
             {
+              "id": "ctl-9-gv-ra",
+              "name": "Risk appetite statement for social engineering",
+              "description": "Board-approved statement defining acceptable residual risk from human manipulation attacks including phishing, pretexting, and business email compromise.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-9-gv-rt",
+              "name": "Risk tolerance thresholds for social engineering",
+              "description": "Quantified operational boundaries: max acceptable phishing click rate (e.g., <5%), max percentage of staff without annual security awareness training, max time to triage user-reported phishing (e.g., 30 min).",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
               "id": "s-299",
               "name": "Track phishing simulation results",
               "description": "",
@@ -4011,6 +4209,28 @@
             }
           ],
           "umbrella": [
+            {
+              "id": "ctl-10-gv-ra",
+              "name": "Risk appetite statement for supply chain attacks",
+              "description": "Board-approved statement defining acceptable residual risk from compromised third-party components, update channels, and vendor trust relationships.",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
+            {
+              "id": "ctl-10-gv-rt",
+              "name": "Risk tolerance thresholds for supply chain attacks",
+              "description": "Quantified operational boundaries: max dependencies without SCA coverage, max vendors without completed security assessment, max time to isolate compromised component after advisory (e.g., 4h for Critical).",
+              "kind": "org",
+              "maturity": 0,
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "linkMore": "",
+              "linkJira": ""
+            },
             {
               "id": "s-335",
               "name": "Track vendor risk assessments",
