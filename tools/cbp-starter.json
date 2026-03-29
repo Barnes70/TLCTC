@@ -644,7 +644,8 @@
               "controls": [
                 { "id": "ctl-5-pr-1", "name": "Enforce TLS 1.2+ on all endpoints", "description": "", "kind": "tech", "status": "open" },
                 { "id": "ctl-5-pr-2", "name": "Implement certificate pinning for critical services", "description": "", "kind": "tech", "status": "open" },
-                { "id": "ctl-5-pr-3", "name": "DNSSEC deployment", "description": "", "kind": "tech", "status": "open" }
+                { "id": "ctl-5-pr-3", "name": "DNSSEC deployment", "description": "", "kind": "tech", "status": "open" },
+                { "id": "ctl-5-pr-4", "name": "SCION", "description": "", "kind": "tech", "status": "open" }
               ],
               "workforce": [
                 { "id": "wf-5-pr-1", "name": "Network Engineers", "description": "", "status": "open" },
