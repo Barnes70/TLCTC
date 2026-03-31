@@ -78,6 +78,9 @@
     #tlctc-mobile-menu .nav-toggle-btn { background: transparent; border: none; cursor: pointer; color: hsl(var(--nav-foreground)); border-radius: 9999px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
     #tlctc-mobile-menu .nav-toggle-btn:hover { background: hsl(var(--nav-secondary)); }
 
+    .ai-disclaimer { background: hsl(var(--nav-secondary) / 0.5); border-bottom: 1px solid hsl(var(--nav-border)); color: hsl(var(--nav-muted-foreground)); font-size: 11px; line-height: 1.4; padding: 6px 16px; text-align: center; flex-shrink: 0; }
+    .ai-disclaimer button { background: none; border: none; cursor: pointer; color: hsl(var(--nav-muted-foreground)); font-size: 14px; margin-left: 8px; opacity: 0.6; vertical-align: middle; }
+    .ai-disclaimer button:hover { opacity: 1; }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -142,6 +145,8 @@
     </nav>
   </div>
 
+  <div class="ai-disclaimer no-print" id="ai-disclaimer">&#9432; Example data in this tool is AI-generated based on real-world threat reports. Quality improves with evolving AI capabilities. These examples illustrate the practical application of the TLCTC framework.<button onclick="document.getElementById('ai-disclaimer').remove();try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){}" title="Dismiss">&times;</button></div>
+
   <div id="root" class="flex-1 overflow-hidden"></div>
 
   <!-- Nav bar vanilla JS (outside React) -->
@@ -184,6 +189,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       if (window.lucide) { lucide.createIcons(); }
       updateNavThemeIcons();
+      try { if (localStorage.getItem('tlctc-dismiss-disclaimer') === '1') { var d = document.getElementById('ai-disclaimer'); if (d) d.remove(); }} catch(e) {}
     });
   </script>
 

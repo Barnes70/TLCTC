@@ -33,7 +33,7 @@ Starter templates are provided in [`examples/`](examples/) for each tool. Import
 
 ### Example Data Files
 
-Real-world examples contributed by the community:
+> **Note:** Example and starter data in the tools is AI-generated based on real-world threat reports. Quality improves with evolving AI capabilities. These examples illustrate the practical application of the TLCTC framework — answering the "So What?" when reading the foundational taxonomy.
 
 | File | For Tool | Content |
 |------|----------|---------|

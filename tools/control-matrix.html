@@ -87,6 +87,9 @@
             .glass-header { @apply bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-40; }
             .card { @apply bg-card text-card-foreground rounded-xl border border-border shadow-lg; }
             .input-ctrl { @apply w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring text-foreground; }
+            .ai-disclaimer { @apply bg-muted/50 text-muted-foreground text-[11px] leading-snug py-1.5 px-4 text-center border-b border-border flex-shrink-0; }
+            .ai-disclaimer button { @apply bg-transparent border-none cursor-pointer text-muted-foreground text-sm ml-2 opacity-60 align-middle; }
+            .ai-disclaimer button:hover { @apply opacity-100; }
             .app-btn { @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg px-4 py-2 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background text-sm; }
             .app-btn-primary { @apply bg-primary text-primary-foreground hover:opacity-90; }
             .app-btn-secondary { @apply bg-secondary text-secondary-foreground hover:opacity-90; }
@@ -1861,6 +1864,7 @@ function App() {
     const [state, setState] = useState(() => loadState());
     const [activeEnvId, setActiveEnvId] = useState(() => state.environments[0]?.id || 'aggregated');
     const [selectedCell, setSelectedCell] = useState(null);
+    const [disclaimerDismissed, setDisclaimerDismissed] = useState(() => { try { return localStorage.getItem('tlctc-dismiss-disclaimer') === '1'; } catch(e) { return false; } });
     const [darkMode, setDarkMode] = useState(() => {
         const saved = localStorage.getItem('tlctc-cm-dark');
         if (saved !== null) return saved === 'true';
@@ -2287,6 +2291,7 @@ function App() {
                     sharedControlCount={(state.sharedControls || []).length}
                     onShowSchema={() => setShowSchema(true)}
                     onLoadStarter={loadStarter} />
+            {!disclaimerDismissed && <div className="ai-disclaimer no-print">&#9432; Example data in this tool is AI-generated based on real-world threat reports. Quality improves with evolving AI capabilities. These examples illustrate the practical application of the TLCTC framework.<button onClick={() => { setDisclaimerDismissed(true); try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){} }} title="Dismiss">&times;</button></div>}
 
             <SummaryBar orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
                         targetMaturity={state.targetMaturity} onTargetChange={v => updateState({ targetMaturity: v })}

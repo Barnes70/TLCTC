@@ -516,6 +516,9 @@
             .btn-ghost { @apply hover:bg-accent hover:text-accent-foreground; }
 
             .glass-card { @apply bg-card/50 backdrop-blur-xl border border-border/50 shadow-sm transition-all duration-300; }
+            .ai-disclaimer { @apply bg-muted/50 text-muted-foreground text-[11px] leading-snug py-1.5 px-4 text-center border-b border-border flex-shrink-0; }
+            .ai-disclaimer button { @apply bg-transparent border-none cursor-pointer text-muted-foreground text-sm ml-2 opacity-60 align-middle; }
+            .ai-disclaimer button:hover { @apply opacity-100; }
             
             .input-field { @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50; }
             
@@ -572,6 +575,7 @@
                 </div>
             </div>
         </div>
+        <div class="ai-disclaimer no-print rounded-b-2xl" id="ai-disclaimer" style="margin-top:-1px;">&#9432; Example data in this tool is AI-generated based on real-world threat reports. Quality improves with evolving AI capabilities. These examples illustrate the practical application of the TLCTC framework.<button onclick="document.getElementById('ai-disclaimer').remove();try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){}" title="Dismiss">&times;</button></div>
     </header>
 
     <div id="mobile-menu" class="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden hidden transition-all duration-300 opacity-0">
@@ -1125,6 +1129,7 @@
         const $legend = sel('legendBox');
 
         document.addEventListener('DOMContentLoaded', () => {
+            try { if (localStorage.getItem('tlctc-dismiss-disclaimer') === '1') { var d = document.getElementById('ai-disclaimer'); if (d) d.remove(); }} catch(e) {}
             buildCapabilitySliders();
             loadLocal();
             populateSelect();

@@ -104,6 +104,9 @@
                 background-image: radial-gradient(hsl(var(--muted-foreground) / 0.2) 1px, transparent 1px);
                 background-size: 24px 24px;
             }
+            .ai-disclaimer { background: hsl(var(--muted) / 0.5); border-bottom: 1px solid hsl(var(--border)); color: hsl(var(--muted-foreground)); font-size: 11px; line-height: 1.4; padding: 6px 16px; text-align: center; flex-shrink: 0; }
+            .ai-disclaimer button { background: none; border: none; cursor: pointer; color: hsl(var(--muted-foreground)); font-size: 14px; margin-left: 8px; opacity: 0.6; vertical-align: middle; }
+            .ai-disclaimer button:hover { opacity: 1; }
 
             .vc-badge { @apply text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wide; }
             .vc-1 { @apply bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300; }
@@ -186,6 +189,8 @@
         <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">TLCTC.net</a>
     </nav>
 </div>
+
+<div class="ai-disclaimer no-print" id="ai-disclaimer">&#9432; Example data in this tool is AI-generated based on real-world threat reports. Quality improves with evolving AI capabilities. These examples illustrate the practical application of the TLCTC framework.<button onclick="document.getElementById('ai-disclaimer').remove();try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){}" title="Dismiss">&times;</button></div>
 
 <!-- Strategic Notation Bar -->
 <div class="bg-card border-b border-border px-6 py-3 flex items-center gap-4 flex-shrink-0 overflow-x-auto whitespace-nowrap">
@@ -824,6 +829,7 @@ let zoomLevel = 0; // 0 = fit-to-width (default), >0 = explicit scale
 
 window.onload = function() {
     lucide.createIcons();
+    try { if (localStorage.getItem('tlctc-dismiss-disclaimer') === '1') { var d = document.getElementById('ai-disclaimer'); if (d) d.remove(); }} catch(e) {}
 
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');

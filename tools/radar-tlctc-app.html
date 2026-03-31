@@ -159,6 +159,9 @@
             .sector-drop-indicator-top { @apply border-t-4 border-t-blue-500; }
             .sector-drop-indicator-bottom { @apply border-b-4 border-b-blue-500; }
         }
+        .ai-disclaimer { background: hsl(var(--muted) / 0.5); border-bottom: 1px solid hsl(var(--border)); color: hsl(var(--muted-foreground)); font-size: 11px; line-height: 1.4; padding: 6px 16px; text-align: center; flex-shrink: 0; }
+        .ai-disclaimer button { background: none; border: none; cursor: pointer; color: hsl(var(--muted-foreground)); font-size: 14px; margin-left: 8px; opacity: 0.6; vertical-align: middle; }
+        .ai-disclaimer button:hover { opacity: 1; }
         @media print {
             .no-print { display: none !important; }
             body { background-color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -219,6 +222,8 @@
         </nav>
     </div>
 
+    <div class="ai-disclaimer no-print" id="ai-disclaimer">&#9432; Example data in this tool is AI-generated based on real-world threat reports. Quality improves with evolving AI capabilities. These examples illustrate the practical application of the TLCTC framework.<button onclick="document.getElementById('ai-disclaimer').remove();try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){}" title="Dismiss">&times;</button></div>
+
     <div id="root"></div>
 
     <script type="text/babel">
@@ -260,7 +265,7 @@ const DEFAULT_REPORT_FLAG_BG_COLOR = '#facc15'; // Tailwind yellow-400
 const DEFAULT_REPORT_FLAG_TEXT_COLOR = '#1f2937'; // Tailwind gray-800
 const DEFAULT_TOLERANCE_FLAG_BG_COLOR = '#ef4444'; // Tailwind red-500
 const DEFAULT_TOLERANCE_FLAG_TEXT_COLOR = '#FFFFFF'; // White
-const DEFAULT_LABEL_TEXT_COLOR = '#FFFFFF'; // White - for "both" mode labels
+const DEFAULT_LABEL_TEXT_COLOR = '#000000'; // Black - for bubble and label text
 
 const DEFAULT_BUBBLE_RADIUS = 15;
 const DEFAULT_RECT_WIDTH = 50;
@@ -413,7 +418,7 @@ function RadarBubble({
                     y={labelOffsetY}
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    fill={labelTextColor || '#FFFFFF'}
+                    fill={labelTextColor || DEFAULT_LABEL_TEXT_COLOR}
                     fontSize={`${effectiveFontSize * 0.95}px`}
                     fontWeight="500"
                     fontFamily="Inter, sans-serif"
@@ -447,7 +452,7 @@ function RadarBubble({
             <text
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fill="#FFFFFF"
+                fill={labelTextColor || DEFAULT_LABEL_TEXT_COLOR}
                 fontSize={`${effectiveFontSize}px`}
                 fontWeight={highlight ? "normal" : "latin"}
                 fontFamily="Inter, sans-serif"
@@ -1493,6 +1498,7 @@ const bubblePositions = useMemo(() => {
     <script>
         // --- UI & Theme Logic ---
         lucide.createIcons();
+        try { if (localStorage.getItem('tlctc-dismiss-disclaimer') === '1') { var d = document.getElementById('ai-disclaimer'); if (d) d.remove(); }} catch(e) {}
 
         const htmlEl = document.documentElement;
 
