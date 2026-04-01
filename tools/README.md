@@ -11,7 +11,7 @@ Standalone, self-contained HTML applications that implement the TLCTC framework.
 | **Actor Profile Designer** | [`actor-profile-designer.html`](actor-profile-designer.html) | Build threat actor capability profiles scored across all 10 TLCTC clusters, link observed incidents, compare actors side-by-side, and export for CTI sharing |
 | **Threat Radar** | [`radar-tlctc-app.html`](radar-tlctc-app.html) | Interactive threat radar visualization with configurable sectors, zone thresholds, trend tracking (old vs current values), report/tolerance flags, and PNG export with optional legend |
 | **Control Matrix** | [`control-matrix.html`](control-matrix.html) | NIST CSF 2.0 × TLCTC control matrix for mapping controls across all 10 clusters and 6 CSF functions, with maturity scoring, multi-environment support, shared controls library, and reporting |
-| **CBP** | [`cbp-app.html`](cbp-app.html) | Capability-Based Planning — map organizational capabilities across 10 TLCTC clusters × 6 CSF functions, with maturity at the capability level, three component types (Controls, Workforce, Governance), gap analysis, and multi-environment support |
+| **CBP** | [`cbp-app.html`](cbp-app.html) | Capability-Based Planning — map organizational capabilities across 10 TLCTC clusters × 6 CSF functions, with maturity at capability and component level, three dimensions (Controls, Workforce, Data Level), shared controls library, gap analysis, and multi-environment support |
 
 ## How to Use
 
@@ -306,6 +306,19 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
   "exportDate": "ISO-8601",
   "orgName": "Organization Name",
   "targetMaturity": 3,                        // 0–5 target maturity level
+  "sharedControls": [{                        // shared controls library
+    "id": "unique-id",
+    "name": "Shared Control Name",
+    "description": "...",
+    "kind": "tech | org",
+    "status": "open | in-progress | done | not-applicable",
+    "maturity": 0,                            // 0–5
+    "scope": "all | applications | platform | infra-sw | infra-hw",
+    "ownerName": "Owner Name",
+    "ownerOrgChart": "URL to org chart",
+    "linkMore": "URL to documentation",
+    "linkJira": "URL to ticket"
+  }],
   "environments": [{
     "id": "unique-id",
     "name": "Environment Name",
@@ -322,19 +335,32 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
               "name": "Control name",
               "description": "...",
               "kind": "tech | org",            // technical or organizational
-              "status": "open | in-progress | done | not-applicable"
+              "status": "open | in-progress | done | not-applicable",
+              "maturity": 0,                   // 0–5, per-control maturity
+              "scope": "all | applications | platform | infra-sw | infra-hw",
+              "ownerName": "Owner Name",
+              "ownerOrgChart": "URL",
+              "linkMore": "URL",
+              "linkJira": "URL"
             }],
             "workforce": [{                    // roles and competencies
               "id": "unique-id",
               "name": "Role or competency name",
               "description": "...",
-              "status": "open | in-progress | done | not-applicable"
+              "status": "open | in-progress | done | not-applicable",
+              "maturity": 0,                   // 0–5, per-role maturity
+              "scope": "all | applications | platform | infra-sw | infra-hw",
+              "ownerName": "Owner Name",
+              "ownerOrgChart": "URL",
+              "linkMore": "URL",
+              "linkJira": "URL"
             }],
-            "governance": [{                   // ownership and assurance
+            "dataLevel": [{                    // data quality and automation feeding the capability
               "id": "unique-id",
-              "name": "Governance mechanism",
+              "name": "Data source name",
               "description": "...",
-              "status": "open | in-progress | done | not-applicable"
+              "dataType": "generic | automated | semi-automated | manually",
+              "dataQuality": "low | medium | good"
             }]
           },
           "subCapabilities": [{                // optional nested decomposition
@@ -345,7 +371,12 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
             "notes": ""
           }],
           "notes": ""
-        }
+        },
+        "umbrella": [{                         // shared control references per cell
+          "id": "unique-id",
+          "sharedControlId": "ref-to-shared",  // links to sharedControls[].id
+          "maturity": 0                        // 0–5, per-link maturity override
+        }]
       }
     }
   }]
@@ -354,8 +385,9 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
 
 **Key concepts:**
 - Each cell (cluster × CSF function) holds exactly **one capability** — not a list of controls.
-- **Maturity is assessed at the capability level**, not per individual component. Components have a `status` field instead.
-- Three **component types**: Controls (what delivers it), Workforce (who operates it), Governance (who assures it).
+- **Maturity** is tracked at both the **capability level** (overall assessment) and **per component** (controls and workforce each have their own maturity 0–5).
+- Three **dimensions**: Controls (what delivers it), Workforce (who operates it), Data Level (how informed — automation type and quality).
+- **Shared Controls Library** — define controls once, link to many cells via the `umbrella` array with per-link maturity. Compatible with Control Matrix shared controls for cross-tool import.
 - **Sub-capabilities** allow optional decomposition without deep nesting.
 - Cell keys follow the pattern `{clusterId}-{funcId}` (e.g., `"7-DE"` for Malware × Detect).
 

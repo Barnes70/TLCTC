@@ -155,7 +155,7 @@ const CSF_FUNCTIONS = [
 const COMPONENT_TYPES = [
     { id: 'controls',   name: 'Controls',   icon: 'shield',   color: '#3b82f6', desc: 'Technical and organizational measures delivering the capability' },
     { id: 'workforce',  name: 'Workforce',  icon: 'users',    color: '#8b5cf6', desc: 'Roles and competencies needed to operate the capability' },
-    { id: 'governance', name: 'Governance', icon: 'landmark', color: '#22c55e', desc: 'Ownership, accountability, and assurance mechanisms' },
+    { id: 'dataLevel',  name: 'Data Level', icon: 'database',  color: '#22c55e', desc: 'Data quality and automation level feeding the capability' },
 ];
 
 const MATURITY_LEVELS = [
@@ -177,6 +177,27 @@ const COMPONENT_STATUSES = [
 const CONTROL_KINDS = [
     { id: 'tech', label: 'Technical',      color: '#3b82f6' },
     { id: 'org',  label: 'Organizational', color: '#8b5cf6' },
+];
+
+const SHARED_SCOPES = [
+    { id: 'all',          label: 'All' },
+    { id: 'applications', label: 'Applications' },
+    { id: 'platform',     label: 'Platform' },
+    { id: 'infra-sw',     label: 'Infrastructure (SW)' },
+    { id: 'infra-hw',     label: 'Infrastructure (HW)' },
+];
+
+const DATA_LEVEL_TYPES = [
+    { id: 'generic',        label: 'Generic',        color: '#94a3b8' },
+    { id: 'automated',      label: 'Automated',      color: '#22c55e' },
+    { id: 'semi-automated', label: 'Semi-Automated', color: '#eab308' },
+    { id: 'manually',       label: 'Manually',       color: '#f97316' },
+];
+
+const DATA_LEVEL_QUALITY = [
+    { id: 'low',    label: 'Low',    color: '#ef4444' },
+    { id: 'medium', label: 'Medium', color: '#eab308' },
+    { id: 'good',   label: 'Good',   color: '#22c55e' },
 ];
 
 const STORAGE_KEY = 'tlctc-cbp-v1';
@@ -216,7 +237,7 @@ function createEmptyCapability(name, controlObjective) {
         name: name || '',
         controlObjective: controlObjective || '',
         maturity: 0,
-        components: { controls: [], workforce: [], governance: [] },
+        components: { controls: [], workforce: [], dataLevel: [] },
         subCapabilities: [],
         notes: '',
     };
@@ -231,6 +252,7 @@ function createDefaultState() {
         orgName: 'My Organization',
         targetMaturity: 3,
         environments: [createEmptyEnvironment('Default')],
+        sharedControls: [],
         createdAt: new Date().toISOString().split('T')[0],
     };
 }
@@ -248,14 +270,14 @@ function saveState(state) {
 }
 
 function countComponents(env) {
-    let controls = 0, workforce = 0, governance = 0;
+    let controls = 0, workforce = 0, dataLevel = 0;
     Object.values(env.cells).forEach(cell => {
         if (!cell.capability) return;
         controls += (cell.capability.components.controls || []).length;
         workforce += (cell.capability.components.workforce || []).length;
-        governance += (cell.capability.components.governance || []).length;
+        dataLevel += (cell.capability.components.dataLevel || cell.capability.components.governance || []).length;
     });
-    return { controls, workforce, governance, total: controls + workforce + governance };
+    return { controls, workforce, dataLevel, total: controls + workforce + dataLevel };
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -300,7 +322,7 @@ function MaturityBadge({ value, size = 'md' }) {
 // HEADER
 // ═══════════════════════════════════════════════════════════════════
 
-function Header({ darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onGapAnalysis, onReport, onLoadStarter }) {
+function Header({ darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onGapAnalysis, onReport, onLoadStarter, onShowSharedControls, sharedControlCount }) {
     return (
         <header className="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
             <div className="flex items-center gap-3">
@@ -326,6 +348,10 @@ function Header({ darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPN
                 <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">TLCTC.net <Icon name="external-link" size={12} /></a>
             </nav>
             <div className="flex items-center gap-2">
+                <button onClick={onShowSharedControls} className="app-btn app-btn-outline app-btn-sm gap-1" title="Shared Controls Library — define and link controls across clusters">
+                    <Icon name="link" size={14} /> <span className="hidden sm:inline">Shared</span>
+                    {sharedControlCount > 0 && <span className="bg-amber-500 text-white text-[10px] px-1.5 rounded-full font-bold">{sharedControlCount}</span>}
+                </button>
                 <button onClick={onGapAnalysis} className="app-btn app-btn-outline app-btn-sm gap-1" title="Gap Analysis">
                     <Icon name="bar-chart-3" size={14} /> <span className="hidden sm:inline">Gaps</span>
                 </button>
@@ -654,34 +680,38 @@ function CapabilityMatrix({ environments, activeEnvId, targetMaturity, selectedC
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// COMPONENT CARD (for controls, workforce, governance items)
+// COMPONENT CARD (for controls, workforce, data level items)
 // ═══════════════════════════════════════════════════════════════════
 
-function ComponentCard({ item, compType, onUpdate, onDelete }) {
+function ComponentCard({ item, compType, onUpdate, onDelete, targetMaturity }) {
     const [expanded, setExpanded] = useState(!item.name);
     const st = COMPONENT_STATUSES.find(s => s.id === item.status) || COMPONENT_STATUSES[0];
-    const kind = compType === 'controls' ? CONTROL_KINDS.find(k => k.id === item.kind) : null;
+    const kind = (compType === 'controls' || compType === 'workforce') ? CONTROL_KINDS.find(k => k.id === item.kind) : null;
+    const isDataLevel = compType === 'dataLevel';
+    const dlType = isDataLevel ? DATA_LEVEL_TYPES.find(t => t.id === item.dataType) : null;
+    const dlQuality = isDataLevel ? DATA_LEVEL_QUALITY.find(q => q.id === item.dataQuality) : null;
+    const hasMaturity = compType === 'controls' || compType === 'workforce';
+    const isGap = hasMaturity && typeof item.maturity === 'number' && item.maturity < (targetMaturity || 0);
 
     return (
-        <div className="bg-muted/50 rounded-lg border border-border p-3">
+        <div className={`bg-muted/50 rounded-lg border ${isGap ? 'border-destructive/40' : 'border-border'} p-3`}>
             <div className="flex items-start gap-2 cursor-pointer select-none" onClick={() => setExpanded(e => !e)} role="button">
-                <span style={{ color: st.color }} className="mt-0.5"><Icon name={st.icon} size={14} /></span>
+                {hasMaturity ? <MaturityBadge value={item.maturity} size="sm" /> : <span style={{ color: st.color }} className="mt-0.5"><Icon name={st.icon} size={14} /></span>}
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-sm font-semibold truncate">{item.name || 'Unnamed'}</span>
-                        {kind && (
-                            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: kind.color + '22', color: kind.color }}>
-                                {kind.label}
-                            </span>
-                        )}
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: st.color + '22', color: st.color }}>
-                            {st.label}
-                        </span>
+                        {kind && <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: kind.color + '22', color: kind.color }}>{kind.label}</span>}
+                        {dlType && <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: dlType.color + '22', color: dlType.color }}>{dlType.label}</span>}
+                        {dlQuality && <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: dlQuality.color + '22', color: dlQuality.color }}>Q: {dlQuality.label}</span>}
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: st.color + '22', color: st.color }}>{st.label}</span>
                     </div>
+                    {item.ownerName && <div className="text-[11px] text-muted-foreground mt-0.5">Owner: {item.ownerName}{item.ownerOrgChart ? ` (${item.ownerOrgChart})` : ''}</div>}
                 </div>
-                <span className="p-1 hover:bg-accent rounded flex-shrink-0">
-                    <Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={14} />
-                </span>
+                <div className="flex items-center gap-0.5 flex-shrink-0">
+                    {item.linkJira && <a href={item.linkJira} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="p-1 hover:bg-accent rounded text-blue-500" title="Open Jira"><Icon name="ticket" size={13} /></a>}
+                    {item.linkMore && <a href={item.linkMore} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="p-1 hover:bg-accent rounded text-blue-500" title="More info"><Icon name="external-link" size={13} /></a>}
+                    <span className="p-1 hover:bg-accent rounded"><Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={14} /></span>
+                </div>
             </div>
             {expanded && (
                 <div className="mt-3 space-y-2 text-sm">
@@ -695,13 +725,52 @@ function ComponentCard({ item, compType, onUpdate, onDelete }) {
                         <textarea value={item.description || ''} onChange={e => onUpdate({ ...item, description: e.target.value })}
                                   className="input-ctrl py-1 text-sm resize-none" rows={2} placeholder="Details..." />
                     </div>
-                    <div className={`grid gap-2 ${compType === 'controls' ? 'grid-cols-2' : ''}`}>
-                        {compType === 'controls' && (
+                    {!isDataLevel && (
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to More</label>
+                            <input type="url" value={item.linkMore || ''} onChange={e => onUpdate({ ...item, linkMore: e.target.value })}
+                                   className="input-ctrl py-1 text-sm" placeholder="https://..." />
+                        </div>
+                    )}
+                    {!isDataLevel && (
+                        <div className="grid grid-cols-2 gap-2">
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Name</label>
+                                <input type="text" value={item.ownerName || ''} onChange={e => onUpdate({ ...item, ownerName: e.target.value })}
+                                       className="input-ctrl py-1 text-sm" placeholder="Person or team" />
+                            </div>
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Org-Chart Name</label>
+                                <input type="text" value={item.ownerOrgChart || ''} onChange={e => onUpdate({ ...item, ownerOrgChart: e.target.value })}
+                                       className="input-ctrl py-1 text-sm" placeholder="Department, unit, role..." />
+                            </div>
+                        </div>
+                    )}
+                    <div className="grid grid-cols-2 gap-2">
+                        {(compType === 'controls' || compType === 'workforce') && (
                             <div>
                                 <label className="text-[11px] font-medium text-muted-foreground block mb-1">Kind</label>
                                 <select value={item.kind || ''} onChange={e => onUpdate({ ...item, kind: e.target.value || '' })} className="input-ctrl py-1 text-sm">
-                                    <option value="">-- not set --</option>
+                                    <option value="">— not set —</option>
                                     {CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}
+                                </select>
+                            </div>
+                        )}
+                        {isDataLevel && (
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Type</label>
+                                <select value={item.dataType || ''} onChange={e => onUpdate({ ...item, dataType: e.target.value || '' })} className="input-ctrl py-1 text-sm">
+                                    <option value="">— not set —</option>
+                                    {DATA_LEVEL_TYPES.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
+                                </select>
+                            </div>
+                        )}
+                        {isDataLevel && (
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Quality</label>
+                                <select value={item.dataQuality || ''} onChange={e => onUpdate({ ...item, dataQuality: e.target.value || '' })} className="input-ctrl py-1 text-sm">
+                                    <option value="">— not set —</option>
+                                    {DATA_LEVEL_QUALITY.map(q => <option key={q.id} value={q.id}>{q.label}</option>)}
                                 </select>
                             </div>
                         )}
@@ -712,6 +781,30 @@ function ComponentCard({ item, compType, onUpdate, onDelete }) {
                             </select>
                         </div>
                     </div>
+                    {hasMaturity && (
+                        <div className="grid grid-cols-2 gap-2">
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Maturity</label>
+                                <select value={item.maturity ?? 0} onChange={e => onUpdate({ ...item, maturity: Number(e.target.value) })} className="input-ctrl py-1 text-sm">
+                                    {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Scope</label>
+                                <select value={item.scope || ''} onChange={e => onUpdate({ ...item, scope: e.target.value || '' })} className="input-ctrl py-1 text-sm">
+                                    <option value="">— not set —</option>
+                                    {SHARED_SCOPES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                    )}
+                    {!isDataLevel && (
+                        <div>
+                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to Jira</label>
+                            <input type="url" value={item.linkJira || ''} onChange={e => onUpdate({ ...item, linkJira: e.target.value })}
+                                   className="input-ctrl py-1 text-sm" placeholder="https://jira.example.com/browse/..." />
+                        </div>
+                    )}
                     <div className="flex justify-end pt-1">
                         <button onClick={() => { if (confirm('Delete this component?')) onDelete(item.id); }}
                                 className="app-btn app-btn-danger app-btn-xs gap-1">
@@ -720,6 +813,245 @@ function ComponentCard({ item, compType, onUpdate, onDelete }) {
                     </div>
                 </div>
             )}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SHARED CONTROL REFERENCE CARD (rendered inside a cell)
+// ═══════════════════════════════════════════════════════════════════
+
+function SharedRefCard({ reference, sharedControl, onUpdateMaturity, onUpdateSharedControl, onUnlink, targetMaturity }) {
+    if (!sharedControl) return null;
+    const [expanded, setExpanded] = useState(false);
+    const isGap = reference.maturity < targetMaturity;
+    const kind = CONTROL_KINDS.find(k => k.id === sharedControl.kind);
+    const toggle = () => setExpanded(e => !e);
+    const updateField = (field, value) => onUpdateSharedControl({ ...sharedControl, [field]: value });
+
+    return (
+        <div className={`rounded-lg border-2 ${isGap ? 'border-destructive/40' : 'border-amber-500/30'} bg-amber-500/5 p-3`}>
+            <div className="flex items-start gap-2 cursor-pointer select-none" onClick={toggle} role="button">
+                <span className="text-amber-500 mt-0.5"><Icon name="link" size={15} /></span>
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-semibold truncate">{sharedControl.name}</span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded-full font-bold bg-amber-500/20 text-amber-600">SHARED</span>
+                        {kind && <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: kind.color + '22', color: kind.color }}>{kind.label}</span>}
+                        {sharedControl.scope && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-slate-500/15 text-slate-600">{SHARED_SCOPES.find(s => s.id === sharedControl.scope)?.label || sharedControl.scope}</span>}
+                    </div>
+                    {sharedControl.ownerName && <div className="text-[11px] text-muted-foreground mt-0.5">Owner: {sharedControl.ownerName}{sharedControl.ownerOrgChart ? ` (${sharedControl.ownerOrgChart})` : ''}</div>}
+                    {!expanded && sharedControl.description && <div className="text-[11px] text-muted-foreground mt-0.5 line-clamp-2">{sharedControl.description}</div>}
+                </div>
+                <div className="flex items-center gap-0.5 flex-shrink-0">
+                    {sharedControl.linkJira && <a href={sharedControl.linkJira} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="p-1 hover:bg-accent rounded text-blue-500" title="Open Jira"><Icon name="ticket" size={13} /></a>}
+                    {sharedControl.linkMore && <a href={sharedControl.linkMore} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="p-1 hover:bg-accent rounded text-blue-500" title="More info"><Icon name="external-link" size={13} /></a>}
+                    <span className="p-1 hover:bg-accent rounded"><Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={14} /></span>
+                </div>
+            </div>
+            <div className="mt-3 flex items-center gap-2 bg-background/50 rounded-md p-2">
+                <label className="text-[11px] font-semibold text-foreground whitespace-nowrap">Maturity here:</label>
+                <MaturityBadge value={reference.maturity} size="sm" />
+                <select value={reference.maturity} onChange={e => onUpdateMaturity(Number(e.target.value))} className="input-ctrl py-1 px-2 text-sm flex-1">
+                    {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                </select>
+                <button onClick={() => { if (confirm('Unlink this shared control from this cell?')) onUnlink(); }}
+                        className="app-btn app-btn-xs app-btn-outline gap-1 text-muted-foreground flex-shrink-0">
+                    <Icon name="unlink" size={11} /> Unlink
+                </button>
+            </div>
+            {expanded && (
+                <div className="mt-3 space-y-2 text-sm border-t border-amber-500/20 pt-3">
+                    <div className="text-[10px] font-bold text-amber-600 uppercase tracking-wider">Edit Shared Control (changes apply everywhere this control is linked)</div>
+                    <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Name *</label>
+                        <input type="text" value={sharedControl.name} onChange={e => updateField('name', e.target.value)} className="input-ctrl py-1 text-sm" placeholder="Control name" /></div>
+                    <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Description</label>
+                        <textarea value={sharedControl.description || ''} onChange={e => updateField('description', e.target.value)} className="input-ctrl py-1 text-sm resize-none" rows={2} /></div>
+                    <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to More</label>
+                        <input type="url" value={sharedControl.linkMore || ''} onChange={e => updateField('linkMore', e.target.value)} className="input-ctrl py-1 text-sm" placeholder="https://..." /></div>
+                    <div className="grid grid-cols-2 gap-2">
+                        <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Name</label>
+                            <input type="text" value={sharedControl.ownerName || ''} onChange={e => updateField('ownerName', e.target.value)} className="input-ctrl py-1 text-sm" /></div>
+                        <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Org-Chart Name</label>
+                            <input type="text" value={sharedControl.ownerOrgChart || ''} onChange={e => updateField('ownerOrgChart', e.target.value)} className="input-ctrl py-1 text-sm" /></div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                        <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Type</label>
+                            <select value={sharedControl.kind || ''} onChange={e => updateField('kind', e.target.value)} className="input-ctrl py-1 text-sm">
+                                <option value="">— not set —</option>{CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}</select></div>
+                        <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Scope</label>
+                            <select value={sharedControl.scope || ''} onChange={e => updateField('scope', e.target.value)} className="input-ctrl py-1 text-sm">
+                                <option value="">— not set —</option>{SHARED_SCOPES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}</select></div>
+                        <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to Jira</label>
+                            <input type="url" value={sharedControl.linkJira || ''} onChange={e => updateField('linkJira', e.target.value)} className="input-ctrl py-1 text-sm" /></div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SHARED CONTROLS LIBRARY MODAL
+// ═══════════════════════════════════════════════════════════════════
+
+function SharedControlsLibrary({ sharedControls, environments, onAdd, onUpdate, onDelete, onLink, onUnlink, onClose }) {
+    const [editId, setEditId] = useState(null);
+    const [form, setForm] = useState({});
+    const [quickLinkId, setQuickLinkId] = useState(null);
+
+    const startEdit = (sc) => { setEditId(sc ? sc.id : 'new'); setForm(sc ? { ...sc } : { id: genId(), name: '', description: '', linkMore: '', ownerName: '', ownerOrgChart: '', kind: '', scope: '', linkJira: '' }); };
+    const saveForm = () => { if (!form.name?.trim()) return; if (editId === 'new') onAdd(form); else onUpdate(form); setEditId(null); };
+
+    const countRefs = (scId) => {
+        let count = 0;
+        environments.forEach(env => { Object.values(env.cells).forEach(cell => { (cell.umbrella || []).forEach(c => { if (c.sharedControlId === scId) count++; }); }); });
+        return count;
+    };
+
+    const isLinked = (scId, envId, ck) => {
+        const env = environments.find(e => e.id === envId);
+        return env ? (env.cells[ck]?.umbrella || []).some(c => c.sharedControlId === scId) : false;
+    };
+
+    const getRefs = (scId) => {
+        const refs = [];
+        environments.forEach(env => { Object.entries(env.cells).forEach(([ck, cell]) => {
+            (cell.umbrella || []).forEach(c => { if (c.sharedControlId === scId) {
+                const [cid, fid] = ck.split('-');
+                refs.push({ envName: env.name, cluster: CLUSTERS[Number(cid)-1], func: CSF_FUNCTIONS.find(f=>f.id===fid), maturity: c.maturity });
+            }});
+        }); });
+        return refs;
+    };
+
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content" style={{ maxWidth: 720 }} onClick={e => e.stopPropagation()}>
+                <div className="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 className="font-display font-bold text-lg flex items-center gap-2"><Icon name="link" size={20} /> Shared Controls Library</h2>
+                        <p className="text-xs text-muted-foreground mt-1">Define controls once, link to many cells. Each link has its own maturity rating.</p>
+                    </div>
+                    <button onClick={onClose} className="p-1 hover:bg-accent rounded"><Icon name="x" size={18} /></button>
+                </div>
+                {editId ? (
+                    <div className="space-y-3 bg-muted/50 rounded-lg border border-border p-4">
+                        <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{editId === 'new' ? 'New Shared Control' : 'Edit Shared Control'}</div>
+                        <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Name *</label>
+                            <input type="text" value={form.name || ''} onChange={e => setForm({...form, name: e.target.value})} className="input-ctrl py-1 text-sm" placeholder="e.g. SIEM (Splunk), EDR (CrowdStrike), WAF (Cloudflare)" autoFocus /></div>
+                        <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Description</label>
+                            <textarea value={form.description || ''} onChange={e => setForm({...form, description: e.target.value})} className="input-ctrl py-1 text-sm resize-none" rows={2} /></div>
+                        <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to More</label>
+                            <input type="url" value={form.linkMore || ''} onChange={e => setForm({...form, linkMore: e.target.value})} className="input-ctrl py-1 text-sm" /></div>
+                        <div className="grid grid-cols-2 gap-2">
+                            <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Name</label>
+                                <input type="text" value={form.ownerName || ''} onChange={e => setForm({...form, ownerName: e.target.value})} className="input-ctrl py-1 text-sm" /></div>
+                            <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Org-Chart Name</label>
+                                <input type="text" value={form.ownerOrgChart || ''} onChange={e => setForm({...form, ownerOrgChart: e.target.value})} className="input-ctrl py-1 text-sm" /></div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                            <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Type</label>
+                                <select value={form.kind || ''} onChange={e => setForm({...form, kind: e.target.value})} className="input-ctrl py-1 text-sm">
+                                    <option value="">— not set —</option>{CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}</select></div>
+                            <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Scope</label>
+                                <select value={form.scope || ''} onChange={e => setForm({...form, scope: e.target.value})} className="input-ctrl py-1 text-sm">
+                                    <option value="">— not set —</option>{SHARED_SCOPES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}</select></div>
+                            <div><label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to Jira</label>
+                                <input type="url" value={form.linkJira || ''} onChange={e => setForm({...form, linkJira: e.target.value})} className="input-ctrl py-1 text-sm" /></div>
+                        </div>
+                        <div className="flex justify-end gap-2 pt-2">
+                            <button onClick={() => setEditId(null)} className="app-btn app-btn-outline app-btn-sm">Cancel</button>
+                            <button onClick={saveForm} disabled={!form.name?.trim()} className="app-btn app-btn-primary app-btn-sm"><Icon name="check" size={13} /> Save</button>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <div className="space-y-3 max-h-[55vh] overflow-y-auto">
+                            {sharedControls.length === 0 ? (
+                                <div className="text-center py-8 text-muted-foreground">
+                                    <Icon name="link" size={32} />
+                                    <p className="mt-2 text-sm">No shared controls yet.</p>
+                                    <p className="text-xs">Create shared controls for tools that span multiple clusters (SIEM, EDR, WAF, IAM, etc.)</p>
+                                </div>
+                            ) : sharedControls.map(sc => {
+                                const refCount = countRefs(sc.id);
+                                const refs = getRefs(sc.id);
+                                const kind = CONTROL_KINDS.find(k => k.id === sc.kind);
+                                return (
+                                    <div key={sc.id} className="bg-muted/50 rounded-lg border border-border p-3">
+                                        <div className="flex items-start gap-2">
+                                            <span className="text-amber-500 mt-0.5"><Icon name="link" size={15} /></span>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-2 flex-wrap">
+                                                    <span className="text-sm font-semibold">{sc.name}</span>
+                                                    {kind && <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ backgroundColor: kind.color + '22', color: kind.color }}>{kind.label}</span>}
+                                                    {sc.scope && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-slate-500/15 text-slate-600">{SHARED_SCOPES.find(s=>s.id===sc.scope)?.label || sc.scope}</span>}
+                                                    <span className="text-[10px] text-muted-foreground">{refCount} link{refCount !== 1 ? 's' : ''}</span>
+                                                </div>
+                                                {sc.ownerName && <div className="text-[11px] text-muted-foreground">Owner: {sc.ownerName}{sc.ownerOrgChart ? ` (${sc.ownerOrgChart})` : ''}</div>}
+                                                {sc.description && <div className="text-[11px] text-muted-foreground mt-0.5">{sc.description}</div>}
+                                                {refs.length > 0 && (
+                                                    <div className="mt-2 flex flex-wrap gap-1">
+                                                        {refs.map((r, i) => (
+                                                            <span key={i} className="inline-flex items-center gap-1 text-[9px] px-1.5 py-0.5 rounded bg-background border border-border">
+                                                                <span className="font-bold">#{r.cluster.id}</span>
+                                                                <span style={{color: r.func.color}}>{r.func.id}</span>
+                                                                <MaturityBadge value={r.maturity} size="sm" />
+                                                                {environments.length > 1 && <span className="text-muted-foreground">{r.envName}</span>}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-1 flex-shrink-0">
+                                                <button onClick={() => setQuickLinkId(quickLinkId === sc.id ? null : sc.id)}
+                                                        className={`p-1 hover:bg-accent rounded ${quickLinkId === sc.id ? 'bg-amber-500/20 text-amber-600' : 'text-amber-500'}`} title="Quick Link to cells">
+                                                    <Icon name="grid" size={13} /></button>
+                                                <button onClick={() => startEdit(sc)} className="p-1 hover:bg-accent rounded" title="Edit"><Icon name="pencil" size={13} /></button>
+                                                <button onClick={() => { if (confirm(`Delete "${sc.name}"?${refCount > 0 ? ` This will also remove ${refCount} link(s) from cells.` : ''}`)) onDelete(sc.id); }}
+                                                        className="p-1 hover:bg-accent rounded text-destructive" title="Delete"><Icon name="trash-2" size={13} /></button>
+                                            </div>
+                                        </div>
+                                        {quickLinkId === sc.id && (
+                                            <div className="mt-3 pt-3 border-t border-border">
+                                                <div className="text-[10px] font-bold text-amber-600 uppercase tracking-wider mb-2">Quick Link — click cells to toggle</div>
+                                                {environments.map(env => (
+                                                    <div key={env.id} className="mb-2">
+                                                        {environments.length > 1 && <div className="text-[10px] font-semibold text-muted-foreground mb-1">{env.name}</div>}
+                                                        <div className="grid gap-0.5" style={{ gridTemplateColumns: 'auto repeat(6, 1fr)' }}>
+                                                            <div />
+                                                            {CSF_FUNCTIONS.map(fn => <div key={fn.id} className="text-center text-[8px] font-bold" style={{color: fn.color}}>{fn.id}</div>)}
+                                                            {CLUSTERS.map(cl => (
+                                                                <React.Fragment key={cl.id}>
+                                                                    <div className="text-[9px] font-semibold pr-1 truncate" title={cl.name}>#{cl.id}</div>
+                                                                    {CSF_FUNCTIONS.map(fn => {
+                                                                        const ck2 = cellKey(cl.id, fn.id);
+                                                                        const linked = isLinked(sc.id, env.id, ck2);
+                                                                        return (
+                                                                            <button key={fn.id} onClick={() => linked ? onUnlink(env.id, ck2, sc.id) : onLink(env.id, ck2, sc.id)}
+                                                                                    className={`h-5 rounded-sm text-[9px] font-bold transition-colors ${linked ? 'bg-amber-500 text-white hover:bg-amber-600' : 'bg-muted hover:bg-accent border border-border/50'}`}>
+                                                                                {linked ? '\u2713' : ''}
+                                                                            </button>
+                                                                        );
+                                                                    })}
+                                                                </React.Fragment>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="mt-4 flex justify-end">
+                            <button onClick={() => startEdit(null)} className="app-btn app-btn-primary app-btn-sm gap-1"><Icon name="plus" size={13} /> New Shared Control</button>
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
     );
 }
@@ -779,8 +1111,9 @@ function SubCapabilityCard({ sub, onUpdate, onDelete }) {
 // CELL DETAIL PANEL
 // ═══════════════════════════════════════════════════════════════════
 
-function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturity, onUpdateCapability, onClose }) {
+function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturity, sharedControls, onUpdateCapability, onUpdateCell, onAddSharedControl, onUpdateSharedControl, onClose }) {
     const [activeTab, setActiveTab] = useState('controls');
+    const [linkMenuOpen, setLinkMenuOpen] = useState(null);
     if (!selectedCell) return null;
     const { clusterId, funcId } = selectedCell;
     const cluster = CLUSTERS[clusterId - 1];
@@ -810,7 +1143,19 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
         const cell = env?.cells[ck];
         const cap = cell?.capability || createEmptyCapability();
         const newItem = { id: genId(), name: '', description: '', status: 'open' };
-        if (compType === 'controls') newItem.kind = '';
+        if (compType === 'controls' || compType === 'workforce') {
+            newItem.kind = '';
+            newItem.maturity = 0;
+            newItem.scope = '';
+            newItem.ownerName = '';
+            newItem.ownerOrgChart = '';
+            newItem.linkMore = '';
+            newItem.linkJira = '';
+        }
+        if (compType === 'dataLevel') {
+            newItem.dataType = '';
+            newItem.dataQuality = '';
+        }
         onUpdateCapability(envId, ck, {
             ...cap,
             components: { ...cap.components, [compType]: [...(cap.components[compType] || []), newItem] }
@@ -861,6 +1206,26 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
         const cap = cell?.capability;
         if (!cap) return;
         onUpdateCapability(envId, ck, { ...cap, subCapabilities: cap.subCapabilities.filter(s => s.id !== subId) });
+    };
+
+    // Umbrella (shared) control functions
+    const linkShared = (envId, scId) => {
+        if (!onUpdateCell) return;
+        onUpdateCell(envId, ck, cell => {
+            const umbrella = cell.umbrella || [];
+            if (umbrella.some(c => c.sharedControlId === scId)) return cell;
+            return { ...cell, umbrella: [...umbrella, { id: genId(), sharedControlId: scId, maturity: 0 }] };
+        });
+    };
+
+    const unlinkShared = (envId, scId) => {
+        if (!onUpdateCell) return;
+        onUpdateCell(envId, ck, cell => ({ ...cell, umbrella: (cell.umbrella || []).filter(c => c.sharedControlId !== scId) }));
+    };
+
+    const updateUmbrellaMaturity = (envId, refId, maturity) => {
+        if (!onUpdateCell) return;
+        onUpdateCell(envId, ck, cell => ({ ...cell, umbrella: (cell.umbrella || []).map(c => c.id === refId ? { ...c, maturity } : c) }));
     };
 
     const renderEnvSection = (env) => {
@@ -942,22 +1307,63 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
 
                 {/* Component List */}
                 <div className="space-y-2 mb-4">
-                    {(cap.components[activeTab] || []).length === 0 ? (
+                    {(cap.components[activeTab] || []).length === 0 && (cell.umbrella || []).length === 0 ? (
                         <div className="text-xs text-muted-foreground italic py-3 text-center border border-dashed border-border rounded-lg">
                             No {COMPONENT_TYPES.find(ct => ct.id === activeTab)?.name.toLowerCase()} documented
                         </div>
                     ) : (
-                        (cap.components[activeTab] || []).map(item => (
-                            <ComponentCard key={item.id} item={item} compType={activeTab}
-                                           onUpdate={(updated) => updateComponent(env.id, activeTab, updated)}
-                                           onDelete={(itemId) => deleteComponent(env.id, activeTab, itemId)} />
-                        ))
+                        <>
+                            {(cap.components[activeTab] || []).map(item => (
+                                <ComponentCard key={item.id} item={item} compType={activeTab} targetMaturity={targetMaturity}
+                                               onUpdate={(updated) => updateComponent(env.id, activeTab, updated)}
+                                               onDelete={(itemId) => deleteComponent(env.id, activeTab, itemId)} />
+                            ))}
+                            {activeTab === 'controls' && (cell.umbrella || []).map(ref_ => {
+                                const sc = (sharedControls || []).find(s => s.id === ref_.sharedControlId);
+                                if (!sc) return null;
+                                return (
+                                    <SharedRefCard key={ref_.id} reference={ref_} sharedControl={sc} targetMaturity={targetMaturity}
+                                                   onUpdateMaturity={(m) => updateUmbrellaMaturity(env.id, ref_.id, m)}
+                                                   onUpdateSharedControl={onUpdateSharedControl}
+                                                   onUnlink={() => unlinkShared(env.id, ref_.sharedControlId)} />
+                                );
+                            })}
+                        </>
                     )}
                     {!isAgg && (
-                        <button onClick={() => addComponent(env.id, activeTab)}
-                                className="app-btn app-btn-outline app-btn-xs gap-1 w-full">
-                            <Icon name="plus" size={11} /> Add {COMPONENT_TYPES.find(ct => ct.id === activeTab)?.name.slice(0, -1) || 'Item'}
-                        </button>
+                        <div className="flex gap-2">
+                            <button onClick={() => addComponent(env.id, activeTab)}
+                                    className="app-btn app-btn-outline app-btn-xs gap-1 flex-1">
+                                <Icon name="plus" size={11} /> Add {COMPONENT_TYPES.find(ct => ct.id === activeTab)?.name.slice(0, -1) || 'Item'}
+                            </button>
+                            {activeTab === 'controls' && (sharedControls || []).length > 0 && (() => {
+                                const linkedScIds = new Set((cell.umbrella || []).map(c => c.sharedControlId));
+                                const available = (sharedControls || []).filter(sc => !linkedScIds.has(sc.id));
+                                const menuKey = env.id;
+                                return (
+                                    <div className="relative">
+                                        <button onClick={() => setLinkMenuOpen(linkMenuOpen === menuKey ? null : menuKey)}
+                                                className="app-btn app-btn-outline app-btn-xs gap-1 text-amber-600">
+                                            <Icon name="link" size={11} /> Link Shared
+                                        </button>
+                                        {linkMenuOpen === menuKey && (
+                                            <div className="absolute right-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-40 py-1 min-w-[250px] max-h-56 overflow-y-auto">
+                                                {available.length > 0 && <div className="px-3 py-1 text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Available shared controls</div>}
+                                                {available.map(sc => (
+                                                    <button key={sc.id} onClick={() => { linkShared(env.id, sc.id); setLinkMenuOpen(null); }}
+                                                            className="w-full text-left px-3 py-1.5 text-xs hover:bg-accent flex items-center gap-2">
+                                                        <Icon name="link" size={11} className="text-amber-500" />
+                                                        <span className="truncate font-medium">{sc.name}</span>
+                                                        {sc.scope && <span className="text-[9px] text-muted-foreground">({SHARED_SCOPES.find(s=>s.id===sc.scope)?.label || sc.scope})</span>}
+                                                    </button>
+                                                ))}
+                                                {available.length === 0 && <div className="px-3 py-2 text-xs text-muted-foreground italic">All shared controls already linked</div>}
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })()}
+                        </div>
                     )}
                 </div>
 
@@ -1264,6 +1670,7 @@ function App() {
     });
     const [showImport, setShowImport] = useState(false);
     const [showGapAnalysis, setShowGapAnalysis] = useState(false);
+    const [showSharedLibrary, setShowSharedLibrary] = useState(false);
     const matrixRef = useRef(null);
 
     // Persist state
@@ -1278,7 +1685,7 @@ function App() {
     // Keyboard shortcuts
     useEffect(() => {
         const handler = (e) => {
-            if (e.key === 'Escape') { setSelectedCell(null); setShowGapAnalysis(false); setShowImport(false); }
+            if (e.key === 'Escape') { setSelectedCell(null); setShowGapAnalysis(false); setShowImport(false); setShowSharedLibrary(false); }
         };
         window.addEventListener('keydown', handler);
         return () => window.removeEventListener('keydown', handler);
@@ -1340,6 +1747,38 @@ function App() {
         }));
     };
 
+    // Cell-level update (for umbrella controls)
+    const handleUpdateCell = (envId, ck, updater) => {
+        updateEnvironment(envId, env => {
+            const cell = env.cells[ck] || { capability: null, umbrella: [] };
+            return { ...env, cells: { ...env.cells, [ck]: updater(cell) } };
+        });
+    };
+
+    // Shared Controls CRUD
+    const addSharedControl = (sc) => setState(prev => ({ ...prev, sharedControls: [...(prev.sharedControls || []), sc] }));
+    const updateSharedControl = (sc) => setState(prev => ({ ...prev, sharedControls: (prev.sharedControls || []).map(s => s.id === sc.id ? sc : s) }));
+    const deleteSharedControl = (scId) => {
+        setState(prev => {
+            const newShared = (prev.sharedControls || []).filter(s => s.id !== scId);
+            const newEnvs = prev.environments.map(env => ({
+                ...env,
+                cells: Object.fromEntries(Object.entries(env.cells).map(([ck, cell]) => [ck, { ...cell, umbrella: (cell.umbrella || []).filter(c => c.sharedControlId !== scId) }]))
+            }));
+            return { ...prev, sharedControls: newShared, environments: newEnvs };
+        });
+    };
+    const linkSharedToCell = (envId, ck, scId) => {
+        handleUpdateCell(envId, ck, cell => {
+            const umbrella = cell.umbrella || [];
+            if (umbrella.some(c => c.sharedControlId === scId)) return cell;
+            return { ...cell, umbrella: [...umbrella, { id: genId(), sharedControlId: scId, maturity: 0 }] };
+        });
+    };
+    const unlinkSharedFromCell = (envId, ck, scId) => {
+        handleUpdateCell(envId, ck, cell => ({ ...cell, umbrella: (cell.umbrella || []).filter(c => c.sharedControlId !== scId) }));
+    };
+
     // Export JSON
     const exportJSON = () => {
         const exportData = {
@@ -1363,6 +1802,7 @@ function App() {
             orgName: data.orgName || 'Imported',
             targetMaturity: data.targetMaturity ?? 3,
             environments: data.environments || [],
+            sharedControls: data.sharedControls || [],
             createdAt: data.createdAt || new Date().toISOString().split('T')[0],
         };
         setState(newState);
@@ -1467,7 +1907,7 @@ function App() {
                         rowVals.push(cap.maturity);
                         const isGap = cap.maturity < target;
                         if (isGap) gapCount++;
-                        const compCount = (cap.components.controls || []).length + (cap.components.workforce || []).length + (cap.components.governance || []).length;
+                        const compCount = (cap.components.controls || []).length + (cap.components.workforce || []).length + (cap.components.dataLevel || cap.components.governance || []).length;
                         html += '<td class="' + (isGap ? 'gap' : 'ok') + '"><span class="badge mat-' + cap.maturity + '">' + cap.maturity + C('span');
                         html += '<br><span class="comp-summary">' + (cap.name || '—') + C('span');
                         html += '<br><span class="comp-summary">' + compCount + ' components' + C('span') + C('td');
@@ -1524,7 +1964,9 @@ function App() {
             <Header darkMode={darkMode} onToggleDark={() => setDarkMode(d => !d)}
                     onExportJSON={exportJSON} onImportJSON={() => setShowImport(true)} onExportPNG={exportPNG}
                     onGapAnalysis={() => setShowGapAnalysis(true)} onReport={generateReport}
-                    onLoadStarter={loadStarter} />
+                    onLoadStarter={loadStarter}
+                    onShowSharedControls={() => setShowSharedLibrary(true)}
+                    sharedControlCount={(state.sharedControls || []).length} />
             {!disclaimerDismissed && <div className="ai-disclaimer no-print">&#9432; Example data in this tool is AI-generated based on real-world threat reports. Quality improves with evolving AI capabilities. These examples illustrate the practical application of the TLCTC framework.<button onClick={() => { setDisclaimerDismissed(true); try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){} }} title="Dismiss">&times;</button></div>}
 
             <SummaryBar orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
@@ -1558,7 +2000,11 @@ function App() {
                 {selectedCell && (
                     <CellDetailPanel selectedCell={selectedCell} environments={state.environments}
                                      activeEnvId={activeEnvId} targetMaturity={state.targetMaturity}
+                                     sharedControls={state.sharedControls || []}
                                      onUpdateCapability={handleUpdateCapability}
+                                     onUpdateCell={handleUpdateCell}
+                                     onAddSharedControl={addSharedControl}
+                                     onUpdateSharedControl={updateSharedControl}
                                      onClose={() => setSelectedCell(null)} />
                 )}
             </div>
@@ -1570,6 +2016,10 @@ function App() {
             {showImport && <ImportModal onClose={() => setShowImport(false)} onImport={handleImport} />}
             {showGapAnalysis && <GapAnalysisModal onClose={() => setShowGapAnalysis(false)} environments={state.environments}
                                                     activeEnvId={activeEnvId} targetMaturity={state.targetMaturity} />}
+            {showSharedLibrary && <SharedControlsLibrary sharedControls={state.sharedControls || []} environments={state.environments}
+                                                         onAdd={addSharedControl} onUpdate={updateSharedControl} onDelete={deleteSharedControl}
+                                                         onLink={linkSharedToCell} onUnlink={unlinkSharedFromCell}
+                                                         onClose={() => setShowSharedLibrary(false)} />}
         </div>
     );
 }
