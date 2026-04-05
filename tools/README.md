@@ -10,8 +10,8 @@ Standalone, self-contained HTML applications that implement the TLCTC framework.
 | **Attack Path Architect** | [`attack-path-architect.html`](attack-path-architect.html) | Document cyber incidents as TLCTC attack paths with velocity analysis, MITRE/CVE references, DRE outcomes, and compliant JSON export for CTI exchange |
 | **Actor Profile Designer** | [`actor-profile-designer.html`](actor-profile-designer.html) | Build threat actor capability profiles scored across all 10 TLCTC clusters, link observed incidents, compare actors side-by-side, and export for CTI sharing |
 | **Threat Radar** | [`radar-tlctc-app.html`](radar-tlctc-app.html) | Interactive threat radar visualization with configurable sectors, zone thresholds, trend tracking (old vs current values), report/tolerance flags, and PNG export with optional legend |
-| **Control Matrix** | [`control-matrix.html`](control-matrix.html) | NIST CSF 2.0 × TLCTC control matrix for mapping controls across all 10 clusters and 6 CSF functions, with maturity scoring, multi-environment support, shared controls library, and reporting |
-| **CBP** | [`cbp-app.html`](cbp-app.html) | Capability-Based Planning — map organizational capabilities across 10 TLCTC clusters × 6 CSF functions, with maturity at capability and component level, three dimensions (Controls, Workforce, Data Level), shared controls library, gap analysis, and multi-environment support |
+| **Control Matrix** | [`control-matrix.html`](control-matrix.html) | NIST CSF 2.0 × TLCTC control matrix for mapping controls across all 10 clusters and 6 CSF functions, with maturity scoring, three-layer control effectiveness model (CDE_max, CDE_fitness, COE → ECR), cell-level aggregation (essential floor + complementary ceiling raise), DCS integration for DETECT cells, residual ceiling gap tracking, multi-environment support, shared controls library, and reporting |
+| **CBP** | [`cbp-app.html`](cbp-app.html) | Capability-Based Planning — map organizational capabilities across 10 TLCTC clusters × 6 CSF functions, with maturity at capability and component level, three dimensions (Controls, Workforce, Data Level), control effectiveness model (role, CDE_max, CDE_fitness, COE metrics → ECR), cell-level aggregation with DCS for DETECT cells, shared controls library, gap analysis, and multi-environment support |
 
 ## How to Use
 
@@ -29,7 +29,8 @@ Starter templates are provided in [`examples/`](examples/) for each tool. Import
 | [`template-attack-path.json`](examples/template-attack-path.json) | Attack Path Architect | 4-step phishing→credential→malware→exfil path with instructional descriptions |
 | [`template-threat-model.json`](examples/template-threat-model.json) | Threat Modeling | 3-component web app (browser, API, database) with group, interfaces, and threat register |
 | [`template-actor-profile.json`](examples/template-actor-profile.json) | Actor Profile Designer | 3 actor archetypes: blank template, nation-state APT, ransomware operator |
-| [`cbp-starter.json`](cbp-starter.json) | CBP | Pre-populated capability matrix with all 60 capabilities (names, control objectives, starter components) |
+| [`control-matrix-starter.json`](control-matrix-starter.json) | Control Matrix | Pre-populated control matrix with 558 controls across 60 cells, including a worked effectiveness example in DE×#7 (EDR, SIEM, sandbox) |
+| [`cbp-starter.json`](cbp-starter.json) | CBP | Pre-populated capability matrix with all 60 capabilities (names, control objectives, starter components), including a worked effectiveness example in DE×#7 |
 
 ### Example Data Files
 
@@ -295,6 +296,118 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
 - **Flags** mark clusters for special attention: `toBeReported` (!) and `riskToleranceCrashed` (⚡).
 - Multiple analytical perspectives from one report (by sector, by actor, by CIA, by asset type) are modeled as separate JSON files with different sector configurations.
 
+### Control Matrix
+
+**Schema identifier:** Internal format
+
+```jsonc
+{
+  "version": "1.0.0",
+  "tool": "TLCTC Control Matrix Manager",
+  "exportDate": "ISO-8601",
+  "orgName": "Organization Name",
+  "targetMaturity": 3,                        // 0–5 target maturity level
+  "sharedControls": [{                        // shared controls library
+    "id": "unique-id",
+    "name": "Shared Control Name",
+    "description": "...",
+    "kind": "tech | org",
+    "scope": "all | applications | platform | infra-sw | infra-hw",
+    "ownerName": "Owner Name",
+    "ownerOrgChart": "URL",
+    "linkMore": "URL",
+    "linkJira": "URL",
+    "cde_max": {                              // design effectiveness ceiling
+      "value": 0.85,
+      "rationale": "...",
+      "set_by": "CISO",
+      "last_reviewed": "2026-01-15",
+      "review_trigger": "Quarterly"
+    }
+  }],
+  "environments": [{
+    "id": "unique-id",
+    "name": "Environment Name",
+    "cells": {
+      "7-DE": {                               // key = {clusterId}-{csfFunction}
+        "local": [{                           // local (system-specific) controls
+          "id": "unique-id",
+          "name": "EDR (Behavioral)",
+          "description": "...",
+          "kind": "tech | org",
+          "maturity": 3,                      // 0–5
+          "ownerName": "SOC Team",
+          "ownerOrgChart": "URL",
+          "linkMore": "URL",
+          "linkJira": "URL",
+          "role": "essential | complementary",
+          "cde_max": {
+            "value": 0.85,                    // 0.00–0.99, never 1.0
+            "rationale": "Misses novel fileless techniques",
+            "set_by": "CISO",
+            "last_reviewed": "2026-01-15",
+            "review_trigger": "Zero-day, quarterly"
+          },
+          "cde_fitness": {
+            "target_velocity_class": "VC-3",
+            "fit": true,
+            "factor": 1.0,                    // 1.0 | 0.5 | 0.0
+            "rationale": "Automated response within seconds"
+          },
+          "coe": {
+            "metrics": [{
+              "metric_id": "m-unique-id",
+              "name": "Active agent %",
+              "type": "coverage | currency | mode | configuration | performance",
+              "value": 0.97,
+              "target": 0.99,
+              "unit": "ratio",
+              "source": "EDR console API",
+              "measured_at": "ISO-8601"
+            }],
+            "aggregation_method": "weighted_mean | worst_of | geometric_mean",
+            "weights": { "m-unique-id": 0.50 },
+            "composite_coe": 0.97
+          },
+          "ecr": 0.82                         // calculated: COE × CDE_max × fitness_factor
+        }],
+        "umbrella": [{                        // shared control references
+          "id": "unique-id",
+          "sharedControlId": "ref-to-shared",
+          "maturity": 3
+        }],
+        "velocity_context": {                 // attack velocity context for this cell
+          "primary_velocity_class": "VC-3",
+          "delta_t": "PT10M",                 // ISO 8601 duration
+          "delta_t_source": "TI-derived",
+          "delta_t_confidence": "medium"
+        },
+        "controls_meta": {
+          "expected_count": 3                  // governance: how many controls needed
+        },
+        "dcs_mttd": "PT8M",                   // MTTD for DETECT cells
+        "manualMaturity": null,                // optional maturity override
+        "comments": "",                        // cell notes
+        "tasks": []                            // cell task list
+      }
+    }
+  }]
+}
+```
+
+**Key concepts:**
+- **10×6 matrix**: 10 TLCTC threat clusters × 6 NIST CSF functions (GV, ID, PR, DE, RS, RC) = 60 cells.
+- **Local vs Umbrella**: Local controls are system-specific; umbrella controls reference the shared library.
+- **Control Effectiveness Model** — three-layer assessment per control:
+  - **CDE_max** (0.00–0.99): theoretical detection/prevention ceiling. Never 1.0 — no control is perfect.
+  - **CDE_fitness** (factor 1.0/0.5/0.0): whether the control can structurally act within the cell's Δt window.
+  - **COE**: measured operational performance from typed metrics (coverage, currency, mode, configuration, performance).
+  - **ECR** = COE × CDE_max × fitness_factor.
+- **Cell aggregation**: essential controls → worst-of floor; complementary controls → probabilistic ceiling raise. Cell ECR = floor + raise.
+- **Residual ceiling gap** = 1.0 − cell CDE_max composite — risk that cannot be closed by operations, only by adding new control types or accepting the gap.
+- **DCS** (DETECT cells only) = MTTD / Δt. Verdicts: effective (<0.5), adequate (0.5–0.8), marginal (0.8–1.0), ineffective (1.0–2.0), structurally failed (>2.0).
+- **Multi-environment**: track controls across environments (e.g., Production, Staging); aggregated view uses worst-of across environments.
+
 ### CBP (Capability-Based Planning)
 
 **Schema identifier:** Internal format
@@ -341,7 +454,38 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
               "ownerName": "Owner Name",
               "ownerOrgChart": "URL",
               "linkMore": "URL",
-              "linkJira": "URL"
+              "linkJira": "URL",
+              // Control Effectiveness fields:
+              "role": "essential | complementary",  // aggregation role
+              "cde_max": {                     // design effectiveness ceiling (0.00–0.99)
+                "value": 0.85,
+                "rationale": "Why this ceiling — what can't it detect/prevent",
+                "set_by": "CISO / TI Lead",
+                "last_reviewed": "2026-01-15",
+                "review_trigger": "Zero-day, quarterly review"
+              },
+              "cde_fitness": {                 // velocity fitness
+                "target_velocity_class": "VC-1 | VC-2 | VC-3 | VC-4",
+                "fit": true,
+                "factor": 1.0,                 // 1.0 = fit, 0.5 = marginal, 0.0 = unfit
+                "rationale": "Why this fitness level"
+              },
+              "coe": {                         // operational effectiveness
+                "metrics": [{
+                  "metric_id": "m-unique-id",
+                  "name": "Active agent %",
+                  "type": "coverage | currency | mode | configuration | performance",
+                  "value": 0.97,               // 0.0–1.0
+                  "target": 0.99,
+                  "unit": "ratio",
+                  "source": "EDR console API",
+                  "measured_at": "ISO-8601"
+                }],
+                "aggregation_method": "weighted_mean | worst_of | geometric_mean",
+                "weights": { "m-unique-id": 0.50 },
+                "composite_coe": 0.97          // calculated
+              },
+              "ecr": 0.82                      // calculated: COE × CDE_max × fitness_factor
             }],
             "workforce": [{                    // roles and competencies
               "id": "unique-id",
@@ -370,7 +514,18 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
             "maturity": 0,
             "notes": ""
           }],
-          "notes": ""
+          "notes": "",
+          // Effectiveness fields (per-capability):
+          "velocity_context": {                // attack velocity for this cell
+            "primary_velocity_class": "VC-1 | VC-2 | VC-3 | VC-4",
+            "delta_t": "PT10M",               // ISO 8601 duration
+            "delta_t_source": "TI report or framework default",
+            "delta_t_confidence": "low | medium | high"
+          },
+          "controls_meta": {
+            "expected_count": 3                // governance decision: how many controls needed
+          },
+          "dcs_mttd": "PT8M"                  // MTTD for DETECT cells (ISO 8601 duration)
         },
         "umbrella": [{                         // shared control references per cell
           "id": "unique-id",
@@ -387,6 +542,13 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
 - Each cell (cluster × CSF function) holds exactly **one capability** — not a list of controls.
 - **Maturity** is tracked at both the **capability level** (overall assessment) and **per component** (controls and workforce each have their own maturity 0–5).
 - Three **dimensions**: Controls (what delivers it), Workforce (who operates it), Data Level (how informed — automation type and quality).
+- **Control Effectiveness Model** — each control has a three-layer effectiveness assessment:
+  - **CDE_max** (Design Effectiveness Ceiling, 0.00–0.99): structural detection/prevention limit, never 1.0.
+  - **CDE_fitness** (Velocity Fitness): whether the control can act within the cell's Δt window (factor 1.0/0.5/0.0).
+  - **COE** (Operational Effectiveness): measured performance via typed metrics (coverage, currency, mode, configuration, performance).
+  - **ECR** = COE × CDE_max × fitness_factor — the effective contribution of a single control.
+- **Cell-level aggregation**: essential controls use worst-of (floor), complementary controls use probabilistic ceiling-raising. Residual ceiling gap = 1.0 − cell CDE_max composite.
+- **DCS** (Detection Coverage Score) = MTTD / Δt — calculated for DETECT cells only. Verdicts: effective (<0.5), adequate (0.5–0.8), marginal (0.8–1.0), ineffective (1.0–2.0), structurally failed (>2.0).
 - **Shared Controls Library** — define controls once, link to many cells via the `umbrella` array with per-link maturity. Compatible with Control Matrix shared controls for cross-tool import.
 - **Sub-capabilities** allow optional decomposition without deep nesting.
 - Cell keys follow the pattern `{clusterId}-{funcId}` (e.g., `"7-DE"` for Malware × Detect).

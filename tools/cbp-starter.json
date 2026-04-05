@@ -28,7 +28,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-gv-2",
@@ -41,7 +62,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-gv-3",
@@ -54,7 +96,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-gv-4",
@@ -67,7 +130,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -133,7 +217,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -156,7 +249,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-id-2",
@@ -169,7 +283,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-id-3",
@@ -182,7 +317,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -222,7 +378,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -245,7 +410,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-pr-2",
@@ -258,7 +444,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-pr-3",
@@ -271,7 +478,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -311,7 +539,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -334,7 +571,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-de-2",
@@ -347,7 +605,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -375,7 +654,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -398,7 +686,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-rs-2",
@@ -411,7 +720,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -439,7 +769,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -462,7 +801,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-1-rc-2",
@@ -475,7 +835,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -503,7 +884,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -526,7 +916,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-gv-2",
@@ -539,7 +950,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-gv-3",
@@ -552,7 +984,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-gv-4",
@@ -565,7 +1018,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -631,7 +1105,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -654,7 +1137,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-id-2",
@@ -667,7 +1171,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-id-3",
@@ -680,7 +1205,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-id-4",
@@ -693,7 +1239,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-id-5",
@@ -706,7 +1273,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-id-6",
@@ -719,7 +1307,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -783,7 +1392,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -806,7 +1424,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-pr-2",
@@ -819,7 +1458,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-pr-3",
@@ -832,7 +1492,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -872,7 +1553,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -895,7 +1585,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-de-2",
@@ -908,7 +1619,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -936,7 +1668,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -959,7 +1700,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-rs-2",
@@ -972,7 +1734,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1012,7 +1795,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1035,7 +1827,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-2-rc-2",
@@ -1048,7 +1861,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1076,7 +1910,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1099,7 +1942,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-gv-2",
@@ -1112,7 +1976,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-gv-3",
@@ -1125,7 +2010,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-gv-4",
@@ -1138,7 +2044,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1204,7 +2131,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1227,7 +2163,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-id-2",
@@ -1240,7 +2197,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-id-3",
@@ -1253,7 +2231,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1293,7 +2292,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1316,7 +2324,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-pr-2",
@@ -1329,7 +2358,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-pr-3",
@@ -1342,7 +2392,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1370,7 +2441,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1393,7 +2473,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-de-2",
@@ -1406,7 +2507,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1434,7 +2556,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1457,7 +2588,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-rs-2",
@@ -1470,7 +2622,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1498,7 +2671,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1521,7 +2703,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-3-rc-2",
@@ -1534,7 +2737,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1574,7 +2798,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1597,7 +2830,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-4-gv-2",
@@ -1610,7 +2864,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-4-gv-3",
@@ -1623,7 +2898,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-4-gv-4",
@@ -1636,7 +2932,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1702,7 +3019,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1725,7 +3051,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-4-id-2",
@@ -1738,7 +3085,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1766,7 +3134,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1789,7 +3166,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-4-pr-2",
@@ -1802,7 +3200,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-4-pr-3",
@@ -1815,7 +3234,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1843,7 +3283,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1866,7 +3315,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-4-de-2",
@@ -1879,7 +3349,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1919,7 +3410,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -1942,7 +3442,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-4-rs-2",
@@ -1955,7 +3476,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -1995,7 +3537,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2018,7 +3569,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-4-rc-2",
@@ -2031,7 +3603,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2059,7 +3652,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2082,7 +3684,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-gv-2",
@@ -2095,7 +3718,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-gv-3",
@@ -2108,7 +3752,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-gv-4",
@@ -2121,7 +3786,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2187,7 +3873,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2210,7 +3905,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-id-2",
@@ -2223,7 +3939,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-id-3",
@@ -2236,7 +3973,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2276,7 +4034,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2299,7 +4066,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-pr-2",
@@ -2312,7 +4100,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-pr-3",
@@ -2325,7 +4134,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-pr-4",
@@ -2338,7 +4168,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2378,7 +4229,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2401,7 +4261,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-de-2",
@@ -2414,7 +4295,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2442,7 +4344,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2465,7 +4376,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-rs-2",
@@ -2478,7 +4410,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2518,7 +4471,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2541,7 +4503,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-5-rc-2",
@@ -2554,7 +4537,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2582,7 +4586,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2605,7 +4618,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-6-gv-2",
@@ -2618,7 +4652,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-6-gv-3",
@@ -2631,7 +4686,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-6-gv-4",
@@ -2644,7 +4720,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2710,7 +4807,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2733,7 +4839,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-6-id-2",
@@ -2746,7 +4873,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2774,7 +4922,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2797,7 +4954,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-6-pr-2",
@@ -2810,7 +4988,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-6-pr-3",
@@ -2823,7 +5022,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2863,7 +5083,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2886,7 +5115,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-6-de-2",
@@ -2899,7 +5149,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -2939,7 +5210,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -2962,7 +5242,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-6-rs-2",
@@ -2975,7 +5276,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3015,7 +5337,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3038,7 +5369,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-6-rc-2",
@@ -3051,7 +5403,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3079,7 +5452,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3102,7 +5484,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-7-gv-2",
@@ -3115,7 +5518,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-7-gv-3",
@@ -3128,7 +5552,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-7-gv-4",
@@ -3141,7 +5586,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3207,7 +5673,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3230,7 +5705,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-7-id-2",
@@ -3243,7 +5739,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3271,7 +5788,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3294,7 +5820,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-7-pr-2",
@@ -3307,7 +5854,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-7-pr-3",
@@ -3320,7 +5888,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3360,7 +5949,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3383,10 +5981,89 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "essential",
+                  "cde_max": {
+                    "value": 0.85,
+                    "rationale": "Behavioral + heuristic engine; misses novel fileless techniques",
+                    "set_by": "CISO",
+                    "last_reviewed": "2026-01-15",
+                    "review_trigger": "Zero-day, quarterly"
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "VC-3",
+                    "fit": true,
+                    "factor": 1,
+                    "rationale": "EDR automated response within seconds"
+                  },
+                  "coe": {
+                    "metrics": [
+                      {
+                        "metric_id": "m-active-pct",
+                        "name": "Active agent %",
+                        "type": "coverage",
+                        "value": 0.97,
+                        "target": 0.99,
+                        "unit": "ratio",
+                        "source": "EDR console API",
+                        "description": "",
+                        "measured_at": "2026-03-28T14:00:00Z"
+                      }
+                    ],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": 0.97
+                  },
+                  "ecr": 0.8245
                 },
                 {
                   "id": "ctl-7-de-2",
+                  "name": "SIEM correlation rules for malware indicators",
+                  "description": "",
+                  "kind": "tech",
+                  "status": "open",
+                  "maturity": 0,
+                  "scope": "all",
+                  "ownerName": "",
+                  "ownerOrgChart": "",
+                  "linkMore": "",
+                  "linkJira": "",
+                  "role": "essential",
+                  "cde_max": {
+                    "value": 0.7,
+                    "rationale": "Rule-based; misses novel patterns",
+                    "set_by": "SOC Lead",
+                    "last_reviewed": "2026-01-15",
+                    "review_trigger": "Quarterly"
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "VC-3",
+                    "fit": true,
+                    "factor": 1,
+                    "rationale": "Automated correlation within minutes"
+                  },
+                  "coe": {
+                    "metrics": [
+                      {
+                        "metric_id": "m-rule-cov",
+                        "name": "Detection rule coverage",
+                        "type": "coverage",
+                        "value": 0.9,
+                        "target": 0.95,
+                        "unit": "ratio",
+                        "source": "SIEM",
+                        "description": "",
+                        "measured_at": "2026-03-28T14:00:00Z"
+                      }
+                    ],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": 0.9
+                  },
+                  "ecr": 0.63
+                },
+                {
+                  "id": "ctl-7-de-3",
                   "name": "Sandbox detonation of suspicious files",
                   "description": "",
                   "kind": "tech",
@@ -3396,7 +6073,40 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "complementary",
+                  "cde_max": {
+                    "value": 0.6,
+                    "rationale": "Sandbox evasion reduces effectiveness",
+                    "set_by": "TI Lead",
+                    "last_reviewed": "2026-01-15",
+                    "review_trigger": "Quarterly"
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "VC-3",
+                    "fit": true,
+                    "factor": 1,
+                    "rationale": "Automated detonation within minutes"
+                  },
+                  "coe": {
+                    "metrics": [
+                      {
+                        "metric_id": "m-sandbox",
+                        "name": "File submission coverage",
+                        "type": "coverage",
+                        "value": 0.85,
+                        "target": 0.95,
+                        "unit": "ratio",
+                        "source": "Sandbox console",
+                        "description": "",
+                        "measured_at": "2026-03-28T14:00:00Z"
+                      }
+                    ],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": 0.85
+                  },
+                  "ecr": 0.51
                 }
               ],
               "workforce": [
@@ -3436,7 +6146,17 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "VC-3",
+              "delta_t": "PT10M",
+              "delta_t_source": "TI-derived (CrowdStrike 2025 GTR median ransomware dwell)",
+              "delta_t_confidence": "medium"
+            },
+            "controls_meta": {
+              "expected_count": 3
+            },
+            "dcs_mttd": "PT8M"
           },
           "umbrella": []
         },
@@ -3459,7 +6179,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-7-rs-2",
@@ -3472,7 +6213,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3512,7 +6274,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3535,7 +6306,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-7-rc-2",
@@ -3548,7 +6340,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3588,7 +6401,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3611,7 +6433,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-8-gv-2",
@@ -3624,7 +6467,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-8-gv-3",
@@ -3637,7 +6501,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-8-gv-4",
@@ -3650,7 +6535,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3716,7 +6622,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3739,7 +6654,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-8-id-2",
@@ -3752,7 +6688,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3780,7 +6737,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3803,7 +6769,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-8-pr-2",
@@ -3816,7 +6803,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-8-pr-3",
@@ -3829,7 +6837,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3869,7 +6898,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3892,7 +6930,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-8-de-2",
@@ -3905,7 +6964,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -3933,7 +7013,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -3956,7 +7045,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-8-rs-2",
@@ -3969,7 +7079,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4009,7 +7140,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4032,7 +7172,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-8-rc-2",
@@ -4045,7 +7206,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4073,7 +7255,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4096,7 +7287,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-9-gv-2",
@@ -4109,7 +7321,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-9-gv-3",
@@ -4122,7 +7355,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-9-gv-4",
@@ -4135,7 +7389,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4201,7 +7476,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4224,7 +7508,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-9-id-2",
@@ -4237,7 +7542,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4265,7 +7591,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4288,7 +7623,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-9-pr-2",
@@ -4301,7 +7657,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-9-pr-3",
@@ -4314,7 +7691,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4354,7 +7752,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4377,7 +7784,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-9-de-2",
@@ -4390,7 +7818,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4430,7 +7879,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4453,7 +7911,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-9-rs-2",
@@ -4466,7 +7945,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4494,7 +7994,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4517,7 +8026,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-9-rc-2",
@@ -4530,7 +8060,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4570,7 +8121,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4593,7 +8153,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-gv-2",
@@ -4606,7 +8187,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-gv-3",
@@ -4619,7 +8221,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-gv-4",
@@ -4632,7 +8255,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4698,7 +8342,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4721,7 +8374,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-id-2",
@@ -4734,7 +8408,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-id-3",
@@ -4747,7 +8442,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4775,7 +8491,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4798,7 +8523,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-pr-2",
@@ -4811,7 +8557,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-pr-3",
@@ -4824,7 +8591,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4864,7 +8652,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4887,7 +8684,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-de-2",
@@ -4900,7 +8718,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -4940,7 +8779,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -4963,7 +8811,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-rs-2",
@@ -4976,7 +8845,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -5016,7 +8906,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         },
@@ -5039,7 +8938,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 },
                 {
                   "id": "ctl-10-rc-2",
@@ -5052,7 +8972,28 @@
                   "ownerName": "",
                   "ownerOrgChart": "",
                   "linkMore": "",
-                  "linkJira": ""
+                  "linkJira": "",
+                  "role": "",
+                  "cde_max": {
+                    "value": null,
+                    "rationale": "",
+                    "set_by": "",
+                    "last_reviewed": "",
+                    "review_trigger": ""
+                  },
+                  "cde_fitness": {
+                    "target_velocity_class": "",
+                    "fit": null,
+                    "factor": null,
+                    "rationale": ""
+                  },
+                  "coe": {
+                    "metrics": [],
+                    "aggregation_method": "weighted_mean",
+                    "weights": {},
+                    "composite_coe": null
+                  },
+                  "ecr": null
                 }
               ],
               "workforce": [
@@ -5080,7 +9021,16 @@
               ]
             },
             "subCapabilities": [],
-            "notes": ""
+            "notes": "",
+            "velocity_context": {
+              "primary_velocity_class": "",
+              "delta_t": "",
+              "delta_t_source": "",
+              "delta_t_confidence": ""
+            },
+            "controls_meta": {
+              "expected_count": null
+            }
           },
           "umbrella": []
         }

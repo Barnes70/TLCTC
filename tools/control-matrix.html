@@ -185,6 +185,46 @@ const TASK_STATUSES = [
     { id: 'done',        label: 'Done',        color: '#22c55e', icon: 'check-circle' },
 ];
 
+const VELOCITY_CLASSES = [
+    { id: 'VC-1', label: 'VC-1 Latent (Days-Months)', deltaRange: 'Days-Months' },
+    { id: 'VC-2', label: 'VC-2 Medium (Hours)',        deltaRange: 'Hours' },
+    { id: 'VC-3', label: 'VC-3 Fast (Minutes)',         deltaRange: 'Minutes' },
+    { id: 'VC-4', label: 'VC-4 Realtime (Sec-ms)',      deltaRange: 'Seconds-ms' },
+];
+
+const CONTROL_ROLES = [
+    { id: 'essential',     label: 'Essential',     color: '#ef4444', desc: 'Single point of failure — worst-of aggregation' },
+    { id: 'complementary', label: 'Complementary', color: '#3b82f6', desc: 'Defense-in-depth — ceiling-raising composite' },
+];
+
+const COE_METRIC_TYPES = [
+    { id: 'coverage',      label: 'Coverage',      desc: 'Proportion of target scope protected' },
+    { id: 'currency',      label: 'Currency',       desc: 'Freshness of control knowledge/signatures' },
+    { id: 'mode',          label: 'Mode',           desc: 'Operational mode effectiveness' },
+    { id: 'configuration', label: 'Configuration',  desc: 'Configuration compliance to design spec' },
+    { id: 'performance',   label: 'Performance',    desc: 'Speed/accuracy of control action' },
+];
+
+const COE_AGG_METHODS = [
+    { id: 'weighted_mean',  label: 'Weighted Mean',  desc: 'Metrics weighted by importance' },
+    { id: 'worst_of',       label: 'Worst-Of',       desc: 'Single metric failure = control failure' },
+    { id: 'geometric_mean', label: 'Geometric Mean', desc: 'Poor performance compounds multiplicatively' },
+];
+
+const DCS_VERDICTS = [
+    { id: 'effective',           max: 0.5,      color: '#22c55e', label: 'Effective' },
+    { id: 'adequate',            max: 0.8,      color: '#84cc16', label: 'Adequate' },
+    { id: 'marginal',            max: 1.0,      color: '#eab308', label: 'Marginal' },
+    { id: 'ineffective',         max: 2.0,      color: '#f97316', label: 'Ineffective' },
+    { id: 'structurally_failed', max: Infinity,  color: '#ef4444', label: 'Structurally Failed' },
+];
+
+const FITNESS_FACTORS = [
+    { value: 1.0, label: 'Fit (1.0)',      desc: 'Acts within Δt window' },
+    { value: 0.5, label: 'Marginal (0.5)', desc: 'Near boundary — ECR halved' },
+    { value: 0.0, label: 'Unfit (0.0)',    desc: 'Cannot act within Δt — ECR zero' },
+];
+
 const STORAGE_KEY = 'tlctc-control-matrix-v1';
 
 // ═══════════════════════════════════════════════════════════════════
@@ -245,7 +285,7 @@ function createDefaultState() {
 function loadState() {
     try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) return JSON.parse(raw);
+        if (raw) return migrateState(JSON.parse(raw));
     } catch(e) { console.warn('Failed to load state', e); }
     return createDefaultState();
 }
@@ -274,6 +314,148 @@ function countDocumentedCells(env) {
         });
     });
     return count;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CONTROL EFFECTIVENESS — FACTORIES & CALCULATIONS
+// ═══════════════════════════════════════════════════════════════════
+
+function createControl() {
+    return {
+        id: genId(), name: '', description: '', linkMore: '', ownerName: '', ownerOrgChart: '',
+        kind: '', maturity: 0, linkJira: '',
+        role: '',
+        cde_max: { value: null, rationale: '', set_by: '', last_reviewed: '', review_trigger: '' },
+        cde_fitness: { target_velocity_class: '', fit: null, factor: null, rationale: '' },
+        coe: { metrics: [], aggregation_method: 'weighted_mean', weights: {}, composite_coe: null },
+        ecr: null,
+    };
+}
+
+function createCoeMetric() {
+    return { metric_id: 'm-' + genId(), name: '', type: '', value: null, target: null, unit: 'ratio', source: '', description: '', measured_at: '' };
+}
+
+function calcCompositeCoe(metrics, method, weights) {
+    if (!metrics || metrics.length === 0) return null;
+    const valid = metrics.filter(m => m.value != null);
+    if (valid.length === 0) return null;
+    if (method === 'worst_of') return Math.min(...valid.map(m => m.value));
+    if (method === 'geometric_mean') {
+        const product = valid.reduce((acc, m) => acc * Math.max(m.value, 0.001), 1);
+        return Math.pow(product, 1 / valid.length);
+    }
+    let totalWeight = 0, weightedSum = 0;
+    valid.forEach(m => {
+        const w = (weights && weights[m.metric_id]) || (1 / valid.length);
+        totalWeight += w;
+        weightedSum += m.value * w;
+    });
+    return totalWeight > 0 ? weightedSum / totalWeight : null;
+}
+
+function calcEcr(control) {
+    const coe = control.coe?.composite_coe;
+    const cde = control.cde_max?.value;
+    const fit = control.cde_fitness?.factor;
+    if (coe == null || cde == null || fit == null) return null;
+    return coe * cde * fit;
+}
+
+function calcCellEffectiveness(controls) {
+    const resolved = controls.map(c => {
+        const compositeCoe = calcCompositeCoe(c.coe?.metrics, c.coe?.aggregation_method, c.coe?.weights);
+        const ctrl = { ...c, coe: { ...c.coe, composite_coe: compositeCoe } };
+        const ecr = calcEcr(ctrl);
+        const cdeEff = (c.cde_max?.value ?? 0) * (c.cde_fitness?.factor ?? 0);
+        return { ...ctrl, ecr, _cdeEff: cdeEff };
+    }).filter(c => c.ecr != null);
+
+    const essential = resolved.filter(c => c.role === 'essential');
+    const complementary = resolved.filter(c => c.role === 'complementary');
+    if (essential.length === 0 && complementary.length === 0) return null;
+
+    const essFloor = essential.length > 0 ? Math.min(...essential.map(c => c.ecr)) : 0;
+    const compFactor = complementary.length > 0 ? 1 - complementary.reduce((a, c) => a * (1 - c.ecr), 1) : 0;
+    const compRaise = (1.0 - essFloor) * compFactor;
+    const cellEcr = essFloor + compRaise;
+
+    const essCdeFloor = essential.length > 0 ? Math.min(...essential.map(c => c._cdeEff)) : 0;
+    const compCdeFactor = complementary.length > 0 ? 1 - complementary.reduce((a, c) => a * (1 - c._cdeEff), 1) : 0;
+    const cellCdeMax = essCdeFloor + (1.0 - essCdeFloor) * compCdeFactor;
+
+    const coeVals = resolved.filter(c => c.coe?.composite_coe != null).map(c => c.coe.composite_coe);
+    const cellCoe = coeVals.length > 0 ? coeVals.reduce((a, b) => a + b, 0) / coeVals.length : null;
+
+    return {
+        essential_floor: essFloor, complementary_raise: compRaise,
+        cell_cde_max_composite: cellCdeMax, cell_coe_composite: cellCoe,
+        cell_ecr: cellEcr, residual_ceiling_gap: 1.0 - cellCdeMax,
+    };
+}
+
+function parseDuration(iso) {
+    if (!iso) return null;
+    const m = iso.match(/P(?:(\d+)D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?/);
+    if (!m) return null;
+    return (parseInt(m[1]||0))*86400 + (parseInt(m[2]||0))*3600 + (parseInt(m[3]||0))*60 + parseFloat(m[4]||0);
+}
+
+function calcDcs(mttdIso, deltaIso) {
+    const mttd = parseDuration(mttdIso), dt = parseDuration(deltaIso);
+    if (mttd == null || dt == null || dt === 0) return null;
+    const score = mttd / dt;
+    const verdict = DCS_VERDICTS.find(v => score <= v.max) || DCS_VERDICTS[4];
+    return { score: Math.round(score * 100) / 100, verdict: verdict.id, verdictLabel: verdict.label, verdictColor: verdict.color };
+}
+
+function getEcrColor(val) {
+    if (val == null) return '#94a3b8';
+    if (val >= 0.8) return '#22c55e';
+    if (val >= 0.5) return '#eab308';
+    return '#ef4444';
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE MIGRATION
+// ═══════════════════════════════════════════════════════════════════
+
+function migrateControl(ctrl) {
+    if (!ctrl || ctrl.sharedControlId) return ctrl;
+    return {
+        ...ctrl,
+        role: ctrl.role || '',
+        cde_max: ctrl.cde_max || { value: null, rationale: '', set_by: '', last_reviewed: '', review_trigger: '' },
+        cde_fitness: ctrl.cde_fitness || { target_velocity_class: '', fit: null, factor: null, rationale: '' },
+        coe: ctrl.coe || { metrics: [], aggregation_method: 'weighted_mean', weights: {}, composite_coe: null },
+        ecr: ctrl.ecr ?? null,
+    };
+}
+
+function migrateCell(cell) {
+    if (!cell) return cell;
+    return {
+        ...cell,
+        local: (cell.local || []).map(migrateControl),
+        umbrella: (cell.umbrella || []).map(migrateControl),
+        velocity_context: cell.velocity_context || { primary_velocity_class: '', delta_t: '', delta_t_source: '', delta_t_confidence: '' },
+        controls_meta: cell.controls_meta || { expected_count: null },
+    };
+}
+
+function migrateState(st) {
+    if (!st) return st;
+    return {
+        ...st,
+        environments: (st.environments || []).map(env => ({
+            ...env,
+            cells: Object.fromEntries(Object.entries(env.cells || {}).map(([k, c]) => [k, migrateCell(c)])),
+        })),
+        sharedControls: (st.sharedControls || []).map(sc => ({
+            ...sc,
+            cde_max: sc.cde_max || { value: null, rationale: '', set_by: '', last_reviewed: '', review_trigger: '' },
+        })),
+    };
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -314,7 +496,120 @@ function MaturityBadge({ value, size = 'md' }) {
     );
 }
 
+function EcrBadge({ value, size = 'sm' }) {
+    const color = getEcrColor(value);
+    const sizeClasses = size === 'sm' ? 'text-[10px] px-1.5 py-0.5' : 'text-xs px-2 py-0.5';
+    return (
+        <span className={`inline-flex items-center font-bold rounded-full ${sizeClasses}`}
+              style={{ backgroundColor: color + '22', color, border: `1px solid ${color}44` }}
+              title={value != null ? `ECR: ${value.toFixed(3)}` : 'ECR not calculated'}>
+            {value != null ? value.toFixed(2) : '—'}
+        </span>
+    );
+}
+
+function RoleBadge({ role }) {
+    const r = CONTROL_ROLES.find(cr => cr.id === role);
+    if (!r) return null;
+    return (
+        <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
+              style={{ backgroundColor: r.color + '22', color: r.color }}>
+            {r.label}
+        </span>
+    );
+}
+
 // ═══════════════════════════════════════════════════════════════════
+// NAV DROPDOWN
+// ═══════════════════════════════════════════════════════════════════
+
+const NAV_GROUPS = [
+    { id: 'analysis', label: 'Analysis', icon: 'scan-search', links: [
+        { href: 'threat-modeling.html', label: 'Threat Modeling', icon: 'file-search' },
+        { href: 'attack-path-architect.html', label: 'Attack Path Architect', icon: 'route' },
+    ]},
+    { id: 'actors', label: 'Actors', icon: 'user-search', links: [
+        { href: 'actor-profile-designer.html', label: 'Actor Profiler', icon: 'fingerprint' },
+        { href: 'actor-story-designer.html', label: 'Actor Story', icon: 'book-open' },
+    ]},
+    { id: 'defense', label: 'Defense', icon: 'shield-check', links: [
+        { href: 'radar-tlctc-app.html', label: 'Threat Radar', icon: 'radar' },
+        { href: 'control-matrix.html', label: 'Control Matrix', icon: 'grid-3x3' },
+        { href: 'cbp-app.html', label: 'CBP', icon: 'building-2' },
+    ]},
+];
+
+function NavDropdown({ group }) {
+    const [open, setOpen] = useState(false);
+    const ref = useRef(null);
+    const currentPath = window.location.pathname.split('/').pop() || '';
+    const isActive = group.links.some(l => currentPath === l.href);
+    useEffect(() => {
+        if (!open) return;
+        const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, [open]);
+    return (
+        <div className="relative" ref={ref}>
+            <button onClick={() => setOpen(o => !o)}
+                    className={`text-sm font-medium flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors ${isActive ? 'text-foreground font-semibold' : 'text-muted-foreground'}`}>
+                <Icon name={group.icon} size={14} /> {group.label} <Icon name="chevron-down" size={12} className="opacity-50" />
+            </button>
+            {open && (
+                <div className="absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
+                    {group.links.map((link, i) => {
+                        const isCurrent = currentPath === link.href;
+                        return (
+                            <a key={i} href={link.href}
+                               className={`flex items-center gap-2 px-3 py-2 text-sm transition-colors ${isCurrent ? 'text-foreground font-semibold bg-accent/50' : 'text-muted-foreground hover:text-foreground hover:bg-accent'}`}>
+                                <Icon name={link.icon} size={16} /> {link.label}
+                            </a>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
+    );
+}
+
+function MobileNavMenu({ open, onClose }) {
+    if (!open) return null;
+    return (
+        <div className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden" onClick={onClose}>
+            <div className="flex h-14 items-center justify-between px-6 border-b border-border" onClick={e => e.stopPropagation()}>
+                <span className="font-display font-bold text-lg">TLCTC</span>
+                <button onClick={onClose} className="app-btn h-10 w-10 p-0 rounded-full hover:bg-secondary">
+                    <Icon name="x" size={24} />
+                </button>
+            </div>
+            <nav className="flex flex-col p-8 gap-2 text-base font-medium" onClick={e => e.stopPropagation()}>
+                {NAV_GROUPS.map(group => {
+                    const currentPath = window.location.pathname.split('/').pop() || '';
+                    return (
+                        <React.Fragment key={group.id}>
+                            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 first:mt-0 mb-1 flex items-center gap-1.5">
+                                <Icon name={group.icon} size={14} /> {group.label}
+                            </span>
+                            {group.links.map((link, i) => (
+                                <a key={i} href={link.href}
+                                   className={`pl-5 py-1 ${currentPath === link.href ? 'text-foreground font-semibold' : 'text-muted-foreground hover:text-foreground'}`}>
+                                    {link.label}
+                                </a>
+                            ))}
+                        </React.Fragment>
+                    );
+                })}
+                <div className="border-t border-border mt-4 pt-4">
+                    <a href="/" className="text-muted-foreground hover:text-foreground flex items-center gap-1.5">
+                        TLCTC.net <Icon name="external-link" size={14} />
+                    </a>
+                </div>
+            </nav>
+        </div>
+    );
+}
+
 // HEADER DROPDOWN
 // ═══════════════════════════════════════════════════════════════════
 
@@ -353,7 +648,7 @@ function HeaderDropdown({ label, icon, items }) {
 // HEADER
 // ═══════════════════════════════════════════════════════════════════
 
-function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onShowSharedControls, sharedControlCount, onReport, onShowSchema, onLoadStarter }) {
+function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onShowSharedControls, sharedControlCount, onReport, onShowSchema, onLoadStarter, mobileMenuOpen, onToggleMobileMenu }) {
     return (
         <header className="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
             <div className="flex items-center gap-3">
@@ -369,14 +664,9 @@ function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON
                     </div>
                 </a>
             </div>
-            <nav className="hidden lg:flex items-center gap-6">
-                <a href="threat-modeling.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Modeling</a>
-                <a href="attack-path-architect.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Attack Path</a>
-                <a href="actor-profile-designer.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Actor Profiler</a>
-                <a href="radar-tlctc-app.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Radar</a>
-                <a href="control-matrix.html" className="text-sm font-semibold text-foreground transition-colors">Control Matrix</a>
-                <a href="cbp-app.html" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">CBP</a>
-                <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">TLCTC.net <Icon name="external-link" size={12} /></a>
+            <nav className="hidden md:flex items-center gap-1">
+                {NAV_GROUPS.map(g => <NavDropdown key={g.id} group={g} />)}
+                <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <Icon name="external-link" size={12} /></a>
             </nav>
             <div className="flex items-center gap-2">
                 <button onClick={onShowSharedControls} className="app-btn app-btn-outline app-btn-sm gap-1" title="Shared Controls Library — define and link controls across clusters">
@@ -403,6 +693,9 @@ function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON
                 </button>
                 <button onClick={onToggleDark} className="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Toggle theme">
                     <Icon name={darkMode ? 'sun' : 'moon'} size={16} />
+                </button>
+                <button onClick={onToggleMobileMenu} className="md:hidden app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary">
+                    <Icon name="menu" size={20} />
                 </button>
             </div>
         </header>
@@ -574,7 +867,7 @@ function EnvironmentTabs({ environments, activeEnvId, onSelect, onAdd, onRename,
 // MATRIX CELL (split L/U)
 // ═══════════════════════════════════════════════════════════════════
 
-function MatrixCell({ clusterId, funcId, localMat, umbrellaMat, manualOverride, targetMaturity, isAgg, isSelected, onClick, darkMode }) {
+function MatrixCell({ clusterId, funcId, localMat, umbrellaMat, manualOverride, targetMaturity, isAgg, isSelected, onClick, darkMode, cellEcr }) {
     const isGapL = localMat !== null && localMat < targetMaturity;
     const isGapU = umbrellaMat !== null && umbrellaMat < targetMaturity;
     const active = isSelected ? ' active-cell' : '';
@@ -586,7 +879,7 @@ function MatrixCell({ clusterId, funcId, localMat, umbrellaMat, manualOverride, 
         return (
             <div className={`flex-1 flex flex-col items-center justify-center ${isGap ? 'gap-highlight' : ''}`}
                  style={{ backgroundColor: bg + (ml ? 'cc' : ''), minHeight: 40 }}
-                 title={`#${clusterId} ${CLUSTERS[clusterId-1].name} × ${funcId} ${type}\nMaturity: ${mat !== null ? mat + ' — ' + MATURITY_LEVELS[mat].label : 'No controls'}${manualOverride ? ' (manual override)' : ''}`}>
+                 title={`#${clusterId} ${CLUSTERS[clusterId-1].name} × ${funcId} ${type}\nMaturity: ${mat !== null ? mat + ' — ' + MATURITY_LEVELS[mat].label : 'No controls'}${manualOverride ? ' (manual override)' : ''}${cellEcr != null ? '\nCell ECR: ' + cellEcr.toFixed(2) : ''}`}>
                 <span className="text-[9px] font-bold opacity-70" style={{ color: textColor }}>{type[0]}</span>
                 <span className="text-sm font-bold" style={{ color: textColor }}>{mat !== null ? mat : '—'}</span>
             </div>
@@ -594,11 +887,18 @@ function MatrixCell({ clusterId, funcId, localMat, umbrellaMat, manualOverride, 
     };
 
     return (
-        <div className={`matrix-cell rounded-md overflow-hidden flex border ${manualOverride ? 'border-purple-500 border-2 ring-1 ring-purple-500/30' : 'border-border/50'}${active}`}
+        <div className={`matrix-cell rounded-md overflow-hidden flex flex-col border ${manualOverride ? 'border-purple-500 border-2 ring-1 ring-purple-500/30' : 'border-border/50'}${active}`}
              onClick={onClick} role="button" tabIndex={0} onKeyDown={e => e.key === 'Enter' && onClick()}>
-            {renderHalf(localMat, 'Local', isGapL)}
-            <div className="w-px" style={{ backgroundColor: darkMode ? '#475569' : '#cbd5e1' }} />
-            {renderHalf(umbrellaMat, 'Umbrella', isGapU)}
+            <div className="flex flex-1">
+                {renderHalf(localMat, 'Local', isGapL)}
+                <div className="w-px" style={{ backgroundColor: darkMode ? '#475569' : '#cbd5e1' }} />
+                {renderHalf(umbrellaMat, 'Umbrella', isGapU)}
+            </div>
+            {cellEcr != null && (
+                <div className="flex items-center justify-center py-0.5" style={{ backgroundColor: getEcrColor(cellEcr) + '22', borderTop: `1px solid ${getEcrColor(cellEcr)}44` }}>
+                    <span className="text-[8px] font-bold" style={{ color: getEcrColor(cellEcr) }}>{cellEcr.toFixed(2)}</span>
+                </div>
+            )}
         </div>
     );
 }
@@ -717,6 +1017,16 @@ function ControlMatrix({ environments, activeEnvId, targetMaturity, selectedCell
                                     {CSF_FUNCTIONS.map(fn => {
                                         const m = getMaturities(cl.id, fn.id);
                                         const isSel = selectedCell && selectedCell.clusterId === cl.id && selectedCell.funcId === fn.id;
+                                        const ck = cellKey(cl.id, fn.id);
+                                        let cellEcrVal = null;
+                                        if (!isAgg && env) {
+                                            const c = env.cells[ck];
+                                            if (c) {
+                                                const allC = [...(c.local||[]),...(c.umbrella||[])].filter(x=>!x.sharedControlId);
+                                                const eff = calcCellEffectiveness(allC);
+                                                if (eff) cellEcrVal = eff.cell_ecr;
+                                            }
+                                        }
                                         return (
                                             <td key={fn.id} className="p-0">
                                                 <MatrixCell
@@ -727,6 +1037,7 @@ function ControlMatrix({ environments, activeEnvId, targetMaturity, selectedCell
                                                     isAgg={isAgg} isSelected={isSel}
                                                     onClick={() => onCellClick(cl.id, fn.id)}
                                                     darkMode={darkMode}
+                                                    cellEcr={cellEcrVal}
                                                 />
                                             </td>
                                         );
@@ -756,19 +1067,226 @@ function ControlMatrix({ environments, activeEnvId, targetMaturity, selectedCell
 }
 
 // ═══════════════════════════════════════════════════════════════════
+// COE METRIC ROW
+// ═══════════════════════════════════════════════════════════════════
+
+function CoeMetricRow({ metric, weight, aggMethod, onUpdate, onUpdateWeight, onDelete }) {
+    return (
+        <div className="flex items-start gap-1 bg-background/50 rounded p-2 border border-border/50">
+            <div className="flex-1 space-y-1">
+                <div className="grid grid-cols-3 gap-1">
+                    <input type="text" value={metric.name} onChange={e => onUpdate({ ...metric, name: e.target.value })}
+                           className="input-ctrl py-0.5 text-[11px]" placeholder="Metric name" />
+                    <select value={metric.type || ''} onChange={e => onUpdate({ ...metric, type: e.target.value })} className="input-ctrl py-0.5 text-[11px]">
+                        <option value="">Type...</option>
+                        {COE_METRIC_TYPES.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
+                    </select>
+                    <input type="text" value={metric.source || ''} onChange={e => onUpdate({ ...metric, source: e.target.value })}
+                           className="input-ctrl py-0.5 text-[11px]" placeholder="Source" />
+                </div>
+                <div className="grid grid-cols-3 gap-1">
+                    <div className="flex items-center gap-1">
+                        <label className="text-[9px] text-muted-foreground w-8">Val:</label>
+                        <input type="number" min="0" max="1" step="0.01" value={metric.value ?? ''} onChange={e => onUpdate({ ...metric, value: e.target.value === '' ? null : Math.min(1, Math.max(0, Number(e.target.value))) })}
+                               className="input-ctrl py-0.5 text-[11px] flex-1" />
+                    </div>
+                    <div className="flex items-center gap-1">
+                        <label className="text-[9px] text-muted-foreground w-8">Tgt:</label>
+                        <input type="number" min="0" max="1" step="0.01" value={metric.target ?? ''} onChange={e => onUpdate({ ...metric, target: e.target.value === '' ? null : Number(e.target.value) })}
+                               className="input-ctrl py-0.5 text-[11px] flex-1" />
+                    </div>
+                    {aggMethod === 'weighted_mean' && (
+                        <div className="flex items-center gap-1">
+                            <label className="text-[9px] text-muted-foreground w-8">Wt:</label>
+                            <input type="number" min="0" max="1" step="0.05" value={weight ?? ''} onChange={e => onUpdateWeight(metric.metric_id, e.target.value === '' ? null : Number(e.target.value))}
+                                   className="input-ctrl py-0.5 text-[11px] flex-1" />
+                        </div>
+                    )}
+                </div>
+            </div>
+            <button onClick={() => onDelete(metric.metric_id)} className="p-0.5 hover:bg-destructive/10 rounded text-destructive/60" title="Remove metric">
+                <Icon name="x" size={12} />
+            </button>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// EFFECTIVENESS EDITOR (inside ControlCard)
+// ═══════════════════════════════════════════════════════════════════
+
+function EffectivenessEditor({ control, onUpdate }) {
+    const cde = control.cde_max || {};
+    const fit = control.cde_fitness || {};
+    const coe = control.coe || { metrics: [], aggregation_method: 'weighted_mean', weights: {} };
+    const compositeCoe = calcCompositeCoe(coe.metrics, coe.aggregation_method, coe.weights);
+    const ctrlWithCoe = { ...control, coe: { ...coe, composite_coe: compositeCoe } };
+    const ecr = calcEcr(ctrlWithCoe);
+
+    const updateCde = (field, val) => onUpdate({ ...control, cde_max: { ...cde, [field]: val } });
+    const updateFit = (field, val) => onUpdate({ ...control, cde_fitness: { ...fit, [field]: val } });
+    const updateCoe = (field, val) => onUpdate({ ...control, coe: { ...coe, [field]: val } });
+
+    const addMetric = () => updateCoe('metrics', [...coe.metrics, createCoeMetric()]);
+    const updateMetric = (updated) => updateCoe('metrics', coe.metrics.map(m => m.metric_id === updated.metric_id ? updated : m));
+    const deleteMetric = (mid) => {
+        const w = { ...coe.weights }; delete w[mid];
+        onUpdate({ ...control, coe: { ...coe, metrics: coe.metrics.filter(m => m.metric_id !== mid), weights: w } });
+    };
+    const updateWeight = (mid, val) => updateCoe('weights', { ...coe.weights, [mid]: val });
+
+    return (
+        <div className="space-y-3 text-sm">
+            {/* Role */}
+            <div>
+                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Control Role *</label>
+                <div className="flex gap-1">
+                    {CONTROL_ROLES.map(r => (
+                        <button key={r.id} onClick={() => onUpdate({ ...control, role: r.id })}
+                                className={`flex-1 text-[11px] py-1 px-2 rounded border font-medium transition-colors ${control.role === r.id ? 'border-current' : 'border-border opacity-50 hover:opacity-80'}`}
+                                style={{ color: r.color, backgroundColor: control.role === r.id ? r.color + '15' : 'transparent' }}
+                                title={r.desc}>
+                            {r.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {/* CDE_max */}
+            <div className="bg-background/50 rounded-lg p-2 border border-border/50">
+                <div className="text-[11px] font-bold text-muted-foreground mb-1.5 flex items-center gap-1">
+                    <Icon name="target" size={11} /> CDE_max (Design Effectiveness Ceiling)
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                    <div>
+                        <label className="text-[10px] text-muted-foreground block">Value (0.00-0.99) *</label>
+                        <input type="number" min="0" max="0.99" step="0.01" value={cde.value ?? ''}
+                               onChange={e => updateCde('value', e.target.value === '' ? null : Math.min(0.99, Math.max(0, Number(e.target.value))))}
+                               className="input-ctrl py-0.5 text-sm" />
+                    </div>
+                    <div>
+                        <label className="text-[10px] text-muted-foreground block">Set by</label>
+                        <input type="text" value={cde.set_by || ''} onChange={e => updateCde('set_by', e.target.value)}
+                               className="input-ctrl py-0.5 text-sm" placeholder="CISO / TI Lead" />
+                    </div>
+                </div>
+                <div className="mt-1">
+                    <label className="text-[10px] text-muted-foreground block">Rationale *</label>
+                    <textarea value={cde.rationale || ''} onChange={e => updateCde('rationale', e.target.value)}
+                              className="input-ctrl py-0.5 text-[11px] resize-none" rows={2} placeholder="Why this ceiling? What can't it detect/prevent?" />
+                </div>
+                <div className="grid grid-cols-2 gap-2 mt-1">
+                    <div>
+                        <label className="text-[10px] text-muted-foreground block">Last reviewed</label>
+                        <input type="date" value={cde.last_reviewed || ''} onChange={e => updateCde('last_reviewed', e.target.value)}
+                               className="input-ctrl py-0.5 text-[11px]" />
+                    </div>
+                    <div>
+                        <label className="text-[10px] text-muted-foreground block">Review trigger</label>
+                        <input type="text" value={cde.review_trigger || ''} onChange={e => updateCde('review_trigger', e.target.value)}
+                               className="input-ctrl py-0.5 text-[11px]" placeholder="Zero-day, quarterly..." />
+                    </div>
+                </div>
+            </div>
+
+            {/* CDE_fitness */}
+            <div className="bg-background/50 rounded-lg p-2 border border-border/50">
+                <div className="text-[11px] font-bold text-muted-foreground mb-1.5 flex items-center gap-1">
+                    <Icon name="zap" size={11} /> CDE_fitness (Velocity Fitness)
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                    <div>
+                        <label className="text-[10px] text-muted-foreground block">Target Velocity Class</label>
+                        <select value={fit.target_velocity_class || ''} onChange={e => updateFit('target_velocity_class', e.target.value)} className="input-ctrl py-0.5 text-[11px]">
+                            <option value="">— select —</option>
+                            {VELOCITY_CLASSES.map(vc => <option key={vc.id} value={vc.id}>{vc.label}</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <label className="text-[10px] text-muted-foreground block">Fitness Factor</label>
+                        <select value={fit.factor != null ? fit.factor : ''} onChange={e => {
+                            const v = e.target.value === '' ? null : Number(e.target.value);
+                            onUpdate({ ...control, cde_fitness: { ...fit, factor: v, fit: v === 1.0 ? true : v != null ? false : null } });
+                        }} className="input-ctrl py-0.5 text-[11px]">
+                            <option value="">— select —</option>
+                            {FITNESS_FACTORS.map(f => <option key={f.value} value={f.value}>{f.label} — {f.desc}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div className="mt-1">
+                    <label className="text-[10px] text-muted-foreground block">Rationale</label>
+                    <input type="text" value={fit.rationale || ''} onChange={e => updateFit('rationale', e.target.value)}
+                           className="input-ctrl py-0.5 text-[11px]" placeholder="Why this fitness level?" />
+                </div>
+            </div>
+
+            {/* COE Metrics */}
+            <div className="bg-background/50 rounded-lg p-2 border border-border/50">
+                <div className="flex items-center justify-between mb-1.5">
+                    <div className="text-[11px] font-bold text-muted-foreground flex items-center gap-1">
+                        <Icon name="activity" size={11} /> COE Metrics (Operational Effectiveness)
+                    </div>
+                    <button onClick={addMetric} className="app-btn app-btn-outline app-btn-xs gap-0.5">
+                        <Icon name="plus" size={10} /> Metric
+                    </button>
+                </div>
+                <div className="mb-1.5">
+                    <select value={coe.aggregation_method || 'weighted_mean'} onChange={e => updateCoe('aggregation_method', e.target.value)} className="input-ctrl py-0.5 text-[11px]">
+                        {COE_AGG_METHODS.map(m => <option key={m.id} value={m.id}>{m.label} — {m.desc}</option>)}
+                    </select>
+                </div>
+                <div className="space-y-1">
+                    {coe.metrics.map(m => (
+                        <CoeMetricRow key={m.metric_id} metric={m} weight={coe.weights?.[m.metric_id]}
+                                      aggMethod={coe.aggregation_method} onUpdate={updateMetric}
+                                      onUpdateWeight={updateWeight} onDelete={deleteMetric} />
+                    ))}
+                </div>
+                {coe.metrics.length > 0 && (
+                    <div className="mt-2 flex items-center gap-2 text-[11px]">
+                        <span className="text-muted-foreground">Composite COE:</span>
+                        <span className="font-bold" style={{ color: getEcrColor(compositeCoe) }}>{compositeCoe != null ? compositeCoe.toFixed(3) : '—'}</span>
+                    </div>
+                )}
+            </div>
+
+            {/* ECR Result */}
+            <div className="flex items-center gap-3 bg-background/50 rounded-lg p-2 border border-border/50">
+                <div className="text-[11px] font-bold text-muted-foreground flex items-center gap-1">
+                    <Icon name="gauge" size={11} /> ECR =
+                </div>
+                <EcrBadge value={ecr} size="md" />
+                <span className="text-[10px] text-muted-foreground">
+                    {compositeCoe != null && cde.value != null && fit.factor != null
+                        ? `${compositeCoe.toFixed(3)} × ${cde.value.toFixed(2)} × ${fit.factor.toFixed(1)}`
+                        : 'Set COE, CDE_max, and fitness to calculate'}
+                </span>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // CONTROL CARD
 // ═══════════════════════════════════════════════════════════════════
 
 function ControlCard({ control, onUpdate, onDelete, targetMaturity }) {
     const [expanded, setExpanded] = useState(!control.name);
+    const [tab, setTab] = useState('basic');
     const isGap = control.maturity < targetMaturity;
     const kind = CONTROL_KINDS.find(k => k.id === control.kind);
+    const role = CONTROL_ROLES.find(r => r.id === control.role);
     const toggle = () => setExpanded(e => !e);
+
+    const compositeCoe = calcCompositeCoe(control.coe?.metrics, control.coe?.aggregation_method, control.coe?.weights);
+    const ctrlWithCoe = { ...control, coe: { ...control.coe, composite_coe: compositeCoe } };
+    const ecr = calcEcr(ctrlWithCoe);
 
     return (
         <div className={`bg-muted/50 rounded-lg border ${isGap ? 'border-destructive/40' : 'border-border'} p-3`}>
             <div className="flex items-start gap-2 cursor-pointer select-none" onClick={toggle} role="button">
                 <MaturityBadge value={control.maturity} size="sm" />
+                {ecr != null && <EcrBadge value={ecr} />}
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-sm font-semibold truncate">{control.name || 'Unnamed Control'}</span>
@@ -777,6 +1295,7 @@ function ControlCard({ control, onUpdate, onDelete, targetMaturity }) {
                                 {kind.label}
                             </span>
                         )}
+                        <RoleBadge role={control.role} />
                     </div>
                     {control.ownerName && <div className="text-[11px] text-muted-foreground mt-0.5">Owner: {control.ownerName}{control.ownerOrgChart ? ` (${control.ownerOrgChart})` : ''}</div>}
                 </div>
@@ -799,60 +1318,116 @@ function ControlCard({ control, onUpdate, onDelete, targetMaturity }) {
                 </div>
             </div>
             {expanded && (
-                <div className="mt-3 space-y-2 text-sm">
-                    <div>
-                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Name *</label>
-                        <input type="text" value={control.name} onChange={e => onUpdate({ ...control, name: e.target.value })}
-                               className="input-ctrl py-1 text-sm" placeholder="Control name" />
+                <div className="mt-3 text-sm">
+                    <div className="flex gap-1 mb-3 border-b border-border pb-1">
+                        {[{id:'basic',label:'Basic',icon:'settings'},{id:'effectiveness',label:'Effectiveness',icon:'shield'},{id:'ecr',label:'ECR',icon:'gauge'}].map(t => (
+                            <button key={t.id} onClick={() => setTab(t.id)}
+                                    className={`text-[11px] px-2 py-1 rounded-t font-medium flex items-center gap-1 transition-colors ${tab === t.id ? 'bg-accent text-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
+                                <Icon name={t.icon} size={11} /> {t.label}
+                            </button>
+                        ))}
                     </div>
-                    <div>
-                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Description</label>
-                        <textarea value={control.description || ''} onChange={e => onUpdate({ ...control, description: e.target.value })}
-                                  className="input-ctrl py-1 text-sm resize-none" rows={2} placeholder="What does this control do?" />
-                    </div>
-                    <div>
-                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to More</label>
-                        <input type="url" value={control.linkMore || ''} onChange={e => onUpdate({ ...control, linkMore: e.target.value })}
-                               className="input-ctrl py-1 text-sm" placeholder="https://..." />
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                        <div>
-                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Name</label>
-                            <input type="text" value={control.ownerName || ''} onChange={e => onUpdate({ ...control, ownerName: e.target.value })}
-                                   className="input-ctrl py-1 text-sm" placeholder="Person or team" />
+
+                    {tab === 'basic' && (
+                        <div className="space-y-2">
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Name *</label>
+                                <input type="text" value={control.name} onChange={e => onUpdate({ ...control, name: e.target.value })}
+                                       className="input-ctrl py-1 text-sm" placeholder="Control name" />
+                            </div>
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Description</label>
+                                <textarea value={control.description || ''} onChange={e => onUpdate({ ...control, description: e.target.value })}
+                                          className="input-ctrl py-1 text-sm resize-none" rows={2} placeholder="What does this control do?" />
+                            </div>
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to More</label>
+                                <input type="url" value={control.linkMore || ''} onChange={e => onUpdate({ ...control, linkMore: e.target.value })}
+                                       className="input-ctrl py-1 text-sm" placeholder="https://..." />
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Name</label>
+                                    <input type="text" value={control.ownerName || ''} onChange={e => onUpdate({ ...control, ownerName: e.target.value })}
+                                           className="input-ctrl py-1 text-sm" placeholder="Person or team" />
+                                </div>
+                                <div>
+                                    <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Org-Chart Name</label>
+                                    <input type="text" value={control.ownerOrgChart || ''} onChange={e => onUpdate({ ...control, ownerOrgChart: e.target.value })}
+                                           className="input-ctrl py-1 text-sm" placeholder="Department, unit, role..." />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label className="text-[11px] font-medium text-muted-foreground block mb-1">Type</label>
+                                    <select value={control.kind || ''} onChange={e => onUpdate({ ...control, kind: e.target.value || '' })} className="input-ctrl py-1 text-sm">
+                                        <option value="">— not set —</option>
+                                        {CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[11px] font-medium text-muted-foreground block mb-1">Maturity</label>
+                                    <select value={control.maturity} onChange={e => onUpdate({ ...control, maturity: Number(e.target.value) })} className="input-ctrl py-1 text-sm">
+                                        {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to Jira</label>
+                                <input type="url" value={control.linkJira || ''} onChange={e => onUpdate({ ...control, linkJira: e.target.value })}
+                                       className="input-ctrl py-1 text-sm" placeholder="https://jira.example.com/browse/..." />
+                            </div>
+                            <div className="flex justify-end pt-1">
+                                <button onClick={() => { if (confirm('Delete this control?')) onDelete(control.id); }}
+                                        className="app-btn app-btn-danger app-btn-xs gap-1">
+                                    <Icon name="trash-2" size={11} /> Delete
+                                </button>
+                            </div>
                         </div>
-                        <div>
-                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Owner Org-Chart Name</label>
-                            <input type="text" value={control.ownerOrgChart || ''} onChange={e => onUpdate({ ...control, ownerOrgChart: e.target.value })}
-                                   className="input-ctrl py-1 text-sm" placeholder="Department, unit, role..." />
+                    )}
+
+                    {tab === 'effectiveness' && (
+                        <EffectivenessEditor control={control} onUpdate={onUpdate} />
+                    )}
+
+                    {tab === 'ecr' && (
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg border border-border/50">
+                                <span className="text-lg font-bold" style={{ color: getEcrColor(ecr) }}>{ecr != null ? ecr.toFixed(3) : '—'}</span>
+                                <div className="text-[11px] text-muted-foreground">
+                                    <div>ECR = COE x CDE_max x Fitness</div>
+                                    <div className="font-mono mt-0.5">
+                                        = {compositeCoe != null ? compositeCoe.toFixed(3) : '?'} x {control.cde_max?.value != null ? control.cde_max.value.toFixed(2) : '?'} x {control.cde_fitness?.factor != null ? control.cde_fitness.factor.toFixed(1) : '?'}
+                                    </div>
+                                </div>
+                            </div>
+                            {control.cde_max?.rationale && (
+                                <div className="text-[11px]"><span className="font-medium text-muted-foreground">CDE_max rationale:</span> {control.cde_max.rationale}</div>
+                            )}
+                            {control.cde_fitness?.rationale && (
+                                <div className="text-[11px]"><span className="font-medium text-muted-foreground">Fitness rationale:</span> {control.cde_fitness.rationale}</div>
+                            )}
+                            {control.coe?.metrics?.length > 0 && (
+                                <div className="text-[11px]">
+                                    <span className="font-medium text-muted-foreground">COE metrics ({control.coe.aggregation_method}):</span>
+                                    <div className="mt-1 space-y-0.5">
+                                        {control.coe.metrics.map(m => (
+                                            <div key={m.metric_id} className="flex justify-between">
+                                                <span>{m.name || 'Unnamed'} ({m.type || '?'})</span>
+                                                <span className="font-mono">{m.value != null ? m.value.toFixed(2) : '—'} / {m.target != null ? m.target.toFixed(2) : '—'}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                            <div className="flex justify-end pt-1">
+                                <button onClick={() => { if (confirm('Delete this control?')) onDelete(control.id); }}
+                                        className="app-btn app-btn-danger app-btn-xs gap-1">
+                                    <Icon name="trash-2" size={11} /> Delete
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                        <div>
-                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Type</label>
-                            <select value={control.kind || ''} onChange={e => onUpdate({ ...control, kind: e.target.value || '' })} className="input-ctrl py-1 text-sm">
-                                <option value="">— not set —</option>
-                                {CONTROL_KINDS.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}
-                            </select>
-                        </div>
-                        <div>
-                            <label className="text-[11px] font-medium text-muted-foreground block mb-1">Maturity</label>
-                            <select value={control.maturity} onChange={e => onUpdate({ ...control, maturity: Number(e.target.value) })} className="input-ctrl py-1 text-sm">
-                                {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label className="text-[11px] font-medium text-muted-foreground block mb-1">Link to Jira</label>
-                        <input type="url" value={control.linkJira || ''} onChange={e => onUpdate({ ...control, linkJira: e.target.value })}
-                               className="input-ctrl py-1 text-sm" placeholder="https://jira.example.com/browse/..." />
-                    </div>
-                    <div className="flex justify-end pt-1">
-                        <button onClick={() => { if (confirm('Delete this control?')) onDelete(control.id); }}
-                                className="app-btn app-btn-danger app-btn-xs gap-1">
-                            <Icon name="trash-2" size={11} /> Delete
-                        </button>
-                    </div>
+                    )}
                 </div>
             )}
         </div>
@@ -1207,8 +1782,7 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
     const isAgg = activeEnvId === 'aggregated';
 
     const addControl = (envId, type) => {
-        const newCtrl = { id: genId(), name: '', description: '', linkMore: '', ownerName: '', ownerOrgChart: '', kind: '', maturity: 0, linkJira: '' };
-        onUpdateCell(envId, ck, type, (controls) => [...controls, newCtrl]);
+        onUpdateCell(envId, ck, type, (controls) => [...controls, createControl()]);
     };
 
     const linkShared = (envId, type, scId) => {
@@ -1448,6 +2022,125 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
                                     )}
                                 </div>
                             </div>
+                        </div>
+                    );
+                })}
+
+                {/* Cell Effectiveness Summary */}
+                {!isAgg && envsToShow.map(env => {
+                    const cell = env.cells[ck] || { local: [], umbrella: [] };
+                    const allControls = [...(cell.local || []), ...(cell.umbrella || [])].filter(c => !c.sharedControlId);
+                    const eff = calcCellEffectiveness(allControls);
+                    const vc = cell.velocity_context || {};
+                    const cm = cell.controls_meta || {};
+                    const presentCount = allControls.length;
+                    const coverageScore = cm.expected_count ? presentCount / cm.expected_count : null;
+                    const isDe = funcId === 'DE';
+
+                    const updateVc = (field, val) => onUpdateCellMeta(env.id, ck, { velocity_context: { ...vc, [field]: val } });
+                    const updateCm = (field, val) => onUpdateCellMeta(env.id, ck, { controls_meta: { ...cm, [field]: val } });
+
+                    const dcs = isDe && vc.delta_t && cell.dcs_mttd ? calcDcs(cell.dcs_mttd, vc.delta_t) : null;
+
+                    return (
+                        <div key={'eff-' + env.id} className="mb-4 p-3 bg-muted/50 rounded-lg border border-border space-y-3">
+                            <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
+                                <Icon name="shield" size={12} /> Control Effectiveness
+                            </div>
+
+                            {/* Velocity Context */}
+                            <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label className="text-[10px] text-muted-foreground block">Velocity Class</label>
+                                    <select value={vc.primary_velocity_class || ''} onChange={e => updateVc('primary_velocity_class', e.target.value)} className="input-ctrl py-0.5 text-[11px]">
+                                        <option value="">— select —</option>
+                                        {VELOCITY_CLASSES.map(v => <option key={v.id} value={v.id}>{v.label}</option>)}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] text-muted-foreground block">Δt (ISO duration)</label>
+                                    <input type="text" value={vc.delta_t || ''} onChange={e => updateVc('delta_t', e.target.value)}
+                                           className="input-ctrl py-0.5 text-[11px]" placeholder="PT10M, PT4H..." />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label className="text-[10px] text-muted-foreground block">Δt Source</label>
+                                    <input type="text" value={vc.delta_t_source || ''} onChange={e => updateVc('delta_t_source', e.target.value)}
+                                           className="input-ctrl py-0.5 text-[11px]" placeholder="TI report, framework default..." />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] text-muted-foreground block">Confidence</label>
+                                    <select value={vc.delta_t_confidence || ''} onChange={e => updateVc('delta_t_confidence', e.target.value)} className="input-ctrl py-0.5 text-[11px]">
+                                        <option value="">—</option>
+                                        <option value="low">Low</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="high">High</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {/* Coverage */}
+                            <div className="grid grid-cols-3 gap-2">
+                                <div>
+                                    <label className="text-[10px] text-muted-foreground block">Expected #</label>
+                                    <input type="number" min="0" value={cm.expected_count ?? ''} onChange={e => updateCm('expected_count', e.target.value === '' ? null : Number(e.target.value))}
+                                           className="input-ctrl py-0.5 text-[11px]" />
+                                </div>
+                                <div className="text-[11px]">
+                                    <label className="text-[10px] text-muted-foreground block">Present</label>
+                                    <span className="font-bold">{presentCount}</span>
+                                </div>
+                                <div className="text-[11px]">
+                                    <label className="text-[10px] text-muted-foreground block">Coverage</label>
+                                    <span className="font-bold" style={{ color: coverageScore != null ? (coverageScore >= 1 ? '#22c55e' : coverageScore >= 0.5 ? '#eab308' : '#ef4444') : '#94a3b8' }}>
+                                        {coverageScore != null ? (coverageScore * 100).toFixed(0) + '%' : '—'}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* DCS (DE cells only) */}
+                            {isDe && (
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label className="text-[10px] text-muted-foreground block">MTTD (ISO duration)</label>
+                                        <input type="text" value={cell.dcs_mttd || ''} onChange={e => onUpdateCellMeta(env.id, ck, { dcs_mttd: e.target.value })}
+                                               className="input-ctrl py-0.5 text-[11px]" placeholder="PT8M, PT2H..." />
+                                    </div>
+                                    <div className="text-[11px]">
+                                        <label className="text-[10px] text-muted-foreground block">DCS</label>
+                                        {dcs ? (
+                                            <span className="font-bold px-1.5 py-0.5 rounded-full text-[10px]" style={{ backgroundColor: dcs.verdictColor + '22', color: dcs.verdictColor }}>
+                                                {dcs.score.toFixed(2)} — {dcs.verdictLabel}
+                                            </span>
+                                        ) : <span className="text-muted-foreground">—</span>}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Aggregated Effectiveness */}
+                            {eff && (
+                                <div className="border-t border-border pt-2 space-y-1">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-[10px] text-muted-foreground">Cell ECR:</span>
+                                        <EcrBadge value={eff.cell_ecr} size="md" />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-x-4 text-[10px]">
+                                        <div><span className="text-muted-foreground">Essential floor:</span> <span className="font-bold">{eff.essential_floor.toFixed(3)}</span></div>
+                                        <div><span className="text-muted-foreground">Complementary raise:</span> <span className="font-bold">{eff.complementary_raise.toFixed(3)}</span></div>
+                                        <div><span className="text-muted-foreground">CDE_max composite:</span> <span className="font-bold">{eff.cell_cde_max_composite.toFixed(3)}</span></div>
+                                        <div>
+                                            <span className="text-muted-foreground">Residual gap:</span>{' '}
+                                            <span className="font-bold" style={{ color: eff.residual_ceiling_gap > 0.2 ? '#ef4444' : eff.residual_ceiling_gap > 0.1 ? '#eab308' : '#22c55e' }}>
+                                                {(eff.residual_ceiling_gap * 100).toFixed(1)}%
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            {!eff && allControls.length > 0 && (
+                                <div className="text-[10px] text-muted-foreground italic">Set role, CDE_max, fitness, and COE on controls to see effectiveness calculations</div>
+                            )}
                         </div>
                     );
                 })}
@@ -1870,6 +2563,7 @@ function App() {
         if (saved !== null) return saved === 'true';
         return window.matchMedia?.('(prefers-color-scheme: dark)').matches || false;
     });
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showImport, setShowImport] = useState(false);
     const [showSchema, setShowSchema] = useState(false);
     const [showQuickAssess, setShowQuickAssess] = useState(false);
@@ -2026,13 +2720,13 @@ function App() {
 
     // Import JSON
     const handleImport = (data) => {
-        const newState = {
+        const newState = migrateState({
             orgName: data.orgName || data.organizationName || 'Imported',
             targetMaturity: data.targetMaturity ?? 3,
             environments: data.environments || [],
             sharedControls: data.sharedControls || [],
             createdAt: data.createdAt || new Date().toISOString().split('T')[0],
-        };
+        });
         setState(newState);
         setActiveEnvId(newState.environments[0]?.id || 'aggregated');
         setSelectedCell(null);
@@ -2290,7 +2984,10 @@ function App() {
                     onShowSharedControls={() => setShowSharedLibrary(true)}
                     sharedControlCount={(state.sharedControls || []).length}
                     onShowSchema={() => setShowSchema(true)}
-                    onLoadStarter={loadStarter} />
+                    onLoadStarter={loadStarter}
+                    mobileMenuOpen={mobileMenuOpen}
+                    onToggleMobileMenu={() => setMobileMenuOpen(o => !o)} />
+            <MobileNavMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
             {!disclaimerDismissed && <div className="ai-disclaimer no-print">&#9432; Example data in this tool is AI-generated based on real-world threat reports. Quality improves with evolving AI capabilities. These examples illustrate the practical application of the TLCTC framework.<button onClick={() => { setDisclaimerDismissed(true); try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){} }} title="Dismiss">&times;</button></div>}
 
             <SummaryBar orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
