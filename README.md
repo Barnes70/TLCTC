@@ -384,7 +384,8 @@ tlctc/
 │   ├── README.md                             # Tool index & JSON format reference
 │   ├── threat-modeling.html                  # SDLC threat modeling & architecture analysis
 │   ├── attack-path-architect.html            # Incident attack path documentation & CTI exchange
-│   ├── actor-profile-designer.html           # Threat actor capability profiling & comparison
+│   ├── actor-profile-designer.html           # Threat actor capability profiling & comparison (573 actors: 59 expert-scored + 514 ETDA heuristic-scored)
+│   ├── score_etda.py                         # ETDA→TLCTC scoring engine: tool arsenal + description mining, calibrated against expert data
 │   ├── radar-tlctc-app.html                  # Interactive threat radar visualization & assessment
 │   ├── control-matrix.html                   # NIST CSF 2.0 × TLCTC control matrix with maturity scoring
 │   └── examples/                             # Starter templates & real-world example datasets
