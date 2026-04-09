@@ -185,14 +185,38 @@
                 </div>
             </a>
         </div>
-        <nav class="hidden md:flex items-center gap-6">
-            <a href="threat-modeling.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Threat Modeling</a>
-            <a href="attack-path-architect.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Attack Path Architect</a>
-            <a href="actor-profile-designer.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Actor Profiler</a>
-            <a href="radar-tlctc-app.html" class="text-sm font-medium text-foreground font-semibold transition-colors">Threat Radar</a>
-            <a href="control-matrix.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Control Matrix</a>
-            <a href="cbp-app.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">CBP</a>
-            <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+        <nav class="hidden md:flex items-center gap-1">
+            <div class="nav-dd relative">
+                <button onclick="toggleNavDd('analysis')" class="text-sm font-medium text-muted-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                    <i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+                </button>
+                <div id="nav-dd-analysis-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
+                    <a href="threat-modeling.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="file-search" class="h-4 w-4"></i> Threat Modeling</a>
+                    <a href="attack-path-architect.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="route" class="h-4 w-4"></i> Attack Path Architect</a>
+                    <a href="attck-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="swords" class="h-4 w-4"></i> ATT&CK Explorer</a>
+                    <a href="cwe-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="bug" class="h-4 w-4"></i> CWE Explorer</a>
+                </div>
+            </div>
+            <div class="nav-dd relative">
+                <button onclick="toggleNavDd('actors')" class="text-sm font-medium text-muted-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                    <i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+                </button>
+                <div id="nav-dd-actors-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
+                    <a href="actor-profile-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="fingerprint" class="h-4 w-4"></i> Actor Profiler</a>
+                    <a href="actor-story-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="book-open" class="h-4 w-4"></i> Actor Story</a>
+                </div>
+            </div>
+            <div class="nav-dd relative">
+                <button onclick="toggleNavDd('defense')" class="text-sm font-semibold text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                    <i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+                </button>
+                <div id="nav-dd-defense-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
+                    <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground font-semibold bg-accent/50"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
+                    <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
+                    <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
+                </div>
+            </div>
+            <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
         </nav>
         <div class="flex items-center gap-3">
             <button onclick="toggleDarkMode()" class="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Toggle theme">
@@ -211,14 +235,22 @@
                 <i data-lucide="x" class="h-6 w-6"></i>
             </button>
         </div>
-        <nav class="flex flex-col p-8 gap-6 text-lg font-medium">
-            <a href="threat-modeling.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Threat Modeling</a>
-            <a href="attack-path-architect.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Attack Path Architect</a>
-            <a href="actor-profile-designer.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Actor Profiler</a>
-            <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="text-foreground font-semibold">Threat Radar</a>
-            <a href="control-matrix.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Control Matrix</a>
-            <a href="cbp-app.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">CBP</a>
-            <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">TLCTC.net</a>
+        <nav class="flex flex-col p-8 gap-2 text-base font-medium">
+            <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1.5"><i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis</span>
+            <a href="threat-modeling.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Modeling</a>
+            <a href="attack-path-architect.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Attack Path Architect</a>
+            <a href="attck-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">ATT&CK Explorer</a>
+            <a href="cwe-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CWE Explorer</a>
+            <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors</span>
+            <a href="actor-profile-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Profiler</a>
+            <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Story</a>
+            <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense</span>
+            <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-foreground font-semibold">Threat Radar</a>
+            <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
+            <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
+            <div class="border-t border-border mt-4 pt-4">
+                <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <i data-lucide="external-link" class="h-3.5 w-3.5"></i></a>
+            </div>
         </nav>
     </div>
 
@@ -1528,6 +1560,20 @@ const bubblePositions = useMemo(() => {
             htmlEl.classList.remove('dark');
         }
         updateThemeIcons();
+
+        // Nav Dropdowns
+        function toggleNavDd(id) {
+            document.querySelectorAll('.nav-dd-panel').forEach(function(p) {
+                if (p.id !== 'nav-dd-' + id + '-panel') p.classList.add('hidden');
+            });
+            var panel = document.getElementById('nav-dd-' + id + '-panel');
+            if (panel) panel.classList.toggle('hidden');
+        }
+        document.addEventListener('mousedown', function(e) {
+            if (!e.target.closest('.nav-dd')) {
+                document.querySelectorAll('.nav-dd-panel').forEach(function(p) { p.classList.add('hidden'); });
+            }
+        });
 
         // Mobile Menu
         function toggleMenu() {

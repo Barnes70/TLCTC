@@ -77,6 +77,15 @@
     #tlctc-mobile-menu a.nav-active { color: hsl(var(--nav-foreground)); font-weight: 600; }
     #tlctc-mobile-menu .nav-toggle-btn { background: transparent; border: none; cursor: pointer; color: hsl(var(--nav-foreground)); border-radius: 9999px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
     #tlctc-mobile-menu .nav-toggle-btn:hover { background: hsl(var(--nav-secondary)); }
+    #tlctc-mobile-menu .nav-group-label { color: hsl(var(--nav-muted-foreground)); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px; }
+
+    #tlctc-unified-nav .nav-dd button { background: transparent; border: none; cursor: pointer; color: hsl(var(--nav-muted-foreground)); font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    #tlctc-unified-nav .nav-dd button:hover { background: hsl(var(--nav-secondary)); color: hsl(var(--nav-foreground)); }
+    #tlctc-unified-nav .nav-dd button.nav-active { color: hsl(var(--nav-foreground)); font-weight: 600; }
+    .nav-dd-panel { background: hsl(var(--nav-background)); border: 1px solid hsl(var(--nav-border)); border-radius: 8px; box-shadow: 0 10px 25px -5px rgba(0,0,0,.15); z-index: 50; padding: 4px 0; min-width: 210px; position: absolute; left: 0; top: 100%; margin-top: 4px; }
+    .nav-dd-panel a { display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 14px; color: hsl(var(--nav-muted-foreground)); text-decoration: none; transition: background 0.15s, color 0.15s; }
+    .nav-dd-panel a:hover { background: hsl(var(--nav-secondary)); color: hsl(var(--nav-foreground)); }
+    .nav-dd-panel a.nav-active { color: hsl(var(--nav-foreground)); font-weight: 600; background: hsl(var(--nav-secondary) / 0.5); }
 
     .ai-disclaimer { background: hsl(var(--nav-secondary) / 0.5); border-bottom: 1px solid hsl(var(--nav-border)); color: hsl(var(--nav-muted-foreground)); font-size: 11px; line-height: 1.4; padding: 6px 16px; text-align: center; flex-shrink: 0; }
     .ai-disclaimer button { background: none; border: none; cursor: pointer; color: hsl(var(--nav-muted-foreground)); font-size: 14px; margin-left: 8px; opacity: 0.6; vertical-align: middle; }
@@ -106,14 +115,32 @@
         </div>
       </a>
     </div>
-    <nav class="hidden md:flex items-center gap-6">
-      <a href="threat-modeling.html" class="nav-active text-sm font-medium">Threat Modeling</a>
-      <a href="attack-path-architect.html" class="text-sm font-medium">Attack Path Architect</a>
-      <a href="actor-profile-designer.html" class="text-sm font-medium">Actor Profiler</a>
-      <a href="radar-tlctc-app.html" class="text-sm font-medium">Threat Radar</a>
-      <a href="control-matrix.html" class="text-sm font-medium">Control Matrix</a>
-      <a href="cbp-app.html" class="text-sm font-medium">CBP</a>
-      <a href="/" class="text-sm font-medium flex items-center gap-1">TLCTC.net <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+    <nav class="hidden md:flex items-center gap-1">
+      <div class="nav-dd relative">
+        <button onclick="toggleNavDd('analysis')" class="nav-active"><i data-lucide="scan-search" style="width:14px;height:14px;"></i> Analysis <i data-lucide="chevron-down" style="width:12px;height:12px;opacity:0.5;"></i></button>
+        <div id="nav-dd-analysis-panel" class="nav-dd-panel hidden">
+          <a href="threat-modeling.html" class="nav-active"><i data-lucide="file-search" style="width:16px;height:16px;"></i> Threat Modeling</a>
+          <a href="attack-path-architect.html"><i data-lucide="route" style="width:16px;height:16px;"></i> Attack Path Architect</a>
+          <a href="attck-explorer.html"><i data-lucide="swords" style="width:16px;height:16px;"></i> ATT&CK Explorer</a>
+          <a href="cwe-explorer.html"><i data-lucide="bug" style="width:16px;height:16px;"></i> CWE Explorer</a>
+        </div>
+      </div>
+      <div class="nav-dd relative">
+        <button onclick="toggleNavDd('actors')"><i data-lucide="user-search" style="width:14px;height:14px;"></i> Actors <i data-lucide="chevron-down" style="width:12px;height:12px;opacity:0.5;"></i></button>
+        <div id="nav-dd-actors-panel" class="nav-dd-panel hidden">
+          <a href="actor-profile-designer.html"><i data-lucide="fingerprint" style="width:16px;height:16px;"></i> Actor Profiler</a>
+          <a href="actor-story-designer.html"><i data-lucide="book-open" style="width:16px;height:16px;"></i> Actor Story</a>
+        </div>
+      </div>
+      <div class="nav-dd relative">
+        <button onclick="toggleNavDd('defense')"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> Defense <i data-lucide="chevron-down" style="width:12px;height:12px;opacity:0.5;"></i></button>
+        <div id="nav-dd-defense-panel" class="nav-dd-panel hidden">
+          <a href="radar-tlctc-app.html"><i data-lucide="radar" style="width:16px;height:16px;"></i> Threat Radar</a>
+          <a href="control-matrix.html"><i data-lucide="grid-3x3" style="width:16px;height:16px;"></i> Control Matrix</a>
+          <a href="cbp-app.html"><i data-lucide="building-2" style="width:16px;height:16px;"></i> CBP</a>
+        </div>
+      </div>
+      <a href="/" class="text-sm font-medium flex items-center gap-1" style="padding:6px 10px;border-radius:6px;">TLCTC.net <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
     </nav>
     <div class="flex items-center gap-3">
       <button onclick="toggleNavTheme()" class="nav-toggle-btn" aria-label="Toggle theme">
@@ -134,14 +161,22 @@
         <i data-lucide="x" style="width:24px;height:24px;"></i>
       </button>
     </div>
-    <nav class="flex flex-col p-8 gap-6 text-lg font-medium">
-      <a href="threat-modeling.html" class="nav-active">Threat Modeling</a>
-      <a href="attack-path-architect.html">Attack Path Architect</a>
-      <a href="actor-profile-designer.html">Actor Profiler</a>
-      <a href="radar-tlctc-app.html">Threat Radar</a>
-      <a href="control-matrix.html">Control Matrix</a>
-      <a href="cbp-app.html">CBP</a>
-      <a href="/">TLCTC.net</a>
+    <nav class="flex flex-col p-8 gap-2 text-base font-medium">
+      <span class="nav-group-label" style="margin-bottom:4px;"><i data-lucide="scan-search" style="width:14px;height:14px;"></i> Analysis</span>
+      <a href="threat-modeling.html" class="nav-active" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Threat Modeling</a>
+      <a href="attack-path-architect.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Attack Path Architect</a>
+      <a href="attck-explorer.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">ATT&CK Explorer</a>
+      <a href="cwe-explorer.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">CWE Explorer</a>
+      <span class="nav-group-label" style="margin-top:16px;margin-bottom:4px;"><i data-lucide="user-search" style="width:14px;height:14px;"></i> Actors</span>
+      <a href="actor-profile-designer.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Actor Profiler</a>
+      <a href="actor-story-designer.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Actor Story</a>
+      <span class="nav-group-label" style="margin-top:16px;margin-bottom:4px;"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> Defense</span>
+      <a href="radar-tlctc-app.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Threat Radar</a>
+      <a href="control-matrix.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Control Matrix</a>
+      <a href="cbp-app.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">CBP</a>
+      <div style="border-top:1px solid hsl(var(--nav-border));margin-top:16px;padding-top:16px;">
+        <a href="/" style="display:flex;align-items:center;gap:6px;">TLCTC.net <i data-lucide="external-link" style="width:14px;height:14px;"></i></a>
+      </div>
     </nav>
   </div>
 
@@ -151,6 +186,19 @@
 
   <!-- Nav bar vanilla JS (outside React) -->
   <script>
+    function toggleNavDd(id) {
+      document.querySelectorAll('.nav-dd-panel').forEach(function(p) {
+        if (p.id !== 'nav-dd-' + id + '-panel') p.classList.add('hidden');
+      });
+      var panel = document.getElementById('nav-dd-' + id + '-panel');
+      if (panel) panel.classList.toggle('hidden');
+    }
+    document.addEventListener('mousedown', function(e) {
+      if (!e.target.closest('.nav-dd')) {
+        document.querySelectorAll('.nav-dd-panel').forEach(function(p) { p.classList.add('hidden'); });
+      }
+    });
+
     function toggleNavMenu() {
       var menu = document.getElementById('tlctc-mobile-menu');
       if (menu.classList.contains('hidden')) {

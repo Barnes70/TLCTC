@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>TLCTC Actor Profile Designer - Capability Framework App</title>
-    <meta name="description" content="Design, visualize, and export TLCTC threat actor capability profiles. Generate radar charts, PDF Actor Cards, and JSON datasets compliant with the TLCTC Framework.">
-    <meta name="keywords" content="TLCTC, Threat Actor Profiling, Cyber Threat Intelligence, CTI, Capability Matrix, MITRE ATT&CK, Actor Cards, Risk Management, Cybersecurity Tools">
+    <title>TLCTC Actor Story Designer - Threat Intelligence Framework App</title>
+    <meta name="description" content="Design threat actor stories combining TLCTC capability profiles, emerging technology enablers, and Diamond Model-framed narrative intelligence.">
+    <meta name="keywords" content="TLCTC, Threat Actor Profiling, Diamond Model, Cyber Threat Intelligence, CTI, Capability Matrix, Emerging Tech, Actor Stories">
     <meta name="author" content="TLCTC Framework">
-    <meta property="og:title" content="TLCTC Actor Profile Designer">
+    <meta property="og:title" content="TLCTC Actor Story Designer">
     <meta property="og:type" content="website">
-    
+
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="/vendor/react/18.3.1/react.development.js"></script>
+    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
+    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 
@@ -249,17 +253,9 @@
         //  FEATURE: Intelligence Summary
         // ============================================================
         function renderIntelligenceSummary() {
+            // Intelligence Summary moved to dedicated Tab 4 — keep this section hidden
             var section = sel('intelligenceSummary');
-            if (!section) return;
-            var entries = Object.entries(actors);
-            if (entries.length < 2) { section.classList.add('hidden'); return; }
-            section.classList.remove('hidden');
-            sel('intelActorCount').textContent = entries.length + ' actors';
-            renderArchetypes();
-            renderAvgRadar();
-            renderLeaderboard();
-            renderEnrichmentBreakdowns();
-            lucide.createIcons();
+            if (section) section.classList.add('hidden');
         }
 
         function toggleIntelligenceSummary() {
@@ -530,6 +526,32 @@
             }
         }
     </style>
+    <style>
+        /* Enablers Radar Styles */
+        .tech-chip { width:42px; height:42px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:800; color:white; cursor:grab; transition:transform 0.1s,box-shadow 0.1s; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06); position:relative; margin:3px; text-align:center; line-height:1; flex-shrink:0; border-radius:8px; border:1px solid rgba(255,255,255,0.2); user-select:none; }
+        .tech-chip:active { cursor:grabbing; transform:scale(1.05); z-index:50; }
+        .tech-chip:hover { z-index:40; transform:translateY(-1px); box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); }
+        .tech-chip-small { width:24px; height:24px; font-size:0; margin:2px; border-radius:4px; }
+        .actor-indicator { position:absolute; font-weight:900; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.8); pointer-events:none; font-family:'Inter',sans-serif; }
+        .pos-tl{top:1px;left:2px} .pos-tr{top:1px;right:2px} .pos-bl{bottom:1px;left:2px} .pos-br{bottom:1px;right:2px} .pos-cc{bottom:1px;left:50%;transform:translateX(-50%)}
+        .tech-chip-small .actor-indicator{display:none}
+        .enabler-arrow-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:20;overflow:visible}
+        @keyframes enabler-dash{to{stroke-dashoffset:-20}} .animate-enabler-dash{animation:enabler-dash 1s linear infinite}
+        .selected-ring{outline:2px solid #2563eb;outline-offset:2px}
+        .tech-ghost{opacity:0.4;filter:grayscale(100%) brightness(1.2);border:2px dashed #94a3b8;box-shadow:none}
+        .enabler-radar-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0}
+        .enabler-radar-table th{padding:12px 4px;font-size:0.7rem;border-bottom:2px solid hsl(var(--border));background:hsl(var(--secondary))}
+        .enabler-radar-table td{padding:4px;vertical-align:top;border-right:1px solid hsl(var(--border));border-bottom:1px solid hsl(var(--border));height:100px;transition:background-color 0.2s}
+        .enabler-radar-table td:last-child{border-right:none}
+        td.enabler-drag-over{background-color:hsl(var(--primary)/0.08) !important}
+        .enabler-row-label{width:140px;font-size:0.75rem;padding:8px;font-weight:700;color:hsl(var(--muted-foreground));border-right:2px solid hsl(var(--border)) !important;display:flex;align-items:center;justify-content:flex-end;text-align:right;height:100%}
+        .enabler-btn-tool{padding:6px 12px;border:1px solid hsl(var(--border));border-radius:6px;font-size:0.75rem;font-weight:600;display:flex;align-items:center;gap:6px;transition:all 0.15s;cursor:pointer;background:hsl(var(--background));color:hsl(var(--foreground))}
+        .enabler-btn-tool:hover{background:hsl(var(--secondary))}
+        /* Tab styles */
+        .tab-btn{padding:0.75rem 1.25rem;font-size:0.875rem;font-weight:500;display:flex;align-items:center;gap:0.5rem;border-bottom:2px solid transparent;color:hsl(var(--muted-foreground));transition:all 0.2s;cursor:pointer;background:none;border-top:none;border-left:none;border-right:none}
+        .tab-btn:hover{color:hsl(var(--foreground))}
+        .tab-btn.active{border-bottom-color:hsl(var(--primary));color:hsl(var(--foreground));font-weight:700}
+    </style>
 </head>
 <body class="min-h-screen font-sans antialiased relative overflow-x-hidden flex flex-col">
 
@@ -571,8 +593,8 @@
                             <i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
                         </button>
                         <div id="nav-dd-actors-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
-                            <a href="actor-profile-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground font-semibold bg-accent/50"><i data-lucide="fingerprint" class="h-4 w-4"></i> Actor Profiler</a>
-                            <a href="actor-story-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="book-open" class="h-4 w-4"></i> Actor Story</a>
+                            <a href="actor-profile-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="fingerprint" class="h-4 w-4"></i> Actor Profiler</a>
+                            <a href="actor-story-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground font-semibold bg-accent/50"><i data-lucide="book-open" class="h-4 w-4"></i> Actor Story</a>
                         </div>
                     </div>
                     <div class="nav-dd relative">
@@ -616,8 +638,8 @@
             <a href="attck-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">ATT&CK Explorer</a>
             <a href="cwe-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CWE Explorer</a>
             <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors</span>
-            <a href="actor-profile-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-foreground font-semibold">Actor Profiler</a>
-            <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Story</a>
+            <a href="actor-profile-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Profiler</a>
+            <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-foreground font-semibold">Actor Story</a>
             <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense</span>
             <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Radar</a>
             <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
@@ -630,17 +652,40 @@
 
     <main class="flex-grow pt-12 pb-24">
         
-        <section class="container-custom mb-12 text-center animate-fade-in-up">
+        <section class="container-custom mb-8 text-center animate-fade-in-up">
             <div class="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-3 py-1 text-xs font-medium text-secondary-foreground backdrop-blur-sm mb-6">
                 <span class="text-primary">Tool</span> / Threat Intelligence
             </div>
             <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 gradient-text">
-                Actor Capability Designer
+                Actor Story Designer
             </h1>
             <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Design, visualize, and share TLCTC-style capability profiles for threat actors.
+                Combine capability profiles, emerging technology enablers, and Diamond Model-framed narratives into actionable threat intelligence.
             </p>
         </section>
+
+        <!-- TAB BAR -->
+        <div class="container-custom mb-6">
+            <div class="glass-card rounded-xl overflow-hidden">
+                <div class="flex border-b border-border overflow-x-auto">
+                    <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn active">
+                        <i data-lucide="venetian-mask" class="h-4 w-4"></i> Profile
+                    </button>
+                    <button onclick="switchTab('enablers')" id="tab-enablers" class="tab-btn">
+                        <i data-lucide="cpu" class="h-4 w-4"></i> Enablers
+                    </button>
+                    <button onclick="switchTab('story')" id="tab-story" class="tab-btn">
+                        <i data-lucide="book-open" class="h-4 w-4"></i> Story
+                    </button>
+                    <button onclick="switchTab('intelligence')" id="tab-intelligence" class="tab-btn">
+                        <i data-lucide="brain" class="h-4 w-4"></i> Intelligence
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== TAB 1: PROFILE ===================== -->
+        <div id="tabContent-profile">
 
         <div class="container-custom mb-8">
             <div class="glass-card rounded-xl p-3 flex flex-wrap gap-3 items-center justify-between">
@@ -650,15 +695,10 @@
                 <div class="flex flex-wrap gap-2">
                     <select id="selLoadDataset" class="input-field h-9 text-xs w-auto" onchange="loadExampleDataset(this.value)">
                         <option value="">Load Dataset...</option>
-                        <optgroup label="Expert-Scored">
+                        <optgroup label="Example Datasets">
                             <option value="google_mandiant">Google/Mandiant APTs (44)</option>
                             <option value="crowdstrike_2025">CrowdStrike 2025 (15)</option>
-                            <option value="all_expert">Expert-Scored Combined (59)</option>
-                        </optgroup>
-                        <optgroup label="Heuristic-Scored">
-                            <option value="etda_tgc">ETDA Threat Group Cards (514)</option>
-                        </optgroup>
-                        <optgroup label="All Sources">
+                            <option value="etda_thaicert">ETDA ThaiCERT (514)</option>
                             <option value="all">All Combined (573)</option>
                         </optgroup>
                     </select>
@@ -934,6 +974,153 @@
             </div>
 
         </div>
+        </div><!-- /tabContent-profile -->
+
+        <!-- ===================== TAB 2: ENABLERS RADAR ===================== -->
+        <div id="tabContent-enablers" class="hidden">
+            <div id="enablerReactRoot"></div>
+        </div>
+
+        <!-- ===================== TAB 3: ACTOR STORY ===================== -->
+        <div id="tabContent-story" class="hidden">
+            <div class="container-custom space-y-6">
+                <div class="glass-card rounded-xl p-4 flex flex-wrap items-center gap-4">
+                    <div class="flex items-center gap-2 text-primary">
+                        <i data-lucide="book-open" class="h-5 w-5"></i>
+                        <h2 class="font-display text-lg font-bold text-foreground">Actor Story</h2>
+                    </div>
+                    <select id="storyActorSelect" class="input-field h-9 text-sm w-64" onchange="renderStoryView()">
+                        <option value="">— Select Actor —</option>
+                    </select>
+                    <div class="flex items-center gap-2 ml-auto">
+                        <label class="text-xs text-muted-foreground">Actor Type:</label>
+                        <select id="storyActorType" class="input-field h-8 text-xs w-40" onchange="saveStoryMeta()">
+                            <option value="">Auto-detect</option>
+                            <option value="N">N — Nation State</option>
+                            <option value="E">E — Extortion</option>
+                            <option value="F">F — Fraud</option>
+                            <option value="H">H — Hacktivist</option>
+                            <option value="A">A — Amateur</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="storyContent" class="hidden space-y-6">
+                    <!-- Diamond Model Frame -->
+                    <div class="glass-card rounded-xl p-6">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Diamond Model Frame</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="bg-secondary/30 border border-border rounded-lg p-4">
+                                <div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-2">Adversary</div>
+                                <div id="storyAdversary" class="text-sm"></div>
+                            </div>
+                            <div class="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                                <div class="text-[10px] uppercase tracking-wider text-primary font-bold mb-2">Capability (TLCTC)</div>
+                                <div id="storyCapability" class="text-sm"></div>
+                            </div>
+                            <div class="bg-secondary/30 border border-border rounded-lg p-4">
+                                <div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-2">Infrastructure</div>
+                                <textarea id="storyInfrastructure" class="input-field h-20 text-xs w-full" placeholder="Known C2, tools, hosting..." onchange="saveStoryMeta()"></textarea>
+                            </div>
+                            <div class="bg-secondary/30 border border-border rounded-lg p-4">
+                                <div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-2">Victim</div>
+                                <div id="storyVictim" class="text-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Causal Fingerprint -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="glass-card rounded-xl p-6">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Causal Fingerprint</h3>
+                            <div class="aspect-square max-h-[300px] mx-auto"><canvas id="storyRadar"></canvas></div>
+                        </div>
+                        <div class="glass-card rounded-xl p-6">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Key Characteristics</h3>
+                            <div id="storyCharacteristics" class="space-y-3"></div>
+                        </div>
+                    </div>
+
+                    <!-- Technology Evolution -->
+                    <div class="glass-card rounded-xl p-6">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Technology Evolution</h3>
+                        <p class="text-[10px] text-muted-foreground mb-3">Emerging technologies mapped from the Enablers Radar, filtered for this actor type.</p>
+                        <div id="storyTechEvolution" class="space-y-2"></div>
+                    </div>
+
+                    <!-- Narrative Assessment -->
+                    <div class="glass-card rounded-xl p-6">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Narrative Assessment</h3>
+                        <div id="storyNarrativeAuto" class="text-sm text-muted-foreground mb-4 bg-secondary/30 border border-border rounded-lg p-4"></div>
+                        <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5 block">Analyst Notes</label>
+                        <textarea id="storyAnalystNotes" class="input-field h-24 text-sm" placeholder="Add your assessment, context, or override the auto-generated narrative..." onchange="saveStoryMeta()"></textarea>
+                    </div>
+
+                    <!-- Observed Activity Threads -->
+                    <div id="storyActivityThreads" class="glass-card rounded-xl p-6 hidden">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Observed Activity Threads</h3>
+                        <div id="storyThreadsList" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <div id="storyEmpty" class="text-center py-16 text-muted-foreground">
+                    <i data-lucide="book-open" class="h-12 w-12 mx-auto mb-4 opacity-30"></i>
+                    <p>Select an actor to generate their story</p>
+                    <p class="text-xs mt-2">Load a dataset in the Profile tab first, then select an actor here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== TAB 4: INTELLIGENCE ===================== -->
+        <div id="tabContent-intelligence" class="hidden">
+            <div class="container-custom">
+                <div class="glass-card rounded-xl p-6">
+                    <div class="flex items-center gap-2 text-primary mb-6">
+                        <i data-lucide="brain" class="h-5 w-5"></i>
+                        <h2 class="font-display text-lg font-bold text-foreground">Intelligence Summary</h2>
+                        <span id="intelActorCount2" class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">0</span>
+                    </div>
+                    <div id="intelContent2">
+                        <div id="intelMinActors" class="text-center py-12 text-muted-foreground">
+                            <i data-lucide="brain" class="h-12 w-12 mx-auto mb-4 opacity-30"></i>
+                            <p>Load 2+ actors in the Profile tab to see intelligence analysis.</p>
+                        </div>
+                        <div id="intelDashboard" class="hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                                <div>
+                                    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Most Common Archetypes</h3>
+                                    <div id="intelArchetypes2" class="space-y-2"></div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Average Capability Profile</h3>
+                                    <div class="aspect-square max-h-[250px] mx-auto"><canvas id="avgRadar2"></canvas></div>
+                                    <div id="intelAvgStat2" class="text-center mt-2 text-xs text-muted-foreground"></div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Cluster Leaderboard</h3>
+                                    <div id="intelLeaderboard2" class="space-y-1.5"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-6 border-t border-border/50">
+                                <div>
+                                    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Origin Breakdown</h3>
+                                    <div id="intelOriginBreakdown2" class="space-y-1.5"></div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Top Targeted Sectors</h3>
+                                    <div id="intelSectorBreakdown2" class="space-y-1.5"></div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Motivation Profile</h3>
+                                    <div id="intelMotivationBreakdown2" class="space-y-1.5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <footer class="bg-card border-t border-border py-12 text-sm mt-auto opacity-90">
@@ -943,7 +1130,7 @@
                 <span class="font-bold">TLCTC Framework</span>
             </div>
             <div class="text-muted-foreground text-center md:text-right text-xs">
-                <p>Exports support TLCTC Actor Profile v2 with observed attack paths. Generated cards include vector charts and DRE profiles.</p>
+                <p>Actor Story Designer — TLCTC Actor Profile v2 with enablers, narratives, and Diamond Model framing.</p>
                 <p class="mt-1">Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" class="underline decoration-dotted hover:text-primary">CC BY 4.0</a>.</p>
             </div>
         </div>
@@ -1150,7 +1337,7 @@
                 {"threat_actor":"PUNK SPIDER","tlctc_scores":[2,3,1,3,1,1,4,1,1,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Technology","Manufacturing","Professional Services","Financial Services"],"notes":"Develops and maintains Akira ransomware [#7 Champion]. Exploited CVE-2024-3400 on Palo Alto GlobalProtect VPN for initial access [#2 High]; RDP with service accounts, credential dumping within 12-14 minutes [#4 High]; privilege escalation via ESX Admins group; stages via legitimate tools SharpShares, WinRAR, FileZilla, AnyDesk [#1 Medium] before ransomware deployment. One of the fastest adversaries observed. First identified April 2023.","sequence":"#02 → #04 → #01 → #07","sources":["CrowdStrike 2024 Threat Hunting Report"],"last_updated":"2026-03-22"},
                 {"threat_actor":"HORDE PANDA","tlctc_scores":[2,2,1,3,1,1,3,1,1,1],"origin_country":"China","motivation":["Espionage"],"target_sectors":["Telecommunications"],"notes":"China-nexus adversary targeting South Asian telecommunications providers. Identity-based initial access via VPN, DCSync credential dumping from multiple accounts [#4 High]; DLL side-loading and living-off-the-land techniques to stage implants [#1 Medium]; deploys LuaPlug and KEYPLUG implants [#7 High]. Searched for LAPS attributes and unrestricted delegation objects. Leveraged 11 compromised user accounts in one observed operation.","sequence":"#04 → #01 → #07","sources":["CrowdStrike 2024 Threat Hunting Report"],"last_updated":"2026-03-22"}
         ]};
-        const CTA_ETDA = {schema_version:"tlctc-actor-profile.v2",actors:[
+        const CTA_ETDA_THAICERT = {schema_version:'tlctc-actor-profile.v2',actors:[
                 {"threat_actor": "8220 Gang, 8220 Mining Group, Returned Libra", "tlctc_scores": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "origin_country": "China", "motivation": ["Financial Gain"], "target_sectors": [], "notes": "(Trend Micro) 8220 Gang (also known as “8220 Mining Group,” derived from their use of port 8220 for command and control or C&C communications exchange) has been active since 2017 and continues to scan for vulnerable applications in cloud and conta... Heuristic-scored from ETDA Threat Group Cards.", "sequence": "", "sources": ["ETDA ThaiCERT Threat Group Cards v20250816", "https://apt.etda.or.th/cgi-bin/showcard.cgi?u=8384088d-a679-47bb-bff5-957830937ae3", "https://www.lacework.com/blog/8220-gangs-recent-use-of-custom-miner-and-botnet/", "https://www.sentinelone.com/blog/from-the-front-lines-8220-gang-massively-expands-cloud-botnet-to-30000-infected-hosts/"], "last_updated": "2026-04-08"},
                 {"threat_actor": "[Unnamed group USA]", "tlctc_scores": [1, 2, 1, 1, 1, 1, 1, 1, 1, 1], "origin_country": "Unknown", "motivation": ["Espionage"], "target_sectors": [], "notes": "A subgroup of the 'CIA'. Scoring: server exploitation signals. Heuristic-scored from ETDA Threat Group Cards. Known victims: China, Iran, North Korea, Russia. Suspected sponsor: State-sponsored, CIA.", "sequence": "#02", "sources": ["ETDA ThaiCERT Threat Group Cards v20250816", "https://apt.etda.or.th/cgi-bin/showcard.cgi?u=d4ccac4c-06b7-4b12-af53-7b96e160055a", "https://www.zdnet.com/article/hackers-breach-fsb-contractor-expose-tor-deanonymization-project/", "https://www.zdnet.com/article/hackers-breach-fsb-contractor-and-leak-details-about-iot-hacking-project/"], "last_updated": "2026-04-08"},
                 {"threat_actor": "[Unnamed groups: China]", "tlctc_scores": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "origin_country": "China", "motivation": ["Espionage"], "target_sectors": ["Aerospace & Defense", "Government"], "notes": "These are reported APT activities attributed to a country, but not to an individual threat group. Scoring: Arsenal: 1 tools (1 malware, 0 dual-use). Heuristic-scored from ETDA Threat Group Cards. Known victims: Cambodia, Japan, Myanmar, Netherlands, Taiwan, USA. Suspected sponsor: State-sponsored. Key tools: COATHANGER.", "sequence": "", "sources": ["ETDA ThaiCERT Threat Group Cards v20250816", "https://apt.etda.or.th/cgi-bin/showcard.cgi?u=e319c38c-1f2c-434b-b1b9-6457bc585bcd", "https://www.zdnet.com/article/china-blamed-for-data-theft-from-us-navy-contractor/", "https://www.zdnet.com/article/mitsubishi-electric-discloses-security-breach-china-is-main-suspect/"], "last_updated": "2026-04-08"},
@@ -1669,9 +1856,8 @@
         const EXAMPLE_DATASETS = {
             google_mandiant:{name:'Google/Mandiant APTs (44)',actors:CTA_GOOGLE_MANDIANT},
             crowdstrike_2025:{name:'CrowdStrike 2025 (15)',actors:CTA_CROWDSTRIKE_2025.actors},
-            etda_tgc:{name:'ETDA Threat Group Cards (514)',actors:CTA_ETDA.actors},
-            all_expert:{name:'Expert-Scored Combined (59)',get actors(){return[...CTA_GOOGLE_MANDIANT,...CTA_CROWDSTRIKE_2025.actors];}},
-            all:{name:'All Combined (573)',get actors(){return[...CTA_GOOGLE_MANDIANT,...CTA_CROWDSTRIKE_2025.actors,...CTA_ETDA.actors];}}
+            etda_thaicert:{name:'ETDA ThaiCERT (514)',actors:CTA_ETDA_THAICERT.actors},
+            all:{name:'All Combined (573)',get actors(){return[...CTA_GOOGLE_MANDIANT,...CTA_CROWDSTRIKE_2025.actors,...CTA_ETDA_THAICERT.actors];}}
         };
         let libraryViewMode = 'grid';
         let avgRadarChart = null;
@@ -2194,6 +2380,8 @@
                 renderLibraryGrid(entries);
             }
             renderIntelligenceSummary();
+            // Keep story actor dropdown in sync
+            if(typeof populateStorySelect === 'function') populateStorySelect();
         }
 
         // --- Quick JSON Modal Logic ---
@@ -2715,6 +2903,800 @@
             });
             updateChart(true);
         }
+
+        // ============================================================
+        //  UNIFIED STATE MANAGEMENT
+        // ============================================================
+        const UNIFIED_KEY = 'tlctc_actor_story_v1';
+
+        // Enablers state
+        const ENABLER_CLUSTERS = [
+            {id:'c1',label:'#1 Abuse'},{id:'c2',label:'#2 Exp Svr'},{id:'c3',label:'#3 Exp Clnt'},
+            {id:'c4',label:'#4 Identity'},{id:'c5',label:'#5 MitM'},{id:'c6',label:'#6 Flood'},
+            {id:'c7',label:'#7 Malware'},{id:'c8',label:'#8 Physical'},{id:'c9',label:'#9 Soc Eng'},
+            {id:'c10',label:'#10 Supply'}
+        ];
+        const ENABLER_LEVELS = [
+            {id:'l1',label:'Commodity / As a Service',color:'bg-red-50 border-l-4 border-red-500'},
+            {id:'l2',label:'Established',color:'bg-orange-50 border-l-4 border-orange-500'},
+            {id:'l3',label:'Specialized / Targeted',color:'bg-fuchsia-50 border-l-4 border-fuchsia-500'},
+            {id:'l4',label:'First Movers',color:'bg-indigo-50 border-l-4 border-indigo-500'},
+            {id:'l5',label:'Not Seen',color:'bg-slate-100 border-l-4 border-slate-400'}
+        ];
+        const DEFAULT_TECHS = [
+            {id:'AI',label:'AI Supported',color:'#2563eb'},{id:'Ag',label:'Agentic AI',color:'#9333ea'},
+            {id:'QC',label:'Q-Computing',color:'#059669'},{id:'QS',label:'Q-Sensing',color:'#0d9488'},
+            {id:'Robo',label:'Robotics',color:'#ea580c'},{id:'IoT',label:'IoT/Edge',color:'#f59e0b'},
+            {id:'Bio',label:'Bionics',color:'#dc2626'},{id:'XR',label:'XR/Spatial',color:'#4f46e5'},
+            {id:'Sat',label:'Space/Satellite',color:'#6366f1'}
+        ];
+        const DEFAULT_ACTOR_TYPES = [
+            {id:'N',label:'Nation State',pos:'pos-tl'},{id:'E',label:'Extortion (Ransom)',pos:'pos-tr'},
+            {id:'F',label:'Fraud (Financial)',pos:'pos-bl'},{id:'H',label:'Hacktivist',pos:'pos-br'},
+            {id:'A',label:'Amateur',pos:'pos-cc'}
+        ];
+        const DEFAULT_ENABLER_APPEARANCE = {actorFontSize:10,trendArrowColor:'#1e293b',trendArrowSize:14};
+
+        // Shared enabler state accessible from story tab
+        window._enablerInstances = [];
+        window._enablerConfig = {clusters:ENABLER_CLUSTERS,levels:ENABLER_LEVELS,techs:DEFAULT_TECHS,actors:DEFAULT_ACTOR_TYPES,appearance:DEFAULT_ENABLER_APPEARANCE};
+        let actorStories = {};
+
+        function saveUnifiedState(){
+            const state = {
+                actors: actors,
+                enablers: {instances: window._enablerInstances, config: window._enablerConfig},
+                actorStories: actorStories,
+                version: 'tlctc-actor-story.v1'
+            };
+            localStorage.setItem(UNIFIED_KEY, JSON.stringify(state));
+        }
+
+        function loadUnifiedState(){
+            try {
+                const raw = localStorage.getItem(UNIFIED_KEY);
+                if(raw){
+                    const s = JSON.parse(raw);
+                    actors = s.actors || {};
+                    if(s.enablers){
+                        window._enablerInstances = s.enablers.instances || [];
+                        if(s.enablers.config) window._enablerConfig = {...window._enablerConfig, ...s.enablers.config};
+                    }
+                    actorStories = s.actorStories || {};
+                    return;
+                }
+            } catch(e){}
+            // Migrate from old storage
+            try { actors = JSON.parse(localStorage.getItem('threatActorRadarData_TLCTC_v4')||'{}'); } catch(e){ actors={}; }
+            try {
+                const ed = JSON.parse(localStorage.getItem('tlctc_v5')||'null');
+                if(ed){ window._enablerInstances=ed.instances||[]; if(ed.config) window._enablerConfig={...window._enablerConfig,...ed.config}; }
+            } catch(e){}
+            actorStories = {};
+        }
+
+        // Override original loadLocal/saveLocal to use unified state
+        loadLocal = loadUnifiedState;
+        saveLocal = saveUnifiedState;
+
+        // ============================================================
+        //  TAB SWITCHING
+        // ============================================================
+        let activeTab = 'profile';
+        let enablerReactMounted = false;
+
+        function switchTab(tabId){
+            activeTab = tabId;
+            ['profile','enablers','story','intelligence'].forEach(t=>{
+                const section = sel('tabContent-'+t);
+                const btn = sel('tab-'+t);
+                if(section) section.classList.toggle('hidden', t!==tabId);
+                if(btn){
+                    btn.classList.toggle('active', t===tabId);
+                }
+            });
+            if(tabId==='enablers' && !enablerReactMounted) mountEnablerReact();
+            if(tabId==='story'){ populateStorySelect(); renderStoryView(); }
+            if(tabId==='intelligence') renderIntelTab();
+            if(tabId==='profile'){ renderLibrary(); if(chart) updateChart(false); }
+            lucide.createIcons();
+        }
+
+        // ============================================================
+        //  TAB 3: ACTOR STORY VIEW
+        // ============================================================
+        let storyRadarChart = null;
+
+        function populateStorySelect(){
+            const s = sel('storyActorSelect');
+            if(!s) return;
+            const keep = s.value;
+            s.innerHTML = '<option value="">— Select Actor —</option>';
+            Object.keys(actors).sort().forEach(n=>{
+                const o=document.createElement('option'); o.value=n; o.textContent=n; s.appendChild(o);
+            });
+            if(actors[keep]) s.value=keep;
+        }
+
+        function renderStoryView(){
+            const name = sel('storyActorSelect')?.value;
+            if(!name || !actors[name]){
+                if(sel('storyContent')) sel('storyContent').classList.add('hidden');
+                if(sel('storyEmpty')) sel('storyEmpty').classList.remove('hidden');
+                return;
+            }
+            sel('storyContent').classList.remove('hidden');
+            sel('storyEmpty').classList.add('hidden');
+
+            const actor = actors[name];
+            const scores = actor.scores || DEFAULT_SCORES;
+            const storyData = actorStories[name] || {};
+
+            // Actor type selector
+            if(sel('storyActorType')) sel('storyActorType').value = storyData.actorTypeMapping || '';
+
+            // Diamond: Adversary
+            sel('storyAdversary').innerHTML =
+                '<div class="font-bold text-foreground">'+name+'</div>'+
+                '<div class="text-xs text-muted-foreground mt-1">'+(actor.origin_country||'Unknown origin')+'</div>'+
+                '<div class="flex flex-wrap gap-1 mt-2">'+(actor.motivation||[]).map(m=>
+                    '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-secondary text-secondary-foreground">'+m+'</span>'
+                ).join('')+'</div>';
+
+            // Diamond: Capability
+            const topClusters = scores.map((v,i)=>({cluster:i+1,score:v,label:LABELS[i]}))
+                .filter(c=>c.score>=3).sort((a,b)=>b.score-a.score);
+            sel('storyCapability').innerHTML =
+                '<div class="flex flex-wrap gap-1 mb-2">'+topClusters.map(c=>
+                    '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold '+CLUSTER_COLORS[c.cluster-1]+'">#'+c.cluster+' '+c.label.split(' ')[0]+' ('+c.score+')</span>'
+                ).join('')+'</div>'+
+                '<div class="text-[10px] text-muted-foreground">'+(actor.sequence?'Archetype: '+actor.sequence:'No archetype defined')+'</div>';
+
+            // Diamond: Victim
+            const sectors = actor.target_sectors || [];
+            sel('storyVictim').innerHTML =
+                '<div class="flex flex-wrap gap-1">'+sectors.slice(0,5).map(s=>
+                    '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-secondary text-secondary-foreground">'+s+'</span>'
+                ).join('')+'</div>'+
+                (sectors.length>5?'<div class="text-[10px] text-muted-foreground mt-1">+'+(sectors.length-5)+' more sectors</div>':'');
+
+            // Diamond: Infrastructure
+            sel('storyInfrastructure').value = storyData.infrastructure || '';
+            sel('storyAnalystNotes').value = storyData.storyNotes || '';
+
+            // Causal Fingerprint Radar
+            renderStoryRadar(scores);
+            // Key Characteristics
+            renderStoryCharacteristics(name, actor, scores, topClusters);
+            // Tech Evolution
+            renderStoryTechEvolution(name, actor);
+            // Narrative
+            renderStoryNarrative(name, actor, scores, topClusters);
+            // Activity Threads
+            renderStoryActivityThreads(name, actor);
+
+            lucide.createIcons();
+        }
+
+        function renderStoryRadar(scores){
+            const isDark = htmlEl.classList.contains('dark');
+            const color = '#3b82f6';
+            const canvas = sel('storyRadar');
+            if(!canvas) return;
+            if(storyRadarChart){
+                storyRadarChart.data.datasets[0].data = scores;
+                storyRadarChart.options.scales.r.ticks.color = isDark?'#9ca3af':'#4b5563';
+                storyRadarChart.options.scales.r.grid.color = isDark?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.1)';
+                storyRadarChart.options.scales.r.pointLabels.color = isDark?'#e5e7eb':'#374151';
+                storyRadarChart.update();
+            } else {
+                storyRadarChart = new Chart(canvas.getContext('2d'), {
+                    type:'radar',
+                    data:{labels:LABELS,datasets:[{label:'Capability',data:scores,backgroundColor:rgba(color,0.25),borderColor:color,borderWidth:2,pointBackgroundColor:color,fill:true}]},
+                    options:{responsive:true,maintainAspectRatio:true,animation:false,
+                        scales:{r:{suggestedMin:0,suggestedMax:4,ticks:{stepSize:1,backdropColor:'transparent',color:isDark?'#9ca3af':'#4b5563',font:{size:9},callback:v=>(['','L','M','H','C'])[v]||''},grid:{color:isDark?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.1)'},pointLabels:{color:isDark?'#e5e7eb':'#374151',font:{size:9}}}},
+                        plugins:{legend:{display:false}}}
+                });
+            }
+        }
+
+        function renderStoryCharacteristics(name, actor, scores, topClusters){
+            const container = sel('storyCharacteristics');
+            if(!container) return;
+            const sorted=[...scores].sort((a,b)=>b-a);
+            const max=sorted[0]; const dom=max-(sorted[1]||0); const breadth=scores.filter(v=>v>=3).length;
+
+            let h='';
+            h+='<div class="flex items-center gap-3 text-sm"><span class="w-32 text-muted-foreground">Max Score</span><span class="font-bold text-primary">'+max+'/4 ('+(max===4?'Champion':max===3?'High':max===2?'Medium':'Low')+')</span></div>';
+            h+='<div class="flex items-center gap-3 text-sm"><span class="w-32 text-muted-foreground">Breadth &ge;3</span><span class="font-bold">'+breadth+' of 10 clusters</span></div>';
+            h+='<div class="flex items-center gap-3 text-sm"><span class="w-32 text-muted-foreground">Dominance</span><span class="font-bold">'+dom+' (specialization gap)</span></div>';
+
+            if(topClusters.length){
+                h+='<div class="pt-3 border-t border-border mt-3"><div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-2">Strongest Mechanisms</div>';
+                topClusters.forEach(c=>{
+                    h+='<div class="flex items-center gap-2 text-xs mb-1"><span class="inline-block px-1.5 py-0.5 rounded font-bold '+CLUSTER_COLORS[c.cluster-1]+'">#'+c.cluster+'</span> '+c.label+' <span class="text-muted-foreground">('+(["","Low","Medium","High","Champion"])[c.score]+')</span></div>';
+                });
+                h+='</div>';
+            }
+            if(actor.sequence){
+                h+='<div class="pt-3 border-t border-border mt-3"><div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-2">Typical Attack Sequence</div>';
+                const seqBadges=actor.sequence.split(/\s*→\s*/).map(s=>{
+                    const m=s.trim().match(/#(\d+)/);
+                    if(m){const c=parseInt(m[1]);return '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold '+(CLUSTER_COLORS[c-1]||'')+'">#'+c+'</span>';}
+                    return s;
+                }).join(' <span class="text-muted-foreground">→</span> ');
+                h+='<div class="text-xs">'+seqBadges+'</div></div>';
+            }
+            h+='<div class="pt-3 border-t border-border mt-3 text-[10px] text-muted-foreground italic">This causal fingerprint identifies the actor by the generic vulnerabilities they exploit, not by the tools they use. The profile persists across tooling changes.</div>';
+            container.innerHTML=h;
+        }
+
+        function inferActorType(actor){
+            const motiv=(actor.motivation||[]).join(' ').toLowerCase();
+            if(motiv.includes('espionage')||motiv.includes('ip theft')||motiv.includes('surveillance')) return 'N';
+            if(motiv.includes('financial')||motiv.includes('sabotage')) return 'E';
+            if(motiv.includes('information operations')) return 'H';
+            return 'N';
+        }
+
+        function renderStoryTechEvolution(name, actor){
+            const container=sel('storyTechEvolution');
+            if(!container) return;
+            const storyData=actorStories[name]||{};
+            const actorTypeId=storyData.actorTypeMapping||inferActorType(actor);
+            const instances=window._enablerInstances||[];
+            const config=window._enablerConfig||{};
+            const relevant=instances.filter(inst=>inst.activeActors.includes(actorTypeId));
+
+            if(!relevant.length){
+                container.innerHTML='<p class="text-sm text-muted-foreground italic">No enabler data for actor type '+actorTypeId+' ('+(config.actors?.find(a=>a.id===actorTypeId)?.label||'Unknown')+').</p><p class="text-xs text-muted-foreground mt-1">Switch to the Enablers tab to map emerging technologies to actor types.</p>';
+                return;
+            }
+            const scores=actor.scores||DEFAULT_SCORES;
+            let h='';
+            relevant.forEach(inst=>{
+                const tech=(config.techs||[]).find(t=>t.id===inst.typeId);
+                const level=(config.levels||[]).find(l=>inst.cellKey.startsWith(l.id));
+                const cm=inst.cellKey.match(/c(\d+)/);
+                const ci=cm?parseInt(cm[1])-1:-1;
+                const actorScore=ci>=0?scores[ci]:0;
+                const isHigh=actorScore>=3;
+                h+='<div class="flex items-center gap-3 p-2 rounded-lg '+(isHigh?'bg-primary/5 border border-primary/20':'bg-secondary/30 border border-border')+'">';
+                h+='<div class="w-5 h-5 rounded flex-shrink-0" style="background-color:'+(tech?.color||'#64748b')+'"></div>';
+                h+='<div class="flex-1 min-w-0"><span class="text-xs font-bold">'+(tech?.label||inst.typeId)+'</span>';
+                h+=' <span class="text-[10px] text-muted-foreground">at '+(level?.label||'?')+' maturity</span>';
+                if(ci>=0) h+=' <span class="text-[10px] text-muted-foreground">in #'+(ci+1)+' '+LABELS[ci].split(' ')[0]+'</span>';
+                h+='</div>';
+                if(inst.trend) h+='<span class="text-xs">'+(inst.trend==='up'?'↑':'↓')+'</span>';
+                if(isHigh) h+='<span class="text-[10px] font-bold text-primary whitespace-nowrap">HIGH RELEVANCE</span>';
+                h+='</div>';
+            });
+            container.innerHTML=h;
+        }
+
+        function renderStoryNarrative(name, actor, scores, topClusters){
+            const container=sel('storyNarrativeAuto');
+            if(!container) return;
+            let t='<div class="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-2">Auto-generated Assessment</div>';
+            t+='<p class="mb-2"><strong>'+name+'</strong> is ';
+            t+=(actor.origin_country&&actor.origin_country!=='Unknown')?'a <strong>'+actor.origin_country+'</strong>-origin actor ':'an actor of unknown origin ';
+            t+='motivated by <strong>'+((actor.motivation||[]).join(' and ')||'unknown objectives')+'</strong>. ';
+            if(topClusters.length){
+                t+='Their causal fingerprint shows strength in ';
+                t+=topClusters.map(c=>'<strong>'+c.label+'</strong> (#'+c.cluster+', '+(["","Low","Medium","High","Champion"])[c.score]+')').join(', ')+'. ';
+            } else { t+='Their causal fingerprint shows moderate capability across clusters without clear specialization. '; }
+            if(actor.sequence) t+='Typical attack archetype: <code class="text-xs bg-secondary px-1 py-0.5 rounded">'+actor.sequence+'</code>. ';
+            t+='</p>';
+            if((actor.target_sectors||[]).length){
+                t+='<p class="mb-2">Primary targeting: <strong>'+actor.target_sectors.slice(0,5).join(', ')+'</strong>';
+                if(actor.target_sectors.length>5) t+=' and '+(actor.target_sectors.length-5)+' additional sectors';
+                t+='. ';
+                if(topClusters.length){
+                    t+='Organizations in these sectors should prioritize defenses against ';
+                    t+=topClusters.map(c=>c.label.split(' ')[0].toLowerCase()).join(', ');
+                    t+=' attack mechanisms.</p>';
+                } else t+='</p>';
+            }
+            if(actor.incidents?.length){
+                const totals={C:0,I:0,A:0,Ac:0};
+                actor.incidents.forEach(inc=>{const o=inc.outcomes||inc.dre_outcomes;if(o)Object.entries(o).forEach(([k,v])=>{if(totals[k]!=null)totals[k]+=v;});});
+                const dreTotal=Object.values(totals).reduce((a,b)=>a+b,0);
+                if(dreTotal>0){
+                    const dreLabels={C:'Confidentiality',I:'Integrity',A:'Availability',Ac:'Accessibility'};
+                    const dominant=Object.entries(totals).sort((a,b)=>b[1]-a[1])[0];
+                    t+='<p class="mb-2">Based on '+actor.incidents.length+' observed attack paths, primary data risk is <strong>'+dreLabels[dominant[0]]+'</strong> ('+Math.round((dominant[1]/dreTotal)*100)+'% of DRE outcomes).</p>';
+                }
+            }
+            container.innerHTML=t;
+        }
+
+        function renderStoryActivityThreads(name, actor){
+            const section=sel('storyActivityThreads');
+            const list=sel('storyThreadsList');
+            if(!actor.incidents?.length){section.classList.add('hidden');return;}
+            section.classList.remove('hidden');
+            const dreLabels={C:'Confidentiality',I:'Integrity',A:'Availability',Ac:'Accessibility'};
+            let h='';
+            actor.incidents.forEach(inc=>{
+                h+='<div class="bg-secondary/30 border border-border rounded-lg p-3">';
+                h+='<div class="font-mono text-xs font-bold text-muted-foreground mb-1">'+(inc.incident_id||'Observed Path')+'</div>';
+                if(inc.stepsDetail && inc.stepsDetail.length){
+                    h+='<div class="text-xs leading-relaxed">'+notationHTML(inc.stepsDetail)+'</div>';
+                } else if(inc.notation){
+                    // Render raw notation string with cluster badges
+                    const rendered=inc.notation.replace(/#(\d+)/g, function(m,num){
+                        const ci=parseInt(num)-1;
+                        return '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold '+(CLUSTER_COLORS[ci]||'')+'">'+m+'</span>';
+                    });
+                    h+='<div class="text-xs leading-relaxed font-mono">'+rendered+'</div>';
+                } else if(inc.cluster_sequence){
+                    h+='<div class="text-xs leading-relaxed">'+inc.cluster_sequence.map(function(c){
+                        return '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold '+(CLUSTER_COLORS[c-1]||'')+'">#'+c+'</span>';
+                    }).join(' <span class="text-muted-foreground mx-0.5">\u2192</span> ')+'</div>';
+                }
+                const outcomes=inc.outcomes||inc.dre_outcomes;
+                if(outcomes){
+                    const entries=Object.entries(outcomes).filter(([_,v])=>v>0);
+                    if(entries.length){
+                        h+='<div class="mt-2 flex items-center gap-2 text-[10px]"><span class="text-muted-foreground">DRE Impact:</span>';
+                        entries.forEach(([k])=>{h+='<span class="px-1.5 py-0.5 rounded bg-destructive/10 text-destructive font-bold">'+dreLabels[k]+'</span>';});
+                        h+='</div>';
+                    }
+                }
+                h+='</div>';
+            });
+            list.innerHTML=h;
+        }
+
+        function saveStoryMeta(){
+            const name=sel('storyActorSelect')?.value;
+            if(!name) return;
+            if(!actorStories[name]) actorStories[name]={};
+            actorStories[name].storyNotes=sel('storyAnalystNotes')?.value||'';
+            actorStories[name].infrastructure=sel('storyInfrastructure')?.value||'';
+            actorStories[name].actorTypeMapping=sel('storyActorType')?.value||'';
+            saveUnifiedState();
+        }
+
+        // ============================================================
+        //  TAB 4: INTELLIGENCE (standalone tab rendering)
+        // ============================================================
+        let avgRadarChart2 = null;
+
+        function renderIntelTab(){
+            const entries=Object.entries(actors);
+            sel('intelActorCount2').textContent=entries.length+' actors';
+            if(entries.length<2){
+                sel('intelMinActors').classList.remove('hidden');
+                sel('intelDashboard').classList.add('hidden');
+                return;
+            }
+            sel('intelMinActors').classList.add('hidden');
+            sel('intelDashboard').classList.remove('hidden');
+            renderArchetypes2();
+            renderAvgRadar2();
+            renderLeaderboard2();
+            renderEnrichmentBreakdowns2();
+            lucide.createIcons();
+        }
+
+        function renderArchetypes2(){
+            const container=sel('intelArchetypes2');
+            if(!container)return;container.innerHTML='';
+            const withSeq=[],withoutSeq=[0];
+            Object.entries(actors).forEach(e=>{
+                if(e[1].sequence&&e[1].sequence.trim()) withSeq.push({name:e[0],sequence:e[1].sequence.trim()});
+                else withoutSeq[0]++;
+            });
+            const groups={};
+            withSeq.forEach(item=>{
+                const norm=item.sequence.replace(/\s+/g,' ').replace(/\s*\u2192\s*/g,' \u2192 ');
+                if(!groups[norm])groups[norm]=[];
+                groups[norm].push(item.name);
+            });
+            const sorted=Object.entries(groups).sort((a,b)=>b[1].length-a[1].length);
+            if(!sorted.length){container.innerHTML='<p class="text-xs text-muted-foreground italic">No archetypes defined.</p>';return;}
+            sorted.slice(0,8).forEach(entry=>{
+                const seq=entry[0],names=entry[1];
+                const row=document.createElement('div');
+                row.className='bg-secondary/30 border border-border rounded-lg p-2';
+                const badges=seq.split(' \u2192 ').map(s=>{
+                    const m=s.trim().match(/#(\d+)/);
+                    if(m){const c=parseInt(m[1]);return '<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold '+(CLUSTER_COLORS[c-1]||'')+'">#'+c+'</span>';}
+                    return s;
+                }).join(' <span class="text-muted-foreground">\u2192</span> ');
+                row.innerHTML='<div class="flex items-center gap-2 mb-1">'+badges+' <span class="text-xs font-bold text-primary">('+names.length+'x)</span></div><div class="text-[10px] text-muted-foreground truncate">'+names.join(', ')+'</div>';
+                container.appendChild(row);
+            });
+        }
+
+        function renderAvgRadar2(){
+            const entries=Object.entries(actors);
+            if(!entries.length) return;
+            const sums=Array(10).fill(0);
+            entries.forEach(e=>{(e[1].scores||DEFAULT_SCORES).forEach((v,i)=>{sums[i]+=v;});});
+            const avgs=sums.map(s=>+(s/entries.length).toFixed(2));
+            const isDark=htmlEl.classList.contains('dark');
+            const color='#a855f7';
+            const canvas=sel('avgRadar2');
+            if(!canvas)return;
+            if(avgRadarChart2){
+                avgRadarChart2.data.datasets[0].data=avgs;
+                avgRadarChart2.update();
+            } else {
+                avgRadarChart2=new Chart(canvas.getContext('2d'),{
+                    type:'radar',
+                    data:{labels:LABELS,datasets:[{label:'Average',data:avgs,backgroundColor:rgba(color,0.25),borderColor:color,borderWidth:2,pointBackgroundColor:color,fill:true}]},
+                    options:{responsive:true,maintainAspectRatio:true,animation:false,
+                        scales:{r:{suggestedMin:0,suggestedMax:4,ticks:{stepSize:1,backdropColor:'transparent',color:isDark?'#9ca3af':'#4b5563',font:{size:8},callback:v=>(['','L','M','H','C'])[v]||''},grid:{color:isDark?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.1)'},pointLabels:{color:isDark?'#e5e7eb':'#374151',font:{size:8}}}},
+                        plugins:{legend:{display:false}}}
+                });
+            }
+            const maxAvg=Math.max(...avgs);const maxIdx=avgs.indexOf(maxAvg);
+            sel('intelAvgStat2').textContent='Highest avg: #'+(maxIdx+1)+' '+LABELS[maxIdx].split(' ')[0]+' ('+maxAvg.toFixed(1)+')';
+        }
+
+        function renderLeaderboard2(){
+            const container=sel('intelLeaderboard2');
+            if(!container)return;container.innerHTML='';
+            const entries=Object.entries(actors);if(!entries.length)return;
+            const sums=Array(10).fill(0),champCounts=Array(10).fill(0),highCounts=Array(10).fill(0);
+            entries.forEach(e=>{(e[1].scores||DEFAULT_SCORES).forEach((v,i)=>{sums[i]+=v;if(v===4)champCounts[i]++;if(v>=3)highCounts[i]++;});});
+            const avgs=sums.map(s=>+(s/entries.length).toFixed(2));
+            const maxAvg=Math.max(...avgs);
+            avgs.map((avg,i)=>({idx:i,avg,champ:champCounts[i],high:highCounts[i]})).sort((a,b)=>b.avg-a.avg).forEach(r=>{
+                const pct=maxAvg>0?(r.avg/maxAvg*100):0;
+                const barColor=r.idx>=7?'bg-amber-500':'bg-primary';
+                const row=document.createElement('div');row.className='flex items-center gap-2 text-xs';
+                row.innerHTML='<span class="w-20 text-muted-foreground truncate font-mono">#'+(r.idx+1)+' '+LABELS[r.idx].split(' ')[0]+'</span><div class="flex-1 bg-secondary rounded-full h-3 overflow-hidden"><div class="h-3 rounded-full '+barColor+' transition-all" style="width:'+pct+'%"></div></div><span class="w-8 text-right font-bold">'+r.avg.toFixed(1)+'</span><span class="w-16 text-[10px] text-muted-foreground">'+r.champ+'C '+r.high+'H</span>';
+                container.appendChild(row);
+            });
+        }
+
+        function renderEnrichmentBreakdowns2(){
+            const entries=Object.entries(actors);if(entries.length<2)return;
+            // Origin
+            const oc={};entries.forEach(e=>{const o=e[1].origin_country||'Unknown';oc[o]=(oc[o]||0)+1;});
+            const originC=sel('intelOriginBreakdown2');
+            if(originC){originC.innerHTML='';const mx=Math.max(...Object.values(oc));
+                Object.entries(oc).sort((a,b)=>b[1]-a[1]).forEach(entry=>{
+                    const pct=mx>0?(entry[1]/mx*100):0;const row=document.createElement('div');row.className='flex items-center gap-2 text-xs';
+                    row.innerHTML='<span class="w-24 text-muted-foreground truncate">'+entry[0]+'</span><div class="flex-1 bg-secondary rounded-full h-3 overflow-hidden"><div class="h-3 rounded-full bg-blue-500 transition-all" style="width:'+pct+'%"></div></div><span class="w-6 text-right font-bold">'+entry[1]+'</span>';
+                    originC.appendChild(row);
+                });
+            }
+            // Sectors
+            const sc={};entries.forEach(e=>{(e[1].target_sectors||[]).forEach(s=>{sc[s]=(sc[s]||0)+1;});});
+            const sectorC=sel('intelSectorBreakdown2');
+            if(sectorC){sectorC.innerHTML='';const ss=Object.entries(sc).sort((a,b)=>b[1]-a[1]).slice(0,10);const smx=ss.length>0?ss[0][1]:1;
+                ss.forEach(entry=>{const pct=smx>0?(entry[1]/smx*100):0;const row=document.createElement('div');row.className='flex items-center gap-2 text-xs';
+                    row.innerHTML='<span class="w-28 text-muted-foreground truncate text-[10px]">'+entry[0]+'</span><div class="flex-1 bg-secondary rounded-full h-3 overflow-hidden"><div class="h-3 rounded-full bg-emerald-500 transition-all" style="width:'+pct+'%"></div></div><span class="w-6 text-right font-bold">'+entry[1]+'</span>';
+                    sectorC.appendChild(row);
+                });
+            }
+            // Motivation
+            const mc={};entries.forEach(e=>{(e[1].motivation||[]).forEach(m=>{mc[m]=(mc[m]||0)+1;});});
+            const motivC=sel('intelMotivationBreakdown2');
+            if(motivC){motivC.innerHTML='';const ms=Object.entries(mc).sort((a,b)=>b[1]-a[1]);const mmx=ms.length>0?ms[0][1]:1;
+                ms.forEach(entry=>{const pct=mmx>0?(entry[1]/mmx*100):0;const row=document.createElement('div');row.className='flex items-center gap-2 text-xs';
+                    row.innerHTML='<span class="w-28 text-muted-foreground truncate text-[10px]">'+entry[0]+'</span><div class="flex-1 bg-secondary rounded-full h-3 overflow-hidden"><div class="h-3 rounded-full bg-violet-500 transition-all" style="width:'+pct+'%"></div></div><span class="w-6 text-right font-bold">'+entry[1]+'</span>';
+                    motivC.appendChild(row);
+                });
+            }
+        }
+
+        // ============================================================
+        //  TAB 2: ENABLERS RADAR (React, mounted on demand)
+        // ============================================================
+        function mountEnablerReact(){
+            if(enablerReactMounted) return;
+            enablerReactMounted = true;
+            // The React component is defined in a separate script[type=text/babel] block below
+            if(window._mountEnablerApp) window._mountEnablerApp();
+        }
+    </script>
+
+    <!-- Enablers Radar React App (mounted into #enablerReactRoot on tab switch) -->
+    <script type="text/babel">
+        const { useState, useEffect, useLayoutEffect, useRef } = React;
+
+        const EIcon = ({ name, size = 16, className }) => {
+            useEffect(() => lucide.createIcons(), [name]);
+            return <i data-lucide={name} width={size} height={size} className={className}></i>;
+        };
+
+        const EnablerTechChip = ({ instance, config, isGhost = false, isSelected, onSelect, onDragStart }) => {
+            const type = config.techs.find(t => t.id === instance.typeId);
+            if (!type) return null;
+            const bgStyle = type.color.startsWith('#') ? { backgroundColor: type.color } : {};
+            const isNotSeen = instance.cellKey && instance.cellKey.startsWith('l5');
+            let classes = `tech-chip `;
+            if (isNotSeen) classes += 'tech-chip-small ';
+            if (isSelected && !isGhost) classes += 'selected-ring ';
+            if (isGhost) classes += 'tech-ghost ';
+            const elementId = isGhost ? `ghost-${instance.uid}` : `tech-${instance.uid}`;
+            const trendColor = config.appearance?.trendArrowColor || '#1e293b';
+            const trendSize = config.appearance?.trendArrowSize || 14;
+            return (
+                <div id={elementId} draggable={!isGhost} onDragStart={(e) => onDragStart && onDragStart(e, instance.uid)}
+                    onClick={(e) => { e.stopPropagation(); onSelect && onSelect(instance.uid); }}
+                    className={classes} style={bgStyle} title={type.label}>
+                    <span>{type.id}</span>
+                    {instance.activeActors.map(actorId => {
+                        const actor = config.actors.find(a => a.id === actorId);
+                        if(!actor) return null;
+                        return <span key={actorId} className={`actor-indicator ${actor.pos}`} style={{ fontSize: `${config.appearance?.actorFontSize || 10}px` }}>{actorId}</span>;
+                    })}
+                    {instance.trend && !isNotSeen && (
+                        <svg className="absolute top-0 left-1/2 -translate-x-1/2 drop-shadow-md" width={trendSize} height={trendSize} viewBox="0 0 24 24" fill={trendColor}>
+                            {instance.trend === 'up' ? <path d="M12 2L4 14h6v8h4v-8h6L12 2z" /> : <path d="M12 22L20 10h-6V2h-4v8H4l8 12z" />}
+                        </svg>
+                    )}
+                </div>
+            );
+        };
+
+        const EnablerSettingsModal = ({ isOpen, onClose, config, setConfig }) => {
+            if (!isOpen) return null;
+            const [activeTab, setActiveTab] = useState('techs');
+            const updateItem = (cat, idx, field, val) => { const list = [...config[cat]]; list[idx][field] = val; setConfig({ ...config, [cat]: list }); };
+            const addItem = (cat, item) => setConfig({ ...config, [cat]: [...config[cat], item] });
+            const deleteItem = (cat, idx) => { if(confirm('Delete?')) setConfig({ ...config, [cat]: config[cat].filter((_, i) => i !== idx) }); };
+            return (
+                <div className="fixed inset-0 z-[200] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
+                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
+                        <div className="p-4 border-b flex justify-between items-center"><h2 className="text-lg font-bold">Radar Configuration</h2><button onClick={onClose}><EIcon name="x"/></button></div>
+                        <div className="flex border-b">{['techs','actors','levels','appearance'].map(tab=>(
+                            <button key={tab} className={`px-6 py-3 text-sm font-bold capitalize ${activeTab===tab?'border-b-2 border-blue-600 text-blue-600':'text-gray-500'}`} onClick={()=>setActiveTab(tab)}>{tab}</button>
+                        ))}</div>
+                        <div className="p-6 overflow-y-auto flex-1 min-h-0">
+                            {activeTab==='techs'&&<div className="space-y-4">
+                                <button onClick={()=>addItem('techs',{id:'NEW',label:'New Tech',color:'#64748b'})} className="text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded font-bold border border-blue-100">+ Add Technology</button>
+                                {config.techs.map((tech,i)=><div key={i} className="flex gap-2 items-center p-2 border rounded-lg bg-gray-50 dark:bg-slate-800">
+                                    <input className="text-xs font-bold p-1 border rounded w-20 bg-white dark:bg-slate-700" value={tech.id} onChange={e=>updateItem('techs',i,'id',e.target.value)}/>
+                                    <input className="text-xs p-1 border rounded flex-1 bg-white dark:bg-slate-700" value={tech.label} onChange={e=>updateItem('techs',i,'label',e.target.value)}/>
+                                    <input type="color" className="h-8 w-8 rounded cursor-pointer" value={tech.color} onChange={e=>updateItem('techs',i,'color',e.target.value)}/>
+                                    <button onClick={()=>deleteItem('techs',i)} className="text-red-400 hover:text-red-600 px-2"><EIcon name="trash-2" size={14}/></button>
+                                </div>)}
+                            </div>}
+                            {activeTab==='actors'&&<div className="space-y-4">
+                                <button onClick={()=>addItem('actors',{id:'?',label:'New Actor',pos:'pos-cc'})} className="text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded font-bold border border-blue-100">+ Add Actor</button>
+                                {config.actors.map((actor,i)=><div key={i} className="flex gap-2 items-center p-2 border rounded-lg bg-gray-50 dark:bg-slate-800">
+                                    <input className="text-xs font-bold p-1 border rounded w-10 text-center bg-white dark:bg-slate-700" value={actor.id} onChange={e=>updateItem('actors',i,'id',e.target.value)} maxLength={1}/>
+                                    <input className="text-xs p-1 border rounded flex-1 bg-white dark:bg-slate-700" value={actor.label} onChange={e=>updateItem('actors',i,'label',e.target.value)}/>
+                                    <select className="text-xs p-1 border rounded bg-white dark:bg-slate-700" value={actor.pos} onChange={e=>updateItem('actors',i,'pos',e.target.value)}>
+                                        <option value="pos-tl">Top-Left</option><option value="pos-tr">Top-Right</option><option value="pos-bl">Bot-Left</option><option value="pos-br">Bot-Right</option><option value="pos-cc">Center</option>
+                                    </select>
+                                    <button onClick={()=>deleteItem('actors',i)} className="text-red-400 hover:text-red-600 px-2"><EIcon name="trash-2" size={14}/></button>
+                                </div>)}
+                            </div>}
+                            {activeTab==='levels'&&<div className="space-y-4"><p className="text-xs text-gray-500">Maturity rows (fixed IDs, editable labels).</p>
+                                {config.levels.map((lvl,i)=><div key={i} className="flex gap-2 items-center p-2 border rounded-lg bg-gray-50 dark:bg-slate-800">
+                                    <span className="text-xs font-mono w-8 text-gray-400">{lvl.id}</span>
+                                    <input className="text-xs font-bold p-1 border rounded flex-1 bg-white dark:bg-slate-700" value={lvl.label} onChange={e=>updateItem('levels',i,'label',e.target.value)}/>
+                                </div>)}
+                            </div>}
+                            {activeTab==='appearance'&&<div className="space-y-6">
+                                <div className="p-4 border rounded bg-gray-50 dark:bg-slate-800">
+                                    <label className="block text-sm font-bold mb-4">Actor Font Size: {config.appearance?.actorFontSize||10}px</label>
+                                    <input type="range" min="8" max="16" value={config.appearance?.actorFontSize||10} onChange={e=>setConfig({...config,appearance:{...config.appearance,actorFontSize:parseInt(e.target.value)}})} className="w-full"/>
+                                </div>
+                                <div className="p-4 border rounded bg-gray-50 dark:bg-slate-800">
+                                    <h4 className="text-sm font-bold mb-4">Trend Arrow</h4>
+                                    <label className="block text-xs font-semibold mb-2">Size: {config.appearance?.trendArrowSize||14}px</label>
+                                    <input type="range" min="10" max="24" value={config.appearance?.trendArrowSize||14} onChange={e=>setConfig({...config,appearance:{...config.appearance,trendArrowSize:parseInt(e.target.value)}})} className="w-full"/>
+                                    <div className="flex items-center gap-3 mt-3">
+                                        <label className="text-xs font-semibold">Color:</label>
+                                        <input type="color" className="h-8 w-12 rounded cursor-pointer" value={config.appearance?.trendArrowColor||'#1e293b'} onChange={e=>setConfig({...config,appearance:{...config.appearance,trendArrowColor:e.target.value}})}/>
+                                    </div>
+                                </div>
+                            </div>}
+                        </div>
+                        <div className="p-4 border-t flex justify-end"><button onClick={onClose} className="bg-gray-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-900">Save & Close</button></div>
+                    </div>
+                </div>
+            );
+        };
+
+        function EnablerApp() {
+            const [config, setConfig] = useState(window._enablerConfig);
+            const [techInstances, setTechInstances] = useState(window._enablerInstances);
+            const [selectedUid, setSelectedUid] = useState(null);
+            const [snapshot, setSnapshot] = useState(null);
+            const [showArrows, setShowArrows] = useState(false);
+            const [arrows, setArrows] = useState([]);
+            const [dragOverCell, setDragOverCell] = useState(null);
+            const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+            const [isExporting, setIsExporting] = useState(false);
+            const mapRef = useRef(null);
+            const draggedItemRef = useRef(null);
+
+            // Sync to parent state for unified storage
+            useEffect(() => {
+                window._enablerInstances = techInstances;
+                window._enablerConfig = config;
+                if(window.saveUnifiedState) window.saveUnifiedState();
+            }, [techInstances, config]);
+
+            const handleDragStart = (e, uid, isNew = false, typeId = null) => {
+                draggedItemRef.current = { isNew, uid, typeId };
+                if (!isNew) setSelectedUid(uid);
+            };
+            const handleDrop = (e, cellKey) => {
+                e.preventDefault(); setDragOverCell(null);
+                const item = draggedItemRef.current; if (!item) return;
+                if (item.isNew) {
+                    const ni = { uid: Date.now().toString(), typeId: item.typeId, cellKey, activeActors: [], trend: null };
+                    setTechInstances(prev => [...prev, ni]); setSelectedUid(ni.uid);
+                } else { setTechInstances(prev => prev.map(t => t.uid === item.uid ? { ...t, cellKey } : t)); }
+                draggedItemRef.current = null;
+            };
+            const toggleActor = (actorId) => {
+                if (!selectedUid) return;
+                setTechInstances(prev => prev.map(t => {
+                    if (t.uid !== selectedUid) return t;
+                    const has = t.activeActors.includes(actorId);
+                    return { ...t, activeActors: has ? t.activeActors.filter(id => id !== actorId) : [...t.activeActors, actorId] };
+                }));
+            };
+            const setTrend = (trend) => {
+                if (!selectedUid) return;
+                setTechInstances(prev => prev.map(t => t.uid !== selectedUid ? t : { ...t, trend: t.trend === trend ? null : trend }));
+            };
+            const calculateArrows = () => {
+                if (!showArrows || !snapshot || !mapRef.current) { setArrows([]); return; }
+                const newArr = []; const cr = mapRef.current.getBoundingClientRect();
+                snapshot.forEach(si => {
+                    const ci = techInstances.find(t => t.uid === si.uid);
+                    if (ci && ci.cellKey !== si.cellKey) {
+                        const se = document.getElementById(`ghost-${si.uid}`), ee = document.getElementById(`tech-${ci.uid}`);
+                        if (se && ee) {
+                            const sr = se.getBoundingClientRect(), er = ee.getBoundingClientRect();
+                            const tt = config.techs.find(t => t.id === ci.typeId);
+                            newArr.push({ id: si.uid, x1: sr.left+sr.width/2-cr.left, y1: sr.top+sr.height/2-cr.top, x2: er.left+er.width/2-cr.left, y2: er.top+er.height/2-cr.top, color: tt?.color?.startsWith('#') ? tt.color : '#64748b' });
+                        }
+                    }
+                });
+                setArrows(newArr);
+            };
+            useLayoutEffect(() => { calculateArrows(); const h=()=>calculateArrows(); window.addEventListener('resize',h); return ()=>window.removeEventListener('resize',h); }, [showArrows, snapshot, techInstances, config, isSettingsOpen]);
+
+            const exportImage = async () => {
+                if (!mapRef.current) return; setIsExporting(true);
+                await new Promise(r => setTimeout(r, 50));
+                try {
+                    const canvas = await window.html2canvas(mapRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false });
+                    const link = document.createElement('a'); link.download = `TLCTC_Radar_${new Date().toISOString().split('T')[0]}.png`; link.href = canvas.toDataURL(); link.click();
+                } catch (e) { alert("Export failed: "+e.message); }
+                setIsExporting(false);
+            };
+            const exportJSON = () => { const b=new Blob([JSON.stringify({instances:techInstances,config},null,2)],{type:'application/json'}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download='tlctc_enabler_radar.json'; a.click(); URL.revokeObjectURL(u); };
+
+            return (
+                <div className="container-custom" onClick={() => setSelectedUid(null)}>
+                    <EnablerSettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} config={config} setConfig={setConfig} />
+                    <div className="flex flex-col lg:flex-row gap-6">
+                        {/* Sidebar */}
+                        <div className="lg:w-64 flex-shrink-0 space-y-6">
+                            <div className="glass-card rounded-xl p-4">
+                                <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Technology Library</h3>
+                                <div className="grid grid-cols-2 gap-2 max-h-[30vh] overflow-y-auto">
+                                    {config.techs.map(tech => (
+                                        <div key={tech.id} draggable onDragStart={e => handleDragStart(e, null, true, tech.id)}
+                                            className="flex flex-col items-center justify-center p-2 rounded-lg border border-border hover:border-primary cursor-grab transition-all">
+                                            <div className="w-6 h-6 rounded mb-1" style={{backgroundColor: tech.color}}></div>
+                                            <span className="text-[10px] font-bold text-muted-foreground text-center leading-tight">{tech.label}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className={`glass-card rounded-xl p-4 transition-all ${selectedUid ? 'border-2 border-primary' : 'opacity-60'}`}>
+                                <div className="flex justify-between items-center mb-4">
+                                    <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Active Actors</h3>
+                                    {selectedUid && <button onClick={e=>{e.stopPropagation();setTechInstances(prev=>prev.filter(t=>t.uid!==selectedUid));setSelectedUid(null);}} className="text-destructive"><EIcon name="trash-2" size={14}/></button>}
+                                </div>
+                                <div className="space-y-2">
+                                    {config.actors.map(actor => {
+                                        const isActive = techInstances.find(t => t.uid === selectedUid)?.activeActors.includes(actor.id);
+                                        return <button key={actor.id} disabled={!selectedUid} onClick={e=>{e.stopPropagation();toggleActor(actor.id);}}
+                                            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-bold border transition-all ${isActive?'bg-primary text-primary-foreground border-primary':'bg-background text-muted-foreground border-border hover:border-primary/50'}`}>
+                                            <span>{actor.label}</span><span className="opacity-60 text-[9px]">{actor.id}</span>
+                                        </button>;
+                                    })}
+                                </div>
+                            </div>
+                            <div className={`glass-card rounded-xl p-4 transition-all ${selectedUid ? 'border-2 border-primary' : 'opacity-60'}`}>
+                                <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Trend Indicator</h3>
+                                <div className="flex gap-2">
+                                    {[{id:'up',label:'Trending Up',icon:'trending-up'},{id:'down',label:'Trending Down',icon:'trending-down'}].map(trend => {
+                                        const isActive = techInstances.find(t => t.uid === selectedUid)?.trend === trend.id;
+                                        return <button key={trend.id} disabled={!selectedUid} onClick={e=>{e.stopPropagation();setTrend(trend.id);}}
+                                            className={`flex-1 flex flex-col items-center gap-1 px-3 py-3 rounded-lg text-xs font-bold border transition-all ${isActive?'bg-primary text-primary-foreground border-primary':'bg-background text-muted-foreground border-border hover:border-primary/50'}`}>
+                                            <EIcon name={trend.icon} size={18}/><span className="text-[10px]">{trend.label}</span>
+                                        </button>;
+                                    })}
+                                </div>
+                                <p className="text-[10px] text-muted-foreground mt-2 text-center">Click again to remove</p>
+                            </div>
+                        </div>
+                        {/* Radar Grid */}
+                        <div className="flex-1 glass-card rounded-xl overflow-hidden flex flex-col relative" ref={mapRef}>
+                            <svg className="enabler-arrow-canvas">
+                                <defs><marker id="earrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#64748b"/></marker></defs>
+                                {arrows.map(a => <g key={a.id}><path d={`M ${a.x1} ${a.y1} L ${a.x2} ${a.y2}`} stroke={a.color} strokeWidth="2" strokeDasharray="6 4" fill="none" markerEnd="url(#earrowhead)" className="animate-enabler-dash" opacity="0.8"/><circle cx={a.x1} cy={a.y1} r="3" fill={a.color} opacity="0.6"/></g>)}
+                            </svg>
+                            <div className="overflow-x-auto">
+                                <table className="enabler-radar-table min-w-[1000px]">
+                                    <thead><tr>
+                                        <th className="enabler-row-label !bg-transparent"></th>
+                                        {config.clusters.map(c => <th key={c.id} className="uppercase tracking-wider text-[10px] text-muted-foreground font-extrabold">{c.label}</th>)}
+                                    </tr></thead>
+                                    <tbody>
+                                        {config.levels.map(lvl => (
+                                            <tr key={lvl.id}>
+                                                <td className="enabler-row-label"><div className="w-full h-full flex items-center justify-end pr-2">{lvl.label}</div></td>
+                                                {config.clusters.map(cluster => {
+                                                    const cellKey = `${lvl.id}-${cluster.id}`;
+                                                    const items = techInstances.filter(t => t.cellKey === cellKey);
+                                                    const ghosts = (showArrows && snapshot) ? snapshot.filter(s => s.cellKey === cellKey && !items.find(i => i.uid === s.uid)) : [];
+                                                    const isOver = dragOverCell === cellKey;
+                                                    return (
+                                                        <td key={cellKey}
+                                                            onDragOver={e => { e.preventDefault(); setDragOverCell(cellKey); }}
+                                                            onDragLeave={() => setDragOverCell(null)}
+                                                            onDrop={e => handleDrop(e, cellKey)}
+                                                            className={`${isOver ? 'enabler-drag-over' : ''} ${lvl.id==='l1'?'bg-red-50/30 dark:bg-red-950/10':''} ${lvl.id==='l2'?'bg-orange-50/30 dark:bg-orange-950/10':''}`}>
+                                                            <div className="w-full h-full min-h-[90px] p-1 flex flex-wrap content-start justify-center gap-1">
+                                                                {ghosts.map(g => <EnablerTechChip key={`g-${g.uid}`} instance={g} config={config} isGhost={true} />)}
+                                                                {items.map(t => <EnablerTechChip key={t.uid} instance={t} config={config} isSelected={selectedUid===t.uid} onSelect={setSelectedUid} onDragStart={handleDragStart} />)}
+                                                            </div>
+                                                        </td>
+                                                    );
+                                                })}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {/* Legend */}
+                            <div className="border-t border-border bg-secondary/20 p-4 space-y-3">
+                                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider min-w-[100px]">Technologies:</span>
+                                    {config.techs.map(tech => <div key={tech.id} className="flex items-center gap-1.5"><div className="w-4 h-4 rounded" style={{backgroundColor:tech.color}}></div><span className="text-[10px] font-semibold text-muted-foreground">{tech.id} = {tech.label}</span></div>)}
+                                </div>
+                                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider min-w-[100px]">Actors:</span>
+                                    {config.actors.map(actor => <div key={actor.id} className="flex items-center gap-1.5"><span className="w-5 h-5 rounded bg-primary text-primary-foreground text-[10px] font-black flex items-center justify-center">{actor.id}</span><span className="text-[10px] font-semibold text-muted-foreground">= {actor.label}</span></div>)}
+                                </div>
+                                <div className="flex justify-between items-center pt-2 border-t border-border">
+                                    <span className="text-[9px] text-muted-foreground">TLCTC Emerging Tech & Actors Radar</span>
+                                    <span className="text-[9px] text-muted-foreground">{new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Toolbar */}
+                    <div className="glass-card rounded-xl p-3 flex flex-wrap gap-3 items-center justify-between mt-6">
+                        <div className="flex items-center gap-2">
+                            <button onClick={() => setTechInstances([])} className="enabler-btn-tool text-destructive"><EIcon name="trash" size={14}/> Clear</button>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button onClick={() => {setSnapshot(JSON.parse(JSON.stringify(techInstances))); setShowArrows(true);}} className="enabler-btn-tool"><EIcon name="camera" size={14}/> Snap</button>
+                            {showArrows && <button onClick={() => {setSnapshot(null); setShowArrows(false);}} className="enabler-btn-tool text-destructive"><EIcon name="x" size={14}/> Clear Snap</button>}
+                            <div className="h-6 w-px bg-border mx-1"></div>
+                            <button onClick={() => setIsSettingsOpen(true)} className="enabler-btn-tool"><EIcon name="settings" size={14}/> Config</button>
+                            <button onClick={exportJSON} className="enabler-btn-tool"><EIcon name="save" size={14}/> Save JSON</button>
+                            <button onClick={exportImage} disabled={isExporting} className="enabler-btn-tool bg-primary text-primary-foreground"><EIcon name="download" size={14}/> {isExporting ? '...' : 'Export PNG'}</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        window._mountEnablerApp = function() {
+            const root = ReactDOM.createRoot(document.getElementById('enablerReactRoot'));
+            root.render(<EnablerApp />);
+        };
     </script>
 </body>
 </html>
