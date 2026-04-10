@@ -2760,6 +2760,8 @@ This notation enables precise velocity measurement per transition and DCS calcul
 
 This section defines the **syntax and semantics** for expressing TLCTC attack sequences as compact, shareable strings. It is **pure notation mechanics**—cluster **classification decisions** are defined in **Section 4**.
 
+> **Attack paths describe an evolving reconstruction, not a final truth.** Incident analysis and forensics are iterative: evidence arrives out of order, log sources are destroyed or delayed, and Cyber Threat Intelligence (CTI) sharing cannot wait for a complete picture. TLCTC therefore treats partial classification as a **first-class state**. A path may contain fully-classified steps, low-confidence steps, inferred steps, and **unresolved steps** in the same document. As evidence matures, unresolved and inferred steps are progressively replaced with definitive cluster references. A path is a *living artifact*: correct now, more correct later. This design is what makes TLCTC usable as an **operational** shared language during active investigations — not only as a retrospective classification scheme.
+
 > **Reminder:** An attack path expresses **cause-side attacker steps** (threats exploiting generic vulnerabilities). Outcomes (e.g., data loss) are recorded separately as **Data Risk Events (DRE)** and **MUST NOT** be used as step substitutes.
 
 ---
@@ -2801,6 +2803,23 @@ An attack path is only comparable across incidents and organizations if step gra
 
 - **Data Risk Events (DRE)** are **outcomes**, not threats. They **MUST NOT** be written as stand-alone steps.
 - DRE tags **MAY** be appended to steps for documentation.
+
+#### 11.0.6 Evidentiary Completeness (Normative)
+
+Real incident analysis is iterative. Paths are authored under incomplete information and refined over time as evidence arrives, log sources are recovered, and artifacts are analyzed. The notation supports this reality directly:
+
+1. **Partial classification is permitted and expected.** A path **MAY** contain steps whose cluster cannot yet be determined. These are recorded using the **unresolved-step operators** `?` (single unresolved step) and `…` (unresolved gap of one or more steps), defined in §11.5.4.
+2. **Resolution is the goal.** Every `?` and `…` represents an open analytical task. When new evidence becomes available, analysts **SHOULD** replace unresolved operators with definitive cluster classifications. A fully-resolved path (containing only `#1`–`#10`) is always preferred over a path containing unresolved steps — but a partially-resolved path is always preferred over silence or over-committed guesswork.
+3. **Epistemic states are distinct from ontological states.** The notation carries **four distinct epistemic states** for a step:
+
+   | State | Syntax | Meaning |
+   | --- | --- | --- |
+   | Classified (strong evidence) | `#X` | Cluster assigned; evidence supports classification |
+   | Classified (weak evidence) | `#X [conf=low]` | Best-supported cluster assigned with explicit low-confidence caveat |
+   | Inferred | `#X [inferred]` | Step not directly observed but logically required by surrounding evidence |
+   | Unresolved | `?` or `…` | Step known to exist (or a region of activity known to exist), cluster cannot yet be determined |
+
+   **Rule:** `?` and `…` are used **only** when the analyst cannot commit to *any* cluster on the evidence available. If any cluster can be defended — even weakly — the step **MUST** be classified as `#X [conf=low]` rather than left unresolved. This prevents `?` from becoming a lazy catch-all and preserves the distinction between *low confidence in a hypothesis* and *absence of a hypothesis*.
 
 ---
 
@@ -3177,24 +3196,163 @@ Constraints (Normative):
 
 ---
 
+#### 11.5.4 Unresolved-Step Operators (`?`, `…`) *(V2.1 Extension)*
+
+TLCTC paths frequently encounter forensic reality: evidence confirms that *something happened* at a given position in the chain, but that something cannot yet be classified. Log coverage is incomplete, binaries have not been recovered, timeline reconstruction is still in progress. The unresolved-step operators allow analysts to represent this condition in the notation without over-committing to a cluster and without silently dropping the step from the path.
+
+The operators are **additive and backward-compatible**: all existing paths (containing only `#1`–`#10`) remain valid. The operators are part of the **canonical grammar** (see §11.7 ABNF), not a dialect.
+
+##### 11.5.4.1 Operators (Normative)
+
+| Symbol | Name | Cardinality | Meaning |
+| --- | --- | --- | --- |
+| `?` | Single Unresolved Step | Exactly one step | One real TLCTC-classifiable attack step exists at this position, but available evidence is insufficient to determine which cluster (`#1`–`#10`) it belongs to. |
+| `…` | Unresolved Gap | One or more steps | At least one real TLCTC-classifiable attack step exists at this position. Both the **count** of steps and their **cluster identities** are unknown. |
+
+The `…` symbol is U+2026 HORIZONTAL ELLIPSIS. For environments that cannot reliably render it, the ASCII form `...` (three dots) **MAY** be used; tools **SHOULD** accept both as equivalent.
+
+##### 11.5.4.2 Normative Rules
+
+**R-UNRES-1 — Forensic Use Only.**
+`?` and `…` **SHALL** be used only to represent genuine forensic or analytical uncertainty — cases where evidence indicates a real attack step occurred but is insufficient for classification. They **SHALL NOT** be used as shorthand for laziness, approximation, or editorial convenience.
+
+**R-UNRES-2 — Not Clusters.**
+`?` and `…` are **epistemic annotations, not ontological categories**. They **SHALL NOT** be interpreted, referenced, or treated as TLCTC clusters. They do not possess generic vulnerabilities. They do not appear in cluster definitions (§4), axioms (§2), or the Layer 1 framework package (§14.3).
+
+**R-UNRES-3 — Excluded from Statistics.**
+`?` and `…` **SHALL NOT** be counted as cluster values in any quantitative analysis, frequency distribution, heat map, or statistical aggregation derived from attack path data. They represent *absence of knowledge*, not *presence of a category*.
+
+**R-UNRES-4 — Velocity Annotations Permitted.**
+Temporal annotations (Δt, §11.5.2 / §12) **MAY** be applied to transitions involving `?` or `…`. Forensic evidence frequently establishes timing independently of cluster classification (e.g., via log timestamps, network captures, or file metadata).
+
+Valid:
+```
+#9 →[Δt=24h] ? →[Δt=<5m] #1 → #7
+```
+
+*Rationale: The analyst observes from log evidence that something occurred between the social engineering step and the function-abuse step, and that the interval was under five minutes, but cannot yet determine what that step was.*
+
+**R-UNRES-5 — DRE Annotations Prohibited.**
+Data Risk Event annotations (`+ [DRE: C/I/Ac/Av]`) **SHALL NOT** be appended to `?` or `…`. A DRE is a consequence of a specific generic vulnerability being exploited; without a classified cluster, the causal basis for asserting a DRE does not exist.
+
+Invalid:
+```
+? + [DRE: C]
+… + [DRE: I]
+```
+
+If forensic evidence independently confirms a data risk event occurred but the causing step is unresolved, the DRE **SHOULD** be noted in the accompanying prose annotation (R-UNRES-8), not in the notation itself.
+
+**R-UNRES-6 — Boundary Operators Permitted.**
+Domain boundary operators (`||[context][@Source→@Target]||`), transit operators (`⇒`), and intra-system boundary operators (`|[type][@from→@to]|`) **MAY** appear adjacent to `?` or `…`. Boundary crossings are independently observable through network telemetry, access logs, or organizational evidence and do not depend on cluster classification.
+
+Valid:
+```
+#10 → ||[cloud][@Vendor→@Org]|| ? → #7
+… → ||[prod][@DMZ→@Internal]|| #4 → #1
+```
+
+**R-UNRES-7 — Resolution Obligation.**
+Every `?` and `…` in an attack path represents an open analytical task. When new evidence becomes available, analysts **SHOULD** replace unresolved operators with definitive cluster classifications. See §11.0.6.
+
+**R-UNRES-8 — Prose Annotation Required.**
+Any attack path containing `?` or `…` **MUST** be accompanied by a prose note explaining what is unresolved and, where possible, why. This note **SHOULD** state:
+
+1. What evidence indicates a step exists at that position.
+2. What evidence is missing or ambiguous.
+3. What classification candidates are under consideration, if any.
+
+Preferred minimum note:
+
+> *One or more real attack steps are assessed to exist here, but available evidence is insufficient to classify them.*
+
+**R-UNRES-9 — Binary Classification (No Partial-Confidence Operators).**
+Classification is binary: a step is either resolved to a definitive cluster (`#1`–`#10`) or it is unresolved (`?` / `…`). There is **no partial-confidence notation** such as `?#4`, `#4?`, or `#{2|7}`. If the analyst can identify the generic vulnerability with sufficient confidence to name a cluster, the step is classified (optionally with `[conf=low]`). If not, it is `?` or `…`.
+
+*Rationale: Partial-confidence operators would require an arbitrary threshold definition, introduce subjective gradation into an axiomatic system, and blur the boundary between evidence and conjecture within the formal notation. Confidence assessments and candidate hypotheses belong in step-level annotations (`[conf=low]`) or prose (R-UNRES-8), not in the formal path operator.*
+
+##### 11.5.4.3 Syntax Summary
+
+| Element | Syntax | Valid? |
+| --- | --- | --- |
+| Single unknown step | `?` | ✓ |
+| Unknown gap | `…` | ✓ |
+| With velocity | `→[Δt=value] ? →[Δt=value]` | ✓ |
+| With boundary | `\|\|[ctx][@A→@B]\|\| ?` | ✓ |
+| With DRE | `? + [DRE: C]` | ✗ (R-UNRES-5) |
+| Partial confidence | `?#4` / `#4?` | ✗ (R-UNRES-9) |
+| In parallel | `(? + #7)` | ✓ |
+| Consecutive singles | `? → ?` | ✓ |
+| Gap then resolved | `… → #1 → #7` | ✓ |
+| Resolved then gap | `#2 → #7 → …` | ✓ |
+
+*Note on `? → ?`:* Two consecutive `?` operators assert that exactly two unresolved steps exist in sequence, which is a **stronger evidentiary claim** than `…` (which asserts only ≥1). Use `? → ?` only when evidence specifically indicates two distinct steps.
+
+##### 11.5.4.4 Examples (Informative)
+
+**Unknown initial access:**
+```
+? → #1 → #7
+```
+> *Forensic analysis confirms function abuse (system discovery commands) followed by malware deployment, but the initial access vector has not been determined. Phishing (#9), credential use (#4), and an unpatched perimeter service (#2) remain under investigation.*
+
+**Gap in lateral movement:**
+```
+#9 →[Δt=18h] #4 →[Δt=2m] #1 → … → #1 →[Δt=0s] + [DRE: Ac]
+```
+> *Initial access via phishing and credential theft is confirmed. The final encryption step (function abuse causing loss of accessibility) is confirmed. Between the initial foothold and the encryption event, one or more lateral movement steps occurred — likely involving additional credential theft (#4) and function abuse (#1) — but log coverage for that segment was destroyed by the attacker.*
+
+**Known timing, unknown step:**
+```
+#3 →[Δt=0s] #7 →[Δt=4h] ? →[Δt=<10m] #4 → #1
+```
+> *Client exploit delivered via browser leads to malware execution. Four hours later, an unclassified step occurs — endpoint telemetry shows process activity inconsistent with the initial malware's known capabilities, but the binary has not yet been recovered for analysis. Within ten minutes, credential use and function abuse follow. The unresolved step may represent a second-stage payload (#7) or exploitation of a local privilege escalation vulnerability (#2).*
+
+**Boundary crossing with unknown mechanism:**
+```
+#10 → ||[saas][@Vendor→@Org]|| ? → #7 + [DRE: C]
+```
+> *Supply chain compromise of a SaaS vendor is confirmed. Malware was subsequently found executing within the organization's environment, and data exfiltration is confirmed as a consequence of the malware step. The mechanism by which the supply chain compromise translated into code execution inside the organizational boundary — the step between the boundary crossing and the malware — has not been determined. Candidates include a trojanized update (#10 continuation), exploitation of an integration API (#2), or abuse of a legitimate sync function (#1).*
+
+**Entirely unknown prefix:**
+```
+… → ||[prod][@External→@Internal]|| #4 → #1 → #7 →[Δt=0s] + [DRE: Ac]
+```
+> *Incident response identified the attack from the credential use stage onward: an external actor authenticated with valid domain admin credentials, abused administrative tools, and deployed ransomware. Everything preceding the boundary crossing — how the credentials were obtained, how the attacker reached the perimeter — is unknown. The gap may span multiple steps and weeks of attacker activity.*
+
+##### 11.5.4.5 Design Rationale (Informative)
+
+The unresolved-step operators encode a single epistemological distinction: the difference between *what exists* (ontology) and *what we know* (epistemology). TLCTC's ten clusters are **ontological** — they define what kinds of attack steps *are*. The `?` and `…` operators are **epistemological** — they mark where the analyst's knowledge has gaps.
+
+This separation is deliberate. Mixing ontological categories with epistemic qualifiers (e.g., confidence scores baked into cluster identifiers, probability-weighted classifications) would compromise the framework's axiomatic precision. The binary rule (R-UNRES-9) enforces this separation: a step is either classified or it is not. All nuance, probability, and analytical reasoning about unresolved steps is expressed in annotations and prose, not in the formal operator layer.
+
+This design mirrors established practice in formal logic, where object-level statements and meta-level annotations occupy distinct layers and are never conflated.
+
+---
+
 ### 11.6 Conformance Rules (Normative)
 
 A textual TLCTC path is **conformant** with this specification if it satisfies all of the following:
 
-1. Contains **at least one** valid step (cluster reference).
+1. Contains **at least one** valid step token — either a cluster reference (`#1`–`#10` / `TLCTC-XX.YY`) or an unresolved-step operator (`?` / `…`).
 2. Uses only defined operators:
    - Sequence: `→` (or `->` as accepted alternative)
    - Parallel: `+` inside parentheses only
    - Domain boundary: `||[context][@Source→@Target]||` attached to a step
    - Transit boundary *(V2.1)*: `||[context][@Source⇒@Carrier→@Target]||` attached to a step
    - Intra-system boundary *(V2.1)*: `|[type][@from→@to]|` attached to a step
+   - Unresolved single step *(V2.1)*: `?`
+   - Unresolved gap *(V2.1)*: `…` (or `...` as accepted ASCII alternative)
 3. Has **balanced parentheses** for all parallel groups.
 4. Does not contain:
    - trailing sequence operators (`... →`)
    - `+` outside parentheses
    - boundary operator as the final element
    - adjacent boundary operators with no step between
+   - DRE tags appended to unresolved-step operators (R-UNRES-5)
+   - partial-confidence operators such as `?#4`, `#4?`, or `#{2|7}` (R-UNRES-9)
 5. *(V2.1)* Intra-system boundary types are limited to: `sandbox`, `privilege`, `process`, `hypervisor`. The `memory` type is reserved and **MUST NOT** be used (R-INTRA-9).
+6. *(V2.1)* Any path containing `?` or `…` is accompanied by a prose annotation explaining the unresolved state (R-UNRES-8).
 
 ---
 
@@ -3213,7 +3371,14 @@ PHASE         = STEP / PAR_GROUP
 
 PAR_GROUP     = "(" SP* STEP *(SP* "+" SP* STEP) SP* ")"
 
-STEP          = CLUSTER_REF [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN) [SP* DRE_TAG]
+; A STEP is either a classified cluster step or an unresolved-step operator.
+; Unresolved steps MUST NOT carry a DRE_TAG (R-UNRES-5).
+STEP          = CLASSIFIED_STEP / UNRESOLVED_STEP
+CLASSIFIED_STEP = CLUSTER_REF [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN) [SP* DRE_TAG]
+
+; V2.1 Unresolved-Step Operators (see §11.5.4)
+UNRESOLVED_STEP  = UNRESOLVED_TOKEN [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN)
+UNRESOLVED_TOKEN = "?" / "…" / "..."                 ; ? = single; … / ... = gap (≥1 step)
 
 CLUSTER_REF   = STRATEGIC / OPERATIONAL
 STRATEGIC     = "#" ( "10" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" )
@@ -4653,11 +4818,60 @@ To support this, steps carry:
       }
     },
 
+    "unresolved_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "V2.1 Unresolved-Step (see §11.5.4). Represents a step that is known to exist but cannot yet be classified. Maps to the '?' (single) or '…' (gap) textual operators. MUST NOT carry 'outcomes' (DRE) per R-UNRES-5. MUST NOT carry 'cluster' (R-UNRES-2). A 'notes' annotation is REQUIRED per R-UNRES-8.",
+      "required": ["step_id", "status", "unresolved_type", "notes"],
+      "properties": {
+        "step_id": { "$ref": "#/definitions/step_id" },
+
+        "status": { "const": "unresolved" },
+
+        "unresolved_type": {
+          "type": "string",
+          "enum": ["single", "gap"],
+          "description": "'single' maps to the '?' operator (exactly one unresolved step). 'gap' maps to the '…' operator (one or more unresolved steps)."
+        },
+
+        "estimated_count": {
+          "type": "string",
+          "description": "Optional count or range estimate for 'gap' type (e.g., '2-4'). Informational only; does not constitute classification."
+        },
+
+        "candidates": {
+          "type": "array",
+          "description": "Cluster IDs under consideration. INFORMATIONAL ONLY — does not constitute classification (R-UNRES-9). If any candidate can be defended, the step SHOULD be recorded as a classified attack_step with [conf=low] instead.",
+          "items": { "$ref": "#/definitions/cluster_id" },
+          "uniqueItems": true
+        },
+
+        "topology_boundary": { "$ref": "#/definitions/boundary" },
+
+        "delta_t_to_next": { "$ref": "#/definitions/delta_t" },
+
+        "evidence_refs": {
+          "type": "array",
+          "description": "Optional references (tickets, log sources, intel reports, indicator IDs).",
+          "items": { "type": "string" }
+        },
+
+        "notes": {
+          "type": "string",
+          "description": "REQUIRED prose annotation per R-UNRES-8 explaining (1) what evidence indicates a step exists, (2) what evidence is missing or ambiguous, (3) candidate hypotheses if any.",
+          "minLength": 1
+        },
+
+        "extensions": { "type": "object" }
+      }
+    },
+
     "sequence_item": {
-      "description": "A single attack step or a parallel group.",
+      "description": "A single attack step, a parallel group, or an unresolved step.",
       "oneOf": [
         { "$ref": "#/definitions/attack_step" },
-        { "$ref": "#/definitions/parallel_group" }
+        { "$ref": "#/definitions/parallel_group" },
+        { "$ref": "#/definitions/unresolved_step" }
       ]
     }
   }
@@ -4725,6 +4939,52 @@ To support this, steps carry:
 }
 ```
 
+##### Example Incident Fragment with Unresolved Step *(V2.1)*
+
+An incident in active forensic analysis where client-side exploitation and malware execution are confirmed, but a subsequent observed step cannot yet be classified. The unresolved step is represented as a `sequence_item` of type `unresolved_step` (see §14.5.1). Note: `cluster` is absent (R-UNRES-2), `outcomes` is absent (R-UNRES-5), `notes` is required (R-UNRES-8), and `candidates` is informational only (R-UNRES-9).
+
+```
+{
+  "path_sequence": [
+    {
+      "step_id": "s1",
+      "cluster": "#3",
+      "delta_t_to_next": "instant"
+    },
+    {
+      "step_id": "s2",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "4h"
+    },
+    {
+      "step_id": "s3",
+      "status": "unresolved",
+      "unresolved_type": "single",
+      "candidates": ["#2", "#7"],
+      "delta_t_to_next": "<10m",
+      "evidence_refs": ["EDR-2026-0412-001"],
+      "notes": "Endpoint telemetry shows process activity inconsistent with the initial malware's known capabilities. Binary not yet recovered for analysis. Candidates: second-stage payload (#7) or local privilege escalation exploit (#2)."
+    },
+    {
+      "step_id": "s4",
+      "cluster": "#4",
+      "delta_t_to_next": "instant"
+    },
+    {
+      "step_id": "s5",
+      "cluster": "#1"
+    }
+  ]
+}
+```
+
+This fragment represents the textual path:
+
+```
+#3 →[Δt=0s] #7 →[Δt=4h] ? →[Δt=<10m] #4 → #1
+```
+
 ---
 
 ### 14.6 Conformance Checklist (Normative)
@@ -4738,6 +4998,8 @@ An incident record is conformant if:
    - either that step is `#7` / `TLCTC-07.xx`, or
    - it includes `fec_recorded_in_step_id` pointing to a `#7` / `TLCTC-07.xx` step.
 5. All boundary annotations use `@Sphere` identifiers and `context` labels that are defined in the referenced Layer 2 registry (when such a registry is provided).
+6. *(V2.1)* Every `unresolved_step` item carries a non-empty `notes` field (R-UNRES-8), contains neither `cluster` nor `outcomes` (R-UNRES-2, R-UNRES-5), and — if `candidates` are listed — the analyst has confirmed none of them can be defended individually (otherwise the step should be recorded as a classified `attack_step` with `[conf=low]`, per R-UNRES-9).
+7. *(V2.1)* `unresolved_step` items **SHOULD** be progressively replaced with classified `attack_step` items as forensic evidence matures (R-UNRES-7, §11.0.6).
 
 ---
 

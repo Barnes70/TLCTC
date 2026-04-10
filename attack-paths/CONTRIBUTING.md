@@ -43,6 +43,19 @@ These are non-negotiable. Submissions that violate them will be rejected.
 - **Outcome tags** (`outcomes`) — Annotate Data Risk Events (C, I, A) where they occur.
 - **Source attribution** — Cite your sources in `metadata.notes` (vendor advisories, CISA alerts, academic papers, threat intel reports).
 
+### Handling Forensic Uncertainty (V2.1)
+
+Incident analysis is iterative — submissions based on live or evolving investigations are welcome. If evidence confirms a step exists but you cannot yet classify it, use the **unresolved-step** variant instead of guessing (see whitepaper §11.5.4):
+
+- Use `"status": "unresolved"` with `"unresolved_type": "single"` for a single unresolved step (maps to the `?` operator).
+- Use `"status": "unresolved"` with `"unresolved_type": "gap"` for a region of activity where step count and clusters are unknown (maps to the `…` operator).
+- `cluster` and `outcomes` MUST be absent (R-UNRES-2, R-UNRES-5).
+- `notes` is **required** and must explain what is unresolved and why (R-UNRES-8).
+- `candidates` is informational only — if any candidate can be individually defended on the evidence, classify the step instead and annotate with `[conf=low]` in prose (R-UNRES-9, binary classification).
+- Velocity and boundary annotations are permitted on unresolved steps (R-UNRES-4, R-UNRES-6) — timing and boundary crossings are often observable even when cluster classification is not.
+
+See `json-schemas/layer-3/examples/unresolved-step-example-2026.json` for a canonical reference. Unresolved steps SHOULD be replaced with classified steps as evidence matures (R-UNRES-7) — a path is a living artifact, correct now, more correct later.
+
 ### Quality Checks
 
 Before submitting:
@@ -53,6 +66,7 @@ Before submitting:
 - [ ] R-EXEC compliance: every `fec_executed: true` has a corresponding #7 step
 - [ ] R-TRANSIT-3 compliance: vendor code on target device is not marked as transit (e.g., Safari on victim's phone is #3, not a transit party)
 - [ ] R-INTRA-7 compliance: intra-system boundaries are observability annotations only — they do not change cluster classification
+- [ ] R-UNRES compliance (if unresolved steps are present): every unresolved step has a prose `notes` annotation; `cluster` and `outcomes` are absent; `candidates` is informational only and no single candidate can be individually defended
 - [ ] Boundary annotations use sphere IDs from the example registry (or clearly document custom spheres)
 - [ ] The compact notation in `metadata.notes` matches the JSON path sequence
 - [ ] Sources are cited

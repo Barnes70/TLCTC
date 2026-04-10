@@ -25,7 +25,7 @@
     },
     "path_sequence": {
       "type": "array",
-      "description": "Ordered list of sequence items. Each item is either a single attack_step or a parallel_group.",
+      "description": "Ordered list of sequence items. Each item is a single attack_step, a parallel_group, or (V2.1) an unresolved_step representing forensic uncertainty where a step is known to exist but cannot yet be classified.",
       "minItems": 1,
       "items": { "$ref": "#/definitions/sequence_item" }
     },
@@ -191,19 +191,102 @@
         "steps": {
           "type": "array",
           "minItems": 2,
-          "description": "Steps executed in parallel. Member steps MUST NOT carry delta_t_to_next; use the group's delta_t_to_next.",
-          "items": { "$ref": "#/definitions/attack_step_in_parallel" }
+          "description": "Steps executed in parallel. Member steps MUST NOT carry delta_t_to_next; use the group's delta_t_to_next. Members may be classified attack steps or (V2.1) unresolved steps.",
+          "items": {
+            "oneOf": [
+              { "$ref": "#/definitions/attack_step_in_parallel" },
+              { "$ref": "#/definitions/unresolved_step_in_parallel" }
+            ]
+          }
         },
         "delta_t_to_next": { "$ref": "#/definitions/delta_t" },
         "notes": { "type": "string" },
         "extensions": { "type": "object" }
       }
     },
+    "unresolved_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "V2.1 Unresolved-Step (see whitepaper §11.5.4). Represents a step that is known to exist but cannot yet be classified. Maps to the '?' (single) or '…' (gap) textual operators. Governed by R-UNRES-1 through R-UNRES-9. MUST NOT carry 'cluster' (R-UNRES-2). MUST NOT carry 'outcomes' (R-UNRES-5) — DRE tags are only valid on classified steps. 'notes' is REQUIRED and MUST explain what is unresolved per R-UNRES-8. 'candidates' is INFORMATIONAL ONLY — if any candidate can be individually defended on the evidence, record the step as a classified attack_step with [conf=low] instead (R-UNRES-9, binary classification).",
+      "required": ["step_id", "status", "unresolved_type", "notes"],
+      "properties": {
+        "step_id": { "$ref": "#/definitions/step_id" },
+        "status": { "const": "unresolved" },
+        "unresolved_type": {
+          "type": "string",
+          "enum": ["single", "gap"],
+          "description": "'single' maps to the '?' operator (exactly one unresolved step). 'gap' maps to the '…' operator (one or more unresolved steps)."
+        },
+        "estimated_count": {
+          "type": "string",
+          "description": "Optional count or range estimate for 'gap' type (e.g., '2-4'). Informational only; does not constitute classification."
+        },
+        "candidates": {
+          "type": "array",
+          "description": "Cluster IDs under consideration. INFORMATIONAL ONLY — does not constitute classification (R-UNRES-9).",
+          "items": { "$ref": "#/definitions/cluster_id" },
+          "uniqueItems": true
+        },
+        "topology_boundary": { "$ref": "#/definitions/boundary" },
+        "intra_system_boundaries": {
+          "type": "array",
+          "description": "Intra-system boundary crossings. Permitted on unresolved steps per R-UNRES-6 (boundaries are independently observable and do not depend on cluster classification).",
+          "items": { "$ref": "#/definitions/intra_system_boundary" }
+        },
+        "delta_t_to_next": { "$ref": "#/definitions/delta_t" },
+        "evidence_refs": {
+          "type": "array",
+          "description": "Optional references (tickets, log sources, intel reports, indicator IDs).",
+          "items": { "type": "string" }
+        },
+        "notes": {
+          "type": "string",
+          "description": "REQUIRED prose annotation per R-UNRES-8 explaining (1) what evidence indicates a step exists, (2) what evidence is missing or ambiguous, (3) candidate hypotheses if any.",
+          "minLength": 1
+        },
+        "extensions": { "type": "object" }
+      }
+    },
+    "unresolved_step_in_parallel": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "V2.1 Unresolved-Step variant for use inside a parallel_group. Same semantics as unresolved_step, but without delta_t_to_next (transition time belongs to the group). See unresolved_step for R-UNRES-* constraints.",
+      "required": ["step_id", "status", "unresolved_type", "notes"],
+      "properties": {
+        "step_id": { "$ref": "#/definitions/step_id" },
+        "status": { "const": "unresolved" },
+        "unresolved_type": {
+          "type": "string",
+          "enum": ["single", "gap"]
+        },
+        "estimated_count": { "type": "string" },
+        "candidates": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/cluster_id" },
+          "uniqueItems": true
+        },
+        "topology_boundary": { "$ref": "#/definitions/boundary" },
+        "intra_system_boundaries": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/intra_system_boundary" }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": { "type": "object" }
+      }
+    },
     "sequence_item": {
-      "description": "A single attack step or a parallel group.",
+      "description": "A single attack step, a parallel group, or (V2.1) an unresolved step representing forensic uncertainty.",
       "oneOf": [
         { "$ref": "#/definitions/attack_step" },
-        { "$ref": "#/definitions/parallel_group" }
+        { "$ref": "#/definitions/parallel_group" },
+        { "$ref": "#/definitions/unresolved_step" }
       ]
     }
   }

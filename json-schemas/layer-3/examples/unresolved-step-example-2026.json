@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "incident_id": "UNRESOLVED-EXAMPLE-2026-001",
+    "analyst_confidence": "medium",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-04-10T00:00:00Z",
+    "notes": "Canonical example demonstrating V2.1 unresolved-step operators (see whitepaper §11.5.4). This is a synthetic illustrative incident, not a real event. It shows: (1) a 'single' unresolved step (? operator) where evidence confirms a step exists but its cluster cannot yet be determined; (2) a 'gap' unresolved step (… operator) representing one or more unknown steps across a destroyed-log window; (3) the rule that unresolved steps carry neither 'cluster' nor 'outcomes' (R-UNRES-2, R-UNRES-5) and MUST carry a 'notes' prose annotation (R-UNRES-8); (4) the use of 'candidates' as informational-only metadata (R-UNRES-9); (5) velocity annotations (delta_t_to_next) and boundary operators applied to unresolved steps (R-UNRES-4, R-UNRES-6). Textual equivalent: #3 →[Δt=0s] #7 →[Δt=4h] ? →[Δt=<10m] #4 → … → #1 →[Δt=0s] + [DRE: Ac]"
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-client-exploit",
+      "cluster": "#3",
+      "delta_t_to_next": "instant",
+      "notes": "Browser exploit delivered via compromised website. Renderer process crash followed by FEC execution."
+    },
+    {
+      "step_id": "s2-malware-exec",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "4h",
+      "notes": "First-stage loader executes in renderer context per R-EXEC."
+    },
+    {
+      "step_id": "s3-unknown-activity",
+      "status": "unresolved",
+      "unresolved_type": "single",
+      "candidates": ["#2", "#7"],
+      "delta_t_to_next": "<10m",
+      "evidence_refs": ["EDR-2026-0410-881"],
+      "notes": "Endpoint telemetry shows process activity inconsistent with the first-stage loader's known capabilities: unexpected network beacon to a new C2 and a write to HKLM. Binary not yet recovered for analysis. Candidates under consideration (informational only, per R-UNRES-9): second-stage payload (#7) or exploitation of a local privilege escalation vulnerability (#2). If a candidate can be defended on its own evidence, this step should be promoted to a classified attack_step with [conf=low]."
+    },
+    {
+      "step_id": "s4-credential-use",
+      "cluster": "#4",
+      "delta_t_to_next": "instant",
+      "notes": "Authenticated access to internal services using credentials obtained during the unresolved window."
+    },
+    {
+      "step_id": "s5-lateral-gap",
+      "status": "unresolved",
+      "unresolved_type": "gap",
+      "estimated_count": "2-4",
+      "delta_t_to_next": "instant",
+      "notes": "Log coverage for the lateral movement segment was destroyed by the attacker (Windows event logs cleared, endpoint agent temporarily disabled). Evidence of the endpoints reached is available from network flow data, but the specific actions taken on each are not recoverable. At least one credential reuse step (#4) and one function abuse step (#1) are assessed to have occurred, but their count, order, and intermediate clusters cannot be determined. Estimated 2-4 steps based on the set of hosts touched."
+    },
+    {
+      "step_id": "s6-encryption",
+      "cluster": "#1",
+      "outcomes": ["Ac"],
+      "notes": "Encryption of file shares via abuse of legitimate backup/replication tooling. DRE: Ac — data present but unusable (ransomware-style accessibility impact)."
+    }
+  ]
+}
