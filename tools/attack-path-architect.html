@@ -103,7 +103,9 @@
             .grid-bg {
                 background-image: radial-gradient(hsl(var(--muted-foreground) / 0.2) 1px, transparent 1px);
                 background-size: 24px 24px;
+                cursor: grab;
             }
+            .grid-bg:active { cursor: grabbing; }
             .ai-disclaimer { background: hsl(var(--muted) / 0.5); border-bottom: 1px solid hsl(var(--border)); color: hsl(var(--muted-foreground)); font-size: 11px; line-height: 1.4; padding: 6px 16px; text-align: center; flex-shrink: 0; }
             .ai-disclaimer button { background: none; border: none; cursor: pointer; color: hsl(var(--muted-foreground)); font-size: 14px; margin-left: 8px; opacity: 0.6; vertical-align: middle; }
             .ai-disclaimer button:hover { opacity: 1; }
@@ -129,7 +131,7 @@
             header, .toolbar, .sidebar, .btn, .modal-overlay, .no-print { display: none !important; }
             .workspace { display: block; height: auto; overflow: visible; }
             .main-view { display: block; height: auto; }
-            .canvas-container { border: none; padding: 0; margin: 0; overflow: visible; height: auto; background: white !important; display: block !important; }
+            #canvasArea { border: none; padding: 0; margin: 0; overflow: visible; height: auto; background: white !important; display: block !important; }
             #notationDisplay { font-size: 12pt; color: black; border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 20px; font-family: monospace; display: block; }
             #print-table { display: block !important; margin-top: 20px; }
             svg { width: 100% !important; height: auto !important; max-height: 100vh; }
@@ -178,11 +180,13 @@
             </button>
             <div id="nav-dd-defense-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
                 <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
+                <a href="tech-enablers-radar.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="cpu" class="h-4 w-4"></i> Tech Enablers Radar</a>
                 <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
                 <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
             </div>
         </div>
         <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+        <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><i data-lucide="github" class="h-4 w-4"></i></a>
     </nav>
     <div class="flex items-center gap-3">
         <button onclick="toggleTheme()" class="btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Toggle theme">
@@ -214,10 +218,12 @@
         <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Story</a>
         <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense</span>
         <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Radar</a>
+        <a href="tech-enablers-radar.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Tech Enablers Radar</a>
         <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
         <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
-        <div class="border-t border-border mt-4 pt-4">
+        <div class="border-t border-border mt-4 pt-4 flex flex-col gap-2">
             <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <i data-lucide="external-link" class="h-3.5 w-3.5"></i></a>
+            <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5"><i data-lucide="github" class="h-4 w-4"></i> GitHub</a>
         </div>
     </nav>
 </div>
@@ -300,11 +306,11 @@
     </aside>
 
     <!-- Main Canvas Area -->
-    <main class="main-view bg-background flex flex-col h-full relative">
-        <div id="canvasArea" class="canvas-container flex-1 overflow-auto p-8 grid-bg relative"></div>
+    <main class="main-view bg-background flex flex-col h-full min-h-0 overflow-hidden relative">
+        <div id="canvasArea" class="flex-1 overflow-auto p-8 grid-bg relative"></div>
 
         <!-- Zoom Controls -->
-        <div class="absolute top-3 right-3 flex items-center gap-1 bg-card/90 backdrop-blur border border-border rounded-lg shadow-sm px-1.5 py-1 z-10 no-print">
+        <div class="absolute top-3 right-3 flex items-center gap-1 bg-card/90 backdrop-blur border border-border rounded-lg shadow-sm px-1.5 py-1 z-20 no-print">
             <button class="btn btn-secondary btn-xs" onclick="zoomOut()" title="Zoom Out"><i data-lucide="minus" class="h-3 w-3"></i></button>
             <button id="zoomLabel" class="text-[10px] font-mono text-muted-foreground w-12 text-center cursor-pointer hover:text-foreground" onclick="zoomFit()" title="Fit to View">Fit</button>
             <button class="btn btn-secondary btn-xs" onclick="zoomIn()" title="Zoom In"><i data-lucide="plus" class="h-3 w-3"></i></button>
@@ -347,8 +353,19 @@
                     Threat Classification
                 </div>
                 <div class="space-y-4">
+                    <!-- Step Type selector (v2.1 unresolved-step support) -->
+                    <div>
+                        <label class="block text-xs font-semibold text-muted-foreground mb-1">Step Type</label>
+                        <select id="sStepType" class="input-std" onchange="updateStepType()">
+                            <option value="classified">Classified Step (cluster known)</option>
+                            <option value="unresolved-single">Unresolved — Single (?)  [evidence confirms one step, cluster unknown]</option>
+                            <option value="unresolved-gap">Unresolved — Gap (…)  [region of unknown activity, count unknown]</option>
+                        </select>
+                        <p class="text-[10px] text-muted-foreground mt-1 italic">V2.1 unresolved steps (whitepaper §11.5.4) carry no cluster and no DRE (R-UNRES-2, R-UNRES-5). Description is required as prose annotation (R-UNRES-8).</p>
+                    </div>
+
                     <div class="grid grid-cols-2 gap-4">
-                        <div>
+                        <div id="clusterFieldWrap">
                             <label class="block text-xs font-semibold text-muted-foreground mb-1">Primary Cluster *</label>
                             <select id="sCluster" class="input-std" onchange="updateClusterHelp()">
                                 <option value="" disabled selected>Select threat cluster...</option>
@@ -379,6 +396,22 @@
                                 <option value="Attacker">@Attacker</option>
                                 <option value="Physical">@Physical</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <!-- Unresolved-Step Fields (v2.1) -->
+                    <div id="unresolvedSection" class="hidden p-3 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700 rounded-lg">
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">Unresolved-Step Metadata (v2.1)</label>
+                        <p class="text-[10px] text-muted-foreground mb-2"><strong>R-UNRES-9 (Binary Rule):</strong> Candidates are <em>informational only</em>. If any listed candidate can be individually defended on the evidence, promote this to a classified step with <code>[conf=low]</code> instead.</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[10px] text-muted-foreground">Candidates (informational)</label>
+                                <input type="text" id="sUnresCandidates" class="input-std text-xs" placeholder="e.g., #2, #7">
+                            </div>
+                            <div id="estimatedCountWrap" class="hidden">
+                                <label class="text-[10px] text-muted-foreground">Estimated count (gap)</label>
+                                <input type="text" id="sUnresEstCount" class="input-std text-xs" placeholder="e.g., 2-4">
+                            </div>
                         </div>
                     </div>
                     
@@ -457,7 +490,7 @@
                     </div>
 
                     <!-- Parallel Action -->
-                    <div class="flex items-center gap-2">
+                    <div id="parallelToggleWrap" class="flex items-center gap-2">
                         <input type="checkbox" id="sParallel" class="rounded" onchange="toggleParallel()">
                         <label for="sParallel" class="text-xs font-semibold text-green-600 cursor-pointer">+ Parallel Action (#X + #Y)</label>
                     </div>
@@ -583,7 +616,7 @@
             </div>
 
             <!-- Section 5: Risk Outcomes -->
-            <div>
+            <div id="riskOutcomesSection">
                 <div class="text-xs font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
                     <span class="bg-primary/10 text-primary w-5 h-5 rounded-full flex items-center justify-center text-[10px]">5</span>
                     Risk Outcomes (Right side of Bow-Tie)
@@ -845,6 +878,141 @@ const TEMPLATES = {
             { id: 300013, cluster: 10, sphere: "Customer", dtVal: "12", dtUnit: "h", velocityClass: "VC-2", description: "Recursive Trust Acceptance Event (Update Vector / #10.1). Each newly poisoned package creates a new TAE for downstream consumers. The attack path loops back to step 4 for each new victim — cyclic/fractal propagation. The conventional linear model of supply chain risk fails here.", mitre: "T1195.002", confidence: "high", stage: "intermediate", boundary: { context: "update", source: "Victim1", target: "Victim2", transit: ["npm"] }, evidence: "Propagation pattern documented by Datadog, Sonatype, and Trend Micro." },
             { id: 300014, cluster: 1, sphere: "Customer", dtVal: "0", dtUnit: "s", velocityClass: "VC-4", description: "Shai-Hulud 2.0 conditional destructive fallback: if exfiltration fails entirely, recursively overwrite and delete the victim's home directory. OS delete operations are legitimate; their scope is abused. DRE: Ac — files permanently inaccessible (not Availability loss). Different DRE, different recovery playbook: Ac calls for backups, not failover.", mitre: "T1485", confidence: "medium", stage: "final", dre: { types: ["Ac"], title: "Destructive Fallback — Home Directory Wipe", desc: "Conditional: if primary exfiltration fails, victim's home directory recursively deleted. Loss of Accessibility (not Availability)." }, bizRisk: { title: "Data Destruction", desc: "Complete loss of user data, local credentials, configuration, and project files. Recovery requires backups." }, evidence: "Shai-Hulud 2.0 (November 2025) variant analysis; Trend Micro report." }
         ]
+    },
+    'cf_grub1': {
+        title: "GRUB1 SaaS-to-SaaS Pivot (Cloudflare 2026)",
+        metadata: {
+            sequence_id: "GRUB1-SAAS-PIVOT-2025",
+            description: "Unsophisticated actor industrialized credential discovery (TruffleHog) and AI-assisted SaaS navigation to breach hundreds of Salesforce tenants via Salesloft/Drift integration cascade. Exemplifies the Measure of Effectiveness (MOE) paradigm.",
+            analyst: "TLCTC Project",
+            organization: "Community Example",
+            threat_actor: { name: "GRUB1", motivation: "financial", sophistication: "low" }
+        },
+        path: [
+            { id: 500001, cluster: 1, sphere: "Vendor", dtVal: "0", dtUnit: "d", velocityClass: "VC-2", description: "Automated secret scanning of code repositories using TruffleHog. Discovered exposed API keys and OAuth tokens for Salesloft/Drift integrations. Legitimate tool, legitimate function, abused scope — no exploitation of technical vulnerabilities.", mitre: "T1552.001", confidence: "high", stage: "initial", dre: { types: ["C"], title: "Integration Credentials Harvested", desc: "SaaS integration tokens discovered in public/private code repositories via automated secret scanning." }, evidence: "Cloudflare 2026 Threat Report (pp. 7); Cloudforce One investigation." },
+            { id: 500002, cluster: 4, sphere: "Org", dtVal: "1", dtUnit: "h", velocityClass: "VC-2", description: "Stolen integration tokens used to authenticate into Salesloft/Drift, then pivot into connected Salesforce production instances. R-CRED: credential use is always #4. The over-privileged SaaS integration became the bridge.", mitre: "T1078", confidence: "high", stage: "intermediate" },
+            { id: 500003, cluster: 1, sphere: "Org", dtVal: "30", dtUnit: "m", velocityClass: "VC-3", description: "AI-assisted navigation of Salesforce data models using GenAI (LLMs) in real time. Standard SaaS APIs abused for bulk data exfiltration. The attacker inhabits the victim's ecosystem — all infrastructure is the victim's own.", mitre: "T1567", confidence: "high", stage: "final", dre: { types: ["C"], title: "Salesforce Data Exfiltrated", desc: "Hundreds of corporate Salesforce tenants compromised via SaaS integration cascade. AI-assisted navigation of unfamiliar data models." }, bizRisk: { title: "Mass SaaS Supply Chain Breach", desc: "Security of each tenant defined by the most over-privileged integration in its stack. Hundreds breached simultaneously." }, evidence: "Cloudflare 2026 Threat Report (pp. 7)." }
+        ]
+    },
+    'cf_nk_worker': {
+        title: "NK IT Worker Deepfake Infiltration (Cloudflare 2026)",
+        metadata: {
+            sequence_id: "NK-IT-WORKER-INFILTRATION-2025",
+            description: "North Korean state-sponsored operatives using AI-driven deepfakes to pass live video interviews, fabricated personas to infiltrate Western companies, and legitimate corporate access for revenue extraction. No malware — the 'malware' is a human with legitimate credentials.",
+            analyst: "TLCTC Project",
+            organization: "Community Example",
+            threat_actor: { name: "FoolishSlug (NK IT Workers)", motivation: "financial/espionage", sophistication: "intermediate" }
+        },
+        path: [
+            { id: 510001, cluster: 9, sphere: "External", dtVal: "30", dtUnit: "d", velocityClass: "VC-1", description: "Industrialized identity fraud: AI-driven deepfakes pass live video interviews. Fabricated LinkedIn and GitHub profiles with realistic activity histories. Rented US citizen credentials for background checks. The hiring process itself is the attack surface.", mitre: "T1566", confidence: "high", stage: "initial", boundary: { context: "human", source: "External", target: "Org" }, evidence: "Cloudflare 2026 Threat Report (pp. 12, 24-27); Cloudforce One analysis." },
+            { id: 510002, cluster: 4, sphere: "Org", dtVal: "1", dtUnit: "d", velocityClass: "VC-1", description: "Once hired, operative receives legitimate corporate credentials — employee badge, VPN access, SSO accounts. R-CRED: legitimate credential issuance to a fraudulent identity. US-based 'laptop farms' host corporate hardware while operators sit abroad.", mitre: "T1078", confidence: "high", stage: "intermediate" },
+            { id: 510003, cluster: 1, sphere: "Org", dtVal: "0", dtUnit: "d", velocityClass: "VC-2", description: "All access uses legitimate corporate systems — no malware needed. Administrative access to financial systems, source code repositories. Mouse-jiggling software maintains activity illusion. Hundreds of millions of dollars funneled back to DPRK regime.", mitre: "T1567", confidence: "high", stage: "final", dre: { types: ["C"], title: "Insider Data Exfiltration", desc: "Operative placed within organization's most trusted systems. Revenue and intelligence extracted through legitimate channels." }, bizRisk: { title: "State-Sponsored Insider Threat", desc: "No IOCs, no malware hashes, no C2 domains. Detection requires behavioral science: impossible travel, deepfake artifacts, mouse-jiggling signatures." }, evidence: "Cloudflare 2026 Threat Report (pp. 12, 24-27)." }
+        ]
+    },
+    'cf_frumpytoad': {
+        title: "FrumpyToad TOUGHPROGRESS — Google Calendar C2 (Cloudflare 2026)",
+        metadata: {
+            sequence_id: "FRUMPYTOAD-TOUGHPROGRESS-2025",
+            description: "APT41/Wicked Panda's TOUGHPROGRESS campaign: spear-phishing via serverless redirects, Google Calendar weaponized as C2 channel. Textbook Living off the XaaS (LotX) — all traffic stays within Google's encrypted ecosystem.",
+            analyst: "TLCTC Project",
+            organization: "Community Example",
+            threat_actor: { name: "FrumpyToad (APT41/Wicked Panda/Brass Typhoon)", motivation: "espionage/financial", sophistication: "nation-state" }
+        },
+        path: [
+            { id: 520001, cluster: 9, sphere: "External", dtVal: "1", dtUnit: "h", velocityClass: "VC-2", description: "Spear-phishing emails redirect through serverless cloud platforms to malicious ZIP archives hosted on compromised government websites. Multi-hop design adds legitimacy at each relay.", mitre: "T1566.002", confidence: "high", stage: "initial", boundary: { context: "human", source: "External", target: "Org" }, evidence: "Cloudflare 2026 Threat Report (pp. 23); Cloudforce One telemetry." },
+            { id: 520002, cluster: 7, sphere: "Org", dtVal: "0", dtUnit: "m", velocityClass: "VC-4", description: "TOUGHPROGRESS malware executes from ZIP payload. R-EXEC: FEC execution. Establishes persistence and connects to Google Calendar C2. Commands encoded in calendar event descriptions (hardcoded dates: operators write to July 30-31, 2023; exfil data embedded in May 30, 2023).", mitre: "T1059", confidence: "high", stage: "intermediate", evidence: "Cloudforce One telemetry; Google Threat Intelligence." },
+            { id: 520003, cluster: 1, sphere: "Org", dtVal: "0", dtUnit: "d", velocityClass: "VC-2", description: "Google Calendar weaponized as cloud-to-cloud C2 loop. The malware never connects to a malicious domain — all traffic is legitimate HTTPS to calendar.google.com. Standard network monitoring sees JSON calendar events. Detection: unusual volume of Calendar API calls from non-interactive processes.", mitre: "T1102", confidence: "high", stage: "final", dre: { types: ["C"], title: "LotX Data Exfiltration via Calendar", desc: "C2 and exfiltration embedded within Google Calendar events. Infrastructure entirely within legitimate enterprise ecosystem." }, bizRisk: { title: "Undetectable C2 Channel", desc: "Firewall rules permit Google Calendar traffic. DLP sees JSON calendar events. The command is in the description field of an event from 2023." }, evidence: "Cloudflare 2026 Threat Report (pp. 23)." }
+        ]
+    },
+    'cf_aisuru_ddos': {
+        title: "Aisuru Hyper-Volumetric DDoS — 31.4 Tbps (Cloudflare 2026)",
+        metadata: {
+            sequence_id: "AISURU-DDOS-2025",
+            description: "Aisuru botnet operators achieved 31.4 Tbps UDP flood — a world record. 1-4M infected hosts, 19 world records in 2025. Kimwolf successor: 550+ C2 nodes null-routed early 2026.",
+            analyst: "TLCTC Project",
+            organization: "Community Example",
+            threat_actor: { name: "Aisuru / Kimwolf (Botnet Operators)", motivation: "disruption/financial", sophistication: "intermediate" }
+        },
+        path: [
+            { id: 530001, cluster: 7, sphere: "External", dtVal: "30", dtUnit: "d", velocityClass: "VC-1", description: "Botnet assembly: 1-4 million hosts compromised with Aisuru malware variants. R-EXEC: FEC deployed at scale across IoT devices, routers, and vulnerable endpoints. 550+ C2 nodes coordinating the botnet.", mitre: "T1583.005", confidence: "high", stage: "initial", evidence: "Cloudflare 2026 Threat Report (pp. 42-45)." },
+            { id: 530002, cluster: 6, sphere: "Org", dtVal: "0", dtUnit: "s", velocityClass: "VC-4", description: "Hyper-volumetric UDP flood: 31.4 Tbps peak — largest DDoS attack ever recorded. 19 world records set in 2025. Attack lasted seconds to minutes per burst. Cloudflare mitigated autonomously.", mitre: "T1498.001", confidence: "high", stage: "final", dre: { types: ["A"], title: "Service Availability Impact", desc: "31.4 Tbps volumetric flood targeting service availability. Mitigated by autonomous DDoS defense." }, bizRisk: { title: "Record-Breaking DDoS", desc: "Demonstrates that hyper-volumetric attacks now exceed 30 Tbps. Manual mitigation is no longer viable at this scale." }, evidence: "Cloudflare 2026 Threat Report (pp. 42-45)." }
+        ]
+    },
+    'cs_scattered_spider': {
+        title: "SCATTERED SPIDER ESXi Credential Dump (CrowdStrike 2026)",
+        metadata: {
+            sequence_id: "CS26-SCATTERED-SPIDER-ESXI-2025",
+            description: "SCATTERED SPIDER evades managed endpoints during high-tempo intrusion. Vishing the help desk for SSO access, pivoting through SharePoint and Citrix VDI to vCenter, mounting a domain controller VMDK on an unmanaged VM to dump NTDS.dit — all within 3 hours. Ransomware deployed solely on VMware ESXi.",
+            analyst: "TLCTC Project",
+            organization: "Community Example",
+            threat_actor: { name: "SCATTERED SPIDER", motivation: "financial", sophistication: "advanced" }
+        },
+        path: [
+            { id: 600001, cluster: 9, sphere: "Org", dtVal: "15", dtUnit: "m", velocityClass: "VC-3", description: "SCATTERED SPIDER calls the help desk, impersonating an employee, and persuades personnel to perform a self-service password reset for a targeted account. Generic vulnerability: human psychological susceptibility — authority bias and urgency.", mitre: "T1566.004", confidence: "high", stage: "initial", boundary: { context: "human", source: "External", target: "Org" }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 22-23)." },
+            { id: 600002, cluster: 4, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "Attacker authenticates to the compromised Entra ID / SSO account using the reset password. R-CRED: credential use is always #4.", mitre: "T1078.004", confidence: "high", stage: "intermediate" },
+            { id: 600003, cluster: 1, sphere: "Org", dtVal: "45", dtUnit: "m", velocityClass: "VC-3", description: "Searches Microsoft SharePoint for files related to network architecture documentation. Legitimate search function, abused scope — the intelligence gathered informs subsequent lateral movement to virtualization infrastructure.", mitre: "T1213.002", confidence: "high", stage: "intermediate", evidence: "CrowdStrike 2026 Global Threat Report (pp. 23): 'performs searches in Microsoft SharePoint for files related to network architecture documentation'." },
+            { id: 600004, cluster: 4, sphere: "Org", dtVal: "30", dtUnit: "m", velocityClass: "VC-3", description: "Authenticates to a second compromised account and accesses the privileged access management (PAM) application via web browser. Retrieves the user's VMware vCenter password from the PAM vault. R-CRED: credential use is always #4. Axiom X: the PAM access (credential acquisition) enables the next step.", mitre: "T1078", confidence: "high", stage: "intermediate", dre: { types: ["C"], title: "vCenter Credentials Retrieved", desc: "VMware vCenter administrative password retrieved from PAM application." }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 23)." },
+            { id: 600005, cluster: 1, sphere: "Org", dtVal: "15", dtUnit: "m", velocityClass: "VC-3", description: "Pivots to Citrix VDI system. Downloads and executes AD Explorer to gather user and computer information. AD Explorer is a legitimate Sysinternals tool — no FEC, no #7. The reconnaissance function is designed; its scope is abused.", mitre: "T1087.002", confidence: "high", stage: "intermediate", evidence: "CrowdStrike 2026 Global Threat Report (pp. 23): only one managed endpoint touched during entire 3-hour intrusion." },
+            { id: 600006, cluster: 4, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "Authenticates to VMware vCenter using the password retrieved from PAM. R-CRED: credential application is always #4.", mitre: "T1078", confidence: "high", stage: "intermediate" },
+            { id: 600007, cluster: 1, sphere: "Org", dtVal: "60", dtUnit: "m", velocityClass: "VC-2", description: "Downloads a Windows Server ISO, identifies and shuts down the VM hosting the domain controller, detaches the DC's VMDK, and mounts it as a drive to a new/decommissioned unmanaged VM. All vCenter operations are legitimate administrative functions — abused scope. The unmanaged VM has no EDR visibility.", mitre: "T1484", confidence: "high", stage: "intermediate", evidence: "CrowdStrike 2026 Global Threat Report (pp. 22, Figure 10)." },
+            { id: 600008, cluster: 1, sphere: "Org", dtVal: "15", dtUnit: "m", velocityClass: "VC-3", description: "Uses GoSecretsDump to extract NTDS.dit and the SYSTEM registry hive from the mounted VMDK on the unmanaged VM. GoSecretsDump is a credential extraction tool operating on the mounted disk — the file read operations are legitimate OS functions, abused to harvest the entire Active Directory credential database.", mitre: "T1003.003", confidence: "high", stage: "intermediate", dre: { types: ["C"], title: "Active Directory Credential Dump", desc: "Complete NTDS.dit and SYSTEM registry hive extracted from domain controller VMDK. All domain credentials compromised." }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 23)." },
+            { id: 600009, cluster: 7, sphere: "Org", dtVal: "30", dtUnit: "m", velocityClass: "VC-3", description: "Deploys ransomware solely on VMware ESXi infrastructure — not on managed endpoints. R-EXEC: FEC execution. By targeting only ESXi, the adversary avoids endpoint-resident EDR entirely. The encrypted VMs become inaccessible.", mitre: "T1486", confidence: "high", stage: "final", dre: { types: ["Ac"], title: "ESXi Ransomware Encryption", desc: "Ransomware deployed exclusively on VMware ESXi. Virtual machines encrypted — data present but inaccessible (Accessibility loss, not Availability)." }, bizRisk: { title: "Total Virtualization Infrastructure Compromise", desc: "All VMs encrypted. EDR never triggered because ransomware executed only on unmanaged ESXi hosts. Recovery requires backups or ransom payment." }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 21-23)." }
+        ]
+    },
+    'cs_pressure_chollima': {
+        title: "PRESSURE CHOLLIMA / Bybit $1.46B Heist (CrowdStrike 2026)",
+        metadata: {
+            sequence_id: "CS26-PRESSURE-CHOLLIMA-BYBIT-2025",
+            description: "PRESSURE CHOLLIMA executes the largest cryptocurrency theft in history ($1.46B) by compromising Safe{Wallet}, a digital asset management platform, via a trojanized Python project delivered to a developer. The adversary pivoted to cloud infrastructure, injected malicious JavaScript and a smart contract into the frontend, and redirected a routine Bybit transaction.",
+            analyst: "TLCTC Project",
+            organization: "Community Example",
+            threat_actor: { name: "PRESSURE CHOLLIMA (Lazarus Group)", motivation: "financial", sophistication: "nation-state" }
+        },
+        path: [
+            { id: 610001, cluster: 9, sphere: "External", dtVal: "7", dtUnit: "d", velocityClass: "VC-1", description: "Social engineering targeting a Safe{Wallet} software developer. A trojanized Python project delivered — likely as a fake job assessment or collaboration request. DPRK-nexus adversaries routinely use this tactic. Generic vulnerability: human psychological susceptibility.", mitre: "T1566.002", confidence: "high", stage: "initial", boundary: { context: "human", source: "External", target: "Vendor" }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 32): 'trojanized Python project (likely delivered using social engineering tactics)'." },
+            { id: 610002, cluster: 7, sphere: "Vendor", dtVal: "0", dtUnit: "m", velocityClass: "VC-4", description: "Trojanized Python project executes on the developer's machine. R-EXEC: FEC execution. Deploys malware that exfiltrates development-related credentials from the compromised workstation.", mitre: "T1059.006", confidence: "high", stage: "intermediate", dre: { types: ["C"], title: "Developer Credentials Exfiltrated", desc: "Development-related credentials stolen from Safe{Wallet} developer's machine." }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 32)." },
+            { id: 610003, cluster: 4, sphere: "Vendor", dtVal: "2", dtUnit: "d", velocityClass: "VC-1", description: "Exfiltrated development credentials used to authenticate to Safe{Wallet}'s cloud infrastructure. R-CRED: credential application is always #4. Axiom X: credential acquisition (#7 enabling) and credential use are separate steps.", mitre: "T1078.004", confidence: "high", stage: "intermediate" },
+            { id: 610004, cluster: 1, sphere: "Vendor", dtVal: "1", dtUnit: "d", velocityClass: "VC-1", description: "From cloud infrastructure, the adversary injects two elements into the Safe{Wallet} frontend: (1) malicious JavaScript targeting Bybit transactions, and (2) a smart contract containing customized transfer logic that executes exclusively during transactions between Bybit's contract address and an adversary-controlled address. Legitimate deployment mechanisms, abused scope.", mitre: "T1195.002", confidence: "high", stage: "intermediate", dre: { types: ["I"], title: "Safe{Wallet} Frontend Compromised", desc: "Malicious JS and smart contract injected into Safe{Wallet} production frontend, targeting Bybit-specific transactions." }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 32)." },
+            { id: 610005, cluster: 10, sphere: "Org", dtVal: "0", dtUnit: "d", velocityClass: "VC-2", description: "Trust Acceptance Event: Bybit's routine transaction between its own wallets is processed through the compromised Safe{Wallet} frontend. Bybit trusts Safe{Wallet} as its digital asset management platform. The malicious smart contract activates specifically for this transaction.", mitre: "T1195.002", confidence: "high", stage: "intermediate", boundary: { context: "update", source: "Vendor", target: "Org" }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 32)." },
+            { id: 610006, cluster: 1, sphere: "Org", dtVal: "0", dtUnit: "s", velocityClass: "VC-4", description: "The smart contract's customized transfer logic modifies the routine transaction, redirecting cryptocurrency then valued at $1.46 billion USD to an adversary-controlled wallet. The blockchain transaction executes as designed — the logic modification is the abuse. Largest cryptocurrency theft in history.", mitre: "T1565.003", confidence: "high", stage: "final", dre: { types: ["C", "I"], title: "$1.46B Cryptocurrency Redirected", desc: "Routine Bybit wallet transaction redirected to adversary-controlled address. $1.46B stolen in a single transaction." }, bizRisk: { title: "Largest Cryptocurrency Theft in History", desc: "Direct financial loss of $1.46B USD. DPRK-nexus funding for weapons programs. Transaction irreversible on blockchain." }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 32)." },
+            { id: 610007, cluster: 1, sphere: "Vendor", dtVal: "0", dtUnit: "m", velocityClass: "VC-4", description: "Immediately following the transaction, the adversary restores the legitimate Safe{Wallet} frontend code to evade detection. Anti-forensic cleanup using legitimate deployment functions — abused scope.", mitre: "T1070", confidence: "high", stage: "final", evidence: "CrowdStrike 2026 Global Threat Report (pp. 32): 'the adversary restored the malicious [code]'." }
+        ]
+    },
+    'cs_fancy_bear_lamehug': {
+        title: "FANCY BEAR LAMEHUG — LLM-Enabled Malware (CrowdStrike 2026)",
+        metadata: {
+            sequence_id: "CS26-FANCY-BEAR-LAMEHUG-2025",
+            description: "In mid-2025, FANCY BEAR deployed LAMEHUG, a novel malware family embedding an LLM directly into its operational workflow. Rather than hardcoding reconnaissance logic, the malware uses LLM prompts to generate system enumeration and document collection commands. First observed instance of a state-nexus adversary embedding LLM prompting into malware for operational tasks.",
+            analyst: "TLCTC Project",
+            organization: "Community Example",
+            threat_actor: { name: "FANCY BEAR (APT28/GRU Unit 26165)", motivation: "espionage", sophistication: "nation-state" }
+        },
+        path: [
+            { id: 620001, cluster: 9, sphere: "External", dtVal: "1", dtUnit: "h", velocityClass: "VC-2", description: "Spear-phishing email delivered to Ukrainian government entity. FANCY BEAR targets Ukrainian government officials for intelligence collection supporting Russia's strategic objectives.", mitre: "T1566.002", confidence: "high", stage: "initial", boundary: { context: "human", source: "External", target: "Org" }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 17-18)." },
+            { id: 620002, cluster: 7, sphere: "Org", dtVal: "0", dtUnit: "m", velocityClass: "VC-4", description: "LAMEHUG malware executes on the target system. R-EXEC: FEC execution. Novel characteristic: incorporates an LLM directly into its operational workflow. Rather than hardcoding traditional reconnaissance logic, the adversary delegates command generation to the model at runtime.", mitre: "T1059", confidence: "high", stage: "intermediate", evidence: "CrowdStrike 2026 Global Threat Report (pp. 17-18): 'first observed instance of FANCY BEAR embedding LLM prompting directly into malware'." },
+            { id: 620003, cluster: 1, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "LLM generates and executes system enumeration commands: creates C:\\ProgramData\\info folder, gathers computer information, hardware information, running processes, services, network configuration, and AD domain information. All output written to info.txt. The commands are standard OS utilities — legitimate functions, abused scope. The LLM is the novel generation mechanism.", mitre: "T1082", confidence: "high", stage: "intermediate", evidence: "CrowdStrike 2026 Global Threat Report (pp. 18, Figure 8): exact LLM prompts reproduced." },
+            { id: 620004, cluster: 1, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "LLM generates and executes document collection commands: recursively copies Office documents, PDFs, and text files from user Documents, Downloads, and Desktop folders to C:\\ProgramData\\info. Standard file copy operations — legitimate functions, abused scope for intelligence collection.", mitre: "T1005", confidence: "high", stage: "intermediate", dre: { types: ["C"], title: "Document Collection via LLM Commands", desc: "Office documents, PDFs, and text files collected from user directories. Command generation delegated to embedded LLM." }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 18, Figure 8)." },
+            { id: 620005, cluster: 1, sphere: "Org", dtVal: "15", dtUnit: "m", velocityClass: "VC-3", description: "Collected intelligence and documents exfiltrated to adversary infrastructure. Standard data transfer — legitimate network function, abused scope. The LLM-generated reconnaissance data provides attacker with comprehensive target profile.", mitre: "T1041", confidence: "high", stage: "final", dre: { types: ["C"], title: "Intelligence Exfiltration", desc: "System enumeration data and sensitive documents exfiltrated. First known APT use of LLM-driven reconnaissance in production malware." }, bizRisk: { title: "AI-Enhanced Espionage", desc: "LLM-generated commands adapt to each target environment. Signature-based detection of hardcoded recon commands is bypassed because the commands are generated dynamically at runtime." }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 17-18)." }
+        ]
+    },
+    'cs_cozy_bear_oauth': {
+        title: "COZY BEAR Multi-Day OAuth Phishing (CrowdStrike 2026)",
+        metadata: {
+            sequence_id: "CS26-COZY-BEAR-OAUTH-2025",
+            description: "COZY BEAR executes a sophisticated, multi-day social engineering campaign exploiting interpersonal trust and platform trust. The adversary impersonates known contacts using compromised accounts, conducts rapport-building conversations across IM, email, and video calls, then delivers Entra ID OAuth 2.0 phishing links that redirect to legitimate Microsoft login pages — eliminating the traditional phishing warning sign of suspicious domains.",
+            analyst: "TLCTC Project",
+            organization: "Community Example",
+            threat_actor: { name: "COZY BEAR (APT29/SVR)", motivation: "espionage", sophistication: "nation-state" }
+        },
+        path: [
+            { id: 630001, cluster: 9, sphere: "External", dtVal: "1", dtUnit: "d", velocityClass: "VC-1", description: "Day 1: Initial contact via instant message. COZY BEAR impersonates a known, trusted professional contact — employees from international NGO branches or pro-Ukraine organizations. Uses compromised legitimate email accounts and burner communication channels to reinforce authenticity. Multi-day rapport building across IM, email, and video conferencing.", mitre: "T1566.004", confidence: "high", stage: "initial", boundary: { context: "human", source: "External", target: "Org" }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 42-43, Figure 17)." },
+            { id: 630002, cluster: 9, sphere: "External", dtVal: "6", dtUnit: "h", velocityClass: "VC-2", description: "Day 1, 13:25: Sends phishing link initiating Entra ID OAuth 2.0 authorization code flow to access device registration app. The link redirects to authentic Microsoft login pages — victims see only legitimate Microsoft infrastructure throughout authentication. Platform trust abuse: no suspicious domains to detect.", mitre: "T1566.002", confidence: "high", stage: "intermediate", evidence: "CrowdStrike 2026 Global Threat Report (pp. 42-43): 'This technique removed the traditional phishing warning sign: suspicious domains'." },
+            { id: 630003, cluster: 4, sphere: "Org", dtVal: "1", dtUnit: "m", velocityClass: "VC-3", description: "Day 1, 14:26-14:29: Target user logs in with threat actor-provided device registration URL, then sends the authorization code to the threat actor via chat. Attacker immediately authenticates using the authorization code. R-CRED: credential application is always #4.", mitre: "T1528", confidence: "high", stage: "intermediate", evidence: "CrowdStrike 2026 Global Threat Report (pp. 43, Figure 17): exact timestamps 14:26:21 through 14:29:09." },
+            { id: 630004, cluster: 1, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "Day 1, 14:33: Attacker attempts to access Outlook but is blocked by conditional access policy requiring Intune enrollment. Sends follow-up authorization code URL targeting Outlook mobile app, hoping mobile path bypasses Intune requirement. Conditional access policy is an effective control — demonstrates defense-in-depth working.", mitre: "T1538", confidence: "high", stage: "intermediate", evidence: "CrowdStrike 2026 Global Threat Report (pp. 43, Figure 17): 'tries and fails to access Outlook due to conditional access policy requiring Intune enrollment'." },
+            { id: 630005, cluster: 9, sphere: "External", dtVal: "4", dtUnit: "d", velocityClass: "VC-1", description: "Days 2-5: Persistent social engineering despite target's growing suspicion. Day 1 14:44 — target requests email-based verification of identity. Attacker responds from compromised legitimate account. Day 2 — sends new OAuth device code authentication link. Day 4 — emails phishing link from the impersonated individual's actual compromised account. Day 5 — final attempt via email.", mitre: "T1566.002", confidence: "high", stage: "intermediate", evidence: "CrowdStrike 2026 Global Threat Report (pp. 43, Figure 17): multi-day timeline." },
+            { id: 630006, cluster: 4, sphere: "Org", dtVal: "0", dtUnit: "m", velocityClass: "VC-3", description: "Target eventually authenticates via device code or authorization code flow on a subsequent attempt. Attacker obtains OAuth tokens granting access to Microsoft 365 resources. R-CRED: token-based authentication is always #4.", mitre: "T1528", confidence: "medium", stage: "intermediate" },
+            { id: 630007, cluster: 1, sphere: "Org", dtVal: "2", dtUnit: "h", velocityClass: "VC-2", description: "Access to Microsoft 365 mailbox and associated resources. Email and document exfiltration targeting diplomatic communications, intelligence on Ukraine-related activities, and organizational strategy. Legitimate API access, abused scope.", mitre: "T1114.002", confidence: "high", stage: "final", dre: { types: ["C"], title: "Diplomatic Email Exfiltration", desc: "Microsoft 365 mailbox accessed. Diplomatic and intelligence-related communications exfiltrated from NGO/government targets." }, bizRisk: { title: "Strategic Intelligence Compromise", desc: "Multi-day investment per target indicates high-value intelligence objectives. No IOCs from suspicious domains — all authentication traffic to legitimate Microsoft infrastructure." }, evidence: "CrowdStrike 2026 Global Threat Report (pp. 42-43)." }
+        ]
     }
 };
 
@@ -893,6 +1061,19 @@ window.onload = function() {
             if (zoomLevel === 0) renderVisualization();
         }, 150);
     });
+
+    // Drag-to-pan on the canvas area
+    initCanvasPan();
+
+    // Ctrl+Wheel zoom on canvas
+    var canvas = document.getElementById('canvasArea');
+    canvas.addEventListener('wheel', function(e) {
+        if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            if (e.deltaY < 0) zoomIn();
+            else zoomOut();
+        }
+    }, { passive: false });
 };
 
 function loadStorage() {
@@ -1003,6 +1184,36 @@ function zoomOut() {
 function updateZoomLabel() {
     const label = document.getElementById('zoomLabel');
     if (label) label.textContent = zoomLevel === 0 ? 'Fit' : Math.round(zoomLevel * 100) + '%';
+}
+
+function initCanvasPan() {
+    var canvas = document.getElementById('canvasArea');
+    var isPanning = false, startX = 0, startY = 0, scrollLeft = 0, scrollTop = 0;
+
+    canvas.addEventListener('mousedown', function(e) {
+        // Only pan on left-click directly on canvas/svg, not on interactive elements
+        if (e.button !== 0 || e.target.closest('button, a, input, select, textarea')) return;
+        isPanning = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        scrollLeft = canvas.scrollLeft;
+        scrollTop = canvas.scrollTop;
+        canvas.style.cursor = 'grabbing';
+        e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', function(e) {
+        if (!isPanning) return;
+        canvas.scrollLeft = scrollLeft - (e.clientX - startX);
+        canvas.scrollTop = scrollTop - (e.clientY - startY);
+    });
+
+    window.addEventListener('mouseup', function() {
+        if (isPanning) {
+            isPanning = false;
+            canvas.style.cursor = '';
+        }
+    });
 }
 
 // ============================================================================
@@ -1129,20 +1340,27 @@ function convertFromV2Format(data) {
     
     if (data.attack_sequence) {
         data.attack_sequence.forEach((step, i) => {
+            const isUnresolved = step.status === 'unresolved';
             const s = {
                 id: Date.now() + i,
-                cluster: parseInt(step.tlctc_cluster?.strategic?.replace('#', '') || step.cluster),
+                cluster: isUnresolved ? null : parseInt(step.tlctc_cluster?.strategic?.replace('#', '') || step.cluster),
                 sphere: step.responsibility_sphere?.replace('@', '') || 'Org',
                 dtVal: step.delta_t_to_next?.replace(/[^\d~<>?]/g, '') || '',
                 dtUnit: (step.delta_t_to_next?.match(/[smhdw]$/)?.[0]) || 'm',
                 velocityClass: step.velocity_class,
-                description: step.description || '',
+                description: step.description || step.notes || '',
                 mitre: step.mitre?.join(', ') || '',
                 cve: step.cve?.join(', ') || '',
                 confidence: step.confidence,
                 inferred: step.inferred,
                 evidence: step.evidence
             };
+            if (isUnresolved) {
+                s.status = 'unresolved';
+                s.unresolved_type = step.unresolved_type || 'single';
+                if (step.candidates) s.candidates = step.candidates;
+                if (step.estimated_count) s.estimated_count = step.estimated_count;
+            }
             
             if (step.data_risk_events?.length) {
                 s.dre = {
@@ -1241,6 +1459,41 @@ function convertFromLayer3Format(data) {
 
     if (data.path_sequence) {
         data.path_sequence.forEach((item, i) => {
+            // V2.1: Layer 3 unresolved_step
+            if (item.status === 'unresolved') {
+                const dt = parseDeltaT(item.delta_t_to_next);
+                const s = {
+                    id: Date.now() + i,
+                    status: 'unresolved',
+                    unresolved_type: item.unresolved_type || 'single',
+                    cluster: null,
+                    sphere: deriveSphere(item),
+                    dtVal: dt.dtVal,
+                    dtUnit: dt.dtUnit,
+                    description: item.notes || '',
+                    mitre: '',
+                    cve: ''
+                };
+                if (item.candidates && item.candidates.length) s.candidates = item.candidates;
+                if (item.estimated_count) s.estimated_count = item.estimated_count;
+
+                const boundary = convertBoundary(item.topology_boundary);
+                if (boundary) s.boundary = boundary;
+
+                if (item.intra_system_boundaries?.length) {
+                    s.intraBoundaries = item.intra_system_boundaries.map(ib => ({
+                        type: ib.type, from: ib.from, to: ib.to
+                    }));
+                }
+
+                if (item.evidence_refs?.length) {
+                    s.evidence = item.evidence_refs.join('; ');
+                }
+
+                c.path.push(s);
+                return;
+            }
+
             if (item.mode === 'parallel' && item.steps?.length) {
                 // Parallel group: flatten to cluster + cluster2
                 const primary = item.steps[0];
@@ -1396,12 +1649,13 @@ function openStepModal(id = null) {
     const modal = document.getElementById('stepModal');
     modal.classList.remove('hidden');
     modal.classList.add('flex');
-    
+
     // Reset all fields
     document.querySelectorAll('#stepModal input, #stepModal textarea, #stepModal select').forEach(e => {
         if (e.type === 'checkbox') e.checked = false;
         else e.value = '';
     });
+    document.getElementById('sStepType').value = "classified";
     document.getElementById('sSphere').value = "Org";
     document.getElementById('sDtUnit').value = "m";
     document.getElementById('parallelBox').classList.add('hidden');
@@ -1412,11 +1666,23 @@ function openStepModal(id = null) {
     document.getElementById('clusterHelp').textContent = '';
     document.getElementById('sTransit').value = '';
     document.getElementById('intraBoundaryRows').innerHTML = '';
-    
+    document.getElementById('unresolvedSection').classList.add('hidden');
+    document.getElementById('estimatedCountWrap').classList.add('hidden');
+    updateStepType();
+
     if (id) {
         const s = getActiveCase().path.find(p => p.id === id);
         if (s) {
-            document.getElementById('sCluster').value = s.cluster;
+            // Determine step type
+            if (s.status === 'unresolved') {
+                document.getElementById('sStepType').value = s.unresolved_type === 'gap' ? 'unresolved-gap' : 'unresolved-single';
+                document.getElementById('sUnresCandidates').value = (s.candidates || []).join(', ');
+                document.getElementById('sUnresEstCount').value = s.estimated_count || '';
+            } else {
+                document.getElementById('sStepType').value = 'classified';
+                document.getElementById('sCluster').value = s.cluster;
+            }
+
             document.getElementById('sSphere').value = s.sphere;
             document.getElementById('sDtVal').value = s.dtVal || '';
             document.getElementById('sDtUnit').value = s.dtUnit || 'm';
@@ -1429,17 +1695,17 @@ function openStepModal(id = null) {
             document.getElementById('sConfidence').value = s.confidence || '';
             document.getElementById('sStage').value = s.stage || '';
             document.getElementById('sInferred').checked = s.inferred || false;
-            
+
             if (s.timestamp) {
                 document.getElementById('sTimestamp').value = s.timestamp.slice(0, 16);
             }
-            
+
             if (s.cluster2) {
                 document.getElementById('sParallel').checked = true;
                 document.getElementById('parallelBox').classList.remove('hidden');
                 document.getElementById('sCluster2').value = s.cluster2;
             }
-            
+
             if (s.boundary) {
                 document.getElementById('sBoundaryContext').value = s.boundary.context || '';
                 document.getElementById('sBoundarySource').value = s.boundary.source || '';
@@ -1452,7 +1718,7 @@ function openStepModal(id = null) {
             if (s.intraBoundaries && s.intraBoundaries.length) {
                 s.intraBoundaries.forEach(ib => addIntraBoundary(ib.type, ib.from, ib.to));
             }
-            
+
             if (s.dre) {
                 if (s.dre.types?.includes('C')) document.getElementById('sDreC').checked = true;
                 if (s.dre.types?.includes('I')) document.getElementById('sDreI').checked = true;
@@ -1460,18 +1726,71 @@ function openStepModal(id = null) {
                 document.getElementById('sDataRiskTitle').value = s.dre.title || '';
                 document.getElementById('sDataRiskDesc').value = s.dre.desc || '';
             }
-            
+
             if (s.bizRisk) {
                 document.getElementById('sBizRiskTitle').value = s.bizRisk.title || '';
                 document.getElementById('sBizRiskDesc').value = s.bizRisk.desc || '';
             }
-            
+
             document.getElementById('deleteStepBtn').style.display = 'inline-flex';
-            updateClusterHelp();
+            updateStepType();
+            if (s.status !== 'unresolved') {
+                updateClusterHelp();
+            }
         }
     }
-    
+
     lucide.createIcons();
+}
+
+function updateStepType() {
+    const type = document.getElementById('sStepType').value;
+    const clusterWrap = document.getElementById('clusterFieldWrap');
+    const unresolvedSection = document.getElementById('unresolvedSection');
+    const estCountWrap = document.getElementById('estimatedCountWrap');
+    const riskSection = document.getElementById('riskOutcomesSection');
+    const parallelWrap = document.getElementById('parallelToggleWrap');
+    const parallelBox = document.getElementById('parallelBox');
+    const boundarySection = document.getElementById('boundarySection');
+    const transitSection = document.getElementById('transitSection');
+    const descLabel = document.getElementById('sDesc')?.previousElementSibling;
+
+    if (type === 'classified') {
+        clusterWrap.classList.remove('hidden');
+        unresolvedSection.classList.add('hidden');
+        riskSection.classList.remove('hidden');
+        parallelWrap.classList.remove('hidden');
+        if (descLabel) descLabel.textContent = 'Description';
+        // Re-evaluate cluster-dependent sections
+        updateClusterHelp();
+    } else {
+        // Unresolved step (single or gap)
+        clusterWrap.classList.add('hidden');
+        unresolvedSection.classList.remove('hidden');
+        riskSection.classList.add('hidden');
+        parallelWrap.classList.add('hidden');
+        parallelBox.classList.add('hidden');
+        document.getElementById('sParallel').checked = false;
+        document.getElementById('sCluster2').value = '';
+        // Boundaries are permitted on unresolved steps (R-UNRES-6) — leave boundary/transit
+        // sections under user control but don't auto-show them (no cluster signal).
+        boundarySection.classList.add('hidden');
+        transitSection.classList.add('hidden');
+        // Clear DRE fields so they never leak into an unresolved step object
+        ['sDreC','sDreI','sDreA'].forEach(id => { document.getElementById(id).checked = false; });
+        document.getElementById('sDataRiskTitle').value = '';
+        document.getElementById('sDataRiskDesc').value = '';
+        document.getElementById('sBizRiskTitle').value = '';
+        document.getElementById('sBizRiskDesc').value = '';
+        // Gap-only: estimated_count
+        if (type === 'unresolved-gap') {
+            estCountWrap.classList.remove('hidden');
+        } else {
+            estCountWrap.classList.add('hidden');
+            document.getElementById('sUnresEstCount').value = '';
+        }
+        if (descLabel) descLabel.textContent = 'Notes (required per R-UNRES-8)';
+    }
 }
 
 function closeStepModal() {
@@ -1563,22 +1882,36 @@ function deleteEditingStep() {
 }
 
 function commitStep() {
+    const stepType = document.getElementById('sStepType').value;
+    const isUnresolved = stepType === 'unresolved-single' || stepType === 'unresolved-gap';
+
     const cl = document.getElementById('sCluster').value;
-    if (!cl) {
+    if (!isUnresolved && !cl) {
         alert("Please select a primary cluster.");
         return;
     }
 
-    // Gather DRE types
+    // Gather DRE types (classified steps only — unresolved steps cannot carry DRE per R-UNRES-5)
     const dreTypes = [];
-    if (document.getElementById('sDreC').checked) dreTypes.push('C');
-    if (document.getElementById('sDreI').checked) dreTypes.push('I');
-    if (document.getElementById('sDreA').checked) dreTypes.push('A');
+    if (!isUnresolved) {
+        if (document.getElementById('sDreC').checked) dreTypes.push('C');
+        if (document.getElementById('sDreI').checked) dreTypes.push('I');
+        if (document.getElementById('sDreA').checked) dreTypes.push('A');
+    }
 
     // R-CRED Enforcement: #4 Identity Theft must not carry DRE
-    if (cl === '4' && dreTypes.length > 0) {
+    if (!isUnresolved && cl === '4' && dreTypes.length > 0) {
         alert("R-CRED Rule Violation:\n\n#4 Identity Theft represents credential USE, not acquisition.\n\nDREs for credential theft belong on the acquisition step (#9, #2, #3, #5, #7, #8, or #10).\n\nPlease remove the DRE from this step or change the cluster.");
         return;
+    }
+
+    // R-UNRES-8: Unresolved steps MUST have a non-empty prose annotation
+    if (isUnresolved) {
+        const desc = document.getElementById('sDesc').value.trim();
+        if (!desc) {
+            alert("R-UNRES-8 Rule Violation:\n\nUnresolved steps MUST include a prose annotation (the Description field) explaining what evidence is known and what is missing.\n\nPlease fill in the Description before saving.");
+            return;
+        }
     }
 
     // Validate MITRE ATT&CK IDs
@@ -1642,8 +1975,8 @@ function commitStep() {
     pushUndo();
     const step = {
         id: editingId || Date.now(),
-        cluster: parseInt(cl),
-        cluster2: document.getElementById('sCluster2').value ? parseInt(document.getElementById('sCluster2').value) : null,
+        cluster: isUnresolved ? null : parseInt(cl),
+        cluster2: (!isUnresolved && document.getElementById('sCluster2').value) ? parseInt(document.getElementById('sCluster2').value) : null,
         sphere: document.getElementById('sSphere').value,
         dtVal: document.getElementById('sDtVal').value || '',
         dtUnit: document.getElementById('sDtUnit').value,
@@ -1659,16 +1992,30 @@ function commitStep() {
         timestamp: document.getElementById('sTimestamp').value ? document.getElementById('sTimestamp').value + ':00Z' : null,
         boundary: boundary,
         intraBoundaries: intraBoundaries.length > 0 ? intraBoundaries : null,
-        dre: dreTypes.length > 0 ? {
+        dre: (!isUnresolved && dreTypes.length > 0) ? {
             types: dreTypes,
             title: document.getElementById('sDataRiskTitle').value,
             desc: document.getElementById('sDataRiskDesc').value
         } : null,
-        bizRisk: document.getElementById('sBizRiskTitle').value ? {
+        bizRisk: (!isUnresolved && document.getElementById('sBizRiskTitle').value) ? {
             title: document.getElementById('sBizRiskTitle').value,
             desc: document.getElementById('sBizRiskDesc').value
         } : null
     };
+
+    // V2.1: attach unresolved-step metadata
+    if (isUnresolved) {
+        step.status = 'unresolved';
+        step.unresolved_type = stepType === 'unresolved-gap' ? 'gap' : 'single';
+        const candRaw = document.getElementById('sUnresCandidates').value.trim();
+        if (candRaw) {
+            step.candidates = candRaw.split(/[,;\s]+/).filter(Boolean).map(c => c.startsWith('#') ? c : '#' + c);
+        }
+        if (step.unresolved_type === 'gap') {
+            const estCnt = document.getElementById('sUnresEstCount').value.trim();
+            if (estCnt) step.estimated_count = estCnt;
+        }
+    }
     
     const c = getActiveCase();
     if (editingId) {
@@ -1735,6 +2082,18 @@ function renderUI() {
             { value: 'template:npm_chalk', text: 'Chalk/Debug Phishing 2025 (7 steps)' },
             { value: 'template:npm_nx', text: 'S1ngularity/Nx CI Abuse 2025 (10 steps)' },
             { value: 'template:npm_worm', text: 'Shai-Hulud Worm 2025 (14 steps)' }
+        ]},
+        { label: 'CrowdStrike 2026 Threat Report', items: [
+            { value: 'template:cs_scattered_spider', text: 'SCATTERED SPIDER ESXi Dump (9 steps)' },
+            { value: 'template:cs_pressure_chollima', text: 'PRESSURE CHOLLIMA Bybit $1.46B (7 steps)' },
+            { value: 'template:cs_fancy_bear_lamehug', text: 'FANCY BEAR LAMEHUG LLM Malware (5 steps)' },
+            { value: 'template:cs_cozy_bear_oauth', text: 'COZY BEAR Multi-Day OAuth (7 steps)' }
+        ]},
+        { label: 'Cloudflare 2026 Threat Report', items: [
+            { value: 'template:cf_grub1', text: 'GRUB1 SaaS Pivot (3 steps)' },
+            { value: 'template:cf_nk_worker', text: 'NK IT Worker Infiltration (3 steps)' },
+            { value: 'template:cf_frumpytoad', text: 'FrumpyToad Calendar C2 (3 steps)' },
+            { value: 'template:cf_aisuru_ddos', text: 'Aisuru 31.4 Tbps DDoS (2 steps)' }
         ]}
     ];
     tplGroups.forEach(g => {
@@ -1768,10 +2127,15 @@ function renderStepList() {
     }
     
     c.path.forEach((s, i) => {
-        const cl = CLUSTERS[s.cluster];
-        const isBridge = cl.type === 'Bridge';
-        
+        const isUnresolved = s.status === 'unresolved';
+        const cl = isUnresolved ? null : CLUSTERS[s.cluster];
+        const isBridge = cl && cl.type === 'Bridge';
+
         let badges = '';
+        if (isUnresolved) {
+            const tok = s.unresolved_type === 'gap' ? '…' : '?';
+            badges += `<span class="vc-badge bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200" title="Unresolved step (R-UNRES)">${tok} unresolved</span>`;
+        }
         if (s.velocityClass) {
             badges += `<span class="vc-badge ${s.velocityClass.toLowerCase()}">${s.velocityClass}</span>`;
         }
@@ -1792,20 +2156,32 @@ function renderStepList() {
                 badges += `<span class="vc-badge bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400">|${ib.type}|</span>`;
             });
         }
-        
+
         let subText = `<span class="opacity-70">@${s.sphere}</span>`;
         if (s.dtVal) subText += ` <span class="mx-1">•</span> Δt: ${s.dtVal}${s.dtUnit}`;
-        
+
         const div = document.createElement('div');
         div.className = 'glass-panel p-3 rounded-lg cursor-pointer hover:border-primary transition-all group';
         div.onclick = () => openStepModal(s.id);
-        
+
+        let titleHtml;
+        if (isUnresolved) {
+            const tok = s.unresolved_type === 'gap' ? '…' : '?';
+            const label = s.unresolved_type === 'gap' ? 'Unresolved Gap' : 'Unresolved Step';
+            const cand = (s.candidates && s.candidates.length) ? ` <span class="text-[10px] text-muted-foreground font-normal">(candidates: ${s.candidates.join(', ')})</span>` : '';
+            titleHtml = `<span class="text-slate-600 dark:text-slate-300">${tok}</span> ${label}${cand}`;
+        } else {
+            titleHtml = `#${s.cluster}${s.cluster2 ? ' + #' + s.cluster2 : ''} ${cl.name}`;
+        }
+
+        const badgeColor = isUnresolved ? '#64748b' : (isBridge ? '#d97706' : '#3b82f6');
+
         div.innerHTML = `
             <div class="flex items-start gap-3">
-                <div class="h-7 w-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0 mt-0.5" style="background:${isBridge ? '#d97706' : '#3b82f6'}">${i+1}</div>
+                <div class="h-7 w-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0 mt-0.5" style="background:${badgeColor}">${i+1}</div>
                 <div class="flex-1 min-w-0">
                     <div class="font-bold text-sm truncate flex items-center gap-2">
-                        #${s.cluster}${s.cluster2 ? ' + #' + s.cluster2 : ''} ${cl.name}
+                        ${titleHtml}
                     </div>
                     <div class="text-xs text-muted-foreground truncate">${subText}</div>
                     ${badges ? `<div class="flex gap-1 mt-1.5 flex-wrap">${badges}</div>` : ''}
@@ -1926,25 +2302,37 @@ function renderNotation() {
         }
 
         // Step notation
-        if (s.cluster2) {
+        if (s.status === 'unresolved') {
+            const tok = s.unresolved_type === 'gap' ? '…' : '?';
+            html += `<span class="font-bold text-slate-600 dark:text-slate-300">${tok}</span>`;
+            if (s.candidates && s.candidates.length) {
+                html += `<span class="text-xs text-slate-500 dark:text-slate-400 ml-0.5">[candidates: ${s.candidates.join(', ')}]</span>`;
+            }
+            if (s.unresolved_type === 'gap' && s.estimated_count) {
+                html += `<span class="text-xs text-slate-500 dark:text-slate-400 ml-0.5">[est=${s.estimated_count}]</span>`;
+            }
+        } else if (s.cluster2) {
             html += `<span class="font-bold">(#${s.cluster} + #${s.cluster2})</span>`;
         } else {
             html += `<span class="font-bold">#${s.cluster}</span>`;
         }
-        
-        // Step annotations
-        let annotations = [];
-        if (s.confidence) annotations.push(`conf=${s.confidence}`);
-        if (s.inferred) annotations.push('inferred');
-        if (s.evidence) annotations.push(`evidence=${s.evidence}`);
-        
-        if (annotations.length) {
-            html += `<span class="text-xs text-slate-500 dark:text-slate-400 ml-0.5">[${annotations.join('] [')}]</span>`;
-        }
-        
-        // DRE tag
-        if (s.dre && s.dre.types?.length) {
-            html += `<span class="text-red-600 dark:text-red-400 font-medium ml-1">+ [DRE: ${s.dre.types.join(', ')}]</span>`;
+
+        // Step annotations (R-UNRES-2/5: unresolved steps carry neither cluster-dependent
+        // confidence nor DRE; confidence on unresolved would contradict binary rule R-UNRES-9)
+        if (s.status !== 'unresolved') {
+            let annotations = [];
+            if (s.confidence) annotations.push(`conf=${s.confidence}`);
+            if (s.inferred) annotations.push('inferred');
+            if (s.evidence) annotations.push(`evidence=${s.evidence}`);
+
+            if (annotations.length) {
+                html += `<span class="text-xs text-slate-500 dark:text-slate-400 ml-0.5">[${annotations.join('] [')}]</span>`;
+            }
+
+            // DRE tag
+            if (s.dre && s.dre.types?.length) {
+                html += `<span class="text-red-600 dark:text-red-400 font-medium ml-1">+ [DRE: ${s.dre.types.join(', ')}]</span>`;
+            }
         }
     });
     
@@ -2066,14 +2454,16 @@ function renderVisualization() {
     });
     
     // Draw nodes
+    const C_UNRES = isDark ? '#94a3b8' : '#64748b';
     c.path.forEach((s, i) => {
         const x = START_X + (i * STEP_W);
-        const cl = CLUSTERS[s.cluster];
-        const isBridge = cl.type === 'Bridge';
-        const color = isBridge ? C_BRIDGE : C_INTERNAL;
-        
-        // Data Risk connection
-        if (s.dre && s.dre.types?.length) {
+        const isUnresolved = s.status === 'unresolved';
+        const cl = isUnresolved ? null : CLUSTERS[s.cluster];
+        const isBridge = cl && cl.type === 'Bridge';
+        const color = isUnresolved ? C_UNRES : (isBridge ? C_BRIDGE : C_INTERNAL);
+
+        // Data Risk connection (classified steps only)
+        if (!isUnresolved && s.dre && s.dre.types?.length) {
             svg += `<line x1="${x}" y1="${Y_THREAT-30}" x2="${x}" y2="${Y_DATA+40}" stroke="${C_DATA}" stroke-dasharray="4" stroke-width="1.5" marker-end="url(#uArrow)"/>`;
             svg += `<rect x="${x-80}" y="${Y_DATA+10}" width="160" height="35" rx="6" fill="${isDark ? '#2d1f1f' : '#fef2f2'}" stroke="${C_DATA}" stroke-width="1.5"/>`;
             svg += `<text x="${x}" y="${Y_DATA+28}" text-anchor="middle" font-size="10" fill="${C_DATA}" font-weight="bold" font-family="Inter, sans-serif">[DRE: ${s.dre.types.join(', ')}]</text>`;
@@ -2081,42 +2471,61 @@ function renderVisualization() {
                 svg += `<text x="${x}" y="${Y_DATA+40}" text-anchor="middle" font-size="8" fill="${C_DATA}" font-family="Inter, sans-serif">${truncate(s.dre.title, 25)}</text>`;
             }
         }
-        
-        // Business Risk connection
-        if (s.bizRisk && s.bizRisk.title) {
+
+        // Business Risk connection (classified steps only)
+        if (!isUnresolved && s.bizRisk && s.bizRisk.title) {
             const dreY = (s.dre) ? Y_DATA+10 : Y_THREAT-30;
             svg += `<line x1="${x}" y1="${dreY-15}" x2="${x}" y2="${Y_BIZ+35}" stroke="${C_GRAY}" stroke-dasharray="3" marker-end="url(#uArrow)"/>`;
             svg += `<rect x="${x-80}" y="${Y_BIZ+5}" width="160" height="30" rx="6" fill="${isDark ? '#1f1f2d' : '#faf5ff'}" stroke="${C_BIZ}" stroke-width="1.5"/>`;
             svg += `<text x="${x}" y="${Y_BIZ+24}" text-anchor="middle" font-size="10" fill="${C_BIZ}" font-weight="bold" font-family="Inter, sans-serif">${truncate(s.bizRisk.title, 22)}</text>`;
         }
-        
+
         // Main node
         svg += `<g onclick="openStepModal(${s.id})" style="cursor:pointer" class="step-node">`;
-        
-        if (isBridge) {
+
+        if (isUnresolved) {
+            // Dashed circle to signify epistemic uncertainty
+            svg += `<circle cx="${x}" cy="${Y_THREAT}" r="28" fill="${C_BG_CARD}" stroke="${color}" stroke-width="3" stroke-dasharray="5,4"/>`;
+        } else if (isBridge) {
             svg += `<rect x="${x-26}" y="${Y_THREAT-26}" width="52" height="52" fill="${C_BG_CARD}" stroke="${color}" stroke-width="3" transform="rotate(45 ${x} ${Y_THREAT})" rx="4"/>`;
         } else {
             svg += `<circle cx="${x}" cy="${Y_THREAT}" r="28" fill="${C_BG_CARD}" stroke="${color}" stroke-width="3"/>`;
         }
-        
-        // Cluster number
-        const clusterText = s.cluster2 ? `#${s.cluster}+#${s.cluster2}` : `#${s.cluster}`;
-        svg += `<text x="${x}" y="${Y_THREAT+4}" text-anchor="middle" font-weight="bold" font-size="${s.cluster2 ? 10 : 13}" fill="${C_TEXT}" font-family="Inter, sans-serif">${clusterText}</text>`;
-        
+
+        // Cluster number (or unresolved token)
+        let centerText;
+        if (isUnresolved) {
+            centerText = s.unresolved_type === 'gap' ? '…' : '?';
+        } else {
+            centerText = s.cluster2 ? `#${s.cluster}+#${s.cluster2}` : `#${s.cluster}`;
+        }
+        const centerSize = isUnresolved ? 22 : (s.cluster2 ? 10 : 13);
+        svg += `<text x="${x}" y="${Y_THREAT+(isUnresolved ? 8 : 4)}" text-anchor="middle" font-weight="bold" font-size="${centerSize}" fill="${isUnresolved ? color : C_TEXT}" font-family="Inter, sans-serif">${centerText}</text>`;
+
         svg += `</g>`;
-        
+
         // Labels below node
-        svg += `<text x="${x}" y="${Y_THREAT+50}" text-anchor="middle" font-size="11" font-weight="600" fill="${C_TEXT}" font-family="Inter, sans-serif">${cl.name}</text>`;
+        const labelName = isUnresolved ? (s.unresolved_type === 'gap' ? 'Unresolved Gap' : 'Unresolved Step') : cl.name;
+        svg += `<text x="${x}" y="${Y_THREAT+50}" text-anchor="middle" font-size="11" font-weight="600" fill="${isUnresolved ? color : C_TEXT}" font-family="Inter, sans-serif">${labelName}</text>`;
         svg += `<text x="${x}" y="${Y_THREAT+65}" text-anchor="middle" font-size="10" fill="${C_GRAY}" font-family="Inter, sans-serif">@${s.sphere}</text>`;
-        
-        // Confidence indicator
-        if (s.confidence) {
+
+        // Candidates label for unresolved steps
+        if (isUnresolved && s.candidates && s.candidates.length) {
+            svg += `<text x="${x}" y="${Y_THREAT+78}" text-anchor="middle" font-size="8" fill="${C_GRAY}" font-style="italic" font-family="Inter, sans-serif">candidates: ${s.candidates.join(', ')}</text>`;
+        }
+        if (isUnresolved && s.unresolved_type === 'gap' && s.estimated_count) {
+            const yy = (s.candidates && s.candidates.length) ? Y_THREAT+90 : Y_THREAT+78;
+            svg += `<text x="${x}" y="${yy}" text-anchor="middle" font-size="8" fill="${C_GRAY}" font-style="italic" font-family="Inter, sans-serif">est: ${s.estimated_count}</text>`;
+        }
+
+        // Confidence indicator (classified only)
+        if (!isUnresolved && s.confidence) {
             const confColor = s.confidence === 'high' ? '#10b981' : s.confidence === 'medium' ? '#f59e0b' : '#ef4444';
             svg += `<circle cx="${x+22}" cy="${Y_THREAT-22}" r="5" fill="${confColor}"/>`;
         }
-        
-        // Inferred indicator
-        if (s.inferred) {
+
+        // Inferred indicator (classified only)
+        if (!isUnresolved && s.inferred) {
             svg += `<text x="${x}" y="${Y_THREAT+78}" text-anchor="middle" font-size="8" fill="${C_GRAY}" font-style="italic" font-family="Inter, sans-serif">[inferred]</text>`;
         }
 
@@ -2155,14 +2564,23 @@ function renderPrintTable() {
     
     tbody.innerHTML = '';
     c.path.forEach((s, i) => {
-        const cl = CLUSTERS[s.cluster];
-        
+        const isUnresolved = s.status === 'unresolved';
+        const cl = isUnresolved ? null : CLUSTERS[s.cluster];
+
         let riskHtml = '';
-        if (s.dre) {
+        if (!isUnresolved && s.dre) {
             riskHtml += `<div class="mb-1"><strong style="color:#dc2626">DRE:</strong> [${s.dre.types?.join(', ')}] ${s.dre.title || ''}</div>`;
         }
-        if (s.bizRisk?.title) {
+        if (!isUnresolved && s.bizRisk?.title) {
             riskHtml += `<div><strong style="color:#7e22ce">Business:</strong> ${s.bizRisk.title}</div>`;
+        }
+        if (isUnresolved) {
+            if (s.candidates && s.candidates.length) {
+                riskHtml += `<div class="mb-1"><strong style="color:#64748b">Candidates:</strong> ${s.candidates.join(', ')}</div>`;
+            }
+            if (s.unresolved_type === 'gap' && s.estimated_count) {
+                riskHtml += `<div><strong style="color:#64748b">Est. count:</strong> ${s.estimated_count}</div>`;
+            }
         }
         
         let velocityHtml = '';
@@ -2191,15 +2609,29 @@ function renderPrintTable() {
             });
         }
 
-        const row = `<tr class="border-b border-gray-300">
-            <td class="p-2 align-top">${i+1}</td>
-            <td class="p-2 align-top">
+        let classCell;
+        if (isUnresolved) {
+            const tok = s.unresolved_type === 'gap' ? '…' : '?';
+            const label = s.unresolved_type === 'gap' ? 'Unresolved Gap' : 'Unresolved Step';
+            classCell = `
+                <strong style="color:#64748b">${tok}</strong><br>
+                ${label}<br>
+                <span class="text-gray-500">@${s.sphere}</span>
+                ${boundaryHtml}
+            `;
+        } else {
+            classCell = `
                 <strong>#${s.cluster}${s.cluster2 ? ' + #' + s.cluster2 : ''}</strong><br>
                 ${cl.name}<br>
                 <span class="text-gray-500">@${s.sphere}</span>
                 ${s.confidence ? `<br><span style="color:${s.confidence === 'high' ? 'green' : s.confidence === 'medium' ? 'orange' : 'red'}">[${s.confidence}]</span>` : ''}
                 ${boundaryHtml}
-            </td>
+            `;
+        }
+
+        const row = `<tr class="border-b border-gray-300">
+            <td class="p-2 align-top">${i+1}</td>
+            <td class="p-2 align-top">${classCell}</td>
             <td class="p-2 align-top">${s.description || ''}</td>
             <td class="p-2 align-top text-xs">${velocityHtml}</td>
             <td class="p-2 align-top text-xs">${refHtml}</td>
@@ -2248,7 +2680,15 @@ function exportCompliantJSON() {
             "sophistication": c.metadata.threat_actor.sophistication || undefined
         } : undefined,
         "attack_sequence": c.path.map((s, i) => {
-            const step = {
+            const isUnresolved = s.status === 'unresolved';
+            const step = isUnresolved ? {
+                "step_number": i + 1,
+                "status": "unresolved",
+                "unresolved_type": s.unresolved_type || 'single',
+                "stage": s.stage || (i === 0 ? "initial" : i === c.path.length - 1 ? "final" : "intermediate"),
+                "responsibility_sphere": `@${s.sphere}`,
+                "notes": s.description || undefined
+            } : {
                 "step_number": i + 1,
                 "tlctc_cluster": {
                     "strategic": `#${s.cluster}`,
@@ -2258,6 +2698,11 @@ function exportCompliantJSON() {
                 "responsibility_sphere": `@${s.sphere}`,
                 "description": s.description || undefined
             };
+
+            if (isUnresolved) {
+                if (s.candidates && s.candidates.length) step.candidates = s.candidates;
+                if (s.unresolved_type === 'gap' && s.estimated_count) step.estimated_count = s.estimated_count;
+            }
             
             if (s.dtVal) {
                 step.delta_t_to_next = `${s.dtVal}${s.dtUnit}`;
@@ -2294,10 +2739,11 @@ function exportCompliantJSON() {
             if (s.cve) {
                 step.cve = s.cve.split(',').map(t => t.trim());
             }
-            if (s.confidence) {
+            // Confidence/inferred are contradictory for unresolved steps (R-UNRES-9 binary rule)
+            if (!isUnresolved && s.confidence) {
                 step.confidence = s.confidence;
             }
-            if (s.inferred) {
+            if (!isUnresolved && s.inferred) {
                 step.inferred = true;
             }
             if (s.evidence) {
@@ -2306,7 +2752,8 @@ function exportCompliantJSON() {
             if (s.timestamp) {
                 step.timestamp = s.timestamp;
             }
-            if (s.dre) {
+            // DRE is forbidden on unresolved steps (R-UNRES-5)
+            if (!isUnresolved && s.dre) {
                 step.data_risk_events = s.dre.types.map(t => ({
                     "impact_type": t,
                     "title": s.dre.title || undefined,
@@ -2365,13 +2812,15 @@ function generateNotationString(c) {
             });
         }
 
-        if (s.cluster2) {
+        if (s.status === 'unresolved') {
+            notation += s.unresolved_type === 'gap' ? '…' : '?';
+        } else if (s.cluster2) {
             notation += `(#${s.cluster} + #${s.cluster2})`;
         } else {
             notation += `#${s.cluster}`;
         }
 
-        if (s.dre && s.dre.types?.length) {
+        if (s.status !== 'unresolved' && s.dre && s.dre.types?.length) {
             notation += ` + [DRE: ${s.dre.types.join(', ')}]`;
         }
     });
@@ -2476,5 +2925,9 @@ function truncate(s, n) {
     return (s && s.length > n) ? s.substr(0, n-1) + '...' : s || '';
 }
 </script>
+<div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+  <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. All data is stored in your <strong>browser's local storage</strong> only &mdash; nothing is sent to a server. Use the <strong>export function</strong> to save your work if you are using real data.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+</div>
+<script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
 </body>
 </html>
