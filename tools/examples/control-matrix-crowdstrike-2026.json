@@ -1,0 +1,405 @@
+{
+  "version": "1.0.0",
+  "tool": "TLCTC Control Matrix Manager",
+  "exportDate": "2026-04-12T00:00:00Z",
+  "orgName": "CrowdStrike 2026 Recommendations",
+  "targetMaturity": 3,
+  "environments": [
+    {
+      "id": "env-cs26",
+      "name": "CrowdStrike 2026",
+      "cells": {
+        "1-ID": {
+          "local": [
+            {
+              "id": "cs26-1",
+              "name": "Inventory all SaaS integrations and non-human identities",
+              "description": "Map all SaaS-to-SaaS integrations, OAuth tokens, service accounts, and API keys. Identify over-privileged non-human identities, especially CRM integration tokens. SCATTERED SPIDER, BLOCKADE SPIDER, and ShinyHunters all leveraged non-human identity types. (CS26 Rec: Treat identity and SaaS as primary attack surfaces, pp. 48)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "1-PR": {
+          "local": [
+            {
+              "id": "cs26-2",
+              "name": "Enforce least-privilege for SaaS API permissions",
+              "description": "Apply least-privilege to all SaaS integrations and non-human accounts. Review OAuth token scopes, restrict service account permissions, enforce token rotation. CRM instances emerged as key target in 2025. (CS26 Rec: Treat identity and SaaS as primary attack surfaces, pp. 48)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "cs26-3",
+              "name": "AI security governance and DLP for AI tools",
+              "description": "Monitor employee AI tool usage, enforce access controls, deploy DLP to prevent sensitive data leakage into model training. Secure homegrown AI workloads from runtime attacks (prompt injection). Assess AI vendor security. Require secure configs and vulnerability assessments for AI products and dependencies. (CS26 Rec: Secure AI to reduce emerging business and operational risk, pp. 48)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "1-DE": {
+          "local": [
+            {
+              "id": "cs26-4",
+              "name": "Behavioral analytics for SaaS and cloud API anomalies",
+              "description": "Detect anomalous SaaS API usage — unusual query patterns, bulk data export, abnormal OAuth token activity. AiTM phishing kits enable real-time session hijacking; detect anomalous post-auth behavior. (CS26: AiTM attacks enable SaaS intrusions, pp. 44)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "detective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "2-PR": {
+          "local": [
+            {
+              "id": "cs26-5",
+              "name": "Aggressive edge device and perimeter patching (<72h)",
+              "description": "Prioritize patching of VPN appliances, firewalls, gateways, and edge devices within 72 hours of critical vulnerability disclosure. China-nexus adversaries consistently weaponized exploits within 2-6 days of public disclosure in 2025. Edge devices targeted in 40% of China-nexus vulnerability exploitation. Apply virtual patching where immediate updates are not feasible. (CS26 Rec: Prioritize edge device and perimeter patching and monitoring, pp. 49)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "cs26-6",
+              "name": "Network segmentation from edge devices",
+              "description": "Implement network segmentation to limit lateral movement from compromised perimeter systems. WARP PANDA pivoted from VPN appliances to vCenter environments; OPERATOR PANDA moved from Cisco devices to internal networks. (CS26 Rec: Prioritize edge device patching, pp. 49; WARP PANDA case, pp. 28)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "2-DE": {
+          "local": [
+            {
+              "id": "cs26-7",
+              "name": "Enhanced monitoring for edge device compromise indicators",
+              "description": "Implement detection for edge device compromise: unexpected configuration changes, unusual DNS tunneling (HOLLOW PANDA ShadowPad), TACACS+ redirections (OPERATOR PANDA), and anomalous traffic patterns from perimeter systems. EDR has limited visibility on edge devices — compensate with network-level monitoring. (CS26: Edge device targeting, pp. 26-30)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "detective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "3-PR": {
+          "local": [
+            {
+              "id": "cs26-8",
+              "name": "Restrict Quick Assist and unsanctioned RMM tools",
+              "description": "Disable or restrict Microsoft Quick Assist and other RMM tools (RustDesk, Supremo, AnyDesk) on endpoints. Fake CAPTCHA lures increased 563% in 2025 (ClickFix); CHATTY SPIDER uses Quick Assist for 4-minute exfiltration chains. (CS26: Fake CAPTCHA campaigns, pp. 12; CHATTY SPIDER case, pp. 11)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "4-ID": {
+          "local": [
+            {
+              "id": "cs26-9",
+              "name": "Audit hybrid identity solutions (Entra Connect Sync, AD FS)",
+              "description": "Review and harden Entra Connect Sync and AD FS configurations. SCATTERED SPIDER and BLOCKADE SPIDER both targeted hybrid identity solutions for privilege escalation and cross-domain authentication control. (CS26: Hybrid identity abuse, pp. 40-41, 45)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "4-PR": {
+          "local": [
+            {
+              "id": "cs26-10",
+              "name": "Deploy phishing-resistant MFA across all identity surfaces",
+              "description": "Enforce phishing-resistant MFA (FIDO2/WebAuthn) for all accounts. Valid account abuse accounted for 35% of cloud incidents. COZY BEAR abused OAuth authorization code and device code flows — standard MFA is insufficient against AiTM and device code phishing. (CS26 Rec: Treat identity and SaaS as primary attack surfaces, pp. 48)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "cs26-11",
+              "name": "Conditional access policies for device registration and enrollment",
+              "description": "Enforce conditional access policies requiring managed device enrollment and on-premises IP for Intune registration. COZY BEAR was blocked by conditional access policies when attempting device registration and mobile Outlook access — these controls were the effective defense layer. (CS26: COZY BEAR case, pp. 42-43)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "4-DE": {
+          "local": [
+            {
+              "id": "cs26-12",
+              "name": "Monitor for anomalous OAuth and device code authentication",
+              "description": "Detect anomalous OAuth authorization code flows, device code authentication requests, and unusual Entra ID sign-in patterns. Monitor for impossible travel, unusual application consent grants, and B2B partner trust abuse. MURKY PANDA exploited Entra ID tenant trust connections. (CS26: Cloud trust exploitation, pp. 39-43)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "detective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "7-PR": {
+          "local": [
+            {
+              "id": "cs26-13",
+              "name": "VMware ESXi/vCenter security hardening and monitoring",
+              "description": "Ingest VMware vCenter logs into SIEM. Detect adversary-controlled VM creation, VMDK mounting from decommissioned VMs, and unauthorized ISO downloads. SCATTERED SPIDER and BLOCKADE SPIDER deploy ransomware solely on ESXi, bypassing endpoint EDR entirely. (CS26: SCATTERED SPIDER ESXi case, pp. 22-23)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "cs26-14",
+              "name": "File System Containment for SMB-based remote encryption",
+              "description": "Deploy endpoint protection with file system containment against remote encryption via SMB shares. PUNK SPIDER (198 intrusions, most active BGH 2025) executes Akira ransomware on unmanaged hosts targeting remote SMB shares. Also used by RECESS SPIDER, TRAVELING SPIDER affiliates, and WANDERING SPIDER. (CS26: PUNK SPIDER remote encryption, pp. 24)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "7-DE": {
+          "local": [
+            {
+              "id": "cs26-15",
+              "name": "AI-aware detection for LLM-enabled malware",
+              "description": "Develop detection for malware integrating AI capabilities — unusual API calls to AI services (Hugging Face, OpenAI), AI optical character recognition in mobile malware (SparkCat), and LLM-generated post-exploitation scripts. FANCY BEAR's LAMEHUG used hardcoded prompts to Qwen2.5-Coder for reconnaissance. (CS26: Technical operations with AI, pp. 17-18)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "detective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "9-PR": {
+          "local": [
+            {
+              "id": "cs26-16",
+              "name": "Help desk identity verification and vishing defense",
+              "description": "Implement strong identity verification for help desk password resets and MFA changes. SCATTERED SPIDER almost exclusively relies on vishing help desk to trigger self-service password resets. Deploy callback verification procedures. AI-focused security awareness training for vishing and deepfake scenarios. (CS26 Rec: Treat identity as primary attack surface, pp. 48; SCATTERED SPIDER case, pp. 22-23)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "cs26-17",
+              "name": "AI-enhanced social engineering awareness program",
+              "description": "Train employees on AI-enhanced social engineering: AI-translated ClickFix lures (RENAISSANCE SPIDER), deepfake video interviews (FAMOUS CHOLLIMA), multi-day multi-channel social engineering (COZY BEAR), and fake CAPTCHA campaigns (563% increase in 2025). AI-enabled adversary attacks increased 89% YoY. (CS26 Rec: Secure AI, pp. 48; AI-enhanced threats, pp. 15-16)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "10-PR": {
+          "local": [
+            {
+              "id": "cs26-18",
+              "name": "Harden developer environments and code signing",
+              "description": "Harden developer workstations, enforce code signing and dependency validation, scan repositories for malicious packages. PRESSURE CHOLLIMA compromised a developer's machine to reach Safe{Wallet} cloud infrastructure. FAMOUS CHOLLIMA uses trojanized npm packages and Python projects. ShaiHulud self-propagating stealer compromised 690 npm packages. (CS26 Rec: Secure the software supply chain, pp. 49)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "cs26-19",
+              "name": "Software update integrity verification",
+              "description": "Verify integrity of software update mechanisms. In October 2025, a legitimate Notepad++ update delivered malicious payloads to ~0.1% of updating organizations (highly targeted). Malicious MCP server (postmark-mcp) impersonated a legitimate AI tool server. (CS26: Supply chain attacks, pp. 31-34; Threats to AI systems, pp. 19)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "10-DE": {
+          "local": [
+            {
+              "id": "cs26-20",
+              "name": "Detect anomalous SaaS provider and supply chain activity",
+              "description": "Monitor for anomalous activity in SaaS provider integrations and upstream trust relationships. Salesloft/Drift intrusion (March-June 2025) enabled OAuth token theft for customer integrations. Deploy SaaS security posture management. Detect stolen OAuth tokens and unusual API access from third-party SaaS applications. (CS26: SaaS supply chain, pp. 34)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "detective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        }
+      }
+    }
+  ]
+}

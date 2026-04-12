@@ -1,0 +1,736 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-04-12T00:00:00Z",
+  "description": "Adversary profiles derived from the CrowdStrike 2026 Global Threat Report. Updates and extends the 2025 edition with new adversaries, updated tradecraft, and 2025 campaign data.",
+  "actors": [
+    {
+      "threat_actor": "SCATTERED SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #04 → #01 → #07",
+      "notes": "Champion Social Engineering [#9] — almost exclusively vishing help desk personnel to trigger self-service password resets for cloud/SSO accounts. Champion Identity Theft [#4] — dumps NTDS via unmanaged VMs (mounts DC VMDK to new/decommissioned VM), pivots through Entra ID and hybrid identity solutions. High Malware [#7] — deploys ransomware solely on VMware ESXi systems, avoiding managed endpoints entirely. High Function Abuse [#1] — abuses SharePoint for network architecture discovery, Citrix VDI for lateral movement, privileged access management apps. AiTM phishing for MFA bypass [#5]. In mid-2025 case, moved from initial vishing to NTDS dump in 3 hours, interacting with only one managed endpoint. Cross-domain tradecraft across cloud, SaaS, hypervisors, and unmanaged hosts.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 5, 21-23, 40-41, 45)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Aviation",
+        "Insurance",
+        "Retail",
+        "Technology",
+        "Telecommunications",
+        "Financial Services"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "SCATTERED-SPIDER-ESXI-2025",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=~15m] #4 →[Δt=~45m] #1 →[Δt=~30m] #4 →[Δt=~1h] #7 + [DRE: Ac]",
+          "cluster_sequence": [9, 4, 1, 4, 7],
+          "dre_outcomes": { "C": 0, "I": 0, "A": 0, "Ac": 1 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "PUNK SPIDER (Akira operators)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #04 → #07",
+      "notes": "Most active BGH adversary in 2025 — 198 intrusions observed, 134% increase YoY. Champion Malware [#7] — Akira ransomware with remote encryption via SMB shares from unmanaged hosts, avoiding execution on managed endpoints. High Identity Theft [#4] — credential-based lateral movement. Medium Server Exploitation [#2] — exploits unpatched edge devices for initial access (e.g., unpatched webcam on corporate network used as ransomware launchpad). Uses AI-generated scripts for post-exploitation. FunkLocker and RALord variants share encryption flaws from WormGPT templates.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 5, 15, 24)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Cross-sector"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "PUNK-SPIDER-REMOTE-ENCRYPT-2025",
+          "notation": "#02 →[Δt=~2h] #04 →[Δt=~30m] #07 + [DRE: Ac]",
+          "cluster_sequence": [2, 4, 7],
+          "dre_outcomes": { "C": 0, "I": 0, "A": 0, "Ac": 1 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "BLOCKADE SPIDER (Embargo operators)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #04 → #01 → #07",
+      "notes": "Progressive cross-domain tradecraft in Embargo ransomware campaigns. High Server Exploitation [#2] — gains initial access via unpatched edge devices. Champion Identity Theft [#4] — targets hybrid identity solutions (Entra Connect Sync, AD FS) for privilege escalation and authentication control across on-prem and cloud. High Function Abuse [#1] — creates unmanaged adversary-controlled VMs, abuses cloud-based identity solutions for persistence. High Malware [#7] — deploys Embargo ransomware on virtualization infrastructure. Techniques conceptually similar to SCATTERED SPIDER but adapted for speed-focused eCrime operations.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 24-25, 40-41, 45)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Cross-sector"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "BLOCKADE-SPIDER-CROSS-DOMAIN-2025",
+          "notation": "#02 →[Δt=~1h] #04 →[Δt=~2h] #01 →[Δt=~1h] #07 + [DRE: C, Ac]",
+          "cluster_sequence": [2, 4, 1, 7],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 1 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "CHATTY SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #01",
+      "notes": "Champion Social Engineering [#9] — vishing campaigns persuading employees to install RMM tooling (Microsoft Quick Assist). High Function Abuse [#1] — downloads WinSCP for data exfiltration from beachhead hosts and accessible network shares; pivots to Google Drive when WinSCP is blocked by firewall. Primarily targets law firms. Extreme speed: initial access to data exfiltration attempt in 4 minutes. Intrusions often last less than one hour. Exclusively exfiltrates from beachhead hosts without lateral movement.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 11)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Legal"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "CHATTY-SPIDER-4MIN-EXFIL-2025",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=4m] #1 + [DRE: C]",
+          "cluster_sequence": [9, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "GRACEFUL SPIDER (Clop operators)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #01",
+      "notes": "Champion Server Exploitation [#2] — differentiates from other BGH adversaries by repeatedly exploiting zero-day vulnerabilities in internet-exposed enterprise web applications. Since late 2020: Accellion FTA (CVE-2021-27101/02/03/04), GoAnywhere MFT (CVE-2023-0669), SysAid (CVE-2023-47246), MOVEit Transfer (CVE-2023-34362), Cleo products (CVE-2024-55956), and Oracle E-Business Suite (CVE-2025-61882). Tactical shift from file transfer apps to broader enterprise platforms, but strategy constant: target internet-exposed apps for initial access and data exfiltration. Whether GRACEFUL SPIDER develops or acquires zero-days remains unclear.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 37)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Cross-sector (enterprises with internet-facing web apps)"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "GRACEFUL-SPIDER-EBS-2025",
+          "notation": "#02 →[Δt=~1h] #01 + [DRE: C]",
+          "cluster_sequence": [2, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "VICE SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#04 → #02 → #07",
+      "notes": "Moderately skilled BGH adversary relying on well-established techniques. High Server Exploitation [#2] — transitioned from compromised credentials to novel zero-day LPE exploits; first eCrime actor to use CVE-2025-59230 (NetMan service zero-day) before public disclosure. Also uses Windows LPE exploits targeting Streaming Service (CVE-2023-29360), kernel-mode drivers (CVE-2024-35250), Error Reporting service (CVE-2024-26169). High Identity Theft [#4] — credential-based initial access and lateral movement. High Malware [#7] — ransomware deployment.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 21, 37-38)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Academic",
+        "Healthcare",
+        "Government (Local)"
+      ]
+    },
+    {
+      "threat_actor": "FAMOUS CHOLLIMA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 3
+      },
+      "sequence": "#09 → #04 → #01",
+      "notes": "2025 activity doubled vs. 2024. Champion Social Engineering [#9] — AI-driven deepfake personas for fraudulent employment (ChatGPT, Gemini, GitHub Copilot, VSCodium for persona creation and legitimate job performance). High Identity Theft [#4] — masquerades as legitimate job recruiters, creates backdoor admin users. High Function Abuse [#1] — uses legitimate insider access (Git, SharePoint, OneDrive) and AI coding assistants for job tasks. High Malware [#7] — deploys BeaverTail/InvisibleFerret via trojanized Node.js coding challenges. High Supply Chain [#10] — trojanized Python projects and npm packages; adversary-linked packages downloaded 8,000+ times. Laptop farms in US locations.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 6, 15-16, 33)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Espionage",
+        "Financial Gain",
+        "Revenue Generation"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services",
+        "Aerospace & Defense",
+        "Education",
+        "Energy",
+        "Manufacturing"
+      ]
+    },
+    {
+      "threat_actor": "PRESSURE CHOLLIMA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 4
+      },
+      "sequence": "#09 → #10 → #04 → #01",
+      "notes": "Champion Supply Chain [#10] — executed largest single financial theft in history ($1.46B USD in cryptocurrency) by compromising Safe{Wallet} digital asset management platform. Compromised a developer's machine via trojanized Python project (likely social engineering delivery), then pivoted to Safe{Wallet} cloud infrastructure. Inserted malicious JavaScript and smart contract for Bybit transactions that redirected cryptocurrency to adversary wallet. Immediately restored modified JavaScript to original version post-theft to evade detection. Trust Acceptance Event: Bybit's reliance on Safe{Wallet} frontend for transaction authorization.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 5, 32)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Financial Gain",
+        "Revenue Generation"
+      ],
+      "target_sectors": [
+        "Cryptocurrency",
+        "Financial Services"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "PRESSURE-CHOLLIMA-BYBIT-2025",
+          "notation": "#9 ||[human][@DPRK→@SafeWalletDev]|| →[Δt=~days] #7 →[Δt=~days] #10 ||[update][@SafeWallet→@Bybit]|| →[Δt=~0s] #1 + [DRE: C]",
+          "cluster_sequence": [9, 7, 10, 1],
+          "dre_outcomes": { "C": 1, "I": 1, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "STARDUST CHOLLIMA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 2
+      },
+      "sequence": "#09 → #07 → #04",
+      "notes": "Significantly increased operational tempo in 2025. Part of DPRK-nexus cluster acting undeterred by global law enforcement actions. CrowdStrike Intelligence assesses DPRK-nexus adversaries will pose acute threat to fintech, technology, and Western defense entities in 2026.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 6)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Financial Gain",
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Fintech",
+        "Technology",
+        "Defense"
+      ]
+    },
+    {
+      "threat_actor": "WARP PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #07 → #01",
+      "notes": "Champion Server Exploitation [#2] — exploited VPN appliances via CVE-2024-21887 + CVE-2023-46805 (authentication bypass + arbitrary RCE chain). June-August 2025 operations targeting US legal, technology, manufacturing. Pivoted from edge devices to vCenter environments. High Malware [#7] — deployed BRICKSTORM, TetanusStorm, DualGauge, Junction, GuestConduit. High Function Abuse [#1] — careful OPSEC: tunneled traffic through vCenter appliances, masqueraded as legitimate processes, cleared logs, timestomped files. Maintained persistent access for 22 months (Oct 2023 to mid-2025) in one intrusion. Malware survives file deletion and system reboots.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 26, 28-29)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "Long-term Intelligence Collection"
+      ],
+      "target_sectors": [
+        "Legal",
+        "Technology",
+        "Manufacturing"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "WARP-PANDA-VPN-VCENTER-2025",
+          "notation": "#02 →[Δt=~1h] #07 →[Δt=~days] #01 + [DRE: C]",
+          "cluster_sequence": [2, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "OPERATOR PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #04 → #01",
+      "notes": "Champion Server Exploitation [#2] — versatile edge device targeting: Cisco IOS XE, Palo Alto Networks firewalls (CVE-2024-3400), and SQL injection (CVE-2025-25257, exploited 6 days after POC release on July 14, 2025). High Function Abuse [#1] — modified TACACS+ configurations on compromised devices to redirect traffic to adversary-controlled infrastructure, strengthening OPSEC. Operates during China business hours. Rapid exploit weaponization from dedicated vulnerability monitoring resources.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 26-29)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Telecommunications",
+        "Professional Services",
+        "Technology"
+      ]
+    },
+    {
+      "threat_actor": "HOLLOW PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #07 → #01",
+      "notes": "Champion Server Exploitation [#2] — consistently compromised Check Point VPN appliances from mid-2023 to October 2025 across multiple intrusions. Likely exploited CVE-2024-24919 or leveraged previously compromised accounts. Global targeting: Australia, Brazil, India, Indonesia, Israel, Mexico, Philippines, Southeast Asia, US. High Malware [#7] — deployed ShadowPad via DLL search-order hijacking, configured for DNS tunneling.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 28)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Cross-sector (global)"
+      ]
+    },
+    {
+      "threat_actor": "PHANTOM PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #04",
+      "notes": "Champion Server Exploitation [#2] — exploited CVE-2025-31324 (SAP file upload vulnerability) on April 27, 2025, only 3 days after public disclosure. Demonstrates rapid exploit weaponization capability consistent with state-level resource allocation.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 26-27)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Cross-sector"
+      ]
+    },
+    {
+      "threat_actor": "VAULT PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #07 → #04",
+      "notes": "Champion Server Exploitation [#2] — deployed React2Shell (CVE-2025-55182) exploit on December 5, 2025, only 2 days after public disclosure. High Malware [#7] — deployed custom implant GoneDoor during React2Shell operations. Uses combination of unique, shared, and public malware tooling. Rapid exploit weaponization indicates dedicated vulnerability research monitoring resources. Less sophisticated OPSEC compared to WARP PANDA but compensates with speed.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 27, 29)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Financial Services",
+        "Technology",
+        "Academic",
+        "Defense",
+        "Government"
+      ]
+    },
+    {
+      "threat_actor": "GENESIS PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #07",
+      "notes": "Champion Server Exploitation [#2] — deployed React2Shell (CVE-2025-55182) exploit on December 5, 2025, same day as VAULT PANDA, only 2 days after disclosure. High Malware [#7] — delivered VShell and its associated downloader Bottles. Less sophisticated OPSEC but rapid weaponization indicates dedicated vulnerability monitoring resources.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 27, 29)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Cross-sector"
+      ]
+    },
+    {
+      "threat_actor": "MURKY PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 3
+      },
+      "sequence": "#10 → #04 → #01",
+      "notes": "Champion Identity Theft [#4] — specializes in targeting Entra ID since at least Q3 2024. Compromises IT services organizations via trusted relationship connections between Entra ID tenants, then pivots to downstream victims through B2B partner trust. High Supply Chain [#10] — gains access by abusing compromised trust relationships rather than direct targeting. High Function Abuse [#1] — uses ORB28 network for anonymity, password spraying from residential IP space. Initial access vector is less monitored than alternatives, enabling prolonged undetected access to downstream victims' data including email.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 6, 39, 41)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "IT Services",
+        "Technology",
+        "Cross-sector (via B2B trust)"
+      ]
+    },
+    {
+      "threat_actor": "VEILED PANDA",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #04",
+      "notes": "Part of the China-nexus cohort exploiting VPN appliances, firewalls, gateways, and internet-facing systems for initial access. Listed alongside WARP PANDA, OPERATOR PANDA, HOLLOW PANDA, GENESIS PANDA, PHANTOM PANDA, and VAULT PANDA in the 2026 report's network perimeter targeting section.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 26)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Cross-sector"
+      ]
+    },
+    {
+      "threat_actor": "COZY BEAR (APT29)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #04 → #01",
+      "notes": "Champion Social Engineering [#9] — orchestrated multi-day, multi-channel social engineering across instant messaging, email, and video conferencing to build rapport. Impersonated individuals from international NGO branches and pro-Ukraine organizations using compromised legitimate email accounts alongside burner channels. Champion Identity Theft [#4] — abused legitimate Entra ID OAuth 2.0 authorization code and device code authentication flows through targeted phishing. Directed victims to authentic Microsoft login pages, eliminating suspicious domain warning signs. Medium MitM [#5] — leveraged legitimate Microsoft infrastructure as intermediary. High Function Abuse [#1] — attempted to register malicious devices via Intune, access Microsoft 365 data. Multi-day campaign timeline: Day 1 initial contact, Day 2 phishing link, Days 4-5 escalation and alternative auth attempts.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 6, 39, 42-43)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Russia",
+      "motivation": [
+        "Espionage",
+        "Intelligence Collection"
+      ],
+      "target_sectors": [
+        "Government",
+        "NGOs",
+        "Pro-Ukraine Organizations",
+        "NATO Member States"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "COZY-BEAR-OAUTH-PHISHING-2025",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=~1d] #9 →[Δt=~2d] #4 →[Δt=~1m] #4 →[Δt=~3d] #1 + [DRE: C]",
+          "cluster_sequence": [9, 9, 4, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "FANCY BEAR (APT28)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 3,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #03 → #07 → #01",
+      "notes": "High across multiple clusters. High Server Exploitation [#2] — targets webmail services via zero-day and n-day exploitation (Zimbra, Roundcube). High Client Exploitation [#3] — exploits XSS vulnerabilities in Roundcube and Zimbra to exfiltrate credentials, emails, contacts. High Social Engineering [#9] — spear-phishing delivery. High Malware [#7] — deployed LAMEHUG, first observed instance of embedding LLM prompting directly into malware. LAMEHUG uses Hugging Face API to interact with Qwen2.5-Coder-32B-Instruct for reconnaissance and intelligence collection via hardcoded prompts. Uses AI coding assistants for post-exploitation scripts. High Identity Theft [#4] — credential exfiltration via XSS. High Function Abuse [#1] — LotL techniques.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 16-18, 36)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Russia",
+      "motivation": [
+        "Espionage",
+        "Intelligence Collection"
+      ],
+      "target_sectors": [
+        "Government",
+        "Defense",
+        "Ukrainian Government Entities"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "FANCY-BEAR-LAMEHUG-2025",
+          "notation": "#9 ||[human][@External→@UkrGov]|| →[Δt=~1h] #3 →[Δt=~0s] #7 →[Δt=~5m] #1 + [DRE: C]",
+          "cluster_sequence": [9, 3, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "UMBRAL BISON",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#03 → #04 → #01",
+      "notes": "Belarus-nexus adversary. High Client Exploitation [#3] — exploited XSS vulnerabilities in Roundcube and Zimbra webmail alongside FANCY BEAR. High Identity Theft [#4] — exfiltrated valid credentials, email communications, and contact lists via XSS exploitation.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 36)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Belarus",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Defense"
+      ]
+    },
+    {
+      "threat_actor": "RENAISSANCE SPIDER",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #03 → #07",
+      "notes": "High Social Engineering [#9] — uses AI to translate ClickFix lures into Ukrainian language to increase credibility. High Client Exploitation [#3] — entices victims to download JavaScript downloaders. High Malware [#7] — delivers NetSupport RAT and RMS payloads.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 16)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Ukrainian Entities"
+      ]
+    },
+    {
+      "threat_actor": "IMPERIAL KITTEN",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #05 → #04",
+      "notes": "Iran-nexus. First observed attempt at targeting cloud identities in November 2025. High Social Engineering [#9] — deployed EvilGinx2 phishing kit targeting Hebrew- and English-speaking Microsoft 365 users. Medium MitM [#5] — AiTM capability via EvilGinx2 reverse proxy. High Identity Theft [#4] — credential collection and session token theft via AiTM phishing pages.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 39)"
+      ],
+      "last_updated": "2026-04-12",
+      "origin_country": "Iran",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Defense",
+        "Energy"
+      ]
+    }
+  ]
+}

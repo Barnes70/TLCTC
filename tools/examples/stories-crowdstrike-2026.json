@@ -1,0 +1,162 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-04-12T00:00:00Z",
+  "description": "Four narrative threat stories from the CrowdStrike 2026 Global Threat Report, designed for the Actor Story Designer's Diamond Model framing. Each story captures a signature case highlight from the report.",
+  "actors": [
+    {
+      "threat_actor": "SCATTERED SPIDER — The Ghost in the Hypervisor",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] SCATTERED SPIDER is the defining cross-domain adversary of 2025. They do not fight on the battlefield defenders have prepared — they bypass it entirely. No malware on managed endpoints. No lateral movement through monitored networks. Instead, they operate in the seams between security domains: cloud identity, SaaS platforms, hypervisors, and decommissioned virtual machines. Their tradecraft in 2025 represents a fundamental challenge to endpoint-centric security models.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Social Engineering (#9): almost exclusively vishes help desk personnel to trigger self-service password resets for cloud/SSO accounts. No phishing emails, no malicious links — just a phone call to the right person. Champion-level Identity Theft (#4): the NTDS dump technique is elegant in its simplicity — mount a domain controller's virtual disk to a new or decommissioned VM (which has no security agent), then copy ntds.dit from an unmanaged host. The credential database is exfiltrated without ever touching a managed endpoint. High Malware (#7): ransomware deployed solely on VMware ESXi — the hypervisor layer that most EDR tools cannot see.\n\n[DIAMOND MODEL — INFRASTRUCTURE] The victim's own infrastructure is the attack platform. VMware vCenter for VM manipulation. Citrix VDI for lateral movement. SharePoint for network architecture reconnaissance. Privileged access management applications accessed via browser. The adversary inhabits the victim's management plane. External infrastructure is minimal — the phone used for vishing and an internet connection are sufficient.\n\n[DIAMOND MODEL — VICTIM] Aviation, insurance, and retail targets made mainstream headlines in 2025. The victim profile is large enterprises with complex hybrid environments — on-premises Active Directory federated with cloud identity (Entra ID), VMware virtualization, and SaaS applications. The attack exploits the gap between these domains: each may be monitored individually, but the transitions between them are blind spots.\n\n[ANALYST ASSESSMENT] The mid-2025 case study is a masterclass in cross-domain evasion. In three hours: vishing → password reset → SharePoint recon → Citrix VDI → AD Explorer → vCenter access → unmanaged VM creation → NTDS dump. Only one managed endpoint was touched during the entire three-hour intrusion. The 29-minute average breakout time reported in the 2026 report is the headline, but SCATTERED SPIDER's true innovation is that breakout time becomes irrelevant when the adversary never touches the surfaces where breakout is measured. The defense paradigm must shift from 'detect fast on the endpoint' to 'correlate across domains' — vCenter logs, Entra ID authentication events, and SaaS audit trails must be unified.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 5, 21-23, 40-41)"
+      ],
+      "sequence": "#09 → #04 → #01 → #04 → #07",
+      "last_updated": "2026-04-12",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Aviation",
+        "Insurance",
+        "Retail",
+        "Technology"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "SCATTERED-SPIDER-ESXI-2025",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=~15m] #4 →[Δt=~45m] #1 →[Δt=~30m] #4 →[Δt=~1h] #7 + [DRE: Ac]",
+          "cluster_sequence": [9, 4, 1, 4, 7],
+          "dre_outcomes": { "C": 0, "I": 0, "A": 0, "Ac": 1 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "CHATTY SPIDER — Four Minutes to Exfiltration",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] CHATTY SPIDER is the speed demon of 2025's eCrime landscape. While other adversaries build elaborate multi-stage campaigns, CHATTY SPIDER has distilled their operation to its essence: call, connect, steal, leave. The entire operation typically concludes in under an hour. In the featured case, initial access to exfiltration attempt took four minutes. This adversary proves that sophistication and impact are not correlated — their technique is simple, their execution is ruthless, and their targeting is precise.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Social Engineering (#9): voice phishing (vishing) campaigns that persuade targeted employees to install remote monitoring and management (RMM) tooling — specifically Microsoft Quick Assist. The social engineering is tailored and convincing: employees voluntarily grant workstation access. High Function Abuse (#1): once connected via Quick Assist, downloads WinSCP for data exfiltration from the beachhead host and accessible network shares. When WinSCP was blocked by firewall controls, the adversary pivoted within minutes to Google Drive as an alternative exfiltration channel. No malware deployed. No exploitation. No lateral movement. The beachhead is the target.\n\n[DIAMOND MODEL — INFRASTRUCTURE] Microsoft Quick Assist — a legitimate, often pre-installed remote assistance tool — is the access mechanism. WinSCP and Google Drive are the exfiltration channels. The adversary carries no custom tooling. Every component of the attack uses software that would appear on any enterprise's approved software list. The infrastructure cost is effectively zero.\n\n[DIAMOND MODEL — VICTIM] US-based law firms are the primary target. The legal sector is particularly vulnerable: high-value confidential data (client privilege, M&A documents, litigation strategy), time-pressured staff accustomed to urgent requests, and often less security-mature than similarly sized enterprises. CHATTY SPIDER exclusively exfiltrates from beachhead hosts and accessible network shares — they don't need to move laterally because the initial foothold already has access to the data they want.\n\n[ANALYST ASSESSMENT] Four minutes. That's the gap between initial access and attempted data exfiltration in the featured case. The 29-minute average eCrime breakout time is a distant luxury compared to CHATTY SPIDER's operational tempo. This case study demolishes the assumption that defenders have 'minutes to hours' to detect and respond. The defense implications are stark: if your first detection opportunity is after initial access, you have already lost. Prevention must focus on the social engineering vector itself — callback verification procedures, Quick Assist restrictions, and employee training that specifically addresses vishing scenarios. The secondary lesson is equally important: the adversary's firewall pivot from WinSCP to Google Drive took minutes, demonstrating that blocking a single exfiltration tool is insufficient without DLP controls across all cloud storage services.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 11)"
+      ],
+      "sequence": "#09 → #01",
+      "last_updated": "2026-04-12",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Legal"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "CHATTY-SPIDER-4MIN-EXFIL-2025",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=4m] #1 + [DRE: C]",
+          "cluster_sequence": [9, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "PRESSURE CHOLLIMA — The $1.46 Billion Heist",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 4
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] PRESSURE CHOLLIMA executed the largest single financial theft in recorded history: $1.46 billion USD in cryptocurrency stolen from the Bybit exchange in February 2025. This DPRK-nexus adversary represents the pinnacle of supply chain attack sophistication — not through technical complexity, but through strategic patience and precise targeting of trust relationships. The operation funds North Korea's weapons programs and demonstrates that a single supply chain compromise can yield returns that dwarf years of conventional cybercrime.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Supply Chain (#10): the Trust Acceptance Event is the critical moment — Bybit's reliance on Safe{Wallet}'s frontend as the authoritative interface for transaction authorization. PRESSURE CHOLLIMA didn't attack Bybit directly. They attacked the tool Bybit trusted. High Social Engineering (#9): initial compromise of a Safe{Wallet} developer via a trojanized Python project, likely delivered through social engineering. High Malware (#7): inserted two precise elements into Safe{Wallet}'s frontend — malicious JavaScript code specifically for Bybit transactions, and a smart contract with customized transfer logic that executed only during transactions between Bybit's contract address and an adversary-controlled address. High Function Abuse (#1): the malicious code operated within legitimate transaction flows — the transfer appeared routine.\n\n[DIAMOND MODEL — INFRASTRUCTURE] Safe{Wallet}'s own cloud infrastructure served as the staging platform. The malicious JavaScript was hosted on Safe{Wallet}'s legitimate servers. The smart contract lived on the blockchain itself. After the theft, PRESSURE CHOLLIMA immediately restored the modified JavaScript to its original version — anti-forensic cleanup performed on the victim's own infrastructure. Cryptocurrency laundering networks then distributed the stolen funds.\n\n[DIAMOND MODEL — VICTIM] The primary victim was Bybit, a centralized cryptocurrency exchange. But the attack surface was Safe{Wallet}, a third-party digital asset management platform. The developer whose machine was initially compromised is the entry point — a single individual in the supply chain whose credentials provided access to the infrastructure that Bybit trusted. The victim chain: Developer → Safe{Wallet} cloud → Safe{Wallet} frontend → Bybit cold wallet.\n\n[ANALYST ASSESSMENT] This operation redefines supply chain risk. PRESSURE CHOLLIMA attacked a routine transaction between Bybit's own wallets — a transfer that should have been among the most mundane and trusted operations possible. The malicious smart contract was surgically targeted: it only modified transactions involving Bybit's specific contract address, leaving all other Safe{Wallet} users unaffected. This precision made detection nearly impossible through behavioral monitoring. The immediate cleanup (restoring the JavaScript to its original state) compounds the challenge — forensic evidence was actively destroyed. The strategic implication: in the cryptocurrency ecosystem, the security of your assets is defined by the weakest link in your signing infrastructure's supply chain, not by your own controls. The $1.46B figure makes this the most consequential single intrusion in cybercrime history and demonstrates that DPRK-nexus actors operate at a strategic, not tactical, level.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 5, 32)"
+      ],
+      "sequence": "#09 → #07 → #10 → #01",
+      "last_updated": "2026-04-12",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Financial Gain",
+        "Revenue Generation",
+        "Regime Funding"
+      ],
+      "target_sectors": [
+        "Cryptocurrency",
+        "Financial Services"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "PRESSURE-CHOLLIMA-BYBIT-2025",
+          "notation": "#9 ||[human][@DPRK→@SafeWalletDev]|| →[Δt=~days] #7 →[Δt=~days] #10 ||[update][@SafeWallet→@Bybit]|| →[Δt=~0s] #1 + [DRE: C]",
+          "cluster_sequence": [9, 7, 10, 1],
+          "dre_outcomes": { "C": 1, "I": 1, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "COZY BEAR — The Patient Phisher",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] COZY BEAR (APT29) demonstrated in 2025 that the most effective phishing doesn't look like phishing at all. Their multi-day, multi-channel social engineering campaigns against pro-Ukraine organizations and NATO-aligned entities represent the apex of trust exploitation. Rather than sending a single malicious link, COZY BEAR invests days building authentic-seeming professional relationships, then weaponizes legitimate Microsoft authentication infrastructure so that the victim never sees a suspicious domain.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Social Engineering (#9): multi-day campaigns across instant messaging, email, and video conferencing. Day 1: initial contact via instant message. Day 2: phishing link delivery via Entra ID OAuth 2.0 authorization code flow. Days 4-5: escalation, alternative authentication attempts, and parallel targeting of additional users. The adversary impersonated individuals from international NGO branches and pro-Ukraine organizations, using compromised individuals' legitimate email accounts to substantiate the impersonation. Champion-level Identity Theft (#4): abused legitimate Entra ID OAuth 2.0 authorization code and device code authentication flows. Victims were directed to authentic Microsoft login pages — no adversary-controlled domains in the authentication chain. Attempted device registration via Microsoft Intune, and when blocked by conditional access policies, pivoted to mobile Outlook and Power Platform application authorization.\n\n[DIAMOND MODEL — INFRASTRUCTURE] The infrastructure is Microsoft's own: legitimate Microsoft 365 login pages, Entra ID authentication endpoints, Intune device registration portals. Compromised email accounts of trusted individuals serve as the social engineering platform. Burner communication channels supplement legitimate accounts. The adversary invested heavily in substantiating impersonations — this is not a spray-and-pray operation but a carefully orchestrated intelligence collection campaign.\n\n[DIAMOND MODEL — VICTIM] Pro-Ukraine organizations and NATO member state entities. The targeting is strategically aligned with Russian intelligence collection priorities. The victim was sophisticated enough to request email-based identity verification when suspicious (Day 2), but the adversary had prepared for this by compromising the impersonated individual's actual email account, responding from the legitimate address on Day 4.\n\n[ANALYST ASSESSMENT] The Day 2/Day 4 exchange is the most instructive moment in the entire case. The target became suspicious and requested verification via email. Most phishing campaigns would fail at this point. But COZY BEAR had already compromised the impersonated individual's legitimate email — when the target asked for email verification, the adversary responded from the real email address. This level of preparation demonstrates intelligence tradecraft, not cybercrime. The conditional access policy blocks on Days 2 and 5 show that technical controls worked — but the adversary's persistence and adaptability (trying authorization code flow, then device code, then mobile app, then Power Platform) demonstrate that a single control is insufficient. The defense must be layered: phishing-resistant MFA, conditional access policies, impossible travel detection, and critically, user awareness that multi-day relationship-building campaigns are the new phishing vector.",
+      "sources": [
+        "CrowdStrike 2026 Global Threat Report (pp. 6, 39, 42-43)"
+      ],
+      "sequence": "#09 → #09 → #04 → #04 → #01",
+      "last_updated": "2026-04-12",
+      "origin_country": "Russia",
+      "motivation": [
+        "Espionage",
+        "Intelligence Collection"
+      ],
+      "target_sectors": [
+        "Government",
+        "NGOs",
+        "Pro-Ukraine Organizations",
+        "NATO Member States"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "COZY-BEAR-OAUTH-PHISHING-2025",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=~1d] #9 →[Δt=~2d] #4 →[Δt=~1m] #4 →[Δt=~3d] #1 + [DRE: C]",
+          "cluster_sequence": [9, 9, 4, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    }
+  ]
+}
