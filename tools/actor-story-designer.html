@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>TLCTC Actor Story Designer - Threat Intelligence Framework App</title>
-    <meta name="description" content="Design threat actor stories combining TLCTC capability profiles, emerging technology enablers, and Diamond Model-framed narrative intelligence.">
-    <meta name="keywords" content="TLCTC, Threat Actor Profiling, Diamond Model, Cyber Threat Intelligence, CTI, Capability Matrix, Emerging Tech, Actor Stories">
+    <meta name="description" content="Design threat actor stories combining TLCTC capability profiles and Diamond Model-framed narrative intelligence.">
+    <meta name="keywords" content="TLCTC, Threat Actor Profiling, Diamond Model, Cyber Threat Intelligence, CTI, Capability Matrix, Actor Stories">
     <meta name="author" content="TLCTC Framework">
     <meta property="og:title" content="TLCTC Actor Story Designer">
     <meta property="og:type" content="website">
@@ -527,26 +527,6 @@
         }
     </style>
     <style>
-        /* Enablers Radar Styles */
-        .tech-chip { width:42px; height:42px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:800; color:white; cursor:grab; transition:transform 0.1s,box-shadow 0.1s; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06); position:relative; margin:3px; text-align:center; line-height:1; flex-shrink:0; border-radius:8px; border:1px solid rgba(255,255,255,0.2); user-select:none; }
-        .tech-chip:active { cursor:grabbing; transform:scale(1.05); z-index:50; }
-        .tech-chip:hover { z-index:40; transform:translateY(-1px); box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); }
-        .tech-chip-small { width:24px; height:24px; font-size:0; margin:2px; border-radius:4px; }
-        .actor-indicator { position:absolute; font-weight:900; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.8); pointer-events:none; font-family:'Inter',sans-serif; }
-        .pos-tl{top:1px;left:2px} .pos-tr{top:1px;right:2px} .pos-bl{bottom:1px;left:2px} .pos-br{bottom:1px;right:2px} .pos-cc{bottom:1px;left:50%;transform:translateX(-50%)}
-        .tech-chip-small .actor-indicator{display:none}
-        .enabler-arrow-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:20;overflow:visible}
-        @keyframes enabler-dash{to{stroke-dashoffset:-20}} .animate-enabler-dash{animation:enabler-dash 1s linear infinite}
-        .selected-ring{outline:2px solid #2563eb;outline-offset:2px}
-        .tech-ghost{opacity:0.4;filter:grayscale(100%) brightness(1.2);border:2px dashed #94a3b8;box-shadow:none}
-        .enabler-radar-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0}
-        .enabler-radar-table th{padding:12px 4px;font-size:0.7rem;border-bottom:2px solid hsl(var(--border));background:hsl(var(--secondary))}
-        .enabler-radar-table td{padding:4px;vertical-align:top;border-right:1px solid hsl(var(--border));border-bottom:1px solid hsl(var(--border));height:100px;transition:background-color 0.2s}
-        .enabler-radar-table td:last-child{border-right:none}
-        td.enabler-drag-over{background-color:hsl(var(--primary)/0.08) !important}
-        .enabler-row-label{width:140px;font-size:0.75rem;padding:8px;font-weight:700;color:hsl(var(--muted-foreground));border-right:2px solid hsl(var(--border)) !important;display:flex;align-items:center;justify-content:flex-end;text-align:right;height:100%}
-        .enabler-btn-tool{padding:6px 12px;border:1px solid hsl(var(--border));border-radius:6px;font-size:0.75rem;font-weight:600;display:flex;align-items:center;gap:6px;transition:all 0.15s;cursor:pointer;background:hsl(var(--background));color:hsl(var(--foreground))}
-        .enabler-btn-tool:hover{background:hsl(var(--secondary))}
         /* Tab styles */
         .tab-btn{padding:0.75rem 1.25rem;font-size:0.875rem;font-weight:500;display:flex;align-items:center;gap:0.5rem;border-bottom:2px solid transparent;color:hsl(var(--muted-foreground));transition:all 0.2s;cursor:pointer;background:none;border-top:none;border-left:none;border-right:none}
         .tab-btn:hover{color:hsl(var(--foreground))}
@@ -603,11 +583,13 @@
                         </button>
                         <div id="nav-dd-defense-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
                             <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
+                            <a href="tech-enablers-radar.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="cpu" class="h-4 w-4"></i> Tech Enablers Radar</a>
                             <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
                             <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
                         </div>
                     </div>
                     <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+                    <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><i data-lucide="github" class="h-4 w-4"></i></a>
                 </nav>
 
                 <div class="flex items-center gap-3">
@@ -642,10 +624,12 @@
             <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-foreground font-semibold">Actor Story</a>
             <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense</span>
             <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Radar</a>
+            <a href="tech-enablers-radar.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Tech Enablers Radar</a>
             <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
             <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
-            <div class="border-t border-border mt-4 pt-4">
+            <div class="border-t border-border mt-4 pt-4 flex flex-col gap-2">
                 <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <i data-lucide="external-link" class="h-3.5 w-3.5"></i></a>
+                <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5"><i data-lucide="github" class="h-4 w-4"></i> GitHub</a>
             </div>
         </nav>
     </div>
@@ -660,7 +644,7 @@
                 Actor Story Designer
             </h1>
             <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Combine capability profiles, emerging technology enablers, and Diamond Model-framed narratives into actionable threat intelligence.
+                Combine capability profiles and Diamond Model-framed narratives into actionable threat intelligence.
             </p>
         </section>
 
@@ -670,9 +654,6 @@
                 <div class="flex border-b border-border overflow-x-auto">
                     <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn active">
                         <i data-lucide="venetian-mask" class="h-4 w-4"></i> Profile
-                    </button>
-                    <button onclick="switchTab('enablers')" id="tab-enablers" class="tab-btn">
-                        <i data-lucide="cpu" class="h-4 w-4"></i> Enablers
                     </button>
                     <button onclick="switchTab('story')" id="tab-story" class="tab-btn">
                         <i data-lucide="book-open" class="h-4 w-4"></i> Story
@@ -698,8 +679,9 @@
                         <optgroup label="Example Datasets">
                             <option value="google_mandiant">Google/Mandiant APTs (44)</option>
                             <option value="crowdstrike_2025">CrowdStrike 2025 (15)</option>
+                            <option value="cloudflare_2026">Cloudflare 2026 Stories (3)</option>
                             <option value="etda_thaicert">ETDA ThaiCERT (514)</option>
-                            <option value="all">All Combined (573)</option>
+                            <option value="all">All Combined (576)</option>
                         </optgroup>
                     </select>
                     <div class="h-6 w-px bg-border mx-1"></div>
@@ -976,12 +958,7 @@
         </div>
         </div><!-- /tabContent-profile -->
 
-        <!-- ===================== TAB 2: ENABLERS RADAR ===================== -->
-        <div id="tabContent-enablers" class="hidden">
-            <div id="enablerReactRoot"></div>
-        </div>
-
-        <!-- ===================== TAB 3: ACTOR STORY ===================== -->
+        <!-- ===================== TAB 2: ACTOR STORY ===================== -->
         <div id="tabContent-story" class="hidden">
             <div class="container-custom space-y-6">
                 <div class="glass-card rounded-xl p-4 flex flex-wrap items-center gap-4">
@@ -992,17 +969,6 @@
                     <select id="storyActorSelect" class="input-field h-9 text-sm w-64" onchange="renderStoryView()">
                         <option value="">— Select Actor —</option>
                     </select>
-                    <div class="flex items-center gap-2 ml-auto">
-                        <label class="text-xs text-muted-foreground">Actor Type:</label>
-                        <select id="storyActorType" class="input-field h-8 text-xs w-40" onchange="saveStoryMeta()">
-                            <option value="">Auto-detect</option>
-                            <option value="N">N — Nation State</option>
-                            <option value="E">E — Extortion</option>
-                            <option value="F">F — Fraud</option>
-                            <option value="H">H — Hacktivist</option>
-                            <option value="A">A — Amateur</option>
-                        </select>
-                    </div>
                 </div>
 
                 <div id="storyContent" class="hidden space-y-6">
@@ -1041,13 +1007,6 @@
                         </div>
                     </div>
 
-                    <!-- Technology Evolution -->
-                    <div class="glass-card rounded-xl p-6">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Technology Evolution</h3>
-                        <p class="text-[10px] text-muted-foreground mb-3">Emerging technologies mapped from the Enablers Radar, filtered for this actor type.</p>
-                        <div id="storyTechEvolution" class="space-y-2"></div>
-                    </div>
-
                     <!-- Narrative Assessment -->
                     <div class="glass-card rounded-xl p-6">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Narrative Assessment</h3>
@@ -1071,7 +1030,7 @@
             </div>
         </div>
 
-        <!-- ===================== TAB 4: INTELLIGENCE ===================== -->
+        <!-- ===================== TAB 3: INTELLIGENCE ===================== -->
         <div id="tabContent-intelligence" class="hidden">
             <div class="container-custom">
                 <div class="glass-card rounded-xl p-6">
@@ -1130,7 +1089,7 @@
                 <span class="font-bold">TLCTC Framework</span>
             </div>
             <div class="text-muted-foreground text-center md:text-right text-xs">
-                <p>Actor Story Designer — TLCTC Actor Profile v2 with enablers, narratives, and Diamond Model framing.</p>
+                <p>Actor Story Designer — TLCTC Actor Profile v2 with narratives and Diamond Model framing.</p>
                 <p class="mt-1">Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" class="underline decoration-dotted hover:text-primary">CC BY 4.0</a>.</p>
             </div>
         </div>
@@ -1853,11 +1812,24 @@
                 {"threat_actor": "Zombie Spider", "tlctc_scores": [1, 1, 1, 2, 1, 1, 2, 1, 3, 1], "origin_country": "Russia", "motivation": ["Financial Gain"], "target_sectors": [], "notes": "(CrowdStrike) The primary threat actor, who was tracked by CrowdStrike as Zombie Spider, rose to prominence in the criminal underground under the moniker Peter Severa. Scoring: Arsenal: 1 tools (1 malware, 0 dual-use); phishing/SE signals in description. Heuristic-scored from ETDA Threat Group Cards. Key tools: Kelihos.", "sequence": "#09 → #04 → #07", "sources": ["ETDA ThaiCERT Threat Group Cards v20250816", "https://apt.etda.or.th/cgi-bin/showcard.cgi?u=2c1d1677-f2d9-44e1-ac9a-4f7f4047e2d5", "https://www.securityweek.com/kelihos-spreads-usb-drives", "https://www.secureworks.com/research/waledac-kelihos-botnet-takeover"], "last_updated": "2026-04-08"},
                 {"threat_actor": "ZooPark, TG-2884, Cobalt Juno", "tlctc_scores": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "origin_country": "Unknown", "motivation": ["Espionage"], "target_sectors": ["Media & Entertainment"], "notes": "(Kaspersky) ZooPark is a cyberespionage operation that has been focusing on Middle Eastern targets since at least June 2015. Scoring: Arsenal: 1 tools (1 malware, 0 dual-use); 1 credential/keylogger tools. Heuristic-scored from ETDA Threat Group Cards. Known victims: Egypt, Iraq, Iran, Jordan, Kuwait, Lebanon, Morocco. Key tools: ZooPark.", "sequence": "", "sources": ["ETDA ThaiCERT Threat Group Cards v20250816", "https://apt.etda.or.th/cgi-bin/showcard.cgi?u=7d58d4fb-0ed4-4384-a16b-ea023145ddb9", "https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2018/05/24122414/ZooPark_for_public_final_edited.pdf"], "last_updated": "2026-04-08"}
         ]};
+        const CTA_CLOUDFLARE_2026 = {schema_version:'tlctc-actor-profile.v2',actors:[
+                {"threat_actor": "GRUB1 — The Unsophisticated Actor Who Breached Hundreds", "tlctc_scores": [4, 1, 1, 3, 1, 1, 1, 1, 1, 2], "origin_country": "Unknown", "motivation": ["Financial Gain"], "target_sectors": ["SaaS", "Technology", "Cross-sector (via SaaS integrations)"], "notes": "[DIAMOND MODEL — ADVERSARY] GRUB1 is a single, unsophisticated individual actor who exemplifies the Measure of Effectiveness (MOE) paradigm: maximum disruption at minimum cost. No zero-days, no custom malware, no advanced persistent implants. Instead, GRUB1 industrialized two capabilities: (1) automated credential discovery using off-the-shelf secret-scanning tools, and (2) AI-assisted navigation of unfamiliar SaaS environments using generative AI in real time.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Abuse of Functions (#1): TruffleHog for automated secret scanning of code repositories; GenAI (LLMs) for real-time navigation of complex Salesforce data models; standard SaaS APIs for data exfiltration. No exploitation of technical vulnerabilities — entirely legitimate tools used for illegitimate purposes.\n\n[DIAMOND MODEL — INFRASTRUCTURE] SaaS-to-SaaS connective tissue: Salesloft/Drift integration as pivot point into Salesforce production instances. Code repositories and configuration stores as credential sources. GenAI subscription as navigation tool. All infrastructure is the victim's own — the attacker inhabits the ecosystem rather than building external C2.\n\n[DIAMOND MODEL — VICTIM] Hundreds of corporate Salesforce tenants exposed simultaneously through the Salesloft/Drift integration cascade. The security of each tenant was defined not by its own controls but by the most over-privileged integration in its tech stack.\n\n[ANALYST ASSESSMENT] GRUB1 is the archetype of the 2026 threat: unsophisticated but devastatingly effective. The campaign demonstrates that the barrier to entry for high-impact breaches has vanished. Traditional risk models based on actor sophistication fail completely here — GRUB1 would score 'low threat' on any capability-based assessment, yet achieved outcomes rivaling nation-state operations. The key lesson: control the connective tissue, and you control the data.", "sequence": "#01 → #04 → #01", "sources": ["Cloudflare 2026 Threat Report (pp. 7)", "Cloudforce One investigation"], "last_updated": "2026-04-09", "observed_paths": [{"incident_id": "GRUB1-SAAS-PIVOT-2025", "notation": "#1 + [DRE: C] →[Δt=~1h] #4 →[Δt=~30m] #1 + [DRE: C]", "cluster_sequence": [1, 4, 1], "dre_outcomes": {"C": 1, "I": 0, "A": 0, "Ac": 0}}]},
+                {"threat_actor": "FoolishSlug — The Deepfake Employee", "tlctc_scores": [4, 1, 1, 3, 1, 1, 1, 1, 4, 1], "origin_country": "North Korea", "motivation": ["Revenue Generation", "Espionage"], "target_sectors": ["Technology", "Financial Services", "Government Contractors"], "notes": "[DIAMOND MODEL — ADVERSARY] North Korean state-sponsored operatives running industrialized identity fraud at scale. Thousands of operatives creating comprehensive digital personas. Not a single actor but an industrialized pipeline: identity fabrication → hiring infiltration → revenue extraction → regime funding. The remote workforce becomes the attack vector.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Social Engineering (#9): AI-driven deepfakes that pass live video interviews; fabricated LinkedIn and GitHub profiles with realistic activity histories; rented US citizen credentials for background checks. Champion-level Function Abuse (#1): once hired, all access uses legitimate corporate systems — no malware needed. Mouse-jiggling software maintains activity illusion. The entire operation exploits human trust in the hiring process.\n\n[DIAMOND MODEL — INFRASTRUCTURE] US-based 'laptop farms' — physical locations with facilitators hosting corporate hardware. RMM software for remote access from abroad. LinkedIn, GitHub as persona platforms. Cryptocurrency networks for revenue laundering. The infrastructure is deliberately distributed to maintain the domestic residency illusion: the corporate laptop appears to be in the US while the operator sits in Pyongyang or Shenyang.\n\n[DIAMOND MODEL — VICTIM] Western technology companies, government contractors, and financial institutions. The operative is placed within the organization's most trusted systems — administrative access, financial systems, source code repositories. Hundreds of millions of dollars funneled back to the DPRK regime.\n\n[ANALYST ASSESSMENT] This is the most structurally novel threat in the 2026 landscape. There are no IOCs, no malware hashes, no C2 domains. The 'malware' is a human being with legitimate credentials. Detection requires behavioral science: impossible travel alerts, deepfake rendering artifacts in video metadata, mouse-jiggling software signatures. The defense must shift from technical indicators to identity verification — zero trust biometric authentication and hardware-based geofencing. This threat turns the entire zero trust model inside out: the 'insider' was never who they claimed to be.", "sequence": "#09 → #04 → #01", "sources": ["Cloudflare 2026 Threat Report (pp. 12, 24-27)", "Cloudforce One analysis"], "last_updated": "2026-04-09", "observed_paths": [{"incident_id": "NK-IT-WORKER-INFILTRATION-2025", "notation": "#9 ||[human][@DPRK→@WesternOrg]|| →[Δt=~30d] #4 →[Δt=~1d] #1 + [DRE: C]", "cluster_sequence": [9, 4, 1], "dre_outcomes": {"C": 1, "I": 0, "A": 0, "Ac": 0}}]},
+                {"threat_actor": "FrumpyToad — Calendar of Secrets", "tlctc_scores": [4, 2, 2, 3, 1, 1, 4, 1, 3, 3], "origin_country": "China", "motivation": ["Espionage", "Financial Gain"], "target_sectors": ["Financial Services", "SaaS Providers", "Government"], "notes": "[DIAMOND MODEL — ADVERSARY] FrumpyToad (APT41/Wicked Panda/Brass Typhoon) is a China-nexus dual-purpose group: state espionage and private financial gain. One of the most technically versatile threat actors globally, with 46+ malware families. The TOUGHPROGRESS campaign showcases their evolution from traditional infrastructure to Living off the XaaS (LotX) stealth.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Function Abuse (#1): weaponized Google Calendar for a cloud-to-cloud C2 loop. Commands encoded in calendar event descriptions (hardcoded dates: operators write to July 30-31, 2023; exfil data embedded in May 30, 2023). The malware never connects to a malicious domain — all traffic stays within Google's encrypted ecosystem. Champion-level Malware (#7): TOUGHPROGRESS, KEYPLUG, ShadowPad, DUSTTRAP, DUSTPAN — a deep bench of custom tools. High Supply Chain (#10): known for software supply chain attacks.\n\n[DIAMOND MODEL — INFRASTRUCTURE] Google Calendar as C2 (no malicious domains needed). Serverless cloud platforms for redirect chains. Compromised government websites for payload staging. The infrastructure is entirely within legitimate enterprise ecosystems — Google, AWS, Azure. Detection indicator: unusual volume of API calls to Google Calendar from non-interactive processes. Cloudforce One telemetry identified the campaign through this specific anomaly.\n\n[DIAMOND MODEL — VICTIM] Global financial sector and SaaS providers. Spear-phishing emails redirect through serverless platforms to malicious ZIP archives hosted on compromised government sites. The attack chain is multi-hop by design: each relay adds a layer of legitimacy.\n\n[ANALYST ASSESSMENT] FrumpyToad's TOUGHPROGRESS campaign is the textbook example of Living off the XaaS. By embedding C2 traffic within Google Calendar — a ubiquitous enterprise service — the actor creates a nearly undetectable persistence mechanism. Standard network monitoring sees legitimate HTTPS traffic to calendar.google.com. Firewall rules permit it. DLP inspects the SSL stream and sees JSON calendar events. The command is in the description field of an event from 2023. This is the future of C2: not malicious infrastructure, but malicious intent encoded within legitimate ecosystems. The only reliable detection is behavioral: why is a non-interactive process making 200 Calendar API calls per hour?", "sequence": "#09 → #07 → #01 (Google Calendar C2)", "sources": ["Cloudflare 2026 Threat Report (pp. 23)", "Cloudforce One telemetry", "Google Threat Intelligence (Mandiant APT Groups)"], "last_updated": "2026-04-09", "observed_paths": [{"incident_id": "FRUMPYTOAD-TOUGHPROGRESS-2025", "notation": "#9 ||[email][@FrumpyToad→@Victim]|| →[Δt=~1h] #7 →[Δt=instant] #1 + [DRE: C]", "cluster_sequence": [9, 7, 1], "dre_outcomes": {"C": 1, "I": 0, "A": 0, "Ac": 0}}]}
+        ]};
+        const CTA_CROWDSTRIKE_2026 = {schema_version:'tlctc-actor-profile.v2',actors:[
+                {"threat_actor":"SCATTERED SPIDER — The Ghost in the Hypervisor","tlctc_scores":[3,1,1,4,2,1,3,1,4,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Aviation","Insurance","Retail","Technology"],"notes":"[DIAMOND MODEL — ADVERSARY] SCATTERED SPIDER is the defining cross-domain adversary of 2025. They do not fight on the battlefield defenders have prepared — they bypass it entirely. No malware on managed endpoints. No lateral movement through monitored networks. Instead, they operate in the seams between security domains: cloud identity, SaaS platforms, hypervisors, and decommissioned virtual machines.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Social Engineering (#9): almost exclusively vishes help desk personnel to trigger self-service password resets. Champion-level Identity Theft (#4): the NTDS dump technique — mount a DC's VMDK to an unmanaged VM, copy ntds.dit without touching a managed endpoint. High Malware (#7): ransomware deployed solely on VMware ESXi.\n\n[DIAMOND MODEL — INFRASTRUCTURE] The victim's own infrastructure is the attack platform. VMware vCenter for VM manipulation. Citrix VDI for lateral movement. SharePoint for recon. External infrastructure is minimal.\n\n[DIAMOND MODEL — VICTIM] Large enterprises with complex hybrid environments — on-premises AD federated with Entra ID, VMware virtualization, SaaS apps. The attack exploits gaps between domains.\n\n[ANALYST ASSESSMENT] In three hours: vishing → password reset → SharePoint recon → Citrix VDI → AD Explorer → vCenter → unmanaged VM → NTDS dump. Only one managed endpoint touched. The defense paradigm must shift from 'detect fast on the endpoint' to 'correlate across domains'.","sequence":"#09 → #04 → #01 → #04 → #07","sources":["CrowdStrike 2026 Global Threat Report (pp. 5, 21-23, 40-41)"],"last_updated":"2026-04-12","observed_paths":[{"incident_id":"SCATTERED-SPIDER-ESXI-2025","notation":"#9 ||[human][@External→@Org]|| →[Δt=~15m] #4 →[Δt=~45m] #1 →[Δt=~30m] #4 →[Δt=~1h] #7 + [DRE: Ac]","cluster_sequence":[9,4,1,4,7],"dre_outcomes":{"C":0,"I":0,"A":0,"Ac":1}}]},
+                {"threat_actor":"CHATTY SPIDER — Four Minutes to Exfiltration","tlctc_scores":[3,1,1,2,1,1,1,1,4,1],"origin_country":"Unknown","motivation":["Financial Gain"],"target_sectors":["Legal"],"notes":"[DIAMOND MODEL — ADVERSARY] CHATTY SPIDER is the speed demon of 2025. Initial access to exfiltration in four minutes.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Social Engineering (#9): vishing to persuade employees to install Microsoft Quick Assist. High Function Abuse (#1): downloads WinSCP for exfiltration; pivots to Google Drive when blocked by firewall. No malware. No exploitation. The beachhead is the target.\n\n[DIAMOND MODEL — INFRASTRUCTURE] Quick Assist (pre-installed), WinSCP, Google Drive. Zero custom tooling. Every component is approved enterprise software.\n\n[DIAMOND MODEL — VICTIM] US-based law firms. High-value confidential data, time-pressured staff, often less security-mature.\n\n[ANALYST ASSESSMENT] Four minutes from access to exfiltration. If your first detection opportunity is after initial access, you have already lost. The firewall pivot from WinSCP to Google Drive demonstrates that blocking one exfiltration tool is insufficient without DLP across all cloud storage.","sequence":"#09 → #01","sources":["CrowdStrike 2026 Global Threat Report (pp. 11)"],"last_updated":"2026-04-12","observed_paths":[{"incident_id":"CHATTY-SPIDER-4MIN-EXFIL-2025","notation":"#9 ||[human][@External→@Org]|| →[Δt=4m] #1 + [DRE: C]","cluster_sequence":[9,1],"dre_outcomes":{"C":1,"I":0,"A":0,"Ac":0}}]},
+                {"threat_actor":"PRESSURE CHOLLIMA — The $1.46 Billion Heist","tlctc_scores":[3,1,1,3,1,1,3,1,3,4],"origin_country":"North Korea","motivation":["Financial Gain","Revenue Generation","Regime Funding"],"target_sectors":["Cryptocurrency","Financial Services"],"notes":"[DIAMOND MODEL — ADVERSARY] PRESSURE CHOLLIMA executed the largest single financial theft in history: $1.46B USD in cryptocurrency from Bybit in February 2025.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Supply Chain (#10): the TAE is Bybit's reliance on Safe{Wallet}'s frontend for transaction authorization. High Social Engineering (#9): developer compromise via trojanized Python project. High Malware (#7): malicious JavaScript + smart contract targeting only Bybit's contract address. High Function Abuse (#1): malicious code operated within legitimate transaction flows.\n\n[DIAMOND MODEL — INFRASTRUCTURE] Safe{Wallet}'s own cloud. The smart contract on the blockchain itself. Post-theft, JavaScript restored to original — anti-forensic cleanup on victim's infrastructure.\n\n[DIAMOND MODEL — VICTIM] Bybit (exchange) via Safe{Wallet} (third-party platform). Victim chain: Developer → Safe{Wallet} cloud → frontend → Bybit cold wallet.\n\n[ANALYST ASSESSMENT] The malicious smart contract only modified Bybit-specific transactions. Detection nearly impossible through behavioral monitoring. The $1.46B figure demonstrates DPRK-nexus actors operate at strategic, not tactical, level.","sequence":"#09 → #07 → #10 → #01","sources":["CrowdStrike 2026 Global Threat Report (pp. 5, 32)"],"last_updated":"2026-04-12","observed_paths":[{"incident_id":"PRESSURE-CHOLLIMA-BYBIT-2025","notation":"#9 ||[human][@DPRK→@SafeWalletDev]|| →[Δt=~days] #7 →[Δt=~days] #10 ||[update][@SafeWallet→@Bybit]|| →[Δt=~0s] #1 + [DRE: C]","cluster_sequence":[9,7,10,1],"dre_outcomes":{"C":1,"I":1,"A":0,"Ac":0}}]},
+                {"threat_actor":"COZY BEAR — The Patient Phisher","tlctc_scores":[3,1,1,4,2,1,2,1,4,1],"origin_country":"Russia","motivation":["Espionage","Intelligence Collection"],"target_sectors":["Government","NGOs","Pro-Ukraine Organizations","NATO Member States"],"notes":"[DIAMOND MODEL — ADVERSARY] COZY BEAR demonstrated that the most effective phishing doesn't look like phishing. Multi-day, multi-channel campaigns where victims never see a suspicious domain.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Social Engineering (#9): multi-day campaigns across IM, email, video. Impersonated NGO individuals using compromised legitimate email accounts. Champion-level Identity Theft (#4): abused Entra ID OAuth 2.0 authorization code and device code flows. Victims directed to authentic Microsoft login pages.\n\n[DIAMOND MODEL — INFRASTRUCTURE] Microsoft's own: legitimate M365 login pages, Entra ID endpoints, Intune portals. Compromised email accounts of trusted individuals.\n\n[DIAMOND MODEL — VICTIM] Pro-Ukraine orgs and NATO entities. The victim requested email verification — the adversary responded from the real compromised email.\n\n[ANALYST ASSESSMENT] The Day 2/Day 4 exchange: target became suspicious, asked for email verification, adversary responded from the legitimate account. Intelligence tradecraft, not cybercrime. Conditional access policies blocked device registration — but the adversary pivoted through auth code, device code, mobile app, Power Platform. Defense must be layered.","sequence":"#09 → #09 → #04 → #04 → #01","sources":["CrowdStrike 2026 Global Threat Report (pp. 6, 39, 42-43)"],"last_updated":"2026-04-12","observed_paths":[{"incident_id":"COZY-BEAR-OAUTH-PHISHING-2025","notation":"#9 ||[human][@External→@Org]|| →[Δt=~1d] #9 →[Δt=~2d] #4 →[Δt=~1m] #4 →[Δt=~3d] #1 + [DRE: C]","cluster_sequence":[9,9,4,4,1],"dre_outcomes":{"C":1,"I":0,"A":0,"Ac":0}}]}
+        ]};
         const EXAMPLE_DATASETS = {
             google_mandiant:{name:'Google/Mandiant APTs (44)',actors:CTA_GOOGLE_MANDIANT},
             crowdstrike_2025:{name:'CrowdStrike 2025 (15)',actors:CTA_CROWDSTRIKE_2025.actors},
+            crowdstrike_2026:{name:'CrowdStrike 2026 Stories (4)',actors:CTA_CROWDSTRIKE_2026.actors},
+            cloudflare_2026:{name:'Cloudflare 2026 Stories (3)',actors:CTA_CLOUDFLARE_2026.actors},
             etda_thaicert:{name:'ETDA ThaiCERT (514)',actors:CTA_ETDA_THAICERT.actors},
-            all:{name:'All Combined (573)',get actors(){return[...CTA_GOOGLE_MANDIANT,...CTA_CROWDSTRIKE_2025.actors,...CTA_ETDA_THAICERT.actors];}}
+            all:{name:'All Combined (580)',get actors(){return[...CTA_GOOGLE_MANDIANT,...CTA_CROWDSTRIKE_2025.actors,...CTA_CROWDSTRIKE_2026.actors,...CTA_CLOUDFLARE_2026.actors,...CTA_ETDA_THAICERT.actors];}}
         };
         let libraryViewMode = 'grid';
         let avgRadarChart = null;
@@ -2909,43 +2881,11 @@
         // ============================================================
         const UNIFIED_KEY = 'tlctc_actor_story_v1';
 
-        // Enablers state
-        const ENABLER_CLUSTERS = [
-            {id:'c1',label:'#1 Abuse'},{id:'c2',label:'#2 Exp Svr'},{id:'c3',label:'#3 Exp Clnt'},
-            {id:'c4',label:'#4 Identity'},{id:'c5',label:'#5 MitM'},{id:'c6',label:'#6 Flood'},
-            {id:'c7',label:'#7 Malware'},{id:'c8',label:'#8 Physical'},{id:'c9',label:'#9 Soc Eng'},
-            {id:'c10',label:'#10 Supply'}
-        ];
-        const ENABLER_LEVELS = [
-            {id:'l1',label:'Commodity / As a Service',color:'bg-red-50 border-l-4 border-red-500'},
-            {id:'l2',label:'Established',color:'bg-orange-50 border-l-4 border-orange-500'},
-            {id:'l3',label:'Specialized / Targeted',color:'bg-fuchsia-50 border-l-4 border-fuchsia-500'},
-            {id:'l4',label:'First Movers',color:'bg-indigo-50 border-l-4 border-indigo-500'},
-            {id:'l5',label:'Not Seen',color:'bg-slate-100 border-l-4 border-slate-400'}
-        ];
-        const DEFAULT_TECHS = [
-            {id:'AI',label:'AI Supported',color:'#2563eb'},{id:'Ag',label:'Agentic AI',color:'#9333ea'},
-            {id:'QC',label:'Q-Computing',color:'#059669'},{id:'QS',label:'Q-Sensing',color:'#0d9488'},
-            {id:'Robo',label:'Robotics',color:'#ea580c'},{id:'IoT',label:'IoT/Edge',color:'#f59e0b'},
-            {id:'Bio',label:'Bionics',color:'#dc2626'},{id:'XR',label:'XR/Spatial',color:'#4f46e5'},
-            {id:'Sat',label:'Space/Satellite',color:'#6366f1'}
-        ];
-        const DEFAULT_ACTOR_TYPES = [
-            {id:'N',label:'Nation State',pos:'pos-tl'},{id:'E',label:'Extortion (Ransom)',pos:'pos-tr'},
-            {id:'F',label:'Fraud (Financial)',pos:'pos-bl'},{id:'H',label:'Hacktivist',pos:'pos-br'},
-            {id:'A',label:'Amateur',pos:'pos-cc'}
-        ];
-        const DEFAULT_ENABLER_APPEARANCE = {actorFontSize:10,trendArrowColor:'#1e293b',trendArrowSize:14};
-
-        // Shared enabler state accessible from story tab
-        window._enablerInstances = [];
-        window._enablerConfig = {clusters:ENABLER_CLUSTERS,levels:ENABLER_LEVELS,techs:DEFAULT_TECHS,actors:DEFAULT_ACTOR_TYPES,appearance:DEFAULT_ENABLER_APPEARANCE};
         let actorStories = {};
 
         function saveUnifiedState(){
             const state = {
                 actors: actors,
-                enablers: {instances: window._enablerInstances, config: window._enablerConfig},
                 actorStories: actorStories,
                 version: 'tlctc-actor-story.v1'
             };
@@ -2958,20 +2898,12 @@
                 if(raw){
                     const s = JSON.parse(raw);
                     actors = s.actors || {};
-                    if(s.enablers){
-                        window._enablerInstances = s.enablers.instances || [];
-                        if(s.enablers.config) window._enablerConfig = {...window._enablerConfig, ...s.enablers.config};
-                    }
                     actorStories = s.actorStories || {};
                     return;
                 }
             } catch(e){}
             // Migrate from old storage
             try { actors = JSON.parse(localStorage.getItem('threatActorRadarData_TLCTC_v4')||'{}'); } catch(e){ actors={}; }
-            try {
-                const ed = JSON.parse(localStorage.getItem('tlctc_v5')||'null');
-                if(ed){ window._enablerInstances=ed.instances||[]; if(ed.config) window._enablerConfig={...window._enablerConfig,...ed.config}; }
-            } catch(e){}
             actorStories = {};
         }
 
@@ -2983,11 +2915,10 @@
         //  TAB SWITCHING
         // ============================================================
         let activeTab = 'profile';
-        let enablerReactMounted = false;
 
         function switchTab(tabId){
             activeTab = tabId;
-            ['profile','enablers','story','intelligence'].forEach(t=>{
+            ['profile','story','intelligence'].forEach(t=>{
                 const section = sel('tabContent-'+t);
                 const btn = sel('tab-'+t);
                 if(section) section.classList.toggle('hidden', t!==tabId);
@@ -2995,7 +2926,6 @@
                     btn.classList.toggle('active', t===tabId);
                 }
             });
-            if(tabId==='enablers' && !enablerReactMounted) mountEnablerReact();
             if(tabId==='story'){ populateStorySelect(); renderStoryView(); }
             if(tabId==='intelligence') renderIntelTab();
             if(tabId==='profile'){ renderLibrary(); if(chart) updateChart(false); }
@@ -3032,9 +2962,6 @@
             const scores = actor.scores || DEFAULT_SCORES;
             const storyData = actorStories[name] || {};
 
-            // Actor type selector
-            if(sel('storyActorType')) sel('storyActorType').value = storyData.actorTypeMapping || '';
-
             // Diamond: Adversary
             sel('storyAdversary').innerHTML =
                 '<div class="font-bold text-foreground">'+name+'</div>'+
@@ -3068,8 +2995,6 @@
             renderStoryRadar(scores);
             // Key Characteristics
             renderStoryCharacteristics(name, actor, scores, topClusters);
-            // Tech Evolution
-            renderStoryTechEvolution(name, actor);
             // Narrative
             renderStoryNarrative(name, actor, scores, topClusters);
             // Activity Threads
@@ -3128,49 +3053,6 @@
                 h+='<div class="text-xs">'+seqBadges+'</div></div>';
             }
             h+='<div class="pt-3 border-t border-border mt-3 text-[10px] text-muted-foreground italic">This causal fingerprint identifies the actor by the generic vulnerabilities they exploit, not by the tools they use. The profile persists across tooling changes.</div>';
-            container.innerHTML=h;
-        }
-
-        function inferActorType(actor){
-            const motiv=(actor.motivation||[]).join(' ').toLowerCase();
-            if(motiv.includes('espionage')||motiv.includes('ip theft')||motiv.includes('surveillance')) return 'N';
-            if(motiv.includes('financial')||motiv.includes('sabotage')) return 'E';
-            if(motiv.includes('information operations')) return 'H';
-            return 'N';
-        }
-
-        function renderStoryTechEvolution(name, actor){
-            const container=sel('storyTechEvolution');
-            if(!container) return;
-            const storyData=actorStories[name]||{};
-            const actorTypeId=storyData.actorTypeMapping||inferActorType(actor);
-            const instances=window._enablerInstances||[];
-            const config=window._enablerConfig||{};
-            const relevant=instances.filter(inst=>inst.activeActors.includes(actorTypeId));
-
-            if(!relevant.length){
-                container.innerHTML='<p class="text-sm text-muted-foreground italic">No enabler data for actor type '+actorTypeId+' ('+(config.actors?.find(a=>a.id===actorTypeId)?.label||'Unknown')+').</p><p class="text-xs text-muted-foreground mt-1">Switch to the Enablers tab to map emerging technologies to actor types.</p>';
-                return;
-            }
-            const scores=actor.scores||DEFAULT_SCORES;
-            let h='';
-            relevant.forEach(inst=>{
-                const tech=(config.techs||[]).find(t=>t.id===inst.typeId);
-                const level=(config.levels||[]).find(l=>inst.cellKey.startsWith(l.id));
-                const cm=inst.cellKey.match(/c(\d+)/);
-                const ci=cm?parseInt(cm[1])-1:-1;
-                const actorScore=ci>=0?scores[ci]:0;
-                const isHigh=actorScore>=3;
-                h+='<div class="flex items-center gap-3 p-2 rounded-lg '+(isHigh?'bg-primary/5 border border-primary/20':'bg-secondary/30 border border-border')+'">';
-                h+='<div class="w-5 h-5 rounded flex-shrink-0" style="background-color:'+(tech?.color||'#64748b')+'"></div>';
-                h+='<div class="flex-1 min-w-0"><span class="text-xs font-bold">'+(tech?.label||inst.typeId)+'</span>';
-                h+=' <span class="text-[10px] text-muted-foreground">at '+(level?.label||'?')+' maturity</span>';
-                if(ci>=0) h+=' <span class="text-[10px] text-muted-foreground">in #'+(ci+1)+' '+LABELS[ci].split(' ')[0]+'</span>';
-                h+='</div>';
-                if(inst.trend) h+='<span class="text-xs">'+(inst.trend==='up'?'↑':'↓')+'</span>';
-                if(isHigh) h+='<span class="text-[10px] font-bold text-primary whitespace-nowrap">HIGH RELEVANCE</span>';
-                h+='</div>';
-            });
             container.innerHTML=h;
         }
 
@@ -3254,7 +3136,6 @@
             if(!actorStories[name]) actorStories[name]={};
             actorStories[name].storyNotes=sel('storyAnalystNotes')?.value||'';
             actorStories[name].infrastructure=sel('storyInfrastructure')?.value||'';
-            actorStories[name].actorTypeMapping=sel('storyActorType')?.value||'';
             saveUnifiedState();
         }
 
@@ -3385,318 +3266,11 @@
             }
         }
 
-        // ============================================================
-        //  TAB 2: ENABLERS RADAR (React, mounted on demand)
-        // ============================================================
-        function mountEnablerReact(){
-            if(enablerReactMounted) return;
-            enablerReactMounted = true;
-            // The React component is defined in a separate script[type=text/babel] block below
-            if(window._mountEnablerApp) window._mountEnablerApp();
-        }
     </script>
 
-    <!-- Enablers Radar React App (mounted into #enablerReactRoot on tab switch) -->
-    <script type="text/babel">
-        const { useState, useEffect, useLayoutEffect, useRef } = React;
-
-        const EIcon = ({ name, size = 16, className }) => {
-            useEffect(() => lucide.createIcons(), [name]);
-            return <i data-lucide={name} width={size} height={size} className={className}></i>;
-        };
-
-        const EnablerTechChip = ({ instance, config, isGhost = false, isSelected, onSelect, onDragStart }) => {
-            const type = config.techs.find(t => t.id === instance.typeId);
-            if (!type) return null;
-            const bgStyle = type.color.startsWith('#') ? { backgroundColor: type.color } : {};
-            const isNotSeen = instance.cellKey && instance.cellKey.startsWith('l5');
-            let classes = `tech-chip `;
-            if (isNotSeen) classes += 'tech-chip-small ';
-            if (isSelected && !isGhost) classes += 'selected-ring ';
-            if (isGhost) classes += 'tech-ghost ';
-            const elementId = isGhost ? `ghost-${instance.uid}` : `tech-${instance.uid}`;
-            const trendColor = config.appearance?.trendArrowColor || '#1e293b';
-            const trendSize = config.appearance?.trendArrowSize || 14;
-            return (
-                <div id={elementId} draggable={!isGhost} onDragStart={(e) => onDragStart && onDragStart(e, instance.uid)}
-                    onClick={(e) => { e.stopPropagation(); onSelect && onSelect(instance.uid); }}
-                    className={classes} style={bgStyle} title={type.label}>
-                    <span>{type.id}</span>
-                    {instance.activeActors.map(actorId => {
-                        const actor = config.actors.find(a => a.id === actorId);
-                        if(!actor) return null;
-                        return <span key={actorId} className={`actor-indicator ${actor.pos}`} style={{ fontSize: `${config.appearance?.actorFontSize || 10}px` }}>{actorId}</span>;
-                    })}
-                    {instance.trend && !isNotSeen && (
-                        <svg className="absolute top-0 left-1/2 -translate-x-1/2 drop-shadow-md" width={trendSize} height={trendSize} viewBox="0 0 24 24" fill={trendColor}>
-                            {instance.trend === 'up' ? <path d="M12 2L4 14h6v8h4v-8h6L12 2z" /> : <path d="M12 22L20 10h-6V2h-4v8H4l8 12z" />}
-                        </svg>
-                    )}
-                </div>
-            );
-        };
-
-        const EnablerSettingsModal = ({ isOpen, onClose, config, setConfig }) => {
-            if (!isOpen) return null;
-            const [activeTab, setActiveTab] = useState('techs');
-            const updateItem = (cat, idx, field, val) => { const list = [...config[cat]]; list[idx][field] = val; setConfig({ ...config, [cat]: list }); };
-            const addItem = (cat, item) => setConfig({ ...config, [cat]: [...config[cat], item] });
-            const deleteItem = (cat, idx) => { if(confirm('Delete?')) setConfig({ ...config, [cat]: config[cat].filter((_, i) => i !== idx) }); };
-            return (
-                <div className="fixed inset-0 z-[200] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
-                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
-                        <div className="p-4 border-b flex justify-between items-center"><h2 className="text-lg font-bold">Radar Configuration</h2><button onClick={onClose}><EIcon name="x"/></button></div>
-                        <div className="flex border-b">{['techs','actors','levels','appearance'].map(tab=>(
-                            <button key={tab} className={`px-6 py-3 text-sm font-bold capitalize ${activeTab===tab?'border-b-2 border-blue-600 text-blue-600':'text-gray-500'}`} onClick={()=>setActiveTab(tab)}>{tab}</button>
-                        ))}</div>
-                        <div className="p-6 overflow-y-auto flex-1 min-h-0">
-                            {activeTab==='techs'&&<div className="space-y-4">
-                                <button onClick={()=>addItem('techs',{id:'NEW',label:'New Tech',color:'#64748b'})} className="text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded font-bold border border-blue-100">+ Add Technology</button>
-                                {config.techs.map((tech,i)=><div key={i} className="flex gap-2 items-center p-2 border rounded-lg bg-gray-50 dark:bg-slate-800">
-                                    <input className="text-xs font-bold p-1 border rounded w-20 bg-white dark:bg-slate-700" value={tech.id} onChange={e=>updateItem('techs',i,'id',e.target.value)}/>
-                                    <input className="text-xs p-1 border rounded flex-1 bg-white dark:bg-slate-700" value={tech.label} onChange={e=>updateItem('techs',i,'label',e.target.value)}/>
-                                    <input type="color" className="h-8 w-8 rounded cursor-pointer" value={tech.color} onChange={e=>updateItem('techs',i,'color',e.target.value)}/>
-                                    <button onClick={()=>deleteItem('techs',i)} className="text-red-400 hover:text-red-600 px-2"><EIcon name="trash-2" size={14}/></button>
-                                </div>)}
-                            </div>}
-                            {activeTab==='actors'&&<div className="space-y-4">
-                                <button onClick={()=>addItem('actors',{id:'?',label:'New Actor',pos:'pos-cc'})} className="text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded font-bold border border-blue-100">+ Add Actor</button>
-                                {config.actors.map((actor,i)=><div key={i} className="flex gap-2 items-center p-2 border rounded-lg bg-gray-50 dark:bg-slate-800">
-                                    <input className="text-xs font-bold p-1 border rounded w-10 text-center bg-white dark:bg-slate-700" value={actor.id} onChange={e=>updateItem('actors',i,'id',e.target.value)} maxLength={1}/>
-                                    <input className="text-xs p-1 border rounded flex-1 bg-white dark:bg-slate-700" value={actor.label} onChange={e=>updateItem('actors',i,'label',e.target.value)}/>
-                                    <select className="text-xs p-1 border rounded bg-white dark:bg-slate-700" value={actor.pos} onChange={e=>updateItem('actors',i,'pos',e.target.value)}>
-                                        <option value="pos-tl">Top-Left</option><option value="pos-tr">Top-Right</option><option value="pos-bl">Bot-Left</option><option value="pos-br">Bot-Right</option><option value="pos-cc">Center</option>
-                                    </select>
-                                    <button onClick={()=>deleteItem('actors',i)} className="text-red-400 hover:text-red-600 px-2"><EIcon name="trash-2" size={14}/></button>
-                                </div>)}
-                            </div>}
-                            {activeTab==='levels'&&<div className="space-y-4"><p className="text-xs text-gray-500">Maturity rows (fixed IDs, editable labels).</p>
-                                {config.levels.map((lvl,i)=><div key={i} className="flex gap-2 items-center p-2 border rounded-lg bg-gray-50 dark:bg-slate-800">
-                                    <span className="text-xs font-mono w-8 text-gray-400">{lvl.id}</span>
-                                    <input className="text-xs font-bold p-1 border rounded flex-1 bg-white dark:bg-slate-700" value={lvl.label} onChange={e=>updateItem('levels',i,'label',e.target.value)}/>
-                                </div>)}
-                            </div>}
-                            {activeTab==='appearance'&&<div className="space-y-6">
-                                <div className="p-4 border rounded bg-gray-50 dark:bg-slate-800">
-                                    <label className="block text-sm font-bold mb-4">Actor Font Size: {config.appearance?.actorFontSize||10}px</label>
-                                    <input type="range" min="8" max="16" value={config.appearance?.actorFontSize||10} onChange={e=>setConfig({...config,appearance:{...config.appearance,actorFontSize:parseInt(e.target.value)}})} className="w-full"/>
-                                </div>
-                                <div className="p-4 border rounded bg-gray-50 dark:bg-slate-800">
-                                    <h4 className="text-sm font-bold mb-4">Trend Arrow</h4>
-                                    <label className="block text-xs font-semibold mb-2">Size: {config.appearance?.trendArrowSize||14}px</label>
-                                    <input type="range" min="10" max="24" value={config.appearance?.trendArrowSize||14} onChange={e=>setConfig({...config,appearance:{...config.appearance,trendArrowSize:parseInt(e.target.value)}})} className="w-full"/>
-                                    <div className="flex items-center gap-3 mt-3">
-                                        <label className="text-xs font-semibold">Color:</label>
-                                        <input type="color" className="h-8 w-12 rounded cursor-pointer" value={config.appearance?.trendArrowColor||'#1e293b'} onChange={e=>setConfig({...config,appearance:{...config.appearance,trendArrowColor:e.target.value}})}/>
-                                    </div>
-                                </div>
-                            </div>}
-                        </div>
-                        <div className="p-4 border-t flex justify-end"><button onClick={onClose} className="bg-gray-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-900">Save & Close</button></div>
-                    </div>
-                </div>
-            );
-        };
-
-        function EnablerApp() {
-            const [config, setConfig] = useState(window._enablerConfig);
-            const [techInstances, setTechInstances] = useState(window._enablerInstances);
-            const [selectedUid, setSelectedUid] = useState(null);
-            const [snapshot, setSnapshot] = useState(null);
-            const [showArrows, setShowArrows] = useState(false);
-            const [arrows, setArrows] = useState([]);
-            const [dragOverCell, setDragOverCell] = useState(null);
-            const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-            const [isExporting, setIsExporting] = useState(false);
-            const mapRef = useRef(null);
-            const draggedItemRef = useRef(null);
-
-            // Sync to parent state for unified storage
-            useEffect(() => {
-                window._enablerInstances = techInstances;
-                window._enablerConfig = config;
-                if(window.saveUnifiedState) window.saveUnifiedState();
-            }, [techInstances, config]);
-
-            const handleDragStart = (e, uid, isNew = false, typeId = null) => {
-                draggedItemRef.current = { isNew, uid, typeId };
-                if (!isNew) setSelectedUid(uid);
-            };
-            const handleDrop = (e, cellKey) => {
-                e.preventDefault(); setDragOverCell(null);
-                const item = draggedItemRef.current; if (!item) return;
-                if (item.isNew) {
-                    const ni = { uid: Date.now().toString(), typeId: item.typeId, cellKey, activeActors: [], trend: null };
-                    setTechInstances(prev => [...prev, ni]); setSelectedUid(ni.uid);
-                } else { setTechInstances(prev => prev.map(t => t.uid === item.uid ? { ...t, cellKey } : t)); }
-                draggedItemRef.current = null;
-            };
-            const toggleActor = (actorId) => {
-                if (!selectedUid) return;
-                setTechInstances(prev => prev.map(t => {
-                    if (t.uid !== selectedUid) return t;
-                    const has = t.activeActors.includes(actorId);
-                    return { ...t, activeActors: has ? t.activeActors.filter(id => id !== actorId) : [...t.activeActors, actorId] };
-                }));
-            };
-            const setTrend = (trend) => {
-                if (!selectedUid) return;
-                setTechInstances(prev => prev.map(t => t.uid !== selectedUid ? t : { ...t, trend: t.trend === trend ? null : trend }));
-            };
-            const calculateArrows = () => {
-                if (!showArrows || !snapshot || !mapRef.current) { setArrows([]); return; }
-                const newArr = []; const cr = mapRef.current.getBoundingClientRect();
-                snapshot.forEach(si => {
-                    const ci = techInstances.find(t => t.uid === si.uid);
-                    if (ci && ci.cellKey !== si.cellKey) {
-                        const se = document.getElementById(`ghost-${si.uid}`), ee = document.getElementById(`tech-${ci.uid}`);
-                        if (se && ee) {
-                            const sr = se.getBoundingClientRect(), er = ee.getBoundingClientRect();
-                            const tt = config.techs.find(t => t.id === ci.typeId);
-                            newArr.push({ id: si.uid, x1: sr.left+sr.width/2-cr.left, y1: sr.top+sr.height/2-cr.top, x2: er.left+er.width/2-cr.left, y2: er.top+er.height/2-cr.top, color: tt?.color?.startsWith('#') ? tt.color : '#64748b' });
-                        }
-                    }
-                });
-                setArrows(newArr);
-            };
-            useLayoutEffect(() => { calculateArrows(); const h=()=>calculateArrows(); window.addEventListener('resize',h); return ()=>window.removeEventListener('resize',h); }, [showArrows, snapshot, techInstances, config, isSettingsOpen]);
-
-            const exportImage = async () => {
-                if (!mapRef.current) return; setIsExporting(true);
-                await new Promise(r => setTimeout(r, 50));
-                try {
-                    const canvas = await window.html2canvas(mapRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false });
-                    const link = document.createElement('a'); link.download = `TLCTC_Radar_${new Date().toISOString().split('T')[0]}.png`; link.href = canvas.toDataURL(); link.click();
-                } catch (e) { alert("Export failed: "+e.message); }
-                setIsExporting(false);
-            };
-            const exportJSON = () => { const b=new Blob([JSON.stringify({instances:techInstances,config},null,2)],{type:'application/json'}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download='tlctc_enabler_radar.json'; a.click(); URL.revokeObjectURL(u); };
-
-            return (
-                <div className="container-custom" onClick={() => setSelectedUid(null)}>
-                    <EnablerSettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} config={config} setConfig={setConfig} />
-                    <div className="flex flex-col lg:flex-row gap-6">
-                        {/* Sidebar */}
-                        <div className="lg:w-64 flex-shrink-0 space-y-6">
-                            <div className="glass-card rounded-xl p-4">
-                                <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Technology Library</h3>
-                                <div className="grid grid-cols-2 gap-2 max-h-[30vh] overflow-y-auto">
-                                    {config.techs.map(tech => (
-                                        <div key={tech.id} draggable onDragStart={e => handleDragStart(e, null, true, tech.id)}
-                                            className="flex flex-col items-center justify-center p-2 rounded-lg border border-border hover:border-primary cursor-grab transition-all">
-                                            <div className="w-6 h-6 rounded mb-1" style={{backgroundColor: tech.color}}></div>
-                                            <span className="text-[10px] font-bold text-muted-foreground text-center leading-tight">{tech.label}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className={`glass-card rounded-xl p-4 transition-all ${selectedUid ? 'border-2 border-primary' : 'opacity-60'}`}>
-                                <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Active Actors</h3>
-                                    {selectedUid && <button onClick={e=>{e.stopPropagation();setTechInstances(prev=>prev.filter(t=>t.uid!==selectedUid));setSelectedUid(null);}} className="text-destructive"><EIcon name="trash-2" size={14}/></button>}
-                                </div>
-                                <div className="space-y-2">
-                                    {config.actors.map(actor => {
-                                        const isActive = techInstances.find(t => t.uid === selectedUid)?.activeActors.includes(actor.id);
-                                        return <button key={actor.id} disabled={!selectedUid} onClick={e=>{e.stopPropagation();toggleActor(actor.id);}}
-                                            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-bold border transition-all ${isActive?'bg-primary text-primary-foreground border-primary':'bg-background text-muted-foreground border-border hover:border-primary/50'}`}>
-                                            <span>{actor.label}</span><span className="opacity-60 text-[9px]">{actor.id}</span>
-                                        </button>;
-                                    })}
-                                </div>
-                            </div>
-                            <div className={`glass-card rounded-xl p-4 transition-all ${selectedUid ? 'border-2 border-primary' : 'opacity-60'}`}>
-                                <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Trend Indicator</h3>
-                                <div className="flex gap-2">
-                                    {[{id:'up',label:'Trending Up',icon:'trending-up'},{id:'down',label:'Trending Down',icon:'trending-down'}].map(trend => {
-                                        const isActive = techInstances.find(t => t.uid === selectedUid)?.trend === trend.id;
-                                        return <button key={trend.id} disabled={!selectedUid} onClick={e=>{e.stopPropagation();setTrend(trend.id);}}
-                                            className={`flex-1 flex flex-col items-center gap-1 px-3 py-3 rounded-lg text-xs font-bold border transition-all ${isActive?'bg-primary text-primary-foreground border-primary':'bg-background text-muted-foreground border-border hover:border-primary/50'}`}>
-                                            <EIcon name={trend.icon} size={18}/><span className="text-[10px]">{trend.label}</span>
-                                        </button>;
-                                    })}
-                                </div>
-                                <p className="text-[10px] text-muted-foreground mt-2 text-center">Click again to remove</p>
-                            </div>
-                        </div>
-                        {/* Radar Grid */}
-                        <div className="flex-1 glass-card rounded-xl overflow-hidden flex flex-col relative" ref={mapRef}>
-                            <svg className="enabler-arrow-canvas">
-                                <defs><marker id="earrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#64748b"/></marker></defs>
-                                {arrows.map(a => <g key={a.id}><path d={`M ${a.x1} ${a.y1} L ${a.x2} ${a.y2}`} stroke={a.color} strokeWidth="2" strokeDasharray="6 4" fill="none" markerEnd="url(#earrowhead)" className="animate-enabler-dash" opacity="0.8"/><circle cx={a.x1} cy={a.y1} r="3" fill={a.color} opacity="0.6"/></g>)}
-                            </svg>
-                            <div className="overflow-x-auto">
-                                <table className="enabler-radar-table min-w-[1000px]">
-                                    <thead><tr>
-                                        <th className="enabler-row-label !bg-transparent"></th>
-                                        {config.clusters.map(c => <th key={c.id} className="uppercase tracking-wider text-[10px] text-muted-foreground font-extrabold">{c.label}</th>)}
-                                    </tr></thead>
-                                    <tbody>
-                                        {config.levels.map(lvl => (
-                                            <tr key={lvl.id}>
-                                                <td className="enabler-row-label"><div className="w-full h-full flex items-center justify-end pr-2">{lvl.label}</div></td>
-                                                {config.clusters.map(cluster => {
-                                                    const cellKey = `${lvl.id}-${cluster.id}`;
-                                                    const items = techInstances.filter(t => t.cellKey === cellKey);
-                                                    const ghosts = (showArrows && snapshot) ? snapshot.filter(s => s.cellKey === cellKey && !items.find(i => i.uid === s.uid)) : [];
-                                                    const isOver = dragOverCell === cellKey;
-                                                    return (
-                                                        <td key={cellKey}
-                                                            onDragOver={e => { e.preventDefault(); setDragOverCell(cellKey); }}
-                                                            onDragLeave={() => setDragOverCell(null)}
-                                                            onDrop={e => handleDrop(e, cellKey)}
-                                                            className={`${isOver ? 'enabler-drag-over' : ''} ${lvl.id==='l1'?'bg-red-50/30 dark:bg-red-950/10':''} ${lvl.id==='l2'?'bg-orange-50/30 dark:bg-orange-950/10':''}`}>
-                                                            <div className="w-full h-full min-h-[90px] p-1 flex flex-wrap content-start justify-center gap-1">
-                                                                {ghosts.map(g => <EnablerTechChip key={`g-${g.uid}`} instance={g} config={config} isGhost={true} />)}
-                                                                {items.map(t => <EnablerTechChip key={t.uid} instance={t} config={config} isSelected={selectedUid===t.uid} onSelect={setSelectedUid} onDragStart={handleDragStart} />)}
-                                                            </div>
-                                                        </td>
-                                                    );
-                                                })}
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                            {/* Legend */}
-                            <div className="border-t border-border bg-secondary/20 p-4 space-y-3">
-                                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider min-w-[100px]">Technologies:</span>
-                                    {config.techs.map(tech => <div key={tech.id} className="flex items-center gap-1.5"><div className="w-4 h-4 rounded" style={{backgroundColor:tech.color}}></div><span className="text-[10px] font-semibold text-muted-foreground">{tech.id} = {tech.label}</span></div>)}
-                                </div>
-                                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider min-w-[100px]">Actors:</span>
-                                    {config.actors.map(actor => <div key={actor.id} className="flex items-center gap-1.5"><span className="w-5 h-5 rounded bg-primary text-primary-foreground text-[10px] font-black flex items-center justify-center">{actor.id}</span><span className="text-[10px] font-semibold text-muted-foreground">= {actor.label}</span></div>)}
-                                </div>
-                                <div className="flex justify-between items-center pt-2 border-t border-border">
-                                    <span className="text-[9px] text-muted-foreground">TLCTC Emerging Tech & Actors Radar</span>
-                                    <span className="text-[9px] text-muted-foreground">{new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* Toolbar */}
-                    <div className="glass-card rounded-xl p-3 flex flex-wrap gap-3 items-center justify-between mt-6">
-                        <div className="flex items-center gap-2">
-                            <button onClick={() => setTechInstances([])} className="enabler-btn-tool text-destructive"><EIcon name="trash" size={14}/> Clear</button>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <button onClick={() => {setSnapshot(JSON.parse(JSON.stringify(techInstances))); setShowArrows(true);}} className="enabler-btn-tool"><EIcon name="camera" size={14}/> Snap</button>
-                            {showArrows && <button onClick={() => {setSnapshot(null); setShowArrows(false);}} className="enabler-btn-tool text-destructive"><EIcon name="x" size={14}/> Clear Snap</button>}
-                            <div className="h-6 w-px bg-border mx-1"></div>
-                            <button onClick={() => setIsSettingsOpen(true)} className="enabler-btn-tool"><EIcon name="settings" size={14}/> Config</button>
-                            <button onClick={exportJSON} className="enabler-btn-tool"><EIcon name="save" size={14}/> Save JSON</button>
-                            <button onClick={exportImage} disabled={isExporting} className="enabler-btn-tool bg-primary text-primary-foreground"><EIcon name="download" size={14}/> {isExporting ? '...' : 'Export PNG'}</button>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-
-        window._mountEnablerApp = function() {
-            const root = ReactDOM.createRoot(document.getElementById('enablerReactRoot'));
-            root.render(<EnablerApp />);
-        };
-    </script>
+    <div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+      <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. All data is stored in your <strong>browser's local storage</strong> only &mdash; nothing is sent to a server. Use the <strong>export function</strong> to save your work if you are using real data.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+    </div>
+    <script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
 </body>
 </html>

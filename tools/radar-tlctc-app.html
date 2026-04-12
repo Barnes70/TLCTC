@@ -212,11 +212,13 @@
                 </button>
                 <div id="nav-dd-defense-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
                     <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground font-semibold bg-accent/50"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
+                    <a href="tech-enablers-radar.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="cpu" class="h-4 w-4"></i> Tech Enablers Radar</a>
                     <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
                     <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
                 </div>
             </div>
             <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+            <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><i data-lucide="github" class="h-4 w-4"></i></a>
         </nav>
         <div class="flex items-center gap-3">
             <button onclick="toggleDarkMode()" class="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Toggle theme">
@@ -246,10 +248,12 @@
             <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Story</a>
             <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense</span>
             <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-foreground font-semibold">Threat Radar</a>
+            <a href="tech-enablers-radar.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Tech Enablers Radar</a>
             <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
             <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
-            <div class="border-t border-border mt-4 pt-4">
+            <div class="border-t border-border mt-4 pt-4 flex flex-col gap-2">
                 <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <i data-lucide="external-link" class="h-3.5 w-3.5"></i></a>
+                <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5"><i data-lucide="github" class="h-4 w-4"></i> GitHub</a>
             </div>
         </nav>
     </div>
@@ -303,12 +307,22 @@ const DEFAULT_BUBBLE_RADIUS = 15;
 const DEFAULT_RECT_WIDTH = 50;
 const DEFAULT_RECT_HEIGHT = 18;
 
-// zone closer to center = bigger
+// Latent should visually recede, low stays standard, medium slightly broader,
+// and high should prioritize readability over oversized labels.
 const DEFAULT_ZONE_SIZE_MULTIPLIERS = {
-    latent: 0.8,
-    low: 0.9,
+    latent: 0.62,
+    low: 1.0,
     medium: 1.05,
-    high: 1.2,
+    high: 1.0,
+};
+
+// Area distribution per sector: high gets 30% of the sector area,
+// medium gets the next largest share, while low and latent stay narrow.
+const DEFAULT_ZONE_AREA_SPLITS = {
+    high: 0.30,
+    medium: 0.32,
+    low: 0.19,
+    latent: 0.19,
 };
 
 const DEFAULT_OLD_BUBBLE_SIZE_MULTIPLIER = 0.8;
@@ -560,14 +574,23 @@ function RadarBubble({
             return 'high';
         }
 
-        // Zone radii define the OUTER boundary of each zone band
-        // Using full 320px radius with equal bands of 80px each
-        function getZoneBoundaries(scaleFactor = 1) {
+        // Zone radii are derived from area shares instead of equal ring widths.
+        // This gives the center High zone more real space while keeping Latent narrow.
+        function getZoneBoundaries(scaleFactor = 1, outerRadius = 320) {
+            const scaledOuterRadius = outerRadius * scaleFactor;
+            const highOuter = scaledOuterRadius * Math.sqrt(DEFAULT_ZONE_AREA_SPLITS.high);
+            const mediumOuter = scaledOuterRadius * Math.sqrt(
+                DEFAULT_ZONE_AREA_SPLITS.high + DEFAULT_ZONE_AREA_SPLITS.medium
+            );
+            const lowOuter = scaledOuterRadius * Math.sqrt(
+                DEFAULT_ZONE_AREA_SPLITS.high + DEFAULT_ZONE_AREA_SPLITS.medium + DEFAULT_ZONE_AREA_SPLITS.low
+            );
+
             return {
-                high:   { inner: 0, outer: 80 * scaleFactor },
-                medium: { inner: 80 * scaleFactor, outer: 160 * scaleFactor },
-                low:    { inner: 160 * scaleFactor, outer: 240 * scaleFactor },
-                latent: { inner: 240 * scaleFactor, outer: 320 * scaleFactor }
+                high:   { inner: 0, outer: highOuter },
+                medium: { inner: highOuter, outer: mediumOuter },
+                low:    { inner: mediumOuter, outer: lowOuter },
+                latent: { inner: lowOuter, outer: scaledOuterRadius }
             };
         }
 
@@ -605,7 +628,6 @@ function RadarBubble({
 
 const bubblePositions = useMemo(() => {
     let allBubbles = [];
-    const numSectors = sectors.length;
 
     sectors.forEach((sector, sectorIndex) => {
         const baseAngle = getAngle(sectorIndex, sectors.length);
@@ -619,13 +641,26 @@ const bubblePositions = useMemo(() => {
         const activeInSector = threatClustersData
             .filter(c_data => sector.activeThreats?.[c_data.id] && sector.zoneLimits?.[c_data.id]);
 
+        const activeByZone = {
+            latent: [],
+            low: [],
+            medium: [],
+            high: [],
+        };
+
+        activeInSector.forEach(cluster => {
+            const value = parseFloat(sector.values?.[cluster.id] ?? 0);
+            const zone = determineZone(value, sector.zoneLimits[cluster.id]);
+            activeByZone[zone].push(cluster.id);
+        });
+
         activeInSector.forEach((cluster, threatIdx) => {
             const value = parseFloat(sector.values?.[cluster.id] ?? 0);
             const zone = determineZone(value, sector.zoneLimits[cluster.id]);
             const bounds = zoneBounds[zone];
-            
-            // Place bubble in center of its zone band
-            const baseRadius = (bounds.inner + bounds.outer) / 2;
+            const zoneClusterIds = activeByZone[zone] || [];
+            const zoneIndex = Math.max(zoneClusterIds.indexOf(cluster.id), 0);
+            const zoneCount = Math.max(zoneClusterIds.length, 1);
 
             const paddingFactor = 0.15;
             const usableAngleSpan = sectorAngleSpan * (1 - 2 * paddingFactor);
@@ -635,7 +670,10 @@ const bubblePositions = useMemo(() => {
 
             const idealAngle = baseAngle + angleOffsetInSector;
 
-            const sizeMultiplier = zoneSizeMultipliers[zone] || 1.0;
+            const crowdingShrinkFactor = zone === 'high' && zoneCount > 3
+                ? Math.max(0.78, 1 - ((zoneCount - 3) * 0.07))
+                : 1;
+            const sizeMultiplier = (zoneSizeMultipliers[zone] || 1.0) * crowdingShrinkFactor;
             const currentBubbleRadius = DEFAULT_BUBBLE_RADIUS * sizeMultiplier;
 
             let collisionWidth;
@@ -651,15 +689,28 @@ const bubblePositions = useMemo(() => {
                 collisionHeight = currentBubbleRadius * 2;
             }
 
+            const bubbleHalfSize = clusterDisplayMode === 'name'
+                ? Math.max(collisionWidth, collisionHeight) / 2
+                : currentBubbleRadius;
+
+            const bandThickness = Math.max(bounds.outer - bounds.inner, 1);
+            const maxPadding = Math.max((bandThickness / 2) - 1, 0);
+            // Padding must be at least bubbleHalfSize so the bubble's full radial
+            // extent stays inside its zone band; capped at maxPadding for very
+            // narrow bands (e.g. latent) where the bubble can't physically fit.
+            const radialPadding = Math.min(
+                maxPadding,
+                Math.max(bubbleHalfSize, 6 * overallScaleFactor)
+            );
+            const usableBandThickness = Math.max(bandThickness - radialPadding * 2, 1);
+            const baseRadius = zoneCount > 1
+                ? bounds.inner + radialPadding + ((zoneIndex + 0.5) / zoneCount) * usableBandThickness
+                : (bounds.inner + bounds.outer) / 2;
+
             // Get custom offset if exists
             const offset = sector.bubbleOffsets?.[cluster.id] || { dx: 0, dy: 0 };
             const baseX = centerX + Math.cos(idealAngle) * baseRadius;
             const baseY = centerY + Math.sin(idealAngle) * baseRadius;
-
-            // Calculate bubble half-size for zone boundary padding
-            const bubbleHalfSize = clusterDisplayMode === 'name' 
-                ? Math.max(collisionWidth, collisionHeight) / 2 
-                : currentBubbleRadius;
 
             allBubbles.push({
                 id: `${sector.id}-${cluster.id}`,
@@ -712,6 +763,7 @@ const bubblePositions = useMemo(() => {
     zoneSizeMultipliers,
     threatClustersData,
     bubbleTextSizePx,
+    overallScaleFactor,
 ]);
 
             // Convert screen coordinates to SVG coordinates
@@ -1378,6 +1430,10 @@ const bubblePositions = useMemo(() => {
                                 }}
                             >
                                 <option value="">Load example...</option>
+                                <optgroup label="Cloudflare 2026 Threat Report">
+                                    <option value="examples/radar-crowdstrike-2026.json">CrowdStrike 2026 (6 sectors)</option>
+                                    <option value="examples/radar-cloudflare-2026.json">Cloudflare 2026 (4 sectors)</option>
+                                </optgroup>
                                 <optgroup label="NCSC/BACS Switzerland 2024">
                                     <option value="examples/ncsc-google-2024-JB-bericht.json">National Overview (CH vs Global)</option>
                                     <option value="examples/ncsc-google-2024-JB-bericht-sectors.json">By Industry Sector</option>
@@ -1588,5 +1644,9 @@ const bubblePositions = useMemo(() => {
             }
         }
     </script>
+    <div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+      <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. All data is stored in your <strong>browser's local storage</strong> only &mdash; nothing is sent to a server. Use the <strong>export function</strong> to save your work if you are using real data.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+    </div>
+    <script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
 </body>
 </html>
