@@ -1,0 +1,315 @@
+{
+  "version": "1.0.0",
+  "tool": "TLCTC Control Matrix Manager",
+  "exportDate": "2026-04-14T00:00:00Z",
+  "orgName": "Mandiant M-Trends 2026 Recommendations",
+  "targetMaturity": 3,
+  "environments": [
+    {
+      "id": "env-m26",
+      "name": "Mandiant M-Trends 2026",
+      "cells": {
+        "1-ID": {
+          "local": [
+            {
+              "id": "m26-1",
+              "name": "Inventory OAuth grants, service principals, and SaaS-to-SaaS integrations",
+              "description": "Discover and inventory every OAuth application grant, Azure Service Principal, and SaaS-to-SaaS integration across the enterprise. UNC5221 (SaaS cascade) and UNC6395 (Salesloft/Drift) both abused legitimate integration tokens; UNC6040 harvested user-granted Salesforce connected apps. Without an inventory, there is no way to detect a malicious app among thousands of legitimate ones. (M-Trends 2026, pp. 21, 74-77)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "1-PR": {
+          "local": [
+            {
+              "id": "m26-2",
+              "name": "Require admin approval for Salesforce/M365 connected-app consent",
+              "description": "Disable user-granted OAuth consent for high-risk scopes; require admin approval workflow for all connected apps. UNC6040 vishing campaign convinced employees to consent to a malicious connected app that bypassed MFA entirely (MFA protects login, not app-consent). ShinyHunters-branded extortion (UNC6240) monetized the harvested data. (M-Trends 2026, pp. 12, 38)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "m26-3",
+              "name": "AI security governance: usage policy, DLP, and vendor assessment",
+              "description": "Define an enterprise AI-use policy covering both sanctioned LLMs and shadow AI. Deploy DLP to prevent sensitive data leakage into prompts. Assess AI vendor supply chain (PROMPTFLUX and PROMPTSTEAL demonstrate LLM-embedded malware is operational). Govern internal AI systems for prompt injection and distillation attacks. (M-Trends 2026, p. 39)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "m26-15",
+              "name": "Virtualization-plane segmentation: isolate vCenter from AD",
+              "description": "Break AD integration of vCenter and ESXi management; require separate, non-domain-joined credentials for hypervisor administration. SCATTERED SPIDER and recovery-denial operators routinely mounted DC VMDKs to unmanaged VMs via vCenter to dump NTDS from outside any EDR scope. AD-integrated hypervisors are a single point of failure. (M-Trends 2026, pp. 70-73)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "1-DE": {
+          "local": [
+            {
+              "id": "m26-4",
+              "name": "Behavioral monitoring of OAuth token and service-principal usage",
+              "description": "Monitor SaaS audit logs for anomalous OAuth grant creation, unusual service-principal API volume, bulk data export, and geographic anomalies. UNC5221 pivoted through a SaaS provider's service principals into downstream customer tenants via legitimate APIs — the only detection signal was behavioral. (M-Trends 2026, pp. 21, 74-77)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "detective", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "2-ID": {
+          "local": [
+            {
+              "id": "m26-5",
+              "name": "Exposed-asset inventory: edge devices, appliances, and internet-facing apps",
+              "description": "Maintain a continuous inventory of internet-exposed VPNs, firewalls, NAS, and enterprise web applications (Oracle EBS, MFT platforms). Exploits were the #1 infection vector for the 6th consecutive year. FIN11/CL0P weaponized CVE-2025-61882 (Oracle EBS); UNC5807 exploited edge devices with TTE = -7 days (exploited before public disclosure). (M-Trends 2026, pp. 3-5, 9, 78-82)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "2-PR": {
+          "local": [
+            {
+              "id": "m26-6",
+              "name": "Aggressive edge-device and enterprise-app patching (<72h)",
+              "description": "Patch VPN appliances, firewalls, and internet-facing enterprise apps within 72 hours of critical CVE disclosure. Apply virtual patching / WAF rules where vendor fixes lag. Regional data: EMEA exploitation rate 51%, JAPAC 33%, Americas 28%. FIN11/CL0P repeatedly exploits MFT/enterprise apps (Accellion, MOVEit, GoAnywhere, Oracle EBS). (M-Trends 2026, pp. 9, 15, 46-53)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "m26-7",
+              "name": "Firmware integrity monitoring for core network devices",
+              "description": "Deploy firmware-image integrity verification on routers, switches, and edge appliances. UNC5807 (PRC) established firmware-level implants on core network devices, achieving multi-year persistence with network-traffic interception capability. EDR has no visibility on these devices — compensate with out-of-band firmware attestation. (M-Trends 2026, pp. 78-82)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "2-DE": {
+          "local": [
+            {
+              "id": "m26-8",
+              "name": "Network telemetry for edge/core device compromise",
+              "description": "Collect and analyze NetFlow, DNS, and TACACS+ telemetry from perimeter and core network devices. Detect unusual management-plane access, configuration drift, and anomalous traffic patterns. Edge TTE of -7 days means public patch cycles cannot be the only control; behavioral detection is required. (M-Trends 2026, pp. 78-82)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "detective", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "4-ID": {
+          "local": [
+            {
+              "id": "m26-9",
+              "name": "Tiered identity architecture for domain, cloud, and virtualization",
+              "description": "Segment identity tiers (Tier-0 domain, Tier-0 cloud, Tier-0 virtualization) with separate credentials, workstations, and authentication paths. Recovery-denial ransomware operators chained AD → backup infrastructure → vCenter using a single compromised Tier-0 identity. Tiering is the fundamental structural control that breaks this chain. (M-Trends 2026, pp. 60-65, 70-73)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "4-PR": {
+          "local": [
+            {
+              "id": "m26-10",
+              "name": "Phishing-resistant MFA (FIDO2 / passkeys) for privileged identities",
+              "description": "Replace SMS, push, and TOTP MFA with FIDO2 / passkey authentication for admins, developers, and finance users. Stolen credentials were 10% of global initial access (23% in JAPAC); UNC6276 and similar affiliates re-used VPN credentials sourced from infostealers. FIDO2 eliminates the replayable credential entirely. (M-Trends 2026, pp. 10-13, 50-53, 55-59)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "m26-11",
+              "name": "Harden Active Directory Certificate Services (ADCS) and AD FS",
+              "description": "Audit ADCS template permissions, enforce signed certificate issuance, remove ESC1/ESC4/ESC8 misconfigurations. Recovery-denial operators routinely leverage ADCS abuse and AD FS trust manipulation to achieve persistent Tier-0 identity that survives credential rotation. (M-Trends 2026, pp. 5, 60-65)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "4-DE": {
+          "local": [
+            {
+              "id": "m26-12",
+              "name": "Session-cookie invalidation and impossible-travel alerting on IdP",
+              "description": "Integrate infostealer-log feeds with the IdP to auto-invalidate sessions for exposed users. Alert on impossible-travel and new-device sign-ins for privileged roles. The <30-second hand-off between infostealer infection and ransomware-affiliate login makes real-time session hygiene a prevention control, not just detection. (M-Trends 2026, pp. 55-59)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "detective", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "7-PR": {
+          "local": [
+            {
+              "id": "m26-13",
+              "name": "Infostealer-resistant browser posture (cookie binding, password manager migration)",
+              "description": "Enable browser DBSC (Device Bound Session Credentials) and token binding where available. Migrate employees from browser-stored passwords to a managed password manager. Prior compromise was the #1 ransomware initial access vector (30%); most prior compromises were infostealer infections from personal/BYOD devices. (M-Trends 2026, pp. 29-37, 55-59)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "7-DE": {
+          "local": [
+            {
+              "id": "m26-14",
+              "name": "Dormant-foothold and prior-compromise threat hunting",
+              "description": "Run proactive hunts for dormant-foothold indicators: persistent scheduled tasks, unusual service creation, RMM installations, and stale authenticated sessions older than 72 hours. Prior compromise was 30% of ransomware initial access. Infostealer-to-ransomware hand-off can compress to <30 seconds, so hunting the dormant foothold must be continuous. (M-Trends 2026, pp. 29-37, 55-59)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "detective", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "m26-17",
+              "name": "ESXi/vCenter audit logging and VMDK-mount alerting",
+              "description": "Forward vCenter and ESXi logs to a SIEM outside the hypervisor cluster. Alert on new VM creation, VMDK mount/attach to non-origin VMs, and ESX Admins group changes. FOULFOG.LINUX and INC.LINUX are ESXi-only ransomware families observed in 2025; detection must happen on the hypervisor, not the VM. (M-Trends 2026, pp. 70-73)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "detective", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "1-RC": {
+          "local": [
+            {
+              "id": "m26-16",
+              "name": "Immutable, isolated, offline backups with out-of-band credentials",
+              "description": "Maintain at least one backup copy that is immutable (WORM), network-isolated, and authenticated with credentials not stored in AD or the primary IdP. Recovery-denial operators systematically destroy backup catalogs, snapshots, and cloud-backup tenants as a precondition for ransom. Test restore 'without the domain' quarterly. (M-Trends 2026, pp. 60-65)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "corrective", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "9-ID": {
+          "local": [
+            {
+              "id": "m26-18",
+              "name": "High-risk role identification for vishing defense",
+              "description": "Identify roles that have the power to reset MFA, authorize connected apps, or approve large financial transactions — help desk, AR/AP, developer admins, HR. Voice phishing was the #2 initial infection vector in 2025. UNC3944/UNC6040 specifically targeted these roles. Defense must be role-aware, not uniform. (M-Trends 2026, pp. 3-5, 11-12)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "9-PR": {
+          "local": [
+            {
+              "id": "m26-19",
+              "name": "Help-desk callback verification and out-of-band identity proofing",
+              "description": "Help desks must verify caller identity via an out-of-band channel (managed directory callback, supervisor approval, or video-call liveness) before any credential or MFA reset. UNC3944 and UNC6040 vishing exploited the convenience of self-service and help-desk 'soft' verification. This control is the single most impactful defense against 2025's #2 infection vector. (M-Trends 2026, pp. 11-12, 38, 42-45)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "m26-20",
+              "name": "Identity-proofing controls for remote hiring (anti-DPRK-IT-worker)",
+              "description": "Mandate live video interviews with liveness detection, biometric verification at onboarding, hardware-bound device attestation, and payroll-rail due diligence. DPRK IT workers operate with a 122-day median dwell — longer than most external intrusions. The attack vector is the hiring process. Laptop farms, mouse-jigglers, and RMM overlays make behavioral detection inside the workforce unreliable; prevention must happen at onboarding. (M-Trends 2026, p. 22)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "9-DE": {
+          "local": [
+            {
+              "id": "m26-21",
+              "name": "Vishing pattern alerting and tabletop exercises",
+              "description": "Instrument help-desk ticketing and phone systems for vishing-pattern signals (rapid MFA-reset requests, VIP impersonation, urgency markers). Run quarterly red-team vishing exercises targeting help desk, AR/AP, and developer admins. (M-Trends 2026, pp. 11-12)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "detective", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "10-ID": {
+          "local": [
+            {
+              "id": "m26-22",
+              "name": "SaaS supply-chain risk register and provider-breach response playbook",
+              "description": "Maintain a register of every SaaS provider with access into the tenant (including integration-marketplace apps). For each, pre-define a breach-response playbook: immediate OAuth grant revocation, service-principal rotation, and audit-log review. UNC5221 cascaded from a single SaaS provider compromise into dozens of downstream tenants; UNC6395 did the same through Salesloft/Drift. A provider's disclosure must trigger an assumed-compromise workflow in your own tenant. (M-Trends 2026, pp. 21, 74-77)",
+              "linkMore": "", "ownerName": "", "ownerOrgChart": "", "kind": "preventive", "maturity": 0, "linkJira": "", "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        }
+      }
+    }
+  ]
+}

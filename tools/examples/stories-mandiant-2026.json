@@ -1,0 +1,158 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-04-14T00:00:00Z",
+  "description": "Narrative threat stories from the Mandiant M-Trends 2026 report, designed for the Actor Story Designer's Diamond Model framing. Each story captures a signature case highlight from the report.",
+  "actors": [
+    {
+      "threat_actor": "UNC6040 — The Voice on the Line",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] UNC6040 is the archetype of the 2025 voice-phishing wave. No malware. No exploits. No lateral movement. A phone call and a Salesforce OAuth consent prompt are the entire kill chain. The actor's operational partner, the ShinyHunters-branded UNC6240, then monetizes the stolen data via leak-site extortion. Together they represent a clean division of labor: UNC6040 sells access, UNC6240 sells silence.\n\n[DIAMOND MODEL — CAPABILITY] Champion Social Engineering (#9) — the operator calls a Salesforce user, impersonates IT support, and walks the target through 'authorizing a diagnostic app' in Salesforce. The malicious connected app is the attacker's own, designed to look benign. Champion Function Abuse (#1) — once consented, the OAuth grant gives full API access to Salesforce records, bypassing MFA entirely (MFA protects user login; it does not protect a user-granted app-consent flow). High Identity Theft (#4) — the OAuth token itself becomes the persistent credential.\n\n[DIAMOND MODEL — INFRASTRUCTURE] A telephone and a Salesforce developer account. The 'malware' is an OAuth application registration. The command-and-control is Salesforce's own REST API. There are no malicious domains to block, no hashes to sign, no C2 to sinkhole — the attack is entirely inside the victim's SaaS tenant.\n\n[DIAMOND MODEL — VICTIM] Cross-sector: any organization running Salesforce with permissive connected-app policies. In 2025, Mandiant observed this pattern across retail, insurance, technology, and hospitality. The victim sees a legitimate Salesforce login page, a legitimate OAuth consent screen, and a legitimate API exfiltration — every component of the attack is trusted by the platform.\n\n[ANALYST ASSESSMENT] UNC6040 is not a malware family; it is a workflow. The attack demonstrates that in SaaS-first environments, the boundary has moved from the endpoint to the consent screen. Defenders must treat 'app authorization' as a privileged action: require admin approval for connected apps, enforce an allowlist, and instrument the Salesforce audit trail for unusual OAuth grants. The cultural lesson: train users to recognize that 'authorize this app' is the new 'click this attachment'.",
+      "sources": ["Mandiant M-Trends 2026 (pp. 12, 38)"],
+      "sequence": "#09 → #01 → #04 → #01",
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain", "Data Extortion"],
+      "target_sectors": ["Cross-sector (SaaS-using)"],
+      "observed_paths": [
+        {
+          "incident_id": "UNC6040-SALESFORCE-VISHING-2025",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=~15m] #1 →[Δt=~10m] #4 →[Δt=~1h] #1 + [DRE: C]",
+          "cluster_sequence": [9, 1, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "The Hand-Off — From Minor Infection to Ransomware in Seconds",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 2
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] This story is a composite of the infostealer → initial access broker (IAB) → ransomware-affiliate pipeline that dominated 2025. Mandiant observed hand-off times under 30 seconds between credential theft and active ransomware intrusion — an industrialized supply chain in which three distinct actors each play a tightly scoped role.\n\n[DIAMOND MODEL — CAPABILITY] High Social Engineering (#9) — ClickFix lures and fake software download pages trick the victim into running an infostealer. Champion Malware (#7) — Lumma, RedLine, or StealC harvests browser-stored credentials, session cookies, and VPN profiles. The stealer is loud but short-lived (seconds to minutes on the host). Champion Identity Theft (#4) — credentials land in an underground market within minutes; an IAB aggregates them and a ransomware affiliate purchases the 'right' ones (corporate VPN, Citrix, RDP). Champion Malware again (#7) — the affiliate logs in using stolen VPN creds and deploys ransomware with hours, not days, of dwell. The <30-second hand-off is the shocking metric: a user's browser is infected at 10:00:00 and by 10:00:28 the attacker has already performed a first interactive login.\n\n[DIAMOND MODEL — INFRASTRUCTURE] A drive-by download site or malicious ad. A Telegram-delivered stealer. A log-market bot (often on Telegram or a specialized forum). A VPN concentrator or RDP jump host. No single adversary owns the full chain — the infrastructure is a marketplace.\n\n[DIAMOND MODEL — VICTIM] Any employee with cached corporate credentials in their browser. The victim is not the intended target of the initial infection — they are inventory. The actual target organization is selected downstream, by the ransomware affiliate, based on the credentials available for purchase.\n\n[ANALYST ASSESSMENT] The pipeline model defeats detection strategies built around 'dwell time' as a KPI. By the time the ransomware affiliate logs in, the infostealer is gone, the C2 is cold, and the only remaining artifact is a legitimate VPN authentication from a residential IP. Defenders must assume that every infostealer detection — even on a personal device used to access corporate resources — is already a credential-compromise incident. Mandatory session-cookie invalidation, conditional access policies that flag impossible-travel logins, and infostealer-feed integration with the IdP are no longer optional.",
+      "sources": ["Mandiant M-Trends 2026 (pp. 55-59)"],
+      "sequence": "#09 → #07 → #04 → (#01 + #07)",
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Cross-sector"],
+      "observed_paths": [
+        {
+          "incident_id": "MANDIANT-HANDOFF-RANSOMWARE-2025",
+          "notation": "#9 ||[human][@External→@Victim]|| →[Δt=~1h] #7 →[Δt=<30s] #4 →[Δt=~hours] (#1 + #7) + [DRE: Ac]",
+          "cluster_sequence": [9, 7, 4, 1, 7],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 1 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "Recovery Denial — When Backups Become the Target",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] A maturation of the modern ransomware operator: attackers who understand that encryption alone is table-stakes. The premium is on 'recovery denial' — ensuring the victim cannot restore without paying. Mandiant frames this as ransomware's shift from a security problem to a resilience problem.\n\n[DIAMOND MODEL — CAPABILITY] Champion Identity Theft (#4) — admin credential escalation via Kerberoasting, DCSync, and ADCS abuse. Champion Function Abuse (#1) — GPO abuse to push malicious scheduled tasks enterprise-wide; compromise of fleet-management tools (Intune, SCCM) to deploy payloads as trusted software; targeted destruction or corruption of backup catalogs, snapshots, and cloud backup tenants; vCenter access to power off and corrupt virtualization infrastructure. Champion Malware (#7) — ransomware detonation across endpoints, file servers, ESXi hypervisors, and backup appliances in a single coordinated burst.\n\n[DIAMOND MODEL — INFRASTRUCTURE] The victim's own crown-jewel management planes: Active Directory, Azure AD / Entra ID, ADCS, backup consoles (Veeam, Rubrik, Commvault), vCenter, Intune / SCCM. Every lever the enterprise uses to manage its fleet is inverted into a weapon against the fleet.\n\n[DIAMOND MODEL — VICTIM] Large enterprises with mature operational tooling. Paradoxically, the more sophisticated the victim's management stack, the higher the blast radius — AD-integrated hypervisors and fleet-management tools become single points of failure.\n\n[ANALYST ASSESSMENT] Recovery denial is the endgame of the ransomware business model: if the victim can restore, the ransom evaporates. The defender's response must mirror the attacker's three-phase logic — (1) immutable, isolated, offline backup copies with out-of-band credentials; (2) tiered identity architecture that prevents a single Tier-0 compromise from cascading into backup and virtualization planes; (3) red-team exercises that explicitly validate 'can we restore without the domain?' not just 'can we restore?'. The question to ask the CIO is not 'do we have backups?' but 'do we have backups that survive a compromised domain admin?'",
+      "sources": ["Mandiant M-Trends 2026 (pp. 60-65)"],
+      "sequence": "#04 → #01 → #07",
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Cross-sector (large enterprises)"],
+      "observed_paths": [
+        {
+          "incident_id": "MANDIANT-RECOVERY-DENIAL-2025",
+          "notation": "#4 →[Δt=~1d] #1 →[Δt=~hours] #7 + [DRE: Ac]",
+          "cluster_sequence": [4, 1, 7],
+          "dre_outcomes": { "C": 0, "I": 0, "A": 0, "Ac": 1 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "DPRK IT Workers — The Employee Who Never Existed",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 2
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] North Korean IT worker fraud operated at industrial scale in 2025, with Mandiant tracking a 122-day median dwell — longer than most external intrusions. These operators are not hackers in the conventional sense: they are employees. The attack vector is the hiring process itself.\n\n[DIAMOND MODEL — CAPABILITY] Champion Social Engineering (#9) — AI-fabricated resumes, deepfake video interviews, rented US-citizen identities for background checks, and laptop farms hosted by complicit facilitators inside the target country. The engineering is not of a single employee but of an entire identity. High Identity Theft (#4) — once hired, the operator's corporate credentials are genuine; the fraud was in the identity underlying the credential. High Function Abuse (#1) — legitimate employee access to source code, infrastructure, and sometimes financial systems, used for revenue generation (payroll itself) and eventually for extortion when employment is terminated.\n\n[DIAMOND MODEL — INFRASTRUCTURE] A laptop farm (often a house in the US with dozens of corporate laptops), mouse-jigglers, RMM tools (AnyDesk, Chrome Remote Desktop) to give DPRK-based operators real-time control, VPN overlays to mask the true origin. Cryptocurrency rails for payroll exfiltration. LinkedIn and GitHub for persona maintenance.\n\n[DIAMOND MODEL — VICTIM] Western technology firms, especially those that onboard remote engineers quickly. The victim never interacts with the real person — every Zoom call, every Slack message, every code review is with a persona.\n\n[ANALYST ASSESSMENT] This is the inverse of a zero-trust assumption: the identity is fake but the authentication is real. Traditional insider-threat detection looks for anomalous behavior from known employees; DPRK IT workers often behave within policy for months. The defense shifts to identity proofing: biometric verification at onboarding, liveness detection during video interviews, hardware-bound geofencing, and payment-rail due diligence. The 122-day median says something uncomfortable — on average, a DPRK operator is inside the victim's SDLC for four months before detection.",
+      "sources": ["Mandiant M-Trends 2026 (p. 22)"],
+      "sequence": "#09 → #04 → #01",
+      "last_updated": "2026-04-14",
+      "origin_country": "North Korea",
+      "motivation": ["Revenue Generation", "Espionage"],
+      "target_sectors": ["Technology", "Cryptocurrency", "Financial Services"],
+      "observed_paths": [
+        {
+          "incident_id": "DPRK-IT-WORKER-INSIDER-2025",
+          "notation": "#9 ||[human][@DPRK→@HRTarget]|| →[Δt=~weeks] #4 →[Δt=~122d] #1 + [DRE: C]",
+          "cluster_sequence": [9, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "UNC5221 — SaaS Provider as Stepping Stone",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 2
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] UNC5221 is the signature actor of the cascading-SaaS-compromise pattern. Rather than target a single victim, UNC5221 targets the SaaS provider whose trust boundary contains many victims — then rides the provider's legitimate integrations into every downstream tenant. The 2025 campaign mapped intrusions at a SaaS provider to follow-on compromises at government, legal, and financial customers, all via the provider's own API integrations.\n\n[DIAMOND MODEL — CAPABILITY] Champion Server Exploitation (#2) — webshells and SQLi against the SaaS provider's internet-facing admin plane. High Identity Theft (#4) — extraction of Azure Service Principals and OAuth refresh tokens that grant delegated access into customer tenants. High Function Abuse (#1) — use of those service principals to query customer data via legitimate, audited APIs. High Malware (#7) — backdoors on the provider's infrastructure for re-entry. High Supply Chain (#10) — at the customer edge, the trust artifact (the service principal) is honored as if it were the provider itself, because, legally and cryptographically, it is.\n\n[DIAMOND MODEL — INFRASTRUCTURE] The SaaS provider's management plane, Azure AD / Entra ID service principals, OAuth grants on customer tenants, and the provider's API gateway. Once UNC5221 has the provider's service principals, their C2 is the provider's CRM or support platform — traffic that every downstream tenant expects and trusts.\n\n[DIAMOND MODEL — VICTIM] The cascade is the story. A single compromise at the provider produced simultaneous intrusions at dozens of downstream organizations. The downstream victims did nothing wrong — their trust boundary was defined by the weakest integration in their SaaS stack.\n\n[ANALYST ASSESSMENT] UNC5221's pattern is the operationalization of Mandiant's 'cascading impact' thesis. The implication is that third-party risk is now effectively unbounded: SaaS-to-SaaS trust chains make 'our vendor's security posture' a first-order control. Defenders must enforce least-privilege on every SaaS integration, expire OAuth grants aggressively, monitor service-principal behavior as a first-class signal, and treat any SaaS provider's breach disclosure as an assumed compromise of their own tenant until proven otherwise.",
+      "sources": ["Mandiant M-Trends 2026 (pp. 21, 74-77)"],
+      "sequence": "#02 → #04 → #01",
+      "last_updated": "2026-04-14",
+      "origin_country": "China (suspected)",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Government", "Legal", "Technology", "SaaS Providers"],
+      "observed_paths": [
+        {
+          "incident_id": "UNC5221-SAAS-CASCADE-2025",
+          "notation": "#2 ||[api][@External→@SaaSProvider]|| →[Δt=~1d] #4 →[Δt=~1h] #1 ||[api][@SaaSProvider→@Customer]|| + [DRE: C]",
+          "cluster_sequence": [2, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    }
+  ]
+}

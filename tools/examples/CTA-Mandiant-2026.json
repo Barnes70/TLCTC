@@ -1,0 +1,320 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-04-14T00:00:00Z",
+  "description": "Adversary profiles derived from the Mandiant M-Trends 2026 report. Based on frontline incident response investigations in 2025 across targeted attacks, ransomware, cloud, SaaS compromises, and multi-year espionage.",
+  "actors": [
+    {
+      "threat_actor": "UNC3944",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #04 → #01",
+      "notes": "Champion Social Engineering [#9] — vishing help desk for MFA reset / SSO takeover. Champion Identity Theft [#4] — hybrid identity pivot (Entra ID). High Function Abuse [#1] — cloud/SaaS recon and data theft extortion. Overlaps with SCATTERED SPIDER tracking; Mandiant clusters under UNC3944.",
+      "sources": ["Mandiant M-Trends 2026 (pp. 12, 38, 75)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain", "Data Extortion"],
+      "target_sectors": ["Retail", "Insurance", "Technology", "Aviation", "Financial Services"],
+      "observed_paths": [
+        {
+          "incident_id": "UNC3944-CLOUD-EXTORTION-2025",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=~30m] #4 →[Δt=~1h] #1 + [DRE: C]",
+          "cluster_sequence": [9, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "UNC6040",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #01 → #04 → #01",
+      "notes": "Champion Social Engineering [#9] — voice phishing campaigns convincing employees to authorize malicious connected apps in Salesforce. Champion Function Abuse [#1] — SaaS authorization flow abuse (OAuth consent). High Identity Theft [#4]. ShinyHunters-branded data extortion follow-on.",
+      "sources": ["Mandiant M-Trends 2026 (pp. 12, 38)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain", "Data Extortion"],
+      "target_sectors": ["Cross-sector (SaaS-using)"],
+      "observed_paths": [
+        {
+          "incident_id": "UNC6040-SALESFORCE-VISHING-2025",
+          "notation": "#9 ||[human][@External→@Org]|| →[Δt=~15m] #1 →[Δt=~10m] #4 →[Δt=~1h] #1 + [DRE: C]",
+          "cluster_sequence": [9, 1, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "UNC6240 (ShinyHunters-branded)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#04 → #01",
+      "notes": "Data extortion actor operating under the ShinyHunters brand. High Identity Theft [#4] — stolen credential abuse. High Function Abuse [#1] — data aggregation and leak-site monetization. Often partnered with UNC6040 voice-phishing access.",
+      "sources": ["Mandiant M-Trends 2026 (p. 12)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain", "Data Extortion"],
+      "target_sectors": ["Cross-sector"]
+    },
+    {
+      "threat_actor": "FIN11 / CL0P",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #07 → #01",
+      "notes": "Champion Server Exploitation [#2] — CVE-2025-61882 Oracle E-Business Suite zero-day. High Malware [#7] — web shells and post-exploitation implants for data staging. Data extortion monetization without encryption in recent waves.",
+      "sources": ["Mandiant M-Trends 2026 (pp. 9, 15, 26-27)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain", "Data Extortion"],
+      "target_sectors": ["Cross-sector (internet-exposed enterprise apps)"],
+      "observed_paths": [
+        {
+          "incident_id": "FIN11-ORACLE-EBS-2025",
+          "notation": "#2 →[Δt=~1h] #7 →[Δt=~1d] #1 + [DRE: C]",
+          "cluster_sequence": [2, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "UNC5221",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 2
+      },
+      "sequence": "#02 → #04 → #01",
+      "notes": "Champion Server Exploitation [#2] — compromises SaaS providers and edge appliances to pivot into downstream customers. High Identity Theft [#4] — Azure Service Principal abuse. High Function Abuse [#1] — OAuth/NHI abuse for persistent SaaS-to-SaaS movement. High Malware [#7].",
+      "sources": ["Mandiant M-Trends 2026 (pp. 21, 74-77)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "China (suspected)",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Government", "Legal", "Technology", "SaaS Providers"],
+      "observed_paths": [
+        {
+          "incident_id": "UNC5221-SAAS-CASCADE-2025",
+          "notation": "#2 ||[api][@External→@SaaSProvider]|| →[Δt=~1d] #4 →[Δt=~1h] #1 ||[api][@SaaSProvider→@Customer]|| + [DRE: C]",
+          "cluster_sequence": [2, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "UNC6395",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 2
+      },
+      "sequence": "#04 → #01",
+      "notes": "Champion Identity Theft [#4] — abused OAuth tokens stolen via Salesloft/Drift integration compromise to pivot into Salesforce tenants. High Function Abuse [#1] — mass data export via legitimate Salesforce APIs. Illustrates SaaS-to-SaaS trust chain abuse.",
+      "sources": ["Mandiant M-Trends 2026 (p. 21)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain", "Data Extortion"],
+      "target_sectors": ["Cross-sector (Salesforce tenants)"]
+    },
+    {
+      "threat_actor": "DPRK IT Workers",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 2
+      },
+      "sequence": "#09 → #04 → #01",
+      "notes": "Champion Social Engineering [#9] — employment fraud using AI-generated personas, deepfake interviews, laptop farms, and front companies. High Identity Theft [#4] — legitimate employee credentials obtained via fraud. High Function Abuse [#1] — insider data theft and extortion. Median dwell time 122 days.",
+      "sources": ["Mandiant M-Trends 2026 (p. 22)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "North Korea",
+      "motivation": ["Revenue Generation", "Espionage"],
+      "target_sectors": ["Technology", "Cryptocurrency", "Financial Services"],
+      "observed_paths": [
+        {
+          "incident_id": "DPRK-IT-WORKER-INSIDER-2025",
+          "notation": "#9 ||[human][@DPRK→@HRTarget]|| →[Δt=~weeks] #4 →[Δt=~122d] #1 + [DRE: C]",
+          "cluster_sequence": [9, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "UNC1549",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #07 → #04 → #01",
+      "notes": "Iran-nexus. Multi-year persistence in aerospace and defense. High Social Engineering [#9] — fake job lures and HR impersonation. High Malware [#7] — custom implants with long-term tasking. High Identity Theft [#4]. High Function Abuse [#1] — living-off-the-land lateral movement. Dwell measured in years.",
+      "sources": ["Mandiant M-Trends 2026 (pp. 66-69)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "Iran",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Aerospace", "Defense", "Aviation"]
+    },
+    {
+      "threat_actor": "UNC5807",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #07 → #01",
+      "notes": "PRC-nexus. Champion Server Exploitation [#2] — edge/core network device zero-days (TTE = -7 days, exploited before public disclosure). Champion Malware [#7] — firmware-level implants for persistence. Medium MitM [#5] — network traffic interception. Multi-year intrusions.",
+      "sources": ["Mandiant M-Trends 2026 (pp. 66-69, 78-82)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "China",
+      "motivation": ["Espionage"],
+      "target_sectors": ["Telecommunications", "Government", "Defense", "Technology"],
+      "observed_paths": [
+        {
+          "incident_id": "UNC5807-EDGE-FIRMWARE-2025",
+          "notation": "#2 →[Δt=~1h] #7 →[Δt=~months] #1 + [DRE: C]",
+          "cluster_sequence": [2, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "UNC6276",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 4,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#04 → #01 → #07",
+      "notes": "AGENDA ransomware affiliate. Champion Identity Theft [#4] — VPN credential abuse for initial access (often infostealer-sourced). High Function Abuse [#1] — internal recon and backup targeting. High Malware [#7] — AGENDA ransomware deployment. Illustrates the prior-compromise to ransomware pipeline.",
+      "sources": ["Mandiant M-Trends 2026 (p. 37)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Cross-sector"]
+    },
+    {
+      "threat_actor": "UNC2465",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#09 → #07 → #04 → #07",
+      "notes": "Champion Malware [#7] — SMOKEDHAM backdoor operator chaining to LOCKBIT ransomware deployment. High Identity Theft [#4] — credential theft for lateral movement. Medium Social Engineering [#9] — phishing for initial access.",
+      "sources": ["Mandiant M-Trends 2026 (p. 9)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Cross-sector"]
+    },
+    {
+      "threat_actor": "UNC6345",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 1
+      },
+      "sequence": "#02 → #04 → #01",
+      "notes": "Newly tracked cluster in 2025. Limited public detail; Mandiant reports activity consistent with financially-motivated intrusion patterns.",
+      "sources": ["Mandiant M-Trends 2026 (p. 9)"],
+      "last_updated": "2026-04-14",
+      "origin_country": "Unknown",
+      "motivation": ["Financial Gain"],
+      "target_sectors": ["Cross-sector"]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "sectors": [
+    {
+      "id": "mandiant-2026-global",
+      "name": "M26 Global",
+      "color": "#e74c3c",
+      "backgroundColor": "rgba(52, 73, 94, 0.2)",
+      "activeThreats": { "1": true, "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true, "9": true, "10": true },
+      "values": {
+        "1": 22, "2": 28, "3": 12, "4": 24, "5": 10, "6": 6, "7": 24, "8": 4, "9": 26, "10": 16
+      },
+      "oldValues": {
+        "1": 20, "2": 26, "3": 12, "4": 22, "5": 10, "6": 6, "7": 22, "8": 4, "9": 20, "10": 14
+      },
+      "zoneLimits": {
+        "1": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "2": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "3": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "4": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "5": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "6": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "7": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "8": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "9": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
+      },
+      "toBeReported": {
+        "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
+      },
+      "riskToleranceCrashed": {
+        "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
+      },
+      "collapsed": false
+    },
+    {
+      "id": "mandiant-2026-americas",
+      "name": "M26 Americas",
+      "color": "#3498db",
+      "backgroundColor": "rgba(52, 73, 94, 0.2)",
+      "activeThreats": { "1": true, "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true, "9": true, "10": true },
+      "values": {
+        "1": 22, "2": 24, "3": 10, "4": 22, "5": 10, "6": 6, "7": 22, "8": 4, "9": 28, "10": 14
+      },
+      "oldValues": {
+        "1": 20, "2": 22, "3": 10, "4": 20, "5": 10, "6": 6, "7": 20, "8": 4, "9": 22, "10": 12
+      },
+      "zoneLimits": {
+        "1": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "2": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "3": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "4": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "5": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "6": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "7": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "8": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "9": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
+      },
+      "toBeReported": {
+        "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
+      },
+      "riskToleranceCrashed": {
+        "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
+      },
+      "collapsed": false
+    },
+    {
+      "id": "mandiant-2026-emea",
+      "name": "M26 EMEA",
+      "color": "#2ecc71",
+      "backgroundColor": "rgba(52, 73, 94, 0.2)",
+      "activeThreats": { "1": true, "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true, "9": true, "10": true },
+      "values": {
+        "1": 20, "2": 30, "3": 14, "4": 22, "5": 10, "6": 6, "7": 24, "8": 4, "9": 22, "10": 16
+      },
+      "oldValues": {
+        "1": 18, "2": 26, "3": 12, "4": 20, "5": 10, "6": 6, "7": 22, "8": 4, "9": 18, "10": 14
+      },
+      "zoneLimits": {
+        "1": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "2": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "3": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "4": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "5": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "6": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "7": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "8": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "9": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
+      },
+      "toBeReported": {
+        "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
+      },
+      "riskToleranceCrashed": {
+        "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
+      },
+      "collapsed": false
+    },
+    {
+      "id": "mandiant-2026-japac",
+      "name": "M26 JAPAC",
+      "color": "#e67e22",
+      "backgroundColor": "rgba(52, 73, 94, 0.2)",
+      "activeThreats": { "1": true, "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true, "9": true, "10": true },
+      "values": {
+        "1": 22, "2": 26, "3": 12, "4": 28, "5": 10, "6": 6, "7": 22, "8": 4, "9": 20, "10": 16
+      },
+      "oldValues": {
+        "1": 20, "2": 22, "3": 12, "4": 24, "5": 10, "6": 6, "7": 20, "8": 4, "9": 16, "10": 14
+      },
+      "zoneLimits": {
+        "1": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "2": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "3": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "4": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "5": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "6": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "7": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "8": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "9": {"latent": 0, "low": 10, "medium": 16, "high": 26},
+        "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
+      },
+      "toBeReported": {
+        "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
+      },
+      "riskToleranceCrashed": {
+        "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
+      },
+      "collapsed": false
+    }
+  ]
+}
