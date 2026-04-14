@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "incident_id": "MANDIANT-MULTI-YEAR-ESPIONAGE-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "registry_ref": "example-registry.json",
+    "created_at": "2026-04-14T00:00:00Z",
+    "notes": "Composite attack path modeled on Mandiant M-Trends 2026 'Multi-Year Intrusions Highlighting Extreme Persistence' (pp. 66-69). UNC1549 (Iran, aerospace/defense) and UNC5807 (PRC, edge/core network devices) both maintained years-long dwell. This path represents the UNC1549-style pattern: spear phishing for initial access, custom malware for long-term tasking, living-off-the-land lateral movement, and slow exfiltration over VC-1 timescales. Axiom IV: actor identity does not determine cluster classification. Sources: M-Trends 2026 pp. 66-69."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-spear-phishing",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "human",
+        "source_sphere": "@External",
+        "target_sphere": "@Org"
+      },
+      "delta_t_to_next": "~1h",
+      "notes": "Spear-phishing lure tailored to aerospace/defense target: fake job opportunity, HR impersonation, or trade conference invitation. Generic vulnerability: human psychological susceptibility. The victim is enticed to open an attachment or visit a staging URL."
+    },
+    {
+      "step_id": "s2-implant-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "~1d",
+      "notes": "Custom implant executes on victim host (UNC1549 tradecraft favors bespoke tooling with long-term tasking). R-EXEC satisfied: FEC execution recorded. The implant is designed to minimize beacon footprint; long sleep intervals and cloud-resident C2 are characteristic."
+    },
+    {
+      "step_id": "s3-credential-harvest",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~weeks",
+      "notes": "Living-off-the-land credential harvesting: browser data read by the implant (legitimate file access, abused scope), cached Kerberos tickets, RDP credentials. Classified #1 because the OS-native data-gathering functions are legitimate; the implant orchestrates rather than exploits. DRE:C on harvested credentials."
+    },
+    {
+      "step_id": "s4-credential-use-lateral",
+      "cluster": "#4",
+      "delta_t_to_next": "~months",
+      "notes": "Use of harvested credentials to authenticate to adjacent hosts, file servers, and domain services. R-CRED / Axiom X: credential application is ALWAYS #4. Lateral movement typically via RDP / WMI with native Windows tooling to avoid noisy tradecraft."
+    },
+    {
+      "step_id": "s5-lotl-persistence",
+      "cluster": "#1",
+      "delta_t_to_next": "~1y",
+      "notes": "Living-off-the-land persistence: scheduled tasks created via schtasks, WMI event subscriptions, registry run-keys. Legitimate OS persistence mechanisms, abused scope. No new malware dropped — the implant from s2 is renewed through legitimate means to survive host rebuilds."
+    },
+    {
+      "step_id": "s6-long-term-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Slow, low-volume exfiltration of aerospace/defense intellectual property over months to years. Legitimate network functions (HTTPS to cloud storage, staged email forwarding rules), abused scope. DRE:C. The dwell time measured in years is the defining characteristic — Mandiant observed cases with 4+ year dwell in this cohort."
+    }
+  ]
+}

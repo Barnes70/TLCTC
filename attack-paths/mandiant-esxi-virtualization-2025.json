@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "incident_id": "MANDIANT-ESXI-VIRTUALIZATION-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "registry_ref": "example-registry.json",
+    "created_at": "2026-04-14T00:00:00Z",
+    "notes": "Attack path derived from Mandiant M-Trends 2026 'Adversary Focus on Virtualized Infrastructure' (pp. 70-73). Illustrates the VMDK-mount credential-dump technique and ESXi-only ransomware (FOULFOG.LINUX, INC.LINUX) that bypasses endpoint EDR entirely. Initial access presumed to be stolen-credential / VPN login consistent with the broader 2025 pattern. Intra-system hypervisor boundary annotated per v2.1 R-INTRA rules — boundaries are observability annotations and do NOT change cluster classification. Sources: M-Trends 2026 pp. 70-73."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-initial-access",
+      "cluster": "#4",
+      "delta_t_to_next": "~2h",
+      "notes": "Corporate VPN login via stolen employee credentials. R-CRED / Axiom X: credential application is ALWAYS #4."
+    },
+    {
+      "step_id": "s2-ad-compromise",
+      "cluster": "#4",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~4h",
+      "notes": "Privilege escalation to domain admin (Kerberoasting / DCSync / ADCS abuse). DRE:C on the AD credential database. Domain-admin credentials are leveraged in s3 to manipulate ESX Admins group membership."
+    },
+    {
+      "step_id": "s3-esx-admins-group-manipulation",
+      "cluster": "#1",
+      "delta_t_to_next": "~30m",
+      "notes": "Abuse of Active Directory group management to add an adversary-controlled account to the ESX Admins AD group. Because vCenter / ESXi honor this group for administrative access (legacy AD integration), group membership change → hypervisor admin. Legitimate AD management function, abused scope. No exploit, no FEC."
+    },
+    {
+      "step_id": "s4-vcenter-auth",
+      "cluster": "#4",
+      "delta_t_to_next": "~15m",
+      "notes": "Authentication to vCenter using the newly-privileged ESX Admins account. R-CRED: credential application is #4. Axiom X: the group-membership change in s3 is the enabling abuse; the credential use here is a separate step."
+    },
+    {
+      "step_id": "s5-vmdk-mount",
+      "cluster": "#1",
+      "delta_t_to_next": "~20m",
+      "notes": "Via vCenter, power off or snapshot the domain controller VM, detach its VMDK, and attach the disk to a new or decommissioned unmanaged VM (one with no EDR agent). All legitimate vCenter administrative operations, abused scope. Intra-system boundary annotation (observational only, does not change classification): |[hypervisor][@vCenter→@UnmanagedVM]|."
+    },
+    {
+      "step_id": "s6-ntds-dump",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~30m",
+      "notes": "From the unmanaged VM, read NTDS.dit and the SYSTEM registry hive from the mounted disk using standard OS file-read operations (e.g., GoSecretsDump, Impacket). Legitimate OS functions, abused scope. DRE:C — complete Active Directory credential database exfiltrated from outside any managed-endpoint EDR visibility."
+    },
+    {
+      "step_id": "s7-esxi-ransomware",
+      "cluster": "#7",
+      "fec_executed": true,
+      "outcomes": ["Ac"],
+      "notes": "Deploy ESXi-only ransomware (FOULFOG.LINUX, INC.LINUX, or similar) to all hypervisors. R-EXEC satisfied: FEC execution on the hypervisor, not on any managed VM. DRE:Ac — VMs present but inaccessible (Accessibility loss). Because no managed endpoint executes the payload, traditional EDR never triggers. Axiom III: ransomware is an outcome class; the #7 classification applies to the payload execution."
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "incident_id": "MANDIANT-SAAS-CASCADE-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "registry_ref": "example-registry.json",
+    "created_at": "2026-04-14T00:00:00Z",
+    "notes": "Attack path derived from Mandiant M-Trends 2026 'The Cascading Impact of Third-Party SaaS Compromises' (pp. 74-77). UNC5221-style pattern: compromise a SaaS provider via a public-facing webshell / SQLi, extract Azure Service Principals and OAuth refresh tokens, then ride the provider's legitimate integration chain into downstream customer tenants. The downstream step is where #10 (Supply Chain) appears — at the customer's Trust Acceptance Event where the provider's service principal is honored. Sources: M-Trends 2026 pp. 21, 74-77."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-webshell-exploit",
+      "cluster": "#2",
+      "topology_boundary": {
+        "context": "api",
+        "source_sphere": "@External",
+        "target_sphere": "@SaaSProvider"
+      },
+      "delta_t_to_next": "~1h",
+      "notes": "Exploitation of the SaaS provider's internet-facing admin/API plane: SQL injection, deserialization, or webshell upload via an authenticated admin app. R-ROLE: the SaaS provider's application is in server role relative to the attacker → #2 (Exploiting Server)."
+    },
+    {
+      "step_id": "s2-webshell-persistence",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "~1d",
+      "notes": "Webshell / post-exploitation implant installed on the provider's infrastructure. R-EXEC satisfied: FEC execution of attacker-supplied code on the provider's server. Enables persistent hands-on-keyboard operations inside the provider's tenancy."
+    },
+    {
+      "step_id": "s3-cloud-recon",
+      "cluster": "#1",
+      "delta_t_to_next": "~6h",
+      "notes": "Azure AD / Entra ID reconnaissance within the provider's tenant: enumerate service principals, OAuth applications, and multi-tenant integrations. Legitimate cloud management APIs, abused scope. No exploit, no FEC."
+    },
+    {
+      "step_id": "s4-service-principal-exfil",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~1h",
+      "notes": "Extract service-principal secrets / OAuth refresh tokens that grant the provider's app delegated access into downstream customer tenants. Legitimate secret-retrieval APIs (Key Vault, configuration store), abused scope. DRE:C — the provider's cross-tenant credentials are the crown jewels."
+    },
+    {
+      "step_id": "s5-sp-auth-to-customer",
+      "cluster": "#4",
+      "delta_t_to_next": "instant",
+      "notes": "Authentication into the downstream customer tenant using the exfiltrated service-principal secret. R-CRED / Axiom X: credential application is ALWAYS #4, regardless of how the credential was acquired. The authentication looks indistinguishable from normal provider-to-customer integration traffic."
+    },
+    {
+      "step_id": "s6-trust-acceptance",
+      "cluster": "#10",
+      "topology_boundary": {
+        "context": "api",
+        "source_sphere": "@SaaSProvider",
+        "target_sphere": "@Customer"
+      },
+      "delta_t_to_next": "~1h",
+      "notes": "Trust Acceptance Event (R-SUPPLY): the customer tenant honors the provider's service principal as if it were the provider itself — cryptographically it is. This step marks the moment a cross-domain trust artifact becomes authoritative inside the customer's domain. Falsifiability test: if the customer had restricted the service principal's scope or enforced per-customer SP rotation, this TAE would not have enabled downstream data access."
+    },
+    {
+      "step_id": "s7-customer-data-access",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Use of delegated API access to query customer data (CRM records, documents, emails). Legitimate, audited API calls — abused scope. DRE:C. The downstream victim's only observable signal is behavioral: unusual query volume or off-hours access from the provider's service principal."
+    }
+  ]
+}
