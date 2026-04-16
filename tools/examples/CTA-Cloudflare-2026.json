@@ -1,0 +1,494 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-04-09T00:00:00Z",
+  "actors": [
+    {
+      "threat_actor": "NastyShrew (Gamaredon, UAC-0010, Primitive Bear, Aqua Blizzard)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Russia-nexus, one of the most active and persistent Russian threats. Champion Social Engineering [#9] — high-frequency phishing with .lnk/.ps1 files. High Malware [#7] — Pteranodon VBScript chains, multi-stage payloads. High Function Abuse [#1] — dead drop resolvers on paste sites (teletype.in, rentry.co), geofenced C2 infrastructure, LotL techniques. VPS purchased with cryptocurrency, strict Ukrainian IP geofencing. Members arrested in Thailand (Phuket) in Feb/Nov 2025.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 16)",
+        "Cloudforce One",
+        "CERT-UA"
+      ],
+      "sequence": "#09 → #07 → #01 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "Russia",
+      "motivation": [
+        "Espionage",
+        "Critical Infrastructure Disruption"
+      ],
+      "target_sectors": [
+        "Government",
+        "Critical Infrastructure",
+        "Defense"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "NASTYSHREW-UKRAINE-2025",
+          "notation": "#9 ||[email][@NastyShrew→@UkrainianGov]|| →[Δt=~1h] #7 →[Δt=~5m] #1 →[Δt=~30m] #1 + [DRE: C]",
+          "cluster_sequence": [9, 7, 1, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "StainedShrew (VoidBlizzard, Laundry Bear, UAC-0190)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Russia-nexus, first publicly attributed by Dutch intelligence May 2025. Champion Social Engineering [#9] — event-driven tactical targeting aligned with NATO summits, EU Defense meetings, Brussels Indo-Pacific Forum, SIDEC, World Agriculture Forum. High Identity Theft [#4] — credential theft via software brand impersonation (Microsoft, ESET). High Malware [#7] — PLUGGYAPE backdoor. Rapid infrastructure rotation — purchases domains and hosting from multiple providers, anticipates disruption.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 17)",
+        "Dutch Intelligence (AIVD/MIVD)",
+        "Cloudforce One"
+      ],
+      "sequence": "#09 → #04 → #07 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "Russia",
+      "motivation": [
+        "Espionage",
+        "Strategic Intelligence"
+      ],
+      "target_sectors": [
+        "Government",
+        "Defense",
+        "Transportation",
+        "Media",
+        "NGOs",
+        "Healthcare"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "STAINEDSHREW-NATO-2025",
+          "notation": "#9 ||[human][@External→@NATOAlly]|| →[Δt=~1d] #4 →[Δt=~1h] #7 →[Δt=~7d] #1 + [DRE: C]",
+          "cluster_sequence": [9, 4, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "RottenShrew (UAC-0185, Lost Potential, UNC4221)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 2,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Russia-nexus, specialized reconnaissance unit. Champion Social Engineering [#9] — impersonation of Kropyva (Ukrainian artillery guidance), Delta, Teneta, Diia, e-Cherha apps. High Identity Theft [#4] — Signal device-linking credential theft via custom phish kit. High Function Abuse [#1] — PINPOINT (JS geolocation via browser API), MESHAGENT (legitimate RMM for persistence). Geolocation capability suggests overlap with kinetic targeting.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 18)",
+        "CERT-UA"
+      ],
+      "sequence": "#09 → #04 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "Russia",
+      "motivation": [
+        "Reconnaissance",
+        "Espionage",
+        "Kinetic Support"
+      ],
+      "target_sectors": [
+        "Military",
+        "Defense"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "ROTTENSHREW-SIGNAL-2025",
+          "notation": "#9 ||[human][@RottenShrew→@UkrainianMilitary]|| →[Δt=~5m] #4 →[Δt=~1m] #1 + [DRE: C]",
+          "cluster_sequence": [9, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "ClumsyToad (Mustang Panda, Earth Preta, BASIN, Twill Typhoon)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 3,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, high-frequency regional espionage. Champion Malware [#7] — PlugX/Korplug, Toneshell, Yokai, PUBLOAD, SnakeDisk USB worm, DLL side-loading. High Physical Attack [#8] — SnakeDisk propagates via USB removable drives (geofenced to Thailand). High Social Engineering [#9] — spear-phishing with localized lures. Moderate Client Exploit [#3] — shifted from .lnk to .msc (Windows Management Console) files to bypass EDR. Cloudforce One disrupted 20+ accounts, 400+ domains, 87 core assets.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 20-21)",
+        "Cloudforce One"
+      ],
+      "sequence": "#09 → #07 → #01 (spear-phish chain) | #08 → #07 → #01 (USB chain)",
+      "last_updated": "2026-04-09",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Government",
+        "Diplomatic",
+        "Law Enforcement"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "CLUMSYTOAD-SNAKEDISK-2025",
+          "notation": "#8 ||[physical][@ClumsyToad→@ThaiGov]|| →[Δt=?] #7 →[Δt=instant] #1 + [DRE: C]",
+          "cluster_sequence": [8, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "PunyToad (UNC5221, UTA0178, Warp Panda)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 1,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "China-nexus, edge network appliance exploitation specialist. Champion Server Exploit [#2] — F5 BIG-IP, VMware vCenter, VMware ESXi. Champion Malware [#7] — BRICKSTORM (Go-based ELF, Garble-obfuscated), GarbTerm; reverse C2 logic (malware as web server, C2 connects via wss://); masquerades as VMware/Postgres processes. High Function Abuse [#1] — DNS over HTTP (DoH) for C2 resolution, proxy tunneling. Maintained F5 access for >1 year, exfiltrated source code and undisclosed vulnerability documentation.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 22)",
+        "Cloudforce One",
+        "F5 Advisory K000154696",
+        "Google Cloud Blog"
+      ],
+      "sequence": "#02 → #07 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "Pre-positioning"
+      ],
+      "target_sectors": [
+        "Network Infrastructure",
+        "Telecommunications",
+        "Critical Infrastructure"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "PUNYTOAD-F5-BIGIP-2025",
+          "notation": "#2 →[Δt=~1h] #7 →[Δt=~1d] #1 + [DRE: C]",
+          "cluster_sequence": [2, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "FrumpyToad (APT41, Wicked Panda, Brass Typhoon, BARIUM)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 3
+      },
+      "notes": "China-nexus, dual espionage + financial motivation. Champion Function Abuse [#1] — weaponized Google Calendar for cloud-to-cloud C2 (TOUGHPROGRESS reads/writes encrypted commands in event descriptions), LotX operations. Champion Malware [#7] — TOUGHPROGRESS, KEYPLUG, ShadowPad, DUSTTRAP, DUSTPAN. High Supply Chain [#10] — known for software supply chain attacks. High Social Engineering [#9] — spear-phishing via serverless platform redirect chains. High Identity Theft [#4] — credential stealers. Delivery chain uses compromised government sites for payload hosting.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 23)",
+        "Cloudforce One",
+        "Google Threat Intelligence (Mandiant)"
+      ],
+      "sequence": "#09 → #07 → #01 (Google Calendar C2)",
+      "last_updated": "2026-04-09",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Financial Services",
+        "SaaS Providers",
+        "Technology",
+        "Healthcare",
+        "Government"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "FRUMPYTOAD-TOUGHPROGRESS-2025",
+          "notation": "#9 ||[email][@FrumpyToad→@Victim]|| →[Δt=~1h] #7 →[Δt=instant] #1 + [DRE: C]",
+          "cluster_sequence": [9, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "PatheticSlug (Lazarus Group subcluster)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 2,
+        "TLCTC-10.00": 3
+      },
+      "notes": "North Korea-nexus, Lazarus subcluster. High Supply Chain [#10] — XenoRAT payloads hosted on Google Drive and Dropbox, GitHub for covert C2. High Malware [#7] — XenoRAT. High Function Abuse [#1] — leverages high-reputation cloud providers (Google Drive, Dropbox, GitHub) to blend into legitimate enterprise traffic and bypass security filters. Analytical parasitism on legitimate platforms.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 11, 14)"
+      ],
+      "sequence": "#10 → #07 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Financial Gain",
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services",
+        "Cryptocurrency"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "PATHETICSLUG-XENORAT",
+          "notation": "#10 ||[dev][@Public⇒@GoogleDrive→@Victim]|| →[Δt=instant] #7 →[Δt=~1h] #1 + [DRE: C]",
+          "cluster_sequence": [10, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "PutridSlug (Lazarus Group subcluster)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 3
+      },
+      "notes": "North Korea-nexus, Lazarus subcluster. Contagious Interview campaign — social engineering via fake job interviews targeting crypto developers (ClickFix technique). Champion Malware [#7] — custom implants. High Social Engineering [#9] — fake job interviews, dev recruitment lures. High Identity Theft [#4] — credential harvesting. High Supply Chain [#10] — software supply chain compromise. Targets cryptocurrency sector for regime revenue generation.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 24-26)"
+      ],
+      "sequence": "#09 → #07 → #04 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Financial Gain",
+        "Revenue Generation"
+      ],
+      "target_sectors": [
+        "Cryptocurrency",
+        "Financial Services",
+        "Technology"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "PUTRIDSLUG-CONTAGIOUS-INTERVIEW",
+          "notation": "#9 ||[human][@External→@Developer]|| →[Δt=~30m] #7 →[Δt=~1d] #4 →[Δt=~1h] #1 + [DRE: C]",
+          "cluster_sequence": [9, 7, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "FoolishSlug (NK IT Worker Operations)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "North Korea-nexus, industrialized IT worker infiltration. Champion Social Engineering [#9] — deepfake video interviews, fabricated LinkedIn/GitHub personas, rented US citizen credentials, laptop farm residency illusion. Champion Function Abuse [#1] — legitimate corporate system access used for intelligence collection and revenue funneling. High Identity Theft [#4] — uses legitimately-issued credentials obtained through identity fraud. No traditional malware — operates entirely through designed system capabilities. Detection: impossible travel alerts, mouse-jiggling software, deepfake video micro-artifacts.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 12, 24-27)",
+        "Cloudforce One"
+      ],
+      "sequence": "#09 → #04 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Revenue Generation",
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services",
+        "Government Contractors"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "NK-IT-WORKER-INFILTRATION-2025",
+          "notation": "#9 ||[human][@DPRK→@WesternOrg]|| →[Δt=~30d] #4 →[Δt=~1d] #1 + [DRE: C]",
+          "cluster_sequence": [9, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "MuddyKrill (MuddyWater, ConvolutedKrill)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Iran-nexus. High Social Engineering [#9] — spear-phishing targeting government and private sectors. High Malware [#7] — custom backdoors and implants. Moderate Server Exploit [#2] — targets telecommunications infrastructure. High Function Abuse [#1] — post-compromise lateral movement. Targets Middle East (Israel, Saudi Arabia, UAE) and Southern Europe for espionage and regional influence.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 14, 48)"
+      ],
+      "sequence": "#09 → #07 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "Iran",
+      "motivation": [
+        "Espionage",
+        "Regional Influence"
+      ],
+      "target_sectors": [
+        "Government",
+        "Telecommunications",
+        "Energy"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "MUDDYKRILL-REGIONAL",
+          "notation": "#9 ||[human][@External→@Target]|| →[Δt=~1d] #7 →[Δt=~7d] #1 + [DRE: C]",
+          "cluster_sequence": [9, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "GRUB1",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 2
+      },
+      "notes": "Unsophisticated individual actor demonstrating the MOE paradigm. Champion Function Abuse [#1] — automated secret scanning (TruffleHog) for credential discovery, AI-assisted SaaS navigation using LLMs in real time to navigate Salesforce. High Identity Theft [#4] — uses harvested credentials to authenticate to SaaS integrations. No traditional exploitation or malware — operates entirely through legitimate tools and designed functionality. Breached hundreds of corporate Salesforce tenants through the Salesloft/Drift integration. Demonstrates that unsophisticated actors can now execute high-impact breaches through industrialized credential discovery and AI navigation.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 7)",
+        "Cloudforce One"
+      ],
+      "sequence": "#01 → #04 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "SaaS",
+        "Technology",
+        "Cross-sector (via SaaS integrations)"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "GRUB1-SAAS-PIVOT-2025",
+          "notation": "#1 + [DRE: C] →[Δt=~1h] #4 →[Δt=~30m] #1 + [DRE: C]",
+          "cluster_sequence": [1, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "Aisuru / Kimwolf (Botnet Operators)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 4,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 1
+      },
+      "notes": "Botnet operators behind record-breaking DDoS attacks. Champion Flooding [#6] — 31.4 Tbps UDP flood (November 2025), 19 world records in 2025, attacks peak in seconds and end within 10 minutes. Champion Malware [#7] — botnet malware controlling estimated 1-4 million infected hosts, residential proxy tunneling. Moderate Server Exploit [#2] — IoT device exploitation for botnet recruitment. Moderate Identity Theft [#4] — credential stuffing at industrial scale (94% of login attempts from bots). Kimwolf is the successor network; 550+ C2 nodes null-routed in early 2026.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 42-45)",
+        "Cloudforce One DDoS quarterly reports"
+      ],
+      "sequence": "#07 → #06 (DDoS chain) | #04 → #01 → #07 → #06 (full bot lifecycle)",
+      "last_updated": "2026-04-09",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Disruption",
+        "DDoS-for-Hire",
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Cross-sector",
+        "Telecommunications",
+        "Automotive",
+        "Mining"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "AISURU-DDOS-2025",
+          "notation": "#7 →[Δt=?] #6 + [DRE: A]",
+          "cluster_sequence": [7, 6],
+          "dre_outcomes": { "C": 0, "I": 0, "A": 1, "Ac": 0 }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TLCTC Tech Enablers Radar - Emerging Technology Monitor</title>
+    <meta name="description" content="Monitor emerging technology enablers across TLCTC cyber threat clusters, mapped by adoption level and actor archetype (Nation State, Extortion, Fraud, Hacktivist, Amateur).">
+    <meta name="keywords" content="TLCTC, Tech Enablers, Technology Radar, Emerging Tech, AI, Agentic AI, Quantum, Cyber Threat Intelligence">
+    <meta name="author" content="TLCTC Framework">
+    <meta property="og:title" content="TLCTC Tech Enablers Radar">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="/vendor/react/18.3.1/react.development.js"></script>
+    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
+    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))"
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))"
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))"
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))"
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))"
+                        },
+                        destructive: {
+                            DEFAULT: "hsl(var(--destructive))",
+                            foreground: "hsl(var(--destructive-foreground))"
+                        },
+                    },
+                },
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --radius: 0.75rem;
+                --background: 0 0% 100%;
+                --foreground: 240 10% 3.9%;
+                --card: 0 0% 100%;
+                --card-foreground: 240 10% 3.9%;
+                --primary: 240 5.9% 10%;
+                --primary-foreground: 0 0% 98%;
+                --secondary: 240 4.8% 95.9%;
+                --secondary-foreground: 240 5.9% 10%;
+                --muted: 240 4.8% 95.9%;
+                --muted-foreground: 240 3.8% 46.1%;
+                --accent: 240 4.8% 95.9%;
+                --accent-foreground: 240 5.9% 10%;
+                --destructive: 0 84.2% 60.2%;
+                --destructive-foreground: 0 0% 98%;
+                --border: 240 5.9% 90%;
+                --input: 240 5.9% 90%;
+                --ring: 240 5.9% 10%;
+            }
+
+            .dark {
+                --background: 240 10% 3.9%;
+                --foreground: 0 0% 98%;
+                --card: 240 10% 3.9%;
+                --card-foreground: 0 0% 98%;
+                --primary: 0 0% 98%;
+                --primary-foreground: 240 5.9% 10%;
+                --secondary: 240 3.7% 15.9%;
+                --secondary-foreground: 0 0% 98%;
+                --muted: 240 3.7% 15.9%;
+                --muted-foreground: 240 5% 64.9%;
+                --accent: 240 3.7% 15.9%;
+                --accent-foreground: 0 0% 98%;
+                --destructive: 0 62.8% 30.6%;
+                --destructive-foreground: 0 0% 98%;
+                --border: 240 3.7% 15.9%;
+                --input: 240 3.7% 15.9%;
+                --ring: 240 4.9% 83.9%;
+            }
+
+            body {
+                @apply bg-background text-foreground selection:bg-primary/20;
+            }
+        }
+
+        @layer components {
+            .container-custom { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
+
+            .btn { @apply inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background active:scale-95; }
+            .btn-sm { @apply h-9 px-3 text-xs; }
+            .btn-md { @apply h-10 px-4 py-2; }
+            .btn-primary { @apply bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5; }
+            .btn-secondary { @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border/50; }
+            .btn-destructive { @apply bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm; }
+            .btn-outline { @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground; }
+            .btn-ghost { @apply hover:bg-accent hover:text-accent-foreground; }
+
+            .glass-card { @apply bg-card/50 backdrop-blur-xl border border-border/50 shadow-sm transition-all duration-300; }
+            .ai-disclaimer { @apply bg-muted/50 text-muted-foreground text-[11px] leading-snug py-1.5 px-4 text-center border-b border-border flex-shrink-0; }
+            .ai-disclaimer button { @apply bg-transparent border-none cursor-pointer text-muted-foreground text-sm ml-2 opacity-60 align-middle; }
+            .ai-disclaimer button:hover { @apply opacity-100; }
+
+            .input-field { @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50; }
+
+            .gradient-text { @apply bg-clip-text text-transparent bg-gradient-to-br from-foreground via-foreground/90 to-foreground/60; }
+
+            .grid-bg {
+                background-image: linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px),
+                                linear-gradient(to bottom, hsl(var(--border) / 0.1) 1px, transparent 1px);
+                background-size: 40px 40px;
+                mask-image: radial-gradient(ellipse at center, black, transparent 80%);
+            }
+        }
+    </style>
+    <style>
+        /* Enablers Radar Styles */
+        .tech-chip { width:42px; height:42px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:800; color:white; cursor:grab; transition:transform 0.1s,box-shadow 0.1s; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06); position:relative; margin:3px; text-align:center; line-height:1; flex-shrink:0; border-radius:8px; border:1px solid rgba(255,255,255,0.2); user-select:none; }
+        .tech-chip:active { cursor:grabbing; transform:scale(1.05); z-index:50; }
+        .tech-chip:hover { z-index:40; transform:translateY(-1px); box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); }
+        .tech-chip-small { width:24px; height:24px; font-size:0; margin:2px; border-radius:4px; }
+        .actor-indicator { position:absolute; font-weight:900; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.8); pointer-events:none; font-family:'Inter',sans-serif; }
+        .pos-tl{top:1px;left:2px} .pos-tr{top:1px;right:2px} .pos-bl{bottom:1px;left:2px} .pos-br{bottom:1px;right:2px} .pos-cc{bottom:1px;left:50%;transform:translateX(-50%)}
+        .tech-chip-small .actor-indicator{display:none}
+        .enabler-arrow-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:20;overflow:visible}
+        @keyframes enabler-dash{to{stroke-dashoffset:-20}} .animate-enabler-dash{animation:enabler-dash 1s linear infinite}
+        .selected-ring{outline:2px solid #2563eb;outline-offset:2px}
+        .tech-ghost{opacity:0.4;filter:grayscale(100%) brightness(1.2);border:2px dashed #94a3b8;box-shadow:none}
+        .enabler-radar-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0}
+        .enabler-radar-table th{padding:12px 4px;font-size:0.7rem;border-bottom:2px solid hsl(var(--border));background:hsl(var(--secondary))}
+        .enabler-radar-table td{padding:4px;vertical-align:top;border-right:1px solid hsl(var(--border));border-bottom:1px solid hsl(var(--border));height:80px;transition:background-color 0.2s}
+        .enabler-radar-table td:last-child{border-right:none}
+        td.enabler-drag-over{background-color:hsl(var(--primary)/0.08) !important}
+        .enabler-row-label{width:120px;font-size:0.75rem;padding:8px;font-weight:700;color:hsl(var(--muted-foreground));border-right:2px solid hsl(var(--border)) !important;display:flex;align-items:center;justify-content:flex-end;text-align:right;height:100%}
+        .enabler-btn-tool{padding:6px 12px;border:1px solid hsl(var(--border));border-radius:6px;font-size:0.75rem;font-weight:600;display:flex;align-items:center;gap:6px;transition:all 0.15s;cursor:pointer;background:hsl(var(--background));color:hsl(var(--foreground))}
+        .enabler-btn-tool:hover{background:hsl(var(--secondary))}
+        .tech-detail-badge{position:absolute;bottom:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:#fbbf24;border:1.5px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,0.35);pointer-events:none;z-index:5}
+        .enabler-palette-chip{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:8px;border:1px solid hsl(var(--border));background:hsl(var(--background));cursor:grab;transition:all 0.15s;flex-shrink:0;user-select:none}
+        .enabler-palette-chip:hover{border-color:hsl(var(--primary));background:hsl(var(--secondary))}
+        .enabler-palette-chip:active{cursor:grabbing}
+        .enabler-palette-chip .chip-swatch{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;border:1px solid rgba(255,255,255,0.2)}
+        .enabler-palette-chip .chip-label{font-size:10px;font-weight:700;color:hsl(var(--muted-foreground));white-space:nowrap}
+        .enabler-drawer{position:fixed;top:96px;right:16px;bottom:16px;width:100%;max-width:440px;background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.35);z-index:40;display:flex;flex-direction:column;animation:enabler-drawer-in 0.22s cubic-bezier(0.16,1,0.3,1)}
+        @keyframes enabler-drawer-in{from{transform:translateX(calc(100% + 40px));opacity:0}to{transform:translateX(0);opacity:1}}
+        @media (max-width:640px){.enabler-drawer{left:8px;right:8px;max-width:none;top:80px}}
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased relative overflow-x-hidden flex flex-col">
+
+    <div class="fixed inset-0 -z-10 h-full w-full bg-background">
+        <div class="absolute inset-0 grid-bg"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[600px] bg-primary/5 rounded-full blur-[100px] opacity-50 pointer-events-none"></div>
+    </div>
+
+    <header class="sticky top-4 z-50 mx-auto max-w-7xl px-4 w-full">
+        <div class="rounded-2xl border border-border/40 bg-background/70 backdrop-blur-md shadow-sm">
+            <div class="flex h-16 items-center justify-between px-4 sm:px-6">
+                <div class="flex items-center gap-3">
+                    <a href="/index.html" class="flex items-center gap-2 group">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
+                           <img src="/images/logo-small.png" alt="Logo" class="h-full w-full object-contain p-1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                           <i data-lucide="shield" class="h-5 w-5 hidden"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-display font-bold text-lg leading-tight">TLCTC</span>
+                            <span class="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+                        </div>
+                    </a>
+                </div>
+
+                <nav class="hidden md:flex items-center gap-1">
+                    <div class="nav-dd relative">
+                        <button onclick="toggleNavDd('analysis')" class="text-sm font-medium text-muted-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                            <i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+                        </button>
+                        <div id="nav-dd-analysis-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
+                            <a href="threat-modeling.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="file-search" class="h-4 w-4"></i> Threat Modeling</a>
+                            <a href="attack-path-architect.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="route" class="h-4 w-4"></i> Attack Path Architect</a>
+                            <a href="attck-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="swords" class="h-4 w-4"></i> ATT&CK Explorer</a>
+                            <a href="cwe-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="bug" class="h-4 w-4"></i> CWE Explorer</a>
+                        </div>
+                    </div>
+                    <div class="nav-dd relative">
+                        <button onclick="toggleNavDd('actors')" class="text-sm font-medium text-muted-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                            <i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+                        </button>
+                        <div id="nav-dd-actors-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
+                            <a href="actor-profile-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="fingerprint" class="h-4 w-4"></i> Actor Profiler</a>
+                            <a href="actor-story-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="book-open" class="h-4 w-4"></i> Actor Story</a>
+                        </div>
+                    </div>
+                    <div class="nav-dd relative">
+                        <button onclick="toggleNavDd('defense')" class="text-sm font-semibold text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                            <i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+                        </button>
+                        <div id="nav-dd-defense-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
+                            <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
+                            <a href="tech-enablers-radar.html" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground font-semibold bg-accent/50"><i data-lucide="cpu" class="h-4 w-4"></i> Tech Enablers Radar</a>
+                            <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
+                            <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
+                        </div>
+                    </div>
+                    <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+                    <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><i data-lucide="github" class="h-4 w-4"></i></a>
+                </nav>
+
+                <div class="flex items-center gap-3">
+                    <button id="theme-toggle" onclick="toggleDarkMode()" class="btn btn-ghost btn-sm h-9 w-9 p-0 rounded-full" aria-label="Toggle theme">
+                        <i id="theme-toggle-dark-icon" data-lucide="sun" class="h-4 w-4 hidden dark:block"></i>
+                        <i id="theme-toggle-light-icon" data-lucide="moon" class="h-4 w-4 block dark:hidden"></i>
+                    </button>
+                    <button onclick="toggleMenu()" class="md:hidden btn btn-ghost btn-sm h-9 w-9 p-0 rounded-full">
+                        <i data-lucide="menu" class="h-5 w-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="ai-disclaimer no-print rounded-b-2xl" id="ai-disclaimer" style="margin-top:-1px;">&#9432; This radar is a design surface for horizon-scanning. Map emerging technologies against cyber threat clusters and actor archetypes to track adoption over time.<button onclick="document.getElementById('ai-disclaimer').remove();try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){}" title="Dismiss">&times;</button></div>
+    </header>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden hidden transition-all duration-300 opacity-0">
+        <div class="flex h-20 items-center justify-between px-6 border-b border-border">
+            <span class="font-display font-bold text-lg">TLCTC</span>
+            <button onclick="toggleMenu()" class="btn btn-ghost h-10 w-10 p-0 rounded-full">
+                <i data-lucide="x" class="h-6 w-6"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col p-8 gap-2 text-base font-medium">
+            <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1.5"><i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis</span>
+            <a href="threat-modeling.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Modeling</a>
+            <a href="attack-path-architect.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Attack Path Architect</a>
+            <a href="attck-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">ATT&CK Explorer</a>
+            <a href="cwe-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CWE Explorer</a>
+
+            <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors</span>
+            <a href="actor-profile-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Profiler</a>
+            <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Story</a>
+
+            <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense</span>
+            <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Radar</a>
+            <a href="tech-enablers-radar.html" onclick="toggleMenu()" class="pl-5 py-1 text-foreground font-semibold">Tech Enablers Radar</a>
+            <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
+            <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
+        </nav>
+    </div>
+
+    <main class="flex-grow py-6 md:py-8">
+        <section class="text-center container-custom mb-5">
+            <div class="inline-flex items-center gap-1.5 rounded-full bg-secondary border border-border/50 px-3 py-1 text-[10px] font-semibold text-muted-foreground mb-2">
+                <i data-lucide="cpu" class="h-3 w-3 text-primary"></i>
+                <span>Emerging Technology Monitor</span>
+            </div>
+            <h1 class="font-display text-2xl sm:text-3xl font-bold tracking-tight mb-1 gradient-text">
+                Tech Enablers Radar
+            </h1>
+            <p class="text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto">
+                Map emerging technologies against the 10 TLCTC clusters and actor archetypes. Track adoption, spot trends, snapshot shifts.
+            </p>
+        </section>
+
+        <!-- Data Actions Bar -->
+        <div class="container-custom mb-6">
+            <div class="glass-card rounded-xl p-3 flex flex-wrap gap-3 items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-bold ml-2 mr-2"><i data-lucide="file-json" class="inline h-4 w-4 mb-0.5"></i> Data Actions:</span>
+                </div>
+                <div class="flex flex-wrap gap-2 items-center">
+                    <label class="flex items-center gap-1.5 text-xs">
+                        <i data-lucide="book-open" class="h-3 w-3"></i>
+                        <select id="selectLoadExample" class="input-field h-8 text-xs py-0 px-2 rounded-md" title="Load a curated example into the radar">
+                            <option value="">Load Example…</option>
+                            <option value="tech-enablers-horizon-2026">Horizon 2026 — Broad Landscape (27 techs)</option>
+                            <option value="tech-enablers-agentic-focus-2026">Agentic AI Emergence 2026 (10 techs)</option>
+                        </select>
+                    </label>
+                    <button id="btnImportJson" class="btn btn-outline btn-sm">
+                        <i data-lucide="upload" class="h-3 w-3 mr-2"></i> Import JSON
+                    </button>
+                    <button id="btnExportJson" class="btn btn-outline btn-sm">
+                        <i data-lucide="download" class="h-3 w-3 mr-2"></i> Export JSON
+                    </button>
+                    <button id="btnResetRadar" class="btn btn-outline btn-sm text-destructive border-destructive/30 hover:bg-destructive/10">
+                        <i data-lucide="rotate-ccw" class="h-3 w-3 mr-2"></i> Reset to Defaults
+                    </button>
+                    <input type="file" id="fileInputEnabler" accept=".json" hidden />
+                </div>
+            </div>
+        </div>
+
+        <!-- React mount point -->
+        <div id="enablerReactRoot"></div>
+
+    </main>
+
+    <footer class="bg-card border-t border-border py-12 text-sm mt-auto opacity-90">
+        <div class="container-custom flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2 opacity-80">
+                <img src="/images/logo-small.png" alt="TLCTC" class="h-6 w-auto">
+                <span class="font-bold">TLCTC Framework</span>
+            </div>
+            <div class="text-muted-foreground text-center md:text-right text-xs">
+                <p>Tech Enablers Radar — emerging technologies mapped against TLCTC clusters and actor archetypes.</p>
+                <p class="mt-1">Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" class="underline decoration-dotted hover:text-primary">CC BY 4.0</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- UI & Theme Setup ---
+        lucide.createIcons();
+        const htmlEl = document.documentElement;
+
+        function updateThemeIcons() {
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+            if (htmlEl.classList.contains('dark')) {
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            }
+        }
+
+        function toggleDarkMode() {
+            htmlEl.classList.toggle('dark');
+            localStorage.theme = htmlEl.classList.contains('dark') ? 'dark' : 'light';
+            updateThemeIcons();
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
+        }
+        updateThemeIcons();
+
+        // Nav Dropdowns
+        function toggleNavDd(id) {
+            document.querySelectorAll('.nav-dd-panel').forEach(function(p) {
+                if (p.id !== 'nav-dd-' + id + '-panel') p.classList.add('hidden');
+            });
+            var panel = document.getElementById('nav-dd-' + id + '-panel');
+            if (panel) panel.classList.toggle('hidden');
+        }
+        document.addEventListener('mousedown', function(e) {
+            if (!e.target.closest('.nav-dd')) {
+                document.querySelectorAll('.nav-dd-panel').forEach(function(p) { p.classList.add('hidden'); });
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenu = document.getElementById('mobile-menu');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+            } else {
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+            }
+        }
+
+        // ============================================================
+        //  ENABLER RADAR STATE & CONFIG
+        // ============================================================
+        const ENABLER_STORAGE_KEY = 'tlctc_tech_enablers_radar_v1';
+        const LEGACY_KEY = 'tlctc_v5'; // prior key used inside Actor Story Designer
+
+        const ENABLER_CLUSTERS = [
+            {id:'c1',label:'#1 Abuse'},{id:'c2',label:'#2 Exp Svr'},{id:'c3',label:'#3 Exp Clnt'},
+            {id:'c4',label:'#4 Identity'},{id:'c5',label:'#5 MitM'},{id:'c6',label:'#6 Flood'},
+            {id:'c7',label:'#7 Malware'},{id:'c8',label:'#8 Physical'},{id:'c9',label:'#9 Soc Eng'},
+            {id:'c10',label:'#10 Supply'}
+        ];
+        const ENABLER_LEVELS = [
+            {id:'l1',label:'Commodity / As a Service',color:'bg-red-50 border-l-4 border-red-500'},
+            {id:'l2',label:'Established',color:'bg-orange-50 border-l-4 border-orange-500'},
+            {id:'l3',label:'Specialized / Targeted',color:'bg-fuchsia-50 border-l-4 border-fuchsia-500'},
+            {id:'l4',label:'First Movers',color:'bg-indigo-50 border-l-4 border-indigo-500'},
+            {id:'l5',label:'Not Seen',color:'bg-slate-100 border-l-4 border-slate-400'}
+        ];
+        const DEFAULT_TECHS = [
+            {id:'AI',label:'AI Supported',color:'#2563eb'},{id:'Ag',label:'Agentic AI',color:'#9333ea'},
+            {id:'QC',label:'Q-Computing',color:'#059669'},{id:'QS',label:'Q-Sensing',color:'#0d9488'},
+            {id:'Robo',label:'Robotics',color:'#ea580c'},{id:'IoT',label:'IoT/Edge',color:'#f59e0b'},
+            {id:'Bio',label:'Bionics',color:'#dc2626'},{id:'XR',label:'XR/Spatial',color:'#4f46e5'},
+            {id:'Sat',label:'Space/Satellite',color:'#6366f1'}
+        ];
+        const DEFAULT_ACTOR_TYPES = [
+            {id:'N',label:'Nation State',pos:'pos-tl'},{id:'E',label:'Extortion (Ransom)',pos:'pos-tr'},
+            {id:'F',label:'Fraud (Financial)',pos:'pos-bl'},{id:'H',label:'Hacktivist',pos:'pos-br'},
+            {id:'A',label:'Amateur',pos:'pos-cc'}
+        ];
+        const DEFAULT_ENABLER_APPEARANCE = {actorFontSize:10,trendArrowColor:'#1e293b',trendArrowSize:14};
+
+        window._enablerInstances = [];
+        window._enablerConfig = {
+            clusters: ENABLER_CLUSTERS,
+            levels: ENABLER_LEVELS,
+            techs: DEFAULT_TECHS,
+            actors: DEFAULT_ACTOR_TYPES,
+            appearance: DEFAULT_ENABLER_APPEARANCE
+        };
+
+        function saveEnablerState() {
+            try {
+                const state = {
+                    instances: window._enablerInstances,
+                    config: window._enablerConfig,
+                    version: 'tlctc-tech-enablers-radar.v2'
+                };
+                localStorage.setItem(ENABLER_STORAGE_KEY, JSON.stringify(state));
+            } catch(e) { console.warn('saveEnablerState failed', e); }
+        }
+        window.saveEnablerState = saveEnablerState;
+
+        function loadEnablerState() {
+            try {
+                const raw = localStorage.getItem(ENABLER_STORAGE_KEY);
+                if (raw) {
+                    const s = JSON.parse(raw);
+                    if (Array.isArray(s.instances)) window._enablerInstances = s.instances;
+                    if (s.config) window._enablerConfig = { ...window._enablerConfig, ...s.config };
+                    return;
+                }
+            } catch(e) {}
+            // Legacy migration: previous Actor Story Designer used 'tlctc_v5'
+            try {
+                const legacy = JSON.parse(localStorage.getItem(LEGACY_KEY) || 'null');
+                if (legacy) {
+                    if (Array.isArray(legacy.instances)) window._enablerInstances = legacy.instances;
+                    if (legacy.config) window._enablerConfig = { ...window._enablerConfig, ...legacy.config };
+                    saveEnablerState();
+                }
+            } catch(e) {}
+            // Also try migrating from the unified Actor Story Designer key
+            try {
+                const unified = JSON.parse(localStorage.getItem('tlctc_actor_story_v1') || 'null');
+                if (unified && unified.enablers) {
+                    if (Array.isArray(unified.enablers.instances) && unified.enablers.instances.length) {
+                        window._enablerInstances = unified.enablers.instances;
+                    }
+                    if (unified.enablers.config) {
+                        window._enablerConfig = { ...window._enablerConfig, ...unified.enablers.config };
+                    }
+                    saveEnablerState();
+                }
+            } catch(e) {}
+        }
+
+        function remountEnablerApp() {
+            const container = document.getElementById('enablerReactRoot');
+            if (!container) return;
+            // Replace the DOM node so React detaches cleanly and a fresh mount reads window._enabler* state
+            const parent = container.parentNode;
+            const fresh = container.cloneNode(false);
+            parent.replaceChild(fresh, container);
+            if (window._mountEnablerApp) window._mountEnablerApp();
+            lucide.createIcons();
+        }
+
+        // Data actions: import / export / reset
+        document.addEventListener('DOMContentLoaded', () => {
+            try { if (localStorage.getItem('tlctc-dismiss-disclaimer') === '1') { var d = document.getElementById('ai-disclaimer'); if (d) d.remove(); }} catch(e) {}
+
+            loadEnablerState();
+            if (window._mountEnablerApp) window._mountEnablerApp();
+
+            const fileInput = document.getElementById('fileInputEnabler');
+            document.getElementById('btnImportJson').addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    try {
+                        const data = JSON.parse(ev.target.result);
+                        if (Array.isArray(data.instances)) window._enablerInstances = data.instances;
+                        if (data.config) window._enablerConfig = { ...window._enablerConfig, ...data.config };
+                        saveEnablerState();
+                        remountEnablerApp();
+                        alert('Imported ' + (data.instances ? data.instances.length : 0) + ' technology placements.');
+                    } catch(err) { alert('Import failed: ' + err.message); }
+                    fileInput.value = '';
+                };
+                reader.readAsText(file);
+            });
+
+            document.getElementById('btnExportJson').addEventListener('click', () => {
+                const payload = {
+                    schema_version: 'tlctc-tech-enablers-radar.v2',
+                    exported: new Date().toISOString(),
+                    instances: window._enablerInstances,
+                    config: window._enablerConfig
+                };
+                const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'tlctc_tech_enablers_radar_' + new Date().toISOString().split('T')[0] + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+
+            document.getElementById('btnResetRadar').addEventListener('click', () => {
+                if (!confirm('Reset radar to defaults? All placements will be cleared.')) return;
+                window._enablerInstances = [];
+                window._enablerConfig = {
+                    clusters: ENABLER_CLUSTERS,
+                    levels: ENABLER_LEVELS,
+                    techs: DEFAULT_TECHS,
+                    actors: DEFAULT_ACTOR_TYPES,
+                    appearance: DEFAULT_ENABLER_APPEARANCE
+                };
+                saveEnablerState();
+                remountEnablerApp();
+            });
+
+            // Load curated example JSON from tools/examples/
+            const selectExample = document.getElementById('selectLoadExample');
+            if (selectExample) {
+                selectExample.addEventListener('change', async (e) => {
+                    const key = e.target.value;
+                    if (!key) return;
+                    const existing = Array.isArray(window._enablerInstances) ? window._enablerInstances.length : 0;
+                    if (existing > 0 && !confirm('Loading this example will replace your current ' + existing + ' placement(s). Continue?')) {
+                        selectExample.value = '';
+                        return;
+                    }
+                    try {
+                        const resp = await fetch('examples/' + key + '.json', { cache: 'no-store' });
+                        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                        const data = await resp.json();
+                        if (!Array.isArray(data.instances)) throw new Error('Example file has no instances array');
+                        window._enablerInstances = data.instances;
+                        // Deliberately do NOT overwrite _enablerConfig — keep user's clusters/techs/actors/appearance
+                        saveEnablerState();
+                        remountEnablerApp();
+                        const title = (data.metadata && data.metadata.title) ? data.metadata.title : key;
+                        alert('Loaded example: ' + title + '\n\n' + data.instances.length + ' placements added.');
+                    } catch (err) {
+                        alert('Could not load example "' + key + '": ' + err.message + '\n\nNote: if you opened this file directly (file://), your browser may block fetch(). Serve the folder over http:// or use Import JSON instead.');
+                    } finally {
+                        selectExample.value = '';
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Enablers Radar React App -->
+    <script type="text/babel">
+        const { useState, useEffect, useLayoutEffect, useRef } = React;
+
+        const EIcon = ({ name, size = 16, className }) => {
+            useEffect(() => lucide.createIcons(), [name]);
+            return <i data-lucide={name} width={size} height={size} className={className}></i>;
+        };
+
+        const EnablerTechChip = ({ instance, config, isGhost = false, isSelected, onSelect, onDragStart }) => {
+            const type = config.techs.find(t => t.id === instance.typeId);
+            if (!type) return null;
+            const bgStyle = type.color.startsWith('#') ? { backgroundColor: type.color } : {};
+            const isNotSeen = instance.cellKey && instance.cellKey.startsWith('l5');
+            let classes = `tech-chip `;
+            if (isNotSeen) classes += 'tech-chip-small ';
+            if (isSelected && !isGhost) classes += 'selected-ring ';
+            if (isGhost) classes += 'tech-ghost ';
+            const elementId = isGhost ? `ghost-${instance.uid}` : `tech-${instance.uid}`;
+            const trendColor = config.appearance?.trendArrowColor || '#1e293b';
+            const trendSize = config.appearance?.trendArrowSize || 14;
+            const refCount = (instance.references || []).filter(r => r && r.url).length;
+            const hasNotes = !!(instance.notes && instance.notes.trim().length);
+            const hasConfidence = !!(instance.confidence && instance.confidence.length);
+            const hasEvidence = !!(instance.evidenceSource && instance.evidenceSource.trim().length);
+            const hasDetail = hasNotes || refCount > 0 || hasConfidence || hasEvidence || !!instance.customLabel;
+            const displayName = instance.customLabel ? `${instance.customLabel} — ${type.label}` : type.label;
+            const tipLines = [displayName];
+            if (hasNotes) tipLines.push((instance.notes.length > 100 ? instance.notes.slice(0, 100) + '…' : instance.notes));
+            if (hasConfidence) tipLines.push(`Confidence: ${instance.confidence}`);
+            if (hasEvidence) tipLines.push(`Source: ${instance.evidenceSource}`);
+            if (refCount > 0) tipLines.push(`${refCount} reference${refCount !== 1 ? 's' : ''}`);
+            const tooltip = tipLines.join('\n');
+            return (
+                <div id={elementId} draggable={!isGhost} onDragStart={(e) => onDragStart && onDragStart(e, instance.uid)}
+                    onClick={(e) => { e.stopPropagation(); onSelect && onSelect(instance.uid); }}
+                    className={classes} style={bgStyle} title={tooltip}>
+                    <span>{type.id}</span>
+                    {instance.activeActors.map(actorId => {
+                        const actor = config.actors.find(a => a.id === actorId);
+                        if(!actor) return null;
+                        return <span key={actorId} className={`actor-indicator ${actor.pos}`} style={{ fontSize: `${config.appearance?.actorFontSize || 10}px` }}>{actorId}</span>;
+                    })}
+                    {instance.trend && !isNotSeen && (
+                        <svg className="absolute top-0 left-1/2 -translate-x-1/2 drop-shadow-md" width={trendSize} height={trendSize} viewBox="0 0 24 24" fill={trendColor}>
+                            {instance.trend === 'up' ? <path d="M12 2L4 14h6v8h4v-8h6L12 2z" /> : <path d="M12 22L20 10h-6V2h-4v8H4l8 12z" />}
+                        </svg>
+                    )}
+                    {hasDetail && !isGhost && (<span className="tech-detail-badge" aria-hidden="true"></span>)}
+                </div>
+            );
+        };
+
+        const EnablerSettingsModal = ({ isOpen, onClose, config, setConfig }) => {
+            if (!isOpen) return null;
+            const [activeTab, setActiveTab] = useState('techs');
+            const updateItem = (cat, idx, field, val) => { const list = [...config[cat]]; list[idx][field] = val; setConfig({ ...config, [cat]: list }); };
+            const addItem = (cat, item) => setConfig({ ...config, [cat]: [...config[cat], item] });
+            const deleteItem = (cat, idx) => { if(confirm('Delete?')) setConfig({ ...config, [cat]: config[cat].filter((_, i) => i !== idx) }); };
+            return (
+                <div className="fixed inset-0 z-[200] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
+                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
+                        <div className="p-4 border-b flex justify-between items-center"><h2 className="text-lg font-bold">Radar Configuration</h2><button onClick={onClose}><EIcon name="x"/></button></div>
+                        <div className="flex border-b">{['techs','actors','levels','appearance'].map(tab=>(
+                            <button key={tab} className={`px-6 py-3 text-sm font-bold capitalize ${activeTab===tab?'border-b-2 border-blue-600 text-blue-600':'text-gray-500'}`} onClick={()=>setActiveTab(tab)}>{tab}</button>
+                        ))}</div>
+                        <div className="p-6 overflow-y-auto flex-1 min-h-0">
+                            {activeTab==='techs'&&<div className="space-y-4">
+                                <button onClick={()=>addItem('techs',{id:'NEW',label:'New Tech',color:'#64748b'})} className="text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded font-bold border border-blue-100">+ Add Technology</button>
+                                {config.techs.map((tech,i)=><div key={i} className="flex gap-2 items-center p-2 border rounded-lg bg-gray-50 dark:bg-slate-800">
+                                    <input className="text-xs font-bold p-1 border rounded w-20 bg-white dark:bg-slate-700" value={tech.id} onChange={e=>updateItem('techs',i,'id',e.target.value)}/>
+                                    <input className="text-xs p-1 border rounded flex-1 bg-white dark:bg-slate-700" value={tech.label} onChange={e=>updateItem('techs',i,'label',e.target.value)}/>
+                                    <input type="color" className="h-8 w-8 rounded cursor-pointer" value={tech.color} onChange={e=>updateItem('techs',i,'color',e.target.value)}/>
+                                    <button onClick={()=>deleteItem('techs',i)} className="text-red-400 hover:text-red-600 px-2"><EIcon name="trash-2" size={14}/></button>
+                                </div>)}
+                            </div>}
+                            {activeTab==='actors'&&<div className="space-y-4">
+                                <button onClick={()=>addItem('actors',{id:'?',label:'New Actor',pos:'pos-cc'})} className="text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded font-bold border border-blue-100">+ Add Actor</button>
+                                {config.actors.map((actor,i)=><div key={i} className="flex gap-2 items-center p-2 border rounded-lg bg-gray-50 dark:bg-slate-800">
+                                    <input className="text-xs font-bold p-1 border rounded w-10 text-center bg-white dark:bg-slate-700" value={actor.id} onChange={e=>updateItem('actors',i,'id',e.target.value)} maxLength={1}/>
+                                    <input className="text-xs p-1 border rounded flex-1 bg-white dark:bg-slate-700" value={actor.label} onChange={e=>updateItem('actors',i,'label',e.target.value)}/>
+                                    <select className="text-xs p-1 border rounded bg-white dark:bg-slate-700" value={actor.pos} onChange={e=>updateItem('actors',i,'pos',e.target.value)}>
+                                        <option value="pos-tl">Top-Left</option><option value="pos-tr">Top-Right</option><option value="pos-bl">Bot-Left</option><option value="pos-br">Bot-Right</option><option value="pos-cc">Center</option>
+                                    </select>
+                                    <button onClick={()=>deleteItem('actors',i)} className="text-red-400 hover:text-red-600 px-2"><EIcon name="trash-2" size={14}/></button>
+                                </div>)}
+                            </div>}
+                            {activeTab==='levels'&&<div className="space-y-4"><p className="text-xs text-gray-500">Maturity rows (fixed IDs, editable labels).</p>
+                                {config.levels.map((lvl,i)=><div key={i} className="flex gap-2 items-center p-2 border rounded-lg bg-gray-50 dark:bg-slate-800">
+                                    <span className="text-xs font-mono w-8 text-gray-400">{lvl.id}</span>
+                                    <input className="text-xs font-bold p-1 border rounded flex-1 bg-white dark:bg-slate-700" value={lvl.label} onChange={e=>updateItem('levels',i,'label',e.target.value)}/>
+                                </div>)}
+                            </div>}
+                            {activeTab==='appearance'&&<div className="space-y-6">
+                                <div className="p-4 border rounded bg-gray-50 dark:bg-slate-800">
+                                    <label className="block text-sm font-bold mb-4">Actor Font Size: {config.appearance?.actorFontSize||10}px</label>
+                                    <input type="range" min="8" max="16" value={config.appearance?.actorFontSize||10} onChange={e=>setConfig({...config,appearance:{...config.appearance,actorFontSize:parseInt(e.target.value)}})} className="w-full"/>
+                                </div>
+                                <div className="p-4 border rounded bg-gray-50 dark:bg-slate-800">
+                                    <h4 className="text-sm font-bold mb-4">Trend Arrow</h4>
+                                    <label className="block text-xs font-semibold mb-2">Size: {config.appearance?.trendArrowSize||14}px</label>
+                                    <input type="range" min="10" max="24" value={config.appearance?.trendArrowSize||14} onChange={e=>setConfig({...config,appearance:{...config.appearance,trendArrowSize:parseInt(e.target.value)}})} className="w-full"/>
+                                    <div className="flex items-center gap-3 mt-3">
+                                        <label className="text-xs font-semibold">Color:</label>
+                                        <input type="color" className="h-8 w-12 rounded cursor-pointer" value={config.appearance?.trendArrowColor||'#1e293b'} onChange={e=>setConfig({...config,appearance:{...config.appearance,trendArrowColor:e.target.value}})}/>
+                                    </div>
+                                </div>
+                            </div>}
+                        </div>
+                        <div className="p-4 border-t flex justify-end"><button onClick={onClose} className="bg-gray-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-900">Save & Close</button></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const EnablerDetailDrawer = ({ instance, config, onUpdate, onDelete, onToggleActor, onSetTrend, onClose }) => {
+            useEffect(() => {
+                if (!instance) return;
+                const handler = (e) => { if (e.key === 'Escape') onClose(); };
+                window.addEventListener('keydown', handler);
+                return () => window.removeEventListener('keydown', handler);
+            }, [instance, onClose]);
+            if (!instance) return null;
+            const type = config.techs.find(t => t.id === instance.typeId);
+            const cluster = config.clusters.find(c => instance.cellKey && instance.cellKey.endsWith('-' + c.id));
+            const level = config.levels.find(l => instance.cellKey && instance.cellKey.startsWith(l.id + '-'));
+            const refs = instance.references || [];
+            const updateField = (field, value) => onUpdate({ [field]: value });
+            const addReference = () => onUpdate({ references: [...refs, { title: '', url: '' }] });
+            const updateReference = (idx, field, value) => {
+                const next = refs.map((r, i) => i === idx ? { ...r, [field]: value } : r);
+                onUpdate({ references: next });
+            };
+            const removeReference = (idx) => onUpdate({ references: refs.filter((_, i) => i !== idx) });
+            const bgStyle = type && type.color && type.color.startsWith('#') ? { backgroundColor: type.color } : {};
+            return (
+                <div className="enabler-drawer" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
+                    {/* Header */}
+                    <div className="p-4 border-b border-border flex items-start gap-3 flex-shrink-0">
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0 shadow-md" style={bgStyle}>
+                            {type ? type.id : '?'}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{type ? type.label : 'Unknown'}</div>
+                            <input type="text" value={instance.customLabel || ''}
+                                onChange={e => updateField('customLabel', e.target.value)}
+                                placeholder="Custom name (optional)"
+                                className="input-field h-8 text-sm mt-1" />
+                        </div>
+                        <button onClick={onClose} className="btn btn-ghost btn-sm h-8 w-8 p-0 rounded-full" aria-label="Close">
+                            <EIcon name="x" size={16}/>
+                        </button>
+                    </div>
+                    {/* Body (scrollable) */}
+                    <div className="flex-1 overflow-y-auto p-4 space-y-5">
+                        {/* Placement chips */}
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">Placement</h4>
+                            <div className="flex gap-1.5 flex-wrap">
+                                <span className="text-[10px] font-bold px-2 py-1 rounded bg-secondary text-foreground">{cluster ? cluster.label : 'Cluster ?'}</span>
+                                <span className="text-[10px] font-bold px-2 py-1 rounded bg-secondary text-foreground">{level ? level.label : 'Level ?'}</span>
+                            </div>
+                            <p className="text-[10px] text-muted-foreground mt-1 italic">Drag the chip in the matrix to move it.</p>
+                        </div>
+                        {/* Actors */}
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">Active Actors</h4>
+                            <div className="grid grid-cols-1 gap-1.5">
+                                {config.actors.map(actor => {
+                                    const isActive = (instance.activeActors || []).includes(actor.id);
+                                    return (
+                                        <button key={actor.id} onClick={e => { e.stopPropagation(); onToggleActor(actor.id); }}
+                                            className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${isActive ? 'bg-primary text-primary-foreground border-primary' : 'bg-background text-muted-foreground border-border hover:border-primary/50'}`}>
+                                            <span>{actor.label}</span><span className="opacity-60 text-[9px]">{actor.id}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        {/* Trend */}
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">Trend</h4>
+                            <div className="flex gap-2">
+                                {[{id:'up',label:'Trending Up',icon:'trending-up'},{id:'down',label:'Trending Down',icon:'trending-down'}].map(tr => {
+                                    const isActive = instance.trend === tr.id;
+                                    return (
+                                        <button key={tr.id} onClick={e => { e.stopPropagation(); onSetTrend(tr.id); }}
+                                            className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg text-[11px] font-bold border transition-all ${isActive ? 'bg-primary text-primary-foreground border-primary' : 'bg-background text-muted-foreground border-border hover:border-primary/50'}`}>
+                                            <EIcon name={tr.icon} size={14}/><span>{tr.label}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            <p className="text-[10px] text-muted-foreground mt-1 italic">Click again to clear.</p>
+                        </div>
+                        {/* Confidence */}
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">Confidence</h4>
+                            <div className="flex gap-1.5">
+                                {['low','medium','high'].map(c => {
+                                    const isActive = instance.confidence === c;
+                                    return (
+                                        <button key={c} onClick={e => { e.stopPropagation(); updateField('confidence', isActive ? '' : c); }}
+                                            className={`flex-1 px-2 py-1.5 rounded-lg text-[11px] font-bold border transition-all capitalize ${isActive ? 'bg-primary text-primary-foreground border-primary' : 'bg-background text-muted-foreground border-border hover:border-primary/50'}`}>
+                                            {c}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        {/* Evidence source */}
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">Evidence Source</h4>
+                            <input type="text" value={instance.evidenceSource || ''}
+                                onChange={e => updateField('evidenceSource', e.target.value)}
+                                placeholder='e.g. "NCSC NL 2024 annual report"'
+                                className="input-field h-9 text-xs" />
+                        </div>
+                        {/* Notes */}
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">Notes</h4>
+                            <textarea value={instance.notes || ''}
+                                onChange={e => updateField('notes', e.target.value)}
+                                rows={4}
+                                placeholder="Rationale, observations, context…"
+                                className="input-field min-h-[96px] text-xs py-2 resize-y leading-relaxed" />
+                        </div>
+                        {/* References */}
+                        <div>
+                            <div className="flex items-center justify-between mb-1.5">
+                                <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">References</h4>
+                                <button onClick={e => { e.stopPropagation(); addReference(); }}
+                                    className="text-[10px] font-bold text-primary hover:underline flex items-center gap-1">
+                                    <EIcon name="plus" size={12}/> Add
+                                </button>
+                            </div>
+                            <div className="space-y-2">
+                                {refs.length === 0 && (
+                                    <p className="text-[10px] text-muted-foreground italic">No references yet. Add CTI sources, vendor reports, articles.</p>
+                                )}
+                                {refs.map((ref, i) => {
+                                    const validUrl = ref && ref.url && (ref.url.startsWith('http://') || ref.url.startsWith('https://'));
+                                    return (
+                                        <div key={i} className="p-2 border border-border rounded-lg space-y-1.5 bg-background/60">
+                                            <div className="flex items-center gap-1.5">
+                                                <input type="text" value={ref.title || ''}
+                                                    onChange={e => updateReference(i, 'title', e.target.value)}
+                                                    placeholder="Title"
+                                                    className="input-field h-7 text-[11px] flex-1" />
+                                                <button onClick={e => { e.stopPropagation(); removeReference(i); }} className="text-destructive hover:text-destructive/80 px-1" aria-label="Remove reference">
+                                                    <EIcon name="trash-2" size={12}/>
+                                                </button>
+                                            </div>
+                                            <div className="flex items-center gap-1.5">
+                                                <input type="url" value={ref.url || ''}
+                                                    onChange={e => updateReference(i, 'url', e.target.value)}
+                                                    placeholder="https://…"
+                                                    className="input-field h-7 text-[11px] flex-1" />
+                                                {validUrl && (
+                                                    <a href={ref.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline px-1" title="Open in new tab">
+                                                        <EIcon name="external-link" size={12}/>
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                    {/* Footer */}
+                    <div className="p-3 border-t border-border flex-shrink-0">
+                        <button onClick={e => { e.stopPropagation(); if (confirm('Delete this technology placement?')) onDelete(); }}
+                            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-bold border border-destructive/30 text-destructive hover:bg-destructive/10 transition-colors">
+                            <EIcon name="trash-2" size={14}/> Delete Placement
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        function EnablerApp() {
+            const [config, setConfig] = useState(window._enablerConfig);
+            const [techInstances, setTechInstances] = useState(window._enablerInstances);
+            const [selectedUid, setSelectedUid] = useState(null);
+            const [snapshot, setSnapshot] = useState(null);
+            const [showArrows, setShowArrows] = useState(false);
+            const [arrows, setArrows] = useState([]);
+            const [dragOverCell, setDragOverCell] = useState(null);
+            const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+            const [isExporting, setIsExporting] = useState(false);
+            const mapRef = useRef(null);
+            const draggedItemRef = useRef(null);
+
+            // Sync to window state and persist
+            useEffect(() => {
+                window._enablerInstances = techInstances;
+                window._enablerConfig = config;
+                if(window.saveEnablerState) window.saveEnablerState();
+            }, [techInstances, config]);
+
+            const handleDragStart = (e, uid, isNew = false, typeId = null) => {
+                draggedItemRef.current = { isNew, uid, typeId };
+                if (!isNew) setSelectedUid(uid);
+            };
+            const handleDrop = (e, cellKey) => {
+                e.preventDefault(); setDragOverCell(null);
+                const item = draggedItemRef.current; if (!item) return;
+                if (item.isNew) {
+                    const ni = {
+                        uid: Date.now().toString(),
+                        typeId: item.typeId,
+                        cellKey,
+                        activeActors: [],
+                        trend: null,
+                        customLabel: '',
+                        notes: '',
+                        references: [],
+                        confidence: '',
+                        evidenceSource: ''
+                    };
+                    setTechInstances(prev => [...prev, ni]); setSelectedUid(ni.uid);
+                } else { setTechInstances(prev => prev.map(t => t.uid === item.uid ? { ...t, cellKey } : t)); }
+                draggedItemRef.current = null;
+            };
+            const toggleActor = (actorId) => {
+                if (!selectedUid) return;
+                setTechInstances(prev => prev.map(t => {
+                    if (t.uid !== selectedUid) return t;
+                    const has = t.activeActors.includes(actorId);
+                    return { ...t, activeActors: has ? t.activeActors.filter(id => id !== actorId) : [...t.activeActors, actorId] };
+                }));
+            };
+            const setTrend = (trend) => {
+                if (!selectedUid) return;
+                setTechInstances(prev => prev.map(t => t.uid !== selectedUid ? t : { ...t, trend: t.trend === trend ? null : trend }));
+            };
+            const calculateArrows = () => {
+                if (!showArrows || !snapshot || !mapRef.current) { setArrows([]); return; }
+                const newArr = []; const cr = mapRef.current.getBoundingClientRect();
+                snapshot.forEach(si => {
+                    const ci = techInstances.find(t => t.uid === si.uid);
+                    if (ci && ci.cellKey !== si.cellKey) {
+                        const se = document.getElementById(`ghost-${si.uid}`), ee = document.getElementById(`tech-${ci.uid}`);
+                        if (se && ee) {
+                            const sr = se.getBoundingClientRect(), er = ee.getBoundingClientRect();
+                            const tt = config.techs.find(t => t.id === ci.typeId);
+                            newArr.push({ id: si.uid, x1: sr.left+sr.width/2-cr.left, y1: sr.top+sr.height/2-cr.top, x2: er.left+er.width/2-cr.left, y2: er.top+er.height/2-cr.top, color: tt?.color?.startsWith('#') ? tt.color : '#64748b' });
+                        }
+                    }
+                });
+                setArrows(newArr);
+            };
+            useLayoutEffect(() => { calculateArrows(); const h=()=>calculateArrows(); window.addEventListener('resize',h); return ()=>window.removeEventListener('resize',h); }, [showArrows, snapshot, techInstances, config, isSettingsOpen]);
+
+            const exportImage = async () => {
+                if (!mapRef.current) return; setIsExporting(true);
+                await new Promise(r => setTimeout(r, 50));
+                try {
+                    const canvas = await window.html2canvas(mapRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false });
+                    const link = document.createElement('a'); link.download = `TLCTC_Radar_${new Date().toISOString().split('T')[0]}.png`; link.href = canvas.toDataURL(); link.click();
+                } catch (e) { alert("Export failed: "+e.message); }
+                setIsExporting(false);
+            };
+
+            const selectedInstance = techInstances.find(t => t.uid === selectedUid) || null;
+            const updateSelected = (patch) => {
+                if (!selectedUid) return;
+                setTechInstances(prev => prev.map(t => t.uid === selectedUid ? { ...t, ...patch } : t));
+            };
+            const deleteSelected = () => {
+                if (!selectedUid) return;
+                setTechInstances(prev => prev.filter(t => t.uid !== selectedUid));
+                setSelectedUid(null);
+            };
+
+            return (
+                <div className="container-custom" onClick={() => setSelectedUid(null)}>
+                    <EnablerSettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} config={config} setConfig={setConfig} />
+                    {selectedInstance && (
+                        <EnablerDetailDrawer
+                            instance={selectedInstance}
+                            config={config}
+                            onUpdate={updateSelected}
+                            onDelete={deleteSelected}
+                            onToggleActor={toggleActor}
+                            onSetTrend={setTrend}
+                            onClose={() => setSelectedUid(null)}
+                        />
+                    )}
+
+                    {/* Top Library Palette */}
+                    <div className="glass-card rounded-xl px-4 py-2.5 mb-4" onClick={e => e.stopPropagation()}>
+                        <div className="flex items-center gap-3">
+                            <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex-shrink-0 flex items-center gap-1.5">
+                                <EIcon name="library" size={13}/> <span>Library</span>
+                            </div>
+                            <div className="flex items-center gap-2 overflow-x-auto flex-1 pb-1">
+                                {config.techs.map(tech => (
+                                    <div key={tech.id} draggable onDragStart={e => handleDragStart(e, null, true, tech.id)}
+                                        className="enabler-palette-chip"
+                                        title={`Drag ${tech.label} onto the matrix`}>
+                                        <div className="chip-swatch" style={{backgroundColor: tech.color}}>{tech.id}</div>
+                                        <span className="chip-label">{tech.label}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <span className="text-[10px] text-muted-foreground italic hidden lg:inline flex-shrink-0">drag onto matrix →</span>
+                        </div>
+                    </div>
+
+                    {/* Radar Grid (full width) */}
+                    <div className="glass-card rounded-xl overflow-hidden flex flex-col relative" ref={mapRef}>
+                        <svg className="enabler-arrow-canvas">
+                            <defs><marker id="earrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#64748b"/></marker></defs>
+                            {arrows.map(a => <g key={a.id}><path d={`M ${a.x1} ${a.y1} L ${a.x2} ${a.y2}`} stroke={a.color} strokeWidth="2" strokeDasharray="6 4" fill="none" markerEnd="url(#earrowhead)" className="animate-enabler-dash" opacity="0.8"/><circle cx={a.x1} cy={a.y1} r="3" fill={a.color} opacity="0.6"/></g>)}
+                        </svg>
+                        <div className="overflow-x-auto">
+                            <table className="enabler-radar-table min-w-[880px]">
+                                <thead><tr>
+                                    <th className="enabler-row-label !bg-transparent"></th>
+                                    {config.clusters.map(c => <th key={c.id} className="uppercase tracking-wider text-[10px] text-muted-foreground font-extrabold">{c.label}</th>)}
+                                </tr></thead>
+                                <tbody>
+                                    {config.levels.map(lvl => (
+                                        <tr key={lvl.id}>
+                                            <td className="enabler-row-label"><div className="w-full h-full flex items-center justify-end pr-2">{lvl.label}</div></td>
+                                            {config.clusters.map(cluster => {
+                                                const cellKey = `${lvl.id}-${cluster.id}`;
+                                                const items = techInstances.filter(t => t.cellKey === cellKey);
+                                                const ghosts = (showArrows && snapshot) ? snapshot.filter(s => s.cellKey === cellKey && !items.find(i => i.uid === s.uid)) : [];
+                                                const isOver = dragOverCell === cellKey;
+                                                return (
+                                                    <td key={cellKey}
+                                                        onDragOver={e => { e.preventDefault(); setDragOverCell(cellKey); }}
+                                                        onDragLeave={() => setDragOverCell(null)}
+                                                        onDrop={e => handleDrop(e, cellKey)}
+                                                        className={`${isOver ? 'enabler-drag-over' : ''} ${lvl.id==='l1'?'bg-red-50/30 dark:bg-red-950/10':''} ${lvl.id==='l2'?'bg-orange-50/30 dark:bg-orange-950/10':''}`}>
+                                                        <div className="w-full h-full min-h-[72px] p-1 flex flex-wrap content-start justify-center gap-1">
+                                                            {ghosts.map(g => <EnablerTechChip key={`g-${g.uid}`} instance={g} config={config} isGhost={true} />)}
+                                                            {items.map(t => <EnablerTechChip key={t.uid} instance={t} config={config} isSelected={selectedUid===t.uid} onSelect={setSelectedUid} onDragStart={handleDragStart} />)}
+                                                        </div>
+                                                    </td>
+                                                );
+                                            })}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        {/* Legend */}
+                        <div className="border-t border-border bg-secondary/20 p-3 space-y-2">
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider min-w-[80px]">Technologies:</span>
+                                {config.techs.map(tech => <div key={tech.id} className="flex items-center gap-1"><div className="w-3 h-3 rounded" style={{backgroundColor:tech.color}}></div><span className="text-[10px] font-semibold text-muted-foreground">{tech.id} = {tech.label}</span></div>)}
+                            </div>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider min-w-[80px]">Actors:</span>
+                                {config.actors.map(actor => <div key={actor.id} className="flex items-center gap-1"><span className="w-4 h-4 rounded bg-primary text-primary-foreground text-[9px] font-black flex items-center justify-center">{actor.id}</span><span className="text-[10px] font-semibold text-muted-foreground">= {actor.label}</span></div>)}
+                            </div>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider min-w-[80px]">Signals:</span>
+                                <div className="flex items-center gap-1"><span className="inline-block w-2 h-2 rounded-full bg-amber-400 border border-white shadow-sm"></span><span className="text-[10px] font-semibold text-muted-foreground">= has notes / refs / confidence</span></div>
+                                <div className="flex items-center gap-1"><EIcon name="trending-up" size={11} className="text-foreground"/><EIcon name="trending-down" size={11} className="text-foreground"/><span className="text-[10px] font-semibold text-muted-foreground">= trend arrow</span></div>
+                            </div>
+                            <div className="flex justify-between items-center pt-1.5 border-t border-border">
+                                <span className="text-[9px] text-muted-foreground">TLCTC Emerging Tech & Actors Radar</span>
+                                <span className="text-[9px] text-muted-foreground">{new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Toolbar */}
+                    <div className="glass-card rounded-xl p-3 flex flex-wrap gap-3 items-center justify-between mt-4">
+                        <div className="flex items-center gap-2">
+                            <button onClick={e => { e.stopPropagation(); if (confirm('Clear all placements?')) setTechInstances([]); }} className="enabler-btn-tool text-destructive"><EIcon name="trash" size={14}/> Clear</button>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button onClick={() => {setSnapshot(JSON.parse(JSON.stringify(techInstances))); setShowArrows(true);}} className="enabler-btn-tool"><EIcon name="camera" size={14}/> Snap</button>
+                            {showArrows && <button onClick={() => {setSnapshot(null); setShowArrows(false);}} className="enabler-btn-tool text-destructive"><EIcon name="x" size={14}/> Clear Snap</button>}
+                            <div className="h-6 w-px bg-border mx-1"></div>
+                            <button onClick={() => setIsSettingsOpen(true)} className="enabler-btn-tool"><EIcon name="settings" size={14}/> Config</button>
+                            <button onClick={exportImage} disabled={isExporting} className="enabler-btn-tool bg-primary text-primary-foreground"><EIcon name="download" size={14}/> {isExporting ? '...' : 'Export PNG'}</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        window._mountEnablerApp = function() {
+            const root = ReactDOM.createRoot(document.getElementById('enablerReactRoot'));
+            root.render(<EnablerApp />);
+        };
+    </script>
+
+    <div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+      <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. All data is stored in your <strong>browser's local storage</strong> only &mdash; nothing is sent to a server. Use the <strong>export function</strong> to save your work if you are using real data.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+    </div>
+    <script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
+</body>
+</html>

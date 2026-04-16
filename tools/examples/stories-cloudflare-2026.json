@@ -1,0 +1,128 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-04-09T00:00:00Z",
+  "description": "Three narrative threat stories from the Cloudflare 2026 Threat Report, designed for the Actor Story Designer's Diamond Model framing. Each actor profile is enriched with infrastructure details and analyst notes for story generation.",
+  "actors": [
+    {
+      "threat_actor": "GRUB1 — The Unsophisticated Actor Who Breached Hundreds",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 1,
+        "TLCTC-10.00": 2
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] GRUB1 is a single, unsophisticated individual actor who exemplifies the Measure of Effectiveness (MOE) paradigm: maximum disruption at minimum cost. No zero-days, no custom malware, no advanced persistent implants. Instead, GRUB1 industrialized two capabilities: (1) automated credential discovery using off-the-shelf secret-scanning tools, and (2) AI-assisted navigation of unfamiliar SaaS environments using generative AI in real time.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Abuse of Functions (#1): TruffleHog for automated secret scanning of code repositories; GenAI (LLMs) for real-time navigation of complex Salesforce data models; standard SaaS APIs for data exfiltration. No exploitation of technical vulnerabilities — entirely legitimate tools used for illegitimate purposes.\n\n[DIAMOND MODEL — INFRASTRUCTURE] SaaS-to-SaaS connective tissue: Salesloft/Drift integration as pivot point into Salesforce production instances. Code repositories and configuration stores as credential sources. GenAI subscription as navigation tool. All infrastructure is the victim's own — the attacker inhabits the ecosystem rather than building external C2.\n\n[DIAMOND MODEL — VICTIM] Hundreds of corporate Salesforce tenants exposed simultaneously through the Salesloft/Drift integration cascade. The security of each tenant was defined not by its own controls but by the most over-privileged integration in its tech stack.\n\n[ANALYST ASSESSMENT] GRUB1 is the archetype of the 2026 threat: unsophisticated but devastatingly effective. The campaign demonstrates that the barrier to entry for high-impact breaches has vanished. Traditional risk models based on actor sophistication fail completely here — GRUB1 would score 'low threat' on any capability-based assessment, yet achieved outcomes rivaling nation-state operations. The key lesson: control the connective tissue, and you control the data.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 7)",
+        "Cloudforce One investigation"
+      ],
+      "sequence": "#01 → #04 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "Unknown",
+      "motivation": [
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "SaaS",
+        "Technology",
+        "Cross-sector (via SaaS integrations)"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "GRUB1-SAAS-PIVOT-2025",
+          "notation": "#1 + [DRE: C] →[Δt=~1h] #4 →[Δt=~30m] #1 + [DRE: C]",
+          "cluster_sequence": [1, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "FoolishSlug — The Deepfake Employee",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 1,
+        "TLCTC-03.00": 1,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 1,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 4,
+        "TLCTC-10.00": 1
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] North Korean state-sponsored operatives running industrialized identity fraud at scale. Thousands of operatives creating comprehensive digital personas. Not a single actor but an industrialized pipeline: identity fabrication → hiring infiltration → revenue extraction → regime funding. The remote workforce becomes the attack vector.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Social Engineering (#9): AI-driven deepfakes that pass live video interviews; fabricated LinkedIn and GitHub profiles with realistic activity histories; rented US citizen credentials for background checks. Champion-level Function Abuse (#1): once hired, all access uses legitimate corporate systems — no malware needed. Mouse-jiggling software maintains activity illusion. The entire operation exploits human trust in the hiring process.\n\n[DIAMOND MODEL — INFRASTRUCTURE] US-based 'laptop farms' — physical locations with facilitators hosting corporate hardware. RMM software for remote access from abroad. LinkedIn, GitHub as persona platforms. Cryptocurrency networks for revenue laundering. The infrastructure is deliberately distributed to maintain the domestic residency illusion: the corporate laptop appears to be in the US while the operator sits in Pyongyang or Shenyang.\n\n[DIAMOND MODEL — VICTIM] Western technology companies, government contractors, and financial institutions. The operative is placed within the organization's most trusted systems — administrative access, financial systems, source code repositories. Hundreds of millions of dollars funneled back to the DPRK regime.\n\n[ANALYST ASSESSMENT] This is the most structurally novel threat in the 2026 landscape. There are no IOCs, no malware hashes, no C2 domains. The 'malware' is a human being with legitimate credentials. Detection requires behavioral science: impossible travel alerts, deepfake rendering artifacts in video metadata, mouse-jiggling software signatures. The defense must shift from technical indicators to identity verification — zero trust biometric authentication and hardware-based geofencing. This threat turns the entire zero trust model inside out: the 'insider' was never who they claimed to be.",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 12, 24-27)",
+        "Cloudforce One analysis"
+      ],
+      "sequence": "#09 → #04 → #01",
+      "last_updated": "2026-04-09",
+      "origin_country": "North Korea",
+      "motivation": [
+        "Revenue Generation",
+        "Espionage"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services",
+        "Government Contractors"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "NK-IT-WORKER-INFILTRATION-2025",
+          "notation": "#9 ||[human][@DPRK→@WesternOrg]|| →[Δt=~30d] #4 →[Δt=~1d] #1 + [DRE: C]",
+          "cluster_sequence": [9, 4, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    },
+    {
+      "threat_actor": "FrumpyToad — Calendar of Secrets",
+      "tlctc_scores": {
+        "TLCTC-01.00": 4,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 3
+      },
+      "notes": "[DIAMOND MODEL — ADVERSARY] FrumpyToad (APT41/Wicked Panda/Brass Typhoon) is a China-nexus dual-purpose group: state espionage and private financial gain. One of the most technically versatile threat actors globally, with 46+ malware families. The TOUGHPROGRESS campaign showcases their evolution from traditional infrastructure to Living off the XaaS (LotX) stealth.\n\n[DIAMOND MODEL — CAPABILITY] Champion-level Function Abuse (#1): weaponized Google Calendar for a cloud-to-cloud C2 loop. Commands encoded in calendar event descriptions (hardcoded dates: operators write to July 30-31, 2023; exfil data embedded in May 30, 2023). The malware never connects to a malicious domain — all traffic stays within Google's encrypted ecosystem. Champion-level Malware (#7): TOUGHPROGRESS, KEYPLUG, ShadowPad, DUSTTRAP, DUSTPAN — a deep bench of custom tools. High Supply Chain (#10): known for software supply chain attacks.\n\n[DIAMOND MODEL — INFRASTRUCTURE] Google Calendar as C2 (no malicious domains needed). Serverless cloud platforms for redirect chains. Compromised government websites for payload staging. The infrastructure is entirely within legitimate enterprise ecosystems — Google, AWS, Azure. Detection indicator: unusual volume of API calls to Google Calendar from non-interactive processes. Cloudforce One telemetry identified the campaign through this specific anomaly.\n\n[DIAMOND MODEL — VICTIM] Global financial sector and SaaS providers. Spear-phishing emails redirect through serverless platforms to malicious ZIP archives hosted on compromised government sites. The attack chain is multi-hop by design: each relay adds a layer of legitimacy.\n\n[ANALYST ASSESSMENT] FrumpyToad's TOUGHPROGRESS campaign is the textbook example of Living off the XaaS. By embedding C2 traffic within Google Calendar — a ubiquitous enterprise service — the actor creates a nearly undetectable persistence mechanism. Standard network monitoring sees legitimate HTTPS traffic to calendar.google.com. Firewall rules permit it. DLP inspects the SSL stream and sees JSON calendar events. The command is in the description field of an event from 2023. This is the future of C2: not malicious infrastructure, but malicious intent encoded within legitimate ecosystems. The only reliable detection is behavioral: why is a non-interactive process making 200 Calendar API calls per hour?",
+      "sources": [
+        "Cloudflare 2026 Threat Report (pp. 23)",
+        "Cloudforce One telemetry",
+        "Google Threat Intelligence (Mandiant APT Groups)"
+      ],
+      "sequence": "#09 → #07 → #01 (Google Calendar C2)",
+      "last_updated": "2026-04-09",
+      "origin_country": "China",
+      "motivation": [
+        "Espionage",
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Financial Services",
+        "SaaS Providers",
+        "Government"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "FRUMPYTOAD-TOUGHPROGRESS-2025",
+          "notation": "#9 ||[email][@FrumpyToad→@Victim]|| →[Δt=~1h] #7 →[Δt=instant] #1 + [DRE: C]",
+          "cluster_sequence": [9, 7, 1],
+          "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 0 }
+        }
+      ]
+    }
+  ]
+}

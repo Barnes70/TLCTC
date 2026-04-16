@@ -263,6 +263,9 @@
     .glass-header { background: hsl(var(--background) / 0.8); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid hsl(var(--border)); position: sticky; top: 0; z-index: 30; }
     .nav-dd-panel { position: absolute; left: 0; top: 100%; margin-top: 0.25rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 0.5rem; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); z-index: 50; padding: 0.25rem 0; min-width: 210px; }
     .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+    .ai-disclaimer { background: hsl(var(--muted) / 0.5); color: hsl(var(--muted-foreground)); font-size: 11px; line-height: 1.4; padding: 0.375rem 1rem; text-align: center; border-bottom: 1px solid hsl(var(--border)); flex-shrink: 0; }
+    .ai-disclaimer button { background: transparent; border: none; cursor: pointer; color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin-left: 0.5rem; opacity: 0.6; vertical-align: middle; }
+    .ai-disclaimer button:hover { opacity: 1; }
   </style>
 </head>
 <body class="min-h-screen bg-background text-foreground font-sans antialiased">
@@ -307,11 +310,13 @@
             </button>
             <div id="nav-dd-defense-panel" class="nav-dd-panel hidden">
                 <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
+                <a href="tech-enablers-radar.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="cpu" class="h-4 w-4"></i> Tech Enablers Radar</a>
                 <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
                 <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
             </div>
         </div>
         <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+        <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><i data-lucide="github" class="h-4 w-4"></i></a>
     </nav>
     <div class="flex items-center gap-3">
         <button onclick="toggleTheme()" class="btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Toggle theme">
@@ -323,6 +328,8 @@
         </button>
     </div>
   </header>
+  <div class="ai-disclaimer no-print" id="ai-disclaimer">&#9432; Example data in this tool is AI-generated based on real-world threat reports. Quality improves with evolving AI capabilities. These examples illustrate the practical application of the TLCTC framework.<button onclick="document.getElementById('ai-disclaimer').remove();try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){}" title="Dismiss">&times;</button></div>
+  <script>try { if (localStorage.getItem('tlctc-dismiss-disclaimer') === '1') { var d = document.getElementById('ai-disclaimer'); if (d) d.remove(); }} catch(e) {}</script>
 
   <!-- Mobile Navigation Menu -->
   <div id="mobile-menu" class="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden hidden transition-all duration-300 opacity-0">
@@ -343,10 +350,12 @@
         <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Story</a>
         <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense</span>
         <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Radar</a>
+        <a href="tech-enablers-radar.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Tech Enablers Radar</a>
         <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
         <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
-        <div class="border-t border-border mt-4 pt-4">
+        <div class="border-t border-border mt-4 pt-4 flex flex-col gap-2">
             <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <i data-lucide="external-link" class="h-3.5 w-3.5"></i></a>
+            <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5"><i data-lucide="github" class="h-4 w-4"></i> GitHub</a>
         </div>
     </nav>
   </div>
@@ -8428,5 +8437,9 @@ function updateTable() {
     if (localStorage.theme === 'dark') { document.documentElement.classList.add('dark'); }
     lucide.createIcons();
   </script>
+<div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+  <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. All data is stored in your <strong>browser's local storage</strong> only &mdash; nothing is sent to a server. Use the <strong>export function</strong> to save your work if you are using real data.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+</div>
+<script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
 </body>
 </html>

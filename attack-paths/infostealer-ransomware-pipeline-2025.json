@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "incident_id": "INFOSTEALER-RANSOMWARE-PIPELINE-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-04-09T00:00:00Z",
+    "notes": "Canonical infostealer-to-ransomware pipeline as described in the Cloudflare 2026 Threat Report. This represents the standard operational baseline for the 2026 ransomware ecosystem. The pipeline: (1) Infostealers like LummaC2 harvest credentials for Citrix, Microsoft RDWeb, browser-based VPNs, and live session tokens that bypass MFA. (2) Initial access brokers (IABs) purchase logs from infostealer operators, validate credentials, and auction high-value corporate access. (3) Ransomware affiliates purchase access and execute data theft and direct extortion. Per Verizon DBIR 2025, 54% of all ransomware attacks traced back to infostealer-enabled credential theft. GenAI has compressed attack timelines from days to minutes. Manufacturing and critical infrastructure represent over 50% of targeted attacks. Attack path: #7 -> #4 -> #1 + [DRE: C] -> (#1 + #7) + [DRE: Ac]. Sources: Cloudflare 2026 Threat Report (pp. 39-41), Verizon 2025 DBIR, HellCat ransomware breaches (Jaguar Land Rover, Telefonica). AI-GENERATED EXAMPLE: This is a composite/canonical pattern derived from multiple incidents described in the report."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-infostealer-infection",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "instant",
+      "notes": "Victim system infected with an infostealer (e.g., LummaC2, the premier MaaS example disrupted in May 2025). Initial infection vector varies — drive-by download, malicious email attachment, trojanized software. R-EXEC: foreign executable content executes — recorded as #7 with fec_executed: true. LummaC2 represents the industrialization of data theft: customized malware builds, professional-grade dashboards for managing stolen data."
+    },
+    {
+      "step_id": "s2-credential-and-token-harvest",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~1d",
+      "notes": "The infostealer harvests credentials for Citrix, Microsoft RDWeb, browser-based VPNs, and critically, active session tokens and cookies. The token theft is the key evolution: it neutralizes standard MFA by capturing already-authenticated session state. The credential sweep uses legitimate browser APIs and filesystem reads — designed functions, abused scope. This is #1 Abuse of Functions. DRE: C — credentials and session tokens exfiltrated. The stolen logs are sold to initial access brokers (IABs) who validate and auction high-value corporate access."
+    },
+    {
+      "step_id": "s3-credential-use-by-ransomware-affiliate",
+      "cluster": "#4",
+      "delta_t_to_next": "~2h",
+      "notes": "Ransomware affiliate purchases validated credentials/tokens from the IAB marketplace and authenticates to the target organization's infrastructure. R-CRED: credential application is always #4. The session tokens bypass MFA entirely — the attacker captures the already-authenticated state and 'logs in rather than breaks in'. This represents the handoff from the infostealer supply chain to the ransomware execution chain. Axiom X: credential acquisition (#1 in s2, enabled by #7 in s1) and credential use (#4 here) are separate steps with separate control surfaces."
+    },
+    {
+      "step_id": "s4-lateral-movement-exfil",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "delta_t_to_next": "~2h",
+      "notes": "Ransomware affiliate uses legitimate tools for lateral movement and data exfiltration. GenAI is used in real time to rewrite code that bypasses EDR and map complex network topologies for rapid lateral movement. All tools and protocols function as designed. This is #1 Abuse of Functions. DRE: C — sensitive data exfiltrated for double-extortion leverage. In a majority of observed cases, exfiltrated data is used as ransom leverage while bypassing traditional backup-and-restore defenses."
+    },
+    {
+      "mode": "parallel",
+      "group_id": "g5-ransomware-deployment",
+      "steps": [
+        {
+          "step_id": "s5a-ransomware-execution",
+          "cluster": "#7",
+          "fec_executed": true,
+          "outcomes": ["Ac"],
+          "notes": "Ransomware payload deployed and executed across the target network, encrypting critical data. R-EXEC: foreign executable content — #7 with fec_executed: true. DRE: Ac — data present but unusable (encrypted). Axiom III: 'ransomware' is an outcome label; the cause is FEC execution (#7)."
+        },
+        {
+          "step_id": "s5b-extortion-demand",
+          "cluster": "#1",
+          "notes": "Extortion demand issued leveraging both the encryption and the exfiltrated data. The communication channels and payment infrastructure (cryptocurrency) all function as designed — legitimate functionality abused for criminal purposes. Pure extortion (data theft leverage) has become the new standard, often more effective than encryption alone."
+        }
+      ],
+      "notes": "Ransomware deployment and extortion demand occur in parallel. The encryption and data leak threat serve as complementary leverage. Manufacturing and critical infrastructure represent over 50% of targets due to the immense cost of operational downtime creating desperate incentive for high-value payouts."
+    }
+  ]
+}

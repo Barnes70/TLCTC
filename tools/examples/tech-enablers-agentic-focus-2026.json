@@ -1,0 +1,147 @@
+{
+  "schema_version": "tlctc-tech-enablers-radar.v2",
+  "exported": "2026-04-11T00:00:00.000Z",
+  "metadata": {
+    "title": "Agentic AI Emergence — 2026",
+    "description": "Focused view on how AI and agentic AI change the generic vulnerabilities across the TLCTC clusters. This is a narrow snapshot — it intentionally leaves other tech types empty so the agentic-specific story stands out. Use it as a starting frame for agentic-AI threat discussions with leadership, red teams, or architecture boards.",
+    "author": "TLCTC community (curated)",
+    "date": "2026-04-11"
+  },
+  "instances": [
+    {
+      "uid": "ex2-001",
+      "typeId": "AI",
+      "cellKey": "l1-c9",
+      "activeActors": ["F", "E", "A", "N"],
+      "trend": "up",
+      "customLabel": "GenAI phishing & voice cloning",
+      "notes": "Commodity floor for the agentic-AI threat stack: before agents plan and act, basic generative AI has already lowered the cost of convincing phishing content across email, voice, and video. Included here to anchor the maturity curve.",
+      "references": [
+        { "title": "Europol IOCTA 2024", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "Europol IOCTA 2024"
+    },
+    {
+      "uid": "ex2-002",
+      "typeId": "AI",
+      "cellKey": "l2-c7",
+      "activeActors": ["E", "N"],
+      "trend": "up",
+      "customLabel": "LLM-assisted malware authoring",
+      "notes": "Threat actors use LLMs to write loaders, refactor existing malware, and automate obfuscation. Microsoft/OpenAI have publicly disclosed state-actor model abuse. This is the step before agents write and deploy their own tooling end-to-end.",
+      "references": [
+        { "title": "Microsoft — Staying ahead of threat actors in the age of AI", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "Microsoft Threat Intelligence 2024"
+    },
+    {
+      "uid": "ex2-003",
+      "typeId": "AI",
+      "cellKey": "l2-c4",
+      "activeActors": ["F", "E"],
+      "trend": "up",
+      "customLabel": "Deepfake KYC bypass",
+      "notes": "Face-swap and synthetic video toolkits bypass remote identity verification. Established criminal tradecraft at banks, exchanges, and lenders. Sets the stage for agent chains that stitch identity bypass into end-to-end fraud flows.",
+      "references": [
+        { "title": "Sumsub Identity Fraud Report 2024", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "Sumsub 2024; iProov 2024"
+    },
+    {
+      "uid": "ex2-004",
+      "typeId": "AI",
+      "cellKey": "l3-c1",
+      "activeActors": ["H", "A", "E"],
+      "trend": "up",
+      "customLabel": "Prompt injection on RAG assistants",
+      "notes": "Indirect prompt injection exfiltrates context or triggers unintended actions on customer-facing assistants. Classified #1 Abuse of Functions — the LLM input channel is used as designed, just with adversarial content.",
+      "references": [
+        { "title": "OWASP LLM Top 10 (2025)", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "OWASP LLM Top 10 2025"
+    },
+    {
+      "uid": "ex2-005",
+      "typeId": "Ag",
+      "cellKey": "l3-c1",
+      "activeActors": ["H", "A"],
+      "trend": "up",
+      "customLabel": "Agent tool-use hijacking",
+      "notes": "Agents wired to browser, shell, email, or file-system tools can be coerced via indirect prompt injection to perform unintended tool calls. This is the most urgent agentic-AI-specific risk: the agent's own tool-use channel becomes the generic vulnerability.",
+      "references": [
+        { "title": "Anthropic — Introducing Computer Use (2024)", "url": "" }
+      ],
+      "confidence": "medium",
+      "evidenceSource": "Anthropic computer-use research 2024"
+    },
+    {
+      "uid": "ex2-006",
+      "typeId": "Ag",
+      "cellKey": "l3-c9",
+      "activeActors": ["F", "E", "N"],
+      "trend": "up",
+      "customLabel": "Autonomous scam agents",
+      "notes": "Experimental agents run multi-turn chat with victims over Telegram/WhatsApp, adapting persona and pressure dynamically. A force multiplier for existing criminal call-center operations.",
+      "references": [],
+      "confidence": "medium",
+      "evidenceSource": "Interisle Consulting 2024 scam automation"
+    },
+    {
+      "uid": "ex2-007",
+      "typeId": "Ag",
+      "cellKey": "l4-c2",
+      "activeActors": ["N", "H", "A"],
+      "trend": "up",
+      "customLabel": "Autonomous exploitation agents",
+      "notes": "Research agents chain recon → vulnerability discovery → exploitation autonomously (HackingBuddyGPT, XBOW). Dual-use: defensive red-team tooling already being forked offensively. First-mover maturity — demonstrated against real targets, not yet mass-deployed.",
+      "references": [
+        { "title": "XBOW autonomous pentest agent (2024)", "url": "" },
+        { "title": "HackingBuddyGPT (TU Wien)", "url": "" }
+      ],
+      "confidence": "medium",
+      "evidenceSource": "XBOW / HackingBuddyGPT research 2024"
+    },
+    {
+      "uid": "ex2-008",
+      "typeId": "Ag",
+      "cellKey": "l4-c10",
+      "activeActors": ["N", "E"],
+      "trend": "up",
+      "customLabel": "Agentic package-chain poisoning",
+      "notes": "Agents scan ecosystems for typo-squat opportunities, auto-generate malicious packages, and publish at a rate outpacing human defenders. Early indicators in Shai-Hulud and Chalk/Debug incidents where tooling looked agent-assisted.",
+      "references": [
+        { "title": "Phylum Supply Chain Reports 2024", "url": "" }
+      ],
+      "confidence": "low",
+      "evidenceSource": "Phylum / Aikido supply-chain telemetry"
+    },
+    {
+      "uid": "ex2-009",
+      "typeId": "Ag",
+      "cellKey": "l4-c4",
+      "activeActors": ["F", "E"],
+      "trend": "up",
+      "customLabel": "Infostealer-to-fraud agent chains",
+      "notes": "Agents chain infostealer output directly into authentication flows across harvested services. The Axiom-X credential duality collapses into one automated pipeline: acquire, authenticate, exfiltrate, monetize — in minutes.",
+      "references": [],
+      "confidence": "low",
+      "evidenceSource": "Industry reporting on infostealer-to-fraud time-to-abuse"
+    },
+    {
+      "uid": "ex2-010",
+      "typeId": "Ag",
+      "cellKey": "l5-c7",
+      "activeActors": ["N"],
+      "trend": "up",
+      "customLabel": "Self-modifying agentic malware",
+      "notes": "Hypothetical: malware whose C2 is an embedded agent that rewrites its own code in response to the target environment. Not seen in the wild — classical polymorphism is not this. Watch item for state actors with frontier-model access.",
+      "references": [],
+      "confidence": "low",
+      "evidenceSource": "Speculative; no in-the-wild observations"
+    }
+  ]
+}

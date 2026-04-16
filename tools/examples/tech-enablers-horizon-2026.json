@@ -1,0 +1,385 @@
+{
+  "schema_version": "tlctc-tech-enablers-radar.v2",
+  "exported": "2026-04-11T00:00:00.000Z",
+  "metadata": {
+    "title": "Horizon 2026 — Broad Emerging Tech Landscape",
+    "description": "Research-grounded mapping of 9 emerging technologies against the 10 TLCTC clusters. Placements are calibrated by mechanistic plausibility: a tech × cluster pair only appears if the technology directly changes the generic vulnerability exploited in that cluster. Quantum Computing, for example, is mapped only to #4/#5/#2 because its cryptanalytic capability does not alter the mechanism of flooding, malware execution, social engineering, or supply-chain trust acceptance.",
+    "author": "TLCTC community (curated from public CTI reporting)",
+    "date": "2026-04-11"
+  },
+  "instances": [
+    {
+      "uid": "ex1-001",
+      "typeId": "AI",
+      "cellKey": "l1-c9",
+      "activeActors": ["F", "E", "A", "N"],
+      "trend": "up",
+      "customLabel": "GenAI phishing & deepfakes",
+      "notes": "Generative models have commoditized phishing content, voice cloning, and deepfake video. Phishing-as-a-service offerings now bundle LLM-written lures with brand imitation; voice-cloning CEO fraud routinely observed. This is the dominant 'AI enables' scenario today.",
+      "references": [
+        { "title": "Europol IOCTA 2024", "url": "" },
+        { "title": "NCSC NL Cybersecuritybeeld Nederland 2024", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "Europol IOCTA 2024; NCSC NL 2024 annual report"
+    },
+    {
+      "uid": "ex1-002",
+      "typeId": "AI",
+      "cellKey": "l2-c7",
+      "activeActors": ["E", "N"],
+      "trend": "up",
+      "customLabel": "LLM-assisted malware development",
+      "notes": "Threat actors use LLMs to generate loaders, refactor existing malware families, and automate obfuscation routines. Microsoft and OpenAI publicly disclosed multiple state-actor accounts abusing hosted models for malware tooling.",
+      "references": [
+        { "title": "Microsoft: Staying ahead of threat actors in the age of AI (2024)", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "Microsoft Threat Intelligence 2024"
+    },
+    {
+      "uid": "ex1-003",
+      "typeId": "AI",
+      "cellKey": "l2-c3",
+      "activeActors": ["N", "E"],
+      "trend": "up",
+      "customLabel": "AI-accelerated exploit PoCs",
+      "notes": "LLMs accelerate exploit development from public CVE disclosures. Academic research (Kang et al.) showed frontier models can weaponize N-day vulnerabilities within hours. Relevant to client-side components (browsers, document readers) where attackers target the victim-side flaw.",
+      "references": [
+        { "title": "Kang et al. — LLM agents can autonomously exploit one-day vulnerabilities (2024)", "url": "" }
+      ],
+      "confidence": "medium",
+      "evidenceSource": "UIUC research 2024 on LLM exploit generation"
+    },
+    {
+      "uid": "ex1-004",
+      "typeId": "AI",
+      "cellKey": "l2-c4",
+      "activeActors": ["F", "E"],
+      "trend": "up",
+      "customLabel": "Deepfake KYC bypass",
+      "notes": "Face-swap and synthetic video toolkits bypass remote identity verification (KYC) flows at exchanges, banks, and lenders. Several crypto exchanges and neo-banks reported sharp rises in deepfake-driven account-opening fraud.",
+      "references": [
+        { "title": "Sumsub Identity Fraud Report 2024", "url": "" },
+        { "title": "iProov Threat Intelligence Report 2024", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "Sumsub Identity Fraud Report 2024; iProov 2024"
+    },
+    {
+      "uid": "ex1-005",
+      "typeId": "AI",
+      "cellKey": "l3-c1",
+      "activeActors": ["H", "A", "E"],
+      "trend": "up",
+      "customLabel": "Prompt-injection on customer LLMs",
+      "notes": "Indirect prompt injection against RAG and assistant systems triggers unintended actions or exfiltrates context. Classified as #1 Abuse of Functions: the LLM input channel is used exactly as designed, but with adversarial payload content. Numerous public demonstrations against enterprise chatbots and Copilot-class tools.",
+      "references": [
+        { "title": "OWASP LLM Top 10 (2025)", "url": "" },
+        { "title": "Simon Willison — indirect prompt injection catalog", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "OWASP LLM Top 10 2025"
+    },
+    {
+      "uid": "ex1-006",
+      "typeId": "Ag",
+      "cellKey": "l3-c1",
+      "activeActors": ["H", "A"],
+      "trend": "up",
+      "customLabel": "Agent tool-use hijacking",
+      "notes": "Agents wired to browser/shell/email tools can be coerced via indirect prompt injection to perform unintended tool calls (send emails, execute commands, modify files). Demonstrations against Anthropic computer-use, ChatGPT agents, and open-source frameworks. Still #1: the tool-use channel is being abused, not broken.",
+      "references": [
+        { "title": "Anthropic — Introducing Computer Use (2024)", "url": "" },
+        { "title": "Simon Willison — 'agents are going to be hard'", "url": "" }
+      ],
+      "confidence": "medium",
+      "evidenceSource": "Anthropic computer-use research 2024"
+    },
+    {
+      "uid": "ex1-007",
+      "typeId": "Ag",
+      "cellKey": "l3-c9",
+      "activeActors": ["F", "E", "N"],
+      "trend": "up",
+      "customLabel": "Autonomous scam agents",
+      "notes": "Experimental agents run multi-turn chat with victims over Telegram/WhatsApp, dynamically adjusting persona and social-engineering pressure. Early adopters in pig-butchering and romance-scam operations; scale multiplier for criminal call-centers.",
+      "references": [
+        { "title": "Interisle Consulting — GenAI and Scam Automation (2024)", "url": "" }
+      ],
+      "confidence": "medium",
+      "evidenceSource": "Interisle Consulting 2024 scam automation"
+    },
+    {
+      "uid": "ex1-008",
+      "typeId": "Ag",
+      "cellKey": "l4-c2",
+      "activeActors": ["N", "H", "A"],
+      "trend": "up",
+      "customLabel": "Autonomous exploitation agents",
+      "notes": "Research agents chain recon → vulnerability discovery → exploitation autonomously (HackingBuddyGPT, XBOW). Dual-use: defensive red-team tooling is already being forked by offensive actors. First-mover level — not yet mass-deployed but publicly demonstrated against real targets.",
+      "references": [
+        { "title": "XBOW — autonomous pentest agent (2024)", "url": "" },
+        { "title": "HackingBuddyGPT (TU Wien)", "url": "" }
+      ],
+      "confidence": "medium",
+      "evidenceSource": "XBOW / HackingBuddyGPT research 2024"
+    },
+    {
+      "uid": "ex1-009",
+      "typeId": "Ag",
+      "cellKey": "l4-c10",
+      "activeActors": ["N", "E"],
+      "trend": "up",
+      "customLabel": "Agentic package-chain poisoning",
+      "notes": "Agents scan ecosystems for typo-squat opportunities, auto-generate malicious packages, and publish across npm/PyPI/RubyGems at a rate that outpaces human defenders. Early indicators in Shai-Hulud and Chalk/Debug incidents where tooling showed agent-like automation.",
+      "references": [
+        { "title": "Phylum Supply Chain Reports 2024", "url": "" },
+        { "title": "Aikido Security malicious package telemetry", "url": "" }
+      ],
+      "confidence": "low",
+      "evidenceSource": "Phylum / Aikido 2024 supply-chain telemetry"
+    },
+    {
+      "uid": "ex1-010",
+      "typeId": "Ag",
+      "cellKey": "l4-c4",
+      "activeActors": ["F", "E"],
+      "trend": "up",
+      "customLabel": "Credential harvest-and-use agents",
+      "notes": "Agents chain infostealer output directly into authentication flows across harvested services, compressing the credential-theft → fraud timeline from hours to minutes. Collapses Axiom-X credential duality into a single automated pipeline.",
+      "references": [],
+      "confidence": "low",
+      "evidenceSource": "Industry reporting on infostealer-to-fraud time-to-abuse"
+    },
+    {
+      "uid": "ex1-011",
+      "typeId": "QC",
+      "cellKey": "l5-c4",
+      "activeActors": ["N"],
+      "trend": "up",
+      "customLabel": "CRQC — PKI impersonation",
+      "notes": "A cryptographically relevant quantum computer would break RSA/ECC signing keys, enabling impersonation of any PKI identity (code-signing, TLS client certs, document signing). NIST PQC standards (FIPS 203/204/205) are the migration path; today this is latent.",
+      "references": [
+        { "title": "NIST PQC FIPS 203/204/205 (2024)", "url": "" },
+        { "title": "ENISA Post-Quantum Cryptography 2024", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "NIST 2024; ENISA 2024"
+    },
+    {
+      "uid": "ex1-012",
+      "typeId": "QC",
+      "cellKey": "l5-c5",
+      "activeActors": ["N"],
+      "trend": "up",
+      "customLabel": "Harvest-now, decrypt-later",
+      "notes": "Bulk interception of encrypted traffic today, retained for decryption once CRQC arrives. Threat is latent but real for long-lifetime secrets (state secrets, health records, IP). Drives urgency for PQC migration on confidential transport.",
+      "references": [
+        { "title": "US OMB M-23-02 — Migrating to PQC", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "ENISA PQC 2024; OMB M-23-02"
+    },
+    {
+      "uid": "ex1-013",
+      "typeId": "QC",
+      "cellKey": "l5-c2",
+      "activeActors": ["N"],
+      "trend": "up",
+      "customLabel": "CRQC — server TLS impersonation",
+      "notes": "CRQC breaks server-side TLS authentication (as distinct from #4, which focuses on credential impersonation). Once asymmetric crypto is compromised, attackers can masquerade as the server itself and directly attack clients connecting to it.",
+      "references": [],
+      "confidence": "medium",
+      "evidenceSource": "ENISA PQC 2024"
+    },
+    {
+      "uid": "ex1-014",
+      "typeId": "QS",
+      "cellKey": "l5-c8",
+      "activeActors": ["N"],
+      "trend": "up",
+      "customLabel": "Quantum sensing for covert surveillance",
+      "notes": "Quantum magnetometers and gravimeters detect underground voids, shielded infrastructure, and electromagnetic signatures beyond classical sensor sensitivity. Implications for counter-intelligence and physical security around data centers, cable landings, and critical facilities.",
+      "references": [
+        { "title": "DSTL UK Quantum Sensing Roadmap", "url": "" }
+      ],
+      "confidence": "medium",
+      "evidenceSource": "DSTL UK 2023 quantum sensing roadmap"
+    },
+    {
+      "uid": "ex1-015",
+      "typeId": "Robo",
+      "cellKey": "l3-c8",
+      "activeActors": ["N", "H", "E"],
+      "trend": "up",
+      "customLabel": "Drones for physical intrusion",
+      "notes": "Commercial drones and UGVs used for facility reconnaissance, payload delivery over fences, and close-approach RF sniffing. Established in conflict zones; 2023–2024 saw documented approaches to European data centers and substations.",
+      "references": [],
+      "confidence": "high",
+      "evidenceSource": "Various 2023–2024 incident reports"
+    },
+    {
+      "uid": "ex1-016",
+      "typeId": "Robo",
+      "cellKey": "l4-c2",
+      "activeActors": ["N", "H"],
+      "trend": "up",
+      "customLabel": "Drone-borne RF / Wi-Fi exploitation",
+      "notes": "Drones carrying pentest radios reach rooftop antennas and otherwise inaccessible Wi-Fi attack surfaces. IBM X-Force 'Fly, You Fools' demonstrated the pattern; real-world adoption still first-mover level.",
+      "references": [
+        { "title": "IBM X-Force drone research (2022)", "url": "" }
+      ],
+      "confidence": "medium",
+      "evidenceSource": "IBM X-Force 2022–2023"
+    },
+    {
+      "uid": "ex1-017",
+      "typeId": "IoT",
+      "cellKey": "l1-c6",
+      "activeActors": ["E", "H", "A"],
+      "trend": "up",
+      "customLabel": "IoT botnet DDoS (Aisuru/Mirai)",
+      "notes": "Mirai-class botnets dominate volumetric DDoS. 2024–2025 Aisuru campaigns repeatedly set records above 6 Tbps; Cloudflare logged 5.6 Tbps events in October 2024. Commodity: the attack is offered as a paid service.",
+      "references": [
+        { "title": "Cloudflare DDoS Threat Report 2024/2025", "url": "" },
+        { "title": "KrebsOnSecurity — Aisuru coverage", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "Cloudflare DDoS Threat Reports 2024/2025"
+    },
+    {
+      "uid": "ex1-018",
+      "typeId": "IoT",
+      "cellKey": "l2-c2",
+      "activeActors": ["N", "E"],
+      "trend": "up",
+      "customLabel": "Mass SOHO/edge CVE exploitation",
+      "notes": "Routers, NAS, cameras, VPN gateways are preferred footholds. 2024–2025 saw active exploitation of ASUS, TP-Link, Fortinet, F5 BIG-IP by both state and criminal groups. Volt Typhoon's SOHO-router campaign is the canonical state-actor case.",
+      "references": [
+        { "title": "CISA KEV catalog", "url": "" },
+        { "title": "CISA — Volt Typhoon advisory", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "CISA KEV; Volt Typhoon advisories"
+    },
+    {
+      "uid": "ex1-019",
+      "typeId": "IoT",
+      "cellKey": "l2-c7",
+      "activeActors": ["E", "N", "H"],
+      "trend": null,
+      "customLabel": "Edge-resident implants",
+      "notes": "Custom Linux/BSD/router firmware malware families (VPNFilter successors, Mirai variants) persist on edge devices. Difficult to detect without specialized telemetry; not growing rapidly in 2025 but remains steady as established technique.",
+      "references": [],
+      "confidence": "medium",
+      "evidenceSource": "Multi-vendor IoT malware reporting"
+    },
+    {
+      "uid": "ex1-020",
+      "typeId": "IoT",
+      "cellKey": "l3-c10",
+      "activeActors": ["N", "E"],
+      "trend": "up",
+      "customLabel": "Compromised firmware updates",
+      "notes": "Firmware-level backdoors delivered via compromised update channels or pre-installation implants. Referenced in US/UK advisories on specific vendor equipment. R-SUPPLY applies at the update trust-acceptance moment.",
+      "references": [],
+      "confidence": "medium",
+      "evidenceSource": "US/UK government advisories"
+    },
+    {
+      "uid": "ex1-021",
+      "typeId": "Bio",
+      "cellKey": "l5-c4",
+      "activeActors": ["N"],
+      "trend": null,
+      "customLabel": "Implant auth cloning",
+      "notes": "Hypothetical: implantable chips used for authentication (subdermal NFC/HID, payment implants) could be cloned via close-approach readers or surgically extracted. Not observed in the wild — watched by futures teams only.",
+      "references": [],
+      "confidence": "low",
+      "evidenceSource": "Research speculation"
+    },
+    {
+      "uid": "ex1-022",
+      "typeId": "Bio",
+      "cellKey": "l5-c8",
+      "activeActors": ["N"],
+      "trend": null,
+      "customLabel": "Attacks on medical implants",
+      "notes": "Research has demonstrated wireless attacks on pacemakers and insulin pumps (Halperin 2008; Barnaby Jack historical). Not observed in the wild but classified as #8 because the attack crosses the human-physical boundary per R-ROLE.",
+      "references": [
+        { "title": "Halperin et al. — Pacemaker security (2008)", "url": "" }
+      ],
+      "confidence": "low",
+      "evidenceSource": "Academic research only"
+    },
+    {
+      "uid": "ex1-023",
+      "typeId": "XR",
+      "cellKey": "l4-c9",
+      "activeActors": ["F", "E", "A"],
+      "trend": "up",
+      "customLabel": "Immersive phishing in VR/AR",
+      "notes": "Phishing inside VR/AR environments leverages social presence and bypasses traditional browser indicators. Incidents documented in Meta Horizon Worlds and VRChat 2023–2024. Still first-mover level — small but growing user base.",
+      "references": [],
+      "confidence": "low",
+      "evidenceSource": "Platform transparency reports 2023–2024"
+    },
+    {
+      "uid": "ex1-024",
+      "typeId": "XR",
+      "cellKey": "l4-c3",
+      "activeActors": ["N", "A"],
+      "trend": "up",
+      "customLabel": "XR headset client exploitation",
+      "notes": "Meta Quest, Apple Vision Pro, Pico runtimes are complex client stacks (browser, media, passthrough) with growing attack surface. No mass exploitation observed; research papers have demonstrated sandbox escapes and side-channel gaze-tracking leaks.",
+      "references": [],
+      "confidence": "low",
+      "evidenceSource": "Academic security research"
+    },
+    {
+      "uid": "ex1-025",
+      "typeId": "Sat",
+      "cellKey": "l3-c5",
+      "activeActors": ["N", "H"],
+      "trend": "up",
+      "customLabel": "GNSS spoofing & Satcom MitM",
+      "notes": "The Ukraine/Russia conflict has normalized GNSS spoofing; maritime incidents in Eastern Mediterranean, Black Sea, and Persian Gulf. Starlink and VSAT interception research is active. Classified as #5 because the attacker sits between legitimate endpoints and manipulates the signal path.",
+      "references": [
+        { "title": "C4ADS — Above Us Only Stars (GNSS spoofing)", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "C4ADS 2019+; maritime safety reports 2023–2024"
+    },
+    {
+      "uid": "ex1-026",
+      "typeId": "Sat",
+      "cellKey": "l3-c10",
+      "activeActors": ["N"],
+      "trend": "up",
+      "customLabel": "Satcom ground-segment supply chain",
+      "notes": "Viasat KA-SAT 2022 is the canonical case: the AcidRain wiper entered via the ground-segment management network and propagated to customer modems as trusted firmware. Textbook #10 with the TAE at the modem firmware acceptance.",
+      "references": [
+        { "title": "Viasat KA-SAT incident report", "url": "" },
+        { "title": "SentinelLabs — AcidRain analysis", "url": "" }
+      ],
+      "confidence": "high",
+      "evidenceSource": "Viasat 2022; SentinelLabs AcidRain analysis"
+    },
+    {
+      "uid": "ex1-027",
+      "typeId": "Sat",
+      "cellKey": "l4-c6",
+      "activeActors": ["N", "H"],
+      "trend": "up",
+      "customLabel": "RF jamming & uplink flooding",
+      "notes": "Intentional RF interference against commercial Satcom (Starlink, ViaSat, Inmarsat) documented in Russia/Ukraine and Iran/Israel theaters. Uplink flooding saturates the shared spectrum — classified as #6 at the RF layer.",
+      "references": [
+        { "title": "ITU Radio Regulations Board RFI reports", "url": "" },
+        { "title": "HawkEye 360 spectrum monitoring", "url": "" }
+      ],
+      "confidence": "medium",
+      "evidenceSource": "ITU RFI reports; HawkEye 360 telemetry"
+    }
+  ]
+}

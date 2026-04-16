@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "incident_id": "CHATTY-SPIDER-LAWFIRM-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-04-16T00:00:00Z",
+    "notes": "CHATTY SPIDER's four-minute vishing-to-exfiltration intrusion targeting a U.S.-based law firm (2025). This incident exemplifies the adversary's signature speed and the risk posed by abuse of legitimate credentials and trusted administrative tools. The adversary convinced an employee to grant workstation access via Microsoft Quick Assist, downloaded WinSCP within two minutes, and attempted SFTP exfiltration within three minutes — blocked by firewall controls. CHATTY SPIDER pivoted to Google Drive exfiltration within 10 seconds of the firewall block. CrowdStrike OverWatch detected the activity before data exfiltration was completed. CHATTY SPIDER continued to primarily target law firms in 2025, exclusively exfiltrating from beachhead hosts and accessible network shares; intrusions often lasted less than an hour. Attack path: #9 ||[human][@ChattySpider→@LawFirm]|| →[Δt=~2m] #7 →[Δt=~10s] #1 + [DRE: C]. Velocity class VC-3 to VC-4 throughout. Source: CrowdStrike 2026 Global Threat Report, p. 11, Figure 4."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-vishing-quick-assist",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "human",
+        "source_sphere": "@ChattySpider",
+        "target_sphere": "@LawFirm"
+      },
+      "delta_t_to_next": "~2m",
+      "notes": "T+00:00: CHATTY SPIDER vishing call convinces a law firm employee to grant remote workstation access via Microsoft Quick Assist. This is #9 Social Engineering: the employee is manipulated into sharing their Quick Assist session code, giving the adversary full remote control of the workstation. Boundary crossing: the attack traverses from the external attacker sphere through the human trust boundary into the law firm's internal environment. Quick Assist is a legitimate Microsoft remote support tool pre-installed on Windows — the employee uses it as designed, but for the attacker's benefit. CHATTY SPIDER's vishing campaigns 'persuade targeted employees to download and install remote monitoring and management (RMM) tooling.' At T+02:11, the adversary accesses a Privnote URL through the victim's browser — likely retrieving pre-staged operational instructions or exfiltration credentials (Privnote destroys messages after reading)."
+    },
+    {
+      "step_id": "s2-winscp-blocked",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "~10s",
+      "notes": "T+02:24 to T+02:44: The adversary downloads and executes WinSCP on the victim's workstation. R-EXEC: foreign executable content runs — recorded as #7 with fec_executed: true. WinSCP is a legitimate SFTP/SCP client, but it is foreign to the target system and introduced by the attacker for data exfiltration. At T+02:44, WinSCP attempts to establish an SFTP connection to adversary-controlled infrastructure — the connection is blocked by the organization's firewall controls. This demonstrates a network-layer defense successfully interrupting the exfiltration chain. However, the adversary pivots within 10 seconds (T+02:54), accessing a Google Drive URL as an alternative exfiltration channel. The firewall control forced a pivot but did not stop the intrusion."
+    },
+    {
+      "step_id": "s3-google-drive-exfil",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "T+02:54 onward: After the firewall blocks WinSCP, CHATTY SPIDER immediately pivots to Google Drive for data exfiltration. From T+03:16 to T+39:56, the adversary browses files and folders on the compromised workstation and its accessible network shares. From T+04:03 to T+01:25:45, the adversary uploads targeted files to Google Drive. This is #1 Abuse of Functions: both the Windows file system/network share access and Google Drive's upload functionality operate exactly as designed — the generic vulnerability is that these legitimate functions serve an unauthorized actor. The pivot from blocked SFTP to allowed HTTPS (Google Drive) in 10 seconds demonstrates operational agility and the challenge of blocking all exfiltration channels. DRE: C — law firm files from the beachhead host and accessible network shares were partially exfiltrated before CrowdStrike OverWatch detected and interrupted the activity. The four-minute initial-access-to-first-exfiltration-attempt timeline underscores CHATTY SPIDER's operational tempo and the narrow defender response window."
+    }
+  ]
+}

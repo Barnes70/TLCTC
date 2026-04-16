@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "incident_id": "FANCY-BEAR-LAMEHUG-2025",
+    "analyst_confidence": "medium",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-04-16T00:00:00Z",
+    "notes": "FANCY BEAR's deployment of LAMEHUG, a novel LLM-enabled malware family, against Ukrainian government entities (mid-2025). First observed instance of a state-nexus adversary embedding LLM prompting directly into malware to perform operational tasks. Rather than hardcoding reconnaissance logic, LAMEHUG uses predefined prompts to generate system enumeration and document collection commands at runtime. CrowdStrike assessed that the LLM integration 'did not demonstrate a meaningful increase in effectiveness or sophistication compared to traditional malware' — deterministic model settings and simple prompts suggest experimentation rather than operational reliance. LAMEHUG lacked persistence mechanisms, consistent with short-lived 'smash-and-grab' access. Attack path: #9 ||[human][@FancyBear→@UA-Govt]|| →[Δt=?] #7 →[Δt=?] #1 →[Δt=~5m] #1 + [DRE: C] →[Δt=?] #1 + [DRE: C]. Source: CrowdStrike 2026 Global Threat Report, p. 18, Case Highlight: FANCY BEAR's Use of LLM-Enabled Malware."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-spearphish",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "human",
+        "source_sphere": "@FancyBear",
+        "target_sphere": "@UA-Govt"
+      },
+      "delta_t_to_next": "?",
+      "notes": "FANCY BEAR delivers LAMEHUG via spear-phishing to targeted Ukrainian government entities. This is #9 Social Engineering: the spear-phishing email manipulates the recipient into engaging with the malicious payload. Boundary crossing: the attack traverses from the external attacker sphere through the human trust boundary into the Ukrainian government target environment. FANCY BEAR targets Ukrainian government officials for intelligence collection supporting Russia's strategic objectives. Specific lure content and delivery mechanism are not detailed in the CrowdStrike reporting."
+    },
+    {
+      "step_id": "s2-lamehug-exec",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "?",
+      "notes": "LAMEHUG malware executes on the target system. R-EXEC: foreign executable content runs — recorded as #7 with fec_executed: true. LAMEHUG's distinguishing characteristic: it incorporates an LLM directly into its operational workflow. Rather than hardcoding traditional reconnaissance and collection logic, the adversary embeds predefined prompts that are sent to an LLM to generate commands at runtime. The malware uses deterministic model settings (e.g. temperature=0), prioritizing consistent output over creative variation. LAMEHUG lacked persistence mechanisms, consistent with short-lived 'smash-and-grab' operations designed for rapid intelligence collection."
+    },
+    {
+      "step_id": "s3-llm-recon",
+      "cluster": "#1",
+      "delta_t_to_next": "~5m",
+      "notes": "LAMEHUG's embedded LLM generates and executes system enumeration commands. The observed prompt instructs the model to generate commands that: create C:\\ProgramData\\info directory, gather computer information, hardware information, running processes and services, network configuration, and Active Directory domain information, writing all output to C:\\ProgramData\\info\\info.txt. This is #1 Abuse of Functions: all generated commands use legitimate OS utilities (systeminfo, net, wmic, etc.) exactly as designed — the generic vulnerability is that these functions perform their intended purpose for an unauthorized actor. The LLM is the novel command generation mechanism, replacing hardcoded reconnaissance logic."
+    },
+    {
+      "step_id": "s4-llm-doc-collection",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "delta_t_to_next": "?",
+      "notes": "LAMEHUG's embedded LLM generates and executes document collection commands. The observed prompt instructs the model to generate commands that recursively copy Office documents, PDFs, and text files from user Documents, Downloads, and Desktop folders to the C:\\ProgramData\\info staging directory. This is #1 Abuse of Functions: standard file copy operations using legitimate OS commands, abused for intelligence collection. DRE: C — potentially sensitive government documents are collected and staged for exfiltration. The LLM delegation means the collection logic is not statically visible in the malware binary, potentially evading signature-based detection of hardcoded file-harvesting patterns."
+    },
+    {
+      "step_id": "s5-exfiltration",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "Collected system reconnaissance data and documents are exfiltrated to adversary-controlled infrastructure. This is #1 Abuse of Functions: legitimate network transfer capabilities used to send staged data to adversary infrastructure. DRE: C — system enumeration data and sensitive Ukrainian government documents leave the target environment. CrowdStrike assessed that despite the LLM integration novelty, LAMEHUG 'did not demonstrate a meaningful increase in effectiveness or sophistication compared to traditional malware,' suggesting this campaign reflects experimentation with AI-enabled techniques rather than full operationalization. The malware signals continued state-nexus exploration of AI as a development aid and potential future mechanism for evading static detection."
+    }
+  ]
+}

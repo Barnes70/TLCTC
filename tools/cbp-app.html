@@ -540,6 +540,7 @@ const NAV_GROUPS = [
     ]},
     { id: 'defense', label: 'Defense', icon: 'shield-check', links: [
         { href: 'radar-tlctc-app.html', label: 'Threat Radar', icon: 'radar' },
+        { href: 'tech-enablers-radar.html', label: 'Tech Enablers Radar', icon: 'cpu' },
         { href: 'control-matrix.html', label: 'Control Matrix', icon: 'grid-3x3' },
         { href: 'cbp-app.html', label: 'CBP', icon: 'building-2' },
     ]},
@@ -606,9 +607,12 @@ function MobileNavMenu({ open, onClose }) {
                         </React.Fragment>
                     );
                 })}
-                <div className="border-t border-border mt-4 pt-4">
+                <div className="border-t border-border mt-4 pt-4 flex flex-col gap-2">
                     <a href="/" className="text-muted-foreground hover:text-foreground flex items-center gap-1.5">
                         TLCTC.net <Icon name="external-link" size={14} />
+                    </a>
+                    <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground flex items-center gap-1.5">
+                        <Icon name="github" size={16} /> GitHub
                     </a>
                 </div>
             </nav>
@@ -639,6 +643,7 @@ function Header({ darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPN
             <nav className="hidden md:flex items-center gap-1">
                 {NAV_GROUPS.map(g => <NavDropdown key={g.id} group={g} />)}
                 <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <Icon name="external-link" size={12} /></a>
+                <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><Icon name="github" size={16} /></a>
             </nav>
             <div className="flex items-center gap-2">
                 <button onClick={onShowSharedControls} className="app-btn app-btn-outline app-btn-sm gap-1" title="Shared Controls Library — define and link controls across clusters">
@@ -2604,5 +2609,9 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
+<div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+  <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. All data is stored in your <strong>browser's local storage</strong> only &mdash; nothing is sent to a server. Use the <strong>export function</strong> to save your work if you are using real data.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+</div>
+<script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
 </body>
 </html>

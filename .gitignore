@@ -26,6 +26,14 @@ node_modules/
 # Input files (not for repo)
 input4new/
 
+# Reports (generated output)
+reports/
+
+# Report generator
+tools/generate-*-report.js
+package.json
+package-lock.json
+
 # Build artifacts
 dist/
 build/

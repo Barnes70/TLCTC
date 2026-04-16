@@ -16,11 +16,17 @@
       "notes": "Initial access: affiliate logs in to corporate VPN / Citrix / RDP using stolen employee credentials (sourced from a prior infostealer infection or log-market purchase). R-CRED / Axiom X: credential application is ALWAYS #4. MFA bypass typically via stolen session cookie or legacy VPN profile."
     },
     {
-      "step_id": "s2-tier0-escalation",
-      "cluster": "#4",
+      "step_id": "s2a-tier0-credential-acquisition",
+      "cluster": "#1",
       "outcomes": ["C"],
+      "delta_t_to_next": "~10m",
+      "notes": "Tier-0 credential acquisition via abuse of legitimate AD/PKI protocols: Kerberoasting (abuse of Kerberos TGS-REQ for a crackable service-ticket hash), DCSync (abuse of MS-DRSR replication to request credential material from a DC), or ADCS ESC1/ESC4/ESC8 (abuse of CA enrollment to mint a cert for a privileged principal). Designed protocol functions, abused scope → #1, not #4. DRE:C — the Tier-0 credential set is the crown jewels. Axiom X: acquisition cluster (#1) is independent of the later credential use (#4)."
+    },
+    {
+      "step_id": "s2b-tier0-credential-use",
+      "cluster": "#4",
       "delta_t_to_next": "~6h",
-      "notes": "Privilege escalation to domain admin / Tier-0 identity. Common techniques: Kerberoasting, DCSync, ADCS ESC1/ESC4/ESC8 abuse. R-CRED: all are credential-use patterns (#4). DRE:C — the Tier-0 credential set is effectively the crown jewels at this point."
+      "notes": "Authentication as domain admin / Tier-0 principal using the material obtained in s2a (cracked service password, replicated NT hash, or ADCS-minted certificate via PKINIT). R-CRED / Axiom X: credential application is ALWAYS #4."
     },
     {
       "step_id": "s3-backup-infrastructure-abuse",

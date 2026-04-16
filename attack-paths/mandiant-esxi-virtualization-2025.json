@@ -16,11 +16,17 @@
       "notes": "Corporate VPN login via stolen employee credentials. R-CRED / Axiom X: credential application is ALWAYS #4."
     },
     {
-      "step_id": "s2-ad-compromise",
-      "cluster": "#4",
+      "step_id": "s2a-tier0-credential-acquisition",
+      "cluster": "#1",
       "outcomes": ["C"],
+      "delta_t_to_next": "~10m",
+      "notes": "Tier-0 credential acquisition via abuse of legitimate AD/PKI protocols: Kerberoasting (abuse of the Kerberos TGS-REQ function to obtain a service-account hash for offline cracking), DCSync (abuse of the MS-DRSR replication protocol to request credential material from a DC), or ADCS ESC1/ESC4/ESC8 (abuse of legitimate CA enrollment flows to mint a cert for a privileged principal). No exploit, no FEC — designed protocol functions, abused scope → #1. DRE:C on the credential material obtained. Axiom X: credential ACQUISITION maps to the enabling cluster; the subsequent USE is a separate #4 step."
+    },
+    {
+      "step_id": "s2b-tier0-credential-use",
+      "cluster": "#4",
       "delta_t_to_next": "~4h",
-      "notes": "Privilege escalation to domain admin (Kerberoasting / DCSync / ADCS abuse). DRE:C on the AD credential database. Domain-admin credentials are leveraged in s3 to manipulate ESX Admins group membership."
+      "notes": "Authentication as domain admin / Tier-0 principal using the credential material obtained in s2a (cracked service-account password, replicated NT hash, or ADCS-minted certificate via PKINIT). R-CRED / Axiom X: credential application is ALWAYS #4, regardless of how the credential was acquired."
     },
     {
       "step_id": "s3-esx-admins-group-manipulation",

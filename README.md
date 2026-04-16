@@ -347,11 +347,14 @@ tlctc/
 │   │   ├── decision-tree.md                  # Classification methodology
 │   │   └── examples/
 │   │       └── cwe-to-control-walkthrough.md # Worked example: vuln findings → controls
-│   └── npm-supply-chain/                     # npm supply chain patterns → TLCTC
+│   ├── npm-supply-chain/                     # npm supply chain patterns → TLCTC
+│   │   ├── README.md                         # Pattern documentation & methodology
+│   │   ├── tlctc-npm-patterns.json           # Supply chain attack patterns mapping
+│   │   └── examples/
+│   │       └── incident-to-control-walkthrough.md # Worked example: incident → controls
+│   └── cloudflare-2026-patterns/             # Cloudflare 2026 attack patterns → TLCTC
 │       ├── README.md                         # Pattern documentation & methodology
-│       ├── tlctc-npm-patterns.json           # Supply chain attack patterns mapping
-│       └── examples/
-│           └── incident-to-control-walkthrough.md # Worked example: incident → controls
+│       └── tlctc-cloudflare-2026-patterns.json # Cloudflare 2026 threat report pattern mapping
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
@@ -385,19 +388,40 @@ tlctc/
 │   ├── threat-modeling.html                  # SDLC threat modeling & architecture analysis
 │   ├── attack-path-architect.html            # Incident attack path documentation & CTI exchange
 │   ├── actor-profile-designer.html           # Threat actor capability profiling & comparison (573 actors: 59 expert-scored + 514 ETDA heuristic-scored)
+│   ├── actor-story-designer.html             # Threat intelligence story/narrative builder
 │   ├── score_etda.py                         # ETDA→TLCTC scoring engine: tool arsenal + description mining, calibrated against expert data
 │   ├── radar-tlctc-app.html                  # Interactive threat radar visualization & assessment
+│   ├── tech-enablers-radar.html              # Technology enabler radar for emerging threat vectors
 │   ├── control-matrix.html                   # NIST CSF 2.0 × TLCTC control matrix with maturity scoring
+│   ├── attck-explorer.html                   # MITRE ATT&CK technique explorer with TLCTC mapping
+│   ├── attck-phase-heatmap.html              # ATT&CK phase heatmap visualization
+│   ├── cwe-explorer.html                     # CWE weakness explorer with TLCTC mapping
+│   ├── cbp-app.html                          # Cluster-based prioritization application
 │   └── examples/                             # Starter templates & real-world example datasets
 │       ├── template-threat-model.json        # Blank threat model starter
 │       ├── template-attack-path.json         # Blank attack path starter
 │       ├── template-actor-profile.json       # Blank actor profile starter
 │       ├── CTA-CrowdStrike2025.json          # CrowdStrike 2025 Global Threat Report actors
+│       ├── CTA-CrowdStrike2026.json          # CrowdStrike 2026 Global Threat Report actors
+│       ├── CTA-Cloudflare-2026.json          # Cloudflare 2026 threat actors
+│       ├── CTA-Mandiant-2026.json            # Mandiant M-Trends 2026 threat actors
 │       ├── CTA-Google-APT-Groups.json        # Google APT group profiles
 │       ├── CTA-NCSC-SituationRadar-2024-2025.json  # NCSC Situation Radar threat data
 │       ├── CTA-NCSC-TAC-Profiles.json        # NCSC threat actor capability profiles
-│       ├── ncsc-google-2024-JB-bericht*.json # NCSC/Google 2024 annual report datasets (5 files)
-│       └── npm-*.json                        # npm supply chain incident examples (3 files)
+│       ├── radar-cloudflare-2026.json         # Cloudflare 2026 radar dataset
+│       ├── radar-crowdstrike-2026.json        # CrowdStrike 2026 radar dataset
+│       ├── radar-mandiant-2026.json           # Mandiant 2026 radar dataset
+│       ├── radar-mandiant-2026-industries.json # Mandiant 2026 industry-specific radar
+│       ├── stories-cloudflare-2026.json       # Cloudflare 2026 threat narratives
+│       ├── stories-crowdstrike-2026.json      # CrowdStrike 2026 threat narratives
+│       ├── stories-mandiant-2026.json         # Mandiant 2026 threat narratives
+│       ├── control-matrix-cloudflare-2026.json # Cloudflare 2026 control matrix
+│       ├── control-matrix-crowdstrike-2026.json # CrowdStrike 2026 control matrix
+│       ├── control-matrix-mandiant-2026.json  # Mandiant 2026 control matrix
+│       ├── tech-enablers-horizon-2026.json    # Technology enablers horizon scan 2026
+│       ├── tech-enablers-agentic-focus-2026.json # Agentic AI technology enablers 2026
+│       ├── ncsc-google-2024-JB-bericht*.json  # NCSC/Google 2024 annual report datasets (5 files)
+│       └── npm-*.json                         # npm supply chain incident examples (3 files)
 ├── glossary/
 │   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
 │   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, v2.1 extensions
@@ -418,30 +442,62 @@ tlctc/
 │           ├── path-H-supply-chain-marketplace.json
 │           ├── path-I-apt-in-a-box.json
 │           └── path-J-llm-weaponization-supply-chain.json
-├── attack-paths/                             # Community-contributed incident analyses (22 incidents)
+├── attack-paths/                             # Community-contributed incident analyses (49 incidents)
 │   ├── CONTRIBUTING.md
-│   ├── agent-btz-usb-2008.json
-│   ├── capital-one-2019.json
-│   ├── chalk-debug-phishing-2025.json
-│   ├── change-healthcare-2024.json
-│   ├── cloudflare-http-ddos-2023.json
-│   ├── colonial-pipeline-2021.json
-│   ├── credential-stuffing-2020.json
-│   ├── darkhotel-wifi-2014.json
-│   ├── lockbit-byovd-2023.json
-│   ├── lojax-uefi-2018.json
-│   ├── mirai-botnet-2016.json
-│   ├── okta-lapsus-2022.json
-│   ├── pegasus-forcedentry-2021.json
-│   ├── s1ngularity-nx-2025.json
-│   ├── shai-hulud-worm-2025.json
-│   ├── tesla-insider-2023.json
-│   ├── tesla-k8s-cryptojacking-2018.json
-│   ├── twitter-hack-2020.json
-│   ├── uber-breach-2016.json
-│   ├── ubiquiti-bec-2015.json
-│   ├── ukraine-power-grid-2015.json
-│   └── watering-hole-iphonedevsdk-2013.json
+│   ├── # Historical incidents (2008–2024)
+│   ├── agent-btz-usb-2008.json               # USB worm (2008)
+│   ├── watering-hole-iphonedevsdk-2013.json   # Watering hole (2013)
+│   ├── darkhotel-wifi-2014.json               # Hotel Wi-Fi (2014)
+│   ├── ubiquiti-bec-2015.json                 # BEC wire fraud (2015)
+│   ├── ukraine-power-grid-2015.json           # ICS power grid (2015)
+│   ├── uber-breach-2016.json                  # Credential stuffing (2016)
+│   ├── mirai-botnet-2016.json                 # IoT botnet (2016)
+│   ├── capital-one-2019.json                  # SSRF cloud (2019)
+│   ├── credential-stuffing-2020.json          # Credential stuffing (2020)
+│   ├── twitter-hack-2020.json                 # Social engineering (2020)
+│   ├── colonial-pipeline-2021.json            # Ransomware (2021)
+│   ├── pegasus-forcedentry-2021.json          # Zero-click exploit (2021)
+│   ├── okta-lapsus-2022.json                  # Supply chain (2022)
+│   ├── lockbit-byovd-2023.json                # BYOVD ransomware (2023)
+│   ├── cloudflare-http-ddos-2023.json         # HTTP/2 DDoS (2023)
+│   ├── tesla-insider-2023.json                # Insider threat (2023)
+│   ├── tesla-k8s-cryptojacking-2018.json      # K8s cryptojacking (2018)
+│   ├── lojax-uefi-2018.json                   # UEFI rootkit (2018)
+│   ├── change-healthcare-2024.json            # Healthcare ransomware (2024)
+│   ├── # Cloudflare 2026 Threat Report sourced (13 incidents)
+│   ├── grub1-saas-pivot-2025.json             # GRUB1 Salesloft/Drift SaaS pivot
+│   ├── opencode-exploit-chain-2025.json       # OpenCode AI IDE RCE chain
+│   ├── frumpytoad-toughprogress-2025.json     # FrumpyToad ToughProgress phishing
+│   ├── nastyshrew-ukraine-2025.json           # NastyShrew Ukraine espionage
+│   ├── rottenshrew-signal-2025.json           # RottenShrew Signal device linking
+│   ├── clumsytoad-snakedisk-2025.json         # ClumsyToad SnakeDisk USB wiper
+│   ├── punytoad-f5-bigip-2025.json            # PunyToad F5 BIG-IP exploitation
+│   ├── nk-it-worker-infiltration-2025.json    # DPRK IT worker infiltration scheme
+│   ├── infostealer-ransomware-pipeline-2025.json # Infostealer → IAB → ransomware pipeline
+│   ├── aisuru-ddos-2025.json                  # Aisuru botnet DDoS-for-hire
+│   ├── authorized-insider-extortion-2025.json # Authorized insider extortion
+│   ├── bot-chain-lifecycle-2025.json          # Bot chain lifecycle (IoT → proxy)
+│   ├── raccoon-phaas-aitm-2025.json          # Raccoon PhaaS AiTM credential theft
+│   ├── # Mandiant M-Trends 2026 sourced (6 incidents)
+│   ├── mandiant-handoff-ransomware-2025.json  # Infostealer → IAB → ransomware hand-off
+│   ├── mandiant-multi-year-espionage-2025.json # Multi-year espionage campaign
+│   ├── mandiant-saas-cascade-2025.json        # SaaS token cascade
+│   ├── mandiant-edge-device-exploitation-2025.json # Edge device exploitation
+│   ├── mandiant-esxi-virtualization-2025.json # ESXi VMDK-mount credential dump
+│   ├── mandiant-recovery-denial-2025.json     # Recovery denial ransomware
+│   ├── # CrowdStrike 2026 Global Threat Report sourced (8 incidents)
+│   ├── scattered-spider-unmanaged-vm-2025.json # SCATTERED SPIDER unmanaged VM credential dump
+│   ├── pressure-chollima-bybit-2025.json      # PRESSURE CHOLLIMA Bybit $1.46B supply chain
+│   ├── fancy-bear-lamehug-2025.json           # FANCY BEAR LAMEHUG LLM-enabled malware
+│   ├── blockade-spider-embargo-2025.json      # BLOCKADE SPIDER cross-domain Embargo ransomware
+│   ├── cozy-bear-oauth-ngo-2025.json          # COZY BEAR multi-day OAuth phishing
+│   ├── chatty-spider-lawfirm-2025.json        # CHATTY SPIDER 4-minute law firm intrusion
+│   ├── punk-spider-smb-encryption-2025.json   # PUNK SPIDER remote SMB encryption via IoT
+│   ├── famous-chollima-beavertail-2025.json   # FAMOUS CHOLLIMA fake recruiter npm + BeaverTail
+│   ├── # npm ecosystem sourced (3 incidents)
+│   ├── s1ngularity-nx-2025.json               # S1ngularity NX npm campaign
+│   ├── chalk-debug-phishing-2025.json         # chalk-debug npm phishing
+│   └── shai-hulud-worm-2025.json              # ShaiHulud self-propagating npm worm
 ├── v2.1-Proposals/                           # v2.1 extension specification
 │   ├── TLCTC_v2.1_Full_Extension_Spec.pdf    # Full v2.1 boundary extension spec
 │   └── TLCTC_v2.1_Full_Extension_Spec.docx   # Editable source

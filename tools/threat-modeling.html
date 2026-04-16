@@ -136,11 +136,13 @@
         <button onclick="toggleNavDd('defense')"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> Defense <i data-lucide="chevron-down" style="width:12px;height:12px;opacity:0.5;"></i></button>
         <div id="nav-dd-defense-panel" class="nav-dd-panel hidden">
           <a href="radar-tlctc-app.html"><i data-lucide="radar" style="width:16px;height:16px;"></i> Threat Radar</a>
+          <a href="tech-enablers-radar.html"><i data-lucide="cpu" style="width:16px;height:16px;"></i> Tech Enablers Radar</a>
           <a href="control-matrix.html"><i data-lucide="grid-3x3" style="width:16px;height:16px;"></i> Control Matrix</a>
           <a href="cbp-app.html"><i data-lucide="building-2" style="width:16px;height:16px;"></i> CBP</a>
         </div>
       </div>
       <a href="/" class="text-sm font-medium flex items-center gap-1" style="padding:6px 10px;border-radius:6px;">TLCTC.net <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+      <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" class="text-sm font-medium flex items-center gap-1" style="padding:6px 10px;border-radius:6px;"><i data-lucide="github" style="width:16px;height:16px;"></i></a>
     </nav>
     <div class="flex items-center gap-3">
       <button onclick="toggleNavTheme()" class="nav-toggle-btn" aria-label="Toggle theme">
@@ -172,10 +174,12 @@
       <a href="actor-story-designer.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Actor Story</a>
       <span class="nav-group-label" style="margin-top:16px;margin-bottom:4px;"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> Defense</span>
       <a href="radar-tlctc-app.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Threat Radar</a>
+      <a href="tech-enablers-radar.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Tech Enablers Radar</a>
       <a href="control-matrix.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">Control Matrix</a>
       <a href="cbp-app.html" style="padding-left:20px;padding-top:4px;padding-bottom:4px;">CBP</a>
-      <div style="border-top:1px solid hsl(var(--nav-border));margin-top:16px;padding-top:16px;">
+      <div style="border-top:1px solid hsl(var(--nav-border));margin-top:16px;padding-top:16px;display:flex;flex-direction:column;gap:8px;">
         <a href="/" style="display:flex;align-items:center;gap:6px;">TLCTC.net <i data-lucide="external-link" style="width:14px;height:14px;"></i></a>
+        <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:6px;"><i data-lucide="github" style="width:16px;height:16px;"></i> GitHub</a>
       </div>
     </nav>
   </div>
@@ -2381,5 +2385,9 @@
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<TLCTCThreatIdentificationTool />);
   </script>
+  <div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+    <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. All data is stored in your <strong>browser's local storage</strong> only &mdash; nothing is sent to a server. Use the <strong>export function</strong> to save your work if you are using real data.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+  </div>
+  <script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
 </body>
 </html>

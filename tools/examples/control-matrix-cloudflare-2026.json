@@ -1,0 +1,385 @@
+{
+  "version": "1.0.0",
+  "tool": "TLCTC Control Matrix Manager",
+  "exportDate": "2026-04-09T00:00:00Z",
+  "orgName": "Cloudflare 2026 Recommendations",
+  "targetMaturity": 3,
+  "environments": [
+    {
+      "id": "env-cf26",
+      "name": "Cloudflare 2026",
+      "cells": {
+        "1-ID": {
+          "local": [
+            {
+              "id": "cf26-1",
+              "name": "Audit all SaaS-to-SaaS API permissions",
+              "description": "Conduct immediate audit of all SaaS API permissions. Apply principle of least privilege to integrations, specifically over-privileged read/write tokens in Salesforce, Slack, GitHub. (CF26 Rec #3: Harden SaaS-to-SaaS connective tissue)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "1-PR": {
+          "local": [
+            {
+              "id": "cf26-2",
+              "name": "DLP for AI prompts and generative AI tools",
+              "description": "Implement strict data loss prevention for AI prompts. Deploy browser-isolated environments for generative AI tools to prevent corporate data leakage into model training sets or infostealer capture. (CF26 Rec #1: Focus AI security on workforce usage)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "cf26-3",
+              "name": "Isolate peripheral infrastructure with dedicated domains/IPs",
+              "description": "Subsidiary and supporting services operate independently with dedicated domain names, unique IP addresses, and where feasible, distinct ASNs. (CF26 Rec #6: Isolate peripheral infrastructure)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "1-DE": {
+          "local": [
+            {
+              "id": "cf26-4",
+              "name": "Behavioral analytics on SaaS API usage patterns",
+              "description": "Detect anomalous SaaS API usage — unusual query patterns, bulk data export, AI-assisted navigation indicators. Monitor for GRUB1-style automated credential discovery and AI-assisted lateral movement. (CF26 Rec #3 + MOE pattern)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "detective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "2-PR": {
+          "local": [
+            {
+              "id": "cf26-5",
+              "name": "Aggressive edge appliance patch management",
+              "description": "Prioritize patching for edge network appliances (F5 BIG-IP, VMware vCenter/ESXi, Ivanti). Apply virtual patching where immediate updates are not feasible. PunyToad maintained F5 access for >1 year. (CF26 Rec #6 + Edge pre-positioning pattern)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "4-ID": {
+          "local": [
+            {
+              "id": "cf26-6",
+              "name": "Zero trust biometric verification for remote hiring",
+              "description": "Move away from purely digital onboarding. Use zero trust biometric verification for all remote video interviews. Enforce strict hardware-based geofencing. Cryptographically pair corporate laptops to user's physical location. Counter industrialized NK IT worker deepfake identity fraud. (CF26 Rec #4)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "4-PR": {
+          "local": [
+            {
+              "id": "cf26-7",
+              "name": "Phishing-resistant MFA (FIDO2/passkeys)",
+              "description": "Implement phishing-resistant MFA since infostealers like LummaC2 harvest session tokens to bypass standard MFA. FIDO2/passkeys cannot be intercepted by AitM proxies. (CF26 Rec #2: Transition from MFA to identity-first zero trust)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            },
+            {
+              "id": "cf26-8",
+              "name": "Device-bound session tokens with continuous validation",
+              "description": "Bind session tokens to device fingerprints. Invalidate sessions instantly on impossible travel, suspicious device fingerprints (mouse-jiggling), or anomalous access patterns. Counter the shift from 'attacking the box' to 'attacking the session'. (CF26 Rec #2)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "4-DE": {
+          "local": [
+            {
+              "id": "cf26-9",
+              "name": "Impossible travel and session anomaly detection",
+              "description": "Continuous monitoring for impossible travel patterns, concurrent sessions from divergent geolocations, suspicious device fingerprints. Detect NK IT worker laptop farm patterns and credential stuffing (94% of login attempts from bots). (CF26 Rec #2 + #4)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "detective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "5-PR": {
+          "local": [
+            {
+              "id": "cf26-10",
+              "name": "Origin-binding for authentication tokens",
+              "description": "Implement certificate pinning and origin-binding to prevent AitM transparent proxy interception. PhaaS AitM kits (RaccoonO365) capture session tokens by proxying between victim and legitimate service. (CF26 PhaaS pattern)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "6-PR": {
+          "local": [
+            {
+              "id": "cf26-11",
+              "name": "Autonomous edge-based DDoS mitigation",
+              "description": "Shift to automated, edge-based DDoS mitigation with sub-10-second response capability. Legacy scrubbing center models insufficient for attacks peaking at 31.4 Tbps and concluding within 10 minutes. Window for human intervention has closed. (CF26 Rec #5: Autonomous hyper-volumetric DDoS defenses)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "VC-4", "fit": null, "factor": null, "rationale": "Aisuru attacks peak in seconds — control must act at VC-4 speed" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "6-RS": {
+          "local": [
+            {
+              "id": "cf26-12",
+              "name": "Always-on DDoS protection with autonomous response",
+              "description": "Deploy always-on protection that responds autonomously without human intervention. Multi-terabit attacks are the new baseline. Even mid-tier actors can now launch hyper-volumetric attacks that were once nation-state exclusive. (CF26 Rec #5)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "corrective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "VC-4", "fit": null, "factor": null, "rationale": "Most 2025 attacks lasted <10 minutes — too fast for manual response" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "7-PR": {
+          "local": [
+            {
+              "id": "cf26-13",
+              "name": "Anti-infostealer browser isolation",
+              "description": "Deploy browser-isolated environments for web browsing and SaaS access to prevent infostealer credential/token harvest. LummaC2 and successors are the primary engine of the ransomware supply chain (54% of ransomware traced to infostealers). (CF26 Rec #1 + Infostealer pattern)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "7-DE": {
+          "local": [
+            {
+              "id": "cf26-14",
+              "name": "File integrity monitoring on edge devices",
+              "description": "Monitor edge network appliances for unauthorized binary deployment. Detect process masquerading (e.g., BRICKSTORM posing as VMware/Postgres processes). PunyToad installed Go-based malware in /opt/vmware/vpostgres/. (CF26 Edge pre-positioning pattern)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "detective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "9-DE": {
+          "local": [
+            {
+              "id": "cf26-15",
+              "name": "AI-first email security with polymorphic detection",
+              "description": "Adopt AI-first email security capable of interpreting shifting polymorphic tactics from PhaaS bots that bypass legacy SEGs. Utilize signals beyond the email inbox to identify and neutralize compromised accounts in real time. Counter RaccoonO365-style industrialized phishing with 100% inbox delivery guarantees. (CF26 Rec #7: Eliminate email blind spots)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "detective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "VC-3", "fit": null, "factor": null, "rationale": "PhaaS campaigns operate at VC-3 velocity with automated rotation" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "9-RS": {
+          "local": [
+            {
+              "id": "cf26-16",
+              "name": "Automated PhaaS campaign disruption",
+              "description": "Real-time detection and response to PhaaS-driven phishing campaigns — automated takedown of credential harvesting pages, domain blocking, and account compromise remediation. (CF26 Rec #7 + PhaaS pattern)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "corrective",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "10-ID": {
+          "local": [
+            {
+              "id": "cf26-17",
+              "name": "SaaS integration inventory and privilege audit",
+              "description": "Maintain complete inventory of all third-party SaaS integrations with documented permission scopes. The GRUB1 campaign proves a single over-privileged integration creates cascading risk across entire ecosystems. (CF26 Rec #3)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        },
+        "10-PR": {
+          "local": [
+            {
+              "id": "cf26-18",
+              "name": "Least-privilege SaaS-to-SaaS integration tokens",
+              "description": "Apply principle of least privilege to all SaaS-to-SaaS integration tokens. Remove over-privileged read/write access. Enforce time-limited, scope-restricted tokens. A single compromised integration can cascade across hundreds of tenants. (CF26 Rec #3)",
+              "linkMore": "",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "preventive",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": { "value": null, "rationale": "", "set_by": "", "last_reviewed": "", "review_trigger": "" },
+              "cde_fitness": { "target_velocity_class": "", "fit": null, "factor": null, "rationale": "" },
+              "coe": { "metrics": [], "aggregation_method": "weighted_mean", "weights": {}, "composite_coe": null },
+              "ecr": null
+            }
+          ],
+          "umbrella": []
+        }
+      }
+    }
+  ],
+  "sharedControls": [],
+  "createdAt": "2026-04-09"
+}

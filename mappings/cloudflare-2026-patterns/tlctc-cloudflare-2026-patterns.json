@@ -1,0 +1,155 @@
+{
+  "metadata": {
+    "title": "TLCTC Cloudflare 2026 Threat Report Attack Patterns",
+    "description": "Canonical attack path patterns extracted from the Cloudflare 2026 Threat Report, decomposed into TLCTC threat cluster sequences. Each pattern represents a structurally distinct attack archetype defining the 2026 threat landscape. Patterns use TLCTC v2.0 cluster notation with v2.1 boundary extensions.",
+    "tlctc_version": "2.1",
+    "domain": "cloudflare-2026-threat-landscape",
+    "total_patterns": 7,
+    "license": "CC-BY-4.0",
+    "publisher": "TLCTC Project",
+    "created_at": "2026-04-09T00:00:00Z",
+    "source": "Cloudflare 2026 Threat Report (Cloudforce One)",
+    "notation": {
+      "arrow": "→ denotes sequential causation (left enables right)",
+      "boundary": "||[context][@Source→@Target]|| denotes inter-organizational domain boundary crossing",
+      "transit": "||[context][@Source⇒@Transit→@Target]|| denotes transit boundary (carrier relay)",
+      "dre": "+ [DRE: X] denotes Data Risk Event (C=Confidentiality, I=Integrity, A=Availability, Ac=Accessibility)",
+      "parallel": "(#X + #Y) denotes parallel execution"
+    },
+    "structural_observations": {
+      "identity_over_exploitation": "The 2026 landscape is defined by 'attacking the session' not 'attacking the box'. #4 Identity Theft appears in 6 of 7 patterns. The shift from network exploitation to identity abuse makes token/session management the dominant control surface.",
+      "cluster_1_dominance": "#1 Abuse of Functions appears in every pattern, often multiple times with structurally distinct control surfaces (API abuse, LotX C2, data exfiltration, lateral movement). Legitimate-function abuse is the connective tissue of modern attacks.",
+      "moe_over_sophistication": "The Measure of Effectiveness (MOE) paradigm replaces technical sophistication as the primary risk metric. High-MOE attacks achieve maximum disruption with minimum cost, often leveraging the victim's own infrastructure.",
+      "velocity_compression": "AI-accelerated attack cycles compress timelines from days to minutes. Most patterns show VC-3 (minutes) or VC-4 (seconds) velocity in the exploitation phases, closing the window for human intervention."
+    }
+  },
+  "patterns": [
+    {
+      "patternId": "CF26-PAT-001",
+      "patternName": "SaaS-to-SaaS Pivot",
+      "description": "Attacker uses automated secret-scanning tools to harvest integration credentials from code repositories, then authenticates to interconnected SaaS platforms and uses AI to navigate and exfiltrate data. The security of corporate data is defined by the most over-privileged integration in the tech stack.",
+      "tlctcNotation": "#1 + [DRE: C] → #4 → #1 + [DRE: C]",
+      "tlctcClusters": ["#1", "#4", "#1"],
+      "tlctcClusterNames": ["Abuse of Functions", "Identity Theft", "Abuse of Functions"],
+      "mappingRationale": "First #1 records automated secret scanning using legitimate security tools (TruffleHog) — designed functionality, abused scope. #4 records authentication to target SaaS using harvested credentials (R-CRED: always #4). Second #1 records AI-assisted navigation and exfiltration through legitimate SaaS APIs. No exploitation of technical vulnerabilities (#2/#3) — the entire chain operates through designed functionality. The two #1 steps have distinct control surfaces: repository secret management vs. SaaS API access controls.",
+      "controlsByCluster": {
+        "#1": "Secret scanning: rotate exposed secrets, secret detection in CI/CD, vault-based secret management, never store credentials in code. SaaS navigation: API rate limiting, data loss prevention on export endpoints, anomaly detection on query patterns",
+        "#4": "Least-privilege SaaS integration tokens, short-lived credentials, MFA on integration reconfiguration, audit all SaaS-to-SaaS API permissions"
+      },
+      "velocityProfile": "VC-2 to VC-3 — AI-assisted navigation compresses exploitation from hours to minutes",
+      "realWorldExamples": ["GRUB1 Salesloft/Salesforce campaign (2025)"],
+      "reportReference": "Cloudflare 2026 Threat Report, pp. 7"
+    },
+    {
+      "patternId": "CF26-PAT-002",
+      "patternName": "Living off the XaaS (LotX) C2",
+      "description": "After initial compromise via social engineering and malware delivery, the attacker establishes command-and-control through legitimate cloud services (Google Calendar, paste sites, Azure Web Apps), blending C2 traffic into normal enterprise operations. All traffic remains within encrypted, trusted ecosystems.",
+      "tlctcNotation": "#9 ||[email][@External→@Org]|| → #7 → #1",
+      "tlctcClusters": ["#9", "#7", "#1"],
+      "tlctcClusterNames": ["Social Engineering", "Malware", "Abuse of Functions"],
+      "mappingRationale": "#9 records the initial social engineering (spear-phishing) that crosses the human boundary. #7 records FEC execution (R-EXEC: malware payload). #1 records the LotX C2 operations — read/write to Google Calendar events, polling paste sites, using Azure Web Apps. These are legitimate APIs functioning as designed; the attacker abuses their scope for C2. The LotX pattern is structurally distinct from traditional C2 because the traffic never touches a malicious domain.",
+      "controlsByCluster": {
+        "#9": "Phishing-resistant MFA (FIDO2), email security with AI-first detection, security awareness for spear-phishing",
+        "#7": "Application whitelisting, endpoint detection and response, sandboxed execution environments",
+        "#1": "Anomaly detection on cloud API usage patterns (e.g., unusual Google Calendar API volume from non-interactive processes), SaaS access logging, behavioral analytics on legitimate service usage"
+      },
+      "variants": [
+        {"actor": "FrumpyToad", "service": "Google Calendar event descriptions", "technique": "TOUGHPROGRESS malware"},
+        {"actor": "NastyShrew", "service": "Paste sites (teletype.in, rentry.co) as dead drop resolvers", "technique": "Pteranodon VBScript chains"},
+        {"actor": "CrustyKrill", "service": "Azure Web Apps (.azurewebsites.net) and ONLYOFFICE", "technique": "SaaS-hosted phishing/C2"},
+        {"actor": "PatheticSlug", "service": "Google Drive, Dropbox, GitHub", "technique": "XenoRAT payload hosting"}
+      ],
+      "velocityProfile": "VC-2 — C2 polling intervals typically hours; initial compromise to C2 establishment in minutes",
+      "realWorldExamples": ["FrumpyToad TOUGHPROGRESS (2024-2025)", "NastyShrew Ukraine ops (2025)", "CrustyKrill Azure abuse", "PatheticSlug payload hosting"],
+      "reportReference": "Cloudflare 2026 Threat Report, pp. 11, 16, 23"
+    },
+    {
+      "patternId": "CF26-PAT-003",
+      "patternName": "Infostealer-to-Ransomware Pipeline",
+      "description": "The standard 2026 ransomware operational baseline. Infostealers harvest credentials and live session tokens; initial access brokers validate and auction access; ransomware affiliates authenticate, move laterally, exfiltrate data, and deploy encryption. 54% of all 2025 ransomware traced to infostealer-enabled credential theft.",
+      "tlctcNotation": "#7 → #1 + [DRE: C] → #4 → #1 + [DRE: C] → (#1 + #7) + [DRE: Ac]",
+      "tlctcClusters": ["#7", "#1", "#4", "#1", "#1", "#7"],
+      "tlctcClusterNames": ["Malware", "Abuse of Functions", "Identity Theft", "Abuse of Functions", "Abuse of Functions", "Malware"],
+      "mappingRationale": "First #7 records infostealer execution (LummaC2, etc.). First #1 records credential/token harvesting using legitimate browser APIs and filesystem reads. #4 records ransomware affiliate authenticating with purchased credentials/tokens (R-CRED: always #4). Second #1 records lateral movement and data exfiltration using legitimate tools. Parallel final group: #1 (extortion demand via legitimate channels) + #7 (ransomware payload execution, DRE: Ac — data present but unusable). Axiom III: 'ransomware' is an outcome label; the causes are FEC execution and function abuse.",
+      "controlsByCluster": {
+        "#7": "Endpoint detection, application whitelisting, anti-infostealer defenses, sandboxed browsing",
+        "#1": "Credential isolation, vault-based secret management, egress filtering, DLP for data exfiltration, behavioral analytics on lateral movement",
+        "#4": "Phishing-resistant MFA (FIDO2/passkeys), continuous session validation, impossible-travel detection, token rotation, device-bound sessions"
+      },
+      "velocityProfile": "VC-1 (infostealer to IAB sale: days-weeks) → VC-3 (IAB purchase to ransomware deployment: hours, compressed to minutes by AI)",
+      "realWorldExamples": ["HellCat ransomware (Jaguar Land Rover, Telefonica, 2025)", "LummaC2 MaaS ecosystem (disrupted May 2025)"],
+      "reportReference": "Cloudflare 2026 Threat Report, pp. 39-41"
+    },
+    {
+      "patternId": "CF26-PAT-004",
+      "patternName": "PhaaS AitM Token Theft",
+      "description": "Industrialized phishing-as-a-service with adversary-in-the-middle capability. The PhaaS proxy transparently intercepts authentication between victim and legitimate service, capturing live session tokens that bypass MFA. Transforms ransomware from a 'break-in event' to a 'login event'.",
+      "tlctcNotation": "#9 ||[email][@External→@Org]|| → #5 → #4 → #1 + [DRE: C]",
+      "tlctcClusters": ["#9", "#5", "#4", "#1"],
+      "tlctcClusterNames": ["Social Engineering", "Man in the Middle", "Identity Theft", "Abuse of Functions"],
+      "mappingRationale": "#9 records the phishing lure crossing the human boundary. #5 records the AitM proxy intercepting the authentication exchange — the attacker positions their infrastructure between the victim and the legitimate service, intercepting data in transit (generic MitM vulnerability). #4 records replaying the captured session token (R-CRED: credential use is always #4; Axiom X: acquisition via #5, use via #4). #1 records data harvesting through legitimate APIs using the authenticated session. The #5→#4 sequence is the critical innovation: MFA is neutralized because the proxy captures the already-authenticated state.",
+      "controlsByCluster": {
+        "#9": "AI-first email security, phishing-resistant MFA (FIDO2/passkeys — not interceptable by AitM), brand impersonation detection",
+        "#5": "Device-bound session tokens, certificate pinning, origin-binding for authentication tokens",
+        "#4": "Continuous session validation, impossible-travel detection, device fingerprint verification, session anomaly detection",
+        "#1": "Data loss prevention, API access anomaly detection, egress filtering"
+      },
+      "velocityProfile": "VC-3 to VC-4 — fully automated from phishing click to data exfiltration in minutes",
+      "realWorldExamples": ["RaccoonO365 enterprise (disrupted 2025)"],
+      "reportReference": "Cloudflare 2026 Threat Report, pp. 35-36"
+    },
+    {
+      "patternId": "CF26-PAT-005",
+      "patternName": "Bot Chain Lifecycle",
+      "description": "Three-phase industrialized bot chain: (1) automated credential stuffing at industrial scale, (2) account takeover and systematic data extraction including LLM interface targeting, (3) botnet enrollment and DDoS infrastructure destruction. 94% of login attempts originate from bots; 30% of HTTP traffic is bot-generated.",
+      "tlctcNotation": "#4 → #1 + [DRE: C] → #7 → #6 + [DRE: A]",
+      "tlctcClusters": ["#4", "#1", "#7", "#6"],
+      "tlctcClusterNames": ["Identity Theft", "Abuse of Functions", "Malware", "Flooding Attack"],
+      "mappingRationale": "#4 records automated credential stuffing using compromised credential databases (R-CRED: credential use is always #4). #1 records account exploitation for data extraction — legitimate APIs and functions used for unauthorized data access, including novel LLM interface targeting. #7 records botnet malware deployment on compromised hosts (R-EXEC). #6 records the DDoS phase — finite network capacity overwhelmed by volume. The pattern transitions from stealthy identity exploitation to overt infrastructure destruction, representing the complete bot lifecycle from access to annihilation.",
+      "controlsByCluster": {
+        "#4": "Credential stuffing detection, bot management (behavioral analysis), rate limiting on authentication endpoints, breached-password screening",
+        "#1": "Account activity monitoring, LLM access controls, data export rate limiting, anomaly detection on API usage patterns",
+        "#7": "Endpoint protection, IoT firmware security, network segmentation",
+        "#6": "Autonomous edge-based DDoS mitigation (sub-10-second response), always-on protection, bot network disruption"
+      },
+      "velocityProfile": "VC-4 (credential stuffing: thousands per second) → VC-3 (data extraction: minutes) → VC-4 (DDoS peaks in seconds, concludes in <10 minutes)",
+      "realWorldExamples": ["Aisuru botnet (31.4 Tbps, November 2025)", "Kimwolf successor network (550+ C2 nodes null-routed early 2026)"],
+      "reportReference": "Cloudflare 2026 Threat Report, pp. 42-45"
+    },
+    {
+      "patternId": "CF26-PAT-006",
+      "patternName": "Deepfake Identity Infiltration",
+      "description": "State-sponsored operatives embed themselves in Western organizations through industrialized identity fraud. AI-driven deepfakes bypass video interviews; laptop farms maintain domestic residency illusion; digital personas on LinkedIn/GitHub provide background legitimacy. The remote workforce becomes an attack vector.",
+      "tlctcNotation": "#9 ||[human][@External→@Org]|| → #4 → #1 + [DRE: C]",
+      "tlctcClusters": ["#9", "#4", "#1"],
+      "tlctcClusterNames": ["Social Engineering", "Identity Theft", "Abuse of Functions"],
+      "mappingRationale": "#9 records the social engineering of the hiring process — deepfake interviews, fabricated personas, and rented US citizen credentials manipulate human trust. The bridge cluster crosses the human boundary. #4 records the use of legitimately-issued corporate credentials that were obtained under false pretenses (R-CRED: credential use is always #4). #1 records the abuse of legitimate system access for intelligence collection and revenue generation. Axiom IV: actor identity (DPRK state-sponsored) does not determine classification; the generic vulnerability is human susceptibility to identity fraud.",
+      "controlsByCluster": {
+        "#9": "Zero trust biometric verification for video interviews, in-person identity verification checkpoints, background check enhancement for remote positions",
+        "#4": "Hardware-based geofencing for corporate devices, impossible-travel detection, device-bound authentication, strict geofencing of RMM tools",
+        "#1": "Behavioral analytics on access patterns, data loss prevention, code repository access monitoring, financial transaction monitoring"
+      },
+      "detectionIndicators": ["Impossible travel login alerts", "Mouse-jiggling software presence", "Video metadata micro-artifacts from real-time deepfake rendering", "RMM software accessing devices from unexpected geolocations"],
+      "velocityProfile": "VC-1 — slow infiltration over weeks/months; operational phase is persistent and low-velocity to avoid detection",
+      "realWorldExamples": ["North Korean IT worker schemes (industrialized by 2025, hundreds of millions in revenue)"],
+      "reportReference": "Cloudflare 2026 Threat Report, pp. 12, 24-27"
+    },
+    {
+      "patternId": "CF26-PAT-007",
+      "patternName": "Edge Appliance Pre-Positioning",
+      "description": "Nation-state actors exploit vulnerabilities in edge network appliances (F5 BIG-IP, VMware vCenter/ESXi, Ivanti) for long-term persistent access. Reverse C2 architectures (malware acts as server, C2 connects as client) and masquerading as legitimate system processes enable year-long dwell times.",
+      "tlctcNotation": "#2 → #7 → #1 + [DRE: C]",
+      "tlctcClusters": ["#2", "#7", "#1"],
+      "tlctcClusterNames": ["Exploiting Server", "Malware", "Abuse of Functions"],
+      "mappingRationale": "#2 records exploitation of a server-side vulnerability in the edge appliance (R-ROLE: the appliance is in a server role relative to the attacker). #7 records deployment of custom malware (e.g., BRICKSTORM Go-based ELF, obfuscated with Garble) with fec_executed: true. #1 records persistent access and data exfiltration using legitimate network protocols (DoH for C2 resolution, WebSocket connections, standard file operations). The reverse C2 architecture (malware as server, C2 connects via wss://) is an #1 design innovation — it uses WebSocket protocol as designed, but inverts the expected connection direction.",
+      "controlsByCluster": {
+        "#2": "Aggressive patch management for edge appliances, virtual patching, network segmentation, edge device hardening",
+        "#7": "File integrity monitoring on edge devices, binary allowlisting, process name/path validation (detect masquerading as VMware/Postgres processes)",
+        "#1": "Outbound wss:// connection monitoring, DNS-over-HTTP (DoH) detection/blocking at perimeter, network traffic baseline anomaly detection, edge device forensic auditing"
+      },
+      "velocityProfile": "VC-1 — exploitation may be rapid (VC-3), but pre-positioning operations persist for months to years",
+      "realWorldExamples": ["PunyToad F5 BIG-IP breach (persistent for >1 year, confirmed October 2025)", "Salt Typhoon telecom compromises (AT&T, Verizon, Lumen)"],
+      "reportReference": "Cloudflare 2026 Threat Report, pp. 22"
+    }
+  ]
+}

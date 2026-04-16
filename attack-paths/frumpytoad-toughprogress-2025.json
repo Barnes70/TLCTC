@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "incident_id": "FRUMPYTOAD-TOUGHPROGRESS-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-04-09T00:00:00Z",
+    "notes": "FrumpyToad (APT41/Wicked Panda/Brass Typhoon) TOUGHPROGRESS campaign, October 2024 through mid-2025. Tracked by Cloudforce One. A sophisticated cloud-to-cloud C2 loop weaponizing Google Calendar to blend into legitimate enterprise traffic. Spear-phishing emails redirected through a chain of serverless platforms to host malicious ZIP archives on compromised government sites. The TOUGHPROGRESS malware reads and writes encrypted commands directly into Google Calendar event descriptions — stolen data is embedded in events dated May 30, 2023 (hardcoded); operators place commands in events dated July 30-31, 2023 (polled and executed). This Living off the XaaS (LotX) technique allows the actor to communicate with infected hosts without ever connecting to a malicious domain. Attack path: #9 ||[email][@External->@Org]|| -> #7 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 23), Cloudforce One telemetry."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-spearphishing-delivery",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "email",
+        "source_sphere": "@FrumpyToad",
+        "target_sphere": "@Victim"
+      },
+      "delta_t_to_next": "~1h",
+      "notes": "Spear-phishing emails targeting global financial sector and SaaS providers. Emails redirect through a chain of serverless platforms (legitimate cloud services abused for redirection) to host malicious ZIP archives on compromised government websites. The human boundary crossing is the #9 step — the victim must open the email and follow the redirect chain. The serverless platforms serve as transit infrastructure for delivery."
+    },
+    {
+      "step_id": "s2-toughprogress-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "instant",
+      "notes": "Victim opens the malicious ZIP archive, executing the TOUGHPROGRESS malware. R-EXEC: foreign executable content executes on the victim's system — recorded as #7 with fec_executed: true. TOUGHPROGRESS is a custom malware family designed for cloud-to-cloud C2 operations."
+    },
+    {
+      "step_id": "s3-google-calendar-c2",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "TOUGHPROGRESS establishes a cloud-to-cloud C2 loop using Google Calendar. The malware reads encrypted commands from calendar events dated July 30-31, 2023, and writes exfiltrated data to event descriptions dated May 30, 2023 (hardcoded). All traffic remains within Google's encrypted ecosystem — the actor communicates with infected hosts without ever connecting to a malicious domain. This is #1 Abuse of Functions: Google Calendar's read/write API operates exactly as designed. The event description field is used within its intended parameters. Detection indicator: unusual volume of API calls to Google Calendar from non-interactive processes. DRE: C — exfiltrated data embedded in calendar events. The LotX (Living off the XaaS) approach makes this nearly invisible to standard perimeter defenses."
+    }
+  ]
+}

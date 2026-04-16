@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TLCTC ATT&amp;CK Phase Heatmap</title>
+<link rel="icon" href="/images/logo-small.png" type="image/png">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          background: 'hsl(var(--background) / <alpha-value>)',
+          foreground: 'hsl(var(--foreground) / <alpha-value>)',
+          card: {
+            DEFAULT: 'hsl(var(--card) / <alpha-value>)',
+            foreground: 'hsl(var(--card-foreground) / <alpha-value>)'
+          },
+          primary: {
+            DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
+            foreground: 'hsl(var(--primary-foreground) / <alpha-value>)'
+          },
+          muted: {
+            DEFAULT: 'hsl(var(--muted) / <alpha-value>)',
+            foreground: 'hsl(var(--muted-foreground) / <alpha-value>)'
+          },
+          accent: 'hsl(var(--accent) / <alpha-value>)',
+          border: 'hsl(var(--border) / <alpha-value>)'
+        },
+        borderRadius: {
+          lg: 'var(--radius)',
+          md: 'calc(var(--radius) - 2px)',
+          sm: 'calc(var(--radius) - 4px)'
+        }
+      }
+    }
+  };
+</script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style type="text/tailwindcss">
+  @layer base {
+    :root {
+      --radius: 0.75rem;
+      --background: 210 40% 98%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --primary: 221 83% 53%;
+      --primary-foreground: 210 40% 98%;
+      --muted: 210 40% 96.1%;
+      --muted-foreground: 215.4 16.3% 46.9%;
+      --border: 214.3 31.8% 91.4%;
+      --accent: 210 40% 96.1%;
+    }
+    .dark {
+      --background: 222 47% 11%;
+      --foreground: 210 40% 98%;
+      --card: 217 33% 17%;
+      --card-foreground: 210 40% 98%;
+      --muted: 217 33% 17%;
+      --muted-foreground: 215 20.2% 65.1%;
+      --border: 217 33% 17%;
+      --accent: 217 33% 17%;
+    }
+    body { @apply bg-background text-foreground font-sans; }
+  }
+  @layer components {
+    .cluster-chip { @apply inline-flex items-center gap-1 text-[11px] font-semibold font-mono px-1.5 py-0.5 rounded; }
+    .c1 { @apply bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300; }
+    .c2 { @apply bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300; }
+    .c3 { @apply bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300; }
+    .c4 { @apply bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300; }
+    .c5 { @apply bg-pink-100 text-pink-800 dark:bg-pink-900/40 dark:text-pink-300; }
+    .c6 { @apply bg-cyan-100 text-cyan-800 dark:bg-cyan-900/40 dark:text-cyan-300; }
+    .c7 { @apply bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300; }
+    .c8 { @apply bg-stone-200 text-stone-800 dark:bg-stone-800 dark:text-stone-200; }
+    .c9 { @apply bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300; }
+    .c10 { @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300; }
+    .cNA { @apply bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400; }
+    .bar-c1 { background-color: rgb(59 130 246 / 0.35); }
+    .bar-c2 { background-color: rgb(239 68 68 / 0.35); }
+    .bar-c3 { background-color: rgb(249 115 22 / 0.35); }
+    .bar-c4 { background-color: rgb(168 85 247 / 0.35); }
+    .bar-c5 { background-color: rgb(236 72 153 / 0.35); }
+    .bar-c6 { background-color: rgb(6 182 212 / 0.35); }
+    .bar-c7 { background-color: rgb(244 63 94 / 0.35); }
+    .bar-c8 { background-color: rgb(120 113 108 / 0.35); }
+    .bar-c9 { background-color: rgb(245 158 11 / 0.35); }
+    .bar-c10 { background-color: rgb(16 185 129 / 0.35); }
+    .bar-cNA { background-color: rgb(148 163 184 / 0.25); }
+    .tab-btn { @apply px-3 py-2 text-sm font-medium border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors cursor-pointer whitespace-nowrap; }
+    .tab-btn.active { @apply border-primary text-primary; }
+    .filter-chip { @apply cursor-pointer select-none transition-opacity; }
+    .filter-chip.off { @apply opacity-25; }
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<header class="bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-30">
+  <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="/index.html" class="flex items-center gap-2 group">
+        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <i data-lucide="bar-chart-3" class="h-5 w-5"></i>
+        </div>
+        <div class="flex flex-col leading-tight">
+          <span class="font-bold text-lg">TLCTC</span>
+          <span class="text-[10px] text-muted-foreground uppercase tracking-wider">ATT&amp;CK Phase Heatmap</span>
+        </div>
+      </a>
+    </div>
+    <div class="flex items-center gap-2">
+      <label class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-border bg-card hover:bg-accent cursor-pointer">
+        <i data-lucide="upload" class="h-3.5 w-3.5"></i> Load JSON
+        <input id="fileInput" type="file" accept=".json,application/json" class="hidden">
+      </label>
+      <button id="loadDefaultBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-border bg-card hover:bg-accent">
+        <i data-lucide="download-cloud" class="h-3.5 w-3.5"></i> Mandiant 2026
+      </button>
+      <button id="darkBtn" class="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-medium rounded-md border border-border bg-card hover:bg-accent" title="Toggle dark mode">
+        <i data-lucide="moon" class="h-3.5 w-3.5"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+
+  <div id="empty" class="text-center py-20">
+    <i data-lucide="file-json" class="h-12 w-12 mx-auto text-muted-foreground mb-4"></i>
+    <h2 class="text-xl font-semibold">Load an ATT&amp;CK phase mapping</h2>
+    <p class="text-sm text-muted-foreground mt-2">Use <b>Load JSON</b> to open any mapping in the Mandiant M-Trends shape<br>(<code>phases[].techniques[]</code> with <code>percentage</code> and <code>tlctcMapping</code>),<br>or click <b>Mandiant 2026</b> to load the shipped example.</p>
+    <p id="loadError" class="text-xs text-red-500 mt-4 hidden"></p>
+  </div>
+
+  <section id="report" class="hidden space-y-6">
+
+    <div class="rounded-xl border border-border bg-card p-4 shadow-sm">
+      <h1 id="reportTitle" class="text-lg font-bold"></h1>
+      <p id="reportDesc" class="text-xs text-muted-foreground mt-1"></p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 text-center">
+        <div><div id="statPhases" class="text-2xl font-bold text-primary"></div><div class="text-[11px] text-muted-foreground uppercase tracking-wide">phases</div></div>
+        <div><div id="statTechniques" class="text-2xl font-bold text-primary"></div><div class="text-[11px] text-muted-foreground uppercase tracking-wide">techniques</div></div>
+        <div><div id="statMaxPct" class="text-2xl font-bold text-primary"></div><div class="text-[11px] text-muted-foreground uppercase tracking-wide">top %</div></div>
+        <div><div id="statSource" class="text-sm font-semibold"></div><div class="text-[11px] text-muted-foreground uppercase tracking-wide">source</div></div>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-border bg-card p-4 shadow-sm">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm font-semibold">Filter by TLCTC cluster</h2>
+        <div class="flex items-center gap-2 text-xs">
+          <label class="flex items-center gap-1.5"><input id="sortByPct" type="checkbox" checked> sort by %</label>
+          <label class="flex items-center gap-1.5"><input id="hideZero" type="checkbox"> hide filtered out</label>
+        </div>
+      </div>
+      <div id="clusterFilter" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <div class="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
+      <div id="tabs" class="flex overflow-x-auto border-b border-border bg-muted/30"></div>
+      <div id="phaseBody" class="p-4"></div>
+    </div>
+
+    <div class="rounded-xl border border-border bg-card p-4 shadow-sm">
+      <h2 class="text-sm font-semibold mb-2">Cluster frequency across all observed techniques (weighted by %)</h2>
+      <div id="clusterSummary" class="space-y-1.5"></div>
+    </div>
+
+  </section>
+
+</main>
+
+<div id="detailPanel" class="hidden fixed inset-y-0 right-0 w-full md:w-[440px] bg-card border-l border-border shadow-2xl z-40 overflow-y-auto">
+  <div class="p-5 space-y-3">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <div class="text-[11px] uppercase tracking-wide text-muted-foreground" id="dpPhase"></div>
+        <h3 class="text-lg font-bold font-mono" id="dpId"></h3>
+        <div class="text-sm text-muted-foreground" id="dpName"></div>
+      </div>
+      <button onclick="closeDetail()" class="p-1 rounded hover:bg-accent"><i data-lucide="x" class="h-4 w-4"></i></button>
+    </div>
+    <div class="flex items-center gap-2">
+      <div class="text-3xl font-bold" id="dpPct"></div>
+      <div class="text-xs text-muted-foreground mt-1">of Mandiant 2025 investigations</div>
+    </div>
+    <div>
+      <div class="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">TLCTC mapping</div>
+      <div class="font-mono text-base" id="dpMapping"></div>
+    </div>
+    <div>
+      <div class="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">Rationale</div>
+      <div class="text-sm leading-relaxed" id="dpRationale"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CLUSTER_NAMES = {
+  '1': 'Abuse of Functions',
+  '2': 'Exploiting Server',
+  '3': 'Exploiting Client',
+  '4': 'Identity Theft',
+  '5': 'Man in the Middle',
+  '6': 'Flooding Attack',
+  '7': 'Malware',
+  '8': 'Physical Attack',
+  '9': 'Social Engineering',
+  '10': 'Supply Chain Attack',
+  'NA': 'Not applicable / attacker-side'
+};
+const ALL_CLUSTERS = ['1','2','3','4','5','6','7','8','9','10','NA'];
+
+let STATE = {
+  data: null,
+  activePhaseIdx: 0,
+  activeClusters: new Set(ALL_CLUSTERS),
+  sortByPct: true,
+  hideZero: false
+};
+
+function parseMapping(str) {
+  if (!str) return { primary: 'NA', all: ['NA'] };
+  const hits = [...str.matchAll(/#(\d+)/g)].map(m => m[1]);
+  if (hits.length === 0) return { primary: 'NA', all: ['NA'] };
+  return { primary: hits[0], all: [...new Set(hits)] };
+}
+
+function clusterClass(c) { return 'c' + c; }
+function barClass(c) { return 'bar-c' + c; }
+
+function renderClusterFilter() {
+  const el = document.getElementById('clusterFilter');
+  el.innerHTML = '';
+  ALL_CLUSTERS.forEach(c => {
+    const active = STATE.activeClusters.has(c);
+    const label = c === 'NA' ? 'N/A' : '#' + c;
+    const node = document.createElement('span');
+    node.className = 'cluster-chip ' + clusterClass(c) + ' filter-chip ' + (active ? '' : 'off');
+    node.innerHTML = `${label} <span class="text-[10px] font-normal opacity-70">${CLUSTER_NAMES[c]}</span>`;
+    node.onclick = () => {
+      if (STATE.activeClusters.has(c)) STATE.activeClusters.delete(c);
+      else STATE.activeClusters.add(c);
+      renderClusterFilter();
+      renderPhase();
+    };
+    el.appendChild(node);
+  });
+}
+
+function renderTabs() {
+  const el = document.getElementById('tabs');
+  el.innerHTML = '';
+  STATE.data.phases.forEach((p, i) => {
+    const b = document.createElement('div');
+    b.className = 'tab-btn ' + (i === STATE.activePhaseIdx ? 'active' : '');
+    b.textContent = p.phase;
+    b.onclick = () => { STATE.activePhaseIdx = i; renderTabs(); renderPhase(); };
+    el.appendChild(b);
+  });
+}
+
+function renderPhase() {
+  const body = document.getElementById('phaseBody');
+  const phase = STATE.data.phases[STATE.activePhaseIdx];
+  if (!phase) { body.innerHTML = ''; return; }
+
+  let techs = phase.techniques.slice();
+  techs = techs.map(t => { t._parsed = parseMapping(t.tlctcMapping); return t; });
+
+  const visible = techs.filter(t => t._parsed.all.some(c => STATE.activeClusters.has(c)));
+  const list = STATE.hideZero ? visible : techs;
+
+  if (STATE.sortByPct) list.sort((a,b) => (b.percentage||0) - (a.percentage||0));
+
+  const max = Math.max(...techs.map(t => t.percentage || 0), 1);
+
+  let html = `
+    <div class="mb-4 pb-3 border-b border-border">
+      <div class="flex items-baseline justify-between">
+        <h3 class="text-base font-bold">${escape(phase.phase)}</h3>
+        <span class="text-xs text-muted-foreground">${escape(String(phase.page || phase.pages || ''))}</span>
+      </div>
+      ${phase.note ? `<p class="text-xs text-muted-foreground mt-1 leading-relaxed">${escape(phase.note)}</p>` : ''}
+    </div>
+    <div class="space-y-1">
+  `;
+  list.forEach((t, idx) => {
+    const isVisible = t._parsed.all.some(c => STATE.activeClusters.has(c));
+    const pct = t.percentage || 0;
+    const width = max > 0 ? Math.max((pct / max) * 100, 0.5) : 0;
+    const primary = t._parsed.primary;
+    const mappingHtml = t._parsed.all.map(c => `<span class="cluster-chip ${clusterClass(c)}">${c === 'NA' ? 'N/A' : '#' + c}</span>`).join(' ');
+    html += `
+      <div class="group flex items-center gap-2 py-1.5 px-2 rounded hover:bg-accent/50 cursor-pointer ${isVisible ? '' : 'opacity-30'}" data-phase-idx="${STATE.activePhaseIdx}" data-tech-idx="${idx}">
+        <div class="w-14 text-right text-xs font-semibold tabular-nums">${pct.toFixed(1)}%</div>
+        <div class="flex-1 relative h-6 rounded bg-muted/40 overflow-hidden">
+          <div class="absolute left-0 top-0 h-full ${barClass(primary)}" style="width:${width}%"></div>
+          <div class="absolute inset-0 flex items-center px-2 text-xs font-medium">
+            <span class="truncate"><span class="font-mono text-[11px] opacity-70 mr-1.5">${escape(t.techniqueId)}</span>${escape(t.techniqueName || '')}</span>
+          </div>
+        </div>
+        <div class="shrink-0 flex gap-1">${mappingHtml}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  body.innerHTML = html;
+
+  body.querySelectorAll('[data-tech-idx]').forEach(n => {
+    n.addEventListener('click', () => {
+      const p = STATE.data.phases[+n.dataset.phaseIdx];
+      const t = list[+n.dataset.techIdx];
+      openDetail(p, t);
+    });
+  });
+}
+
+function renderClusterSummary() {
+  const weights = Object.fromEntries(ALL_CLUSTERS.map(c => [c, 0]));
+  let totalPct = 0;
+  STATE.data.phases.forEach(p => p.techniques.forEach(t => {
+    const m = parseMapping(t.tlctcMapping);
+    const share = (t.percentage || 0) / Math.max(m.all.length, 1);
+    m.all.forEach(c => { weights[c] += share; });
+    totalPct += (t.percentage || 0);
+  }));
+  const max = Math.max(...Object.values(weights), 1);
+  const el = document.getElementById('clusterSummary');
+  el.innerHTML = ALL_CLUSTERS.map(c => {
+    const v = weights[c];
+    const label = c === 'NA' ? 'N/A' : '#' + c + ' ' + CLUSTER_NAMES[c];
+    const w = (v / max) * 100;
+    return `
+      <div class="flex items-center gap-2 text-xs">
+        <div class="w-44 shrink-0"><span class="cluster-chip ${clusterClass(c)}">${escape(label)}</span></div>
+        <div class="flex-1 h-4 rounded bg-muted/40 overflow-hidden relative">
+          <div class="absolute left-0 top-0 h-full ${barClass(c)}" style="width:${w}%"></div>
+        </div>
+        <div class="w-14 text-right font-semibold tabular-nums">${v.toFixed(1)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openDetail(phase, tech) {
+  document.getElementById('dpPhase').textContent = phase.phase;
+  document.getElementById('dpId').textContent = tech.techniqueId;
+  document.getElementById('dpName').textContent = tech.techniqueName || '';
+  document.getElementById('dpPct').textContent = (tech.percentage || 0).toFixed(1) + '%';
+  document.getElementById('dpMapping').textContent = tech.tlctcMapping || 'N/A';
+  document.getElementById('dpRationale').textContent = tech.rationale || '—';
+  document.getElementById('detailPanel').classList.remove('hidden');
+  lucide.createIcons();
+}
+function closeDetail() { document.getElementById('detailPanel').classList.add('hidden'); }
+
+function renderHeader() {
+  const m = STATE.data.metadata || {};
+  document.getElementById('reportTitle').textContent = m.title || 'ATT&CK Phase Mapping';
+  document.getElementById('reportDesc').textContent = m.description || '';
+  document.getElementById('statPhases').textContent = STATE.data.phases.length;
+  const techCount = STATE.data.phases.reduce((a,p)=>a+p.techniques.length, 0);
+  document.getElementById('statTechniques').textContent = techCount;
+  const topPct = Math.max(...STATE.data.phases.flatMap(p => p.techniques.map(t => t.percentage || 0)));
+  document.getElementById('statMaxPct').textContent = topPct.toFixed(1) + '%';
+  document.getElementById('statSource').textContent = (m.source || '').slice(0, 80);
+}
+
+function renderAll() {
+  document.getElementById('empty').classList.add('hidden');
+  document.getElementById('report').classList.remove('hidden');
+  renderHeader();
+  renderClusterFilter();
+  renderTabs();
+  renderPhase();
+  renderClusterSummary();
+  lucide.createIcons();
+}
+
+function loadData(obj) {
+  if (!obj || !Array.isArray(obj.phases)) {
+    showError('Invalid format: expected top-level "phases" array.');
+    return;
+  }
+  STATE.data = obj;
+  STATE.activePhaseIdx = 0;
+  STATE.activeClusters = new Set(ALL_CLUSTERS);
+  renderAll();
+}
+function showError(msg) {
+  const el = document.getElementById('loadError');
+  el.textContent = msg; el.classList.remove('hidden');
+}
+function escape(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+document.getElementById('fileInput').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => { try { loadData(JSON.parse(r.result)); } catch(err) { showError('Parse error: ' + err.message); } };
+  r.readAsText(f);
+});
+
+document.getElementById('loadDefaultBtn').addEventListener('click', async () => {
+  const candidates = [
+    '../mappings/mandiant-2026/tlctc-mandiant-2026-attck-mapping.json',
+    '/mappings/mandiant-2026/tlctc-mandiant-2026-attck-mapping.json',
+    'mappings/mandiant-2026/tlctc-mandiant-2026-attck-mapping.json'
+  ];
+  for (const url of candidates) {
+    try {
+      const r = await fetch(url);
+      if (r.ok) { loadData(await r.json()); return; }
+    } catch(e) {}
+  }
+  showError('Could not fetch the default file. If you opened this page from disk, use Load JSON instead.');
+});
+
+document.getElementById('sortByPct').addEventListener('change', e => { STATE.sortByPct = e.target.checked; renderPhase(); });
+document.getElementById('hideZero').addEventListener('change', e => { STATE.hideZero = e.target.checked; renderPhase(); });
+
+document.getElementById('darkBtn').addEventListener('click', () => {
+  document.documentElement.classList.toggle('dark');
+  try { localStorage.setItem('tlctc-heatmap-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); } catch(e) {}
+});
+
+if ((localStorage.getItem('tlctc-heatmap-theme') || '') === 'dark' ||
+    (!localStorage.getItem('tlctc-heatmap-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+}
+
+lucide.createIcons();
+
+(async () => {
+  const candidates = [
+    '../mappings/mandiant-2026/tlctc-mandiant-2026-attck-mapping.json',
+    '/mappings/mandiant-2026/tlctc-mandiant-2026-attck-mapping.json',
+    'mappings/mandiant-2026/tlctc-mandiant-2026-attck-mapping.json'
+  ];
+  for (const url of candidates) {
+    try {
+      const r = await fetch(url);
+      if (r.ok) { loadData(await r.json()); return; }
+    } catch(e) {}
+  }
+})();
+</script>
+</body>
+</html>

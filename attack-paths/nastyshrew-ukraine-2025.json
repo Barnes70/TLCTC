@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "incident_id": "NASTYSHREW-UKRAINE-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-04-09T00:00:00Z",
+    "notes": "NastyShrew (Gamaredon/Primitive Bear/UAC-0010/Aqua Blizzard) persistent campaigns targeting Ukrainian government and critical infrastructure, 2025. One of the most active and persistent Russian threats. Characterized by high-frequency campaigns maintaining persistence on thousands of endpoints. Infrastructure: dead drop resolvers on paste sites (teletype.in, rentry.co) for C2 tunnel rotation, geofencing to Ukrainian IP ranges, VPS purchased with cryptocurrency. Delivery: high-frequency phishing with .lnk and .ps1 files triggering multi-stage VBScript chains (Pteranodon family). Members arrested in Thailand (Phuket) in February and November 2025 in joint US/Thai operations. Attack path: #9 ||[email][@External->@Org]|| -> #7 -> #1 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 16), CERT-UA, Cloudforce One."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-phishing-delivery",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "email",
+        "source_sphere": "@NastyShrew",
+        "target_sphere": "@UkrainianGov"
+      },
+      "delta_t_to_next": "~1h",
+      "notes": "High-frequency phishing campaigns targeting Ukrainian government agencies and critical infrastructure operators. Emails deliver .lnk shortcut files and .ps1 PowerShell scripts as initial access vectors. NastyShrew casts a wide net — volume over precision. The human boundary crossing is the #9 step: the victim must interact with the malicious attachment."
+    },
+    {
+      "step_id": "s2-vbscript-chain-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "delta_t_to_next": "~5m",
+      "notes": "The .lnk/.ps1 file triggers a multi-stage VBScript chain from the Pteranodon malware family. R-EXEC: foreign executable content executes — recorded as #7 with fec_executed: true. The VBScript stages are progressively decoded and executed, establishing the initial foothold."
+    },
+    {
+      "step_id": "s3-dead-drop-c2-resolution",
+      "cluster": "#1",
+      "delta_t_to_next": "~30m",
+      "notes": "Infected host polls legitimate paste sites (teletype.in, rentry.co) to retrieve the current C2 tunnel address. NastyShrew uses these dead drop resolvers (DDR) to rotate backend infrastructure in minutes. This is #1 Abuse of Functions: the paste sites' read APIs function exactly as designed — intended for text sharing, abused for C2 address distribution. The traffic resolves to benign-looking domains, complicating detection. The VPS infrastructure behind the C2 is configured with strict firewall rules permitting only inbound traffic from Ukrainian IP ranges (geofencing)."
+    },
+    {
+      "step_id": "s4-persistent-access-exfil",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "NastyShrew maintains persistent access on thousands of Ukrainian endpoints. Data collection and exfiltration uses legitimate system tools and network capabilities — standard API calls, file reads, and data transfer protocols. This is #1: the tools and protocols function as designed; the scope is abused. DRE: C — intelligence collection from Ukrainian government systems supporting battlefield operations. The persistence model is maintain-and-rotate: infrastructure is expected to be disrupted, so NastyShrew purchases new domains and hosting quickly, using cryptocurrency for anonymity."
+    }
+  ]
+}

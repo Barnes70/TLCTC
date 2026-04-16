@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "incident_id": "NK-IT-WORKER-INFILTRATION-2025",
+    "analyst_confidence": "high",
+    "tlctc_version": "2.1",
+    "framework_ref": "tlctc-framework.v2.0.json",
+    "created_at": "2026-04-09T00:00:00Z",
+    "notes": "North Korean state-sponsored IT worker infiltration scheme, industrialized by 2025. Operatives infiltrate Western organizations using fraudulent identities and AI-driven deepfakes to bypass video interviews, funneling hundreds of millions of dollars in revenue back to the regime. Workers maintain domestic residency illusion using US-based 'laptop farms' and facilitators to host corporate hardware, accessing devices via RMM software from abroad. Thousands create comprehensive digital personas on LinkedIn and GitHub, often renting credentials of complicit US citizens. Detection indicators: impossible travel login alerts, mouse-jiggling software, video metadata micro-artifacts from real-time deepfake rendering. Attack path: #9 ||[human][@External->@Org]|| -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 12, 24-27), Cloudforce One analysis."
+  },
+  "path_sequence": [
+    {
+      "step_id": "s1-deepfake-identity-hiring",
+      "cluster": "#9",
+      "topology_boundary": {
+        "context": "human",
+        "source_sphere": "@DPRK",
+        "target_sphere": "@WesternOrg"
+      },
+      "delta_t_to_next": "~30d",
+      "notes": "North Korean operatives leverage fraudulent identities, AI-driven deepfakes for video interviews, and fabricated digital personas (LinkedIn, GitHub profiles) to pass the hiring process at Western organizations. Some rent credentials of complicit US citizens. This is #9 Social Engineering: the bridge cluster crosses the human boundary — the hiring managers are psychologically manipulated into trusting a fraudulent identity. The deepfake technology and fabricated personas are tools that amplify the social engineering, not separate technical exploitation steps. Axiom IV: actor identity (state-sponsored) does not determine classification; the generic vulnerability is human susceptibility to identity deception."
+    },
+    {
+      "step_id": "s2-legitimate-credential-use",
+      "cluster": "#4",
+      "delta_t_to_next": "~1d",
+      "notes": "Once hired, the operative receives legitimate corporate credentials (VPN, SSO, email, code repositories). The actual access is conducted from abroad via RMM software through US-based laptop farms that host the corporate hardware, maintaining the domestic residency illusion. R-CRED: the operative uses issued credentials to authenticate — this is #4 Identity Theft. Though the credentials were legitimately issued, they were issued to a fraudulent identity. The identity theft occurred at the social engineering step; the credential use is the separate #4 step. Axiom X (Credential Duality): acquisition (through deception in hiring) and use (daily authentication) are distinct."
+    },
+    {
+      "step_id": "s3-insider-access-abuse",
+      "cluster": "#1",
+      "outcomes": ["C"],
+      "notes": "The embedded operative uses legitimate administrative and financial system access to fulfill intelligence collection objectives and funnel revenue back to the DPRK regime. All access uses designed system capabilities — code repositories, financial systems, internal documentation. This is #1 Abuse of Functions: the systems operate within their designed parameters; the scope is abused by an adversarial insider. DRE: C — exfiltration of proprietary source code, financial data, and business intelligence. The operative is placed within the organization's most trusted administrative and financial systems. Detection indicators include impossible travel alerts, mouse-jiggling software for activity simulation, and deepfake rendering micro-artifacts in video metadata."
+    }
+  ]
+}

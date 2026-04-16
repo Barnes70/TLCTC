@@ -16,7 +16,7 @@
           "1": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "2": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "3": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "4": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "5": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "6": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "7": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "8": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "9": {"latent": 0, "low": 10, "medium": 16, "high": 26}, "10": {"latent": 0, "low": 10, "medium": 16, "high": 26}
          },
         "toBeReported": { 
-          "1": false, "2": false, "3": false, "4": true, "5": false, "6": true, "7": true, "8": false, "9": true, "10": true 
+          "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false
          },
         "riskToleranceCrashed": { "1": false, "2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false, "9": false, "10": false },
         "collapsed": false
