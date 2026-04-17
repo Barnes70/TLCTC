@@ -1,6 +1,6 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.0 / 2.1** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) · [v2.1 Extension Spec](v2.1-Proposals/)
+**Version 2.1** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
 The first cause-oriented, axiomatic cyber threat taxonomy.
 
@@ -55,41 +55,41 @@ Each cluster is defined by exactly **one generic vulnerability** (Axiom VI). Eac
 | # | Cluster | Generic Vulnerability | Topology |
 |---|---|---|---|
 | **#1** | **Abuse of Functions** | The inherent trust, scope, and complexity designed into software functionality and configuration | Internal |
-| **#2** | **Exploiting Server** | Server-side implementation flaws that enable unintended behavior | Internal |
-| **#3** | **Exploiting Client** | Client-side implementation flaws that enable unintended behavior | Internal |
-| **#4** | **Identity Theft** | Weak identity management processes and/or inadequate credential protection mechanisms | Internal |
-| **#5** | **Man in the Middle** | Lack of sufficient control, integrity protection, or confidentiality over the communication path | Internal |
+| **#2** | **Exploiting Server** | Exploitable flaws within server-side source code implementation and its resulting logic, stemming from insecure coding practices | Internal |
+| **#3** | **Exploiting Client** | Exploitable flaws within client-role source code implementation, stemming from insecure handling of external data/responses, UI rendering, or client-side state/resources | Internal |
+| **#4** | **Identity Theft** | Weak binding between identity and authentication artifacts, combined with insufficient credential and session lifecycle controls (issuance, storage, transmission, validation, rotation, revocation) | Internal |
+| **#5** | **Man in the Middle** | Insufficient end-to-end confidentiality/integrity protection and implicit trust in local networks and intermediate path infrastructure | Internal |
 | **#6** | **Flooding Attack** | Finite capacity limitations inherent in any system component | Internal |
-| **#7** | **Malware** | The software environment's designed capability to execute potentially untrusted foreign code | Internal |
-| **#8** | **Physical Attack** | Physical accessibility of infrastructure and exploitability of physical-layer properties | Bridge |
-| **#9** | **Social Engineering** | Human psychological factors (trust, fear, urgency, authority bias, curiosity, fatigue) | Bridge |
-| **#10** | **Supply Chain Attack** | Trust in third-party components, services, and update channels can be subverted | Bridge |
+| **#7** | **Malware** | The environment's intended capability to execute potentially untrusted executable content | Internal |
+| **#8** | **Physical Attack** | Physical accessibility of infrastructure and the exploitability of physical-layer properties (interfaces, wireless spectrum, emanations, environmental dependencies) | Bridge |
+| **#9** | **Social Engineering** | Human psychological factors (trust, fear, urgency, authority bias, curiosity, ignorance, fatigue, etc.) | Bridge |
+| **#10** | **Supply Chain Attack** | Necessary reliance on, and implicit trust placed in, external suppliers/services and their trust-transfer mechanisms whose security posture is outside direct organizational control | Bridge |
 
 ### Canonical Definitions
 
-- **#1 Abuse of Functions** — An attacker abuses the logic or scope of existing, legitimate software functions for malicious purposes without exploiting a code flaw. Inputs remain data; no foreign code is introduced or executed.
+- **#1 Abuse of Functions** — Manipulation of legitimate software capabilities — features, APIs, configurations, administrative settings, workflows — through standard interfaces using built-in input types and valid sequences of actions. The step achieves an attacker advantage **without requiring an implementation flaw**.
 
-- **#2 Exploiting Server** — An attacker targets flaws within the server-side application's source code implementation (e.g., SQL injection, buffer overflows), forcing an **unintended data→code transition**. The execution path was never designed to exist.
+- **#2 Exploiting Server** — Triggering an **implementation flaw** in **server-role** software using exploit code, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. This forces an **unintended data→code transition**.
 
-- **#3 Exploiting Client** — An attacker targets flaws within the source code implementation of any software acting in a client role (e.g., browser, PDF reader, email client), forcing an **unintended data→code transition**.
+- **#3 Exploiting Client** — Triggering an **implementation flaw** in **client-role** software through crafted content, responses, or state, exploiting coding mistakes in parsing, rendering, state management, or response handling.
 
-- **#4 Identity Theft** — An attacker misuses authentication credentials (passwords, tokens, keys, session identifiers) to impersonate a legitimate identity. This cluster focuses on the **use** of credentials — acquisition maps to the enabling cluster (see Credential Dual Nature below).
+- **#4 Identity Theft** — Presentation or use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act **as an identity different from the presenter's own**. This cluster focuses on the **use** of credentials — acquisition maps to the enabling cluster (see Credential Dual Nature below).
 
-- **#5 Man in the Middle (MitM)** — An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.
+- **#5 Man in the Middle (MitM)** — Exploitation of a controlled position on a communication path through interception, observation, modification, injection, replay, or protocol downgrade/stripping.
 
-- **#6 Flooding Attack** — An attacker intentionally overwhelms system resources or exceeds capacity limits (network, CPU, memory, API quotas) through volume or intensity, causing denial of service.
+- **#6 Flooding Attack** — Exhaustion of finite system resources (bandwidth, CPU, memory, storage, quotas, pools) through volume or intensity that exceeds capacity limits, causing disruption, degradation, or denial of service.
 
-- **#7 Malware** — An attacker abuses the inherent ability of a software environment to execute foreign executable content (malicious code, scripts, commands, or illegitimate introduction of dual-use tools executing attacker-controlled content). Uses **intended** execution capabilities.
+- **#7 Malware** — Execution of **Foreign Executable Content (FEC)** through the environment's designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters), including dual-use tooling when it executes attacker-controlled FEC.
 
-- **#8 Physical Attack** — An attacker gains unauthorized physical interaction with or causes physical interference to hardware, facilities, data media, interfaces, or signals.
+- **#8 Physical Attack** — Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces (including removable media), or signals — via direct contact or exploitation of physical phenomena/emanations.
 
-- **#9 Social Engineering** — An attacker psychologically manipulates individuals into performing actions counter to their security interests. This is exclusively about human manipulation.
+- **#9 Social Engineering** — Psychological manipulation that causes a human to perform an action counter to security interests — disclosing information, granting access, executing content, modifying configuration, or bypassing procedures.
 
-- **#10 Supply Chain Attack** — An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target. Placed at the **Trust Acceptance Event (TAE)**.
+- **#10 Supply Chain Attack** — Exploitation of an organization's **third-party trust link** such that the organization accepts third-party-originating artifacts or decisions as authoritative within its domain, enabling unauthorized action or compromise. Placed at the **Trust Acceptance Event (TAE)**.
 
 ---
 
-## Key V2.0 Concepts
+## Key Concepts
 
 ### Data→Code Transitions and R-EXEC
 
@@ -140,17 +140,25 @@ Complex attacks are not single events — they are **sequences**. TLCTC provides
 | Parallel steps | `(#X + #Y)` | Concurrent exploitation of distinct generic vulnerabilities |
 | Velocity annotation | `→[Δt=value]→` | Time interval between steps (e.g., `→[Δt=15m]→`, `→[Δt=~2h]→`) |
 | Domain boundary | `\|\|[context][@Source→@Target]\|\|` | Marks where attack crosses responsibility spheres |
-| Transit boundary (v2.1) | `\|\|[context][@Source⇒@Carrier→@Target]\|\|` | Marks intermediate carrier/relay spheres (⇒ = transit) |
-| Intra-system boundary (v2.1) | `\|[type][@from→@to]\|` | Within-host boundary crossing (sandbox, privilege, process, hypervisor) |
+| Transit boundary | `\|\|[context][@Source⇒@Carrier→@Target]\|\|` | Marks intermediate carrier/relay spheres (⇒ = transit) |
+| Intra-system boundary | `\|[type][@from→@to]\|` | Within-host boundary crossing (sandbox, privilege, process, hypervisor) |
+| Unresolved step | `?` / `…` | Forensic uncertainty — step exists but cluster cannot yet be determined |
 | Data Risk Event | `+ [DRE: C, I, A]` | Annotates consequences (never a step itself) |
 
-### v2.1 Boundary Extensions
+### Boundary Operators
 
-TLCTC v2.1 adds two backward-compatible notation operators. Both are **observability annotations** — they increase analytical precision without changing cluster classification.
+TLCTC provides three boundary operators — all are **observability annotations** that increase analytical precision without changing cluster classification.
+
+#### Domain Boundary Operator (`||...||`)
+
+Marks where an attack crosses between responsibility spheres (inter-organizational boundaries):
+```
+||[context][@Source→@Target]||
+```
 
 #### Transit Boundary Operator (`⇒`)
 
-Identifies intermediate responsibility spheres that **relay** an attack without being its source or target. The transit party carries the attack but does not originate or receive it.
+Identifies intermediate responsibility spheres that **relay** an attack without being its source or target:
 
 ```
 ||[context][@Source⇒@Carrier→@Target]||          # single transit party
@@ -180,7 +188,7 @@ Annotates boundary crossings **within a single host or system** — as opposed t
 #2 |[privilege][@user→@root]|    # local privilege escalation via server-side flaw
 ```
 
-#### v2.1 Classification Rules
+#### Boundary Classification Rules
 
 | Rule | Statement |
 |---|---|
@@ -188,11 +196,41 @@ Annotates boundary crossings **within a single host or system** — as opposed t
 | **R-INTRA-7** | Intra-system boundaries **never change** cluster classification. They are observability annotations, not classification inputs. |
 | **R-INTRA-9** | The `memory` boundary type is explicitly **deferred** and MUST NOT be used. |
 
-#### v2.1 Extended Boundary Contexts
+#### Boundary Context Vocabulary
 
-v2.1 expands the Layer 2 boundary context vocabulary beyond the original seven (`human`, `physical`, `update`, `auth`, `dev`, `api`, `cloud`) with ten additional contexts: `messaging`, `email`, `cdn`, `network`, `signaling`, `media`, `browser`, `exploit`, `legal`, `admin`.
+The context vocabulary is extensible. The baseline profile defines 16 context types:
 
-See [`v2.1-Proposals/`](v2.1-Proposals/) for the full specification.
+`messaging` · `email` · `cdn` · `cloud` · `network` · `signaling` · `auth` · `media` · `browser` · `exploit` · `dev` · `update` · `physical` · `human` · `legal` · `admin`
+
+### Unresolved-Step Operators (`?`, `…`)
+
+Incident analysis is iterative — evidence arrives over time and CTI must flow before classification is complete. Paths support two operators for forensic uncertainty:
+
+| Operator | Name | Meaning |
+|---|---|---|
+| `?` | Single Unresolved Step | Exactly one step occurred at this position, but its cluster cannot yet be determined |
+| `…` | Unresolved Gap | At least one step occurred in this region; both count and clusters are unknown |
+
+**Example:** `#3 →[Δt=0s] #7 →[Δt=4h] ? →[Δt=<10m] #4 → #1`
+
+Key rules:
+- `?` and `…` are epistemic annotations, **not** clusters — they have no generic vulnerability (R-UNRES-2)
+- DRE tags MUST NOT be appended to `?`/`…` (R-UNRES-5)
+- Boundary operators MAY appear adjacent to `?`/`…` — boundaries are independently observable (R-UNRES-6)
+- Every `?`/`…` MUST carry a prose `notes` annotation explaining what is unresolved and why (R-UNRES-8)
+
+### Epistemic State Hierarchy
+
+The notation carries four distinct epistemic states for a step:
+
+| State | Syntax | Use when |
+|---|---|---|
+| Classified | `#X` | Cluster assigned, evidence supports it |
+| Low-confidence | `#X [conf=low]` | Best-supported cluster with explicit caveat |
+| Inferred | `#X [inferred]` | Not directly observed but logically required |
+| Unresolved | `?` or `…` | No cluster can be defended on available evidence |
+
+If *any* cluster can be defended — even weakly — use `#X [conf=low]`, not `?`. Reserve unresolved operators for genuine "we know something happened, we don't know what" situations.
 
 ### Example: Deconstructing "Ransomware"
 
@@ -202,7 +240,7 @@ See [`v2.1-Proposals/`](v2.1-Proposals/) for the full specification.
 
 **TLCTC Attack Path:**
 ```
-#9 ||[human][@External→@Org]|| →[Δt=24h] #7 →[Δt=5m] #4 →[Δt=15m] (#1 + #7) + [DRE: A]
+#9 ||[human][@External→@Org]|| →[Δt=24h] #7 →[Δt=5m] #4 →[Δt=15m] (#1 + #7) + [DRE: Ac]
 ```
 
 Reading this notation:
@@ -213,7 +251,7 @@ Reading this notation:
 5. **#4** — Stolen credentials are used (identity theft — credential application)
 6. **→[Δt=15m]** — 15 minutes of lateral movement
 7. **(#1 + #7)** — Simultaneous abuse of AD functions (#1) and encryption payload execution (#7)
-8. **+ [DRE: A]** — Consequence: Loss of Accessibility (data exists but is unusable)
+8. **+ [DRE: Ac]** — Consequence: Loss of Accessibility (data exists but is unusable)
 
 Note: The consequence is Loss of **Accessibility** (data present but encrypted/unusable), not Loss of Availability (data gone or infrastructure unreachable). This distinction matters for incident response.
 
@@ -234,17 +272,17 @@ Note: The consequence is Loss of **Accessibility** (data present but encrypted/u
 #4 → #10 ||[auth][@Vendor(IdP)→@Org(SP)]|| → #1
 ```
 
-**SMS phishing with transit carrier (v2.1):**
+**SMS phishing with transit carrier:**
 ```
 #9 ||[messaging][@Attacker⇒@SMSProvider→@Victim]|| →[Δt=1h] #7 →[Δt=5m] #4 + [DRE: C]
 ```
 
-**Browser exploit with sandbox escape (v2.1):**
+**Browser exploit with sandbox escape:**
 ```
 #3 |[sandbox][@renderer→@os]| →[Δt=0s] #7 |[privilege][@user→@system]| →[Δt=2m] #4 + [DRE: C, I]
 ```
 
-**Watering hole via compromised CDN with chained transit (v2.1):**
+**Watering hole via compromised CDN with chained transit:**
 ```
 #9 ||[browser][@Attacker⇒@CDN⇒@AdNetwork→@Victim]|| →[Δt=0s] #3 |[sandbox][@renderer→@os]| →[Δt=0s] #7 + [DRE: C]
 ```
@@ -298,9 +336,8 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 | Layer | Purpose | Artifact | Scope | Update Frequency |
 |---|---|---|---|---|
 | **Layer 1 — Framework Definition** | Immutable "dictionary": clusters, axioms, rule IDs, topology types | `tlctc-framework.schema.json` / `tlctc-framework.v2.0.json` | Universal | Rarely (framework evolution) |
-| **Layer 2 — Reference Registry** | Reusable reference objects: responsibility spheres, boundary contexts, intra-system boundary types (v2.1) | `tlctc-reference.schema.json` / `@Org-registry.vX.Y.Z.json` | Organization-specific | Occasionally (org changes) |
+| **Layer 2 — Reference Registry** | Reusable reference objects: responsibility spheres, boundary contexts, intra-system boundary types | `tlctc-reference.schema.json` / `@Org-registry.vX.Y.Z.json` | Organization-specific | Occasionally (org changes) |
 | **Layer 3 — Attack Path Instances** | Specific incidents: sequences, parallel groups, Δt, boundary annotations, DREs | `tlctc-attack-path.schema.json` / `incident-<id>.json` | Per-incident | Constantly (new incidents) |
-| **Layer 4 — FAIR Risk Quantification** | Financial risk modeling: FAIR factor estimates, VWCE, SCF, CTM, PVA | `tlctc-fair-risk.schema.json` / `<scenario>-fair.json` | Per-scenario | Per-assessment |
 
 ### Design Principles
 
@@ -372,7 +409,7 @@ tlctc/
 │       └── examples/
 │           └── scattered-spider-2024-fair.json # SCATTERED SPIDER FAIR risk assessment
 ├── documentation/
-│   ├── tlctc-v2.0-whitepaper.md              # Canonical V2.0 White Paper
+│   ├── tlctc-v2.0-whitepaper.md              # Canonical V2.1 White Paper (filename kept for link stability)
 │   ├── tlctc-glossary.md                     # Comprehensive Definitions
 │   ├── npm-supply-chain-blog-final.md        # npm supply chain threat analysis
 │   ├── tlctc-fair-integration-proposal.md    # FAIR integration proposal (Layer 4 spec)
@@ -424,7 +461,7 @@ tlctc/
 │       └── npm-*.json                         # npm supply chain incident examples (3 files)
 ├── glossary/
 │   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
-│   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, v2.1 extensions
+│   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, boundary operators
 ├── examples/
 │   └── agentic-ai/                           # Analysis of AI semantics in Cyber Threats
 │       ├── README.md                         # Overview and methodology
@@ -498,8 +535,8 @@ tlctc/
 │   ├── s1ngularity-nx-2025.json               # S1ngularity NX npm campaign
 │   ├── chalk-debug-phishing-2025.json         # chalk-debug npm phishing
 │   └── shai-hulud-worm-2025.json              # ShaiHulud self-propagating npm worm
-├── v2.1-Proposals/                           # v2.1 extension specification
-│   ├── TLCTC_v2.1_Full_Extension_Spec.pdf    # Full v2.1 boundary extension spec
+├── v2.1-Proposals/                           # v2.1 original proposal documents (now integrated into whitepaper)
+│   ├── TLCTC_v2.1_Full_Extension_Spec.pdf    # Original v2.1 boundary extension proposal
 │   └── TLCTC_v2.1_Full_Extension_Spec.docx   # Editable source
 └── LICENSE                                   # CC BY 4.0
 ```
@@ -513,7 +550,7 @@ tlctc/
 5. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
 6. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
 7. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
-8. **Learn the v2.1 extensions** — See [`v2.1-Proposals/`](v2.1-Proposals/) for the transit boundary and intra-system boundary operators that add observability to attack paths.
+8. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
 
 ## Contributing
 
@@ -530,7 +567,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 | Resource | Description |
 |---|---|
 | [tlctc.net](https://tlctc.net) | Official TLCTC website with documentation, visuals, and tools |
-| [V2.0 White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Canonical definitions, boundary logic, and complete specification |
+| [V2.1 White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Canonical definitions, boundary logic, epistemic operators, and complete specification |
 | [barnes.ch](https://barnes.ch) | Author's site with foundational analysis on cybersecurity's language problem |
 
 ## License

@@ -741,6 +741,8 @@ A Data Risk Event outcome where data or resources exist and can be reached by th
 
 A Data Risk Event outcome where an attacker gains unauthorized access to data. From the attacker's perspective: "Data stolen". This describes what bad thing happens, not how it happens. Various threat clusters can lead to this outcome depending on the mechanism used (e.g., #2 via SQL injection, #5 via MitM eavesdropping).
 
+> **Disambiguation:** In TLCTC, **LoC** always means Loss of Confidentiality — a *consequence*-side Data Risk Event. "Loss of Control" is a distinct concept: the Bow-Tie *central event*, always abbreviated **SRE** (System Risk Event), never "LoC". See **System Risk Event (SRE)**.
+
 ### Loss of Control / System Compromise
 
 The central event in the Cyber Bow-Tie model, abbreviated **SRE** (System Risk Event), representing the point at which the attacker achieves unauthorized control over a system's behavior, privileges, data, or trust relationships. This serves as the pivot point between threat realization (cause) and potential consequences (effect). The SRE is the first event in the consequence chain: **SRE → DRE → BRE\***. Some attacks may have delayed data risk events (creating a detection window), while others lead to immediate data risk events. Examples: A server exploit (#2) enabling remote code execution leading to malware (#7) represents loss of control before any data breach occurs. In contrast, successful SQL injection (#2) can immediately result in Loss of Confidentiality.
@@ -1078,17 +1080,23 @@ Global mapping rule: If the attacker's advantage comes from psychological manipu
 
 **Reference:** §2.2.4 (R-HUMAN)
 
-### R-INTRA-7 (Classification Independence) *(V2.1)*
+### R-INTRA (Intra-System Boundary Rules) *(V2.1)*
 
-Global mapping rule: Intra-system boundaries (`|[type][@from→@to]|`) never change cluster classification. They are observability annotations, not classification inputs. The cluster assigned to a step is determined solely by the generic vulnerability exploited (per R-ROLE, R-EXEC, R-ABUSE, etc.).
+The complete intra-system boundary rule set governing use of the intra-system operator (`|...|`):
 
-**Reference:** §2.2.4 (R-INTRA), §3.3.6 (Intra-System Boundary Operator)
+| Rule | Name | Summary |
+|---|---|---|
+| **R-INTRA-1** | Single-System Scope | Operator MUST be used only for boundaries within a single system instance |
+| **R-INTRA-2** | Cluster Attachment | Operator MUST be attached to the cluster step that accomplishes the crossing |
+| **R-INTRA-3** | No Standalone Use | Operator MUST NOT appear without an associated cluster step |
+| **R-INTRA-4** | No Cluster Change | Operator MUST NOT change cluster classification |
+| **R-INTRA-5** | Optional Precision | Operator is OPTIONAL; mainly recommended for forensic or vendor-facing use |
+| **R-INTRA-6** | Multiple Crossings | Multiple annotations MAY follow one step when compressed form is justified |
+| **R-INTRA-7** | Distinct Vulnerabilities | If crossing requires a separately evidenced vulnerability, a new cluster step MUST be added |
+| **R-INTRA-8** | Compressed Form | If evidence does not distinguish separate exploit causes, compressed single-step form MAY be used |
+| **R-INTRA-9** | Anti-Effect Rule / Memory Deferral | Effects (privilege escalation, sandbox escape, etc.) are NOT independent threat categories; `memory` boundary type is deferred and MUST NOT be used |
 
-### R-INTRA-9 (Reserved Boundary Type) *(V2.1)*
-
-Global mapping rule: The `memory` boundary type for the Intra-System Boundary Operator is explicitly deferred and MUST NOT be used. Memory-level transitions are reserved for potential future specification. Tools and validators SHOULD reject `|[memory][@from→@to]|` as non-conformant.
-
-**Reference:** §2.2.4 (R-INTRA), §3.3.6 (Intra-System Boundary Operator)
+**Reference:** §4.2.5 (R-INTRA), §11.3.6 (Intra-System Boundary Operator)
 
 ### R-MITM (Position vs Action)
 
@@ -1114,11 +1122,22 @@ Global mapping rule: `#10 Supply Chain Attack` MUST be placed at the Trust Accep
 
 **Reference:** §2.2.4 (R-SUPPLY)
 
-### R-TRANSIT-3 (Vendor Code on Target Device) *(V2.1)*
+### R-TRANSIT (Transit Boundary Rules) *(V2.1)*
 
-Global mapping rule: Vendor code running on the target device is NOT transit. It is the attack surface and MUST be classified by R-ROLE. For example, a browser (Safari, Chrome) on the victim's phone is a client-role component (`#3 Exploiting Client`), not a transit party. The transit operator (`⇒`) is reserved for entities that relay or carry the attack between spheres without processing the exploit payload on the target's behalf.
+The complete transit boundary rule set governing use of the transit operator (`⇒`):
 
-**Reference:** §2.2.4 (R-TRANSIT), §3.3.5 (Transit Boundary Operator)
+| Rule | Name | Summary |
+|---|---|---|
+| **R-TRANSIT-1** | Distinct Parties | `@Transit` MUST be distinct from both `@Source` and `@Target` |
+| **R-TRANSIT-2** | True Intermediary Topology | Operator MUST be used only when the intermediary sits between source and target in the delivery path |
+| **R-TRANSIT-3** | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R-ROLE |
+| **R-TRANSIT-4** | Control Relevance | Operator SHOULD be used when the intermediary has meaningful control responsibility; MAY be omitted when analytically incidental |
+| **R-TRANSIT-5** | Pure Conduit Fallback | If the intermediary adds no useful control surface, the analyst MAY use the binary v2.0 boundary or omit the transit annotation |
+| **R-TRANSIT-6** | Compromise or Coercion Is Separate | If transit is enabled by compromise or coercion of the intermediary, that enabling condition MUST be modeled as a preceding cluster step |
+| **R-TRANSIT-7** | Cluster Independence | Transit annotation MUST NOT change cluster classification |
+| **R-TRANSIT-8** | Multiple Transit Parties | Chained transit MAY be used when each intermediary has independent analytical relevance |
+
+**Reference:** §4.2.4 (R-TRANSIT), §11.3.5 (Transit Boundary Operator)
 
 ### Realtime Velocity Class *(V2.0)*
 
@@ -1234,6 +1253,12 @@ Automated tools that identify open-source and third-party components in a codeba
 
 See also: Supply Chain Attack (#10), SBOM
 
+### Semantic Guardrails (SG-1 through SG-7) *(V2.1)*
+
+Normative rules that prevent V2.1 operators (transit boundary, intra-system boundary, unresolved-step) from drifting the classification model. They enforce that: classification is cause-first (SG-1), topology is not classification (SG-2), annotations are subordinate to clusters (SG-3), effects are not threats (SG-4), actors are not threats (SG-5), distinct exploits require distinct steps (SG-6), and stripping V2.1 annotations must leave a valid cluster sequence (SG-7).
+
+**Reference:** §4.2.4 (Semantic Guardrails)
+
 ### Scope of Server Software
 
 In TLCTC: includes Server APIs, incorporated Library APIs, Socket APIs, and Local APIs that run on server-side systems to provide services and resources to clients. The scope defines the attack surface for `#2 Exploiting Server`.
@@ -1309,6 +1334,8 @@ See also: Fast Velocity Class, EDR, SIEM
 ### System Risk Event (SRE)
 
 The central event in the TLCTC Cyber Bow-Tie model: **Loss of Control / System Compromise**. The SRE is the pivot point between the cause side (threat clusters exploiting generic vulnerabilities) and the consequence side (data and business risk events). It is the first event in the consequence chain **SRE → DRE → BRE\***, where each transition has its own Δt representing a detection and intervention window. Not every SRE leads to a DRE — detection and containment at the central event can break the chain before data-level consequences materialize.
+
+> **Disambiguation:** "Loss of Control" is always abbreviated **SRE**, never "LoC". The abbreviation **LoC** is reserved exclusively for Loss of Confidentiality, a *consequence*-side Data Risk Event. See **Loss of Confidentiality (LoC)**.
 
 **Reference:** §1.4.3 (Central Event), §1.4.3.1 (The Consequence Chain)
 
@@ -1584,6 +1611,12 @@ A Δt value where no supported time statement can be made. Notation: `Δt=?`.
 
 **Reference:** §4.0.3, §4.2.3
 
+### Unresolved-Step Operators (`?`, `…`) *(V2.1)*
+
+Notation operators for partially-resolved attack paths where forensic evidence confirms that a step (or gap of steps) exists but the cluster cannot yet be determined. `?` represents exactly one unresolved step; `…` (or ASCII `...`) represents a gap of one or more steps. Governed by R-UNRES-1 through R-UNRES-9. Key constraints: unresolved steps MUST NOT carry DRE tags (R-UNRES-5); if any cluster can be defended even weakly, the step MUST be classified as `#X [conf=low]` rather than left unresolved (R-UNRES-4); every unresolved step MUST be accompanied by a prose annotation (R-UNRES-8).
+
+**Reference:** §11.5.4 (Unresolved-Step Operators)
+
 ### USB Baiting *(Industry Term)*
 
 A physical attack where an attacker leaves malicious USB devices in locations where targets are likely to find and connect them (parking lots, lobbies, conference rooms). In TLCTC: the physical placement of the USB device maps to `#8 Physical Attack`. If the victim is induced by curiosity to plug it in, social engineering is also involved (`#9`). The execution of malicious code from the device maps to `#7 Malware`. Typical sequence: `#8 → #7` or `#9 → #8 → #7`.
@@ -1768,8 +1801,40 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 | **R-HUMAN** | Human Manipulation | Psychological manipulation → `#9`; subsequent tech steps separate |
 | **R-PHYSICAL** | Physical Access | Physical interaction → `#8`; subsequent tech steps separate |
 | **R-ABUSE** | Function Misuse | No flaw required, legitimate capability abused → `#1` |
+| **R-TRANSIT-1** *(V2.1)* | Distinct Parties | `@Transit` MUST be distinct from `@Source` and `@Target` |
+| **R-TRANSIT-2** *(V2.1)* | True Intermediary Topology | Operator only when intermediary sits between source and target |
 | **R-TRANSIT-3** *(V2.1)* | Transit vs Attack Surface | Vendor code on target device → classify by R-ROLE, not transit |
-| **R-INTRA-7** *(V2.1)* | Intra-System Classification | Intra-system boundaries are observability only → never change cluster |
-| **R-INTRA-9** *(V2.1)* | Reserved Boundary Type | `memory` boundary type is deferred → MUST NOT be used |
+| **R-TRANSIT-4** *(V2.1)* | Control Relevance | SHOULD annotate when intermediary has control responsibility |
+| **R-TRANSIT-5** *(V2.1)* | Pure Conduit Fallback | MAY omit transit if intermediary adds no useful control surface |
+| **R-TRANSIT-6** *(V2.1)* | Compromise Separation | Intermediary compromise → preceding cluster step; transit alone insufficient |
+| **R-TRANSIT-7** *(V2.1)* | Cluster Independence | Transit annotation MUST NOT change cluster classification |
+| **R-TRANSIT-8** *(V2.1)* | Multiple Transit Parties | Chained transit MAY be used when each party has independent relevance |
+| **R-INTRA-1** *(V2.1)* | Single-System Scope | Operator only for boundaries within a single system instance |
+| **R-INTRA-2** *(V2.1)* | Cluster Attachment | Operator MUST be attached to the cluster step |
+| **R-INTRA-3** *(V2.1)* | No Standalone Use | Operator MUST NOT appear without an associated cluster step |
+| **R-INTRA-4** *(V2.1)* | No Cluster Change | Operator MUST NOT change cluster classification |
+| **R-INTRA-5** *(V2.1)* | Optional Precision | Operator is OPTIONAL; recommended for forensic/vendor-facing use |
+| **R-INTRA-6** *(V2.1)* | Multiple Crossings | Multiple annotations MAY follow one step when compressed form justified |
+| **R-INTRA-7** *(V2.1)* | Distinct Vulnerabilities | Separately evidenced vulnerability → new cluster step required |
+| **R-INTRA-8** *(V2.1)* | Compressed Form | Compressed single-step MAY be used when evidence doesn't distinguish causes |
+| **R-INTRA-9** *(V2.1)* | Anti-Effect / Memory Deferral | Effects are not threats; `memory` boundary type deferred → MUST NOT use |
+| **R-UNRES-1** *(V2.1)* | Semantic Constraint | `?` and `…` represent real attack steps, not noise or speculation |
+| **R-UNRES-4** *(V2.1)* | Classification Threshold | If any cluster can be defended → use `#X [conf=low]`, not `?` |
+| **R-UNRES-5** *(V2.1)* | No DRE on Unresolved | DRE tags MUST NOT be appended to `?` or `…` |
+| **R-UNRES-7** *(V2.1)* | Resolution Obligation | Every `?`/`…` is an open analytical task → resolve when evidence arrives |
+| **R-UNRES-8** *(V2.1)* | Prose Required | Paths containing `?`/`…` MUST have prose annotation explaining gap |
+| **R-UNRES-9** *(V2.1)* | Binary Classification | No partial-confidence operators (`?#4`, `#4?`, `#{2\|7}`) |
 
-**Reference:** §2.2.4 (Global Mapping Rules), §2.2.9 (Quick Reference)
+### Semantic Guardrails Quick Reference *(V2.1)*
+
+| ID | Rule | Key Constraint |
+| --- | --- | --- |
+| **SG-1** | Cause First | Classify by generic vulnerability exploited, not topology or effect |
+| **SG-2** | Topology ≠ Classification | Transit/intra-system annotations MUST NOT define or imply a cluster |
+| **SG-3** | Annotations Subordinate | Annotations MUST NOT appear as independent path elements or replace clusters |
+| **SG-4** | Effects ≠ Threats | Sandbox escape, privilege escalation, etc. are not TLCTC clusters |
+| **SG-5** | Actors ≠ Threats | Transit parties, vendors, carriers are spheres, not threat categories |
+| **SG-6** | Distinct Exploit Rule | Separately evidenced exploit → new cluster step required |
+| **SG-7** | Backward Recoverability | Stripping V2.1 annotations MUST leave a valid cluster sequence |
+
+**Reference:** §4.2.4 (Semantic Guardrails), §4.2.5 (Global Mapping Rules)

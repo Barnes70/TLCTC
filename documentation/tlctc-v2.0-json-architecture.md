@@ -40,7 +40,7 @@ This document is a **companion** to the *TLCTC v2.0 White Paper*, which defines 
 
 ## 1. Understanding the Architecture
 
-The TLCTC framework operates on two distinct but interconnected layers:
+The TLCTC JSON architecture is organized into three distinct but interconnected layers:
 
 ### Framework Layer (Static)
 
@@ -53,12 +53,21 @@ The TLCTC framework operates on two distinct but interconnected layers:
 **Purpose:** Common language everyone uses.
 **Changes:** Rarely (framework evolution).
 
+### Reference Data Layer (Semi-Static)
+
+- Responsibility spheres (@Org, @Vendor, @External, …)
+- Boundary contexts (human, physical, update, …)
+- Organization-specific customizations
+
+**Purpose:** Domain boundaries that define where responsibility and control shift during an attack.
+**Changes:** Occasionally (organizational or environmental changes).
+
 ### Intelligence Layer (Dynamic)
 
 - Specific attack instances
 - Software versions and CVEs
 - Timeline and actor TTPs
-- Domain boundaries (responsibility spheres)
+- Boundary annotations per step
 - Impact assessment
 
 **Purpose:** Actual threat intelligence.

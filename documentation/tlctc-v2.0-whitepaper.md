@@ -886,7 +886,23 @@ The following dimensions are **orthogonal** to cluster classification and **MUST
 
 ---
 
-#### 4.2.4 Global Mapping Rules (R-\* Rules)
+#### 4.2.4 Semantic Guardrails *(V2.1, Normative)*
+
+The V2.1 operators (transit boundary, intra-system boundary, unresolved-step) are annotations that add structural precision. The following guardrails are **normative** and exist to prevent category drift — the operators are valuable only if they remain subordinate to the classification model.
+
+| ID | Rule |
+| --- | --- |
+| **SG-1** | **Cause first.** Every attack step **SHALL** be classified by the generic vulnerability initially exploited in that step, not by the delivery topology, boundary crossed, internal effect produced, or defender control that failed. |
+| **SG-2** | **Topology is not classification.** Transit and intra-system annotations describe structure. They **MUST NOT** define, imply, or substitute for a TLCTC cluster. |
+| **SG-3** | **Annotations are subordinate.** A boundary annotation **MAY** refine a step, but it **MUST NOT** appear as an independent attack-path element and **MUST NOT** replace a cluster identifier. |
+| **SG-4** | **Effects are not threats.** Sandbox escape, privilege escalation, process pivot, hypervisor escape, persistence, and data exfiltration are not TLCTC clusters. They are internal transitions, follow-on actions, or outcomes that must remain attached to a `#1`–`#10` cause. |
+| **SG-5** | **Actors are not threats.** Transit parties, vendors, cloud providers, carriers, or platform operators are responsibility spheres, not threat categories. |
+| **SG-6** | **Distinct exploit rule.** If forensic evidence shows that an internal transition required a separately evidenced exploit of a distinct vulnerability, the notation **MUST** express a new cluster step. |
+| **SG-7** | **Backward recoverability.** Stripping all V2.1 annotations from a valid expression **MUST** leave a valid underlying cluster sequence or single cluster step. |
+
+---
+
+#### 4.2.5 Global Mapping Rules (R-\* Rules)
 
 These rules are **global**: they apply across all clusters and are **normative**. When classifying any Attack Step, these rules **MUST** be consulted and applied where relevant.
 
@@ -1228,51 +1244,108 @@ If the attacker's success **does not require any implementation flaw** and inste
 
 ##### R-TRANSIT — Transit Boundary Rules *(V2.1)*
 
+**R-TRANSIT-1 — Distinct Parties (Normative):**
+
+`@Transit` **MUST** be distinct from both `@Source` and `@Target`. A sphere cannot be its own transit party.
+
+**R-TRANSIT-2 — True Intermediary Topology (Normative):**
+
+The transit operator **MUST** be used only when the intermediary infrastructure sits **between** source and target in the step's delivery path. The intermediary must occupy a topologically distinct position — merely being involved in the attack is insufficient.
+
 **R-TRANSIT-3 — Vendor Code on Target Device (Normative):**
 
-Vendor code running **on the target device** is **NOT** transit. It is the attack surface and **MUST** be classified by R-ROLE.
+Vendor code running **on the target device** is **NOT** transit. It is the attack surface and **MUST** be classified by R-ROLE. The transit operator (`⇒`) is reserved for entities that **relay or carry** the attack between spheres without processing the exploit payload on the target's behalf.
 
 **Clarifications (Normative):**
 
 1. A browser (e.g., Safari, Chrome) running on the victim's device is the **client-role component** being exploited — classify as `#3 Exploiting Client`, not as a transit party.
-2. The transit operator (`⇒`) is reserved for entities that **relay or carry** the attack between spheres. If the component **processes** the exploit payload and is the point of compromise, it is the attack surface.
-3. **Test:** Does the entity execute/process the malicious content on the target's behalf? → Attack surface (R-ROLE). Does the entity merely forward/relay the content to the target? → Transit (`⇒`).
+2. **Test:** Does the entity execute/process the malicious content on the target's behalf? → Attack surface (R-ROLE). Does the entity merely forward/relay the content to the target? → Transit (`⇒`).
+
+**R-TRANSIT-4 — Control Relevance (Normative):**
+
+The transit operator **SHOULD** be used when the intermediary has meaningful control responsibility at that boundary. It **MAY** be omitted where the intermediary is analytically incidental.
+
+**R-TRANSIT-5 — Pure Conduit Fallback (Normative):**
+
+If the intermediary adds no useful control surface, the analyst **MAY** use the binary v2.0 boundary operator or omit the transit annotation entirely, depending on the scenario.
+
+**R-TRANSIT-6 — Compromise or Coercion Is Separate (Normative):**
+
+If transit is enabled by coercion, credential misuse, physical compromise, administrative abuse, or supply-chain compromise of the intermediary, that enabling condition **MUST** be modeled as a **preceding cluster step**. Transit notation alone is insufficient.
+
+**R-TRANSIT-7 — Cluster Independence (Normative):**
+
+Transit annotation **MUST NOT** change cluster classification. Transit is observability metadata — it enriches the path with relay information but does not alter the generic vulnerability being exploited.
+
+**R-TRANSIT-8 — Multiple Transit Parties (Normative):**
+
+If the path traverses multiple distinct intermediaries in sequence, chained transit **MAY** be used, but only when each party has independent analytical relevance. Chained transit is appropriate for paths such as SS7 signaling or multi-stage relays where multiple intermediary operators each have their own control responsibility and the ordering matters.
 
 **Examples:**
 
 | Scenario | Classification | Rationale |
 | --- | --- | --- |
-| Safari renders exploit on victim's phone | `#3` (R-ROLE) | Safari is client-role software on the target — it is the attack surface |
-| SMS gateway relays phishing link | `⇒@SMSProvider` (transit) | Gateway forwards the message without processing exploit content |
-| CDN serves malicious JavaScript | `⇒@CDN` (transit) | CDN forwards content; the browser on the victim is the attack surface |
+| Safari renders exploit on victim's phone | `#3` (R-ROLE) | Safari is client-role software on the target — it is the attack surface (R-TRANSIT-3) |
+| SMS gateway relays phishing link | `⇒@SMSProvider` (transit) | Gateway forwards the message without processing exploit content (R-TRANSIT-2) |
+| CDN serves malicious JavaScript | `⇒@CDN` (transit) | CDN forwards content; the browser on the victim is the attack surface (R-TRANSIT-3) |
+| Compromised CDN injects payload | `#10` step, then `⇒@CDN` | CDN compromise is a separate cluster step (R-TRANSIT-6) |
+| SS7 relay via two carriers | `⇒@Carrier1⇒@Carrier2` | Each carrier has independent control responsibility (R-TRANSIT-8) |
 
 ---
 
 ##### R-INTRA — Intra-System Boundary Rules *(V2.1)*
 
-**R-INTRA-7 — Classification Independence (Normative):**
+**R-INTRA-1 — Single-System Scope (Normative):**
 
-Intra-system boundaries **never change cluster classification**. They are **observability annotations**, not classification inputs.
+The intra-system boundary operator **MUST** be used only for boundaries within a **single system instance** (one device, host, VM, container, or runtime).
 
-**Clarifications (Normative):**
+**R-INTRA-2 — Cluster Attachment (Normative):**
 
-1. The cluster assigned to a step is determined solely by the generic vulnerability exploited (per R-ROLE, R-EXEC, R-ABUSE, etc.). An intra-system boundary annotation adds detail about **where within the host** the boundary was crossed, but does not alter the cluster.
-2. A sandbox escape exploiting a client-side implementation flaw is `#3` (by R-ROLE). The `|[sandbox][@renderer→@os]|` annotation records the escape but does not create a new cluster or change the existing one.
-3. Multiple intra-system boundary crossings in a single step are **non-conformant**. If two distinct intra-host boundaries are crossed, they **MUST** be represented as separate steps.
+The operator **MUST** be attached to the cluster step that accomplishes the crossing. It is not a standalone element.
 
-**R-INTRA-9 — Reserved Boundary Type (Normative):**
+**R-INTRA-3 — No Standalone Use (Normative):**
 
-The `memory` boundary type is explicitly **deferred** and **MUST NOT** be used.
+The operator **MUST NOT** appear without an associated cluster step. A notation like `|[privilege][@user→@root]|` without a preceding `#X` is non-conformant.
 
-**Clarifications (Normative):**
+**R-INTRA-4 — No Cluster Change (Normative):**
 
-1. Memory-level transitions (e.g., stack → heap, user-space → kernel-space memory) are reserved for potential future specification.
-2. Tools and validators **SHOULD** reject `|[memory][@from→@to]|` as non-conformant.
-3. This reservation ensures that memory-level granularity can be added in a future version without conflicting with existing annotations.
+The operator **MUST NOT** change cluster classification. The cluster is determined solely by the generic vulnerability exploited (per R-ROLE, R-EXEC, R-ABUSE, etc.). The boundary annotation adds detail about **where within the host** the crossing occurred, but does not alter the cluster.
+
+**R-INTRA-5 — Optional Precision (Normative):**
+
+The operator is **OPTIONAL** and is mainly recommended for forensic, exploit-analysis, or vendor-facing use. At the strategic layer, the base cluster sequence often remains sufficient and the operator may be omitted.
+
+**R-INTRA-6 — Multiple Crossings (Normative):**
+
+Multiple intra-system annotations **MAY** follow one step when a compressed representation is justified by the evidence. See R-INTRA-8 for the compressed/expanded distinction.
+
+**R-INTRA-7 — Distinct Vulnerabilities Require Distinct Steps (Normative):**
+
+If a crossing is achieved by exploiting a **separately evidenced distinct vulnerability**, a new cluster step **MUST** be added. The annotation alone is insufficient. A sandbox escape exploiting a client-side implementation flaw is `#3` (by R-ROLE). The `|[sandbox][@renderer→@os]|` annotation records the escape but does not create a new cluster or change the existing one.
+
+**R-INTRA-8 — Compressed Form Under Uncertainty (Normative):**
+
+If evidence shows multiple internal crossings but does **not** distinguish separate exploit causes at each crossing, a compressed single-step form **MAY** be used. The expanded form is always safe; the compressed form is acceptable only when evidence does not support a stronger decomposition.
+
+**Compressed form:**
+```
+#3 |[sandbox][@A→@B]| |[privilege][@user→@root]| → #7
+```
+
+**Expanded form:**
+```
+#3 |[sandbox][@A→@B]| → #3 |[privilege][@user→@root]| → #7
+```
+
+**R-INTRA-9 — Anti-Effect Rule / Reserved Boundary Type (Normative):**
+
+Privilege escalation, sandbox escape, process pivot, and hypervisor escape **MUST NOT** be modeled as independent threat categories. Every annotated internal crossing remains subordinate to a `#1`–`#10` cluster step.
+
+The `memory` boundary type is explicitly **deferred** and **MUST NOT** be used. Memory-level transitions (e.g., stack → heap, user-space → kernel-space memory) are reserved for potential future specification. Tools and validators **SHOULD** reject `|[memory][@from→@to]|` as non-conformant.
 
 ---
 
-#### 4.2.5 Tie-Breaker / Precedence Rules
+#### 4.2.6 Tie-Breaker / Precedence Rules
 
 When a step appears to fit multiple clusters, apply the following precedence rules **in order**. These rules are **normative**.
 
@@ -1359,7 +1432,7 @@ This documentation enables review, consistency checking, and framework improveme
 
 ---
 
-#### 4.2.6 Topology Classification
+#### 4.2.7 Topology Classification
 
 TLCTC clusters are classified into two **topology types** based on whether they cross domain boundaries.
 
@@ -1417,7 +1490,7 @@ Bridge-aware defense architecture requires controls in each domain:
 
 ---
 
-#### 4.2.7 Minimal Classification Procedure
+#### 4.2.8 Minimal Classification Procedure
 
 To classify an Attack Step, follow this procedure:
 
@@ -1498,7 +1571,7 @@ Record:
 
 ---
 
-#### 4.2.8 Summary: Classification Decision Tree
+#### 4.2.9 Summary: Classification Decision Tree
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -1578,7 +1651,7 @@ Record:
 
 ---
 
-#### 4.2.9 Quick Reference: R-\* Rules Summary
+#### 4.2.10 Quick Reference: R-\* Rules Summary
 
 | Rule | Distinguishes | Key Decision |
 | --- | --- | --- |
@@ -1591,10 +1664,14 @@ Record:
 | **R-HUMAN** | Human Manipulation | Psychological manipulation → `#9`; subsequent tech steps separate |
 | **R-PHYSICAL** | Physical Access | Physical interaction → `#8`; subsequent tech steps separate |
 | **R-ABUSE** | Function Misuse | No flaw required, legitimate capability abused → `#1` |
+| **R-TRANSIT-1–8** *(V2.1)* | Transit Boundaries | Distinct parties, true intermediary topology, vendor code exclusion, cluster independence |
+| **R-INTRA-1–9** *(V2.1)* | Intra-System Boundaries | Single-system scope, cluster attachment, no cluster change, compressed form, anti-effect |
+| **R-UNRES-1–9** *(V2.1)* | Unresolved Steps | Semantic constraint, classification threshold, no DRE, resolution obligation, prose required |
+| **SG-1–7** *(V2.1)* | Semantic Guardrails | Cause first, topology ≠ classification, annotations subordinate, effects ≠ threats |
 
 ---
 
-#### 4.2.10 Notation Quick Reference
+#### 4.2.11 Notation Quick Reference
 
 ##### Attack Path Notation
 
@@ -1604,6 +1681,9 @@ Record:
 | Velocity annotation | `→[Δt=value]` | `#9 →[Δt=2h] #4` |
 | Parallel steps | `(#X + #Y)` | `(#1 + #7)` |
 | Domain boundary | `||[context][@Src→@Tgt]||` | `#10 ||[dev][@Vendor→@Org]||` |
+| Transit boundary *(V2.1)* | `||[ctx][@Src⇒@Transit→@Tgt]||` | `#9 ||[email][@Attacker⇒@M365→@Target]||` |
+| Intra-system boundary *(V2.1)* | `|[type][@from→@to]|` | `#3 |[sandbox][@renderer→@os]|` |
+| Unresolved step *(V2.1)* | `?` / `…` | `? → #1 → #7` |
 | Data Risk Event | `+ [DRE: X]` | `#2 + [DRE: C]` |
 
 ##### Cluster Notation
@@ -2990,9 +3070,16 @@ Transit annotations are **observability metadata** — they enrich the path with
 
 ##### 11.3.5.3 Key Rules (Normative)
 
-1. **R-TRANSIT-3:** Vendor code running on the target device is **NOT** transit. For example, Safari on the victim's phone is not a transit party — it is the attack surface. Classify by R-ROLE as `#3 Exploiting Client`.
-2. Transit annotations **MUST** appear inside a domain boundary operator (`||...||`). They are not standalone operators.
-3. Transit parties **SHOULD** be annotated when the relay path is operationally relevant (e.g., for forensics, takedown coordination, or regulatory reporting).
+The full R-TRANSIT rule set (R-TRANSIT-1 through R-TRANSIT-8) is defined in Section 4.2.5. The following summarizes the most relevant rules for notation:
+
+1. **R-TRANSIT-1:** `@Transit` **MUST** be distinct from both `@Source` and `@Target`.
+2. **R-TRANSIT-2:** The transit operator **MUST** be used only when the intermediary sits topologically between source and target in the step's delivery path.
+3. **R-TRANSIT-3:** Vendor code running on the target device is **NOT** transit — it is the attack surface. Classify by R-ROLE (e.g., Safari on the victim's phone → `#3 Exploiting Client`).
+4. **R-TRANSIT-6:** If transit is enabled by compromise or coercion of the intermediary, that enabling condition **MUST** be modeled as a preceding cluster step. Transit notation alone is insufficient.
+5. **R-TRANSIT-7:** Transit annotation **MUST NOT** change cluster classification.
+6. **R-TRANSIT-8:** Chained transit **MAY** be used when multiple distinct intermediaries each have independent analytical relevance.
+7. Transit annotations **MUST** appear inside a domain boundary operator (`||...||`). They are not standalone operators.
+8. Transit parties **SHOULD** be annotated when the relay path is operationally relevant (e.g., for forensics, takedown coordination, or regulatory reporting).
 
 ##### 11.3.5.4 Transit vs #10 Supply Chain
 
@@ -3058,11 +3145,33 @@ An intra-system boundary annotation asserts that the step involves crossing an *
 
 ##### 11.3.6.3 Key Rules (Normative)
 
-1. **R-INTRA-7:** Intra-system boundaries **never change cluster classification**. They are observability annotations, not classification inputs. The cluster is still determined by the generic vulnerability exploited (R-ROLE, R-EXEC, etc.).
-2. **R-INTRA-9:** The `memory` boundary type is explicitly **deferred** and **MUST NOT** be used. Memory-level transitions (e.g., stack → heap, user-space → kernel-space memory) are reserved for potential future specification.
-3. Intra-system operators **MAY** appear alongside domain boundary operators on the same step if both an intra-host boundary crossing and an inter-sphere transition occur.
+The full R-INTRA rule set (R-INTRA-1 through R-INTRA-9) is defined in Section 4.2.5. The following summarizes the most relevant rules for notation:
 
-##### 11.3.6.4 Examples
+1. **R-INTRA-1:** The operator **MUST** be used only for boundaries within a single system instance.
+2. **R-INTRA-2/3:** The operator **MUST** be attached to a cluster step. Standalone use is non-conformant.
+3. **R-INTRA-4:** The operator **MUST NOT** change cluster classification.
+4. **R-INTRA-7:** If a crossing requires a separately evidenced distinct vulnerability, a new cluster step **MUST** be added.
+5. **R-INTRA-8:** Compressed single-step form **MAY** be used when evidence does not distinguish separate exploit causes at each crossing.
+6. **R-INTRA-9:** The `memory` boundary type is **deferred** and **MUST NOT** be used. Effects (sandbox escape, privilege escalation, etc.) are **not** independent threat categories.
+7. Intra-system operators **MAY** appear alongside domain boundary operators on the same step if both an intra-host boundary crossing and an inter-sphere transition occur.
+
+##### 11.3.6.4 Compressed vs Expanded Form
+
+When a step involves multiple internal crossings, two representations are valid:
+
+**Compressed form** (single step, multiple annotations — use when evidence does not support separate exploit causes):
+```
+#3 |[sandbox][@A→@B]| |[privilege][@user→@root]| → #7
+```
+
+**Expanded form** (separate steps — use when evidence supports distinct vulnerability-driven transitions):
+```
+#3 |[sandbox][@A→@B]| → #3 |[privilege][@user→@root]| → #7
+```
+
+The expanded form is always safe. The compressed form is acceptable only when evidence does not support a stronger decomposition (R-INTRA-8).
+
+##### 11.3.6.5 Examples
 
 - Browser exploit escaping renderer sandbox:
 
@@ -3353,6 +3462,22 @@ A textual TLCTC path is **conformant** with this specification if it satisfies a
    - partial-confidence operators such as `?#4`, `#4?`, or `#{2|7}` (R-UNRES-9)
 5. *(V2.1)* Intra-system boundary types are limited to: `sandbox`, `privilege`, `process`, `hypervisor`. The `memory` type is reserved and **MUST NOT** be used (R-INTRA-9).
 6. *(V2.1)* Any path containing `?` or `…` is accompanied by a prose annotation explaining the unresolved state (R-UNRES-8).
+7. *(V2.1)* Stripping all V2.1 annotations leaves a valid underlying cluster sequence (SG-7).
+
+#### 11.6.1 V2.1 Implementation Conformance *(Normative)*
+
+An implementation conforms to the V2.1 extension profile if it satisfies **all** of the following:
+
+1. Accepts all valid V2.0 notation without semantic change.
+2. Accepts both Unicode and ASCII transport forms for all V2.1 operators.
+3. Parses the transit operator only as a topological intermediary annotation.
+4. Parses the intra-system operator only as a cluster-attached internal-boundary annotation.
+5. Preserves cluster classification independently from all annotations.
+6. Supports compressed and expanded intra-system expression without conflating them.
+7. Can strip V2.1 annotations and recover the underlying cluster sequence.
+8. Rejects or warns on standalone intra-system boundaries or transit misuse for vendor-on-target cases.
+
+A human analyst may still produce semantically poor notation even if the parser accepts it. Implementations are encouraged to provide linting rules in addition to pure syntax validation.
 
 ---
 
@@ -3438,6 +3563,314 @@ VCHAR         = %x21-7E
   ```
   #9 → #7 → #4 → #1
   ```
+
+---
+
+### 11.9 V2.1 Composition and Notation Behavior
+
+#### 11.9.1 Operator Inventory
+
+| Operator | Meaning | Version |
+| --- | --- | --- |
+| `#X → #Y` | Sequential attack steps | V2.0 |
+| `(#X + #Y)` | Parallel or combined steps | V2.0 |
+| `→[Δt=value]→` | Temporal gap or velocity annotation | V2.0 |
+| `+ [DRE: X]` | Data risk event annotation | V2.0 |
+| `||[ctx][@A→@B]||` | Binary inter-organizational boundary | V2.0 |
+| `||[ctx][@A⇒@T→@B]||` | Transit boundary | V2.1 |
+| `|[type][@X→@Y]|` | Intra-system boundary | V2.1 |
+| `?` | Single unresolved step | V2.1 |
+| `…` / `...` | Unresolved gap (≥1 step) | V2.1 |
+
+#### 11.9.2 Canonical Placement Order
+
+Within a single step, the recommended element order is:
+
+```
+#X  ||[inter-org boundary]||  |[intra-system boundary]|  →[Δt=value]→  #Y  + [DRE: X]
+```
+
+This order is recommended because it is stable, readable, and easy to parse. Not all elements need to appear in every step. Use only those that add structural clarity.
+
+#### 11.9.3 Stripping Behavior
+
+A V2.1-aware implementation **SHOULD** be able to remove boundary annotations and leave the cluster sequence intact. For example, stripping the V2.1 annotation from:
+
+```
+#3 ||[messaging][@Attacker⇒@Apple(iMessage)→@Target]|| |[sandbox][@A→@B]| → #7
+```
+
+yields:
+
+```
+#3 → #7
+```
+
+This satisfies SG-7 (backward recoverability).
+
+#### 11.9.4 Responsibility Metadata
+
+Vendor responsibility, control ownership, and boundary-enforcement ownership are analytically important, but they are not equivalent to transit topology. Responsibility metadata is separate from notation semantics, even when the same named party appears in both contexts.
+
+---
+
+### 11.10 Serialization Profile *(V2.1)*
+
+#### 11.10.1 Canonical Unicode and ASCII Transport
+
+| Concept | Unicode | ASCII Transport |
+| --- | --- | --- |
+| Sequential arrow | `→` | `->` |
+| Transit arrow | `⇒` | `=>` |
+| Delta-t | `Δt` | `dt` |
+| Inter-org delimiter | `\|\|` | `\|\|` |
+| Intra-system delimiter | `\|` | `\|` |
+
+Canonical output **SHOULD** use Unicode forms. Input parsers **MUST** accept both Unicode and ASCII transport forms.
+
+#### 11.10.2 Parenthetical Detail Rules
+
+A party identifier may optionally carry parenthetical detail, for example `@Apple(iMessage)` or `@Target(Safari)`. Parenthetical content is a precision aid, not a second namespace.
+
+- **Permitted:** letters, digits, spaces, periods, hyphens, underscores, and the `@` sign where needed inside parenthetical email content.
+- **Prohibited:** parentheses, square brackets, pipes, arrows, commas, and semicolons.
+- **Dot notation** may be used for nested services such as `@Microsoft(AzureAD.OAuth)` or `@Apple(iCloud.Photostream)`.
+
+#### 11.10.3 Delimiter Disambiguation
+
+Two consecutive pipes with no intervening content denote the inter-organizational operator. A single pipe followed by a bracket denotes the intra-system operator. Operators **MUST NOT** be nested inside each other.
+
+#### 11.10.4 Canonicalization Rules (Normative)
+
+| ID | Rule |
+| --- | --- |
+| **CAN-1** | Canonical output **SHOULD** normalize arrows to Unicode. |
+| **CAN-2** | Canonical output **SHOULD** remove redundant whitespace while preserving a single space between major step components. |
+| **CAN-3** | Canonical output **SHOULD** place inter-organizational boundary annotations before intra-system annotations on the same step. |
+| **CAN-4** | Canonical output **SHOULD** preserve party detail as supplied, except for removal of prohibited characters. |
+
+---
+
+### 11.11 JSON Mapping for V2.1 Operators *(V2.1)*
+
+#### 11.11.1 Minimal Object Model
+
+```json
+{
+  "step_id": "S2",
+  "cluster": "#3",
+  "notes": "iMessage parser vulnerability exploited",
+  "inter_org_boundary": {
+    "context": "messaging",
+    "source": "@Attacker",
+    "transit": "@Apple(iMessage)",
+    "target": "@Target"
+  },
+  "intra_system_boundaries": [
+    { "type": "sandbox", "from": "@iMessage", "to": "@BlastDoor" },
+    { "type": "privilege", "from": "@user", "to": "@root" }
+  ],
+  "vendor_responsibility": {
+    "vendor": "Apple",
+    "components": ["iMessage parser", "iOS privilege separation"],
+    "note": "Metadata only; not transit topology"
+  }
+}
+```
+
+#### 11.11.2 JSON Rules (Normative)
+
+| ID | Rule |
+| --- | --- |
+| **JSON-1** | The `inter_org_boundary` object is **OPTIONAL**. |
+| **JSON-2** | Within `inter_org_boundary`, the `transit` field is **OPTIONAL**. If absent, the boundary is binary V2.0-compatible. |
+| **JSON-3** | The `intra_system_boundaries` array is **OPTIONAL** and may contain multiple entries for compressed form. |
+| **JSON-4** | `vendor_responsibility` is **OPTIONAL** metadata and has no effect on parser classification. |
+| **JSON-5** | A compliant implementation **MUST** preserve the cluster independently of all annotation metadata. |
+
+#### 11.11.3 Implementation Behavior
+
+- A parser **SHOULD** accept both Unicode and ASCII transport forms.
+- A renderer **SHOULD** be able to display both inter-organizational and intra-system boundaries distinctly.
+- An exporter **SHOULD** be able to strip annotations and emit the base cluster sequence.
+- A validator **SHOULD** warn when transit is used for a vendor-on-target case or when an intra-system boundary appears without a cluster.
+
+---
+
+### 11.12 Rendering and Visualization Guidance *(V2.1, Informative)*
+
+The notation is human-first. Visual clarity matters.
+
+- Inter-organizational boundaries are best rendered as vertical swim-lane boundaries or labeled boundary markers between responsibility spheres.
+- Transit parties should appear between source and target lanes, not merged into either endpoint.
+- Intra-system boundaries are best rendered as horizontal sub-lanes or compartment lines inside the target's lane.
+- The transit arrow should be visually distinguishable from the ordinary sequential arrow.
+- Compressed and expanded intra-system forms should remain visually recognizable as different levels of evidentiary certainty, not just different art styles.
+
+---
+
+### 11.13 V2.1 Worked Examples *(Informative)*
+
+#### 11.13.1 Pegasus Network Injection
+
+```
+#5 ||[network][@NSO_Operator⇒@MobileCarrier→@Target]|| →[Δt≈0s]
+#3 ||[browser][@NSO(free247downloads.com)→@Target(Safari)]|| |[privilege][@user→@root]| →[Δt≈0s]
+#7 + [DRE: C]
+```
+
+*The mobile carrier is transit for the network redirection step. Safari is not transit; it is the target-side client component exploited in the `#3` step. The privilege transition is an internal crossing annotated on the exploit step. Malware execution remains `#7`.*
+
+#### 11.13.2 iMessage Zero-Click (Expanded Form)
+
+```
+#3 ||[messaging][@Attacker⇒@Apple(iMessage)→@Target]|| |[sandbox][@iMessage→@BlastDoor]| →
+#3 |[process][@BlastDoor→@WebKit.WebContent]| →
+#3 |[process][@WebKit.WebContent→@coretelephony]| |[privilege][@user→@root]| →
+#7 + [DRE: C]
+```
+
+*Each new `#3` step is justified only when evidence supports a distinct vulnerability-driven internal transition. The internal crossings remain effects and containment failures attached to `#3`, not new threat categories.*
+
+#### 11.13.3 OAuth Phishing Path
+
+```
+#9 ||[email][@Attacker⇒@Microsoft(M365)→@Target]|| →[Δt=hours]
+#4 ||[auth][@Attacker⇒@AzureAD.OAuth→@Target(CloudResources)]|| →[Δt≈0s]
+#1 + [DRE: C]
+```
+
+*The email provider and identity provider are topological intermediaries. The use of stolen or coerced authorization remains `#4`. Subsequent abuse of legitimate cloud functions remains `#1`.*
+
+#### 11.13.4 SS7 Interception and Account Use
+
+```
+#5 ||[signaling][@Attacker⇒@CarrierB(SS7)⇒@CarrierA→@Target]|| →[Δt≈0s]
+#4 →[Δt≈0s] #1 + [DRE: C]
+```
+
+*Chained transit is justified because two carriers each hold distinct control responsibility in the signaling path. Credential use remains `#4`, and follow-on misuse of legitimate application functions remains `#1`.*
+
+#### 11.13.5 VM Escape in Shared Cloud
+
+```
+#2 |[hypervisor][@GuestVM→@Hypervisor]| →[Δt≈0s]
+#1 |[hypervisor][@Hypervisor→@VictimVM]| ||[cloud][@Attacker(Tenant)⇒@CloudProvider→@Victim(Tenant)]|| + [DRE: C]
+```
+
+*The hypervisor flaw is a `#2` step. The later abuse of legitimate hypervisor or management functions is `#1`. The cloud provider is transit for the cross-tenant boundary, but not the threat category.*
+
+#### 11.13.6 Local Script to SYSTEM via Misconfiguration
+
+```
+#7 → #1 |[privilege][@user→@SYSTEM]|
+```
+
+*The notation makes clear that the system privilege state changes, but the cause remains abuse of a legitimate local function or configuration weakness rather than an invented "privilege escalation cluster".*
+
+#### 11.13.7 Pegasus Photostream Delivery
+
+```
+#1 ||[cloud][@Attacker(bogaardlisa803@gmail.com)⇒@Apple(iCloud.Photostream)→@Target(Photos)]|| →[Δt≈0s]
+#3 |[privilege][@user→@root]| →[Δt≈0s]
+#7 + [DRE: C]
+```
+
+*The attacker abuses the designed auto-delivery scope of Apple's iCloud Photostream service to push crafted media to the target device. This is `#1` because Photostream functions as designed — no code flaw is exploited in the delivery mechanism itself. Apple's iCloud service is transit because its relay infrastructure sits between the attacker's iCloud account and the target's device. The `#3` step is the client-side parsing flaw in the Photos app. Note that `#1` at a transit boundary is structurally valid: the transit operator marks topology, the cluster marks cause, and the two are independent per SG-2.*
+
+---
+
+### 11.14 V2.1 Decision Procedures *(Informative)*
+
+#### 11.14.1 Transit Decision Procedure
+
+Use transit when **all** of the following are true:
+
+1. The step crosses an inter-organizational boundary.
+2. Three or more responsibility spheres are structurally involved.
+3. One party is topologically between source and target.
+4. The intermediary has meaningful control relevance.
+
+Do **not** use transit when the named party is merely the vendor of code running on the target (R-TRANSIT-3).
+
+#### 11.14.2 Intra-System Decision Procedure
+
+Use the intra-system operator when **all** of the following are true:
+
+1. The step crosses a meaningful internal containment boundary within one system.
+2. Naming that boundary adds analytical value.
+3. The annotation remains attached to a cluster step.
+
+If a separately evidenced vulnerability is required for the next internal crossing, create a new cluster step (R-INTRA-7).
+
+---
+
+### 11.15 V2.1 Anti-Patterns *(Normative)*
+
+The following patterns are **non-conformant** and **MUST** be avoided:
+
+| ID | Anti-Pattern |
+| --- | --- |
+| **A1** | Do not write a path where `\|[privilege][@user→@root]\|` appears without a cluster. That turns an effect into a pseudo-threat. |
+| **A2** | Do not use transit to encode vendor blame for a target-side component. Vendor responsibility belongs in prose or metadata. |
+| **A3** | Do not compress multiple clearly distinct exploit causes into one cluster step simply because the chain remained inside one device. |
+| **A4** | Do not let a platform operator's presence default to `#10` unless a trust-link compromise is actually the cause. |
+| **A5** | Do not let modern exploit vocabulary such as "sandbox escape" or "process pivot" replace TLCTC cluster labels. |
+
+---
+
+### 11.16 V2.1 Context Vocabulary *(Normative)*
+
+The context vocabulary is extensible. The following defines the baseline profile:
+
+| Context | Typical Meaning | Typical Transit Party |
+| --- | --- | --- |
+| `messaging` | Message relay or delivery platform | Platform operator |
+| `email` | Email transport and delivery | Email provider |
+| `cdn` | Content delivery infrastructure | CDN provider |
+| `cloud` | Cloud control or service infrastructure | Cloud provider |
+| `network` | Network-level relay or path control | ISP, carrier, VPN provider |
+| `signaling` | Telephony signaling path | Carrier(s) |
+| `auth` | Identity federation or authentication relay | Identity provider |
+| `media` | Media streaming or content relay | Media platform |
+| `browser` | Client browser content delivery | Usually binary; transit only if separate relay exists |
+| `exploit` | Direct exploit delivery path | Usually binary; transit only when relay infrastructure matters |
+| `dev` | Development or build path | Vendor or build service |
+| `update` | Software update delivery path | Update service provider |
+| `physical` | Physical access channel | Facility or hardware operator |
+| `human` | Human communication channel | Organization or operator |
+| `legal` | Compulsion or legal order channel | State or regulator |
+| `admin` | Administrative access channel | System operator |
+
+---
+
+### 11.17 V2.1 Symbol Table *(Reference)*
+
+| Symbol | Meaning |
+| --- | --- |
+| `→` | Sequential step ordering or directional relationship |
+| `⇒` | Transit relationship to a topological intermediary |
+| `\|\|` | Inter-organizational boundary delimiter |
+| `\|` | Intra-system boundary delimiter |
+| `Δt` | Time gap or velocity annotation |
+| `+` | Parallel combination or DRE attachment |
+| `@` | Responsibility sphere prefix |
+| `#` | TLCTC cluster prefix |
+| `?` | Single unresolved step |
+| `…` | Unresolved gap (one or more steps) |
+
+---
+
+### 11.18 Intra-System Boundary Catalog *(V2.1, Reference)*
+
+| Type | Definition | Examples |
+| --- | --- | --- |
+| `sandbox` | Application or container isolation boundary | `@iMessage`, `@BlastDoor`, `@Chrome`, `@Docker` |
+| `privilege` | Privilege or authority boundary | `@user`, `@root`, `@admin`, `@SYSTEM`, `@Ring0` |
+| `process` | Process isolation boundary | `@WebKit.WebContent`, `@coretelephony`, `@renderer` |
+| `hypervisor` | Guest, host, or hypervisor isolation boundary | `@GuestVM`, `@Hypervisor`, `@Host` |
+
+Deferred from V2.1: `memory`-oriented notation. Hardware-enforced memory compartments and mitigation bypasses may warrant future treatment, but they are intentionally excluded to avoid mixing isolation domains with mitigation states.
 
 ---
 
@@ -5906,13 +6339,23 @@ Each example is written as:
   - Deprecated terminology
 
 - Changes from V2.0 to V2.1 *(additive, backward-compatible)*
+  - **Semantic Guardrails (SG-1 through SG-7):** Axiomatic guards ensuring V2.1 operators remain subordinate to the classification model (Section 4.2.4)
   - **Transit Boundary Operator (`⇒`):** New operator to annotate responsibility spheres that relay/carry attacks without being source or target (Section 11.3.5)
+  - **R-TRANSIT-1 through R-TRANSIT-8:** Full transit boundary rule set — distinct parties, true intermediary topology, vendor code exclusion, control relevance, pure conduit fallback, compromise/coercion separation, cluster independence, chained transit (Section 4.2.5)
   - **Intra-System Boundary Operator (`|...|`):** New operator to annotate boundary crossings within a single host — sandbox escapes, privilege escalation, process injection, VM escape (Section 11.3.6)
-  - **R-TRANSIT-3:** Vendor code on target device is NOT transit; classify by R-ROLE (Section 4.2.4)
-  - **R-INTRA-7:** Intra-system boundaries never change cluster classification (Section 4.2.4)
-  - **R-INTRA-9:** `memory` boundary type reserved/deferred (Section 4.2.4)
-  - Updated ABNF grammar to include transit arrow (`⇒`), `SPHERE_LIST`, and `INTRA_BOUNDARY` productions (Section 11.7)
-  - Updated conformance rules to recognize V2.1 operators (Section 11.6)
+  - **R-INTRA-1 through R-INTRA-9:** Full intra-system boundary rule set — single-system scope, cluster attachment, no standalone use, no cluster change, optional precision, multiple crossings, distinct vulnerability rule, compressed form, anti-effect rule and memory deferral (Section 4.2.5)
+  - **Unresolved-Step Operators (`?`, `…`):** Operators for partially-resolved paths with R-UNRES-1 through R-UNRES-9 (Section 11.5.4)
+  - **Composition and notation behavior:** Operator inventory, canonical placement order, stripping behavior, responsibility metadata (Section 11.9)
+  - **Serialization profile:** Unicode/ASCII transport forms, parenthetical detail rules, delimiter disambiguation, canonicalization rules CAN-1 through CAN-4 (Section 11.10)
+  - **JSON mapping for V2.1 operators:** Minimal object model, JSON-1 through JSON-5 rules, implementation behavior (Section 11.11)
+  - **Rendering and visualization guidance** (Section 11.12)
+  - **V2.1 worked examples:** Pegasus, iMessage zero-click, OAuth phishing, SS7 interception, VM escape, local privilege escalation, Photostream delivery (Section 11.13)
+  - **Decision procedures** for transit and intra-system operators (Section 11.14)
+  - **Anti-patterns (A1 through A5):** Normative misuse guardrails (Section 11.15)
+  - **Context vocabulary:** Extended baseline profile with 16 context types (Section 11.16)
+  - **Symbol table and boundary catalog** (Sections 11.17, 11.18)
+  - Updated ABNF grammar to include transit arrow (`⇒`), `SPHERE_LIST`, `INTRA_BOUNDARY`, and unresolved-step productions (Section 11.7)
+  - Updated conformance rules to recognize all V2.1 operators and implementation requirements (Section 11.6)
 
 ---
 
