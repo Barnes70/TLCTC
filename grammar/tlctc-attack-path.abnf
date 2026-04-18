@@ -1,0 +1,75 @@
+; TLCTC Attack Path Notation — Formal Grammar
+; Version: 2.1
+; Format:  ABNF (RFC 5234), UTF-8 source encoding required.
+; Canonical prose specification: documentation/tlctc-v2.0-whitepaper.md §11.7
+;
+; This file is the machine-ingestable mirror of §11.7. In case of
+; divergence, the whitepaper is normative until this file is updated.
+;
+; Unicode literals used directly in the grammar:
+;   →  U+2192 RIGHTWARDS ARROW
+;   ⇒  U+21D2 RIGHTWARDS DOUBLE ARROW   (V2.1 transit operator)
+;   …  U+2026 HORIZONTAL ELLIPSIS       (V2.1 unresolved gap)
+;   Δ  U+0394 GREEK CAPITAL LETTER DELTA (Δt — temporal gap annotation)
+;
+; Parsers that do not natively consume UTF-8 literals should preprocess
+; the input or replace the literal characters below with hex UTF-8 byte
+; sequences (e.g., "→" → %xE2.86.92).
+; ---------------------------------------------------------------------
+
+PATH            = PHASE *(SP* EDGE SP* PHASE)
+
+EDGE            = (ARROW / ARROW_ASCII) [SP* DT_ANN]
+ARROW           = "→"
+ARROW_ASCII     = "->"
+
+PHASE           = STEP / PAR_GROUP
+
+; A PAR_GROUP MAY carry trailing annotations and a DRE_TAG applied to the
+; group as a whole (e.g., "(#1 + #7) + [DRE: Ac]" — see whitepaper §12.3.4).
+PAR_GROUP       = "(" SP* STEP *(SP* "+" SP* STEP) SP* ")" STEP_TRAILER
+
+; A STEP is either a classified cluster step or an unresolved-step operator.
+; Unresolved steps MUST NOT carry a DRE_TAG (R-UNRES-5).
+STEP            = CLASSIFIED_STEP / UNRESOLVED_STEP
+CLASSIFIED_STEP = CLUSTER_REF [SP* BOUNDARY] [SP* INTRA_BOUNDARY] STEP_TRAILER
+
+; Shared trailer for step-level and group-level annotations/outcomes.
+STEP_TRAILER    = *(SP* STEP_ANN) [SP* DRE_TAG]
+
+; V2.1 Unresolved-Step Operators (see whitepaper §11.5.4)
+UNRESOLVED_STEP  = UNRESOLVED_TOKEN [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN)
+UNRESOLVED_TOKEN = "?" / "…" / "..."                 ; ? = single; … / ... = gap (>=1 step)
+
+CLUSTER_REF     = STRATEGIC / OPERATIONAL
+STRATEGIC       = "#" ( "10" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" )
+OPERATIONAL     = "TLCTC-" 2DIG "." 2DIG
+
+BOUNDARY        = "||" "[" CONTEXT "]" "[" SPHERE_LIST "]" "||"
+SPHERE_LIST     = SPHERE *(TRANSIT_ARROW SPHERE) BOUNDARY_ARROW SPHERE
+BOUNDARY_ARROW  = (ARROW / ARROW_ASCII)
+TRANSIT_ARROW   = "⇒"                                ; V2.1 transit operator
+CONTEXT         = 1*(ALPHA / DIGIT / "_" / "-")
+
+SPHERE          = "@" 1*(ALPHA / DIGIT / "_" / "-" / "(" / ")")
+
+; V2.1 Intra-System Boundary Operator
+INTRA_BOUNDARY  = "|" "[" INTRA_TYPE "]" "[" SPHERE BOUNDARY_ARROW SPHERE "]" "|"
+INTRA_TYPE      = "sandbox" / "privilege" / "process" / "hypervisor"
+
+STEP_ANN        = "[" ANN_KEY "=" ANN_VAL "]" / "[inferred]"
+ANN_KEY         = 1*(ALPHA / DIGIT / "_" / "-")
+ANN_VAL         = 1*(VCHAR)     ; no closing bracket "]"
+
+DT_ANN          = "[" "Δt" "=" DT_VAL "]"
+DT_VAL          = 1*(VCHAR)     ; e.g., 2h, 5m, instant, fast, ?, ~15m
+
+DRE_TAG         = "+" SP* "[DRE:" SP* DRE_LIST "]"
+DRE_LIST        = DRE_LET *(SP* "," SP* DRE_LET)
+DRE_LET         = "C" / "I" / "A" / "Av" / "Ac"
+
+2DIG            = DIGIT DIGIT
+SP              = %x20
+ALPHA           = %x41-5A / %x61-7A
+DIGIT           = %x30-39
+VCHAR           = %x21-7E

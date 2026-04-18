@@ -3485,6 +3485,8 @@ A human analyst may still produce semantically poor notation even if the parser 
 
 The following ABNF specifies the **textual** TLCTC attack path notation. Whitespace (`SP`) is optional between tokens unless stated otherwise.
 
+> **Machine-ingestable mirror:** the grammar below is also published as a standalone RFC 5234 artifact at [`grammar/tlctc-attack-path.abnf`](../grammar/tlctc-attack-path.abnf) for tooling integration (parser generators, linters, pre-commit validators, SIEM ingest checks, editor syntax highlighting). This section remains the normative prose specification; the `.abnf` file tracks it verbatim.
+
 ```
 PATH          = PHASE *(SP* EDGE SP* PHASE)
 
