@@ -5639,10 +5639,12 @@ This enables aggregated reporting such as:
 
 #### 15.7.3 STIX/TAXII integration
 
-When using STIX, TLCTC can be carried as:
+When using STIX, TLCTC **cluster classifications** can be carried as:
 
 - a custom property (e.g., `x_tlctc_primary_cluster`), or
 - a controlled vocabulary tag.
+
+**Scope limit — Layer 3 does NOT round-trip to STIX 2.1.** Attack path instances rely on constructs that have no native STIX 2.1 equivalent: Δt velocity annotations, parallel groups (`#X + #Y`), boundary operators (`||...||`, transit `⇒`, intra-system `|...|`), DRE tags, and unresolved operators (`?`, `…`). A STIX consumer receiving these as custom properties can preserve them opaquely but cannot reconstruct the typed graph semantics from STIX SROs alone. Recommended practice: carry the Layer 3 JSON instance as an out-of-band artifact (or inside a STIX extension) rather than attempting a lossy decomposition into `attack-pattern` + SROs.
 
 **Important:** STIX `intrusion-set` (actor) MUST remain metadata; it MUST NOT replace TLCTC classification.
 

@@ -1164,7 +1164,7 @@ An incident record is conformant if (per white paper, Section 7.6):
 
 These JSON structures are designed to integrate with:
 
-- **STIX/TAXII** — Enhanced STIX objects with TLCTC cluster mappings
+- **STIX/TAXII** — Cluster tags carried on STIX objects via custom properties (e.g., `x_tlctc_primary_cluster`). **Layer 3 attack path instances do not round-trip to STIX 2.1**: Δt velocity annotations, parallel groups (`#X + #Y`), boundary operators (`||...||`, `⇒`, `|...|`), DRE tags, and unresolved operators (`?`, `…`) have no native STIX 2.1 equivalents. Full Layer 3 exchange requires either a custom STIX extension or transporting the TLCTC JSON instance alongside STIX as an out-of-band artifact.
 - **MITRE ATT&CK Navigator** — Techniques mapped to clusters
 - **SIEM Platforms** — Automated rule generation per cluster
 - **Threat Intelligence Platforms** — Standardized ingestion via base schema
