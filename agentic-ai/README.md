@@ -73,10 +73,10 @@ Attack path instances validate against the canonical Layer 3 schema:
 
 ```bash
 # Validate individual attack path
-ajv validate -s json-schemas/layer-3/tlctc-attack-path.schema.json -d examples/agentic-ai/attack-paths/path-A-direct-prompt-injection.json
+ajv validate -s json-schemas/layer-3/tlctc-attack-path.schema.json -d agentic-ai/attack-paths/path-A-direct-prompt-injection.json
 
 # Validate all attack paths
-for f in examples/agentic-ai/attack-paths/*.json; do
+for f in agentic-ai/attack-paths/*.json; do
   ajv validate -s json-schemas/layer-3/tlctc-attack-path.schema.json -d "$f"
 done
 ```

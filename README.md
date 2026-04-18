@@ -462,23 +462,22 @@ tlctc/
 ├── glossary/
 │   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
 │   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, boundary operators
-├── examples/
-│   └── agentic-ai/                           # Analysis of AI semantics in Cyber Threats
-│       ├── README.md                         # Overview and methodology
-│       ├── agentic-consequence-chains.json   # Consequence chain examples
-│       ├── agentic-tool-profiles.json        # 5 tool category risk profiles
-│       ├── agentic-irreversibility-matrix.json # Irreversibility windows per consequence type
-│       └── attack-paths/                     # 10 individual agentic AI attack paths (A–J)
-│           ├── path-A-direct-prompt-injection.json
-│           ├── path-B-indirect-prompt-injection.json
-│           ├── path-C-social-engineering-operator.json
-│           ├── path-D-credential-access.json
-│           ├── path-E-agent-as-lolbin.json
-│           ├── path-F-runtime-exploit.json
-│           ├── path-G-rogue-agent-install.json
-│           ├── path-H-supply-chain-marketplace.json
-│           ├── path-I-apt-in-a-box.json
-│           └── path-J-llm-weaponization-supply-chain.json
+├── agentic-ai/                               # Analysis of AI semantics in Cyber Threats
+│   ├── README.md                             # Overview and methodology
+│   ├── agentic-consequence-chains.json       # Consequence chain examples
+│   ├── agentic-tool-profiles.json            # 5 tool category risk profiles
+│   ├── agentic-irreversibility-matrix.json   # Irreversibility windows per consequence type
+│   └── attack-paths/                         # 10 individual agentic AI attack paths (A–J)
+│       ├── path-A-direct-prompt-injection.json
+│       ├── path-B-indirect-prompt-injection.json
+│       ├── path-C-social-engineering-operator.json
+│       ├── path-D-credential-access.json
+│       ├── path-E-agent-as-lolbin.json
+│       ├── path-F-runtime-exploit.json
+│       ├── path-G-rogue-agent-install.json
+│       ├── path-H-supply-chain-marketplace.json
+│       ├── path-I-apt-in-a-box.json
+│       └── path-J-llm-weaponization-supply-chain.json
 ├── attack-paths/                             # Community-contributed incident analyses (49 incidents)
 │   ├── CONTRIBUTING.md
 │   ├── # Historical incidents (2008–2024)
