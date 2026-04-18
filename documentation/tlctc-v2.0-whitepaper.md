@@ -3494,12 +3494,17 @@ ARROW_ASCII   = "->"
 
 PHASE         = STEP / PAR_GROUP
 
-PAR_GROUP     = "(" SP* STEP *(SP* "+" SP* STEP) SP* ")"
+; A PAR_GROUP MAY carry trailing annotations and a DRE_TAG applied to the
+; group as a whole (e.g., "(#1 + #7) + [DRE: Ac]" — see §12.3.4).
+PAR_GROUP     = "(" SP* STEP *(SP* "+" SP* STEP) SP* ")" STEP_TRAILER
 
 ; A STEP is either a classified cluster step or an unresolved-step operator.
 ; Unresolved steps MUST NOT carry a DRE_TAG (R-UNRES-5).
 STEP          = CLASSIFIED_STEP / UNRESOLVED_STEP
-CLASSIFIED_STEP = CLUSTER_REF [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN) [SP* DRE_TAG]
+CLASSIFIED_STEP = CLUSTER_REF [SP* BOUNDARY] [SP* INTRA_BOUNDARY] STEP_TRAILER
+
+; Shared trailer for step-level and group-level annotations/outcomes.
+STEP_TRAILER  = *(SP* STEP_ANN) [SP* DRE_TAG]
 
 ; V2.1 Unresolved-Step Operators (see §11.5.4)
 UNRESOLVED_STEP  = UNRESOLVED_TOKEN [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN)
@@ -6357,6 +6362,7 @@ Each example is written as:
   - **Context vocabulary:** Extended baseline profile with 16 context types (Section 11.16)
   - **Symbol table and boundary catalog** (Sections 11.17, 11.18)
   - Updated ABNF grammar to include transit arrow (`⇒`), `SPHERE_LIST`, `INTRA_BOUNDARY`, and unresolved-step productions (Section 11.7)
+  - Introduced `STEP_TRAILER` production so `PAR_GROUP` can carry group-level annotations and a `DRE_TAG` (e.g., `(#1 + #7) + [DRE: Ac]`), closing the gap between the canonical example in §12.3.4 and the grammar in §11.7
   - Updated conformance rules to recognize all V2.1 operators and implementation requirements (Section 11.6)
 
 ---
