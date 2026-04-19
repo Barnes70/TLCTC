@@ -389,9 +389,19 @@ tlctc/
 │   │   ├── tlctc-npm-patterns.json           # Supply chain attack patterns mapping
 │   │   └── examples/
 │   │       └── incident-to-control-walkthrough.md # Worked example: incident → controls
-│   └── cloudflare-2026-patterns/             # Cloudflare 2026 attack patterns → TLCTC
-│       ├── README.md                         # Pattern documentation & methodology
-│       └── tlctc-cloudflare-2026-patterns.json # Cloudflare 2026 threat report pattern mapping
+│   ├── cloudflare-2026-patterns/             # Cloudflare 2026 attack patterns → TLCTC
+│   │   ├── README.md                         # Pattern documentation & methodology
+│   │   └── tlctc-cloudflare-2026-patterns.json # Cloudflare 2026 threat report pattern mapping
+│   └── cisa-kev/                             # CISA Known Exploited Vulnerabilities → TLCTC
+│       ├── README.md                         # Mapping documentation & caveats
+│       ├── generate-kev-mapping.py           # Deterministic ETL generator
+│       ├── tlctc-kev.json                    # 1,568 per-CVE derivations
+│       ├── tlctc-kev-stats.json              # Cluster counts, ransomware, vendor & monthly stats
+│       ├── product-role-heuristic.json       # R-ROLE (#2 | #3) disambiguation rules
+│       ├── decision-tree.md                  # Derivation algorithm
+│       ├── input/                            # Pinned KEV snapshot (reproducibility)
+│       └── examples/
+│           └── cluster-exposure-walkthrough.md # Worked example: vendor stack → exposure
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
@@ -548,8 +558,9 @@ tlctc/
 4. **Use the JSON schemas** — Validate your attack path instances against Layer 3 schema.
 5. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
 6. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
-7. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
-8. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
+7. **Track active exploitation** — See [`mappings/cisa-kev/`](mappings/cisa-kev/) for a TLCTC-cluster view of the CISA Known Exploited Vulnerabilities catalog (1,568 CVEs, weekly-refreshable, deterministically derived).
+8. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
+9. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
 
 ## Contributing
 
