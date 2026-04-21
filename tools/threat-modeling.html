@@ -1018,6 +1018,7 @@
         return saved ? saved === 'dark' : true; // default dark
       });
       const canvasRef = useRef(null);
+      const dragStateRef = useRef({ moved: false, startX: 0, startY: 0 });
 
       // Sync dark mode class and expose toggle bridge for nav bar
       useEffect(() => {
@@ -1904,10 +1905,23 @@
                         <rect x={group.x} y={group.y} width={group.width} height={group.height} rx="8"
                           fill={darkMode ? '#0f172a' : '#f8fafc'} stroke={isSelected ? '#3b82f6' : (darkMode ? '#334155' : '#cbd5e1')}
                           strokeWidth={isSelected ? 2 : 1} strokeDasharray="4,2" className="cursor-move"
-                          onClick={(e) => { e.stopPropagation(); handleElementClick(group, 'group'); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (dragStateRef.current.moved) { dragStateRef.current.moved = false; return; }
+                            handleElementClick(group, 'group');
+                          }}
                           onMouseDown={(e) => {
                             if (e.button !== 0) return;
-                            const move = (ev) => handleElementDrag(ev, group.id, 'group');
+                            dragStateRef.current = { moved: false, startX: e.clientX, startY: e.clientY };
+                            const move = (ev) => {
+                              if (!dragStateRef.current.moved) {
+                                const dx = ev.clientX - dragStateRef.current.startX;
+                                const dy = ev.clientY - dragStateRef.current.startY;
+                                if (dx * dx + dy * dy < 16) return;
+                                dragStateRef.current.moved = true;
+                              }
+                              handleElementDrag(ev, group.id, 'group');
+                            };
                             const up = () => { document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
                             document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
                           }}
@@ -2021,10 +2035,23 @@
                       <g key={comp.id} transform={`translate(${pos.x}, ${pos.y})`}
                         style={{ opacity: filterCluster && !matchesFilter ? 0.2 : 1 }}
                         filter={isSelected ? 'url(#glow-blue)' : undefined}
-                        onClick={(e) => { e.stopPropagation(); handleElementClick(comp, 'component'); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (dragStateRef.current.moved) { dragStateRef.current.moved = false; return; }
+                          handleElementClick(comp, 'component');
+                        }}
                         onMouseDown={(e) => {
                           if (e.button !== 0 || connectionMode) return;
-                          const move = (ev) => handleElementDrag(ev, comp.id, 'component');
+                          dragStateRef.current = { moved: false, startX: e.clientX, startY: e.clientY };
+                          const move = (ev) => {
+                            if (!dragStateRef.current.moved) {
+                              const dx = ev.clientX - dragStateRef.current.startX;
+                              const dy = ev.clientY - dragStateRef.current.startY;
+                              if (dx * dx + dy * dy < 16) return;
+                              dragStateRef.current.moved = true;
+                            }
+                            handleElementDrag(ev, comp.id, 'component');
+                          };
                           const up = () => { document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
                           document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
                         }}
