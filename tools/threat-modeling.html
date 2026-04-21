@@ -562,6 +562,112 @@
 
     // ============== EXAMPLE TEMPLATE BLUEPRINTS ==============
     const EXAMPLE_TEMPLATES = [
+      { id: 'three-tier-web', name: 'Classic 3-Tier Web App', icon: '🌐', desc: 'Starter template — Browser → Web Server → DB. The "hello world" of threat modeling. Teaches #2 (server exploit), #3 (client XSS), #4 (credential use), #1 (feature abuse) on a minimal surface.',
+        meta: { name: 'Classic 3-Tier Web App', version: '1.0.0', sdlcPhase: 'Design', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'Client', type: 'group-server', x: 30, y: 30, w: 240, h: 130, owner: '@User' },
+          { ref: 'g2', name: 'Web Tier', type: 'group-server', x: 330, y: 30, w: 260, h: 220, owner: '@Org' },
+          { ref: 'g3', name: 'Data Tier', type: 'group-server', x: 650, y: 30, w: 240, h: 130, owner: '@Org' }
+        ],
+        components: [
+          { ref: 'c1', type: 'client-browser', name: 'User Browser', group: 'g1', x: 30, y: 40, owner: '@User' },
+          { ref: 'c2', type: 'web-server', name: 'Web Server', group: 'g2', x: 30, y: 50, owner: '@Org' },
+          { ref: 'c3', type: 'auth-module', name: 'Auth Module', group: 'g2', x: 30, y: 140, owner: '@Org' },
+          { ref: 'c4', type: 'database', name: 'App Database', group: 'g3', x: 30, y: 40, owner: '@Org' }
+        ],
+        interfaces: [
+          { from: 'c1', to: 'c2', protocol: 'HTTPS', port: '443' },
+          { from: 'c2', to: 'c3', protocol: 'Internal Call', port: '-' },
+          { from: 'c2', to: 'c4', protocol: 'TCP', port: '5432' }
+        ]
+      },
+      { id: 'ecommerce-checkout', name: 'E-commerce Checkout', icon: '🛒', desc: 'Showcases #1 Business Logic abuse — coupon replay, inventory oversell, negative-qty orders, price manipulation. Cart + checkout + payment + inventory services on a shared DB.',
+        meta: { name: 'E-commerce Checkout', version: '1.0.0', sdlcPhase: 'Design', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'Shopper', type: 'group-server', x: 30, y: 30, w: 240, h: 130, owner: '@User' },
+          { ref: 'g2', name: 'Checkout Backend', type: 'group-server', x: 330, y: 30, w: 400, h: 440, owner: '@Org' },
+          { ref: 'g3', name: 'Payment Provider', type: 'group-server', x: 790, y: 30, w: 260, h: 150, owner: '@Vendor', thirdParty: true }
+        ],
+        components: [
+          { ref: 'c1', type: 'client-browser', name: 'Shopper Browser', group: 'g1', x: 30, y: 40, owner: '@User' },
+          { ref: 'c2', type: 'api-endpoint', name: 'Checkout API', group: 'g2', x: 30, y: 50, owner: '@Org' },
+          { ref: 'c3', type: 'app-logic', name: 'Cart Service', group: 'g2', x: 200, y: 50, owner: '@Org' },
+          { ref: 'c4', type: 'app-logic', name: 'Coupon / Discount Engine', group: 'g2', x: 30, y: 170, owner: '@Org' },
+          { ref: 'c5', type: 'app-logic', name: 'Inventory Service', group: 'g2', x: 200, y: 170, owner: '@Org' },
+          { ref: 'c6', type: 'app-logic', name: 'Order Workflow', group: 'g2', x: 30, y: 290, owner: '@Org' },
+          { ref: 'c7', type: 'database', name: 'Orders + Inventory DB', group: 'g2', x: 200, y: 290, owner: '@Org' },
+          { ref: 'c8', type: 'third-party-api', name: 'Payment Gateway', group: 'g3', x: 40, y: 50, owner: '@Vendor', thirdParty: true }
+        ],
+        interfaces: [
+          { from: 'c1', to: 'c2', protocol: 'HTTPS', port: '443' },
+          { from: 'c2', to: 'c3', protocol: 'Internal Call', port: '-' },
+          { from: 'c2', to: 'c4', protocol: 'Internal Call', port: '-' },
+          { from: 'c2', to: 'c5', protocol: 'Internal Call', port: '-' },
+          { from: 'c2', to: 'c6', protocol: 'Internal Call', port: '-' },
+          { from: 'c6', to: 'c7', protocol: 'TCP', port: '5432' },
+          { from: 'c5', to: 'c7', protocol: 'TCP', port: '5432' },
+          { from: 'c3', to: 'c7', protocol: 'TCP', port: '5432' },
+          { from: 'c6', to: 'c8', protocol: 'HTTPS', port: '443' }
+        ]
+      },
+      { id: 'cicd-pipeline', name: 'CI/CD Pipeline', icon: '🔧', desc: 'Canonical #10 Supply Chain teaching scaffold — build-time TAE, secret exposure in runners, dependency confusion, signed artifacts. Mirrors SolarWinds / xz-utils classification.',
+        meta: { name: 'CI/CD Pipeline', version: '1.0.0', sdlcPhase: 'Operations', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'Developer Workstation', type: 'group-server', x: 30, y: 30, w: 240, h: 130, owner: '@Org' },
+          { ref: 'g2', name: 'Source Control / CI', type: 'group-server', x: 330, y: 30, w: 280, h: 280, owner: '@Vendor', thirdParty: true },
+          { ref: 'g3', name: 'Build / Artifact Plane', type: 'group-server', x: 670, y: 30, w: 280, h: 280, owner: '@Org' },
+          { ref: 'g4', name: 'Production', type: 'group-server', x: 1010, y: 30, w: 240, h: 150, owner: '@Org' }
+        ],
+        components: [
+          { ref: 'c1', type: 'admin', name: 'Developer', group: 'g1', x: 30, y: 40, owner: '@Org' },
+          { ref: 'c2', type: 'client-browser', name: 'Dev Workstation', group: 'g1', x: 150, y: 40, owner: '@Org' },
+          { ref: 'c3', type: 'web-server', name: 'Git Repository (SCM)', group: 'g2', x: 30, y: 50, owner: '@Vendor', thirdParty: true },
+          { ref: 'c4', type: 'serverless', name: 'CI Runner', group: 'g2', x: 30, y: 170, owner: '@Vendor', thirdParty: true },
+          { ref: 'c5', type: 'framework', name: 'Dependencies (npm/PyPI/Maven)', group: 'g3', x: 30, y: 50, owner: '@Vendor', thirdParty: true },
+          { ref: 'c6', type: 'storage', name: 'Artifact Registry', group: 'g3', x: 30, y: 170, owner: '@Org' },
+          { ref: 'c7', type: 'storage', name: 'Secrets Vault', group: 'g3', x: 150, y: 170, owner: '@Org' },
+          { ref: 'c8', type: 'vm', name: 'Production Host', group: 'g4', x: 30, y: 50, owner: '@Org' }
+        ],
+        interfaces: [
+          { from: 'c1', to: 'c2', protocol: 'Human Use', port: '-' },
+          { from: 'c2', to: 'c3', protocol: 'HTTPS', port: '443' },
+          { from: 'c3', to: 'c4', protocol: 'Webhook', port: '443' },
+          { from: 'c4', to: 'c5', protocol: 'HTTPS', port: '443' },
+          { from: 'c4', to: 'c6', protocol: 'HTTPS', port: '443' },
+          { from: 'c4', to: 'c7', protocol: 'HTTPS', port: '443' },
+          { from: 'c8', to: 'c6', protocol: 'HTTPS', port: '443' }
+        ]
+      },
+      { id: 'llm-agentic-app', name: 'LLM / Agentic AI Application', icon: '🤖', desc: 'User → Chat UI → Agent → LLM + Tool APIs + Vector Store. Teaches prompt injection as #3 on the LLM client, tool-call escalation to #1 on connected services, and #10 on model/MCP supply chain.',
+        meta: { name: 'LLM Agentic AI Application', version: '1.0.0', sdlcPhase: 'Design', author: 'TLCTC Examples' },
+        groups: [
+          { ref: 'g1', name: 'User', type: 'group-server', x: 30, y: 30, w: 240, h: 130, owner: '@User' },
+          { ref: 'g2', name: 'Agent Application', type: 'group-server', x: 330, y: 30, w: 360, h: 400, owner: '@Org' },
+          { ref: 'g3', name: 'LLM Provider', type: 'group-server', x: 750, y: 30, w: 260, h: 150, owner: '@Vendor', thirdParty: true },
+          { ref: 'g4', name: 'Tool Ecosystem (MCP / APIs)', type: 'group-server', x: 750, y: 210, w: 260, h: 260, owner: '@Vendor', thirdParty: true }
+        ],
+        components: [
+          { ref: 'c1', type: 'client-browser', name: 'Chat UI', group: 'g1', x: 30, y: 40, owner: '@User' },
+          { ref: 'c2', type: 'api-endpoint', name: 'Agent API', group: 'g2', x: 30, y: 50, owner: '@Org' },
+          { ref: 'c3', type: 'app-logic', name: 'Agent Orchestrator', group: 'g2', x: 200, y: 50, owner: '@Org' },
+          { ref: 'c4', type: 'database', name: 'Vector Store / RAG', group: 'g2', x: 30, y: 170, owner: '@Org' },
+          { ref: 'c5', type: 'app-logic', name: 'Tool Call Dispatcher', group: 'g2', x: 200, y: 170, owner: '@Org' },
+          { ref: 'c6', type: 'auth-module', name: 'Session / Scope Guard', group: 'g2', x: 100, y: 290, owner: '@Org' },
+          { ref: 'c7', type: 'third-party-api', name: 'LLM API (Foundation Model)', group: 'g3', x: 40, y: 50, owner: '@Vendor', thirdParty: true },
+          { ref: 'c8', type: 'third-party-api', name: 'MCP Server (Email/Files)', group: 'g4', x: 40, y: 50, owner: '@Vendor', thirdParty: true },
+          { ref: 'c9', type: 'third-party-api', name: 'External Tool API', group: 'g4', x: 40, y: 160, owner: '@Vendor', thirdParty: true }
+        ],
+        interfaces: [
+          { from: 'c1', to: 'c2', protocol: 'HTTPS', port: '443' },
+          { from: 'c2', to: 'c3', protocol: 'Internal Call', port: '-' },
+          { from: 'c2', to: 'c6', protocol: 'Internal Call', port: '-' },
+          { from: 'c3', to: 'c4', protocol: 'Internal Call', port: '-' },
+          { from: 'c3', to: 'c5', protocol: 'Internal Call', port: '-' },
+          { from: 'c3', to: 'c7', protocol: 'HTTPS', port: '443' },
+          { from: 'c5', to: 'c8', protocol: 'HTTPS', port: '443' },
+          { from: 'c5', to: 'c9', protocol: 'HTTPS', port: '443' }
+        ]
+      },
       { id: 'oauth-idp', name: 'OAuth/OIDC IdP Integration', icon: '🔑', desc: 'SaaS app with Google OAuth/OIDC. Demonstrates federated identity, session management, and supply chain trust.',
         meta: { name: 'OAuth/OIDC IdP Integration', version: '1.0.0', sdlcPhase: 'Design', author: 'TLCTC Examples' },
         groups: [
