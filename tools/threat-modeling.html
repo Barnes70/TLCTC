@@ -1344,13 +1344,14 @@
       };
 
       const addThreatToInterface = (interfaceId, clusterId) => {
+        const newThreat = { clusterId, applicable: true, status: 'Identified', velocityClass: 'VC-2', controls: [], notes: '', residualRisk: 'Medium', controlRef: '' };
         setInterfaces(interfaces.map(iface => {
           if (iface.id !== interfaceId || iface.threats.find(t => t.clusterId === clusterId)) return iface;
-          return {
-            ...iface,
-            threats: [...iface.threats, { clusterId, applicable: true, status: 'Identified', velocityClass: 'VC-2', controls: [], notes: '', residualRisk: 'Medium', controlRef: '' }]
-          };
+          return { ...iface, threats: [...iface.threats, newThreat] };
         }));
+        if (selectedElement?.type === 'interface' && selectedElement.data.id === interfaceId && !selectedElement.data.threats.find(t => t.clusterId === clusterId)) {
+          setSelectedElement(prev => ({ ...prev, data: { ...prev.data, threats: [...prev.data.threats, newThreat] } }));
+        }
       };
 
       const removeThreatFromInterface = (interfaceId, clusterId) => {
@@ -1358,6 +1359,9 @@
           if (iface.id !== interfaceId) return iface;
           return { ...iface, threats: iface.threats.filter(t => t.clusterId !== clusterId) };
         }));
+        if (selectedElement?.type === 'interface' && selectedElement.data.id === interfaceId) {
+          setSelectedElement(prev => ({ ...prev, data: { ...prev.data, threats: prev.data.threats.filter(t => t.clusterId !== clusterId) } }));
+        }
       };
 
       // Threat management for components
@@ -1379,13 +1383,14 @@
       };
 
       const addThreatToComponent = (componentId, clusterId) => {
+        const newThreat = { clusterId, applicable: true, status: 'Identified', velocityClass: 'VC-2', controls: [], notes: '', residualRisk: 'Medium', controlRef: '' };
         setComponents(components.map(comp => {
           if (comp.id !== componentId || (comp.threats || []).find(t => t.clusterId === clusterId)) return comp;
-          return {
-            ...comp,
-            threats: [...(comp.threats || []), { clusterId, applicable: true, status: 'Identified', velocityClass: 'VC-2', controls: [], notes: '', residualRisk: 'Medium', controlRef: '' }]
-          };
+          return { ...comp, threats: [...(comp.threats || []), newThreat] };
         }));
+        if (selectedElement?.type === 'component' && selectedElement.data.id === componentId && !(selectedElement.data.threats || []).find(t => t.clusterId === clusterId)) {
+          setSelectedElement(prev => ({ ...prev, data: { ...prev.data, threats: [...(prev.data.threats || []), newThreat] } }));
+        }
       };
 
       const removeThreatFromComponent = (componentId, clusterId) => {
@@ -1393,6 +1398,9 @@
           if (comp.id !== componentId) return comp;
           return { ...comp, threats: (comp.threats || []).filter(t => t.clusterId !== clusterId) };
         }));
+        if (selectedElement?.type === 'component' && selectedElement.data.id === componentId) {
+          setSelectedElement(prev => ({ ...prev, data: { ...prev.data, threats: (prev.data.threats || []).filter(t => t.clusterId !== clusterId) } }));
+        }
       };
 
       // Generate threat register (includes both component and interface threats)
