@@ -1,0 +1,24 @@
+{
+  "name": "tlctc",
+  "version": "2.1.0",
+  "description": "Top Level Cyber Threat Clusters (TLCTC) v2.1 — cause-oriented, axiomatic cyber threat taxonomy. Loads the full framework (10 axioms, 10 clusters, R-* rules, attack-path notation) so Claude can classify incidents, CVEs, and threat-intel reports through a causal lens instead of outcome labels.",
+  "author": {
+    "name": "Bernhard Kreinz",
+    "email": "b.kreinz@gmail.com",
+    "url": "https://www.tlctc.net"
+  },
+  "homepage": "https://www.tlctc.net/tlctc-ai-analysis-prompt.html",
+  "repository": "https://github.com/Barnes70/TLCTC",
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "tlctc",
+    "cyber-threat-taxonomy",
+    "incident-analysis",
+    "cve",
+    "threat-intelligence",
+    "attack-path",
+    "bow-tie",
+    "mitre-attack",
+    "security"
+  ]
+}
