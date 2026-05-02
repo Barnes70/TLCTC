@@ -1,0 +1,677 @@
+{
+  "type": "bundle",
+  "id": "bundle--da79eebb-abca-4815-9d70-aa943d3025ba",
+  "objects": [
+    {
+      "type": "report",
+      "spec_version": "2.1",
+      "id": "report--496835e8-910c-467b-8c0a-893f38854da2",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "AD-DOMAIN-ADMIN-CASCADE-2025",
+      "published": "2026-04-19T00:00:00Z",
+      "report_types": [
+        "attack-pattern"
+      ],
+      "object_refs": [
+        "attack-pattern--77bd624a-7293-48bb-8ad7-06bc9debfe33",
+        "attack-pattern--45731a36-cda4-4a8b-82ff-5862f12c4317",
+        "attack-pattern--98705335-ec4f-40e9-a636-0342c0ef7eab",
+        "attack-pattern--b5e517a2-cb2e-480e-9b5a-e6936bd77143",
+        "attack-pattern--82fafa9c-62f5-4346-baee-8b34561ae610",
+        "attack-pattern--0b499d8c-bf3f-495a-a698-4e9e2a54d6d7",
+        "attack-pattern--ebe1909f-45a9-4bbb-9507-12d29b8c5fb6",
+        "attack-pattern--a9f8f93e-da21-4c40-8d4d-c329c17004d9",
+        "attack-pattern--63b7b066-52a7-4fc4-a8c8-61fea87c1e95",
+        "attack-pattern--0d37036e-d8ff-4824-83bb-8aab9d535e5d",
+        "attack-pattern--8e44fd50-4f95-4da4-aa19-6121f17e9565",
+        "attack-pattern--55059c5f-3d58-4c39-9a0e-d0b249e428a0",
+        "attack-pattern--ef48a200-762e-4f31-b293-fe081182f07e",
+        "attack-pattern--c61ac4e4-50e7-4380-9b4e-5d756d163fe3",
+        "attack-pattern--91b32192-3fcb-4bb0-a3ea-5acd7d50d883",
+        "attack-pattern--7dfc26f2-acb4-4c9a-97d5-ae8c3de7a16b",
+        "attack-pattern--90a10661-4c8b-45dc-a052-1aa3488a64c1",
+        "relationship--82bb1864-e296-443d-afd0-2cd2e0251a9f",
+        "relationship--67044c3a-e505-45bf-a802-4a87bebfbf5b",
+        "relationship--01e6a7fd-b210-4dac-bf25-7012e37df599",
+        "relationship--36fe38d5-8efe-4e47-a5da-c393eea64cbb",
+        "relationship--62225281-4137-486e-a439-b5dfdb0448ad",
+        "relationship--44e5cef8-e45e-4d06-87a4-7244d6e15d87",
+        "relationship--688ebcea-6ef8-4214-ab2c-feb1a53c8b63",
+        "relationship--6a148dcf-5894-4860-a5fc-d7e32bfbc7c7",
+        "relationship--b31d1aaf-5bdc-432f-b9cd-18629e3ff408",
+        "relationship--9c42bfdf-7758-4d90-bb05-d2532b9397e1",
+        "relationship--56c2e87a-d64d-4531-9051-9ff071cc9c1a",
+        "relationship--8f395e73-eb9e-443e-9aa9-c69f260f65b4",
+        "relationship--c7708850-1481-4c0b-834f-3a9a8d0d8541",
+        "relationship--98c186dd-a978-484e-ad63-b36fa81eedc4",
+        "relationship--d451249e-1cac-4895-a174-82a08e34100a",
+        "relationship--cf7383e0-6fbb-47b9-b5b8-78e49847b634"
+      ],
+      "description": "Canonical reference path for the Active Directory Domain-Admin → ransomware cascade — a composite/pattern analysis grounded in three 2025 incidents: Lynx (DFIR Report, March 2025), Storm-2603 / ToolShell (Cisco Talos, August 2025), and Storm-0300 / Akira (Microsoft Security Blog, April 2025). The cascade has an invariant Bow-Tie shape: a variable pre-SRE prefix (how the attacker reaches Domain Admin), the SRE itself (Tier-0 principal under attacker control), and a nearly-invariant post-SRE tail that is structurally #1 Abuse of Functions with #7 appearing only at FEC execution moments. Pre-SRE variants documented in the source: (A) valid-credential RDP (Lynx) — acquisition prefix unresolved, use step #4; (B) VPN foothold then escalation (Storm-0300, Akira) — #4 then Kerberoasting or LSASS; (C) server exploit chain (Storm-2603, ToolShell) — #2 → #7 webshell → #1 create admin || auth [@Org→@Entra] → #4; (D) Kerberoasting — #1 + [DRE: C on TGS blobs] → #4 → #1; (E) ZeroLogon — #2 + [DRE: C] → #4. This file models Variant A (Lynx) as the canonical reference path; the acquisition prefix is left as an unresolved gap so the same file serves as a template across all five variants. Compact notation: … → ||[prod][@Attacker→@Org]|| #4 →[Δt=10m] #1 →[Δt=15m] #4 →[Δt=mins] #1 →[Δt=mins] #1 →[Δt=mins] #1 →[Δt=hours] #1 + [DRE: C] →[Δt=mins] #4 →[Δt=mins] #1 + [DRE: C] → #7 + [DRE: C] →[Δt=~24h] #1 →[Δt=mins] #1 + [DRE: Av] →[Δt=mins] #1 + [DRE: Av] →[Δt=mins] #1 → #7 + [DRE: Ac] → #1 + [DRE: Av]. Axiom X (Credential Duality) is reflected as a visible acquisition/application pair at s6b→s6c: s6b is the #1 DCSync that harvests NTDS (DRE:C on credential material); s6c is the paired #4 application (Golden Ticket presentation or pass-the-hash) without DRE — per R-CRED the DRE attaches ONLY at acquisition. Two distinct DRE:C subjects appear in the tail: credential material (s6b — all domain NT hashes plus krbtgt) and business file data (s7 collection + s8 egress). The structural acquisition/application pairs in the path are s0→s1 (external acquisition → RDP use) and s6b→s6c (DCSync → Golden Ticket / PtH use). TTR observed in Lynx: ~178 hours across nine calendar days (velocity class VC-3); extortion-speed outliers compress this to VC-2 without altering the step sequence. Sources: DFIR Report Lynx case (March 2025); Microsoft Security Blog — 'Active Directory under siege' and Storm-0300 reporting (April 2025); Cisco Talos — Storm-2603 ToolShell analysis (August 2025); Verizon 2025 DBIR; Secureworks IR telemetry. Companion analysis: documentation/articles ad-ransomware-tlctc-cascade.html (The #1-Cascade).",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "url": "https://www.tlctc.net",
+          "description": "TLCTC v2.1 framework"
+        }
+      ],
+      "x_tlctc_incident_id": "AD-DOMAIN-ADMIN-CASCADE-2025",
+      "x_tlctc_version": "2.1",
+      "x_tlctc_analyst_confidence": "high",
+      "x_tlctc_framework_ref": "tlctc-framework.v2.0.json",
+      "x_tlctc_registry_ref": "example-registry.json"
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--77bd624a-7293-48bb-8ad7-06bc9debfe33",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC … unresolved (s0-acquisition-prefix)",
+      "description": "Acquisition prefix. In Lynx (Variant A) the credentials were stolen elsewhere — stealer malware (#7 + #1 harvest + #4 use), an infostealer-log marketplace purchase, or an initial-access broker handoff — and no acquisition telemetry survived on the target estate. Five documented 2025 variants for the pre-SRE prefix: (A) pre-acquired valid credentials, no target-side artifact — Lynx; (B) VPN initial access then internal Kerberoasting/LSASS — Storm-0300, Akira; (C) server exploit chain: #2 (ToolShell SharePoint CVE) → #7 (webshell) → #1 (create admin in AD) → auth-boundary cross to Entra → #4 — Storm-2603; (D) Kerberoasting from a low-privilege foothold: #1 (TGS request, legitimate Kerberos function) + [DRE: C on TGS blobs] → offline crack → #4 — evidence: Event 4769 with TicketEncryptionType=0x17 on unusual service principals, no preceding 4768 anomaly; (E) ZeroLogon (CVE-2020-1472): #2 (AES-CFB8 IV cryptographic flaw in MS-NRPC) + [DRE: C on machine account then DCSync-harvested hashes] → #4. R-UNRES-8: this is modeled as an unresolved gap because the single document represents the cascade pattern — defenders replace this gap with a classified prefix from their own incident. R-UNRES-6: the boundary on the subsequent step (||[prod][@Attacker→@Org]||) is independently observable and belongs to s1, not here.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "…",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s0-acquisition-prefix",
+      "x_tlctc_status": "unresolved",
+      "x_tlctc_unresolved_type": "gap",
+      "x_tlctc_candidates": [
+        "#7",
+        "#9",
+        "#2",
+        "#1",
+        "#4"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--45731a36-cda4-4a8b-82ff-5862f12c4317",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #4 Identity Theft (s1-rdp-foothold)",
+      "description": "Successful RDP logon to an internet-exposed production host using valid credentials acquired in s0. No brute-force noise, no stuffing failures — a clean authentication. R-CRED: credential application is ALWAYS #4 regardless of how the credential was acquired (Axiom X, Credential Duality). Evidence: Event ID 4624 logon type 10 on the edge host; often zero failed 4625s preceding it, which is the forensic signature of pre-acquired credentials vs. guessed credentials.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#4",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s1-rdp-foothold",
+      "x_tlctc_cluster": "#4",
+      "x_tlctc_strategic_cluster": "#4",
+      "x_tlctc_boundary": {
+        "context": "prod",
+        "source_sphere": "@Attacker",
+        "target_sphere": "@Org"
+      },
+      "x_tlctc_evidence_refs": [
+        "DFIR Report — Lynx (March 2025)"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--98705335-ec4f-40e9-a636-0342c0ef7eab",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s2-initial-recon)",
+      "description": "Directory and host enumeration from the foothold host using legitimate built-in utilities: net, nltest, NetScan, NetExec, BloodHound collectors. Every command is a designed, advertised capability — Precedence-2 test: 'would this attack work against a perfect implementation of the same functionality?' — yes, therefore #1 Abuse of Functions. No implementation flaw required. Evidence: Event 4688 (process creation) for net/nltest; 4662 with directory-service property access patterns; LDAP query logs from domain controllers.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s2-initial-recon",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1",
+      "x_tlctc_evidence_refs": [
+        "Event 4688",
+        "Event 4662",
+        "DC LDAP query logs"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--b5e517a2-cb2e-480e-9b5a-e6936bd77143",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #4 Identity Theft (s3-da-lateral-to-dc)",
+      "description": "Lateral movement from the foothold host to a domain controller using a SEPARATE compromised domain-admin account (distinct from s1). R-CRED: credential application is always #4. The fact that this DA credential was harvested elsewhere in the environment (rather than re-using s1's account) is forensically significant — Microsoft's April 2025 reporting finds the DC is breached in >78% of human-operated intrusions, and the attacker rarely relies on the initial foothold account for Tier-0 work. This step IS the SRE (Significant Risk Event) — the Bow-Tie central event when a Tier-0 principal comes under attacker control.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#4",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s3-da-lateral-to-dc",
+      "x_tlctc_cluster": "#4",
+      "x_tlctc_strategic_cluster": "#4",
+      "x_tlctc_evidence_refs": [
+        "Event 4624 logon type 3 on DC",
+        "Event 4672 (special privileges assigned)"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--82fafa9c-62f5-4346-baee-8b34561ae610",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s4-dc-recon)",
+      "description": "Domain-controller-local reconnaissance: enumerate trusts, schema, existing Tier-0 groups, GPO inventory, Protected Users membership. Same tools as s2 but now executed on the DC with DA privileges — the authority scope is maximal. Still #1: every query uses a designed Active Directory function.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s4-dc-recon",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1"
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--0b499d8c-bf3f-495a-a698-4e9e2a54d6d7",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s5-create-lookalike-accounts)",
+      "description": "Create persistence accounts using native AD admin functionality (net user /add, New-ADUser). Lynx observed three lookalikes including 'administratr' (one-character omission from 'administrator'). No flaw exploited — account creation is a designed privileged function. Evidence: Event 4720 (user account created), 4738 (user account changed). The typosquat naming is a tell but not a classification input — Axiom IV, actor identity / tradecraft never determines cluster.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s5-create-lookalike-accounts",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1",
+      "x_tlctc_evidence_refs": [
+        "Event 4720",
+        "Event 4738"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--ebe1909f-45a9-4bbb-9507-12d29b8c5fb6",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s6-elevate-accounts)",
+      "description": "Add the persistence accounts to Domain Admins, Enterprise Admins, Group Policy Creator Owners (GPCO). net group, Add-ADGroupMember, or via GPMC. Every Add-ADGroupMember call is a designed function of the privileged role already held — classic #1. Evidence: Event 4728 (member added to security-enabled global group), 4732 (local), 4756 (universal).",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s6-elevate-accounts",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1"
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--a9f8f93e-da21-4c40-8d4d-c329c17004d9",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s6b-credential-harvest)",
+      "description": "Post-DA credential harvest — in the canonical Lynx-style cascade this is DCSync via MS-DRSR GetNCChanges (DS-Replication-Get-Changes-All), which replicates NTDS.dit contents and yields every domain account NT hash plus the krbtgt hash (enabling Golden Ticket persistence). Pure #1 Abuse of Functions: directory replication is a designed AD capability invokable by any principal holding replication rights, and s6 just granted those rights via DA / Enterprise Admin membership. No implementation flaw is exploited — Precedence-2 test confirms the attack works against a perfect implementation. DRE:C attaches HERE on credential material, which is a forensically distinct data subject from the later s7/s8 DRE:C on business file data — different control surface, different recovery semantics, different breach-notification obligations. R-CRED: acquisition event, so DRE:C attaches at this step and NEVER at downstream #4 reuse (pass-the-hash, overpass-the-hash, Golden Ticket) — the paired application is recorded explicitly as s6c. Common variants at this position: LSASS dump via ProcDump / comsvcs.dll on a reached host is still #1 + [DRE: C] (LOLBIN abuse at DA authority); Mimikatz or other attacker-supplied credential stealer is #7 + [DRE: C] because FEC executes (R-EXEC). Persistence rationale: even if s5's lookalike accounts are disabled during response, harvested hashes permit re-entry via any domain principal; undoing DCSync requires a full krbtgt double-rotation, which most organizations cannot execute under incident pressure. Evidence: Event 4662 with ObjectType GUIDs 1131f6aa-9c07-11d1-f79f-00c04fc2dcd2 (DS-Replication-Get-Changes) and 1131f6ad-9c07-11d1-f79f-00c04fc2dcd2 (DS-Replication-Get-Changes-All) sourced from an unexpected principal or host; Sysmon EID 10 with TargetImage=lsass.exe for LSASS-dump variants; 4688 for ProcDump/comsvcs.dll invocation.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s6b-credential-harvest",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1",
+      "x_tlctc_dre": [
+        "C"
+      ],
+      "x_tlctc_evidence_refs": [
+        "Event 4662 (DS-Replication-Get-Changes-All GUID)",
+        "Sysmon EID 10 (LSASS handle access, for LSASS-dump variants)",
+        "Microsoft Security Blog — Active Directory under siege (April 2025)"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--63b7b066-52a7-4fc4-a8c8-61fea87c1e95",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #4 Identity Theft (s6c-harvested-cred-application)",
+      "description": "First application of a credential harvested at s6b — in the canonical Lynx-style cascade this is either (a) pass-the-hash authentication to a target using an NT hash from the NTDS dump, or (b) Golden Ticket presentation using the krbtgt hash (forging is an offline computation with no on-wire event; the observable step is the authentication request, which is this step). Per Axiom X (Credential Duality) and R-CRED: credential acquisition (s6b) and credential application (s6c) are DISTINCT steps with DISTINCT cluster classifications. Acquisition maps to the enabling cluster (#1 Abuse of Functions for DCSync); application is ALWAYS #4 regardless of how the credential was obtained. Conflating s6b and s6c is the most common classification error in post-DA AD incident analysis, and it destroys the #1/#4 control-surface distinction: defences against harvest (DS-Replication auditing, LSASS protection, Credential Guard, Protected Users, tier-0 segmentation) are structurally different from defences against application (authentication-anomaly detection, tiered logon restrictions, Kerberos Armoring / FAST, krbtgt rotation cadence, AS-REQ/TGS-REQ monitoring). This is the pivot point where the attacker switches from the externally-acquired DA credential used at s3 to a domain-internal harvested persona — a routine operator move to (i) break correlation with the s3 foothold account in case it gets flagged during the ~24h pause before s9, (ii) reach scopes the s3 account does not cover (backup-operator service accounts, tier-specific admins surfaced by DCSync), or (iii) establish Kerberos-level persistence via krbtgt that survives account disablement and DA group removal. R-CRED reminder: NO DRE is recorded at this step — DRE:C on the credential material was attached at acquisition (s6b) and does NOT re-attach on each use. Evidence depends on the variant: Golden Ticket presentation — Event 4769 (TGS request) with no preceding Event 4768 (TGT issuance) from the KDC (the KDC never saw the TGT because the attacker forged it offline), anomalous ticket lifetime (Mimikatz default 10 years vs domain policy), PAC validation failures at target services, SID-history artifacts on the ticket; pass-the-hash — Event 4624 logon type 3 with NtlmSsp authentication package from an unexpected source host, using a principal whose NT hash appeared in the s6b NTDS dump; overpass-the-hash — Event 4768 TGT issuance using a hash directly (not an interactive logon password), often preceded by no 4624 type 2 on the source host. Classification boundary is crisp and defensible under review: the offline hash computation / ticket forging is NOT a cluster step (no on-system event, nothing 'happens' on any target); the network authentication event IS the cluster and IS #4.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#4",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s6c-harvested-cred-application",
+      "x_tlctc_cluster": "#4",
+      "x_tlctc_strategic_cluster": "#4",
+      "x_tlctc_evidence_refs": [
+        "Event 4769 without preceding 4768 (Golden Ticket signature)",
+        "Event 4624 logon type 3 with NtlmSsp (pass-the-hash signature)",
+        "Event 4768 with unusual PreAuthType / ticket options (overpass-the-hash)",
+        "DFIR Report — Lynx (March 2025)"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--0d37036e-d8ff-4824-83bb-8aab9d535e5d",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s7-collect-and-stage)",
+      "description": "Share enumeration and file collection across the domain using SMB reads, 7-Zip staging to an internal drop folder. Standard file I/O and compression — designed, legitimate, not flawed — abused at DA scope. DRE:C attaches at acquisition (R-CRED principle generalized to data). The 7-Zip binary is typically a Microsoft-signed or portable build used as a LOLBIN; its execution is not FEC (the binary is legitimate tooling). Evidence: 5140/5145 (SMB share access), 4688 (7z.exe process creation with archive paths in cmdline).",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s7-collect-and-stage",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1",
+      "x_tlctc_dre": [
+        "C"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--8e44fd50-4f95-4da4-aa19-6121f17e9565",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #7 Malware (s8-exfil-tool-exec)",
+      "description": "Attacker-supplied exfiltration tooling executes on the staging host — commonly a custom client uploading staged archives to temp.sh, anonfiles, rclone to attacker-controlled cloud, or a bespoke binary. R-EXEC: foreign executable content runs, therefore a #7 step MUST be recorded at the execution moment (fec_executed: true). DRE:C attaches here as the egress event. Distinction from s7: s7 is abuse of designed functions with data movement internal; s8 is FEC crossing the egress boundary. Defenders often collapse s7+s8 into a single 'exfiltration' label and then have no control surface because 'exfiltration' is an outcome, not a cluster.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#7",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s8-exfil-tool-exec",
+      "x_tlctc_cluster": "#7",
+      "x_tlctc_strategic_cluster": "#7",
+      "x_tlctc_dre": [
+        "C"
+      ],
+      "x_tlctc_fec": true
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--55059c5f-3d58-4c39-9a0e-d0b249e428a0",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s9-lateral-to-backup)",
+      "description": "RDP or SMB/WMI access to the backup server using DA authority. Classified #1 at this strategic-notation level — continued operation inside already-held Tier-0 scope is abuse of the designed function. At a stricter R-CRED decomposition an embedded #4 credential-application step exists (Kerberos TGS present for the backup server SPN); this summary-level compression is intentional and acceptable when the Tier-0 principal has been continuously active. If distinct authentication events matter for control attribution, split into #4 → #1.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s9-lateral-to-backup",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1",
+      "x_tlctc_evidence_refs": [
+        "Event 5140/5145 on backup server",
+        "Event 4624 logon type 10"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--ef48a200-762e-4f31-b293-fe081182f07e",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s10-backup-destruction)",
+      "description": "Delete backup jobs and snapshots via the backup application's own administrative console (Veeam, Commvault, Rubrik) — DA typically has direct or inherited access. The console function is designed; the authority scope is abused. DRE:A (Availability) — backup data is gone, not just inaccessible. This is the strategic move that makes ransomware economically viable: without backups, the recovery option collapses and the extortion leverage becomes binary. Distinct from s11 (VSS): backup system deletion destroys the primary recovery tier.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s10-backup-destruction",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1",
+      "x_tlctc_dre": [
+        "A"
+      ],
+      "x_tlctc_evidence_refs": [
+        "Veeam/Commvault application logs",
+        "Event 4624/4672 on backup server"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--c61ac4e4-50e7-4380-9b4e-5d756d163fe3",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s11-shadow-copy-destruction)",
+      "description": "vssadmin delete shadows /all (or wmic shadowcopy delete) executed on each target host to eliminate the secondary recovery tier. VSS administration is a designed Windows function; attacker holds the authority. DRE:A on VSS shadow data specifically — separate control surface from s10 (backup system) and distinct recovery semantics. Keeping these separate matters: compressing them into one step hides the fact that two independent controls must both fail for the ransomware business model to succeed. Evidence: Event 4688 (vssadmin.exe with 'delete shadows' arguments), VSS event 8224.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s11-shadow-copy-destruction",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1",
+      "x_tlctc_dre": [
+        "A"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--91b32192-3fcb-4bb0-a3ea-5acd7d50d883",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s12-stage-payload-push)",
+      "description": "Push the encryption payload to target hosts via SMB copy to ADMIN$/C$, PsExec, WMI, or GPO software installation. Pure abuse of designed file-share and remote-administration functions. The payload itself is FEC but has not yet EXECUTED here — R-EXEC is not triggered until s13. Keeping the push (#1) and the run (#7) as separate steps is a classification discipline point: conflating them is the most common error in ransomware attack-path analysis and it destroys the distinction between network-level and host-level control surfaces. Evidence: Event 5140/5145 (SMB admin-share access), Event 4688 (remote service create / scheduled task).",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s12-stage-payload-push",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1"
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--7dfc26f2-acb4-4c9a-97d5-ae8c3de7a16b",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #7 Malware (s13-encrypt-per-host)",
+      "description": "The ransomware payload — PE binary, DLL side-loaded via a LOLBIN, or fileless PowerShell script carried in memory — executes on each target host. R-EXEC: foreign executable content runs, #7 recorded with fec_executed: true. DRE:Ac (Accessibility) — data is present on disk but unusable because it is encrypted; distinct from A (Availability) where data would be gone. Strategic notation compresses this step as (#1 → #7)×N where N is the number of encryption victims; at the forensic level each host instance is enumerable and carries its own DRE:Ac. 'Fileless' PowerShell ransomware (observed in Storm-2603 Velociraptor-abuse variant) still counts as #7: the host process (powershell.exe) is #1, the attacker's script running inside it is #7. Axiom III: 'ransomware' is the outcome label — the cluster is FEC execution, the impact is [DRE: Ac], the business event is extortion leverage. Mapping a single 'anti-ransomware' control to this one step is the category error that makes such products underperform.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#7",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s13-encrypt-per-host",
+      "x_tlctc_cluster": "#7",
+      "x_tlctc_strategic_cluster": "#7",
+      "x_tlctc_dre": [
+        "Ac"
+      ],
+      "x_tlctc_fec": true,
+      "x_tlctc_evidence_refs": [
+        "Event 4688 (ransomware binary)",
+        "Event 4104 (PowerShell script block for fileless variants)",
+        "File rename storms",
+        "Ransom note drop"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--90a10661-4c8b-45dc-a052-1aa3488a64c1",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s14-log-clearing)",
+      "description": "Anti-forensics sweep: wevtutil cl, Clear-EventLog, or direct deletion of ETL files. Still #1 — event log administration is a designed function, authority scope is abused. DRE:A on log data specifically — audit trail is gone. Where post-incident gaps were created by this step, subsequent reconstruction uses the '…' (unresolved gap) operator in the path between surviving observations. Evidence: Event 1102 (audit log cleared), Event 104 (system log cleared) — the very act of clearing leaves these markers, which is why the most sophisticated operators avoid wevtutil and instead corrupt log files directly.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s14-log-clearing",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1",
+      "x_tlctc_dre": [
+        "A"
+      ],
+      "x_tlctc_evidence_refs": [
+        "Event 1102",
+        "Event 104"
+      ]
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--82bb1864-e296-443d-afd0-2cd2e0251a9f",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--77bd624a-7293-48bb-8ad7-06bc9debfe33",
+      "target_ref": "attack-pattern--45731a36-cda4-4a8b-82ff-5862f12c4317",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "?"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--67044c3a-e505-45bf-a802-4a87bebfbf5b",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--45731a36-cda4-4a8b-82ff-5862f12c4317",
+      "target_ref": "attack-pattern--98705335-ec4f-40e9-a636-0342c0ef7eab",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~10m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--01e6a7fd-b210-4dac-bf25-7012e37df599",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--98705335-ec4f-40e9-a636-0342c0ef7eab",
+      "target_ref": "attack-pattern--b5e517a2-cb2e-480e-9b5a-e6936bd77143",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~15m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--36fe38d5-8efe-4e47-a5da-c393eea64cbb",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--b5e517a2-cb2e-480e-9b5a-e6936bd77143",
+      "target_ref": "attack-pattern--82fafa9c-62f5-4346-baee-8b34561ae610",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~5m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--62225281-4137-486e-a439-b5dfdb0448ad",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--82fafa9c-62f5-4346-baee-8b34561ae610",
+      "target_ref": "attack-pattern--0b499d8c-bf3f-495a-a698-4e9e2a54d6d7",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~10m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--44e5cef8-e45e-4d06-87a4-7244d6e15d87",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--0b499d8c-bf3f-495a-a698-4e9e2a54d6d7",
+      "target_ref": "attack-pattern--ebe1909f-45a9-4bbb-9507-12d29b8c5fb6",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~5m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--688ebcea-6ef8-4214-ab2c-feb1a53c8b63",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--ebe1909f-45a9-4bbb-9507-12d29b8c5fb6",
+      "target_ref": "attack-pattern--a9f8f93e-da21-4c40-8d4d-c329c17004d9",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~1h"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--6a148dcf-5894-4860-a5fc-d7e32bfbc7c7",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--a9f8f93e-da21-4c40-8d4d-c329c17004d9",
+      "target_ref": "attack-pattern--63b7b066-52a7-4fc4-a8c8-61fea87c1e95",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~5m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--b31d1aaf-5bdc-432f-b9cd-18629e3ff408",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--63b7b066-52a7-4fc4-a8c8-61fea87c1e95",
+      "target_ref": "attack-pattern--0d37036e-d8ff-4824-83bb-8aab9d535e5d",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~10m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--9c42bfdf-7758-4d90-bb05-d2532b9397e1",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--0d37036e-d8ff-4824-83bb-8aab9d535e5d",
+      "target_ref": "attack-pattern--8e44fd50-4f95-4da4-aa19-6121f17e9565",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~5m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--56c2e87a-d64d-4531-9051-9ff071cc9c1a",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--8e44fd50-4f95-4da4-aa19-6121f17e9565",
+      "target_ref": "attack-pattern--55059c5f-3d58-4c39-9a0e-d0b249e428a0",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~24h"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--8f395e73-eb9e-443e-9aa9-c69f260f65b4",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--55059c5f-3d58-4c39-9a0e-d0b249e428a0",
+      "target_ref": "attack-pattern--ef48a200-762e-4f31-b293-fe081182f07e",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~5m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--c7708850-1481-4c0b-834f-3a9a8d0d8541",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--ef48a200-762e-4f31-b293-fe081182f07e",
+      "target_ref": "attack-pattern--c61ac4e4-50e7-4380-9b4e-5d756d163fe3",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~5m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--98c186dd-a978-484e-ad63-b36fa81eedc4",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--c61ac4e4-50e7-4380-9b4e-5d756d163fe3",
+      "target_ref": "attack-pattern--91b32192-3fcb-4bb0-a3ea-5acd7d50d883",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~5m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--d451249e-1cac-4895-a174-82a08e34100a",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--91b32192-3fcb-4bb0-a3ea-5acd7d50d883",
+      "target_ref": "attack-pattern--7dfc26f2-acb4-4c9a-97d5-ae8c3de7a16b",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~15m"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--cf7383e0-6fbb-47b9-b5b8-78e49847b634",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--7dfc26f2-acb4-4c9a-97d5-ae8c3de7a16b",
+      "target_ref": "attack-pattern--90a10661-4c8b-45dc-a052-1aa3488a64c1",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~30m"
+    }
+  ]
+}

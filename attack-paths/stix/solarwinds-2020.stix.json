@@ -1,0 +1,167 @@
+{
+  "type": "bundle",
+  "id": "bundle--4793dab8-7b9d-4f0b-8e6e-36f019b6c9a9",
+  "objects": [
+    {
+      "type": "report",
+      "spec_version": "2.1",
+      "id": "report--47b1fb24-8266-4998-b00b-f7250ed04da2",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "SOLARWINDS-SUNBURST-2020",
+      "published": "2026-02-23T00:00:00Z",
+      "report_types": [
+        "attack-pattern"
+      ],
+      "object_refs": [
+        "attack-pattern--edd24e52-816a-4c3a-9c41-7d5bd8b0520f",
+        "attack-pattern--4dda6cc2-9bd3-4430-95a5-90d48ffe0731",
+        "attack-pattern--3e7b7270-0596-4311-914a-61aa1f5388a6",
+        "attack-pattern--52a96521-55c5-4809-a336-8843f26e1a32",
+        "relationship--74601a8c-1c65-43b2-acfc-ecef767cada2",
+        "relationship--c6199b4e-91bf-4dd0-a5d6-d5e985870dc3",
+        "relationship--57ba4332-471d-4dfd-828e-0cdcc2886351"
+      ],
+      "description": "SolarWinds SUNBURST supply chain compromise (December 2020). Attack path: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]. APT29/Cozy Bear attributed (Axiom IV: actor identity does not change cluster classification). Sources: CISA Alert AA20-352A, Microsoft MSRC, FireEye/Mandiant UNC2452 report.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "url": "https://www.tlctc.net",
+          "description": "TLCTC v2.0 framework"
+        }
+      ],
+      "x_tlctc_incident_id": "SOLARWINDS-SUNBURST-2020",
+      "x_tlctc_version": "2.0",
+      "x_tlctc_analyst_confidence": "high",
+      "x_tlctc_framework_ref": "tlctc-framework.v2.0.json",
+      "x_tlctc_registry_ref": "example-registry.json"
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--edd24e52-816a-4c3a-9c41-7d5bd8b0520f",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #10 Supply Chain Attack (s1-supply-chain)",
+      "description": "Trust Acceptance Event: SolarWinds Orion update v2019.4-2020.2.1 containing SUNBURST backdoor accepted and installed by target organization via legitimate update channel. The compromised DLL (SolarWinds.Orion.Core.BusinessLayer.dll) was digitally signed by SolarWinds, passing all trust verification. Falsifiability test: removing the third-party trust link (not accepting the update) would have prevented this step.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#10",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s1-supply-chain",
+      "x_tlctc_cluster": "#10",
+      "x_tlctc_strategic_cluster": "#10",
+      "x_tlctc_boundary": {
+        "context": "update",
+        "source_sphere": "@Vendor",
+        "target_sphere": "@Org"
+      }
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--4dda6cc2-9bd3-4430-95a5-90d48ffe0731",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #7 Malware (s2-sunburst-execution)",
+      "description": "FEC execution via designed capability: SUNBURST backdoor DLL loaded and executed by the legitimate SolarWinds Orion service (solarwinds.businesslayerhost.exe). The execution used the environment's intended DLL loading mechanism — an intended data→code transition, not an exploit. SUNBURST remained dormant for approximately 12-14 days before activating C2 communication via DNS (avsvmcloud.com). R-EXEC satisfied: FEC execution recorded as #7.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#7",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s2-sunburst-execution",
+      "x_tlctc_cluster": "#7",
+      "x_tlctc_strategic_cluster": "#7",
+      "x_tlctc_fec": true
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--3e7b7270-0596-4311-914a-61aa1f5388a6",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #4 Identity Theft (s3-credential-forgery)",
+      "description": "Credential application: attacker forged SAML tokens using stolen signing certificates to impersonate legitimate users and access cloud resources (Azure AD, Office 365). Per Axiom X: the acquisition of the signing key occurred during the #7 step (a consequence of the malware's access, recorded as DRE:C); the USE of forged credentials to authenticate is always #4 regardless of acquisition method.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#4",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s3-credential-forgery",
+      "x_tlctc_cluster": "#4",
+      "x_tlctc_strategic_cluster": "#4",
+      "x_tlctc_dre": [
+        "C"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--52a96521-55c5-4809-a336-8843f26e1a32",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "name": "TLCTC #1 Abuse of Functions (s4-cloud-abuse)",
+      "description": "Abuse of legitimate cloud functions: attacker used valid (forged) credentials to abuse Azure AD APIs, Office 365 mail reading APIs, and federated trust configurations for data exfiltration. No code flaw exploited — the attacker operated within the designed functionality of the cloud platform using stolen identity. Data stayed data; no foreign code was introduced at this stage.",
+      "external_references": [
+        {
+          "source_name": "tlctc",
+          "external_id": "#1",
+          "url": "https://www.tlctc.net"
+        }
+      ],
+      "x_tlctc_step_id": "s4-cloud-abuse",
+      "x_tlctc_cluster": "#1",
+      "x_tlctc_strategic_cluster": "#1",
+      "x_tlctc_dre": [
+        "C"
+      ]
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--74601a8c-1c65-43b2-acfc-ecef767cada2",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--edd24e52-816a-4c3a-9c41-7d5bd8b0520f",
+      "target_ref": "attack-pattern--4dda6cc2-9bd3-4430-95a5-90d48ffe0731",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "instant"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--c6199b4e-91bf-4dd0-a5d6-d5e985870dc3",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--4dda6cc2-9bd3-4430-95a5-90d48ffe0731",
+      "target_ref": "attack-pattern--3e7b7270-0596-4311-914a-61aa1f5388a6",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~14d"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--57ba4332-471d-4dfd-828e-0cdcc2886351",
+      "created": "2026-05-02T18:25:21Z",
+      "modified": "2026-05-02T18:25:21Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-pattern--3e7b7270-0596-4311-914a-61aa1f5388a6",
+      "target_ref": "attack-pattern--52a96521-55c5-4809-a336-8843f26e1a32",
+      "description": "TLCTC sequence edge (predecessor → successor).",
+      "x_tlctc_relation": "precedes",
+      "x_tlctc_delta_t": "~2h"
+    }
+  ]
+}
