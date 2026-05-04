@@ -1,0 +1,42 @@
+id: TLCTC-08-Physical
+version: -1
+name: TLCTC-08 Physical
+description: |
+  Master playbook for cluster #8 — Physical Attack (bridge cluster).
+
+  Bridge cluster: REQUIRES boundary annotation (||[physical][@External→@Org]||
+  or similar). Examples: device theft, evil maid, hardware implant.
+
+  XSOAR's role here is largely orchestrational — most response is human/physical.
+
+  Direct Response:
+    - Notify physical security / facilities
+    - Wipe / disable affected device remotely if possible (MDM)
+    - Revoke device certificates and tokens
+    - Preserve CCTV / access logs for the incident window
+fromversion: 6.2.0
+starttaskid: "0"
+tasks:
+  "0": {id: "0", taskid: start, type: start, task: {id: start, version: -1, name: ""}, nexttasks: {"#none#": ["1"]}}
+  "1": {id: "1", taskid: vrouter, type: playbook, task: {id: vrouter, version: -1, name: Velocity-Class router, playbookName: sub-velocity-router}, nexttasks: {"#none#": ["2"]}}
+  "2":
+    id: "2"
+    taskid: cluster-action
+    type: regular
+    task:
+      id: cluster-action
+      version: -1
+      name: "#8 Direct Response — Physical sec notification, remote wipe, log preservation"
+      description: |
+        Notify facilities/physical sec. Remote-wipe via MDM. Revoke device
+        certs/tokens. Preserve CCTV + access logs.
+      script: Builtin|||setIncident
+      scriptarguments:
+        tags: {simple: "tlctc:08,direct-response,bridge-cluster"}
+    nexttasks: {"#none#": ["3"]}
+  "3": {id: "3", taskid: rs, type: playbook, task: {id: rs, version: -1, name: RS Container, playbookName: sub-rs-container}}
+view: |
+  {"paper": {"dimensions": {"height": 600, "width": 600}}}
+inputs: []
+outputs: []
+tests: [No tests]

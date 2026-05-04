@@ -1,0 +1,125 @@
+id: sub-velocity-router
+version: -1
+name: TLCTC Sub — Velocity-Class Router
+description: |
+  Routes the response based on incident_tlctcvelocityclass:
+    - VC-4 (sub-second / FEC at speed): record-only — EDR enforces, XSOAR observes
+    - VC-3 (minutes): auto-contain — no human gate
+    - VC-2 (hours): triage + human approval gate
+    - VC-1 (days+): hand off to threat hunting queue
+
+  Glossary refs: documentation/tlctc-glossary.md (Fast/Medium/Slow Velocity Class).
+fromversion: 6.2.0
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    taskid: start
+    type: start
+    task:
+      id: start
+      version: -1
+      name: ""
+    nexttasks:
+      "#none#": ["1"]
+
+  "1":
+    id: "1"
+    taskid: route
+    type: condition
+    task:
+      id: route
+      version: -1
+      name: Route by Velocity Class
+      type: condition
+    conditions:
+      - label: VC-4
+        condition:
+          - - operator: isEqualString
+              left: {value: {simple: incident.tlctcvelocityclass}, iscontext: true}
+              right: {value: {simple: VC-4}}
+      - label: VC-3
+        condition:
+          - - operator: isEqualString
+              left: {value: {simple: incident.tlctcvelocityclass}, iscontext: true}
+              right: {value: {simple: VC-3}}
+      - label: VC-2
+        condition:
+          - - operator: isEqualString
+              left: {value: {simple: incident.tlctcvelocityclass}, iscontext: true}
+              right: {value: {simple: VC-2}}
+      - label: VC-1
+        condition:
+          - - operator: isEqualString
+              left: {value: {simple: incident.tlctcvelocityclass}, iscontext: true}
+              right: {value: {simple: VC-1}}
+    nexttasks:
+      "VC-4": ["10"]
+      "VC-3": ["20"]
+      "VC-2": ["30"]
+      "VC-1": ["40"]
+      "#default#": ["30"]
+
+  "10":
+    id: "10"
+    taskid: vc4-record
+    type: regular
+    task:
+      id: vc4-record
+      version: -1
+      name: VC-4 — Record EDR action, no human gate
+      description: |
+        EDR has already (or will within ms) enforce containment. XSOAR records the
+        action, does not block. Analyst is paged for situational awareness only.
+      script: Builtin|||addEvidence
+      scriptarguments:
+        entryIDs: {simple: ""}
+        description: {simple: "VC-4: EDR enforced response — Δt insufficient for SOAR loop."}
+
+  "20":
+    id: "20"
+    taskid: vc3-auto
+    type: regular
+    task:
+      id: vc3-auto
+      version: -1
+      name: VC-3 — Auto-contain (no human gate)
+      description: Trigger XSOAR auto-containment immediately.
+      script: Builtin|||setIncident
+      scriptarguments:
+        customFields:
+          simple: '{"tlctcvelocityclass":"VC-3"}'
+
+  "30":
+    id: "30"
+    taskid: vc2-human
+    type: regular
+    task:
+      id: vc2-human
+      version: -1
+      name: VC-2 — Triage + human approval gate
+      description: Generate triage task, require analyst approval before containment.
+      script: Builtin|||TaskComplete
+      scriptarguments:
+        actor: {simple: "@analyst"}
+        message: {simple: "VC-2 incident — review and approve containment."}
+
+  "40":
+    id: "40"
+    taskid: vc1-hunt
+    type: regular
+    task:
+      id: vc1-hunt
+      version: -1
+      name: VC-1 — Hand off to threat hunting
+      description: Long-window incident (days+). Move to hunt queue for analysis.
+      script: Builtin|||closeInvestigation
+      scriptarguments:
+        notes: {simple: "Routed to threat hunting (VC-1)."}
+
+view: |
+  {"linkLabelsPosition": {}, "paper": {"dimensions": {"height": 600, "width": 600}}}
+inputs: []
+outputs: []
+tests:
+  - No tests

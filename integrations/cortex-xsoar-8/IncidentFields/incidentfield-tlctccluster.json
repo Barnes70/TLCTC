@@ -1,0 +1,19 @@
+{
+  "id": "incident_tlctccluster",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "TLCTC Cluster",
+  "ownerOnly": false,
+  "description": "Strategic TLCTC cluster (#1-#10). Drives master-playbook routing. Set by TLCTCClassify preProcessingScript on ingestion.",
+  "cliName": "tlctccluster",
+  "type": "singleSelect",
+  "selectValues": ["#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8", "#9", "#10"],
+  "associatedToAll": false,
+  "associatedTypes": ["TLCTC Threat"],
+  "system": false,
+  "content": true,
+  "group": 0,
+  "required": true,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"]
+}

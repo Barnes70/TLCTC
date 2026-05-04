@@ -1,0 +1,43 @@
+{
+  "id": "attck-tlctc-mapper",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "ATT&CK->TLCTC Mapper",
+  "description": "Maps inbound alert fields to TLCTC incident fields. Cluster derivation happens in the TLCTCClassify preProcessingScript. Adjust source field names per your feed (XDR, SIEM, EDR).",
+  "type": "mapping-incoming",
+  "defaultIncidentType": "TLCTC Threat",
+  "system": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"],
+  "mapping": {
+    "TLCTC Threat": {
+      "internalMapping": {
+        "name": {"simple": "alert.name"},
+        "details": {"simple": "alert.description"},
+        "severity": {
+          "complex": {
+            "root": "alert.severity",
+            "transformers": [
+              {
+                "operator": "MapValuesTransformer",
+                "args": {
+                  "input_values": {"value": {"simple": "Low,Medium,High,Critical"}},
+                  "mapped_values": {"value": {"simple": "1,2,3,4"}}
+                }
+              }
+            ]
+          }
+        },
+        "sourceBrand": {"simple": "alert.product"},
+        "sourceInstance": {"simple": "alert.source"},
+        "ATT&CK Techniques": {
+          "complex": {
+            "root": "alert.attack.technique",
+            "accessor": "id",
+            "transformers": [{"operator": "uniq"}]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+id: TLCTC-05-ManInTheMiddle
+version: -1
+name: TLCTC-05 Man in the Middle
+description: |
+  Master playbook for cluster #5 -- Man in the Middle.
+
+  Generic vulnerability: trust in an intermediate channel. ARP/DNS poisoning,
+  rogue AP, certificate spoofing, network relay (T1557 family).
+
+  Direct Response:
+    - Identify the rogue intermediary (rogue AP, ARP poisoner, malicious proxy)
+    - Re-segment / 802.1X enforce / kick from network
+    - Validate TLS pinning and certificate chain integrity
+    - Rotate any credentials/cookies that may have been intercepted
+fromversion: 8.0.0
+marketplaces:
+  - xsoar
+  - marketplacev2
+starttaskid: "0"
+tasks:
+  "0": {id: "0", taskid: start, type: start, task: {id: start, version: -1, name: ""}, nexttasks: {"#none#": ["1"]}}
+  "1": {id: "1", taskid: vrouter, type: playbook, task: {id: vrouter, version: -1, name: Velocity-Class router, playbookName: sub-velocity-router}, nexttasks: {"#none#": ["2"]}}
+  "2":
+    id: "2"
+    taskid: cluster-action
+    type: regular
+    task:
+      id: cluster-action
+      version: -1
+      name: "#5 Direct Response -- Remove intermediary, rotate intercepted material"
+      description: |
+        Locate and remove the rogue intermediary; re-segment; rotate any
+        credentials/cookies/tokens potentially intercepted; validate cert pinning.
+      script: Builtin|||setIncident
+      scriptarguments:
+        tags: {simple: "tlctc:05,direct-response"}
+    nexttasks: {"#none#": ["3"]}
+  "3": {id: "3", taskid: rs, type: playbook, task: {id: rs, version: -1, name: RS Container, playbookName: sub-rs-container}}
+view: |
+  {"paper": {"dimensions": {"height": 600, "width": 600}}}
+inputs: []
+outputs: []
+tests:
+  - No tests

@@ -1,0 +1,50 @@
+{
+  "_comment": "XSOAR 6.2 incident mapper for the 'TLCTC Threat' type. Maps inbound alert fields → TLCTC incident fields. The cluster itself is set by the TLCTCClassify preProcessingScript (referenced from incident-types/tlctc-threat.json). Adjust 'sourceField' values to match your specific feed (XDR, SIEM, EDR connector).",
+  "id": "attck-tlctc-mapper",
+  "name": "ATT&CK→TLCTC Mapper",
+  "type": "mapping-incoming",
+  "defaultIncidentType": "TLCTC Threat",
+  "fromVersion": "6.2.0",
+  "system": false,
+  "mapping": {
+    "TLCTC Threat": {
+      "internalMapping": {
+        "name": {"simple": "alert.name"},
+        "details": {"simple": "alert.description"},
+        "severity": {
+          "complex": {
+            "root": "alert.severity",
+            "transformers": [
+              {
+                "operator": "MapValuesTransformer",
+                "args": {
+                  "input_values": {"value": {"simple": "Low,Medium,High,Critical"}},
+                  "mapped_values": {"value": {"simple": "1,2,3,4"}}
+                }
+              }
+            ]
+          }
+        },
+        "sourceBrand": {"simple": "alert.product"},
+        "sourceInstance": {"simple": "alert.source"},
+        "incident_tlctcattcktechniques": {
+          "complex": {
+            "root": "alert.attack.technique",
+            "accessor": "id",
+            "transformers": [{"operator": "uniq"}]
+          }
+        },
+        "labels": {
+          "complex": {
+            "root": "alert.attack.technique",
+            "accessor": "id",
+            "transformers": [
+              {"operator": "uniq"},
+              {"operator": "Stringify"}
+            ]
+          }
+        }
+      }
+    }
+  }
+}

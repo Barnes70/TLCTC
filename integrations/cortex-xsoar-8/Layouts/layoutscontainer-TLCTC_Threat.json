@@ -1,0 +1,89 @@
+{
+  "id": "layoutscontainer-TLCTC_Threat",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "TLCTC Threat",
+  "group": "incident",
+  "definitionId": "",
+  "system": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"],
+  "detailsV2": {
+    "tabs": [
+      {
+        "id": "summary",
+        "name": "Summary",
+        "type": "summary"
+      },
+      {
+        "id": "tlctc-classification",
+        "name": "TLCTC Classification",
+        "type": "custom",
+        "sections": [
+          {
+            "id": "tlctc-cluster-section",
+            "name": "Cluster (Strategic)",
+            "type": "evidence",
+            "isVisible": true,
+            "displayType": "ROW",
+            "items": [
+              {"endCol": 1, "fieldId": "incident_tlctccluster", "height": 22, "id": "f1", "index": 0, "sectionItemType": "field", "startCol": 0},
+              {"endCol": 2, "fieldId": "incident_tlctcoperationalid", "height": 22, "id": "f2", "index": 1, "sectionItemType": "field", "startCol": 1},
+              {"endCol": 1, "fieldId": "incident_tlctcanalystconfidence", "height": 22, "id": "f3", "index": 2, "sectionItemType": "field", "startCol": 0}
+            ]
+          },
+          {
+            "id": "tlctc-velocity-section",
+            "name": "Velocity",
+            "type": "evidence",
+            "isVisible": true,
+            "displayType": "ROW",
+            "items": [
+              {"endCol": 1, "fieldId": "incident_tlctcdeltat", "height": 22, "id": "f4", "index": 0, "sectionItemType": "field", "startCol": 0},
+              {"endCol": 2, "fieldId": "incident_tlctcvelocityclass", "height": 22, "id": "f5", "index": 1, "sectionItemType": "field", "startCol": 1}
+            ]
+          },
+          {
+            "id": "tlctc-boundary-section",
+            "name": "Boundary & Outcomes",
+            "type": "evidence",
+            "isVisible": true,
+            "displayType": "ROW",
+            "items": [
+              {"endCol": 2, "fieldId": "incident_tlctcboundary", "height": 88, "id": "f6", "index": 0, "sectionItemType": "field", "startCol": 0},
+              {"endCol": 1, "fieldId": "incident_tlctcdre", "height": 22, "id": "f7", "index": 1, "sectionItemType": "field", "startCol": 0},
+              {"endCol": 2, "fieldId": "incident_tlctcfecexecuted", "height": 22, "id": "f8", "index": 2, "sectionItemType": "field", "startCol": 1}
+            ]
+          },
+          {
+            "id": "tlctc-attck-section",
+            "name": "ATT&CK Source",
+            "type": "evidence",
+            "isVisible": true,
+            "displayType": "ROW",
+            "items": [
+              {"endCol": 2, "fieldId": "incident_tlctcattcktechniques", "height": 44, "id": "f9", "index": 0, "sectionItemType": "field", "startCol": 0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "tlctc-attack-path",
+        "name": "Attack Path (Layer 3)",
+        "type": "custom",
+        "sections": [
+          {
+            "id": "tlctc-path-section",
+            "name": "Layer 3 Attack Path JSON",
+            "type": "evidence",
+            "isVisible": true,
+            "displayType": "ROW",
+            "items": [
+              {"endCol": 2, "fieldId": "incident_tlctcattackpath", "height": 320, "id": "f10", "index": 0, "sectionItemType": "field", "startCol": 0}
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

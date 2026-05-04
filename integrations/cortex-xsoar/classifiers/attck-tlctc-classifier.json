@@ -1,0 +1,27 @@
+{
+  "_comment": "XSOAR 6.2 classifier — assigns the 'TLCTC Threat' incident type to incoming alerts when an ATT&CK technique ID is present. Use with the mapper at attck-tlctc-mapper.json. Import via Settings → Object Setup → Classification & Mapping → New Classifier.",
+  "id": "attck-tlctc-classifier",
+  "name": "ATT&CK→TLCTC Classifier",
+  "description": "Tags inbound alerts as 'TLCTC Threat' when an ATT&CK technique ID is detected; lets the mapper extract the technique into incident_tlctcattcktechniques and the preProcessingScript (TLCTCClassify) derive the cluster.",
+  "type": "classification",
+  "defaultIncidentType": "TLCTC Threat",
+  "fromVersion": "6.2.0",
+  "feed": false,
+  "system": false,
+  "transformer": {
+    "complex": {
+      "root": "attack.technique.id",
+      "filters": [
+        [
+          {
+            "operator": "isNotEmpty",
+            "left": {"value": {"simple": "attack.technique.id"}, "iscontext": true}
+          }
+        ]
+      ]
+    }
+  },
+  "keyTypeMap": {
+    "T*": "TLCTC Threat"
+  }
+}

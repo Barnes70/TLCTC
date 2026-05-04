@@ -1,0 +1,48 @@
+id: TLCTC-01-AbuseOfFunctions
+version: -1
+name: TLCTC-01 Abuse of Functions
+description: |
+  Master playbook for cluster #1 -- Abuse of Functions.
+
+  Generic vulnerability: a designed function is used for malicious purposes.
+  Examples: PowerShell as LOLBin, scheduled task creation, OAuth token misuse.
+
+  R-CRED reminder: if this incident also touches credential acquisition, the
+  CREDENTIAL APPLICATION step is #4 -- that fires its own playbook via the
+  multi-step sequence (TLCTCSequence label).
+
+  Direct Response (cluster-specific):
+    - Disable / restrict the abused function for the affected principal
+    - Snapshot configuration of the abused function for forensics
+    - Add detection content for the specific misuse pattern
+fromversion: 8.0.0
+marketplaces:
+  - xsoar
+  - marketplacev2
+starttaskid: "0"
+tasks:
+  "0": {id: "0", taskid: start, type: start, task: {id: start, version: -1, name: ""}, nexttasks: {"#none#": ["1"]}}
+  "1": {id: "1", taskid: vrouter, type: playbook, task: {id: vrouter, version: -1, name: Velocity-Class router, playbookName: sub-velocity-router}, nexttasks: {"#none#": ["2"]}}
+  "2":
+    id: "2"
+    taskid: cluster-action
+    type: regular
+    task:
+      id: cluster-action
+      version: -1
+      name: "#1 Direct Response -- Restrict abused function"
+      description: |
+        Implement org-specific containment for the abused function.
+        Examples: PowerShell ConstrainedLanguage, AppLocker rule, scheduled-task
+        deletion via Remove-ScheduledTask, OAuth grant revocation.
+      script: Builtin|||setIncident
+      scriptarguments:
+        tags: {simple: "tlctc:01,direct-response"}
+    nexttasks: {"#none#": ["3"]}
+  "3": {id: "3", taskid: rs, type: playbook, task: {id: rs, version: -1, name: RS Container, playbookName: sub-rs-container}}
+view: |
+  {"paper": {"dimensions": {"height": 600, "width": 600}}}
+inputs: []
+outputs: []
+tests:
+  - No tests

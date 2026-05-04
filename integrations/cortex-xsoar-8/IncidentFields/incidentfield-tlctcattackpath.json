@@ -1,0 +1,18 @@
+{
+  "id": "incident_tlctcattackpath",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "TLCTC Attack Path (Layer 3)",
+  "ownerOnly": false,
+  "description": "Layer 3 attack path JSON. Built incrementally during incident, validated and emitted on close by TLCTCEmitLayer3. Validates against json-schemas/layer-3/tlctc-attack-path.schema.json.",
+  "cliName": "tlctcattackpath",
+  "type": "longText",
+  "associatedToAll": false,
+  "associatedTypes": ["TLCTC Threat"],
+  "system": false,
+  "content": true,
+  "group": 0,
+  "required": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"]
+}

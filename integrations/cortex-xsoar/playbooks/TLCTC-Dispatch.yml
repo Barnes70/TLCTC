@@ -1,0 +1,83 @@
+id: TLCTC-Dispatch
+version: -1
+name: TLCTC Dispatch
+description: |
+  Default playbook for the 'TLCTC Threat' incident type. Reads the strategic
+  cluster set by TLCTCClassify (preProcessingScript) and routes to the master
+  playbook for that cluster.
+
+  If the classifier produced a multi-step sequence (label TLCTCSequence), each
+  cluster in the sequence gets its own playbook invocation chained in order —
+  e.g. T1566.001 fires TLCTC-09 then TLCTC-07.
+fromversion: 6.2.0
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    taskid: start
+    type: start
+    task: {id: start, version: -1, name: ""}
+    nexttasks: {"#none#": ["1"]}
+
+  "1":
+    id: "1"
+    taskid: route
+    type: condition
+    task:
+      id: route
+      version: -1
+      name: Route by cluster
+      type: condition
+    conditions:
+      - {label: "#1",  condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#1"}}}]]}
+      - {label: "#2",  condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#2"}}}]]}
+      - {label: "#3",  condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#3"}}}]]}
+      - {label: "#4",  condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#4"}}}]]}
+      - {label: "#5",  condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#5"}}}]]}
+      - {label: "#6",  condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#6"}}}]]}
+      - {label: "#7",  condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#7"}}}]]}
+      - {label: "#8",  condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#8"}}}]]}
+      - {label: "#9",  condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#9"}}}]]}
+      - {label: "#10", condition: [[{operator: isEqualString, left: {value: {simple: incident.tlctccluster}, iscontext: true}, right: {value: {simple: "#10"}}}]]}
+    nexttasks:
+      "#1":  ["101"]
+      "#2":  ["102"]
+      "#3":  ["103"]
+      "#4":  ["104"]
+      "#5":  ["105"]
+      "#6":  ["106"]
+      "#7":  ["107"]
+      "#8":  ["108"]
+      "#9":  ["109"]
+      "#10": ["110"]
+      "#default#": ["999"]
+
+  "101": {id: "101", taskid: p01, type: playbook, task: {id: p01, version: -1, name: TLCTC-01 Abuse of Functions, playbookName: "TLCTC-01-AbuseOfFunctions"}}
+  "102": {id: "102", taskid: p02, type: playbook, task: {id: p02, version: -1, name: TLCTC-02 Exploiting Server, playbookName: "TLCTC-02-ExploitingServer"}}
+  "103": {id: "103", taskid: p03, type: playbook, task: {id: p03, version: -1, name: TLCTC-03 Exploiting Client, playbookName: "TLCTC-03-ExploitingClient"}}
+  "104": {id: "104", taskid: p04, type: playbook, task: {id: p04, version: -1, name: TLCTC-04 Identity Theft, playbookName: "TLCTC-04-IdentityTheft"}}
+  "105": {id: "105", taskid: p05, type: playbook, task: {id: p05, version: -1, name: TLCTC-05 Man in the Middle, playbookName: "TLCTC-05-ManInTheMiddle"}}
+  "106": {id: "106", taskid: p06, type: playbook, task: {id: p06, version: -1, name: TLCTC-06 Flooding, playbookName: "TLCTC-06-Flooding"}}
+  "107": {id: "107", taskid: p07, type: playbook, task: {id: p07, version: -1, name: TLCTC-07 Malware, playbookName: "TLCTC-07-Malware"}}
+  "108": {id: "108", taskid: p08, type: playbook, task: {id: p08, version: -1, name: TLCTC-08 Physical, playbookName: "TLCTC-08-Physical"}}
+  "109": {id: "109", taskid: p09, type: playbook, task: {id: p09, version: -1, name: TLCTC-09 Social Engineering, playbookName: "TLCTC-09-SocialEngineering"}}
+  "110": {id: "110", taskid: p10, type: playbook, task: {id: p10, version: -1, name: TLCTC-10 Supply Chain, playbookName: "TLCTC-10-SupplyChain"}}
+
+  "999":
+    id: "999"
+    taskid: unclassified
+    type: regular
+    task:
+      id: unclassified
+      version: -1
+      name: Unclassified — manual triage required
+      description: TLCTCClassify could not derive a cluster. Analyst must classify manually.
+      script: Builtin|||setIncident
+      scriptarguments:
+        tags: {simple: "tlctc:unclassified"}
+
+view: |
+  {"linkLabelsPosition": {}, "paper": {"dimensions": {"height": 1000, "width": 1200}}}
+inputs: []
+outputs: []
+tests: [No tests]

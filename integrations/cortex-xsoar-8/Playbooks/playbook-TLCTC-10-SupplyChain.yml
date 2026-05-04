@@ -1,0 +1,47 @@
+id: TLCTC-10-SupplyChain
+version: -1
+name: TLCTC-10 Supply Chain
+description: |
+  Master playbook for cluster #10 -- Supply Chain Attack (bridge cluster).
+
+  R-SUPPLY: #10 is placed at the Trust Acceptance Event (TAE) -- the moment a
+  trust artifact (signed package, dependency, vendor update) becomes
+  authoritative inside the target domain. Bridge cluster -- REQUIRES boundary
+  annotation (||[update|api|dev][@Vendor->@Org]||).
+
+  Direct Response:
+    - Identify all systems that consumed the compromised artifact
+    - Roll back to last-known-good version
+    - Revoke trust (cert pin, package version pin, registry block)
+    - Force re-validation of dependent build/deploy chain
+fromversion: 8.0.0
+marketplaces:
+  - xsoar
+  - marketplacev2
+starttaskid: "0"
+tasks:
+  "0": {id: "0", taskid: start, type: start, task: {id: start, version: -1, name: ""}, nexttasks: {"#none#": ["1"]}}
+  "1": {id: "1", taskid: vrouter, type: playbook, task: {id: vrouter, version: -1, name: Velocity-Class router, playbookName: sub-velocity-router}, nexttasks: {"#none#": ["2"]}}
+  "2":
+    id: "2"
+    taskid: cluster-action
+    type: regular
+    task:
+      id: cluster-action
+      version: -1
+      name: "#10 Direct Response -- Rollback, revoke trust, audit consumers"
+      description: |
+        Identify all consumers of the compromised artifact. Roll back to LKG.
+        Revoke trust at registry / package manager / cert pin. Re-validate
+        downstream build/deploy chain.
+      script: Builtin|||setIncident
+      scriptarguments:
+        tags: {simple: "tlctc:10,direct-response,bridge-cluster,trust-revoke"}
+    nexttasks: {"#none#": ["3"]}
+  "3": {id: "3", taskid: rs, type: playbook, task: {id: rs, version: -1, name: RS Container, playbookName: sub-rs-container}}
+view: |
+  {"paper": {"dimensions": {"height": 600, "width": 600}}}
+inputs: []
+outputs: []
+tests:
+  - No tests

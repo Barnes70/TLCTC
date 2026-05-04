@@ -1,0 +1,29 @@
+{
+  "id": "attck-tlctc-classifier",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "ATT&CK->TLCTC Classifier",
+  "description": "Tags inbound alerts as 'TLCTC Threat' when an ATT&CK technique ID is detected. Pair with the ATT&CK->TLCTC Mapper.",
+  "type": "classification",
+  "defaultIncidentType": "TLCTC Threat",
+  "feed": false,
+  "system": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"],
+  "transformer": {
+    "complex": {
+      "root": "attack.technique.id",
+      "filters": [
+        [
+          {
+            "operator": "isNotEmpty",
+            "left": {"value": {"simple": "attack.technique.id"}, "iscontext": true}
+          }
+        ]
+      ]
+    }
+  },
+  "keyTypeMap": {
+    "T*": "TLCTC Threat"
+  }
+}

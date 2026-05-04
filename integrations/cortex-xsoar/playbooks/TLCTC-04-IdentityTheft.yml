@@ -1,0 +1,42 @@
+id: TLCTC-04-IdentityTheft
+version: -1
+name: TLCTC-04 Identity Theft
+description: |
+  Master playbook for cluster #4 — Identity Theft.
+
+  R-CRED: the APPLICATION of any credential is always #4, regardless of how it
+  was obtained. Acquisition is a separate step in its own enabling cluster
+  (#1, #5, #7, #9, #10). This playbook handles the application step only.
+
+  Direct Response:
+    - Disable account / revoke active sessions and refresh tokens
+    - Force MFA re-enrollment + password reset
+    - Audit all activity by the identity in the incident window
+    - Add identity to high-watch list
+fromversion: 6.2.0
+starttaskid: "0"
+tasks:
+  "0": {id: "0", taskid: start, type: start, task: {id: start, version: -1, name: ""}, nexttasks: {"#none#": ["1"]}}
+  "1": {id: "1", taskid: vrouter, type: playbook, task: {id: vrouter, version: -1, name: Velocity-Class router, playbookName: sub-velocity-router}, nexttasks: {"#none#": ["2"]}}
+  "2":
+    id: "2"
+    taskid: cluster-action
+    type: regular
+    task:
+      id: cluster-action
+      version: -1
+      name: "#4 Direct Response — Revoke identity, force re-auth"
+      description: |
+        Disable account in IdP, revoke OAuth tokens / refresh tokens / Kerberos
+        TGTs, force password reset, force MFA re-enroll. Audit identity activity
+        across SaaS + on-prem within incident window.
+      script: Builtin|||setIncident
+      scriptarguments:
+        tags: {simple: "tlctc:04,direct-response,identity-revoke"}
+    nexttasks: {"#none#": ["3"]}
+  "3": {id: "3", taskid: rs, type: playbook, task: {id: rs, version: -1, name: RS Container, playbookName: sub-rs-container}}
+view: |
+  {"paper": {"dimensions": {"height": 600, "width": 600}}}
+inputs: []
+outputs: []
+tests: [No tests]

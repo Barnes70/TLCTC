@@ -1,0 +1,40 @@
+id: TLCTC-06-Flooding
+version: -1
+name: TLCTC-06 Flooding
+description: |
+  Master playbook for cluster #6 — Flooding Attack.
+
+  Generic vulnerability: capacity. T1498 (Network DoS), T1499 (Endpoint DoS).
+  Outcome is always [DRE: A] (availability loss).
+
+  Direct Response:
+    - Engage upstream scrubbing (DDoS provider) if volumetric
+    - Apply rate-limits at edge / WAF
+    - Scale out target service if architecture permits
+    - Geo/ASN block sources at upstream
+fromversion: 6.2.0
+starttaskid: "0"
+tasks:
+  "0": {id: "0", taskid: start, type: start, task: {id: start, version: -1, name: ""}, nexttasks: {"#none#": ["1"]}}
+  "1": {id: "1", taskid: vrouter, type: playbook, task: {id: vrouter, version: -1, name: Velocity-Class router, playbookName: sub-velocity-router}, nexttasks: {"#none#": ["2"]}}
+  "2":
+    id: "2"
+    taskid: cluster-action
+    type: regular
+    task:
+      id: cluster-action
+      version: -1
+      name: "#6 Direct Response — Scrub, rate-limit, scale"
+      description: |
+        Engage scrubbing provider; apply rate-limits at edge and WAF; scale
+        service horizontally if possible; geo/ASN block at upstream.
+      script: Builtin|||setIncident
+      scriptarguments:
+        tags: {simple: "tlctc:06,direct-response,ddos-mitigation"}
+    nexttasks: {"#none#": ["3"]}
+  "3": {id: "3", taskid: rs, type: playbook, task: {id: rs, version: -1, name: RS Container, playbookName: sub-rs-container}}
+view: |
+  {"paper": {"dimensions": {"height": 600, "width": 600}}}
+inputs: []
+outputs: []
+tests: [No tests]

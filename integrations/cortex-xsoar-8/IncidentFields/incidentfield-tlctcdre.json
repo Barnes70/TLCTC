@@ -1,0 +1,19 @@
+{
+  "id": "incident_tlctcdre",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "TLCTC DRE Outcomes",
+  "ownerOnly": false,
+  "description": "Data Risk Events resulting from this incident. C=Confidentiality, I=Integrity, A=Availability, Ac=Accessibility (data present but unusable, e.g. ransomware).",
+  "cliName": "tlctcdre",
+  "type": "multiSelect",
+  "selectValues": ["C", "I", "A", "Ac"],
+  "associatedToAll": false,
+  "associatedTypes": ["TLCTC Threat"],
+  "system": false,
+  "content": true,
+  "group": 0,
+  "required": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"]
+}

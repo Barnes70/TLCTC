@@ -1,0 +1,22 @@
+{
+  "_comment": "XSOAR 6.2 incident type 'TLCTC Threat'. Default playbook is the dispatch playbook that reads tlctc_cluster and routes to the master playbook for that cluster.",
+  "id": "TLCTC Threat",
+  "name": "TLCTC Threat",
+  "color": "#1D9D75",
+  "playbookId": "TLCTC-Dispatch",
+  "hours": 0,
+  "days": 0,
+  "weeks": 0,
+  "hoursR": 0,
+  "daysR": 0,
+  "weeksR": 0,
+  "system": false,
+  "readonly": false,
+  "default": false,
+  "autorun": true,
+  "preProcessingScript": "TLCTCClassify",
+  "closureScript": "TLCTCEmitLayer3",
+  "disabled": false,
+  "reputationCalc": 0,
+  "fromVersion": "6.2.0"
+}

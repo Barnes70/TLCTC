@@ -1,0 +1,19 @@
+{
+  "id": "incident_tlctcvelocityclass",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "TLCTC Velocity Class",
+  "ownerOnly": false,
+  "description": "Derived from delta-t. Drives the Velocity-Class router: VC-4 record-only (EDR), VC-3 auto-contain, VC-2 human-gated, VC-1 hand off to hunting.",
+  "cliName": "tlctcvelocityclass",
+  "type": "singleSelect",
+  "selectValues": ["VC-1", "VC-2", "VC-3", "VC-4"],
+  "associatedToAll": false,
+  "associatedTypes": ["TLCTC Threat"],
+  "system": false,
+  "content": true,
+  "group": 0,
+  "required": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"]
+}

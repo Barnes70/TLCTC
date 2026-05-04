@@ -1,0 +1,21 @@
+{
+  "name": "TLCTC",
+  "description": "Operationalises the TLCTC v2.1 cause-oriented threat taxonomy inside Cortex XSOAR 8.x and Cortex XSIAM. Ten cluster-scoped master playbooks, ATT&CK->TLCTC classifier, velocity-class router, RS Container (Direct + Propagated PR), and a Layer 3 attack-path emitter that produces schema-valid JSON on close.",
+  "support": "community",
+  "currentVersion": "1.0.0",
+  "author": "TLCTC Project",
+  "url": "https://www.tlctc.net",
+  "email": "",
+  "categories": ["Analytics & SIEM"],
+  "tags": ["TLCTC", "MITRE ATT&CK", "Threat Modeling", "Cause-Oriented"],
+  "useCases": ["Incident Response"],
+  "keywords": ["TLCTC", "ATT&CK", "Layer 3", "Attack Path", "Threat Cluster"],
+  "marketplaces": ["xsoar", "marketplacev2"],
+  "dependencies": {},
+  "serverMinVersion": "8.0.0",
+  "supportDetails": {
+    "url": "https://www.tlctc.net"
+  },
+  "githubUser": ["tlctc-project"],
+  "created": "2026-05-04T00:00:00Z"
+}

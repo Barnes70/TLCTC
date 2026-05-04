@@ -1,0 +1,21 @@
+commonfields:
+  id: TLCTCClassify
+  version: -1
+name: TLCTCClassify
+script: '-'
+type: python
+subtype: python3
+dockerimage: demisto/python3:3.11.10
+runas: DBotWeakRole
+fromversion: 8.0.0
+tags:
+  - tlctc
+  - classification
+comment: |
+  preProcessingScript for the TLCTC Threat incident type. Reads
+  incident_tlctcattcktechniques and applies the attck-tlctc-lookup list to
+  derive the strategic cluster, operational ID, FEC-executed flag, and
+  velocity class. Enforces Axiom VI / R-EXEC / R-CRED splits.
+marketplaces:
+  - xsoar
+  - marketplacev2

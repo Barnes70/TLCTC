@@ -1,0 +1,18 @@
+{
+  "id": "incident_tlctcboundary",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "TLCTC Boundary",
+  "ownerOnly": false,
+  "description": "Boundary annotation as JSON matching the Layer 3 schema 'boundary' definition: {context, source_sphere, target_sphere, transit_spheres?}. Required for bridge clusters #8/#9/#10.",
+  "cliName": "tlctcboundary",
+  "type": "longText",
+  "associatedToAll": false,
+  "associatedTypes": ["TLCTC Threat"],
+  "system": false,
+  "content": true,
+  "group": 0,
+  "required": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"]
+}

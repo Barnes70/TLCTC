@@ -1,0 +1,116 @@
+id: sub-rs-container
+version: -1
+name: TLCTC Sub -- RS Container (Direct + Propagated PR)
+description: |
+  Implements the RS Container concept (documentation/tlctc-glossary.md "RS Container").
+
+  An RS Container holds TWO classes of action for a given event En:
+    1. Direct Response Actions  -- containment, eradication, forensics for the event itself.
+    2. Propagated PR Controls   -- protection requirements inherited from downstream
+       compliance events (E3a = GDPR Art. 33 if PII; E3b = NIS2 Art. 23 if E1 reached).
+
+  This sub-playbook fires Direct Response unconditionally and conditionally fires
+  the regulatory branches based on:
+    - DRE includes 'C' AND incident.tags includes 'pii'  ->  GDPR Art. 33 (E3a)
+    - incident.severity >= 3                              ->  NIS2 Art. 23 (E3b)
+fromversion: 8.0.0
+marketplaces:
+  - xsoar
+  - marketplacev2
+starttaskid: "0"
+tasks:
+  "0": {id: "0", taskid: start, type: start, task: {id: start, version: -1, name: ""}, nexttasks: {"#none#": ["1", "2", "3"]}}
+  "1":
+    id: "1"
+    taskid: direct-response
+    type: regular
+    task:
+      id: direct-response
+      version: -1
+      name: Direct Response -- Contain, Eradicate, Forensics
+      description: |
+        Cluster-specific containment is implemented in the master playbook that
+        invokes this sub-playbook. This task records the Direct-Response branch
+        of the RS Container for evidence/audit.
+      script: Builtin|||addEvidence
+      scriptarguments:
+        description: {simple: "RS Container -- Direct Response branch executed."}
+  "2":
+    id: "2"
+    taskid: gdpr-gate
+    type: condition
+    task: {id: gdpr-gate, version: -1, name: Propagated PR -- GDPR Art. 33 (PII Confidentiality breach?)}
+    conditions:
+      - label: "yes"
+        condition:
+          - - operator: containsString
+              left: {value: {simple: incident.tlctcdre}, iscontext: true}
+              right: {value: {simple: "C"}}
+            - operator: containsString
+              left: {value: {simple: incident.tags}, iscontext: true}
+              right: {value: {simple: "pii"}}
+    nexttasks: {"yes": ["20"], "#default#": ["21"]}
+  "20":
+    id: "20"
+    taskid: gdpr-fire
+    type: regular
+    task:
+      id: gdpr-fire
+      version: -1
+      name: Fire GDPR Art. 33 notification playbook
+      description: 72h notification window -- invoke the org's GDPR notification playbook.
+      script: Builtin|||setIncident
+      scriptarguments:
+        tags: {simple: "regulatory:gdpr-art33"}
+  "21":
+    id: "21"
+    taskid: gdpr-skip
+    type: regular
+    task:
+      id: gdpr-skip
+      version: -1
+      name: GDPR not triggered (no PII Confidentiality DRE)
+      script: Builtin|||addEvidence
+      scriptarguments:
+        description: {simple: "GDPR Art. 33 not triggered -- no PII confidentiality DRE."}
+  "3":
+    id: "3"
+    taskid: nis2-gate
+    type: condition
+    task: {id: nis2-gate, version: -1, name: Propagated PR -- NIS2 Art. 23 (Significant incident?)}
+    conditions:
+      - label: "yes"
+        condition:
+          - - operator: greaterThanOrEqual
+              left: {value: {simple: incident.severity}, iscontext: true}
+              right: {value: {simple: "3"}}
+    nexttasks: {"yes": ["30"], "#default#": ["31"]}
+  "30":
+    id: "30"
+    taskid: nis2-fire
+    type: regular
+    task:
+      id: nis2-fire
+      version: -1
+      name: Fire NIS2 Art. 23 reporting playbook
+      description: 24h early warning + 72h incident notification -- invoke org's NIS2 playbook.
+      script: Builtin|||setIncident
+      scriptarguments:
+        tags: {simple: "regulatory:nis2-art23"}
+  "31":
+    id: "31"
+    taskid: nis2-skip
+    type: regular
+    task:
+      id: nis2-skip
+      version: -1
+      name: NIS2 not triggered (severity below threshold)
+      script: Builtin|||addEvidence
+      scriptarguments:
+        description: {simple: "NIS2 Art. 23 not triggered -- severity below significant threshold."}
+view: |
+  {"linkLabelsPosition": {}, "paper": {"dimensions": {"height": 800, "width": 800}}}
+inputs: []
+outputs: []
+tests:
+  - No tests

@@ -1,0 +1,19 @@
+{
+  "id": "incident_tlctcoperationalid",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "TLCTC Operational ID",
+  "ownerOnly": false,
+  "description": "Machine-readable identifier in TLCTC-XX.YY form (e.g. TLCTC-03.00). Used for SIEM/SOAR correlation.",
+  "cliName": "tlctcoperationalid",
+  "type": "shortText",
+  "validationRegex": "^TLCTC-(0[1-9]|10)\\.[0-9]{2}$",
+  "associatedToAll": false,
+  "associatedTypes": ["TLCTC Threat"],
+  "system": false,
+  "content": true,
+  "group": 0,
+  "required": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"]
+}

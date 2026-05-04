@@ -1,0 +1,19 @@
+{
+  "id": "incident_tlctcdeltat",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "TLCTC Delta-t",
+  "ownerOnly": false,
+  "description": "Attack Velocity to next step. Layer 3 schema pattern: instant | ? | ~?\\d+(ms|s|m|h|d|w|mo|y) | [<>]=?\\d+(unit). Examples: <30s, ~12m, 4h.",
+  "cliName": "tlctcdeltat",
+  "type": "shortText",
+  "validationRegex": "^(instant|\\?|~?\\d+(ms|s|m|h|d|w|mo|y)|[<>]=?\\d+(ms|s|m|h|d|w|mo|y))$",
+  "associatedToAll": false,
+  "associatedTypes": ["TLCTC Threat"],
+  "system": false,
+  "content": true,
+  "group": 0,
+  "required": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"]
+}

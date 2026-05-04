@@ -1,0 +1,19 @@
+{
+  "id": "incident_tlctcattcktechniques",
+  "version": -1,
+  "modified": "2026-05-04T00:00:00Z",
+  "name": "ATT&CK Techniques",
+  "ownerOnly": false,
+  "description": "Raw ATT&CK technique IDs from source alert (T-numbers). Input to the classifier; preserved for traceability.",
+  "cliName": "tlctcattcktechniques",
+  "type": "multiSelect",
+  "selectValues": [],
+  "associatedToAll": false,
+  "associatedTypes": ["TLCTC Threat"],
+  "system": false,
+  "content": true,
+  "group": 0,
+  "required": false,
+  "fromVersion": "8.0.0",
+  "marketplaces": ["xsoar", "marketplacev2"]
+}

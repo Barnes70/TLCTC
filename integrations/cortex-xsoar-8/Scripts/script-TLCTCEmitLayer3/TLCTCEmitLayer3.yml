@@ -1,0 +1,23 @@
+commonfields:
+  id: TLCTCEmitLayer3
+  version: -1
+name: TLCTCEmitLayer3
+script: '-'
+type: python
+subtype: python3
+dockerimage: demisto/python3:3.11.10
+runas: DBotWeakRole
+fromversion: 8.0.0
+tags:
+  - tlctc
+  - layer3
+  - export
+comment: |
+  Closure script for the TLCTC Threat incident type. Builds a Layer 3
+  attack-path JSON instance from incident fields and writes it to
+  incident_tlctcattackpath. Output validates against
+  json-schemas/layer-3/tlctc-attack-path.schema.json (TLCTC v2.1).
+  Skips overwrite if the analyst has already authored the attack path.
+marketplaces:
+  - xsoar
+  - marketplacev2
