@@ -624,7 +624,7 @@ function MobileNavMenu({ open, onClose }) {
 // HEADER
 // ═══════════════════════════════════════════════════════════════════
 
-function Header({ darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onGapAnalysis, onReport, onLoadStarter, onShowSharedControls, sharedControlCount, onToggleMobileMenu }) {
+function Header({ darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onGapAnalysis, onReport, onShowSharedControls, sharedControlCount, onToggleMobileMenu }) {
     return (
         <header className="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
             <div className="flex items-center gap-3">
@@ -662,9 +662,6 @@ function Header({ darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPN
                 <button onClick={onImportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON">
                     <Icon name="upload" size={14} /> <span className="hidden sm:inline">Import</span>
                 </button>
-                <button onClick={onLoadStarter} className="app-btn app-btn-outline app-btn-sm gap-1" title="Load Starter Template">
-                    <Icon name="rocket" size={14} /> <span className="hidden sm:inline">Starter</span>
-                </button>
                 <button onClick={onToggleDark} className="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Toggle theme">
                     <Icon name={darkMode ? 'sun' : 'moon'} size={16} />
                 </button>
@@ -680,7 +677,39 @@ function Header({ darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPN
 // SUMMARY BAR
 // ═══════════════════════════════════════════════════════════════════
 
-function SummaryBar({ orgName, onOrgNameChange, targetMaturity, onTargetChange, environments, activeEnvId }) {
+function StarterDropdown({ templates, onLoad }) {
+    const [open, setOpen] = useState(false);
+    const ref = useRef(null);
+    useEffect(() => {
+        if (!open) return;
+        const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, [open]);
+    return (
+        <div className="relative" ref={ref}>
+            <button onClick={() => setOpen(o => !o)}
+                    className="app-btn app-btn-outline app-btn-sm gap-1"
+                    title="Load a starter template (replaces current data)">
+                <Icon name="rocket" size={13} /> Templates <Icon name="chevron-down" size={12} />
+            </button>
+            {open && (
+                <div className="absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 p-2 w-[360px] max-h-[70vh] overflow-y-auto">
+                    <div className="px-2 py-1 text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">Starter Templates</div>
+                    {templates.map(t => (
+                        <button key={t.id} onClick={() => { setOpen(false); onLoad(t.file); }}
+                                className="w-full text-left p-2.5 rounded-md hover:bg-secondary/60 transition-colors block">
+                            <div className="text-sm font-medium">{t.label}</div>
+                            <div className="text-xs text-muted-foreground mt-0.5 leading-snug">{t.desc}</div>
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+function SummaryBar({ orgName, onOrgNameChange, targetMaturity, onTargetChange, environments, activeEnvId, starterTemplates, onLoadTemplate }) {
     const totalCells = CLUSTERS.length * CSF_FUNCTIONS.length; // 60
     const isAgg = activeEnvId === 'aggregated';
 
@@ -729,6 +758,9 @@ function SummaryBar({ orgName, onOrgNameChange, targetMaturity, onTargetChange, 
                     {MATURITY_LEVELS.map(ml => <option key={ml.value} value={ml.value}>{ml.value} — {ml.label}</option>)}
                 </select>
             </div>
+            {starterTemplates && starterTemplates.length > 0 && (
+                <StarterDropdown templates={starterTemplates} onLoad={onLoadTemplate} />
+            )}
             <div className="flex items-center gap-4 ml-auto text-xs">
                 <div className="tooltip-wrap">
                     <span className="font-semibold" style={{ color: coverage >= 80 ? '#22c55e' : coverage >= 40 ? '#eab308' : '#ef4444' }}>
@@ -2391,12 +2423,16 @@ function App() {
         setSelectedCell(null);
     };
 
-    // Load starter template
-    const loadStarter = async () => {
+    // Load starter template — inline dropdown in SummaryBar
+    const STARTER_TEMPLATES = [
+        { id: 'generic', label: 'Generic CBP Starter', file: 'cbp-starter.json',
+          desc: 'Baseline cyber-best-practice capabilities mapped to the 10 TLCTC clusters × 6 CSF functions.' },
+    ];
+    const loadStarterFile = async (file) => {
         if (!confirm('Load starter template? This will replace your current data.')) return;
         try {
-            const resp = await fetch('cbp-starter.json');
-            if (!resp.ok) throw new Error('Could not load cbp-starter.json');
+            const resp = await fetch(file);
+            if (!resp.ok) throw new Error('Could not load ' + file);
             const data = await resp.json();
             handleImport(data);
         } catch (e) { alert('Failed to load starter data: ' + e.message); }
@@ -2545,7 +2581,6 @@ function App() {
             <Header darkMode={darkMode} onToggleDark={() => setDarkMode(d => !d)}
                     onExportJSON={exportJSON} onImportJSON={() => setShowImport(true)} onExportPNG={exportPNG}
                     onGapAnalysis={() => setShowGapAnalysis(true)} onReport={generateReport}
-                    onLoadStarter={loadStarter}
                     onShowSharedControls={() => setShowSharedLibrary(true)}
                     sharedControlCount={(state.sharedControls || []).length}
                     onToggleMobileMenu={() => setMobileMenuOpen(o => !o)} />
@@ -2554,7 +2589,8 @@ function App() {
 
             <SummaryBar orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
                         targetMaturity={state.targetMaturity} onTargetChange={v => updateState({ targetMaturity: v })}
-                        environments={state.environments} activeEnvId={activeEnvId} />
+                        environments={state.environments} activeEnvId={activeEnvId}
+                        starterTemplates={STARTER_TEMPLATES} onLoadTemplate={loadStarterFile} />
 
             <EnvironmentTabs environments={state.environments} activeEnvId={activeEnvId}
                             onSelect={setActiveEnvId} onAdd={addEnvironment}

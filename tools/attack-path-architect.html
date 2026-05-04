@@ -126,15 +126,22 @@
         
         /* Print Overrides */
         @media print {
-            @page { size: landscape; margin: 0.5cm; }
-            body { height: auto; overflow: visible; background: white !important; color: black !important; }
-            header, .toolbar, .sidebar, .btn, .modal-overlay, .no-print { display: none !important; }
+            @page { size: landscape; margin: 1cm; }
+            body { height: auto; overflow: visible; background: white !important; color: black !important; font-size: 9pt; }
+            header, .toolbar, .sidebar, .btn, .modal-overlay, .no-print, #tlctc-storage-notice { display: none !important; }
             .workspace { display: block; height: auto; overflow: visible; }
             .main-view { display: block; height: auto; }
-            #canvasArea { border: none; padding: 0; margin: 0; overflow: visible; height: auto; background: white !important; display: block !important; }
-            #notationDisplay { font-size: 12pt; color: black; border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 20px; font-family: monospace; display: block; }
-            #print-table { display: block !important; margin-top: 20px; }
-            svg { width: 100% !important; height: auto !important; max-height: 100vh; }
+            .grid-bg { background-image: none !important; }
+            #print-cover { display: block !important; padding: 0 0 8px 0; margin: 0 0 6px 0; border-bottom: 1px solid #888; }
+            #canvasArea { border: none; padding: 0; margin: 0; overflow: visible; height: auto; background: white !important; display: block !important; page-break-after: always; break-after: page; }
+            #notationDisplay { font-size: 9pt; color: black; border-bottom: 1px solid black; padding-bottom: 5px; margin-bottom: 10px; font-family: monospace; display: block; }
+            #print-table { display: block !important; margin: 0 !important; padding: 0 !important; page-break-before: always; break-before: page; }
+            #print-table h3 { font-size: 11pt !important; margin-bottom: 8px !important; padding-bottom: 4px !important; }
+            #print-table table { font-size: 7.5pt !important; }
+            #print-table th, #print-table td { padding: 3px 5px !important; }
+            #print-table thead { display: table-header-group; }
+            #print-table tbody tr { page-break-inside: avoid; break-inside: avoid; }
+            svg { width: 100% !important; height: auto !important; max-height: 80vh; }
         }
     </style>
 </head>
@@ -307,6 +314,8 @@
 
     <!-- Main Canvas Area -->
     <main class="main-view bg-background flex flex-col h-full min-h-0 overflow-hidden relative">
+        <!-- Print Cover (page 1 header — populated by renderPrintTable) -->
+        <div id="print-cover" class="hidden"></div>
         <div id="canvasArea" class="flex-1 overflow-auto p-8 grid-bg relative"></div>
 
         <!-- Zoom Controls -->
@@ -318,7 +327,6 @@
         
         <!-- Print Table (hidden until print) -->
         <div id="print-table" class="hidden p-8 bg-white text-black">
-            <div id="printHeader" class="mb-6"></div>
             <h3 class="font-display font-bold text-xl mb-4 border-b-2 border-black pb-2">Attack Path Detail Report</h3>
             <table class="w-full text-sm border-collapse text-left">
                 <thead>
@@ -1142,6 +1150,8 @@ const TEMPLATES = {
             { id: 800005, cluster: 1, sphere: "Org", dtVal: "10", dtUnit: "m", velocityClass: "VC-3", description: "DC-local recon: enumerate trusts, schema, existing Tier-0 groups, Protected Users membership. Same tools as s3, now executed at Tier-0. Designed AD functions, abused at maximal scope.", mitre: "T1482", confidence: "high", stage: "intermediate" },
             { id: 800006, cluster: 1, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "Create persistence accounts via net user /add or New-ADUser. Lynx observed 3 lookalikes including 'administratr' (typosquat). Axiom IV: actor tradecraft does not classify — this is #1, designed AD function at DA authority. Evidence: 4720, 4738.", mitre: "T1136.002", confidence: "high", stage: "intermediate" },
             { id: 800007, cluster: 1, sphere: "Org", dtVal: "1", dtUnit: "h", velocityClass: "VC-2", description: "Add persistence accounts to Domain Admins, Enterprise Admins, GPCO. Every Add-ADGroupMember is a designed function of the privileged role already held — classic #1. Evidence: 4728, 4732, 4756.", mitre: "T1098", confidence: "high", stage: "intermediate" },
+            { id: 800075, cluster: 1, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "Post-DA credential harvest — canonically DCSync via MS-DRSR GetNCChanges (DS-Replication-Get-Changes-All), replicating NTDS.dit and yielding every domain NT hash plus the krbtgt hash (Golden Ticket territory). Pure #1: directory replication is a designed AD function invokable by any principal with replication rights (just granted at s7 via DA/Enterprise Admin). No flaw exploited. DRE:C attaches HERE on credential material — forensically distinct data subject from the later s9/s10 DRE:C on business file data. R-CRED: acquisition event, so DRE:C is here, NEVER at downstream #4 reuse — the paired #4 application is the next step. Variants: LSASS dump via ProcDump/comsvcs.dll is #1 + [DRE: C] (LOLBIN at DA authority); Mimikatz is #7 + [DRE: C] (R-EXEC — FEC runs). Persistence rationale: even if s6's lookalikes are disabled, harvested hashes permit re-entry via any domain principal — undoing requires a krbtgt double-rotation most orgs cannot execute under incident pressure. Evidence: 4662 with DS-Replication-Get-Changes-All GUID (1131f6ad-9c07-11d1-f79f-00c04fc2dcd2); Sysmon EID 10 on lsass.exe for LSASS-dump variants.", mitre: "T1003.006", confidence: "high", stage: "intermediate", dre: { types: ["C"], title: "Credential Harvest (DCSync / LSASS)", desc: "All domain NT hashes + krbtgt replicated or dumped. DRE:C on credential material — distinct subject from later file-data DRE:C." } },
+            { id: 800076, cluster: 4, sphere: "Org", dtVal: "10", dtUnit: "m", velocityClass: "VC-3", description: "First application of a credential harvested at the previous step — pass-the-hash authentication with an NT hash from the NTDS dump, or Golden Ticket presentation using the krbtgt hash (offline forging has no observable event; the authentication IS the observable step). Axiom X / R-CRED: acquisition (previous #1 step) and application (this #4) are DISTINCT steps with DISTINCT classifications. Acquisition maps to the enabling cluster; application is ALWAYS #4 regardless of how the credential was obtained. Conflating the two destroys the #1/#4 control-surface distinction — defences against harvest (DS-Replication monitoring, LSASS protection, Credential Guard, Protected Users) differ structurally from defences against application (auth-anomaly detection, tiered logon restrictions, Kerberos Armoring/FAST, krbtgt rotation). No DRE at this step — DRE:C was recorded at acquisition and does NOT re-attach on each reuse. This step is the pivot where the attacker switches from the externally-acquired DA used at s4 (sequence step DA-to-DC) to a domain-internal harvested persona to break correlation with the s2 foothold account, reach scopes the s4 account does not cover, or establish Kerberos-level persistence via krbtgt. Evidence: Golden Ticket — Event 4769 (TGS request) without a preceding 4768 (KDC never saw the TGT); anomalous ticket lifetime, PAC validation failures, SID-history artifacts. Pass-the-hash — Event 4624 logon type 3 with NtlmSsp from an unexpected source host. Classification boundary is crisp: offline forging is NOT a cluster step (no on-system event); the network auth event IS #4.", mitre: "T1550.002", confidence: "high", stage: "intermediate" },
             { id: 800008, cluster: 1, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "Share enumeration and file collection via SMB reads, 7-Zip staging to a drop folder. Standard file I/O and compression — legitimate, not flawed — abused at DA scope. DRE:C at acquisition (R-CRED generalized to data). 7z is a legitimate LOLBIN, not FEC. Evidence: 5140/5145, 4688 with archive paths.", mitre: "T1560.001", confidence: "high", stage: "intermediate", dre: { types: ["C"], title: "Internal Data Staging", desc: "Share contents archived for exfiltration; DRE:C attaches at acquisition." } },
             { id: 800009, cluster: 7, sphere: "Org", dtVal: "24", dtUnit: "h", velocityClass: "VC-1", description: "Attacker-supplied exfiltration tooling executes — rclone, custom uploader to temp.sh/anonfiles, or bespoke binary. R-EXEC: FEC runs, #7 MUST be recorded at the execution moment. DRE:C is the egress event. Collapsing s8+s9 into a single 'exfiltration' label destroys the distinction between internal-staging and egress control surfaces.", mitre: "T1567", confidence: "high", stage: "intermediate", dre: { types: ["C"], title: "Egress Exfiltration (FEC)", desc: "Exfil tool executes and transfers staged archives out of the environment." } },
             { id: 800010, cluster: 1, sphere: "Org", dtVal: "5", dtUnit: "m", velocityClass: "VC-3", description: "RDP/SMB/WMI to the backup server under DA authority. Classified #1 at summary notation — continued operation inside held Tier-0 scope is abuse of designed function. A stricter R-CRED decomposition would embed a #4 credential-application step; split if distinct authentication events matter for control attribution.", mitre: "T1021.001", confidence: "high", stage: "intermediate" },
@@ -2696,20 +2706,22 @@ function renderVisualization() {
 function renderPrintTable() {
     const c = getActiveCase();
     const tbody = document.getElementById('printTableBody');
-    const header = document.getElementById('printHeader');
-    
+    const cover = document.getElementById('print-cover');
+
     if (!c) return;
-    
+
     const meta = c.metadata || {};
-    header.innerHTML = `
-        <h2 style="font-size: 18pt; margin-bottom: 5px;">${c.title}</h2>
-        <p style="font-size: 10pt; color: #666;">
-            ID: ${meta.sequence_id || 'N/A'} | 
-            Analyst: ${meta.analyst || 'N/A'} | 
-            Framework: TLCTC v${meta.framework_version || '2.0'} |
-            Generated: ${new Date().toLocaleString()}
-        </p>
-    `;
+    if (cover) {
+        cover.innerHTML = `
+            <h1 style="font-size: 16pt; font-weight: 700; margin: 0 0 4px 0;">${c.title || 'Untitled Attack Path'}</h1>
+            <p style="font-size: 8pt; color: #444; margin: 0 0 8px 0;">
+                <strong>ID:</strong> ${meta.sequence_id || 'N/A'}
+                &nbsp;|&nbsp; <strong>Analyst:</strong> ${meta.analyst || 'N/A'}
+                &nbsp;|&nbsp; <strong>Framework:</strong> TLCTC v${meta.framework_version || '2.0'}
+                &nbsp;|&nbsp; <strong>Generated:</strong> ${new Date().toLocaleString()}
+            </p>
+        `;
+    }
     
     tbody.innerHTML = '';
     c.path.forEach((s, i) => {

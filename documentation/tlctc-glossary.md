@@ -1,7 +1,7 @@
 # TLCTC Framework Glossary — Version 2.0 / 2.1
 
 *Comprehensive definitions and concepts for the Top Level Cyber Threat Clusters framework.*
-*Author: Bernhard Kreinz | Last Updated: 25 Mar 2026*
+*Author: Bernhard Kreinz | Last Updated: 19 Apr 2026*
 
 ---
 
@@ -20,6 +20,22 @@ A threat cluster where an attacker misuses the logic, scope, or configuration of
 ### Accessibility (Data Risk Event)
 
 The operational state in which data or resources can be used for their intended purpose by authorized processes (Facility, IT, or Business processes). Loss of Accessibility occurs when data exists but cannot be used—such as encrypted files (ransomware), corrupted data, or permission lockouts. This is distinct from Loss of Availability: ransomware causes Loss of Accessibility (data present but unusable), not Loss of Availability (data gone or unreachable). DRE notation: `Ac` when distinguished from Availability, or `A` as general shorthand covering both.
+
+### Actor Archetype
+
+A coarse categorization of threat actors used in TLCTC overlays (Attacker Profiles, Tech Enablers Overlay) to group actors by motivation and resourcing level rather than by identity. The five archetypes are: **Nation State**, **Extortion**, **Fraud**, **Hacktivist**, and **Amateur**. Archetypes are a communication and trend-watching device — they are never used for cluster classification (Axiom IV). An archetype describes *which clusters an actor class tends to prefer* and *which emerging tech enablers that class is likely to adopt*, not the cluster of any specific attack step.
+
+**Reference:** §17.3 (Attacker Profiles), §17.4 (Tech Enablers Overlay)
+
+See also: Attacker Profile, Tech Enablers Overlay, Cyber Threat Radar, Axiom IV
+
+### Attacker Profile *(V2.1)*
+
+An **informative overlay** on the Cyber Threat Radar that describes a threat actor's (or Actor Archetype's) observed preferences across the 10 clusters: per-cluster capability scores, preferred cluster sequences, and typical boundary crossings. Profiles may be wrapped in Diamond-Model framing (adversary / capability / infrastructure / victim). Used for hypothesis generation ("likely next steps"), comparative radar views, and targeting analysis against the organizational radar. **Normative guardrails (R-RADAR-6…9):** actors are not clusters, they *use* clusters (Axiom IV); profiles MUST NOT redefine cluster meanings or introduce actor-based taxonomy; profiles SHOULD be published as probability distributions or pattern frequencies, not deterministic rules; profile scores SHOULD be derived from classified Layer 3 attack path instances so provenance traces back to evidence.
+
+**Reference:** §17.3
+
+See also: Actor Archetype, Cyber Threat Radar, Axiom IV
 
 ### Attacker's View
 
@@ -322,7 +338,25 @@ See also: Vulnerability, Weakness, CVE, Generic Vulnerability
 
 ### Cyber Threat Radar
 
-A visualization tool based on the TLCTC framework that displays threat distribution across different domains (organizational, state, or sector levels). Uses radar chart format to show impact levels (High/Red, Medium/Orange, Low/Gray, Latent) and movement indicators (▲ increasing, ▼ decreasing) for each of the 10 threat clusters. Enables strategic overview, comparative analysis, and standardized threat communication across organizations and borders.
+A standard visualization methodology for communicating threat posture, change over time, and comparative exposure across the 10 TLCTC clusters. The radar is a **communication surface, not a classification device** — every position on it is driven by evidence classified under the Section 4 grammar.
+
+**Structure:**
+
+- **Spokes (10):** one per cluster (`#1`–`#10`), fixed order; the invariant layout is what makes radars from different organizations, sectors, or snapshots directly comparable.
+- **Zones (4, outer → inner):** `Latent` → `Low` → `Medium` → `High`. Radial distance encodes current exposure or impact.
+- **Sectors (configurable):** angular subdivisions within each spoke representing responsibility scopes. Default alignment is to Layer 2 responsibility spheres (`@Org`, `@Customers`, `@Vendor` / `@External`). At state/national scope, sectors may encode critical-infrastructure sectors (energy, finance, healthcare, etc.).
+- **Bubbles:** individual threat instances, sized by significance.
+- **Movement indicators:** `▲` rising / `▼` falling exposure vs. the previous snapshot.
+
+**Scales:** organizational view (enterprise-internal), sector / line-of-business view, and state-level / national view. The spoke layout is invariant across all three — only the sector axis changes, which is what enables cross-view comparison.
+
+**Normative rules (R-RADAR-1…5):** spoke assignment MUST use the Section 4 grammar; multi-cluster attack paths MUST be rendered as multiple bubbles or a single bubble plus a separate Layer 3 path; zone placement SHOULD follow a disclosed scoring method; snapshots SHOULD be dated and use the same method for movement indicators to be meaningful; aggregated sector / national radars MUST use identical spoke definitions and SHOULD disclose the combination rule (max / average / weighted).
+
+**Reference:** §17.1–17.2
+
+See also: Attacker Profile, Tech Enablers Overlay, Responsibility Sphere, Layer 2
+
+**Tool:** [`/tools/radar-tlctc-app.html`](/tools/radar-tlctc-app.html)
 
 ### Command Injection *(Industry Term)*
 
@@ -1450,6 +1484,16 @@ A physical social engineering technique where an unauthorized person follows an 
 **Reference:** V1.9.1 Buzz-Word Refinement (#9)
 
 See also: Social Engineering (#9), Physical Attack (#8)
+
+### Tech Enablers Overlay *(V2.1)*
+
+A forward-looking **informative overlay** on the Cyber Threat Radar that maps emerging technologies (e.g., agentic AI, quantum-resistant crypto, deepfake toolchains, commodity exploit kits) against two axes: the **cluster axis** (which generic vulnerability the technology amplifies, `#1`–`#10`) and the **Actor Archetype axis** (Nation State / Extortion / Fraud / Hacktivist / Amateur). Complements the Attacker Profile overlay: where profiles describe which clusters actors favor *today*, the Tech Enablers Overlay tracks which new capabilities are entering the ecosystem, for whom, and which clusters they are likely to amplify next. Entries carry adoption-level indicators (observed / emerging / hypothesized) and snapshot dates; they MUST map to clusters via the generic vulnerability amplified, not by vendor or product category. Shifts between snapshots SHOULD trigger a review of the organizational radar and relevant Attacker Profiles.
+
+**Reference:** §17.4
+
+See also: Cyber Threat Radar, Attacker Profile, Actor Archetype
+
+**Tool:** [`/tools/tech-enablers-radar.html`](/tools/tech-enablers-radar.html)
 
 ### Techniques (TTPs)
 

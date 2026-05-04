@@ -392,16 +392,20 @@ tlctc/
 │   ├── cloudflare-2026-patterns/             # Cloudflare 2026 attack patterns → TLCTC
 │   │   ├── README.md                         # Pattern documentation & methodology
 │   │   └── tlctc-cloudflare-2026-patterns.json # Cloudflare 2026 threat report pattern mapping
-│   └── cisa-kev/                             # CISA Known Exploited Vulnerabilities → TLCTC
-│       ├── README.md                         # Mapping documentation & caveats
-│       ├── generate-kev-mapping.py           # Deterministic ETL generator
-│       ├── tlctc-kev.json                    # 1,568 per-CVE derivations
-│       ├── tlctc-kev-stats.json              # Cluster counts, ransomware, vendor & monthly stats
-│       ├── product-role-heuristic.json       # R-ROLE (#2 | #3) disambiguation rules
-│       ├── decision-tree.md                  # Derivation algorithm
-│       ├── input/                            # Pinned KEV snapshot (reproducibility)
-│       └── examples/
-│           └── cluster-exposure-walkthrough.md # Worked example: vendor stack → exposure
+│   ├── cisa-kev/                             # CISA Known Exploited Vulnerabilities → TLCTC
+│   │   ├── README.md                         # Mapping documentation & caveats
+│   │   ├── generate-kev-mapping.py           # Deterministic ETL generator
+│   │   ├── tlctc-kev.json                    # 1,568 per-CVE derivations
+│   │   ├── tlctc-kev-stats.json              # Cluster counts, ransomware, vendor & monthly stats
+│   │   ├── product-role-heuristic.json       # R-ROLE (#2 | #3) disambiguation rules
+│   │   ├── decision-tree.md                  # Derivation algorithm
+│   │   ├── input/                            # Pinned KEV snapshot (reproducibility)
+│   │   └── examples/
+│   │       └── cluster-exposure-walkthrough.md # Worked example: vendor stack → exposure
+│   ├── mandiant-2026/                        # Mandiant M-Trends 2026 ATT&CK → TLCTC
+│   │   └── tlctc-mandiant-2026-attck-mapping.json # Mandiant 2026 technique mapping
+│   └── splunk-cisco/                         # Splunk/Cisco Top-50 comparison
+│       └── splunk-top50-tlctc-comparison.html # Interactive Splunk Top-50 vs TLCTC view
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
@@ -413,20 +417,29 @@ tlctc/
 │   │   ├── tlctc-attack-path.schema.json     # Schema for attack path instances
 │   │   └── examples/
 │   │       ├── solarwinds-2020.json          # SolarWinds supply chain incident
-│   │       └── chalk-debug-2025.json         # npm phishing campaign incident
+│   │       ├── chalk-debug-2025.json         # npm phishing campaign incident
+│   │       ├── midnight-blizzard-microsoft-2024.json # Midnight Blizzard → Microsoft OAuth pivot
+│   │       └── unresolved-step-example-2026.json # Unresolved-step operators (?/…) reference
 │   └── layer-4/                              # FAIR Risk Quantification (Risk)
 │       ├── tlctc-fair-risk.schema.json       # Schema for FAIR risk assessment instances
 │       └── examples/
 │           └── scattered-spider-2024-fair.json # SCATTERED SPIDER FAIR risk assessment
+├── grammar/                                  # Standalone ABNF grammar for path notation
+│   ├── README.md                             # Grammar documentation & tooling notes
+│   └── tlctc-attack-path.abnf                # ABNF grammar for TLCTC attack-path syntax
 ├── documentation/
 │   ├── tlctc-v2.0-whitepaper.md              # Canonical V2.1 White Paper (filename kept for link stability)
-│   ├── tlctc-glossary.md                     # Comprehensive Definitions
-│   ├── npm-supply-chain-blog-final.md        # npm supply chain threat analysis
-│   ├── tlctc-fair-integration-proposal.md    # FAIR integration proposal (Layer 4 spec)
+│   ├── tlctc-v2.0-whitepaper.pdf             # PDF export of the white paper
+│   ├── tlctc-glossary.md                     # Comprehensive definitions
+│   ├── tlctc-glossary.pdf                    # PDF export of the glossary
 │   ├── tlctc-v2.0-json-architecture.md       # JSON Architecture Specification
-│   ├── why-exactly-ten.pdf                   # Framework Architecture Rationale
+│   ├── tlctc-fair-integration-proposal.md    # FAIR integration proposal (Layer 4 spec)
+│   ├── tlctc-cve-extension-proposal.md       # CVE extension proposal
+│   ├── npm-supply-chain-blog-final.md        # npm supply chain threat analysis
+│   ├── Why Exactly Ten_ — TLCTC Framework Architecture.pdf # Framework architecture rationale
 │   └── images/                               # Diagrams and visual assets
 │       ├── tlctc-bowtie-anchor-diagram.svg
+│       ├── tlctc-consequence-chain.svg
 │       ├── tlctc-cyber-bow-tie.svg
 │       ├── tlctc-dual-layer-bowtie-overview.svg
 │       └── tlctc-dual-layer-naming.svg
@@ -436,7 +449,6 @@ tlctc/
 │   ├── attack-path-architect.html            # Incident attack path documentation & CTI exchange
 │   ├── actor-profile-designer.html           # Threat actor capability profiling & comparison (573 actors: 59 expert-scored + 514 ETDA heuristic-scored)
 │   ├── actor-story-designer.html             # Threat intelligence story/narrative builder
-│   ├── score_etda.py                         # ETDA→TLCTC scoring engine: tool arsenal + description mining, calibrated against expert data
 │   ├── radar-tlctc-app.html                  # Interactive threat radar visualization & assessment
 │   ├── tech-enablers-radar.html              # Technology enabler radar for emerging threat vectors
 │   ├── control-matrix.html                   # NIST CSF 2.0 × TLCTC control matrix with maturity scoring
@@ -444,6 +456,14 @@ tlctc/
 │   ├── attck-phase-heatmap.html              # ATT&CK phase heatmap visualization
 │   ├── cwe-explorer.html                     # CWE weakness explorer with TLCTC mapping
 │   ├── cbp-app.html                          # Cluster-based prioritization application
+│   ├── cbp-starter.json                      # Cluster-based prioritization starter dataset
+│   ├── control-matrix-starter.json           # NIST CSF control-matrix starter
+│   ├── control-matrix-starter-iso27001.json  # ISO 27001 control-matrix starter
+│   ├── control-matrix-starter-cloudflare-2026.json # Cloudflare-2026 control-matrix starter
+│   ├── score_etda.py                         # ETDA→TLCTC scoring engine: tool arsenal + description mining, calibrated against expert data
+│   ├── generate-cs2026-report.js             # CrowdStrike-2026 report generator
+│   ├── generate-iso27001-starter.py          # ISO 27001 control-matrix starter generator
+│   ├── replace-cdn.sh                        # CDN link rewrite helper
 │   └── examples/                             # Starter templates & real-world example datasets
 │       ├── template-threat-model.json        # Blank threat model starter
 │       ├── template-attack-path.json         # Blank attack path starter
@@ -455,20 +475,20 @@ tlctc/
 │       ├── CTA-Google-APT-Groups.json        # Google APT group profiles
 │       ├── CTA-NCSC-SituationRadar-2024-2025.json  # NCSC Situation Radar threat data
 │       ├── CTA-NCSC-TAC-Profiles.json        # NCSC threat actor capability profiles
-│       ├── radar-cloudflare-2026.json         # Cloudflare 2026 radar dataset
-│       ├── radar-crowdstrike-2026.json        # CrowdStrike 2026 radar dataset
-│       ├── radar-mandiant-2026.json           # Mandiant 2026 radar dataset
+│       ├── radar-cloudflare-2026.json        # Cloudflare 2026 radar dataset
+│       ├── radar-crowdstrike-2026.json       # CrowdStrike 2026 radar dataset
+│       ├── radar-mandiant-2026.json          # Mandiant 2026 radar dataset
 │       ├── radar-mandiant-2026-industries.json # Mandiant 2026 industry-specific radar
-│       ├── stories-cloudflare-2026.json       # Cloudflare 2026 threat narratives
-│       ├── stories-crowdstrike-2026.json      # CrowdStrike 2026 threat narratives
-│       ├── stories-mandiant-2026.json         # Mandiant 2026 threat narratives
+│       ├── stories-cloudflare-2026.json      # Cloudflare 2026 threat narratives
+│       ├── stories-crowdstrike-2026.json     # CrowdStrike 2026 threat narratives
+│       ├── stories-mandiant-2026.json        # Mandiant 2026 threat narratives
 │       ├── control-matrix-cloudflare-2026.json # Cloudflare 2026 control matrix
 │       ├── control-matrix-crowdstrike-2026.json # CrowdStrike 2026 control matrix
-│       ├── control-matrix-mandiant-2026.json  # Mandiant 2026 control matrix
-│       ├── tech-enablers-horizon-2026.json    # Technology enablers horizon scan 2026
+│       ├── control-matrix-mandiant-2026.json # Mandiant 2026 control matrix
+│       ├── tech-enablers-horizon-2026.json   # Technology enablers horizon scan 2026
 │       ├── tech-enablers-agentic-focus-2026.json # Agentic AI technology enablers 2026
-│       ├── ncsc-google-2024-JB-bericht*.json  # NCSC/Google 2024 annual report datasets (5 files)
-│       └── npm-*.json                         # npm supply chain incident examples (3 files)
+│       ├── ncsc-google-2024-JB-bericht*.json # NCSC/Google 2024 annual report datasets (5 files)
+│       └── npm-*.json                        # npm supply chain incident examples (3 files)
 ├── glossary/
 │   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
 │   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, boundary operators
@@ -488,8 +508,10 @@ tlctc/
 │       ├── path-H-supply-chain-marketplace.json
 │       ├── path-I-apt-in-a-box.json
 │       └── path-J-llm-weaponization-supply-chain.json
-├── attack-paths/                             # Community-contributed incident analyses (49 incidents)
+├── attack-paths/                             # Community-contributed incident analyses (50 incidents)
 │   ├── CONTRIBUTING.md
+│   ├── # Canonical pattern reference
+│   ├── ad-domain-admin-cascade-2025.json     # Active Directory Domain-Admin → ransomware #1-cascade (composite pattern: Lynx, Storm-2603, Storm-0300/Akira)
 │   ├── # Historical incidents (2008–2024)
 │   ├── agent-btz-usb-2008.json               # USB worm (2008)
 │   ├── watering-hole-iphonedevsdk-2013.json   # Watering hole (2013)
@@ -544,9 +566,6 @@ tlctc/
 │   ├── s1ngularity-nx-2025.json               # S1ngularity NX npm campaign
 │   ├── chalk-debug-phishing-2025.json         # chalk-debug npm phishing
 │   └── shai-hulud-worm-2025.json              # ShaiHulud self-propagating npm worm
-├── v2.1-Proposals/                           # v2.1 original proposal documents (now integrated into whitepaper)
-│   ├── TLCTC_v2.1_Full_Extension_Spec.pdf    # Original v2.1 boundary extension proposal
-│   └── TLCTC_v2.1_Full_Extension_Spec.docx   # Editable source
 └── LICENSE                                   # CC BY 4.0
 ```
 

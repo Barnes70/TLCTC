@@ -6070,47 +6070,117 @@ Related Resources
 
 ## 17. Cyber Threat Radar
 
-**Purpose:** Visualization methodology for threat landscape communication.
+**Purpose:** Provide a standard visualization methodology for communicating threat posture, change over time, and comparative exposure across the 10 clusters. The radar is a *communication surface*, not a classification device: every position on it is driven by evidence classified under the Section 4 grammar.
 
 ---
 
 ### 17.1 Radar Concept
 
-**Content:**
+The Cyber Threat Radar is a radial visualization with **one spoke per cluster** (`#1`–`#10`), fixed in order. This fixed layout is what makes radars from different organizations, sectors, or points in time directly comparable.
 
-- Radial visualization of 10 clusters
-- Sector overlays (My Company, My Customers, My 3rd Parties)
-- Impact level indicators (High/Medium/Low/Latent)
-- Movement indicators (▲/▼)
+**Structural elements:**
+
+- **Spokes (10):** one per cluster. Order and labels are normative (Chapter 2).
+- **Zones (4, outer → inner):** `Latent` → `Low` → `Medium` → `High`. A bubble's radial distance from the outer edge encodes current exposure/impact.
+
+  - *Latent:* no immediate risk; dormant, theoretical, or structurally excluded.
+  - *Low / Medium / High:* increasing exposure or realized impact.
+- **Sectors (configurable):** angular subdivisions within each cluster spoke representing responsibility scopes. Default sectors align to Layer 2 responsibility spheres — e.g., `@Org` (“My Company”), `@Customers`, `@Vendor` / `@External` (“My 3rd Parties”).
+- **Bubbles:** individual threat instances, sized by significance. Bubbles carry the cluster number (`#X`) and optional metadata (owner, related attack path, source).
+- **Movement indicators (▲/▼):** trend arrows compared to the previous snapshot (rising / falling exposure).
+
+**Normative rules (radar construction):**
+
+- **R-RADAR-1:** Spoke assignment MUST use the Section 4 grammar. A bubble's spoke is determined by the cluster classification of the underlying evidence, not by narrative labels (“ransomware campaign”, “APT42”).
+- **R-RADAR-2:** A single threat / attack path that traverses multiple clusters MUST be represented either (a) as one bubble per traversed cluster, or (b) as a single bubble anchored to the cluster most relevant to the current communication goal, with the full path recorded separately as a Layer 3 instance.
+- **R-RADAR-3:** Zone placement SHOULD reflect a documented scoring method (likelihood × impact, FAIR-style loss exposure, qualitative expert scoring, etc.). The method SHOULD be disclosed alongside the radar.
+- **R-RADAR-4:** Radars SHOULD be snapshot-dated. Movement indicators (▲/▼) are only meaningful between two dated snapshots built with the same scoring method and sector configuration.
+
+**Related Resources**
+
+- → [TLCTC Threat Radar](/tools/radar-tlctc-app.html) — interactive radar with configurable sectors, zone limits, bubble editing, snapshot diffing, and JSON / PNG export.
 
 ---
 
 ### 17.2 Organizational vs State-Level Views
 
-**Content:**
+The same radar structure (17.1) scales from a single organization to a nation-state or sector view by re-interpreting the sector axis:
 
-- Organizational radar: internal threat landscape
-- State-level radar: critical infrastructure sectors
-- Cross-sector comparison use cases
+| View | Sector axis encodes | Typical audience |
+| --- | --- | --- |
+| **Organizational** | Responsibility spheres: `@Org`, `@Customers`, `@Vendor`, `@External` | CISO, board, risk committees |
+| **Sector / Line-of-business** | Business units, product lines, or regulated domains within one organization | Divisional leadership |
+| **State-level / National** | Critical infrastructure sectors (e.g., energy, finance, healthcare, telecom, water, transport) | National CERT, regulators, sector ISACs |
+
+**Design points:**
+
+- The spoke layout (clusters `#1`–`#10`) is invariant across all three views — that invariance is what enables cross-view comparison. Only the sector axis changes.
+- A national radar can be built by **aggregating sector radars**: each sector's radar contributes bubbles to the national view; zone levels are combined per the disclosed scoring method.
+- Cross-sector comparison questions the radar is designed to answer:
+
+  - *Which clusters are concentrated in which sectors?* (e.g., `#10` elevated in software-heavy sectors; `#8` elevated in OT sectors)
+  - *Where does my organization's profile deviate from its sector baseline?*
+  - *Which clusters are rising across all sectors simultaneously?* (systemic signal vs. sector-specific signal)
+
+**Normative rule:**
+
+- **R-RADAR-5:** When aggregating multiple organizational radars into a sector or national view, the contributing radars MUST use the **same spoke definitions** (Chapter 2) and SHOULD disclose whether zone levels were combined by maximum, average, or weighted scoring. Mixing scoring methods without disclosure invalidates cross-view comparison.
 
 ---
 
 ### 17.3 Attacker Profiles *(Informative Overlay)*
 
-**Content:**
+Attacker profiles are an **overlay** on the radar: they describe *observed preferences* of a threat actor or actor archetype across the 10 clusters — which clusters they most often use, in what sequences, and across which boundary crossings. They do not replace or modify cluster classification.
 
-- Treat “attacker profiles” as an **overlay**: observed preferences for cluster sequences, capabilities, and typical boundary crossings
-- Use cases:
-  - Hypothesis generation (“likely next steps”) based on historical patterns
-  - Comparative radar views across sectors or missions
-- Guardrails:
-  - Threat actors are **not** clusters; they **use** clusters (Axiom IV)
-  - Cluster classification remains evidence-driven via Section 4 classification grammar
+**What a profile contains:**
 
-**Remarks:**
+- **Capability scores per cluster** (`#1`–`#10`): ordinal or normalized weights reflecting how often / how skillfully the actor leverages each generic vulnerability. Rendered as a per-actor radar chart.
+- **Preferred cluster sequences:** typical attack path fragments observed for the actor (e.g., `#9 → #3 → #7 → #4 → #1`).
+- **Typical boundary crossings:** `@External→@Org`, `[update]`, `[dev]`, `[api]`, etc. — per Chapter 5.
+- **Diamond-Model framing** (optional): adversary / capability / infrastructure / victim context wrapped around the cluster profile.
 
-- Profiles MUST NOT redefine cluster meanings or introduce actor-based taxonomy
-- Publish profiles as probability distributions / patterns, not deterministic rules
+**Use cases:**
+
+- **Hypothesis generation:** given observed steps, which clusters are the likely *next* steps for actors matching this profile?
+- **Comparative radar views:** overlay multiple actor profiles on the same cluster axes to see where they converge or diverge.
+- **Targeting analysis:** compare an actor profile against the organizational radar to identify clusters where attacker preference aligns with defender weakness.
+
+**Normative guardrails:**
+
+- **R-RADAR-6:** Threat actors are **not** clusters; they **use** clusters (Axiom IV). Actor identity MUST NOT determine cluster classification of any step in any attack path, regardless of how well the actor matches a profile.
+- **R-RADAR-7:** Profiles MUST NOT redefine cluster meanings, merge clusters, or introduce actor-based taxonomy categories. The 10 clusters remain invariant.
+- **R-RADAR-8:** Profiles SHOULD be published as **probability distributions or pattern frequencies**, not deterministic rules. “Actor X used `#9` in 73% of observed intrusions” is a profile claim; “Actor X always starts with `#9`” is not.
+- **R-RADAR-9:** Profile scores SHOULD be derived from classified Layer 3 attack path instances, so that the provenance of each score traces back to evidence classified under the Section 4 grammar.
+
+**Related Resources**
+
+- → [TLCTC Actor Profile Designer](/tools/actor-profile-designer.html) — build, visualize, and export per-cluster capability profiles; generate PDF Actor Cards and JSON datasets.
+- → [TLCTC Actor Story Designer](/tools/actor-story-designer.html) — wrap capability profiles in Diamond-Model-framed narrative intelligence.
+
+---
+
+### 17.4 Tech Enablers Overlay *(Informative)*
+
+The Tech Enablers overlay extends the radar horizon-scanning use case: emerging technologies (e.g., agentic AI, quantum-resistant crypto, deepfake toolchains, commodity exploit kits) are mapped against the **two axes** most useful for trend-watching:
+
+1. **Cluster axis** — which generic vulnerability the technology most amplifies or enables (`#1`–`#10`).
+2. **Actor archetype axis** — who is likely to adopt it: *Nation State, Extortion, Fraud, Hacktivist, Amateur*.
+
+This surface complements 17.1–17.3:
+
+- 17.1 shows *current exposure per cluster*.
+- 17.3 shows *which actors favor which clusters today*.
+- 17.4 shows *which new capabilities are entering the ecosystem, for whom, and which clusters they will most affect next*.
+
+**Guidance:**
+
+- Tech Enablers overlays are **forward-looking** and SHOULD carry explicit adoption-level indicators (observed / emerging / hypothesized) and snapshot dates.
+- Entries MUST map to one or more clusters via the generic vulnerability the technology amplifies — not via vendor or product category.
+- Shifts between snapshots (technology moving from *emerging* to *observed*, or from one archetype to several) SHOULD trigger a review of the organizational radar (17.2) and relevant actor profiles (17.3).
+
+**Related Resources**
+
+- → [TLCTC Tech Enablers Radar](/tools/tech-enablers-radar.html) — emerging-technology monitor mapped against TLCTC clusters and actor archetypes, with snapshot and diff capability.
 
 ---
 
