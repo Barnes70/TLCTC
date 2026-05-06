@@ -84,29 +84,33 @@ Before mapping, determine where the technique occurs:
 | `@AttackerInfra` | Attacker's own infrastructure | Threat potential, not threat — **N/A** |
 | `@OtherVictims` | Other organizations being compromised | Threat potential, not your threat — **N/A** |
 
-Most Reconnaissance and Resource Development techniques fall under `@AttackerInfra` and are classified as **N/A**.
+Most Resource Development techniques (and pure-OSINT Reconnaissance techniques) fall under `@AttackerInfra` / `@External` and are classified as **N/A**. Reconnaissance techniques that *do* cross into `@Org` are classified: active scanning (T1595*) → `#1` with `[DRE: C]`; phishing-for-information (T1598*) → `#9` with `[DRE: C]`.
 
 ## Statistics
 
 - **698** total technique entries
-- **40** unique mapping values (single clusters, alternatives, and attack paths)
+- **44** unique mapping values (single clusters, alternatives, and attack paths)
 - **15** ATT&CK tactics covered
-- **94** techniques classified as N/A (attacker preparation / threat potential)
+- **89** techniques classified as N/A (no `@Org` boundary crossing / attacker preparation)
 
 ### Cluster Distribution (top 10)
 
 | Mapping | Count | Description |
 |---------|-------|-------------|
-| `#1` | 188 | Abuse of designed functions |
-| `#1 → #7` | 153 | Function abuse enabling malware execution |
-| `N/A` | 94 | Not directly mappable (attacker preparation) |
-| `#1 \| #7` | 61 | Context-dependent: function abuse or malware |
-| `#7` | 51 | Direct malware execution |
-| `#1 → #4` | 31 | Function abuse leading to credential use |
-| `#4` | 15 | Direct identity theft (credential application) |
+| `#1 → #7` | 177 | Function abuse enabling malware execution |
+| `#1` | 174 | Abuse of designed functions |
+| `N/A` | 89 | Not directly mappable (no `@Org` boundary crossing) |
+| `#1 \| #7` | 56 | Context-dependent: function abuse or malware |
+| `#7` | 46 | Direct malware execution |
+| `#1 → #4` | 28 | Function abuse leading to credential use |
+| `#4` | 18 | Direct identity theft (credential application) |
 | `#4 → #1` | 15 | Credential use enabling function abuse |
-| `#1 \| #10` | 10 | Function abuse or supply chain |
-| `#9 → #7` | 8 | Social engineering enabling malware |
+| `#7 \| (#1 → #7)` | 12 | Malware execution, possibly via abused launcher |
+| `#9` | 8 | Social engineering (info elicitation / internal phishing / impersonation) |
+| `#6` | 8 | Flooding attack |
+| `(#1 \| #7) → #4` | 7 | Credential extraction (either mode) then application |
+| `#9 → #7` | 7 | Social engineering enabling malware |
+| `#1 \| #10` | 6 | Function abuse or supply chain |
 
 ## Key Mapping Rules
 
