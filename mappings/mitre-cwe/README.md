@@ -2,7 +2,7 @@
 
 This directory contains the mapping of **MITRE Common Weakness Enumeration (CWE)** entries to **TLCTC threat clusters**, connecting weakness taxonomy to cause-oriented threat classification.
 
-> **Note:** This mapping was generated with AI assistance and is marked **experimental**. Community review and contributions are welcome.
+> **Provenance:** AI-generated, human-reviewed. The 2026-05-05 v2.1 audit closed the Unreviewed bucket, applied R-EXEC consistently to execution-enabling CWEs, reclassified enabling-condition CWEs to the cluster they enable (per policy ruling), and narrowed the Allowed-with-Review queue to genuine context-dependence cases. See `tlctc-cwe.json` `metadata.audit_history` for the change log.
 
 ## Purpose
 
@@ -89,33 +89,44 @@ Each mapping carries a confidence verdict:
 
 | Verdict | Count | Meaning |
 |---------|-------|---------|
-| **Allowed** | 754 | High confidence — CWE is specific enough for unambiguous classification |
-| **Allowed-with-Review** | 90 | Reasonable mapping but context-dependent — review recommended |
-| **Discouraged** | 41 | CWE is too abstract or generic for reliable mapping |
-| **Prohibited** | 83 | CWE is a category/view/deprecated entry, not a concrete weakness |
-| **Unreviewed** | 19 | No verdict assigned yet |
+| **Allowed** | 756 | High confidence — CWE is specific enough for unambiguous classification |
+| **Allowed-with-Review** | 16 | Cluster genuinely depends on a use-context that varies between CVE instances — review at instance level |
+| **Discouraged** | 171 | CWE is too abstract or generic for reliable mapping (umbrella CWE) OR is a code-quality / maintainability / consequence-only observation with no defensible threat cluster |
+| **Prohibited** | 44 | CWE is a category/view/list/deprecated entry, not a concrete weakness |
 
 ## Statistics
 
 - **987** total CWE entries
-- **15** unique mapping values
+- **22** unique mapping values
 - **229** context-dependent mappings (role-dependent)
-- **754** high-confidence (`Allowed`) mappings
+- **756** high-confidence (`Allowed`) mappings
 
 ### Cluster Distribution
 
 | Mapping | Count | Description |
 |---------|-------|-------------|
-| `#2 \| #3` | 219 | Server or client code flaw (role-dependent) |
-| `#1` | 195 | Abuse of designed functions |
-| `N/A` | 194 | Not directly mappable |
-| `#2` | 175 | Server-side implementation flaw |
+| `#2 \| #3` | 221 | Server or client code flaw (role-dependent) |
+| `N/A` | 176 | Not directly mappable (Discouraged or Prohibited) |
+| `#1` | 169 | Abuse of designed functions |
+| `#2` | 165 | Server-side implementation flaw |
 | `#8` | 90 | Physical attack |
-| `#6` | 33 | Flooding / resource exhaustion |
-| `#4` | 18 | Identity theft / credential weakness |
-| `#10` | 17 | Supply chain trust weakness |
+| `#4` | 38 | Identity theft / credential weakness |
+| `#6` | 32 | Flooding / resource exhaustion |
+| `#5` | 16 | Man in the Middle / communication path |
+| `#10` | 14 | Supply chain trust weakness |
 | `#3` | 12 | Client-side implementation flaw |
-| `#5` | 8 | Man in the Middle / communication path |
+| `#4 \| #5` | 9 | Predictable random values (token vs key context) |
+| `#9` | 8 | Social engineering / UI deception |
+| `#2 → #7 \| #3` | 8 | XSS-style: server-delivered script executes client-side |
+| `#2 → #7 \| #3 → #7` | 7 | Code injection / deserialization / template injection (role-dependent RCE) |
+| `#2 → #7` | 6 | Server-side code/command injection with execution |
+| `#1 → #7` | 4 | Designed function abused to load foreign code (DLL hijacking, upload+exec) |
+| `#7` | 4 | Direct malware presence |
+| `#10 → #7` | 3 | Trust-accepted untrusted code that subsequently executes |
+| `#5 \| #4` | 2 | Crypto algorithm weakness (channel vs credential context) |
+| `#4 \| #6` | 1 | Missing rate-limiting (auth-endpoint vs resource-endpoint) |
+| `#1 \| #4` | 1 | Predictable values (parent of #4 \| #5 group) |
+| `#10 \| #5` | 1 | Trust artifact compromise vs channel compromise |
 
 ## Key Mapping Rules
 

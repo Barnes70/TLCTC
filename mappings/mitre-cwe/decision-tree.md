@@ -35,10 +35,18 @@ Q2: Is this a CODE IMPLEMENTATION FLAW?
     │         └── NO → stop here
     └── NO ↓
 
-Q3: Is this a CREDENTIAL or AUTHENTICATION weakness?
-    (weak passwords, session fixation, missing authentication, improper token handling)
+Q3: Is this a CREDENTIAL HANDLING weakness?
+    (weak passwords/tokens stored or transmitted, predictable session IDs,
+     hash strength insufficient for offline cracking, default/hard-coded credentials)
     ├── YES → #4 Identity Theft
     └── NO ↓
+
+    NOTE — Authentication-LOGIC bypass is NOT this question.
+    Per Axiom X / R-CRED, credential acquisition follows the enabling cluster
+    and credential APPLICATION is always #4. But a flaw in the authentication
+    function's logic itself (e.g., bypass via spoofed parameter, missing check,
+    wrong comparison) is abuse of the auth function and maps to #1 (Q9 below).
+    CWE-287 Improper Authentication and similar bypass-class CWEs → #1.
 
 Q4: Is this a COMMUNICATION PATH weakness?
     (missing encryption in transit, certificate validation failure, channel security)
@@ -119,18 +127,36 @@ CWE includes many high-level entries that are too abstract to map to a single cl
 
 | Verdict | Guidance | Examples |
 |---------|----------|----------|
-| **Discouraged** | Maps to multiple clusters depending on context | CWE-20 (Input Validation), CWE-693 (Protection Mechanism Failure) |
-| **Prohibited** | Not a concrete weakness — organizational node | CWE-310 (Cryptographic Issues — Category), CWE-1000 (Research Concepts — View) |
+| **Discouraged** | Maps to multiple clusters depending on context, OR maintainability/code-quality defect with no direct threat cluster | CWE-20 (Input Validation), CWE-693 (Protection Mechanism Failure), CWE-1120 (Excessive Code Complexity) |
+| **Prohibited** | Not a concrete weakness — organizational node (category, view, list, deprecated) | CWE-310 (Cryptographic Issues — Category), CWE-1000 (Research Concepts — View), CWE-1432 (MIHW List) |
 
 For these entries, classify at the **child CWE** or **CVE level** instead.
+
+## Enabling-Condition CWEs
+
+Some CWEs describe a *state of exposure* rather than a threat action — for example, cleartext password storage, missing encryption in transit, weak crypto algorithm, predictable PRNG. By policy, these map to **the cluster they enable**, not to N/A:
+
+| Enabling condition | Cluster | Reason |
+|--------------------|---------|--------|
+| Cleartext storage of credentials/tokens | `#4` | The downstream threat is credential application for impersonation |
+| Cleartext transmission / weak channel encryption | `#5` | The downstream threat is interception |
+| Weak password hash (no salt, fast hash, broken algorithm) | `#4` | Hash is reversible to credential |
+| Weak encryption algorithm (broken cipher, weak IV, expired key) | `#5` | Channel/data recoverable to interceptor |
+| Predictable PRNG used for security values | `#4 \| #5` | Token use → #4; key/IV use → #5 |
+| Missing rate-limiting on auth endpoint | `#4 \| #6` | Auth → credential brute force; resource → flooding |
+| Maintainability defect (firmware-not-updateable, dead code) | `N/A` (Discouraged) | Does not map to any single cluster |
+
+The `R-CRED` distinction still applies: the *acquisition* step takes its cluster from the access vector (e.g., `#7` malware reading the storage, `#5` MitM intercepting transit). The CWE itself is classified by what the exposure is *for* — the threat the weakness enables once the storage/channel is reached.
 
 ## Quality Checklist
 
 Before finalizing a CWE mapping, verify:
 
-- [ ] **Concrete weakness** — Not a category, view, or deprecated entry
+- [ ] **Concrete weakness** — Not a category, view, list, or deprecated entry (else Prohibited)
 - [ ] **Specific enough** — Can determine a single generic vulnerability (or explicit alternatives)
 - [ ] **Role considered** — If code flaw, is it server or client? If unclear, mark `#2 | #3`
-- [ ] **R-EXEC respected** — If code execution is possible, `→ #7` is included
-- [ ] **Cause, not consequence** — Mapping the exploitable flaw, not the resulting impact
+- [ ] **R-EXEC respected** — If the weakness enables foreign code execution, `→ #7` is included (e.g., code injection, deserialization, template injection, RFI, dynamic class loading from untrusted source)
+- [ ] **R-CRED respected** — Authentication-logic bypass = `#1`; credential application = `#4`; credential acquisition takes the cluster of the access vector, not `#4`
+- [ ] **Enabling-condition policy** — If the CWE is a state of exposure (cleartext storage, weak crypto, missing rate-limit), map to the cluster it enables, not N/A
+- [ ] **Cause, not consequence** — Mapping the exploitable flaw, not the resulting impact (Axiom III)
 - [ ] **Verdict assigned** — Confidence level reflects mapping certainty
