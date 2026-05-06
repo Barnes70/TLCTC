@@ -435,6 +435,7 @@ tlctc/
 │   ├── tlctc-v2.0-json-architecture.md       # JSON Architecture Specification
 │   ├── tlctc-fair-integration-proposal.md    # FAIR integration proposal (Layer 4 spec)
 │   ├── tlctc-cve-extension-proposal.md       # CVE extension proposal
+│   ├── tlctc-plus-ncsc-proposal.md           # TLCTC+ national reporting extension for NCSCs/CERTs
 │   ├── npm-supply-chain-blog-final.md        # npm supply chain threat analysis
 │   ├── Why Exactly Ten_ — TLCTC Framework Architecture.pdf # Framework architecture rationale
 │   └── images/                               # Diagrams and visual assets
@@ -580,6 +581,7 @@ tlctc/
 7. **Track active exploitation** — See [`mappings/cisa-kev/`](mappings/cisa-kev/) for a TLCTC-cluster view of the CISA Known Exploited Vulnerabilities catalog (1,568 CVEs, weekly-refreshable, deterministically derived).
 8. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
 9. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
+10. **Read the extension proposals** — See [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) for the TLCTC+ national reporting extension (NCSCs/CERTs), [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) for CVE enrichment, and [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) for FAIR risk quantification.
 
 ## Contributing
 

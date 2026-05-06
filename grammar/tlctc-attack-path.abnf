@@ -1,10 +1,13 @@
 ; TLCTC Attack Path Notation — Formal Grammar
-; Version: 2.1
+; Version: 2.1 (+ TLCTC+ BRE extension)
 ; Format:  ABNF (RFC 5234), UTF-8 source encoding required.
 ; Canonical prose specification: documentation/tlctc-v2.0-whitepaper.md §11.7
+; TLCTC+ BRE annotation:        documentation/tlctc-plus-ncsc-proposal.md §9
 ;
 ; This file is the machine-ingestable mirror of §11.7. In case of
 ; divergence, the whitepaper is normative until this file is updated.
+; The BRE_TAG production is an additive extension introduced by the
+; TLCTC+ proposal (consequence-side annotation, parallel to DRE_TAG).
 ;
 ; Unicode literals used directly in the grammar:
 ;   →  U+2192 RIGHTWARDS ARROW
@@ -35,7 +38,10 @@ STEP            = CLASSIFIED_STEP / UNRESOLVED_STEP
 CLASSIFIED_STEP = CLUSTER_REF [SP* BOUNDARY] [SP* INTRA_BOUNDARY] STEP_TRAILER
 
 ; Shared trailer for step-level and group-level annotations/outcomes.
-STEP_TRAILER    = *(SP* STEP_ANN) [SP* DRE_TAG]
+; A trailer MAY carry zero or more BRE_TAGs after an optional DRE_TAG —
+; both DRE and BRE are consequence-side annotations and may co-occur
+; (e.g., "#9 -> #4 + [DRE: C] + [BRE: Account Takeover Fraud]").
+STEP_TRAILER    = *(SP* STEP_ANN) [SP* DRE_TAG] *(SP* BRE_TAG)
 
 ; V2.1 Unresolved-Step Operators (see whitepaper §11.5.4)
 UNRESOLVED_STEP  = UNRESOLVED_TOKEN [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN)
@@ -67,6 +73,13 @@ DT_VAL          = 1*(VCHAR)     ; e.g., 2h, 5m, instant, fast, ?, ~15m
 DRE_TAG         = "+" SP* "[DRE:" SP* DRE_LIST "]"
 DRE_LIST        = DRE_LET *(SP* "," SP* DRE_LET)
 DRE_LET         = "C" / "I" / "A" / "Av" / "Ac"
+
+; TLCTC+ BRE (Business Risk Event) annotation — see tlctc-plus-ncsc-proposal.md §9.
+; One BRE_LABEL per tag; multiple BRE_TAGs MAY co-occur on the same trailer
+; (e.g., "+ [BRE: Romance Scam] + [BRE: Public Confidence Harm]").
+; Labels are drawn from a controlled national vocabulary (proposal §13).
+BRE_TAG         = "+" SP* "[BRE:" SP* BRE_LABEL "]"
+BRE_LABEL       = 1*(ALPHA / DIGIT / SP / "-" / "_" / "/" / "(" / ")" / "&" / "." / "'")
 
 2DIG            = DIGIT DIGIT
 SP              = %x20

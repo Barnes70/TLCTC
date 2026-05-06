@@ -6,7 +6,7 @@ Machine-ingestable formal grammar for TLCTC attack path notation.
 
 | File | Contents |
 | --- | --- |
-| `tlctc-attack-path.abnf` | ABNF (RFC 5234) grammar for the textual attack path notation, covering v2.0 core and v2.1 extensions (transit, intra-system boundaries, unresolved-step operators) |
+| `tlctc-attack-path.abnf` | ABNF (RFC 5234) grammar for the textual attack path notation, covering v2.0 core, v2.1 extensions (transit, intra-system boundaries, unresolved-step operators), and the TLCTC+ BRE annotation |
 
 The canonical *prose* specification lives in `documentation/tlctc-v2.0-whitepaper.md` §11.7. This directory is the machine-readable mirror.
 
@@ -22,6 +22,7 @@ The grammar accepts any syntactically well-formed attack path string, including:
 - Unresolved-step operators `?` and `…`
 - Step annotations (`[conf=low]`, `[inferred]`, `[evidence=...]`)
 - Data risk events (`+ [DRE: C, I, A, Av, Ac]`)
+- Business risk events (`+ [BRE: <label>]`) — TLCTC+ additive consequence-side annotation; see [`documentation/tlctc-plus-ncsc-proposal.md`](../documentation/tlctc-plus-ncsc-proposal.md)
 
 ## What It Does Not Cover
 
