@@ -6308,12 +6308,12 @@ Each example is written as:
 - **Outcomes:** Varies
 - **Notes:** Template injection is a server-side implementation flaw (#2). If it leads to FEC execution via the template engine/runtime, record #7.
 
-### B8 — Client-side XSS where injected script runs (#3 → #7)
+### B8 — DOM-based XSS where injected script runs (#3 → #7)
 
-- **Scenario:** Reflected XSS causes attacker JavaScript to execute in the browser.
+- **Scenario:** Client-side JavaScript unsafely handles attacker-controlled input (e.g., `location.hash`, `postMessage`, fragment data), causing attacker JavaScript to execute in the browser.
 - **Attack Path:** `#3 → #7`
 - **Outcomes:** Commonly `[Data Risk Event: C]` (session/token theft) and subsequent `→ #4`
-- **Notes:** The bug is in client-role content handling (#3). Script execution is FEC → #7.
+- **Notes:** The implementation flaw is in **client-side** code (#3 by R-ROLE). Script execution is FEC → #7. **Reflected and Stored XSS are `#2 → #7`** (the encoding flaw is in server-side code; see the XSS row in the cluster mapping table) — use #3 only when the bug is genuinely client-side.
 
 ### B9 — Client parsing flaw yields crash (no FEC) (#3)
 
