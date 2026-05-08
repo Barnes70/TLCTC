@@ -1,0 +1,229 @@
+; TLCTC+ Attack Path / Record Notation — Formal Grammar
+; Version: TLCTC+ v0.3 (base framework: TLCTC v2.1)
+; Format:  ABNF (RFC 5234), UTF-8 source encoding required.
+; Canonical prose specification: documentation/tlctc-plus-specification.md §8
+; License: CC BY 4.0
+;
+; Companion files:
+;   grammar/tlctc-attack-path.abnf — core TLCTC v2.1 grammar (with the
+;     v0.1 free-text BRE extension). Use that grammar for plain v2.1
+;     attack paths and v0.1-style records.
+;   This file (tlctc-plus-attack-path.abnf) is a self-contained mirror
+;     of TLCTC+ v0.3 §8. Use it to validate TLCTC+ records:
+;       - record_type = core_cyber_incident
+;       - record_type = hybrid_cyber_enabled_harm
+;       - record_type = pure_9_digital_crime
+;     Structured PATTERN/BRE/IMPACT/REPORT codes are required;
+;     free-text BRE labels (v0.1) are NOT accepted by this grammar.
+;
+; Coverage
+;   - Six TLCTC+ tracks: Cause / SRE / DRE / BRE / Impact / Report
+;   - Cause-side step annotations: Pattern (bracket-only), conf, inferred
+;   - Consequence-side annotations: + [SRE], + [DRE: ...], + [BRE: ...],
+;       + [Impact: ...], + [Report: ...]
+;   - R-9-BOUNDARY at grammar level: bridge clusters #8/#9/#10 MUST
+;       carry a boundary annotation in TLCTC+ records.
+;   - R-PATTERN-POSITION at grammar level: Pattern is bracket-only
+;       (no leading "+"); SRE/DRE/BRE/Impact/Report are additive only.
+;   - R-V01-MIGRATION at grammar level: BRE codes are structured
+;       (BRE-XXX.YY); free-text BRE labels do not parse.
+;   - Pure-#9 record skeleton: boundary required, SRE forbidden,
+;       DRE optional (direct-disclosure cases per §3.4 / §5.4).
+;
+; What this grammar does NOT enforce (validator territory)
+;   - R-EXEC, R-CRED, R-SUPPLY, R-ROLE, Axiom IV (single-cluster rule)
+;   - R-DRE-PLACEMENT (link DRE to the correct step)
+;   - R-BRE-OP-SCOPE beyond bracket fencing
+;   - R-RECOVERABILITY (parsers cannot strip tags and re-validate)
+;   - DRE legality on pure-9 records (only direct-disclosure cases are
+;       semantically valid; grammar accepts any DRE letter combination).
+;   - Conformance items 3, 4(b), 12 from §19.
+;
+; Unicode literals used directly in the grammar:
+;   →  U+2192 RIGHTWARDS ARROW
+;   ⇒  U+21D2 RIGHTWARDS DOUBLE ARROW   (V2.1 transit operator)
+;   …  U+2026 HORIZONTAL ELLIPSIS       (V2.1 unresolved gap)
+;   Δ  U+0394 GREEK CAPITAL LETTER DELTA (Δt — temporal gap annotation)
+;
+; Parsers that do not natively consume UTF-8 literals should preprocess
+; the input or replace the literal characters with hex UTF-8 byte
+; sequences (e.g., "→" → %xE2.86.92).
+; ---------------------------------------------------------------------
+
+; =====================================================================
+; Top-level record
+; =====================================================================
+
+TLCTC_PLUS_RECORD = CYBER_RECORD / PURE_9_RECORD
+
+; -- Cyber record -----------------------------------------------------
+; A core_cyber_incident or hybrid_cyber_enabled_harm record.
+; SRE annotation is permitted at most once per record. The grammar
+; accepts zero SRE_TAGs (pre-compromise hypothesis records, §8.2 note);
+; R-SRE makes SRE_TAG REQUIRED once Loss of Control / System Compromise
+; has occurred — that is a validator-level rule.
+CYBER_RECORD    = TLCTC_PATH
+                  [SP+ SRE_TAG]
+                  *(SP+ DRE_TAG)
+                  *(SP+ BRE_TAG)
+                  *(SP+ IMPACT_TAG)
+                  *(SP+ REPORT_TAG)
+
+; -- Pure-#9 record ---------------------------------------------------
+; SRE forbidden by definition (no IT system was compromised).
+; DRE optional and limited to direct-disclosure semantics (§3.4 / §5.4).
+; BRE required (at least one).
+; Boundary on the #9 anchor REQUIRED (R-9-BOUNDARY).
+PURE_9_RECORD   = "#9" SP* BOUNDARY
+                  [SP+ PATTERN_TAG]
+                  [SP+ DRE_TAG]
+                  1*(SP+ BRE_TAG)
+                  *(SP+ IMPACT_TAG)
+                  *(SP+ REPORT_TAG)
+
+; =====================================================================
+; TLCTC path (cause-side)
+; =====================================================================
+
+TLCTC_PATH      = PHASE *(SP* EDGE SP* PHASE)
+
+EDGE            = (ARROW / ARROW_ASCII) [SP* DT_ANN]
+ARROW           = "→"
+ARROW_ASCII     = "->"
+
+PHASE           = STEP / PAR_GROUP
+
+; A PAR_GROUP MAY carry trailing annotations and a DRE_TAG / BRE_TAG
+; applied to the group as a whole (e.g., "(#1 + #7) + [DRE: Ac]").
+PAR_GROUP       = "(" SP* STEP *(SP* "+" SP* STEP) SP* ")" STEP_TRAILER
+
+STEP            = CLASSIFIED_STEP / UNRESOLVED_STEP
+CLASSIFIED_STEP = BRIDGE_STEP / INTERNAL_STEP
+
+; R-9-BOUNDARY: bridge clusters #8/#9/#10 MUST carry a boundary in
+; TLCTC+ records. This is a profile strengthening over the v2.1 SHOULD.
+BRIDGE_STEP     = BRIDGE_CLUSTER SP* BOUNDARY [SP* INTRA_BOUNDARY] STEP_TRAILER
+
+; Internal clusters #1-#7 may carry an inter-organizational boundary
+; (rare but valid in v2.1) and/or an intra-system boundary.
+INTERNAL_STEP   = INTERNAL_CLUSTER [SP* BOUNDARY] [SP* INTRA_BOUNDARY] STEP_TRAILER
+
+; STEP_TRAILER carries cause-side step annotations (Pattern, conf,
+; inferred) followed by consequence-side DRE/BRE tags. SRE / Impact /
+; Report attach at the record level, not the step level.
+STEP_TRAILER    = *(SP* STEP_ANN) [SP* DRE_TAG] *(SP* BRE_TAG)
+
+; v2.1 unresolved-step operators
+UNRESOLVED_STEP  = UNRESOLVED_TOKEN [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN)
+UNRESOLVED_TOKEN = "?" / "…" / "..."
+
+; -- Clusters ---------------------------------------------------------
+
+BRIDGE_CLUSTER   = "#8" / "#9" / "#10"
+
+INTERNAL_CLUSTER = STRATEGIC_INTERNAL / OPERATIONAL_REF
+STRATEGIC_INTERNAL = "#1" / "#2" / "#3" / "#4" / "#5" / "#6" / "#7"
+OPERATIONAL_REF  = "TLCTC-" 2DIG "." 2DIG    ; e.g., TLCTC-09.03
+
+; =====================================================================
+; Cause-side step annotations
+; =====================================================================
+; Pattern is bracket-only per R-PATTERN-POSITION (no leading "+").
+; conf / inferred / generic [key=value] follow v2.1.
+
+STEP_ANN        = PATTERN_TAG
+                / "[inferred]"
+                / "[" ANN_KEY "=" ANN_VAL "]"
+
+ANN_KEY         = 1*(ALPHA / DIGIT / "_" / "-")
+ANN_VAL         = 1*VCHAR_NO_RBR
+
+PATTERN_TAG     = "[Pattern:" SP* PATTERN_EXPR "]"
+PATTERN_EXPR    = PATTERN_TERM *(SP* "+" SP* PATTERN_TERM)
+PATTERN_TERM    = PATTERN_NODE / "(" SP* PATTERN_EXPR SP* ")"
+PATTERN_NODE    = PATTERN_CODE [SP+ LABEL]
+PATTERN_CODE    = "PATTERN-" 1*ALPHA "." 2DIG
+
+; =====================================================================
+; Edge / boundary primitives (v2.1, replicated for self-containment)
+; =====================================================================
+
+DT_ANN          = "[" "Δt" "=" DT_VAL "]"
+DT_VAL          = 1*VCHAR_NO_RBR
+
+BOUNDARY        = "||" "[" CONTEXT "]" "[" SPHERE_LIST "]" "||"
+SPHERE_LIST     = SPHERE *(TRANSIT_ARROW SPHERE) BOUNDARY_ARROW SPHERE
+BOUNDARY_ARROW  = ARROW / ARROW_ASCII
+TRANSIT_ARROW   = "⇒"
+CONTEXT         = 1*(ALPHA / DIGIT / "_" / "-")
+SPHERE          = "@" 1*(ALPHA / DIGIT / "_" / "-" / "(" / ")")
+
+INTRA_BOUNDARY  = "|" "[" INTRA_TYPE "]" "[" SPHERE BOUNDARY_ARROW SPHERE "]" "|"
+INTRA_TYPE      = "sandbox" / "privilege" / "process" / "hypervisor"
+
+; =====================================================================
+; Consequence-side tags (additive; "+" prefix)
+; =====================================================================
+
+; -- SRE: Loss of Control / System Compromise -------------------------
+; SRE has no payload — it is a Bow-Tie centre marker.
+SRE_TAG         = "+" SP* "[SRE]"
+
+; -- DRE: Data Risk Event ---------------------------------------------
+; v2.1 DRE letter set; "A" is a deprecated legacy alias retained for
+; backward compatibility (CLAUDE.md / v2.0 corpus). New records SHOULD
+; prefer "Av" or "Ac".
+DRE_TAG         = "+" SP* "[DRE:" SP* DRE_LIST "]"
+DRE_LIST        = DRE_LET *(SP* "," SP* DRE_LET)
+DRE_LET         = "Av" / "Ac" / "C" / "I" / "A"
+
+; -- BRE: Business Risk Event -----------------------------------------
+; Structured codes only (R-V01-MIGRATION). BRE_EXPR supports sequential
+; (→) and parallel (+) chains and parenthesised sub-expressions per
+; R-BRE-CHAIN. The "→" / "+" inside [BRE: ...] are bracket-fenced and
+; semantically distinct from cause-side path operators (R-BRE-OP-SCOPE).
+BRE_TAG         = "+" SP* "[BRE:" SP* BRE_EXPR "]"
+BRE_EXPR        = BRE_TERM *(SP* BRE_OP SP* BRE_TERM)
+BRE_TERM        = BRE_NODE / "(" SP* BRE_EXPR SP* ")"
+BRE_OP          = ARROW / ARROW_ASCII / "+"
+BRE_NODE        = BRE_CODE [SP+ LABEL]
+BRE_CODE        = "BRE-" 1*ALPHA "." 2DIG
+
+; -- Impact: quantified or qualified measurement ----------------------
+; IMPACT_NODE optionally carries a label and a "= <value>" tail
+; (e.g., "IMPACT-FIN.12 Direct Fraud Loss = CHF 4,500").
+IMPACT_TAG      = "+" SP* "[Impact:" SP* IMPACT_EXPR "]"
+IMPACT_EXPR     = IMPACT_TERM *(SP* "+" SP* IMPACT_TERM)
+IMPACT_TERM     = IMPACT_NODE / "(" SP* IMPACT_EXPR SP* ")"
+IMPACT_NODE     = IMPACT_CODE [SP+ LABEL] [SP+ "=" SP+ IMPACT_VALUE]
+IMPACT_CODE     = "IMPACT-" 1*ALPHA "." 2DIG
+IMPACT_VALUE    = 1*VCHAR_NO_RBR
+
+; -- Report: procedural artefact / workflow state ---------------------
+REPORT_TAG      = "+" SP* "[Report:" SP* REPORT_EXPR "]"
+REPORT_EXPR     = REPORT_TERM *(SP* "+" SP* REPORT_TERM)
+REPORT_TERM     = REPORT_NODE / "(" SP* REPORT_EXPR SP* ")"
+REPORT_NODE     = REPORT_CODE [SP+ LABEL]
+REPORT_CODE     = "REPORT-" 1*ALPHA "." 2DIG
+
+; =====================================================================
+; Shared terminals
+; =====================================================================
+
+; LABEL: free-text human-readable suffix on PATTERN/BRE/IMPACT/REPORT
+; nodes. Kept restrictive on purpose — operator characters ("+", "→",
+; "=") and bracket characters are excluded so the parser can find tag
+; boundaries unambiguously. Trailing whitespace is the parser's
+; responsibility to trim.
+LABEL           = LABEL_CHAR *(LABEL_CHAR / SP)
+LABEL_CHAR      = ALPHA / DIGIT / "-" / "_" / "/" / "(" / ")"
+                / "&" / "." / "'" / "," / ":" / ";" / "?"
+
+2DIG            = DIGIT DIGIT
+SP              = %x20
+ALPHA           = %x41-5A / %x61-7A
+DIGIT           = %x30-39
+
+; VCHAR minus "]" (0x5D) — used for bracketed payloads where the
+; closing bracket terminates the tag.
+VCHAR_NO_RBR    = %x21-5C / %x5E-7E
