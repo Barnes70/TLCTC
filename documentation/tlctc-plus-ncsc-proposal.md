@@ -2,10 +2,15 @@
 
 **Author:** Bernhard Kreinz
 **Framework Version:** TLCTC v2.1
+**Document Version:** v0.1 (proposal)
 **License:** CC BY 4.0
 **Status:** Working proposal
 
 **Core thesis:** Keep TLCTC pure. Extend the reporting layer.
+
+> **Companion document:** This is the **policy proposal** — the case for adopting TLCTC+, the governance model, the adoption path. For the **implementation specification** (grammar, conformance rules, BRE/PATTERN/IMPACT/REPORT catalogues, JSON record formats, decision procedure), see [`tlctc-plus-specification.md`](tlctc-plus-specification.md). The proposal makes the case; the spec defines how to build it.
+>
+> Note: the spec's annotation grammar refines what this proposal sketches in §9 — in particular, free-text BRE labels (e.g. `+ [BRE: Romance Scam]`) are deprecated in v0.3 in favor of structured codes (`[Pattern: PATTERN-FIN.11] + [BRE: BRE-FIN.11]`). See spec §7 R-V01-MIGRATION for the migration path.
 
 ---
 
