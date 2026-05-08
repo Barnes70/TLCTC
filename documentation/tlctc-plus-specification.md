@@ -5,7 +5,7 @@
 **Author:** Bernhard Kreinz  
 **Base framework:** TLCTC v2.1  
 **Extension version:** TLCTC+ v0.3  
-**Status:** Working draft  
+**Status:** Released  
 **License:** CC BY 4.0  
 **Core thesis:** Keep TLCTC pure. Extend the reporting layer.  
 
@@ -33,19 +33,19 @@ TLCTC  ─┐
 TLSFC  ─┘
 ```
 
-In the v0.3 document, the shared consequence catalogues remain embedded as candidate catalogues because TLCTC+ is the first practical use case. The catalogue codes themselves (PATTERN, BRE, IMPACT, REPORT) are unchanged from v0.2 and are versioned independently — see §0.1 below. Once TLSFC reaches publication readiness, the BRE / Impact / Report catalogues SHOULD be extracted into a neutral consequence-side specification shared by TLCTC and TLSFC.
+The shared consequence catalogues are embedded in this specification because TLCTC+ is their first consumer. The catalogue codes (PATTERN, BRE, IMPACT, REPORT) are versioned independently from the specification document — see §0.1. Once TLSFC reaches publication readiness, the BRE / Impact / Report catalogues SHOULD be extracted into a neutral consequence-side specification shared by TLCTC and TLSFC.
 
 ### 0.1 Document and Catalogue Versions
 
 ```text
 Specification document version:   TLCTC+ v0.3
-PATTERN catalogue version:        v0.2 (unchanged from v0.2 spec)
-BRE catalogue version:            v0.2 (unchanged from v0.2 spec)
-IMPACT catalogue version:         v0.2 (unchanged from v0.2 spec)
-REPORT catalogue version:         v0.2 (unchanged from v0.2 spec)
+PATTERN catalogue version:        v0.2
+BRE catalogue version:            v0.2
+IMPACT catalogue version:         v0.2
+REPORT catalogue version:         v0.2
 ```
 
-The catalogue version (`v0.2`) intentionally lags the document version (`v0.3`): v0.3 is a grammar/conformance refinement of v0.2 with no additions, removals, or renumbering of catalogue codes. The next catalogue revision (v0.3 codes) will bump together with whatever document version introduces them.
+The catalogue version intentionally lags the document version: v0.3 is a grammar and conformance refinement that adds, removes, or renumbers no catalogue codes. The next catalogue revision will bump alongside the document version that introduces it.
 
 ---
 
@@ -308,6 +308,24 @@ Mnemonic:
 ```
 
 A Pattern annotation MUST NOT be written with `+`, and a SRE/DRE/BRE/Impact/Report annotation MUST NOT be written without `+`. See §7 R-PATTERN-POSITION.
+
+### 3.9 Cause/Consequence Independence
+
+A TLCTC cluster on the cause side does NOT determine the BRE family on the consequence side.
+
+The cluster classifies the generic vulnerability that was exploited; the BRE family classifies the kind of business, citizen, service, regulatory, or organizational consequence that resulted. These are independent dimensions, and a record may use any combination supported by the case.
+
+```text
+#4 → BRE-ID.*     human-identity takeover (e.g., personal email account)
+#4 → BRE-SVC.*    technical-identity takeover (e.g., service-account → payment outage; no BRE-ID)
+#7 → BRE-FIN.*    malware-driven fraud
+#7 → BRE-SVC.*    malware-driven service outage
+#9 → BRE-FIN.*    pure-#9 induced payment (no SRE, no BRE-ID)
+#9 → BRE-CUS.*    pure-#9 citizen harm without financial event
+#10 → BRE-REG.*   compromised supplier triggering regulatory notification
+```
+
+The same #4 step may produce a BRE-ID, BRE-SVC, BRE-FIN, BRE-DATA, BRE-ORG, or none of these depending on whose identity was stolen and what the attacker did with it. Cause-side classification of credential use remains #4 (per R-CRED); consequence-side BRE follows the actual harm. See §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE, §11.4 note, and §17.8 worked example.
 
 ---
 
@@ -644,6 +662,19 @@ v0.3:  #9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.11 Romance
 
 Free-text BRE labels remain readable in archival v0.1 records but MUST NOT be produced in new v0.3 records.
 
+### R-CAUSE-CONSEQUENCE-INDEPENDENCE
+
+The TLCTC cluster on the cause side and the BRE family on the consequence side are independent dimensions. A record MUST NOT assume that a given cluster automatically maps to a particular BRE family, and intake systems, mappers, or tooling MUST NOT auto-fill consequence-side BREs from cluster identity alone.
+
+In particular:
+
+- `#4` Identity Theft does NOT entail BRE-ID. `#4` against a **technical identity** (service account, API key, machine credential, Kerberos service ticket, OAuth client secret, certificate, robot/RPA account) typically produces BRE-SVC / BRE-FIN / BRE-DATA / BRE-ORG with no BRE-ID. BRE-ID is reserved for cases where a human or organizational identity is the harmed entity. See §11.4 note.
+- `#7` Malware does NOT entail any specific BRE family — outcome depends on payload behavior and operator objective.
+- `#9` Social Engineering does NOT entail BRE-FIN. Many `#9`-anchored cases produce BRE-CUS, BRE-REP, or BRE-LGL outcomes without any financial event.
+- `#10` Supply Chain Attack does NOT entail BRE-REG, even where regulatory reporting is common.
+
+Cluster identity classifies the generic vulnerability exploited (cause). BRE identity classifies the harmed business, citizen, service, regulatory, or organizational dimension (consequence). They MUST be recorded independently. See §3.9.
+
 ---
 
 ## 8. Formal Grammar
@@ -936,6 +967,10 @@ BRE-ID.17 Impersonation-Driven Authorization
 BRE-ID.18 Unauthorized Account Creation
 BRE-ID.19 Account Recovery Lockout
 ```
+
+Note: not every #4 Identity Theft step produces a BRE-ID. #4 against a **technical identity** (service account, API key, machine credential, Kerberos ticket, OAuth client secret) typically yields downstream BRE-SVC, BRE-FIN, BRE-DATA, or BRE-ORG consequences without any BRE-ID entry. BRE-ID is reserved for cases where a **human or organizational identity** is the harmed entity. Cause-side classification of the credential use remains #4 in both cases (per Axiom X / R-CRED); the consequence side records what actually happened to the business or citizen.
+
+Example: a stolen service-account credential used to disable a payment processor records `… → #4 + [SRE] + [BRE: BRE-SVC.11 Payment Function Unavailable]` — no BRE-ID, because no human or organizational identity was the harmed entity.
 
 ## 11.5 Legal
 
@@ -1575,6 +1610,20 @@ The #7 step exists only if foreign executable content executes. If the victim me
 
 Use #1 only when the attacker or victim misuses a legitimate software capability in a way that gives the attacker functional control or operational advantage without an implementation flaw and without FEC execution. If a remote-access tool is installed or executed as attacker-provided foreign executable content, record #7.
 
+## 17.8 Service-Account Compromise Causing Payment-Service Outage (Technical Identity)
+
+```text
+#9 ||[email][@External→@Org]|| → #7 + [SRE] + [DRE: C]
+→ #4 → #1 + [BRE: BRE-SVC.11 Payment Function Unavailable
+   → BRE-ORG.12 Business Continuity Plan Activated]
++ [Impact: IMPACT-OPS.11 Downtime Duration = 4 hours
+   + IMPACT-FIN.11 Lost Revenue = EUR 180,000]
+```
+
+The credential stolen was a **technical identity** — a payment-platform service-account credential discovered in the engineer's saved-secrets store after the workstation was compromised. Cause-side classification of the credential use is still `#4` (Axiom X / R-CRED applies regardless of whether the identity is human, organizational, or technical). The attacker then abuses legitimate operator functions on the payment service to take it offline (`#1`).
+
+The downstream BRE chain contains **no BRE-ID** entry. No human or organizational identity is the harmed entity — the harmed entity is the payment service itself. Compare §17.2 and §17.6, which both record `BRE-ID.13 Email Account Takeover Harm` because there a personal email account is the harmed identity. See §11.4 note and §3.9.
+
 ---
 
 # 18. Decision Procedure
@@ -1684,12 +1733,13 @@ A TLCTC+ v0.3 record is conformant if:
 13. It includes a v2.1 boundary operator on every bridge-cluster step (#8, #9, #10), including pure-#9 anchors (per R-9-BOUNDARY).
 14. It uses no free-text BRE labels — every BRE is a structured code from §11 (per R-V01-MIGRATION).
 15. Stripping all consequence-side annotations recovers a valid TLCTC v2.1 path or #9 anchor (per R-RECOVERABILITY).
+16. Consequence-side BRE families are recorded from observed harm, not auto-derived from cause-side cluster identity (per R-CAUSE-CONSEQUENCE-INDEPENDENCE).
 
 ---
 
-# 20. Candidate Extraction Notice
+# 20. Future Architecture
 
-The following catalogues are included in TLCTC+ v0.3 (catalogue codes unchanged at v0.2; see §0.1) for practical NCSC/CERT use:
+The following catalogues are embedded in TLCTC+ for practical NCSC/CERT use:
 
 ```text
 BRE Catalogue
@@ -1697,7 +1747,7 @@ Impact Catalogue
 Report Catalogue
 ```
 
-These catalogues are candidates for extraction into a shared consequence-side specification once TLSFC reaches publication readiness.
+They are candidates for extraction into a shared consequence-side specification once TLSFC reaches publication readiness.
 
 Target future architecture:
 
@@ -1758,18 +1808,16 @@ In that future architecture:
     - SRE-omission rule split into two cases (pure #9 vs pre-compromise hypothesis).
     - Added conformance items for Pattern annotation form, R-9-BOUNDARY, and free-text BRE prohibition (R-V01-MIGRATION).
     - Re-anchored R-RECOVERABILITY clause on v2.1 path validity, including bridge-cluster boundary operators.
-13. Bumped record schema reference from "TLCTC+ v0.2" to "TLCTC+ v0.3" in title block; v0.2 is retained as a working draft for diff/audit purposes.
-
-**Patch round (release-blocker resolution):**
-
-14. **§0.1 Document and Catalogue Versions** — added an explicit version table separating document version (v0.3) from catalogue version (v0.2 unchanged). Resolves accidentally-mixed version references throughout the spec.
+13. Bumped record schema reference from "TLCTC+ v0.2" to "TLCTC+ v0.3" in the title block.
+14. **§0.1 Document and Catalogue Versions** — added an explicit version table separating document version (v0.3) from catalogue version (v0.2).
 15. **§1.3 / §3.4 / §5.4 / §17.1** — refined pure-#9 DRE policy. A DRE MAY be recorded on a pure-#9 step when the social-engineering act itself directly causes data disclosure (typically `+ [DRE: C]`); this captures phishing-with-credential-disclosure cases that have not yet progressed to credential use. If credential use follows, the record transitions to hybrid form `→ #4 + [SRE]`.
 16. **§7 R-9-BOUNDARY reworded** — explicitly framed as a TLCTC+ profile strengthening of the v2.1 baseline, not a silent rewrite of core TLCTC. v2.1 establishes the boundary-operator notation; TLCTC+ tightens the conformance level from SHOULD to MUST for reporting purposes.
 17. **§8.3 / §8.4 grammar repaired** — `<pure-9-record>` now requires `<boundary-annotation>` and admits an optional `<dre-annotation>`. `<tlctc-path>` extended to support `<tlctc-step>` with boundary, intra-system, and step annotations (Pattern, conf, inferred, Δt). `<boundary-annotation>` production added in §8.4a for self-containment.
-18. **§16 JSON examples** — added boundary operators to `tlctc_path` / `tlctc_anchor` fields in 16.1, 16.2, 16.3. Added `sre.status` field. All examples now fully v0.3-conformant.
-19. **§17.2 corrected** — Investment-scam-with-account-takeover example now uses `BRE-FIN.23 Unauthorized Crypto Transfer Executed` (attacker-executed transfer through taken-over account) instead of the incorrect `BRE-FIN.12 Authorized Crypto Transfer Made`. A contrasting victim-authorized variant added inline to clarify the authorized-vs-unauthorized distinction (which matters for fraud-statistics and reimbursement-regime classification).
+18. **§16 JSON examples** — added boundary operators to `tlctc_path` / `tlctc_anchor` fields in 16.1, 16.2, 16.3. Added `sre.status` field. All examples are fully v0.3-conformant.
+19. **§17.2 corrected** — Investment-scam-with-account-takeover example now uses `BRE-FIN.23 Unauthorized Crypto Transfer Executed` (attacker-executed transfer through taken-over account) instead of `BRE-FIN.12 Authorized Crypto Transfer Made`. A contrasting victim-authorized variant added inline to clarify the authorized-vs-unauthorized distinction (which matters for fraud statistics and reimbursement-regime classification).
 20. **§19 conformance item 4** — refined to allow DRE-without-SRE on pure-#9 steps for direct disclosure cases.
 21. **§21 changelog restructure** — flat `# 21` and `# 21a` headings replaced by `# 21. Changelog` with `## 21.1` and `## 21.2` subsections.
+22. **Cause/consequence independence made explicit** — added §3.9 design principle, §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE rule, §11.4 note distinguishing technical from human/organizational identities, §17.8 worked example (service-account compromise causing payment outage with no BRE-ID), §19 conformance item 16, and §22 glossary entry for **Technical Identity**. Clarifies that `#4` against a technical identity does not produce a BRE-ID, and that cause-side cluster and consequence-side BRE family are independent dimensions across all clusters.
 
 **Non-changes (v0.2 decisions retained in v0.3):**
 
@@ -1806,6 +1854,10 @@ A procedural artefact, report filing, workflow stage, or regulatory communicatio
 ## SRE — System Risk Event
 
 Loss of Control / System Compromise. The cyber Bow-Tie central event.
+
+## Technical Identity
+
+A non-human credential or principal: service account, API key, machine credential, Kerberos service ticket, OAuth client secret, certificate, robot/RPA account. Distinct from a *human or organizational identity* (a person, a customer account, an employee mailbox, a corporate brand). Cause-side classification of the credential use is `#4` Identity Theft regardless (per R-CRED), but the consequence-side BRE typically falls outside BRE-ID. See §11.4 note, §3.9, and §17.8.
 
 ## TLCTC+
 
