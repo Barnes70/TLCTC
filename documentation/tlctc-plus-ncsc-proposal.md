@@ -2,15 +2,15 @@
 
 **Author:** Bernhard Kreinz
 **Framework Version:** TLCTC v2.1
-**Document Version:** v0.1 (proposal)
+**Document Version:** v0.3 (proposal, aligned with TLCTC+ specification v0.3)
 **License:** CC BY 4.0
 **Status:** Working proposal
 
 **Core thesis:** Keep TLCTC pure. Extend the reporting layer.
 
-> **Companion document:** This is the **policy proposal** — the case for adopting TLCTC+, the governance model, the adoption path. For the **implementation specification** (grammar, conformance rules, BRE/PATTERN/IMPACT/REPORT catalogues, JSON record formats, decision procedure), see [`tlctc-plus-specification.md`](tlctc-plus-specification.md). The proposal makes the case; the spec defines how to build it.
+> **Companion document:** This is the **policy proposal** — the case for adopting TLCTC+, the governance model, the adoption path. For the **implementation specification** (grammar, conformance rules, PATTERN/BRE/IMPACT/REPORT catalogues, JSON record formats, decision procedure), see [`tlctc-plus-specification.md`](tlctc-plus-specification.md). The proposal makes the case; the spec defines how to build it.
 >
-> Note: the spec's annotation grammar refines what this proposal sketches in §9 — in particular, free-text BRE labels (e.g. `+ [BRE: Romance Scam]`) are deprecated in v0.3 in favor of structured codes (`[Pattern: PATTERN-FIN.11] + [BRE: BRE-FIN.11]`). See spec §7 R-V01-MIGRATION for the migration path.
+> Notation used throughout this proposal follows the TLCTC+ v0.3 grammar: scam, fraud, and manipulation playbook labels are recorded as `[Pattern: PATTERN-XXX.YY ...]` on the cause-side step; consequence events are recorded as structured BRE codes (`+ [BRE: BRE-XXX.YY ...]`); the cyber Bow-Tie centre is recorded as `+ [SRE]`; measurements as `+ [Impact: ...]`; procedural artefacts as `+ [Report: ...]`. Free-text BRE labels from the v0.1 draft of this proposal (`+ [BRE: Romance Scam]`) are deprecated — see spec §7 R-V01-MIGRATION for the migration path.
 
 ---
 
@@ -29,15 +29,19 @@ The extension starts with one very specific gap: manipulation-driven digital har
 The proposal is therefore simple:
 
 - keep the ten TLCTC clusters unchanged
-- preserve the Bow-Tie separation between causes, Data Risk Events, and Business Risk Events
+- preserve the Bow-Tie separation between causes, System Risk Events, Data Risk Events, and Business Risk Events
 - introduce TLCTC+ as an intake and reporting profile for NCSCs and CERTs
-- begin TLCTC+ with a formal handoff from `#9 Social Engineering` to standardized `BRE` notation for digitally mediated harms that fall outside core cyber-compromise analysis
+- record scam, fraud, and manipulation playbooks as **Pattern** metadata on the cause-side step (bracket-only), and record the actual business or citizen consequence as a structured **BRE** code on the consequence side
 
-Recommended notation:
+Recommended notation (TLCTC+ v0.3):
 
-`#9 + [BRE: Romance Scam]`
+```
+#9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.11 Romance / Relationship Scam]
++ [BRE: BRE-FIN.11 Authorized Push Payment Made]
++ [Impact: IMPACT-FIN.12 Direct Fraud Loss = CHF 4,500]
+```
 
-This reuses the existing additive Bow-Tie grammar that TLCTC already applies to Data Risk Events (`+ [DRE: ...]`). BREs sit on the consequence side of the Bow-Tie alongside DREs, so an additive annotation — not a new operator — is the semantically correct extension. No core TLCTC operator is overloaded, and no new symbol is introduced into the path grammar.
+All consequence-side tracks (`+ [SRE]`, `+ [DRE: ...]`, `+ [BRE: ...]`, `+ [Impact: ...]`, `+ [Report: ...]`) reuse the existing additive Bow-Tie grammar that TLCTC already applies to `+ [DRE: ...]`. Pattern is the only TLCTC+ annotation that attaches in bracket-only form (no `+`), because Pattern is cause-side metadata qualifying the step rather than a consequence-side event. No core TLCTC operator is overloaded, and no new symbol is introduced into the path grammar (the v2.1 transit operator `⇒` is left untouched).
 
 The result is a model that allows national centres to use one language across:
 
@@ -107,8 +111,10 @@ Its purpose is narrower and more practical: to define a stable reporting extensi
 This means:
 
 - threats remain on the cause side
+- System Risk Events (Loss of Control / System Compromise) remain the cyber Bow-Tie central event
 - Data Risk Events remain distinct from threats
 - Business Risk Events remain consequence-side events
+- Patterns remain cause-side narrative metadata; Impacts remain measurements; Reports remain procedural artefacts
 - the ten TLCTC clusters remain unchanged
 - TLCTC+ is an extension profile for intake and reporting, not a new threat taxonomy
 
@@ -178,53 +184,85 @@ In many hybrid or broader digital-harm cases, the cause-side classification is a
 
 The problem is not how to classify the cause. The problem is how to record the downstream harm when there is no meaningful transition into the standard cyber-incident model.
 
-That is why the first formal extension is anchored here. The mechanism itself — appending `+ [BRE: ...]` to a cause-side path — is fully general and may be applied after any terminal cause-side step (e.g., `#4`, `#1`, `#7`) when the nationally relevant outcome is best captured as a Business Risk Event. The deliberate scope choice for the initial TLCTC+ profile is to begin at `#9` because that is where the structural gap between cyber-incident reporting and digitally mediated-harm reporting is widest.
+That is why the first formal extension is anchored here. The mechanism itself — attaching `[Pattern: ...]` to a cause-side step and appending `+ [SRE]`, `+ [DRE: ...]`, `+ [BRE: ...]`, `+ [Impact: ...]`, and `+ [Report: ...]` to the path — is fully general and may be applied after any terminal cause-side step (e.g., `#4`, `#1`, `#7`) when the nationally relevant outcome is best captured as a Business Risk Event. The deliberate scope choice for the initial TLCTC+ profile is to begin at `#9` because that is where the structural gap between cyber-incident reporting and digitally mediated-harm reporting is widest.
 
 ---
 
 ## 9. Proposed Extension Rule
 
-**TLCTC+ introduces a controlled `BRE` (Business Risk Event) annotation, appended to a TLCTC cause-side path, for digitally mediated harms that do not meaningfully enter core IT-system compromise analysis.**
+**TLCTC+ introduces six tracks — Cause / SRE / DRE / BRE / Impact / Report — layered over a TLCTC cause-side path, for cyber incidents, hybrid cyber-enabled harms, and digitally mediated harms that do not meaningfully enter core IT-system compromise analysis.**
 
-Recommended notation:
+Recommended notation (v0.3 — every BRE is a structured catalogue code, every scam/fraud playbook is a Pattern, every #8/#9/#10 step carries a boundary operator):
 
-`#9 + [BRE: Romance Scam]`
-`#9 + [BRE: Fake Tech Support Payment]`
-`#9 + [BRE: CEO Fraud Transfer]`
-`#9 + [BRE: Sextortion Payment]`
+```
+#9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.11 Romance / Relationship Scam]
++ [BRE: BRE-FIN.11 Authorized Push Payment Made]
+```
+
+```
+#9 ||[phone][@External→@Citizen]|| [Pattern: PATTERN-FIN.13 Fake Tech Support Scam]
++ [BRE: BRE-FIN.11 Authorized Push Payment Made]
+```
+
+```
+#9 ||[email][@External→@Org]|| [Pattern: PATTERN-FIN.21 Business Email Compromise]
++ [BRE: BRE-FIN.11 Authorized Push Payment Made]
+```
+
+```
+#9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.18 Sextortion Scam]
++ [BRE: BRE-FIN.11 Authorized Push Payment Made]
+```
 
 ### Semantics
 
 - `→` remains the core TLCTC operator for cause-side attack-path progression
+- `||[ctx][@A→@B]||` remains the v2.1 boundary operator (REQUIRED on every bridge-cluster step under TLCTC+ R-9-BOUNDARY)
+- `+ [SRE]` is the cyber Bow-Tie central event (Loss of Control / System Compromise)
 - `+ [DRE: X]` remains the notation for Data Risk Events
-- `+ [BRE: ...]` is introduced as a TLCTC+ Business Risk Event annotation, parallel to `+ [DRE: ...]`
+- `+ [BRE: BRE-XXX.YY ...]` is the TLCTC+ Business Risk Event annotation, structurally coded against the BRE catalogue (spec §11)
+- `[Pattern: PATTERN-XXX.YY ...]` is bracket-only (no leading `+`) and attaches to a cause-side step — it carries the scam, fraud, or manipulation playbook label
+- `+ [Impact: IMPACT-XXX.YY = <value>]` carries quantified or qualified measurements
+- `+ [Report: REPORT-XXX.YY ...]` carries procedural / regulatory reporting artefacts
 
-The choice to reuse the existing additive `+ [...]` grammar is deliberate. It places BREs on the same grammatical footing as DREs — both are consequence-side events of the Bow-Tie model — without inventing a new operator class and without overloading any existing operator (in particular, the v2.1 transit operator `⇒` is left untouched).
+The choice to reuse the existing additive `+ [...]` grammar for consequence-side annotations is deliberate. It places SRE, DRE, BRE, Impact, and Report on the same grammatical footing — all are consequence-side events of the Bow-Tie model — without inventing a new operator class and without overloading any existing operator (in particular, the v2.1 transit operator `⇒` is left untouched). Pattern is the one intentional asymmetry: it is cause-side metadata, so it attaches bracket-only, aligned with other v2.1 step-level annotations such as `[conf=low]`, `[inferred]`, and `[Δt=...]`.
 
-A path may carry both a DRE and a BRE annotation when both are relevant:
+A hybrid case may carry SRE, DRE, BRE, and Impact together:
 
-`#9 → #4 + [DRE: C] + [BRE: Account Takeover Fraud]`
+```
+#9 ||[email][@External→@Citizen]|| [Pattern: PATTERN-FIN.21 Business Email Compromise]
++ [DRE: C] → #4 + [SRE]
++ [BRE: BRE-ID.13 Email Account Takeover Harm → BRE-FIN.11 Authorized Push Payment Made]
++ [Impact: IMPACT-FIN.12 Direct Fraud Loss = EUR 80,000]
+```
 
-In this hybrid case, `+ [DRE: C]` records the cyber-incident consequence (loss of confidentiality through credential application) and `+ [BRE: Account Takeover Fraud]` records the nationally reportable downstream harm.
+In this case, `+ [DRE: C]` records the cyber-incident data consequence (credential disclosure during phishing), `+ [SRE]` records the central cyber event (loss of control of the mailbox), `+ [BRE: ...]` records the nationally reportable downstream harm chain, and `+ [Impact: ...]` records the measured loss.
 
 ---
 
-## 10. Why BRE Is the Right Destination
+## 10. Why Pattern + BRE Are the Right Destinations
 
-Romance scam, fake support payment, induced transfer, or sextortion payment are not threat clusters. They are not generic vulnerabilities. They are not causes in the TLCTC sense.
+Romance scam, fake support scam, CEO fraud, and sextortion are not threat clusters. They are not generic vulnerabilities. They are not causes in the TLCTC sense. The cause-side classification remains `#9`.
 
-The cause-side classification remains `#9`.
+But these labels are also not, by themselves, business events. A "romance scam" describes the attacker's manipulation narrative; the actual reportable event is the authorized push payment that follows. TLCTC+ v0.3 therefore splits the two:
 
-What follows is better understood as a consequence-side event. That is why `BRE` is the correct anchor for the extension.
+- the scam/fraud/manipulation playbook → **Pattern** (cause-side, bracket-only metadata)
+- the observable business or citizen consequence → **BRE** (consequence-side, structured catalogue code)
+- the measured magnitude of harm → **Impact** (consequence-side measurement)
 
-For TLCTC+ purposes, BRE should be interpreted broadly enough to cover:
+For TLCTC+ purposes the BRE catalogue (spec §11) is organized into nine families that cover:
 
-- organizational harm
-- financial harm
-- citizen-level economic harm
-- reputational harm
-- induced obligations or reporting consequences
-- other discrete consequence-side events relevant to national reporting
+- service / operational consequence (BRE-SVC)
+- customer / citizen / market consequence (BRE-CUS)
+- financial events — authorized and unauthorized (BRE-FIN)
+- identity / account harm (BRE-ID)
+- legal consequence (BRE-LGL)
+- regulatory / supervisory consequence (BRE-REG)
+- reputation / public communication (BRE-REP)
+- third-party / ecosystem consequence (BRE-3P)
+- internal organizational consequence (BRE-ORG)
+
+A BRE family is independent of cause-side cluster identity (spec §3.9 / R-CAUSE-CONSEQUENCE-INDEPENDENCE). The same `#4` step may produce BRE-ID (when the harmed entity is a human or organizational identity), BRE-SVC (when the stolen credential is a service account that controls a service), BRE-FIN, BRE-DATA, or none of these — recorded from the actual observed harm, not auto-derived from the cluster.
 
 This does not change TLCTC core semantics. It extends the reporting vocabulary that NCSCs and CERTs need in practice.
 
@@ -248,86 +286,109 @@ TLCTC+ must remain an extension profile around the framework, not a mutation of 
 
 ## 12. Case Typology for NCSCs and CERTs
 
-TLCTC+ should support three clearly separated case classes.
+TLCTC+ supports three clearly separated case classes, mirrored by the three `record_type` values in spec §15.1.
 
-### A. Core Cyber Incident
+### A. Core Cyber Incident (`record_type: core_cyber_incident`)
 
-A case that meaningfully fits the core TLCTC incident logic.
-
-Example:
-
-`#9 → #4 → #7 + [DRE: C]`
-
-### B. Hybrid Cyber-Enabled Harm
-
-A case in which a core TLCTC chain exists, but the nationally relevant outcome is best captured as a BRE.
+A case that meaningfully fits the core TLCTC incident logic: a TLCTC attack path leads to a System Risk Event, may produce DREs, and may cascade into BREs.
 
 Example:
 
-`#9 → #4 + [BRE: Account Takeover Fraud]`
+```
+#9 ||[email][@External→@Org]|| → #7 + [SRE] + [DRE: Ac]
++ [BRE: BRE-SVC.11 Payment Function Unavailable]
++ [Impact: IMPACT-OPS.11 Downtime Duration = 6 hours]
+```
 
-### C. Digitally Mediated Non-SRE Harm
+### B. Hybrid Cyber-Enabled Harm (`record_type: hybrid_cyber_enabled_harm`)
 
-A case that is digitally mediated and harmful, but does not meaningfully enter the standard cyber-incident chain (no System Risk Event, no DRE).
+A case in which a core TLCTC chain exists, but the nationally or regulatorily dominant interest is the consequence side (BRE chain and impact measurement).
 
 Example:
 
-`#9 + [BRE: Romance Scam]`
+```
+#9 ||[email][@External→@Org]|| + [DRE: C] → #4 + [SRE]
++ [BRE: BRE-ID.13 Email Account Takeover Harm → BRE-FIN.11 Authorized Push Payment Made]
++ [Impact: IMPACT-FIN.12 Direct Fraud Loss = EUR 80,000]
+```
+
+### C. Pure #9-Anchored Digital Crime (`record_type: pure_9_digital_crime`)
+
+A case that is digitally mediated and harmful, but no IT system is compromised — so no SRE is recorded. A DRE MAY be recorded only when the `#9` step itself directly causes data disclosure (typically `+ [DRE: C]` for credential or PII handover during phishing); if the disclosed artefact is later used, the case transitions to class B.
+
+Example (no DRE):
+
+```
+#9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.11 Romance / Relationship Scam]
++ [BRE: BRE-FIN.11 Authorized Push Payment Made]
++ [Impact: IMPACT-FIN.12 Direct Fraud Loss = CHF 4,500]
+```
 
 This three-part typology allows national centres to keep one reporting ecosystem without forcing false equivalence between all digital harms.
 
 ---
 
-## 13. BRE Profile for National Use
+## 13. Pattern, BRE, and Impact Catalogues for National Use
 
-TLCTC+ should define a controlled BRE vocabulary for NCSC and CERT reporting.
+TLCTC+ defines controlled catalogues for NCSC and CERT reporting. The canonical catalogues are normative in the specification (spec §10 PATTERN, §11 BRE, §12 IMPACT, §13 REPORT) and are versioned independently of the document (currently catalogue v0.2, document v0.3 — see spec §0.1).
 
-The exact label set can vary nationally, but a first candidate structure could include:
+The point of separating these into distinct namespaces is that a v0.1 entry such as "Romance Scam" was three things at once: a scam narrative, a business event, and (often) an implied financial loss. v0.3 splits them so that statistics and triage can address each dimension independently:
 
-### Financial Harm
-- Fraudulent Transfer
-- Induced Payment
-- Romance Scam
-- Fake Tech Support Payment
-- Sextortion Payment
-- Investment Scam Loss
+### Pattern catalogue (cause-side narrative — what the attacker did)
 
-### Identity and Account Harm
-- Account Takeover Fraud
-- Identity Misuse Harm
-- Impersonation-Driven Authorization
-- Credential Abuse Consequence
+Examples from spec §10:
 
-### Organizational Harm
-- Public Service Deception
-- Supplier Payment Diversion
-- Internal Approval Fraud
-- Regulatory Notification Obligation
-- Customer Compensation Event
+- `PATTERN-FIN.11` Romance / Relationship Scam
+- `PATTERN-FIN.13` Fake Tech Support Scam
+- `PATTERN-FIN.21` Business Email Compromise
+- `PATTERN-FIN.22` Invoice / Mandate Fraud
+- `PATTERN-FIN.25` CEO / Executive Impersonation
+- `PATTERN-ID.11` Phishing for Credentials
+- `PATTERN-EXT.11` Sextortion Threat
 
-### Societal or Reputational Harm
-- Public Confidence Harm
-- Reputational Damage
-- Citizen Harm Event
-- Media Escalation Event
+### BRE catalogue (consequence-side event — what happened to the victim or business)
 
-The important point is not the perfect label list. The important point is that the labels live on the consequence side and remain subordinate to the cause-side classification.
+Examples from spec §11:
+
+- `BRE-SVC.11` Payment Function Unavailable
+- `BRE-CUS.11` Customer Account Closure
+- `BRE-FIN.11` Authorized Push Payment Made
+- `BRE-FIN.21` Unauthorized Bank Transfer Executed
+- `BRE-ID.13` Email Account Takeover Harm
+- `BRE-LGL.11` Customer Legal Claim
+- `BRE-REG.11` Mandatory Notification Obligation Triggered
+- `BRE-REP.11` Public Warning Issued
+- `BRE-ORG.12` Business Continuity Plan Activated
+
+### Impact catalogue (consequence-side measurement — how much it hurt)
+
+Examples from spec §12:
+
+- `IMPACT-FIN.12` Direct Fraud Loss
+- `IMPACT-FIN.16` Customer Churn Loss
+- `IMPACT-OPS.11` Downtime Duration
+- `IMPACT-CUS.11` Number of Customers Affected
+- `IMPACT-REG.15` Number of Legal Claims
+- `IMPACT-DATA.11` Records Exposed
+
+National centres may add national aliases or extend any catalogue under their own governance (see §16). The important point is not the perfect label list. The important point is the structural separation: cause-side classification remains TLCTC; scam narratives live in Pattern; business events live in BRE; magnitudes live in Impact; regulatory filings live in Report.
 
 ---
 
 ## 14. Intake and Triage Workflow
 
-TLCTC+ should be used through a simple triage logic.
+TLCTC+ should be used through a simple triage logic, mirroring the 8-step decision procedure in spec §18.
 
 ### Decision Flow
 
-1. Is there a TLCTC-classifiable cyber threat against an IT system?
-2. If yes, record the TLCTC path.
-3. Did a Data Risk Event occur?
-4. Did one or more Business Risk Events follow?
-5. If no meaningful SRE/DRE exists, ask whether the case is digitally mediated and driven primarily by `#9 Social Engineering`.
-6. If yes, append the `+ [BRE: <label>]` annotation to the cause-side path.
-7. If not, route the case outside the TLCTC+ intake model.
+1. **TLCTC path?** Is there a TLCTC-classifiable cyber threat against an IT system? If yes, record the TLCTC path (`#1`–`#10`) with all required v2.1 boundary operators on bridge-cluster steps.
+2. **#9 anchor?** If there is no TLCTC cyber path but a human was psychologically manipulated through a digital channel, record `#9` with its REQUIRED boundary operator (R-9-BOUNDARY). If there is neither, the case is outside TLCTC+.
+3. **SRE?** Did Loss of Control / System Compromise occur? If yes, attach `+ [SRE]`. If the case is pure-#9 digital harm with no IT-system compromise, omit SRE.
+4. **DRE?** Attach `+ [DRE: C | I | Ac | Av]` for any data risk events observed. A DRE on a pure-#9 step is permitted only when the social-engineering act itself directly causes disclosure (typically `+ [DRE: C]`).
+5. **Pattern?** Attach `[Pattern: PATTERN-XXX.YY ...]` (bracket-only) on the cause-side step for any scam, fraud, manipulation, or playbook label.
+6. **BRE chain?** Attach `+ [BRE: BRE-XXX.YY → BRE-XXX.YY + BRE-XXX.YY]` for the observed business, citizen, regulatory, or organizational consequence(s).
+7. **Impact?** Attach `+ [Impact: IMPACT-XXX.YY = <value>]` for any measured magnitude (financial, operational, customer, regulatory, reputation, data).
+8. **Report?** Attach `+ [Report: REPORT-XXX.YY ...]` for any regulatory or procedural filing produced. If an obligation was triggered, also attach the regulatory BRE (e.g., `+ [BRE: BRE-REG.11]`).
 
 This workflow helps keep intake disciplined while still supporting the broader mission of national centres.
 
@@ -337,58 +398,83 @@ This workflow helps keep intake disciplined while still supporting the broader m
 
 TLCTC+ should be machine-addressable and easy to integrate into national reporting portals.
 
-A simple starting point is to define three record types:
+The spec (§15 Data Model, §16 Example JSON Records) defines three record types — these are the canonical names national portals should adopt:
 
-- `core_incident`
-- `hybrid_case`
-- `digital_harm_case`
+- `core_cyber_incident`
+- `hybrid_cyber_enabled_harm`
+- `pure_9_digital_crime`
 
-Each record should preserve:
+Each record carries six tracks (spec §4) — Cause, SRE, DRE, BRE, Impact, Report — plus metadata (case ID, intake source, sector, country, timestamps, confidence). Pattern fields attach to cause-side steps.
 
-- case identifier
-- intake source
-- sector or citizen flag
-- TLCTC path or anchor cluster
-- DRE fields where relevant
-- BRE fields
-- mandatory reporting flag
-- law-enforcement referral flag
-- public warning relevance flag
-- statistical category version
+### Example Records (illustrative; canonical examples in spec §16)
 
-### Example Records
-
-#### Core Incident
+#### Core Cyber Incident
 ```json
 {
-  "record_type": "core_incident",
-  "path": "#9 -> #4 -> #7",
-  "dre": ["C"],
-  "bre": [],
+  "case_id": "case-001",
+  "record_type": "core_cyber_incident",
+  "tlctc_plus_version": "0.3",
+  "tlctc_path": "#9 ||[email][@External→@Org]|| → #7",
+  "sre": { "present": true, "status": "confirmed", "linked_to_step": "step-2" },
+  "dre": [ { "type": "Ac", "linked_to_sre": true } ],
+  "bre_chain": {
+    "expression": "BRE-SVC.11 → BRE-ORG.12",
+    "nodes": [
+      { "code": "BRE-SVC.11", "label": "Payment Function Unavailable" },
+      { "code": "BRE-ORG.12", "label": "Business Continuity Plan Activated" }
+    ]
+  },
+  "impact": [
+    { "code": "IMPACT-OPS.11", "label": "Downtime Duration", "value": 6, "unit": "hours" }
+  ],
   "sector": "energy",
   "mandatory_reporting": true
 }
 ```
 
-#### Hybrid Case
+#### Hybrid Cyber-Enabled Harm
 ```json
 {
-  "record_type": "hybrid_case",
-  "path": "#9 -> #4",
-  "dre": [],
-  "bre": ["Account Takeover Fraud"],
-  "sector": "citizen",
+  "case_id": "case-003",
+  "record_type": "hybrid_cyber_enabled_harm",
+  "tlctc_plus_version": "0.3",
+  "tlctc_path": "#9 ||[email][@External→@Org]|| + [DRE: C] → #4",
+  "patterns": [ { "code": "PATTERN-FIN.22", "label": "Invoice / Mandate Fraud" } ],
+  "sre": { "present": true, "status": "confirmed", "linked_to_step": "step-2" },
+  "dre": [ { "type": "C", "linked_to_step": "step-1" } ],
+  "bre_chain": {
+    "expression": "BRE-ID.13 → BRE-FIN.11",
+    "nodes": [
+      { "code": "BRE-ID.13", "label": "Email Account Takeover Harm" },
+      { "code": "BRE-FIN.11", "label": "Authorized Push Payment Made" }
+    ]
+  },
+  "impact": [
+    { "code": "IMPACT-FIN.12", "label": "Direct Fraud Loss", "amount": 80000, "currency": "EUR" }
+  ],
+  "sector": "manufacturing",
   "mandatory_reporting": false
 }
 ```
 
-#### Digital Harm Case
+#### Pure #9 Digital Crime
 ```json
 {
-  "record_type": "digital_harm_case",
-  "path": "#9",
+  "case_id": "case-002",
+  "record_type": "pure_9_digital_crime",
+  "tlctc_plus_version": "0.3",
+  "tlctc_anchor": "#9 ||[messaging][@External→@Citizen]||",
+  "patterns": [ { "code": "PATTERN-FIN.11", "label": "Romance / Relationship Scam" } ],
+  "sre": { "present": false },
   "dre": [],
-  "bre": ["Romance Scam"],
+  "bre_chain": {
+    "expression": "BRE-FIN.11",
+    "nodes": [ { "code": "BRE-FIN.11", "label": "Authorized Push Payment Made" } ]
+  },
+  "impact": [
+    { "code": "IMPACT-FIN.12", "label": "Direct Fraud Loss", "amount": 4500, "currency": "CHF" }
+  ],
+  "report": [ { "code": "REPORT-NCSC.11", "label": "Voluntary NCSC/CERT Report Filed" } ],
   "sector": "citizen",
   "mandatory_reporting": false
 }
@@ -411,10 +497,12 @@ Ownership should be split clearly.
 - versioned separately from core TLCTC
 - documented as an extension profile
 
-### BRE Label Sets
-- maintained nationally or regionally
-- adjustable over time
+### TLCTC+ Consequence Catalogues (PATTERN / BRE / IMPACT / REPORT)
+- versioned independently of the TLCTC+ specification document (spec §0.1)
+- canonical codes maintained by the TLCTC+ specification owner
+- national aliases and national extensions adjustable under national governance
 - harmonizable across borders without changing TLCTC core
+- candidate for future extraction into a shared consequence-side specification once TLSFC reaches publication readiness (spec §20)
 
 This separation allows evolution where needed without destabilizing the threat taxonomy.
 
@@ -459,7 +547,13 @@ Adopting TLCTC+ offers several practical benefits.
 **Mitigation:** use a controlled label set with governance and periodic review.
 
 ### Risk 5: Notation Drift Between TLCTC and TLCTC+
-**Mitigation:** TLCTC+ introduces no new operator. `+ [BRE: ...]` reuses the existing additive Bow-Tie grammar already used by `+ [DRE: ...]` and is restricted to consequence-side annotations only. BRE annotations MUST NOT appear as cause-side steps and MUST NOT be referenced as if they were threat clusters. The v2.1 transit operator `⇒` retains its existing meaning unchanged.
+**Mitigation:** TLCTC+ introduces no new path operator. All consequence-side annotations (`+ [SRE]`, `+ [DRE: ...]`, `+ [BRE: ...]`, `+ [Impact: ...]`, `+ [Report: ...]`) reuse the existing additive Bow-Tie grammar already used by `+ [DRE: ...]` and are restricted to consequence-side annotations only. Pattern is bracket-only (`[Pattern: ...]`, no `+`) and aligns with existing v2.1 step-level annotations (`[conf=low]`, `[inferred]`, `[Δt=...]`). BRE annotations MUST NOT appear as cause-side steps and MUST NOT be referenced as if they were threat clusters. The v2.1 transit operator `⇒` retains its existing meaning unchanged. Stripping all TLCTC+ consequence-side annotations from a conformant record MUST recover a valid TLCTC v2.1 path or `#9` anchor (spec R-RECOVERABILITY).
+
+### Risk 6: Free-Text BRE Labels Returning in National Implementations
+**Mitigation:** spec R-V01-MIGRATION forbids free-text BRE strings in v0.3 records. Every BRE is a structured code from the catalogue (`BRE-XXX.YY`). National centres can extend the catalogue or add national aliases, but cannot accept free-text BREs in conformant records.
+
+### Risk 7: Auto-Filling Consequence Side From Cluster Identity
+**Mitigation:** spec R-CAUSE-CONSEQUENCE-INDEPENDENCE (§3.9, §7) makes the cause-side cluster and consequence-side BRE family independent dimensions. Intake systems and mappers MUST NOT auto-derive a BRE family from the cluster. The same `#4` step may produce BRE-ID, BRE-SVC, BRE-FIN, or none — recorded from observed harm.
 
 ---
 
@@ -474,10 +568,10 @@ Use TLCTC as the stable cause-oriented taxonomy for cyber threats against IT sys
 Publish a national extension profile for broader digitally mediated harms.
 
 ### Phase 3 — Start Narrow
-Limit the first extension rule to the `+ [BRE: ...]` annotation anchored at `#9`.
+Begin national adoption with the pure-`#9` digital-harm class — `[Pattern: PATTERN-XXX.YY] + [BRE: BRE-XXX.YY]` anchored at `#9` with its required boundary operator.
 
-### Phase 4 — Define BRE Vocabulary
-Publish and govern a national BRE label set for digital-harm reporting.
+### Phase 4 — Adopt the Consequence Catalogues
+Adopt the canonical PATTERN, BRE, IMPACT, and REPORT catalogues from the specification, and publish any national aliases or national extensions under documented governance.
 
 ### Phase 5 — Integrate Into Portals and Statistics
 Implement the model in forms, databases, trend reporting, and public awareness workflows.
@@ -491,7 +585,7 @@ Review the extension annually, but do not reopen the semantics of core TLCTC unl
 
 NCSCs and CERTs should adopt TLCTC as the stable cause-oriented taxonomy for cyber threats against IT systems and establish **TLCTC+** as a controlled national reporting extension profile for digitally mediated harms.
 
-TLCTC+ should begin with the `+ [BRE: <label>]` annotation anchored at `#9 Social Engineering`, allowing manipulation-driven scam and fraud cases to be recorded in the same analytical ecosystem without compromising TLCTC's semantic integrity.
+TLCTC+ should begin with the `[Pattern: PATTERN-XXX.YY] + [BRE: BRE-XXX.YY]` reporting form anchored at `#9 Social Engineering` (with its required v2.1 boundary operator), allowing manipulation-driven scam and fraud cases to be recorded in the same analytical ecosystem without compromising TLCTC's semantic integrity. The full six-track form — Cause / SRE / DRE / BRE / Impact / Report — supports core cyber incidents and hybrid cyber-enabled harms in the same vocabulary.
 
 The guiding principle is simple:
 
@@ -535,60 +629,104 @@ A concise formulation is:
 A final published version of this proposal could include the following appendices:
 
 ### Appendix A — Notation Rules
-- `→` for core TLCTC cause-side sequence (unchanged)
-- `+ [DRE: X]` for Data Risk Events (unchanged)
-- `+ [BRE: <label>]` for TLCTC+ Business Risk Events (additive consequence-side annotation, parallel to `+ [DRE: ...]`; appended to a cause-side path, never used as a step)
-- All v2.1 boundary, intra-system, and unresolved-step operators (`||...||`, `⇒` transit, `|...|` intra-system, `?`, `…`) retain their existing meanings unchanged
+
+Cause-side (unchanged from TLCTC v2.1):
+- `→` core TLCTC cause-side sequence
+- `+` parallel cluster execution in `(#X + #Y)` groups
+- `||[ctx][@A→@B]||` boundary operator — REQUIRED on every #8/#9/#10 step under TLCTC+ R-9-BOUNDARY
+- `||[ctx][@A⇒@C→@B]||` v2.1 transit operator (`⇒`) — unchanged
+- `|[type][@from→@to]|` v2.1 intra-system boundary — unchanged
+- `?` and `…` v2.1 unresolved-step operators — unchanged
+- `[Δt=...]`, `[conf=low]`, `[inferred]` v2.1 step-level annotations — unchanged
+
+Cause-side step annotation introduced by TLCTC+:
+- `[Pattern: PATTERN-XXX.YY ...]` — bracket-only (no `+`), attaches to a TLCTC step (typically `#9`), records the scam/fraud/manipulation playbook from the PATTERN catalogue
+
+Consequence-side annotations introduced by TLCTC+ (all additive — `+ [...]`):
+- `+ [SRE]` — Loss of Control / System Compromise; the cyber Bow-Tie central event
+- `+ [DRE: C | I | Ac | Av]` — Data Risk Event (v2.1 extension; TLCTC+ keeps the same letter set)
+- `+ [BRE: BRE-XXX.YY ...]` — Business Risk Event, structured code from the BRE catalogue
+- `+ [Impact: IMPACT-XXX.YY ... = <value>]` — quantified or qualified measurement from the IMPACT catalogue
+- `+ [Report: REPORT-XXX.YY ...]` — procedural / regulatory reporting artefact from the REPORT catalogue
+
+The full formal grammar is defined in spec §8 and mirrored in `grammar/tlctc-plus-attack-path.abnf`.
 
 ### Appendix B — Sample Cases
 
-Each case below shows the intended TLCTC+ notation, followed by the case-class assignment from §12 (A = core cyber incident, B = hybrid cyber-enabled harm, C = digitally mediated non-SRE harm).
+Each case below shows the conformant TLCTC+ v0.3 notation, followed by the case-class assignment from §12 (A = core cyber incident, B = hybrid cyber-enabled harm, C = pure #9-anchored digital crime).
 
 **B.1 Phishing leading to malware** *(case class A)*
 ```
-#9 ||[email][@External→@Org]|| →[Δt=hours] #7 →[Δt=minutes] #4 + [DRE: C]
+#9 ||[email][@External→@Org]|| →[Δt=hours] #7 →[Δt=minutes] #4 + [SRE] + [DRE: C]
 ```
-Classical cyber-incident chain. No BRE annotation required for national reporting unless a downstream business-impact event is independently relevant.
+Classical cyber-incident chain. BRE annotations are added if a nationally reportable downstream business event was observed.
 
 **B.2 Payment diversion after impersonation (CEO fraud)** *(case class C)*
 ```
-#9 ||[email][@External→@Org]|| + [BRE: CEO Fraud Transfer]
+#9 ||[email][@External→@Org]|| [Pattern: PATTERN-FIN.25 CEO / Executive Impersonation]
++ [BRE: BRE-FIN.11 Authorized Push Payment Made]
++ [Impact: IMPACT-FIN.12 Direct Fraud Loss = EUR 250,000]
 ```
-No system compromise; manipulation alone induces an authorized-but-unintended payment. Anchored at #9, terminated with a BRE annotation.
+No system compromise; manipulation alone induces an authorized-but-unintended payment. Anchored at #9. The scam playbook is recorded as Pattern; the business event is recorded as a structured BRE; the magnitude is recorded as Impact.
 
 **B.3 Romance scam without system compromise** *(case class C)*
 ```
-#9 ||[messaging][@External→@Citizen]|| + [BRE: Romance Scam]
+#9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.11 Romance / Relationship Scam]
++ [BRE: BRE-FIN.11 Authorized Push Payment Made]
++ [Impact: IMPACT-FIN.12 Direct Fraud Loss = CHF 4,500]
 ```
-Pure manipulation-driven harm against a citizen. No DRE, no SRE.
+Pure manipulation-driven harm against a citizen. No SRE, no DRE. The boundary operator on `#9` is REQUIRED under R-9-BOUNDARY.
 
 **B.4 Fake tech-support scam with remote-access installation** *(case class B)*
 ```
-#9 ||[human][@External→@Citizen]|| →[Δt=minutes] #7 + [DRE: C] + [BRE: Fake Tech Support Payment]
+#9 ||[phone][@External→@Citizen]|| [Pattern: PATTERN-FIN.13 Fake Tech Support Scam]
+→[Δt=minutes] #7 + [SRE] + [DRE: C]
++ [BRE: BRE-ID.13 Email Account Takeover Harm → BRE-FIN.11 Authorized Push Payment Made]
++ [Impact: IMPACT-FIN.12 Direct Fraud Loss]
 ```
-Hybrid case: the social-engineering step induces installation of remote-access tooling (FEC executes → #7, R-EXEC), producing both a DRE (loss of confidentiality through observed activity) and a BRE (induced payment). Both annotations co-exist on the consequence side.
+Hybrid case: the social-engineering step induces installation of remote-access tooling (FEC executes → #7, R-EXEC), producing an SRE and a DRE. The BRE chain captures account takeover followed by induced payment; the Impact captures the measured loss.
 
 **B.5 Account-takeover-enabled fraud** *(case class B)*
 ```
-#9 ||[email][@External→@Citizen]|| →[Δt=hours] #4 + [DRE: C, I] + [BRE: Account Takeover Fraud]
+#9 ||[email][@External→@Citizen]|| [Pattern: PATTERN-FIN.21 Business Email Compromise]
++ [DRE: C] → #4 + [SRE]
++ [BRE: BRE-ID.13 Email Account Takeover Harm → BRE-FIN.11 Authorized Push Payment Made]
++ [Impact: IMPACT-FIN.12 Direct Fraud Loss = EUR 80,000]
 ```
-Credential acquisition via phishing (#9), credential application (#4 per R-CRED / Axiom X), with both the cyber-incident outcome (DRE) and the nationally reportable downstream harm (BRE) recorded.
+Credential acquisition via phishing (#9 with direct disclosure `+ [DRE: C]`), credential application (#4 per R-CRED / Axiom X), with the SRE recording mailbox compromise. The BRE chain records the cyber-incident identity outcome together with the nationally reportable downstream financial event; Impact records the measured loss.
 
-### Appendix C — BRE Vocabulary Draft
-- candidate BRE labels
-- definitions
-- scope notes
-- de-duplication rules
+**B.6 Ransomware-driven service outage** *(case class A)*
+```
+#9 ||[email][@External→@Org]|| → #7 + [SRE] + [DRE: Ac]
++ [BRE: BRE-SVC.11 Payment Function Unavailable → BRE-ORG.12 Business Continuity Plan Activated]
++ [Impact: IMPACT-OPS.11 Downtime Duration = 6 hours]
+```
+Ransomware is not a cluster — the cause path is `#9 → #7`. The DRE is `Ac` (data present but unusable). The BRE chain records the service consequence followed by internal response; Impact records the downtime measurement.
 
-### Appendix D — JSON Profile Sketch
-- example schemas
-- record validation rules
-- required vs optional fields
+**B.7 Supply-chain incident triggering regulatory reporting** *(case class A)*
+```
+#10 ||[update][@Vendor→@Org]|| → #7 + [SRE] + [DRE: C + I]
++ [BRE: BRE-REG.11 Mandatory Notification Obligation Triggered
+       → BRE-REG.17 Cross-Border Authority Notification Obligation]
++ [Report: REPORT-NIS2.11 24h Early Warning Filed + REPORT-NIS2.12 72h Incident Notification Filed]
+```
+The Trust Acceptance Event is on `#10` (R-SUPPLY); the regulatory BRE captures the obligation; the Report annotation captures the procedural filings. REPORT codes never appear inside BRE chains.
+
+### Appendix C — Catalogue References
+- PATTERN catalogue: spec §10 (financial manipulation, identity manipulation, coercion/extortion families)
+- BRE catalogue: spec §11 (service, customer, financial, identity, legal, regulatory, reputation, third-party, organizational families)
+- IMPACT catalogue: spec §12 (financial, operational, customer, regulatory/legal, reputation, data families)
+- REPORT catalogue: spec §13 (NCSC/CERT, NIS2, DORA, data-protection families)
+
+### Appendix D — JSON Profile
+- canonical record skeletons: spec §15 (Data Model) and §16 (Example JSON Records)
+- formal grammar: spec §8 and `grammar/tlctc-plus-attack-path.abnf`
+- conformance checklist: spec §19 (16 numbered items)
 
 ### Appendix E — Routing Logic
-- when to keep a case inside core TLCTC
-- when to use TLCTC+
-- when to route to law enforcement or another authority
+- when to keep a case inside core TLCTC (no SRE/DRE/BRE consequences worth recording at national level)
+- when to use TLCTC+ (cyber incident, hybrid harm, or pure-#9 digital crime with nationally relevant consequence)
+- when to route to law enforcement or another authority (per national procedure; signalled via REPORT-NCSC.14 Law-Enforcement Referral Candidate Flagged)
 
 ---
 
