@@ -437,6 +437,7 @@ tlctc/
 │   ├── tlctc-cve-extension-proposal.md       # CVE extension proposal
 │   ├── tlctc-plus-ncsc-proposal.md           # TLCTC+ national reporting extension — policy proposal (v0.1)
 │   ├── tlctc-plus-specification.md           # TLCTC+ implementation specification (v0.3) — grammar, conformance, catalogues
+│   ├── propagated-controls.md                # Managing controls over event chains — generalizes Propagated PR to BCM, contractual, and policy sources
 │   ├── npm-supply-chain-blog-final.md        # npm supply chain threat analysis
 │   ├── Why Exactly Ten_ — TLCTC Framework Architecture.pdf # Framework architecture rationale
 │   └── images/                               # Diagrams and visual assets
