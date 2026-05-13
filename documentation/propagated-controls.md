@@ -1,11 +1,13 @@
 # Propagated Controls — Managing Controls Over Event Chains
 
-**Status:** Companion note to TLCTC v2.0 (formalizes a v2.0 glossary concept and generalizes it beyond compliance).
+**Status:** Companion note to TLCTC v2.0 — **not part of the core taxonomy** (the 10 clusters, 10 axioms, classification rules). It is a structural aid for the *consequence-chain* side of an incident — the `SRE → DRE → BRE` chain — and the controls that span it.
 **Audience:** CISOs, IR designers, BCM/operational-risk owners, GRC architects.
 
 ---
 
 ## TL;DR
+
+*Where this fits in TLCTC: the core taxonomy classifies the **cause side** of an incident — which cluster, which attack path. This document is about the **consequence side** — how controls and obligations flow across the causal event chain that follows.*
 
 A single incident produces a **chain of events** — `SRE → DRE → BRE₁ → … → BREₙ`. Each event has its own NIST CSF container (`ID, PR, DE, RS, RC, GV`) **and its own recovery objective**: System Recovery for the SRE, Data Recovery for the DRE, Disaster Recovery / business continuity for the BRE. These objectives are usually owned by *different organisations* with *different clocks*.
 
