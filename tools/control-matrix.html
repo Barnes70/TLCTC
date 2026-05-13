@@ -93,7 +93,7 @@
             .app-btn { @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg px-4 py-2 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background text-sm; }
             .app-btn-primary { @apply bg-primary text-primary-foreground hover:opacity-90; }
             .app-btn-secondary { @apply bg-secondary text-secondary-foreground hover:opacity-90; }
-            .app-btn-outline { @apply border border-border hover:bg-accent; }
+            .app-btn-outline { @apply border border-border text-foreground hover:bg-accent; }
             .app-btn-danger { @apply bg-destructive text-destructive-foreground hover:opacity-90; }
             .app-btn-sm { @apply text-xs px-2.5 py-1.5 rounded-md; }
             .app-btn-xs { @apply text-[11px] px-1.5 py-1 rounded; }
@@ -654,7 +654,7 @@ function HeaderDropdown({ label, icon, items }) {
 // HEADER
 // ═══════════════════════════════════════════════════════════════════
 
-function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON, onImportJSON, onExportPNG, onShowSharedControls, sharedControlCount, onReport, onShowSchema, mobileMenuOpen, onToggleMobileMenu }) {
+function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON, onImportJSON, onResetState, onExportPNG, onShowSharedControls, sharedControlCount, onReport, onShowSchema, mobileMenuOpen, onToggleMobileMenu }) {
     return (
         <header className="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
             <div className="flex items-center gap-3">
@@ -692,8 +692,11 @@ function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON
                 <button onClick={onImportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON">
                     <Icon name="upload" size={14} /> <span className="hidden sm:inline">Import</span>
                 </button>
-                <button onClick={onShowSchema} className="app-btn app-btn-outline app-btn-sm h-9 w-9 p-0" title="Import JSON Format">
-                    <Icon name="info" size={14} />
+                <button onClick={onShowSchema} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON Format">
+                    <Icon name="info" size={14} /> <span className="hidden sm:inline">Schema</span>
+                </button>
+                <button onClick={onResetState} className="app-btn app-btn-outline app-btn-sm gap-1 !text-red-600 dark:!text-red-400 hover:bg-red-500/10" title="Reset — clear all data and start from scratch">
+                    <Icon name="trash-2" size={14} /> <span className="hidden sm:inline">Reset</span>
                 </button>
                 <button onClick={onToggleDark} className="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Toggle theme">
                     <Icon name={darkMode ? 'sun' : 'moon'} size={16} />
@@ -2021,8 +2024,8 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
                     </div>
                     <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{func.desc} — for threats caused by: {cluster.genericVuln.toLowerCase()}</p>
                 </div>
-                <button onClick={onClose} className="p-2 hover:bg-destructive/10 hover:text-destructive rounded-lg flex-shrink-0 border border-border" title="Close panel">
-                    <Icon name="x" size={20} />
+                <button onClick={onClose} className="px-3 py-1.5 text-sm font-semibold text-foreground hover:bg-destructive/10 hover:text-destructive rounded-lg flex-shrink-0 border border-border inline-flex items-center gap-1.5" title="Close panel">
+                    <Icon name="x" size={16} /> Close
                 </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
@@ -2757,6 +2760,16 @@ function App() {
         URL.revokeObjectURL(url);
     };
 
+    // Reset — wipe state and start from scratch
+    const resetState = () => {
+        const confirmed = window.confirm('Reset all data?\n\nThis will permanently delete all environments, controls, shared controls, and tasks from this browser. Export your data first if you want to keep a backup.\n\nThis cannot be undone.');
+        if (!confirmed) return;
+        const fresh = createDefaultState();
+        setState(fresh);
+        setActiveEnvId(fresh.environments[0]?.id || 'aggregated');
+        setSelectedCell(null);
+    };
+
     // Import JSON
     const handleImport = (data) => {
         const newState = migrateState({
@@ -2931,16 +2944,21 @@ function App() {
                     const allControls = [...(cell.local || []), ...(cell.umbrella || [])];
                     allControls.forEach(c => {
                         if (typeof c.maturity === 'number' && c.maturity < target) {
-                            const name = c.sharedControlId ? ((state.sharedControls || []).find(s => s.id === c.sharedControlId)?.name || 'Shared') : (c.name || 'Unnamed');
-                            gaps.push({ cluster: '#' + cl.id + ' ' + cl.name, func: fn.id, name, maturity: c.maturity, gap: target - c.maturity });
+                            const shared = c.sharedControlId ? (state.sharedControls || []).find(s => s.id === c.sharedControlId) : null;
+                            const name = shared ? (shared.name || 'Shared') : (c.name || 'Unnamed');
+                            const description = shared ? (shared.description || '') : (c.description || '');
+                            const ownerName = shared ? (shared.ownerName || '') : (c.ownerName || '');
+                            const ownerOrgChart = shared ? (shared.ownerOrgChart || '') : (c.ownerOrgChart || '');
+                            const owner = ownerName ? (ownerOrgChart ? ownerName + ' (' + ownerOrgChart + ')' : ownerName) : '—';
+                            gaps.push({ cluster: '#' + cl.id + ' ' + cl.name, func: fn.id, name, description, owner, maturity: c.maturity, gap: target - c.maturity });
                         }
                     });
                 }));
                 if (gaps.length > 0) {
                     html += '<h3>Gap Details (controls below target)' + C('h3');
-                    html += '<table><tr><th>Cluster' + C('th') + '<th>Function' + C('th') + '<th>Control' + C('th') + '<th>Maturity' + C('th') + '<th>Gap' + C('th') + C('tr');
+                    html += '<table><tr><th>Cluster' + C('th') + '<th>Function' + C('th') + '<th>Control' + C('th') + '<th>Description' + C('th') + '<th>Owner' + C('th') + '<th>Maturity' + C('th') + '<th>Gap' + C('th') + C('tr');
                     gaps.sort((a, b) => a.maturity - b.maturity).forEach(g => {
-                        html += '<tr class="gap"><td>' + g.cluster + C('td') + '<td>' + g.func + C('td') + '<td>' + g.name + C('td') + '<td class="badge mat-' + g.maturity + '">' + g.maturity + C('td') + '<td>' + g.gap + C('td') + C('tr');
+                        html += '<tr class="gap"><td>' + g.cluster + C('td') + '<td>' + g.func + C('td') + '<td>' + g.name + C('td') + '<td>' + (g.description || '—') + C('td') + '<td>' + g.owner + C('td') + '<td class="badge mat-' + g.maturity + '">' + g.maturity + C('td') + '<td>' + g.gap + C('td') + C('tr');
                     });
                     html += C('table');
                 }
@@ -3030,7 +3048,7 @@ function App() {
         <div className="flex flex-col min-h-screen">
             <Header orgName={state.orgName} onOrgNameChange={v => updateState({ orgName: v })}
                     darkMode={darkMode} onToggleDark={() => setDarkMode(d => !d)}
-                    onExportJSON={exportJSON} onImportJSON={() => setShowImport(true)} onExportPNG={exportPNG}
+                    onExportJSON={exportJSON} onImportJSON={() => setShowImport(true)} onResetState={resetState} onExportPNG={exportPNG}
                     onReport={generateReport}
                     onShowSharedControls={() => setShowSharedLibrary(true)}
                     sharedControlCount={(state.sharedControls || []).length}
