@@ -1,10 +1,10 @@
-# TLCTC+ Specification v0.3
+# TLCTC+ Specification v0.4
 
 ## TLCTC-Anchored Digital-Harm Reporting Extension for NCSCs, CERTs, and Regulators
 
 **Author:** Bernhard Kreinz  
 **Base framework:** TLCTC v2.1  
-**Extension version:** TLCTC+ v0.3  
+**Extension version:** TLCTC+ v0.4  
 **Status:** Released  
 **License:** CC BY 4.0  
 **Core thesis:** Keep TLCTC pure. Extend the reporting layer.  
@@ -38,14 +38,14 @@ The shared consequence catalogues are embedded in this specification because TLC
 ### 0.1 Document and Catalogue Versions
 
 ```text
-Specification document version:   TLCTC+ v0.3
+Specification document version:   TLCTC+ v0.4
 PATTERN catalogue version:        v0.2
-BRE catalogue version:            v0.2
+BRE catalogue version:            v0.3
 IMPACT catalogue version:         v0.2
 REPORT catalogue version:         v0.2
 ```
 
-The catalogue version intentionally lags the document version: v0.3 is a grammar and conformance refinement that adds, removes, or renumbers no catalogue codes. The next catalogue revision will bump alongside the document version that introduces it.
+The catalogue version intentionally lags the document version: a catalogue bumps only when a document version introduces a code addition, removal, renumber, or label rewrite for that catalogue. v0.4 introduces two BRE catalogue changes — the prefix rename `BRE-ID → BRE-ENT` (see §11.4 and §7 R-V02-ENT-MIGRATION) and a label scrub of six entries to remove cause-side verbs (see §21.3 item 8) — together bumping the BRE catalogue to v0.3. PATTERN, IMPACT, and REPORT are unchanged and remain at v0.2.
 
 ---
 
@@ -129,7 +129,7 @@ The `||...||` boundary operator is REQUIRED on the #9 anchor: #9 is a TLCTC v2.1
 
 ## 2. Explicit Non-Scope
 
-The following are outside TLCTC+ v0.3.
+The following are outside TLCTC+ v0.4.
 
 ### 2.1 Non-Cyber Operational Failure
 
@@ -143,7 +143,7 @@ It has no TLCTC anchor by construction. It belongs in TLSFC or another non-adver
 
 ### 2.2 ORE Notation
 
-TLCTC+ v0.3 does **not** define:
+TLCTC+ v0.4 does **not** define:
 
 ```text
 [ORE: ...]
@@ -316,16 +316,16 @@ A TLCTC cluster on the cause side does NOT determine the BRE family on the conse
 The cluster classifies the generic vulnerability that was exploited; the BRE family classifies the kind of business, citizen, service, regulatory, or organizational consequence that resulted. These are independent dimensions, and a record may use any combination supported by the case.
 
 ```text
-#4 → BRE-ID.*     human-identity takeover (e.g., personal email account)
-#4 → BRE-SVC.*    technical-identity takeover (e.g., service-account → payment outage; no BRE-ID)
+#4 → BRE-ENT.*    human-identity takeover (e.g., personal email account)
+#4 → BRE-SVC.*    technical-identity takeover (e.g., service-account → payment outage)
 #7 → BRE-FIN.*    malware-driven fraud
 #7 → BRE-SVC.*    malware-driven service outage
-#9 → BRE-FIN.*    pure-#9 induced payment (no SRE, no BRE-ID)
+#9 → BRE-FIN.*    pure-#9 induced payment
 #9 → BRE-CUS.*    pure-#9 citizen harm without financial event
 #10 → BRE-REG.*   compromised supplier triggering regulatory notification
 ```
 
-The same #4 step may produce a BRE-ID, BRE-SVC, BRE-FIN, BRE-DATA, BRE-ORG, or none of these depending on whose identity was stolen and what the attacker did with it. Cause-side classification of credential use remains #4 (per R-CRED); consequence-side BRE follows the actual harm. See §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE, §11.4 note, and §17.8 worked example.
+The same #4 step may produce BRE-ENT, BRE-SVC, BRE-FIN, BRE-DATA, BRE-ORG, or none of these depending on whose identity was stolen and what the attacker did with it. Cause-side classification of credential use remains #4 (per R-CRED); consequence-side BRE follows the actual harm. See §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE and §17.8 worked example.
 
 ---
 
@@ -404,7 +404,7 @@ A case can begin as pure #9 digital crime and later become a cyber incident.
 #9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.11]
 + [BRE: BRE-FIN.11 Authorized Push Payment Made]
 →[case evolution] #9 ||[email][@External→@Citizen]|| + [DRE: C] → #4 + [SRE]
-+ [BRE: BRE-ID.13 Email Account Takeover Harm]
++ [BRE: BRE-ENT.13 Email Account Takeover Harm]
 ```
 
 The same incident file may contain both chains, but each chain records its own semantics.
@@ -646,7 +646,7 @@ A conformant parser MUST track bracket nesting and disambiguate operator semanti
 
 ### R-V01-MIGRATION
 
-A v0.1 record using a free-text BRE label (e.g., `#9 + [BRE: Romance Scam]`) is NOT conformant in v0.3. Migration MUST:
+A v0.1 record using a free-text BRE label (e.g., `#9 + [BRE: Romance Scam]`) is NOT conformant in v0.3 or later. Migration MUST:
 
 1. Move the narrative scam / fraud / extortion label from `+ [BRE: ...]` to `[Pattern: PATTERN-XXX.YY ...]` on the cause-side step.
 2. Replace the BRE annotation with one or more structured BRE codes from §11 describing the actual consequence event(s).
@@ -660,7 +660,24 @@ v0.3:  #9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.11 Romance
        + [BRE: BRE-FIN.11 Authorized Push Payment Made]
 ```
 
-Free-text BRE labels remain readable in archival v0.1 records but MUST NOT be produced in new v0.3 records.
+Free-text BRE labels remain readable in archival v0.1 records but MUST NOT be produced in v0.3 or later records.
+
+### R-V02-ENT-MIGRATION
+
+A v0.2 or v0.3 record using the `BRE-ID.*` prefix is NOT conformant in v0.4 or later. The prefix was renamed to `BRE-ENT.*` in BRE catalogue v0.3 (introduced by TLCTC+ specification v0.4; see §0.1 and §11.4) to eliminate lexical collision with cause-side `#4` Identity Theft terminology. Migration is mechanical:
+
+1. Replace every `BRE-ID.XX` code with `BRE-ENT.XX`. Numeric suffixes (`.00`–`.19`) are unchanged.
+2. Update the `bre_chain.expression` string and any `code` fields in machine-readable records.
+3. If labels are stored alongside codes, refresh them per the v0.4 label scrub (see §21.3 item 8) — `BRE-ENT.11/.15/.16/.17` and `BRE-FIN.16/.25` were rewritten in v0.4. Labels are informational and codes are authoritative, so a code-only migration is conformant; label refresh is RECOMMENDED for consistency.
+
+Example migration:
+
+```text
+v0.3:  + [BRE: BRE-ID.13 Email Account Takeover Harm]
+v0.4:  + [BRE: BRE-ENT.13 Email Account Takeover Harm]
+```
+
+No semantic re-classification is required: the family scope (consequences where a human or organizational principal is the harmed entity) is unchanged. Archival v0.2/v0.3 records remain readable but MUST NOT be produced as new v0.4 records.
 
 ### R-CAUSE-CONSEQUENCE-INDEPENDENCE
 
@@ -668,10 +685,10 @@ The TLCTC cluster on the cause side and the BRE family on the consequence side a
 
 In particular:
 
-- `#4` Identity Theft does NOT entail BRE-ID. `#4` against a **technical identity** (service account, API key, machine credential, Kerberos service ticket, OAuth client secret, certificate, robot/RPA account) typically produces BRE-SVC / BRE-FIN / BRE-DATA / BRE-ORG with no BRE-ID. BRE-ID is reserved for cases where a human or organizational identity is the harmed entity. See §11.4 note.
+- `#4` Identity Theft does NOT entail BRE-ENT. A `#4` step against a **technical identity** (service account, API key, machine credential) typically produces BRE-SVC / BRE-FIN / BRE-DATA / BRE-ORG instead. See §11.4 and §17.8.
 - `#7` Malware does NOT entail any specific BRE family — outcome depends on payload behavior and operator objective.
 - `#9` Social Engineering does NOT entail BRE-FIN. Many `#9`-anchored cases produce BRE-CUS, BRE-REP, or BRE-LGL outcomes without any financial event.
-- `#10` Supply Chain Attack does NOT entail BRE-REG, even where regulatory reporting is common.
+- `#10` Supply Chain Attack does NOT entail BRE-REG or BRE-3P. Regulatory notification is common but not automatic. BRE-3P captures third-party-induced operational consequences *observed* in the org's ecosystem regardless of cause; conversely, a `#10` incident may produce BRE-SVC, BRE-DATA, or BRE-ENT consequences with no BRE-3P entry at all. See §11.8 note.
 
 Cluster identity classifies the generic vulnerability exploited (cause). BRE identity classifies the harmed business, citizen, service, regulatory, or organizational dimension (consequence). They MUST be recorded independently. See §3.9.
 
@@ -942,35 +959,37 @@ BRE-FIN.12 Authorized Crypto Transfer Made
 BRE-FIN.13 Gift Card / Voucher Transfer Made
 BRE-FIN.14 Cash Withdrawal Made
 BRE-FIN.15 Goods or Services Paid but Not Received
-BRE-FIN.16 Mule Transfer Executed
+BRE-FIN.16 Onward Funds Transfer Executed
 BRE-FIN.20 Unauthorized Payment Family — reserved
 BRE-FIN.21 Unauthorized Bank Transfer Executed
 BRE-FIN.22 Unauthorized Card Transaction Executed
 BRE-FIN.23 Unauthorized Crypto Transfer Executed
 BRE-FIN.24 Unauthorized Payroll Change Executed
-BRE-FIN.25 Refund / Reimbursement Paid to Attacker
+BRE-FIN.25 Refund / Reimbursement Diverted to Third Party
 ```
 
-Note: "account takeover financial loss" is not a BRE. Account takeover belongs under BRE-ID; financial loss belongs under Impact.
+Note: "account takeover financial loss" is not a BRE. Account takeover belongs under BRE-ENT; financial loss belongs under Impact.
+
+Note: money-mule cases combine `BRE-FIN.16 Onward Funds Transfer Executed` (the financial event) with `[Pattern: PATTERN-FIN.19 Mule / Money Transfer Recruitment]` on the cause-side step (the recruitment narrative). The BRE captures the transfer that occurred; the Pattern captures the criminal playbook.
 
 ## 11.4 Identity / Account Harm
 
+`BRE-ENT.*` (E**nt**ity-principal harm) records consequences where a human or organizational principal — a person, customer account, employee mailbox, corporate brand — is the harmed entity.
+
 ```text
-BRE-ID.00 Identity / Account Harm — reserved
-BRE-ID.11 Personal Identity Misuse Event
-BRE-ID.12 Social Media Account Takeover Harm
-BRE-ID.13 Email Account Takeover Harm
-BRE-ID.14 SIM-Swap Consequence
-BRE-ID.15 Digital Identity Wallet Misuse
-BRE-ID.16 Credential Abuse Consequence
-BRE-ID.17 Impersonation-Driven Authorization
-BRE-ID.18 Unauthorized Account Creation
-BRE-ID.19 Account Recovery Lockout
+BRE-ENT.00 Identity / Account Harm — reserved
+BRE-ENT.11 Personal Identity Used Without Consent
+BRE-ENT.12 Social Media Account Takeover Harm
+BRE-ENT.13 Email Account Takeover Harm
+BRE-ENT.14 SIM-Swap Consequence
+BRE-ENT.15 Digital Identity Wallet Used Without Consent
+BRE-ENT.16 Compromised Credential Used to Authenticate
+BRE-ENT.17 Authorization Granted Under False Identity
+BRE-ENT.18 Unauthorized Account Creation
+BRE-ENT.19 Account Recovery Lockout
 ```
 
-Note: not every #4 Identity Theft step produces a BRE-ID. #4 against a **technical identity** (service account, API key, machine credential, Kerberos ticket, OAuth client secret) typically yields downstream BRE-SVC, BRE-FIN, BRE-DATA, or BRE-ORG consequences without any BRE-ID entry. BRE-ID is reserved for cases where a **human or organizational identity** is the harmed entity. Cause-side classification of the credential use remains #4 in both cases (per Axiom X / R-CRED); the consequence side records what actually happened to the business or citizen.
-
-Example: a stolen service-account credential used to disable a payment processor records `… → #4 + [SRE] + [BRE: BRE-SVC.11 Payment Function Unavailable]` — no BRE-ID, because no human or organizational identity was the harmed entity.
+A `#4` step against a **technical identity** (service account, API key, machine credential) typically produces BRE-SVC, BRE-FIN, BRE-DATA, or BRE-ORG instead — the harmed entity is the service, not a principal. See §17.8.
 
 ## 11.5 Legal
 
@@ -1025,6 +1044,8 @@ BRE-3P.15 Outsourcing Contract Breach Asserted
 BRE-3P.16 Concentration-Risk Event Observed
 BRE-3P.17 Sector Contagion Event Observed
 ```
+
+Note: `BRE-3P.*` captures third-party-induced operational consequences observed in the reporting org's ecosystem, **regardless of cause**. A `#10` supply-chain incident *may* produce a downstream BRE-3P observation, but so may a `#6` flooding attack on a payment processor, a `#2` server compromise at a managed-service provider, or a non-cyber supplier outage. Cause-side classification of the supplier-side compromise (when one exists) is separate from the BRE-3P observation recorded by the consuming organization. See §3.9 and §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE.
 
 ## 11.9 Internal Organization
 
@@ -1261,7 +1282,7 @@ hybrid_cyber_enabled_harm
 pure_9_digital_crime
 ```
 
-No `non_cyber_oprisk_event` record type exists in TLCTC+ v0.3.
+No `non_cyber_oprisk_event` record type exists in TLCTC+ v0.4.
 
 ## 15.2 Required Metadata
 
@@ -1390,7 +1411,7 @@ linked_to_dre
 {
   "case_id": "case-001",
   "record_type": "core_cyber_incident",
-  "tlctc_plus_version": "0.3",
+  "tlctc_plus_version": "0.4",
   "tlctc_path": "#9 ||[email][@External→@Org]|| → #7",
   "sre": {
     "present": true,
@@ -1435,7 +1456,7 @@ linked_to_dre
 {
   "case_id": "case-002",
   "record_type": "pure_9_digital_crime",
-  "tlctc_plus_version": "0.3",
+  "tlctc_plus_version": "0.4",
   "tlctc_anchor": "#9 ||[messaging][@External→@Citizen]||",
   "patterns": [
     {
@@ -1480,7 +1501,7 @@ linked_to_dre
 {
   "case_id": "case-003",
   "record_type": "hybrid_cyber_enabled_harm",
-  "tlctc_plus_version": "0.3",
+  "tlctc_plus_version": "0.4",
   "tlctc_path": "#9 ||[email][@External→@Org]|| + [DRE: C] → #4",
   "patterns": [
     {
@@ -1502,10 +1523,10 @@ linked_to_dre
     }
   ],
   "bre_chain": {
-    "expression": "BRE-ID.13 → BRE-FIN.11",
+    "expression": "BRE-ENT.13 → BRE-FIN.11",
     "nodes": [
       {
-        "code": "BRE-ID.13",
+        "code": "BRE-ENT.13",
         "label": "Email Account Takeover Harm"
       },
       {
@@ -1544,7 +1565,7 @@ No SRE. No DRE. The boundary operator on #9 is REQUIRED per R-9-BOUNDARY.
 ```text
 #9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.12 Investment / Crypto-Investment Scam]
 + [DRE: C] → #4 + [SRE]
-+ [BRE: BRE-ID.13 Email Account Takeover Harm → BRE-FIN.23 Unauthorized Crypto Transfer Executed]
++ [BRE: BRE-ENT.13 Email Account Takeover Harm → BRE-FIN.23 Unauthorized Crypto Transfer Executed]
 + [Impact: IMPACT-FIN.12 Direct Fraud Loss = EUR 30,000]
 ```
 
@@ -1594,7 +1615,7 @@ No SRE, no DRE, no #7.
 
 ```text
 #9 ||[phone][@External→@Citizen]|| [Pattern: PATTERN-FIN.13 Fake Tech Support Scam] → #7 + [SRE]
-+ [BRE: BRE-ID.13 Email Account Takeover Harm → BRE-FIN.11 Authorized Push Payment Made]
++ [BRE: BRE-ENT.13 Email Account Takeover Harm → BRE-FIN.11 Authorized Push Payment Made]
 + [Impact: IMPACT-FIN.12 Direct Fraud Loss]
 ```
 
@@ -1605,7 +1626,7 @@ The #7 step exists only if foreign executable content executes. If the victim me
 ```text
 #9 ||[phone][@External→@Citizen]|| [Pattern: PATTERN-FIN.13 Fake Tech Support Scam] → #1
 + [SRE]
-+ [BRE: BRE-ID.13 Email Account Takeover Harm]
++ [BRE: BRE-ENT.13 Email Account Takeover Harm]
 ```
 
 Use #1 only when the attacker or victim misuses a legitimate software capability in a way that gives the attacker functional control or operational advantage without an implementation flaw and without FEC execution. If a remote-access tool is installed or executed as attacker-provided foreign executable content, record #7.
@@ -1622,7 +1643,7 @@ Use #1 only when the attacker or victim misuses a legitimate software capability
 
 The credential stolen was a **technical identity** — a payment-platform service-account credential discovered in the engineer's saved-secrets store after the workstation was compromised. Cause-side classification of the credential use is still `#4` (Axiom X / R-CRED applies regardless of whether the identity is human, organizational, or technical). The attacker then abuses legitimate operator functions on the payment service to take it offline (`#1`).
 
-The downstream BRE chain contains **no BRE-ID** entry. No human or organizational identity is the harmed entity — the harmed entity is the payment service itself. Compare §17.2 and §17.6, which both record `BRE-ID.13 Email Account Takeover Harm` because there a personal email account is the harmed identity. See §11.4 note and §3.9.
+The downstream BRE chain contains **no BRE-ENT** entry: no human or organizational principal is the harmed entity — the payment service itself is. Compare §17.2 and §17.6, which both record `BRE-ENT.13 Email Account Takeover Harm` because there a personal email account is the harmed principal.
 
 ---
 
@@ -1714,7 +1735,7 @@ If a legal obligation was triggered, also attach the regulatory BRE:
 
 # 19. Conformance
 
-A TLCTC+ v0.3 record is conformant if:
+A TLCTC+ v0.4 record is conformant if:
 
 1. It uses a TLCTC path or #9 anchor.
 2. It does not introduce new TLCTC top-level clusters.
@@ -1777,7 +1798,7 @@ In that future architecture:
 6. Added PATTERN namespace.
 7. Split scam/fraud patterns from BRE events.
 8. Changed BRE-FIN entries from playbook labels to event labels.
-9. Removed Account-Takeover Financial Loss as BRE; replaced with BRE-ID plus IMPACT-FIN.
+9. Removed Account-Takeover Financial Loss as BRE; replaced with BRE-ID plus IMPACT-FIN. (The BRE-ID prefix was later renamed to BRE-ENT in v0.4; see §21.3 and §7 R-V02-ENT-MIGRATION.)
 10. Fixed BRE grammar to support arbitrary sequential and parallel chains.
 11. Renamed "Layer" terminology to "Track".
 12. Clarified REPORT vs BRE-REG.
@@ -1817,7 +1838,7 @@ In that future architecture:
 19. **§17.2 corrected** — Investment-scam-with-account-takeover example now uses `BRE-FIN.23 Unauthorized Crypto Transfer Executed` (attacker-executed transfer through taken-over account) instead of `BRE-FIN.12 Authorized Crypto Transfer Made`. A contrasting victim-authorized variant added inline to clarify the authorized-vs-unauthorized distinction (which matters for fraud statistics and reimbursement-regime classification).
 20. **§19 conformance item 4** — refined to allow DRE-without-SRE on pure-#9 steps for direct disclosure cases.
 21. **§21 changelog restructure** — flat `# 21` and `# 21a` headings replaced by `# 21. Changelog` with `## 21.1` and `## 21.2` subsections.
-22. **Cause/consequence independence made explicit** — added §3.9 design principle, §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE rule, §11.4 note distinguishing technical from human/organizational identities, §17.8 worked example (service-account compromise causing payment outage with no BRE-ID), §19 conformance item 16, and §22 glossary entry for **Technical Identity**. Clarifies that `#4` against a technical identity does not produce a BRE-ID, and that cause-side cluster and consequence-side BRE family are independent dimensions across all clusters.
+22. **Cause/consequence independence made explicit** — added §3.9 design principle, §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE rule, §11.4 note distinguishing technical from human/organizational identities, §17.8 worked example (service-account compromise causing payment outage with no BRE-ID), §19 conformance item 16, and §22 glossary entry for **Technical Identity**. Clarifies that `#4` against a technical identity does not produce a BRE-ID, and that cause-side cluster and consequence-side BRE family are independent dimensions across all clusters. (The BRE-ID prefix was later renamed to BRE-ENT in v0.4; see §21.3 and §7 R-V02-ENT-MIGRATION.)
 
 **Non-changes (v0.2 decisions retained in v0.3):**
 
@@ -1826,6 +1847,31 @@ In that future architecture:
 - The PATTERN, BRE, IMPACT, REPORT catalogues are unchanged in structure (no codes added, removed, or renumbered).
 - TLSFC remains a forward reference; no TLSFC artefacts are introduced.
 - The "Tracks not Layers" terminology choice is retained.
+
+## 21.3 Changes from v0.3 to v0.4
+
+1. **BRE prefix renamed `BRE-ID → BRE-ENT`** — to eliminate lexical collision with cause-side `#4` Identity Theft terminology. The prefix now reads "E**nt**ity-principal harm" rather than "**Id**entity," and no longer invites readers to assume a 1:1 mapping from `#4` to this BRE family. Touches §11.4 (catalogue), §3.9 prefix table and prose, §5.5 transitioning-case example, §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE bullet, §11.3 note, §16 JSON example, §17.2 / §17.6 / §17.7 / §17.8 worked examples, and §22 **Technical Identity** glossary entry. Numeric suffixes (`.00`–`.19`) and labels are unchanged.
+2. **BRE catalogue bumped v0.2 → v0.3** — the prefix rename is a catalogue renumber per the §0.1 versioning rule. PATTERN, IMPACT, and REPORT remain at v0.2.
+3. **New rule R-V02-ENT-MIGRATION (§7)** — defines the mechanical migration path from v0.2/v0.3 records (`BRE-ID.XX`) to v0.4 records (`BRE-ENT.XX`).
+4. **R-V01-MIGRATION applicability extended** — wording updated from "v0.3" to "v0.3 or later." The conformance prohibition on free-text BRE labels is unchanged.
+5. **Defensive prose pruned** — §11.4 note, §3.9, §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE, §17.8 note, and §22 Technical Identity glossary trimmed. The BRE-ID/`#4` lexical collision was the root cause of the defensive call-outs; with `BRE-ENT` the collision is gone and the prose no longer needs to fight it.
+6. **Scope statements bumped to v0.4** — §2 (Explicit Non-Scope), §15.x (`non_cyber_oprisk_event` record-type non-existence note), §19 (Conformance) — wording updated to reference "TLCTC+ v0.4" for current-version statements.
+7. **§11.8 BRE-3P clarified** — added a family note explaining that BRE-3P captures third-party-induced operational consequences regardless of cause (`#10`, `#6`, `#2`, or non-cyber). Strengthened the §7 R-CAUSE-CONSEQUENCE-INDEPENDENCE `#10` bullet to call out BRE-3P alongside BRE-REG. No rename — the prefix has no lexical collision with cause-side `#10` vocabulary; the trap was conceptual and the prose now addresses it.
+8. **BRE labels scrubbed of cause-side verbs** — six labels rewritten in passive/victim-side form so they describe the consequence event rather than the attacker action. Codes and numeric suffixes unchanged; only label text. Migration: drop-in label refresh (no `R-V03` rule needed because the codes are stable). Affected:
+   - `BRE-ENT.11 Personal Identity Misuse Event` → `Personal Identity Used Without Consent`
+   - `BRE-ENT.15 Digital Identity Wallet Misuse` → `Digital Identity Wallet Used Without Consent`
+   - `BRE-ENT.16 Credential Abuse Consequence` → `Compromised Credential Used to Authenticate`
+   - `BRE-ENT.17 Impersonation-Driven Authorization` → `Authorization Granted Under False Identity`
+   - `BRE-FIN.16 Mule Transfer Executed` → `Onward Funds Transfer Executed` (mule narrative moved to PATTERN-FIN.19; see §11.3 note)
+   - `BRE-FIN.25 Refund / Reimbursement Paid to Attacker` → `Refund / Reimbursement Diverted to Third Party`
+
+**Non-changes (v0.3 decisions retained in v0.4):**
+
+- The 10 TLCTC clusters remain unchanged.
+- The three case classes (`core_cyber_incident`, `hybrid_cyber_enabled_harm`, `pure_9_digital_crime`) remain unchanged.
+- PATTERN, IMPACT, REPORT catalogues are unchanged (no codes added, removed, or renumbered).
+- All grammar productions in §8 remain unchanged.
+- All normative rules added in v0.3 (R-PATTERN-POSITION, R-9-BOUNDARY, R-BRE-OP-SCOPE, R-V01-MIGRATION, R-CAUSE-CONSEQUENCE-INDEPENDENCE) remain in force unchanged.
 
 ---
 
@@ -1857,7 +1903,7 @@ Loss of Control / System Compromise. The cyber Bow-Tie central event.
 
 ## Technical Identity
 
-A non-human credential or principal: service account, API key, machine credential, Kerberos service ticket, OAuth client secret, certificate, robot/RPA account. Distinct from a *human or organizational identity* (a person, a customer account, an employee mailbox, a corporate brand). Cause-side classification of the credential use is `#4` Identity Theft regardless (per R-CRED), but the consequence-side BRE typically falls outside BRE-ID. See §11.4 note, §3.9, and §17.8.
+A non-human credential or principal: service account, API key, machine credential, Kerberos service ticket, OAuth client secret, certificate, robot/RPA account. Distinct from a *human or organizational identity* (a person, a customer account, an employee mailbox, a corporate brand). Cause-side classification of the credential use is `#4` Identity Theft regardless (per R-CRED); the consequence-side BRE typically falls outside BRE-ENT. See §11.4, §3.9, and §17.8.
 
 ## TLCTC+
 
