@@ -23,19 +23,31 @@ The operational state in which data or resources can be used for their intended 
 
 ### Actor Archetype
 
-A coarse categorization of threat actors used in TLCTC overlays (Attacker Profiles, Tech Enablers Overlay) to group actors by motivation and resourcing level rather than by identity. The five archetypes are: **Nation State**, **Extortion**, **Fraud**, **Hacktivist**, and **Amateur**. Archetypes are a communication and trend-watching device — they are never used for cluster classification (Axiom IV). An archetype describes *which clusters an actor class tends to prefer* and *which emerging tech enablers that class is likely to adopt*, not the cluster of any specific attack step.
+The typical, recurring **attack-sequence pattern** that characterizes how an actor (or an Actor Group) chains TLCTC clusters across incidents — e.g., `#9 → #7 → #4 → #1`. In the Actor Profile Designer tool the archetype is captured per-actor in the **Archetype** field (the `sequence` attribute in the JSON), and the *Most Common Archetypes* panel aggregates actors that share the same pattern, surfacing dominant attack chains across the dataset. Archetypes are a communication and trend-watching device — they are never used for cluster classification (Axiom IV). An archetype describes *which clusters an actor tends to prefer* and *in what order it tends to chain them*, not the cluster of any specific attack step. Distinct from [Actor Group](#actor-group), which is the generalized actor category (Nation-State, Cybercriminal-Ransomware, …) and carries a capability vector rather than a sequence pattern.
+
+**Reference:** §17.3 (Attacker Profiles)
+
+**Tool:** [`/tools/actor-profile-designer.html`](/tools/actor-profile-designer.html)
+
+See also: Actor Group, Attacker Profile, Cyber Threat Radar, Axiom IV
+
+### Actor Group
+
+A generalized categorization of threat actors used in TLCTC overlays (Attacker Profiles, Tech Enablers Overlay) to group actors by motivation and resourcing level — rather than by named identity. The six reference actor groups published at [tlctc.net/tlctc-Attacker-Profiling.html](https://www.tlctc.net/tlctc-Attacker-Profiling.html) are: **Nation-State**, **Cybercriminal (Ransomware)**, **Cybercriminal (General)**, **Hacktivist**, **Insider**, and **Amateur (Script-Kiddie)**. Each actor group carries a baseline **capability vector** across the 10 clusters on the maturity scale (0 = none, 1 = Low, 2 = Medium, 3 = High, 4 = Expert/Champion) — for example, Nation-State scores Expert on `#2`/`#3`/`#7`/`#9`/`#10`, whereas Amateur (Script-Kiddie) scores Low across the board. Actor groups are a communication and trend-watching device — they are never used for cluster classification (Axiom IV). An actor group describes *which clusters a class of actors tends to be capable in* and *which emerging tech enablers that class is likely to adopt*, not the cluster of any specific attack step. The typical sequence pattern characteristic of an actor group is captured separately as an [Actor Archetype](#actor-archetype).
 
 **Reference:** §17.3 (Attacker Profiles), §17.4 (Tech Enablers Overlay)
 
-See also: Attacker Profile, Tech Enablers Overlay, Cyber Threat Radar, Axiom IV
+**Tool:** [`/tools/actor-profile-designer.html`](/tools/actor-profile-designer.html)
+
+See also: Actor Archetype, Attacker Profile, Tech Enablers Overlay, Cyber Threat Radar, Axiom IV
 
 ### Attacker Profile *(V2.1)*
 
-An **informative overlay** on the Cyber Threat Radar that describes a threat actor's (or Actor Archetype's) observed preferences across the 10 clusters: per-cluster capability scores, preferred cluster sequences, and typical boundary crossings. Profiles may be wrapped in Diamond-Model framing (adversary / capability / infrastructure / victim). Used for hypothesis generation ("likely next steps"), comparative radar views, and targeting analysis against the organizational radar. **Normative guardrails (R-RADAR-6…9):** actors are not clusters, they *use* clusters (Axiom IV); profiles MUST NOT redefine cluster meanings or introduce actor-based taxonomy; profiles SHOULD be published as probability distributions or pattern frequencies, not deterministic rules; profile scores SHOULD be derived from classified Layer 3 attack path instances so provenance traces back to evidence.
+An **informative overlay** on the Cyber Threat Radar that describes a threat actor's (or Actor Group's) observed preferences across the 10 clusters: per-cluster capability scores, preferred cluster sequences, and typical boundary crossings. Profiles may be wrapped in Diamond-Model framing (adversary / capability / infrastructure / victim). Used for hypothesis generation ("likely next steps"), comparative radar views, and targeting analysis against the organizational radar. **Normative guardrails (R-RADAR-6…9):** actors are not clusters, they *use* clusters (Axiom IV); profiles MUST NOT redefine cluster meanings or introduce actor-based taxonomy; profiles SHOULD be published as probability distributions or pattern frequencies, not deterministic rules; profile scores SHOULD be derived from classified Layer 3 attack path instances so provenance traces back to evidence.
 
 **Reference:** §17.3
 
-See also: Actor Archetype, Cyber Threat Radar, Axiom IV
+See also: Actor Group, Actor Archetype, Cyber Threat Radar, Axiom IV
 
 ### Attacker's View
 
@@ -1487,11 +1499,11 @@ See also: Social Engineering (#9), Physical Attack (#8)
 
 ### Tech Enablers Overlay *(V2.1)*
 
-A forward-looking **informative overlay** on the Cyber Threat Radar that maps emerging technologies (e.g., agentic AI, quantum-resistant crypto, deepfake toolchains, commodity exploit kits) against two axes: the **cluster axis** (which generic vulnerability the technology amplifies, `#1`–`#10`) and the **Actor Archetype axis** (Nation State / Extortion / Fraud / Hacktivist / Amateur). Complements the Attacker Profile overlay: where profiles describe which clusters actors favor *today*, the Tech Enablers Overlay tracks which new capabilities are entering the ecosystem, for whom, and which clusters they are likely to amplify next. Entries carry adoption-level indicators (observed / emerging / hypothesized) and snapshot dates; they MUST map to clusters via the generic vulnerability amplified, not by vendor or product category. Shifts between snapshots SHOULD trigger a review of the organizational radar and relevant Attacker Profiles.
+A forward-looking **informative overlay** on the Cyber Threat Radar that maps emerging technologies (e.g., agentic AI, quantum-resistant crypto, deepfake toolchains, commodity exploit kits) against two axes: the **cluster axis** (which generic vulnerability the technology amplifies, `#1`–`#10`) and the **Actor Group axis** (Nation-State / Cybercriminal-Ransomware / Cybercriminal-General / Hacktivist / Insider / Amateur-ScriptKiddie). Complements the Attacker Profile overlay: where profiles describe which clusters actors favor *today*, the Tech Enablers Overlay tracks which new capabilities are entering the ecosystem, for whom, and which clusters they are likely to amplify next. Entries carry adoption-level indicators (observed / emerging / hypothesized) and snapshot dates; they MUST map to clusters via the generic vulnerability amplified, not by vendor or product category. Shifts between snapshots SHOULD trigger a review of the organizational radar and relevant Attacker Profiles.
 
 **Reference:** §17.4
 
-See also: Cyber Threat Radar, Attacker Profile, Actor Archetype
+See also: Cyber Threat Radar, Attacker Profile, Actor Group, Actor Archetype
 
 **Tool:** [`/tools/tech-enablers-radar.html`](/tools/tech-enablers-radar.html)
 
