@@ -15,7 +15,12 @@ This glossary contains all defined terms from the TLCTC framework specification 
 
 A threat cluster where an attacker misuses the logic, scope, or configuration of existing, legitimate software functions for malicious purposes. This manipulation occurs through standard interfaces using expected input types (data, parameters, configurations, sequence of actions), but in a way that subverts the intended purpose or security controls. Crucially, inputs remain data; no foreign code is introduced or executed. The generic vulnerability is the scope, complexity, or inherent trust placed in legitimate software functions. Classification is governed by the R-ABUSE mapping rule: if the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as `#1 Abuse of Functions`.
 
-**Reference:** R-ABUSE (§2.2.4)
+**Reference:** R-ABUSE (§4.2.5)
+
+**Related reading:** [AD → Domain Admin → Ransomware cascade](https://www.tlctc.net/ad-ransomware-tlctc-cascade.html), [CVE-2026-44578: Next.js WebSocket SSRF](https://www.tlctc.net/cve-2026-44578.html), [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [CrowdStrike 2025 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-analysis.html), [CrowdStrike 2025 Global Threat Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-report.html), [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html)
+
+
+
 
 ### Accessibility (Data Risk Event)
 
@@ -28,6 +33,11 @@ The typical, recurring **attack-sequence pattern** that characterizes how an act
 **Reference:** §17.3 (Attacker Profiles)
 
 **Tool:** [`/tools/actor-profile-designer.html`](/tools/actor-profile-designer.html)
+
+
+
+
+**Related reading:** [CrowdStrike 2024 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-CrowdStrike2024.html), [CrowdStrike 2025 Threat Report — Strategy & Velocity](https://www.tlctc.net/tlctc-crowdstrike-2025-threat-report.html), [Diamond Model × TLCTC — structuring the empty spaces](https://www.tlctc.net/tlctc-diamond-model.html), [tlctc-Attacker-Profiling.html](https://www.tlctc.net/tlctc-Attacker-Profiling.html)
 
 See also: Actor Group, Attacker Profile, Cyber Threat Radar, Axiom IV
 
@@ -47,21 +57,35 @@ An **informative overlay** on the Cyber Threat Radar that describes a threat act
 
 **Reference:** §17.3
 
+
+
+
+**Related reading:** [CrowdStrike 2024 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-CrowdStrike2024.html), [CrowdStrike 2025 Threat Report — Strategy & Velocity](https://www.tlctc.net/tlctc-crowdstrike-2025-threat-report.html), [Diamond Model × TLCTC — structuring the empty spaces](https://www.tlctc.net/tlctc-diamond-model.html), [tlctc-Attacker-Profiling.html](https://www.tlctc.net/tlctc-Attacker-Profiling.html)
+
 See also: Actor Group, Actor Archetype, Cyber Threat Radar, Axiom IV
 
 ### Attacker's View
 
 A perspective included in each TLCTC threat cluster definition that describes how the attacker perceives or approaches the exploitation of the specific generic vulnerability. It helps distinguish between clusters by focusing on the attacker's methodology rather than technical implementation details.
 
+**Related reading:** [LINDDUN vs TLCTC — complementary approaches](https://www.tlctc.net/tlctc-LINDDUN.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc-threat-modeling-manifesto.html)
+
 ### Attack Path
 
 The sequence of applied Attack Vectors in a cyber incident, representing an ordered sequence of Attack Steps describing a complete attack scenario. Basic notation uses `#X → #Y → #Z` (e.g., `#9→#3→#7`). Attack paths may include velocity annotations showing the time between steps (e.g., `#9→[24h]#4→[12m]#1`), domain boundary markers using the `||` operator, parallel steps, and Data Risk Event tags.
 
-**Reference:** §2.2.2 (Global Definitions), §3.0 (Path Semantics)
+**Reference:** §4.2.2 (Global Definitions), §11.0 (Path Semantics)
+
+**Related reading:** [CrowdStrike 2024 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-CrowdStrike2024.html), [Mandiant M-Trends 2025 — TLCTC](https://www.tlctc.net/tlctc-mtrends-2025.html), [ENISA Threat Landscape 2025 — TLCTC](https://www.tlctc.net/tlctc-enisa-2025-threat-report.html), [Same Attack, Four Stories — vendor report comparison](https://www.tlctc.net/tlctc-threat-report-chaos.html), [PASTA threat modeling × TLCTC](https://www.tlctc.net/tlctc-pasta.html), [CKC + ATT&CK + TLCTC — Holy Trinity of Defense](https://www.tlctc.net/blog-ckc-attack-tlctc-synthesis.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc-threat-modeling-manifesto.html), [20 annotated attack paths (Ransomware, BEC, OT, ...)](https://www.tlctc.net/tlctc-attack-path-examples.html), [SSDLC for developers — the "S" problem](https://www.tlctc.net/tlctc-ssdlc.html), [TLCTC v2.1 monster prompt — CTI & Forensic](https://www.tlctc.net/tlctc-prompt-cti.html), [Report-to-Radar AI prompt for TLCTC](https://www.tlctc.net/tlctc-prompt-radar.html), [TLCTC v2.1 monster prompt — SOC & Detection](https://www.tlctc.net/tlctc-prompt-soc.html), [TLCTC v2.1 AI analysis prompt — teach any LLM](https://www.tlctc.net/tlctc-ai-analysis-prompt.html), [TLCTC v2.1 monster prompts — index](https://www.tlctc.net/tlctc-prompt-index.html)
+
+
+
 
 ### Attack Path Notation
 
 The standardized format for describing cyber attack sequences using TLCTC clusters. Format uses: `→` for sequential steps, `+` for parallel execution, `[time]` for temporal intervals, and `||[context][@Source→@Target]||` for domain boundaries. Example: `#9→[24h]#4→[12m]#1 ||[dev][@Vendor→@Org]|| →[weeks]#10.2→[0s]#7`.
+
+**Related reading:** [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [20 annotated attack paths (Ransomware, BEC, OT, ...)](https://www.tlctc.net/tlctc-attack-path-examples.html), [Dual-layer notation — TLCTC-XX.YY enumeration](https://www.tlctc.net/tlctc-enumeration.html), [TLCTC v2.1 monster prompt — CTI & Forensic](https://www.tlctc.net/tlctc-prompt-cti.html)
 
 ### Attack Sequence Schema *(V2.0)*
 
@@ -71,19 +95,29 @@ The JSON schema that defines the required structure for documenting attack path 
 
 A single attacker action or event that exploits exactly **one generic vulnerability** in a specific context. Each Attack Step MUST map to exactly one TLCTC cluster (per Axiom VI).
 
-**Reference:** §2.2.2 (Global Definitions), §2.2.7 (Minimal Classification Procedure)
+**Reference:** §4.2.2 (Global Definitions), §4.2.8 (Minimal Classification Procedure)
 
 ### Attack Vector
 
 The specific path or method used by an attacker to gain unauthorized access to a target system. In the TLCTC framework, each distinct attack vector is a distinct initiating method defined by the **initial generic vulnerability targeted** (per Axiom VII). The vector label MUST be based on cause, not outcome.
 
-**Reference:** §2.2.2 (Global Definitions), Axiom VII (§1.2)
+**Reference:** §4.2.2 (Global Definitions), Axiom VII (§2)
+
+**Related reading:** [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html)
+
+
+
 
 ### Attack Velocity (Δt) *(V2.0)*
 
 The temporal dimension of cyber risk representing the **time interval** between two adjacent Attack Steps in an attack path. For an edge `#X → #Y`, the value `Δt(X→Y)` represents the elapsed time between step `#X` and step `#Y` in the described scenario. Δt is an edge property attached to the sequence operator, not to steps. Attack velocity is the single most accurate predictor of attacker sophistication and the only metric that truthfully measures control effectiveness. Categorized into four velocity classes: Latent/Slow (days to months), Medium (hours), Fast (minutes), and Realtime (seconds/milliseconds).
 
-**Reference:** §4.0 (Definitions), §4.1 (Measurement Model), §4.2 (Notation)
+**Reference:** §12.0 (Definitions), §12.1 (Measurement Model), §12.2 (Notation)
+
+**Related reading:** [CrowdStrike 2025 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-analysis.html), [CrowdStrike 2025 Threat Report — Strategy & Velocity](https://www.tlctc.net/tlctc-crowdstrike-2025-threat-report.html), [GTIG AI Threat Tracker (May 2026) — TLCTC](https://www.tlctc.net/gtig-ai-threat-tracker-2026.html), [MITRE ATT&CK & STIX × TLCTC V2.0 — implementation guide](https://www.tlctc.net/stix-tlctc.html), [IEC 62443 × TLCTC v2.0 — industrial cybersecurity](https://www.tlctc.net/tlctc-iec62443-v2.html), [FAIR × TLCTC — enhanced quantitative risk](https://www.tlctc.net/tlctc-fair.html), [ISO/SAE 21434 × TLCTC V2.0 — automotive](https://www.tlctc.net/tlctc-blog-IsoSae21434.html), [ISO 27000 × TLCTC — name vs game](https://www.tlctc.net/blog-iso27001-iso27005.html), [OCTAVE × TLCTC v2.0 — causal taxonomy](https://www.tlctc.net/blog-tlctc-octave.html), [Enhancing CVE records with TLCTC v2.1](https://www.tlctc.net/tlctc-cve-nvd.html), [EU Cybersecurity Act (CSA) × TLCTC V2.0](https://www.tlctc.net/blog-eu-cybersecurity-act-csa.html), [EU cyber regulation needs a common taxonomy](https://www.tlctc.net/blog-eu-regulation-tlctc-taxonomy.html), [DORA TLPT × TLCTC V2.1 — boundary & velocity](https://www.tlctc.net/tlctc-regulation-dora-tlpt.html), [Why ORX must rethink the "cyber event"](https://www.tlctc.net/tlctc-orx-rethink-cyber-event.html), [TLCTC classification decision tree V2.0/V2.1](https://www.tlctc.net/tlctc-decision-tree.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html), [Quantum & AI — new magic, same 10 threats](https://www.tlctc.net/tlctc-quantum-ai-velocity.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [tlctc-attack-velocity.html](https://www.tlctc.net/tlctc-attack-velocity.html), [TLCTC v2.1 monster prompt — SOC & Detection](https://www.tlctc.net/tlctc-prompt-soc.html)
+
+
+
 
 ### Availability (Data Risk Event)
 
@@ -93,7 +127,12 @@ The technical state in which data or resources exist and can be reached by the i
 
 A foundational premise that defines what terms mean and what kinds of statements are allowed in TLCTC. Axioms are non-negotiable constraints on interpretation that force methodological consequence and prevent logical shortcuts and category errors. These foundational principles must be accepted to validate and effectively use the TLCTC framework. TLCTC defines ten axioms organized into four groups: Scope (I–II), Separation (III–V), Classification (VI–VIII), and Sequence (IX–X).
 
-**Reference:** §1.2 (Axioms and Assumptions)
+**Reference:** §2 (Axioms and Assumptions)
+
+**Related reading:** [End of Semantic Diffusion — Kuhn & TLCTC](https://www.tlctc.net/tlctc-semantic-diffusion.html), [Logical foundations of TLCTC](https://www.tlctc.net/tlctc-logical-foundation.html), [Why exactly ten? — TLCTC architecture](https://www.tlctc.net/tlctc-why10-explainer.html), [10×10×10 — fun fact about TLCTC](https://www.tlctc.net/tlctc-10x10x10-fun-fact.html), [Why TLCTC does not need the "Hazard"](https://www.tlctc.net/tlctc-hazard-omission.html), [The Control Fixation Reflex](https://www.tlctc.net/control-fixation-reflex.html), [Understanding cyber threats — a common language](https://www.tlctc.net/tlctc-executive-summary.html)
+
+
+
 
 ---
 
@@ -117,6 +156,11 @@ AI systems do not create new threat clusters — they are subject to the existin
 
 **Reference:** V1.9.1 Clarifications
 
+**Related reading:** [GTIG AI Threat Tracker (May 2026) — TLCTC](https://www.tlctc.net/gtig-ai-threat-tracker-2026.html), [MITRE ATLAS × TLCTC integration](https://www.tlctc.net/tlctc-mitre-ai.html), [MITRE ATT&CK for ML (AML) × TLCTC](https://www.tlctc.net/tlctc-mitre-aml-mapping.html), [NIST AI RMF + MITRE ATLAS × TLCTC](https://www.tlctc.net/tlctc-nist-ai-rmf-mitre-cti.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html), [Agentic AI under the microscope — TLCTC](https://www.tlctc.net/tlctc-agentic-ai-microscope.html), [Quantum & AI — new magic, same 10 threats](https://www.tlctc.net/tlctc-quantum-ai-velocity.html), [AI conversation deep dive on TLCTC](https://www.tlctc.net/blog-tlctc-ai-conversation-from-scratch.html), [Grok AI 4.1 — independent TLCTC validation](https://www.tlctc.net/tlctc-grok-ai-validation.html), [G7 SBOM-for-AI — control fixation critique](https://www.tlctc.net/sbom-for-ai-control-fixation.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [Emerging technologies as threat enablers](https://www.tlctc.net/tlctc-emerging-tech-radar.html), [TLCTC v2.1 AI analysis prompt — teach any LLM](https://www.tlctc.net/tlctc-ai-analysis-prompt.html)
+
+
+
+
 ### Amplification Attack *(Industry Term)*
 
 A flooding technique where an attacker sends small requests to third-party services (e.g., NTP, DNS, memcached) that respond with disproportionately large replies directed at the victim. In TLCTC: maps to `#6 Flooding Attack` — the primary mechanism is volume exceeding finite capacity. The abuse of the amplification service itself may additionally involve `#1 Abuse of Functions`.
@@ -139,25 +183,40 @@ See also: Man in the Middle (#5), DNS Spoofing, SSL Stripping
 
 A minimum or maximum bound for Δt derived from known constraints when precise timestamps are unavailable. Notation: `Δt<15m` (upper bound), `Δt>15m` (lower bound), `Δt=10m..20m` (range).
 
-**Reference:** §4.0.3, §4.2.3
+**Reference:** §12.0.3, §12.2.3
+
+**Related reading:** [tlctc-attack-velocity.html](https://www.tlctc.net/tlctc-attack-velocity.html)
+
+
+
 
 ### Bow-Tie Model
 
 A risk model that represents risk as a structure with five elements: Threats (left side), Preventive Controls (left side), Central Event (knot), Mitigating Controls (right side), and Consequences (right side). TLCTC is anchored in the Bow-Tie model to enforce strict separation between cause and effect in cyber risk analysis. The model enforces temporal causality, prevents confusion between threats and outcomes, enables precise control placement, and reveals attack sequences as causal chains. The central event "Loss of Control" serves as the pivot point between threat realization and potential consequences.
 
-**Reference:** §1.4 (The Bow-Tie Anchor), §1.4.1 (Structure and Vocabulary)
+**Reference:** §6 (The Bow-Tie Anchor), §6.1 (Structure and Vocabulary)
+
+**Related reading:** [Basel operational risk × TLCTC Bow-Tie](https://www.tlctc.net/tlctc-banks-operational-risk-basel.html), [Why ORX must rethink the "cyber event"](https://www.tlctc.net/tlctc-orx-rethink-cyber-event.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc-threat-modeling-manifesto.html), [Generic vulnerabilities — software & hardware failure](https://www.tlctc.net/tlctc-generic-vulnerabilities.html), [tlctc-bow-tie-causality.html](https://www.tlctc.net/tlctc-bow-tie-causality.html), [blog-tlctc-two-layer-framework.html](https://www.tlctc.net/blog-tlctc-two-layer-framework.html), [Why TLCTC does not need the "Hazard"](https://www.tlctc.net/tlctc-hazard-omission.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html)
+
+
+
 
 ### Bridge Cluster
 
 A TLCTC cluster whose generic vulnerability **inherently** enables crossing into (or leveraging over) a different domain's control regime. Bridge clusters are: `#8 Physical Attack`, `#9 Social Engineering`, and `#10 Supply Chain Attack`.
 
-**Reference:** §2.2.2 (Global Definitions), §5.1.4, §5.2 (Topology Classification)
+**Reference:** §4.2.2 (Global Definitions), §5.1.4, §5.2 (Topology Classification)
+
+**Related reading:** [TLCTC classification decision tree V2.0/V2.1](https://www.tlctc.net/tlctc-decision-tree.html), [Topology of cyber attacks — Bridge vs Internal](https://www.tlctc.net/tlctc-topology-of-cyber-attacks.html)
+
+
+
 
 ### Bridge Step
 
 A step-level instance of a bridge cluster that crosses a specific domain boundary. When a bridge step crosses responsibility spheres, the boundary SHOULD be recorded in path notation via the domain boundary operator `||[context][@Source→@Target]||`.
 
-**Reference:** §2.2.2 (Global Definitions), §5.1.6
+**Reference:** §4.2.2 (Global Definitions), §5.1.6
 
 ### BGP Hijacking *(Industry Term)*
 
@@ -193,7 +252,12 @@ See also: Exploiting Server (#2), Exploiting Client (#3), Implementation Flaw
 
 A discrete, observable business-level event on the consequence side of the Bow-Tie model, triggered by a Data Risk Event or by a preceding BRE. Examples include regulatory notification obligations, service outage declarations, media coverage, customer churn, and regulatory fines. BREs may **chain**: each BRE can trigger subsequent BREs, forming a variable-length consequence sequence (`SRE → DRE → BRE₁ → BRE₂ → ... → BREₙ`). Each BRE→BRE transition has its own Δt representing a detection and intervention window. An organization's Risk Appetite determines at which point a BRE is designated as the terminal **Business Impact (BI)** — BI is a role a BRE can hold, not a separate event category.
 
-**Reference:** §1.4.3.1 (The Consequence Chain), V1.9.1 §The Anatomy of Risk
+**Reference:** §6.3.1 (The Consequence Chain), V1.9.1 §The Anatomy of Risk
+
+
+
+
+**Related reading:** [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html), [blog-cyber-bow-tie-business-risk-event-chain.html](https://www.tlctc.net/blog-cyber-bow-tie-business-risk-event-chain.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [TLCTC v2.1 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html), [TLCTC+ for NCSCs & CERTs — national reporting](https://www.tlctc.net/tlctc-plus-ncsc-proposal.html)
 
 See also: System Risk Event (SRE), Data Risk Event (DRE), Business Impact (BI), Event Chain, Consequences
 
@@ -201,7 +265,7 @@ See also: System Risk Event (SRE), Data Risk Event (DRE), Business Impact (BI), 
 
 A **role** assigned to the terminal Business Risk Event in a consequence chain — the BRE beyond which further causal decomposition is no longer operationally useful for a given organization. BI is not a separate event category; it is the point in the BRE chain where an organization's **Risk Appetite** boundary is reached. What constitutes BI for one organization may be a mid-chain BRE for another: a €50K regulatory fine may be terminal impact for a startup but a mid-chain event for a multinational. The BI designation is therefore context-dependent and organization-specific.
 
-**Reference:** §1.4.3.1 (The Consequence Chain)
+**Reference:** §6.3.1 (The Consequence Chain)
 
 See also: Business Risk Event (BRE), Risk Appetite, Event Chain
 
@@ -218,6 +282,11 @@ The lowest level of indicators that still make operational sense, representing m
 A social engineering attack where an adversary impersonates a senior executive or trusted business partner (often via compromised or spoofed email) to trick employees into transferring funds, revealing sensitive information, or taking other harmful actions. In TLCTC: the manipulation of the human target maps to `#9 Social Engineering`. If the attacker uses compromised email credentials, the email access maps to `#4 Identity Theft`. Typical sequences: `#9 → #1` (social engineering leading to function abuse, e.g., wire transfer) or `#4 → #9 → #1` (stolen credentials enabling impersonation for social engineering leading to function abuse).
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#9 — "CEO Fraud", "Invoice Manipulation Fraud (BEC Fraud)")
+
+
+
+
+**Related reading:** [20 annotated attack paths (Ransomware, BEC, OT, ...)](https://www.tlctc.net/tlctc-attack-path-examples.html)
 
 See also: Social Engineering (#9), Whaling, Phishing
 
@@ -246,19 +315,19 @@ See also: CWE, CVE, MITRE ATT&CK, Techniques (TTPs)
 
 Degradation or denial of service caused **primarily** by volume or intensity exceeding finite resources. Resources include: bandwidth, CPU cycles, memory, storage, database connections, API quotas, thread/process pools, file handles. Maps to `#6 Flooding Attack`.
 
-**Reference:** §2.2.2 (Global Definitions), R-FLOOD (§2.2.4)
+**Reference:** §4.2.2 (Global Definitions), R-FLOOD (§4.2.5)
 
 ### Central Event
 
 In the TLCTC Bow-Tie model: **Loss of Control / System Compromise** — the point at which the attacker achieves unauthorized control over the system's behavior, privileges, data, or trust relationships—sufficient to pursue attack objectives. This central event is positioned before outcomes.
 
-**Reference:** §1.4.3 (Central Event)
+**Reference:** §6.3 (Central Event)
 
 ### Client-Role Component
 
 A component that **consumes external responses, content, or state** relative to the attacker. The component is in "client role" for the specific interaction being classified.
 
-**Reference:** §2.2.2 (Global Definitions), R-ROLE (§2.2.4)
+**Reference:** §4.2.2 (Global Definitions), R-ROLE (§4.2.5)
 
 ### Client-Server Relationship
 
@@ -268,11 +337,13 @@ A fundamental principle (Axiom II) stating that every networked software system 
 
 A development role focused on implementation and craftsmanship, responsible for writing functional, efficient code according to established patterns, implementing specific security controls at the code level, and following secure coding practices. Primary responsibility for addressing threat clusters #2, #3, and implementation details of #4, #5, and #7. Contrasts with the Programmer role which focuses on architecture and strategy.
 
+**Related reading:** [Taming SonarQube with TLCTC (Secure-Dev pt 2)](https://www.tlctc.net/tlctc-sdlc-dev-blog.html), [Programmer vs Coder in TLCTC (Secure-Dev pt 1)](https://www.tlctc.net/tlctc-sdlc-prog-coder.html), [Adding the Developer's View to TLCTC](https://www.tlctc.net/tlctc-definitions-sdlc-prog-coder.html)
+
 ### Consequences
 
 In the Bow-Tie model: what results after the central event, including technical and business impact (event chains). Consequences are on the right (effect) side of the Bow-Tie and are recorded as Data Risk Events. Consequences are NOT threat categories.
 
-**Reference:** §1.4.1 (Bow-Tie Structure), §1.4.4 (What TLCTC Does NOT Classify)
+**Reference:** §6.1 (Bow-Tie Structure), §6.4 (What TLCTC Does NOT Classify)
 
 ### Control
 
@@ -282,47 +353,60 @@ A security measure implemented to mitigate threats, reduce vulnerabilities, or m
 
 An evaluation of whether a control, as conceived and structured, is theoretically capable of achieving its objective if it operates as intended. Assesses the control's capability to address the identified risk within its specific threat cluster.
 
+**Related reading:** [D3FEND × TLCTC — the missing axis](https://www.tlctc.net/missing-axis-d3fend-tlctc.html), [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html), [Control Matrix for SME & Private (TLCTC v2.0)](https://www.tlctc.net/tlctc-sme-private-controls.html)
+
 ### Control Failure
 
 A deviation from a control objective or lack of effectiveness. Control failure is control-risk and MUST NOT be treated as a threat category (Axiom V). Risk structure remains: Threat → Event/Incident → Consequences; controls influence likelihood and impact but do not define the threat cluster. Distinguished from the actual risk event itself (Axiom IV).
 
-**Reference:** Axiom V (§1.2), §1.4.2 (Rule 3)
+**Reference:** Axiom V (§2), §6.2 (Rule 3)
+
+**Related reading:** [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [Logical impossibility of control-first regulation](https://www.tlctc.net/tlctc-control-first-regulation.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [The Control Fixation Reflex](https://www.tlctc.net/control-fixation-reflex.html), [The Audit Trap — compliance ≠ security](https://www.tlctc.net/tlctc-audit-trap.html)
+
+
+
 
 ### Control Objective
 
 The specific aim or purpose that a control is intended to achieve, defining what the control should accomplish in terms of risk mitigation for a particular threat cluster. Each control aligns with a single, clear objective.
 
+**Related reading:** [NIST SP 800-218 (SSDF) × TLCTC](https://www.tlctc.net/tlctc-NIST.SP.800-218.html), [SABSA × TLCTC — architecture × threat ontology](https://www.tlctc.net/sabsa-tlctc-blog.html), [D3FEND × TLCTC — the missing axis](https://www.tlctc.net/missing-axis-d3fend-tlctc.html), [Logical impossibility of control-first regulation](https://www.tlctc.net/tlctc-control-first-regulation.html), [G7 SBOM-for-AI — control fixation critique](https://www.tlctc.net/sbom-for-ai-control-fixation.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [The Control Fixation Reflex](https://www.tlctc.net/control-fixation-reflex.html), [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [Control Matrix for SME & Private (TLCTC v2.0)](https://www.tlctc.net/tlctc-sme-private-controls.html), [Capability-based planning via 10×(6×2) matrix](https://www.tlctc.net/tlctc-capability-based-planning.html), [The Audit Trap — compliance ≠ security](https://www.tlctc.net/tlctc-audit-trap.html)
+
 ### Control Operational Effectiveness
 
 An evaluation of whether a control is actually working as designed in practice, examining if the control is being executed correctly and consistently over time to meet its objective. May vary depending on the nature of the threat cluster (e.g., controls for Malware #7 may never achieve 100% due to detection latencies).
+
+**Related reading:** [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html)
 
 ### Credential / Identity Artifact
 
 Any secret, token, key, or session artifact that enables authentication or authorization decisions. Examples include: passwords, PINs, passphrases, API keys, bearer tokens, OAuth/OIDC tokens, SAML assertions, session cookies, session identifiers, private keys, client certificate keys, Kerberos tickets, SSH keys, hardware token seeds/OTPs, biometric templates (when used as authenticators).
 
-**Reference:** §2.2.2 (Global Definitions), Axiom X (§1.2)
+**Reference:** §4.2.2 (Global Definitions), Axiom X (§2)
 
 ### Credential Acquisition
 
 The act of obtaining, capturing, exposing, deriving, or forging a credential/identity artifact. Credential acquisition maps to the **enabling cluster**—the generic vulnerability that made the acquisition possible.
 
-**Reference:** §2.2.2 (Global Definitions), R-CRED (§2.2.4), Axiom X (§1.2)
+**Reference:** §4.2.2 (Global Definitions), R-CRED (§4.2.5), Axiom X (§2)
 
 ### Credential Application
 
 The act of presenting, using, replaying, or leveraging a credential to authenticate and operate as an identity. Credential application MUST always map to `#4 Identity Theft`.
 
-**Reference:** §2.2.2 (Global Definitions), R-CRED (§2.2.4), Axiom X (§1.2)
+**Reference:** §4.2.2 (Global Definitions), R-CRED (§4.2.5), Axiom X (§2)
 
 ### Credential Forgery
 
 The act of creating a credential without possessing the legitimate secret. If forgery succeeds due to an implementation flaw (e.g., weak signing algorithm, missing validation, predictable tokens), the forgery step maps to `#2` or `#3` per R-ROLE. The subsequent use of the forged credential maps to `#4`.
 
-**Reference:** §2.2.2 (Global Definitions), R-CRED (§2.2.4)
+**Reference:** §4.2.2 (Global Definitions), R-CRED (§4.2.5)
 
 ### CVE (Common Vulnerabilities and Exposures)
 
 A standardized identifier for publicly known cybersecurity vulnerabilities. In the TLCTC framework, CVEs are mapped to generic vulnerabilities and their corresponding threat clusters to enable consistent threat classification and control implementation.
+
+**Related reading:** [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [Enhancing CVE records with TLCTC v2.1](https://www.tlctc.net/tlctc-cve-nvd.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [Harbor Registry × TLCTC Cyber Threat Radar](https://www.tlctc.net/tlctc-harbor-integration.html)
 
 ### Cyber Bow-Tie
 
@@ -336,15 +420,27 @@ An actual security breach or system compromise that has occurred, representing t
 
 The probability of occurrence of a cyber event in which control over IT systems or persons is lost due to one or more of the 10 Top Level Cyber Threat Clusters, leading (via event chains) to consequential damage (impact). Cyber risks are a subset of operational risks (OpRisk).
 
+**Related reading:** [ENISA Gap Analysis — TLCTC](https://www.tlctc.net/tlctc-enisa-gap-analysis.html), [NIST NICE × TLCTC — workforce capabilities](https://www.tlctc.net/tlctc-NIST-NICE.html), [FAIR × TLCTC — enhanced quantitative risk](https://www.tlctc.net/tlctc-fair.html), [ISO 27000 × TLCTC — name vs game](https://www.tlctc.net/blog-iso27001-iso27005.html), [OCTAVE × TLCTC v2.0 — causal taxonomy](https://www.tlctc.net/blog-tlctc-octave.html), [EU regulation (NIS2/DORA/CRA) vs TLCTC](https://www.tlctc.net/tlctc-eu-regulation.html), [Why DORA will fail regarding cyber risks](https://www.tlctc.net/tlctc-dora-cyber-risk-failure.html), [TLCTC vs 30+ standards & regulations](https://www.tlctc.net/tlctc-regulatorsANDstandards.html), [Basel operational risk × TLCTC Bow-Tie](https://www.tlctc.net/tlctc-banks-operational-risk-basel.html), [Cyber Resilience Act (CRA) — TLCTC pain points & fixes](https://www.tlctc.net/blog-tlctc-cra-pain-points.html), [Generic vulnerabilities — software & hardware failure](https://www.tlctc.net/tlctc-generic-vulnerabilities.html), [TLCTC — the missing link between strategy and ops](https://www.tlctc.net/tlctc-fillthegap.html), [The Audit Trap — compliance ≠ security](https://www.tlctc.net/tlctc-audit-trap.html), [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html), [TLCTC v2.1 monster prompt — CISO & Risk](https://www.tlctc.net/tlctc-prompt-ciso.html), [The Risk Appetite Conversation Your Board Isn't Having](https://www.tlctc.net/tlctc-strategy.html), [TLCTC — the missing link (brief)](https://www.tlctc.net/tlctc-brief-doc.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
+
 ### Cyber Risk Event
 
 A potential occurrence that could lead to a system breach or compromise. Distinguished from Cyber Incidents (which have already occurred) and Data Risk Events (which are consequences). The central event in the Cyber Bow-Tie model is the **System Risk Event (SRE)** — "Loss of Control" or "System Compromise".
+
+
+
+
+**Related reading:** [GDPR vs NIS2 — different trigger points](https://www.tlctc.net/tlctc-gdpr-nis2-triggers.html), [Basel operational risk × TLCTC Bow-Tie](https://www.tlctc.net/tlctc-banks-operational-risk-basel.html), [Why ORX must rethink the "cyber event"](https://www.tlctc.net/tlctc-orx-rethink-cyber-event.html)
 
 See also: System Risk Event (SRE)
 
 ### CWE (Common Weakness Enumeration) *(Industry Term)*
 
 A community-developed list of common software and hardware weakness types maintained by MITRE. CWE categorizes the underlying flaws, bugs, or errors (weaknesses) that enable vulnerabilities to exist — e.g., CWE-89 for SQL Injection weakness, CWE-119 for buffer overflow weakness. In the TLCTC conceptual hierarchy: **Weakness (CWE) → Specific Vulnerability (CVE) → Generic Vulnerability (TLCTC) → Threat Cluster (#1–#10)**. CWE provides granular weakness taxonomy at the code level for developers; TLCTC operates at the strategic level by grouping all resulting vulnerabilities into 10 generic vulnerability categories.
+
+
+
+
+**Related reading:** [CVE-2026-21510: Windows Shell SmartScreen bypass](https://www.tlctc.net/cve-2026-21510.html), [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [TLCTC × CWE — interactive explorer](https://www.tlctc.net/tlctc-mitre-cwe.html), [TLCTC × CWE — context is king](https://www.tlctc.net/tlctc-mitre-cwe-mapping.html), [TLCTC × CWE — advanced explorer](https://www.tlctc.net/tlctc-cwe-mapping.html), [MITRE CWE needs a taxonomic reboot](https://www.tlctc.net/tlctc-cwe-reboot.html), [CWE-514 (covert channel) → TLCTC #8](https://www.tlctc.net/blog-cwe-514-covert-channel-mapping.html), [SonarQube × TLCTC — secure dev integration (pt 3)](https://www.tlctc.net/tlctc-sonar-cwe.html), [Taming SonarQube with TLCTC (Secure-Dev pt 2)](https://www.tlctc.net/tlctc-sdlc-dev-blog.html), [SSDLC for developers — the "S" problem](https://www.tlctc.net/tlctc-ssdlc.html), [Adding the Developer's View to TLCTC](https://www.tlctc.net/tlctc-definitions-sdlc-prog-coder.html), [TLCTC v2.1 monster prompt — DevSecOps](https://www.tlctc.net/tlctc-prompt-devsecops.html)
 
 See also: Vulnerability, Weakness, CVE, Generic Vulnerability
 
@@ -365,6 +461,11 @@ A standard visualization methodology for communicating threat posture, change ov
 **Normative rules (R-RADAR-1…5):** spoke assignment MUST use the Section 4 grammar; multi-cluster attack paths MUST be rendered as multiple bubbles or a single bubble plus a separate Layer 3 path; zone placement SHOULD follow a disclosed scoring method; snapshots SHOULD be dated and use the same method for movement indicators to be meaningful; aggregated sector / national radars MUST use identical spoke definitions and SHOULD disclose the combination rule (max / average / weighted).
 
 **Reference:** §17.1–17.2
+
+
+
+
+**Related reading:** [CrowdStrike 2024 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-CrowdStrike2024.html), [ENISA Threat Landscape 2025 — TLCTC](https://www.tlctc.net/tlctc-enisa-2025-threat-report.html), [GTIG AI Threat Tracker (May 2026) — TLCTC](https://www.tlctc.net/gtig-ai-threat-tracker-2026.html), [Emerging technologies as threat enablers](https://www.tlctc.net/tlctc-emerging-tech-radar.html), [Harbor Registry × TLCTC Cyber Threat Radar](https://www.tlctc.net/tlctc-harbor-integration.html), [Report-to-Radar AI prompt for TLCTC](https://www.tlctc.net/tlctc-prompt-radar.html)
 
 See also: Attacker Profile, Tech Enablers Overlay, Responsibility Sphere, Layer 2
 
@@ -406,13 +507,18 @@ The four distinct paths that data can follow during an attack, each mapping to s
 
 An outcome event describing **Loss of Confidentiality (C)** (data stolen / unauthorized access), **Loss of Integrity (I)** (data modified / unauthorized changes), or **Loss of Availability/Accessibility (A)** (data gone or unreachable, or data present but unusable). Data Risk Events MUST be recorded separately from cluster steps, MUST NOT be used as threat categories, and MUST NOT change the cluster classification of the step that preceded them. Notation: `[DRE: C]`, `[DRE: I]`, `[DRE: A]`, or combinations. When the distinction between Availability and Accessibility is operationally relevant, the general code `A` MAY be refined into **`Av`** (Availability — data gone or unreachable) or **`Ac`** (Accessibility — data present but unusable). Example: ransomware encryption = `[DRE: Ac]`; data deletion = `[DRE: Av]`; distinction unknown = `[DRE: A]`.
 
-**Reference:** §2.2.2 (Global Definitions), §1.4.2 (Rule 2), §3.5.3
+**Reference:** §4.2.2 (Global Definitions), §6.2 (Rule 2), §11.5.3
+
+**Related reading:** [Chaos Ransomware — TLCTC forensic](https://www.tlctc.net/chaos-ransomware-tlctc-analysis.html), [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html), [LINDDUN vs TLCTC — complementary approaches](https://www.tlctc.net/tlctc-LINDDUN.html), [Enhancing CVE records with TLCTC v2.1](https://www.tlctc.net/tlctc-cve-nvd.html), [GDPR vs NIS2 — different trigger points](https://www.tlctc.net/tlctc-gdpr-nis2-triggers.html), [TLCTC classification decision tree V2.0/V2.1](https://www.tlctc.net/tlctc-decision-tree.html), [TLCTC+ for NCSCs & CERTs — national reporting](https://www.tlctc.net/tlctc-plus-ncsc-proposal.html)
+
+
+
 
 ### Data vs Code Boundary
 
 A normative classification principle: Domain-specific expressions (e.g., SQL, LDAP, XPath, GraphQL, template syntax, configuration languages) are treated as **data** unless they directly cause **FEC execution** via a general-purpose execution engine.
 
-**Reference:** §2.2.2 (Global Definitions)
+**Reference:** §4.2.2 (Global Definitions)
 
 ### Delta t (Δt) *(V2.0)*
 
@@ -422,7 +528,12 @@ Symbol representing the time interval between threat cluster transitions in an a
 
 The environment's **intended** capability to load, interpret, or execute program content. This is the generic vulnerability exploited by `#7 Malware`. Examples: OS loaders, script interpreters, macro engines, browser JS engines, module loaders, container/virtualization runtimes.
 
-**Reference:** §2.2.2 (Global Definitions), §2.1 (#7 Definition)
+**Reference:** §4.2.2 (Global Definitions), §4.1 (#7 Definition)
+
+**Related reading:** [The File Type Fallacy — extension blocklists](https://www.tlctc.net/tlctc-file-type-fallacy.html), [GovCERT-CH blocked filetypes × TLCTC](https://www.tlctc.net/tlctc-govcert-blocked-filetypes.html)
+
+
+
 
 ### Detection Coverage Score (DCS) *(V2.0)*
 
@@ -433,27 +544,41 @@ A strategic Key Performance Indicator (KPI) for measuring security effectiveness
 
 Example: If a ransomware group moves from #4 to #1 in 10 minutes and your SIEM alerts in 15 minutes, DCS = 15/10 = 1.5, indicating systematic blindness requiring automation rather than analyst intervention.
 
+**Related reading:** [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
+
 ### Developer's View
 
 A perspective included in each TLCTC threat cluster definition that provides guidance on secure development practices specific to preventing that cluster. Encompasses both Programmer (architectural) and Coder (implementation) responsibilities.
+
+**Related reading:** [Programmer vs Coder in TLCTC (Secure-Dev pt 1)](https://www.tlctc.net/tlctc-sdlc-prog-coder.html), [SSDLC phase-by-phase reference — TLCTC v2.1](https://www.tlctc.net/tlctc-ssdlc-integration.html), [Adding the Developer's View to TLCTC](https://www.tlctc.net/tlctc-definitions-sdlc-prog-coder.html), [TLCTC v2.1 monster prompt — DevSecOps](https://www.tlctc.net/tlctc-prompt-devsecops.html)
 
 ### Domain
 
 A set of assets governed by a coherent control regime (policies, monitoring, enforcement, and accountability). Domains may be technical, organizational, or socio-technical. Examples: cyber/IT domain, physical security domain, human decision domain, vendor development domain, cloud provider control-plane domain.
 
-**Reference:** §2.2.2 (Global Definitions), §5.1.1
+**Reference:** §4.2.2 (Global Definitions), §5.1.1
 
 ### Domain Boundary
 
 A point where responsibility spheres or control regimes change. Crossing a domain boundary means the attack moves from one set of applicable controls to a different set.
 
-**Reference:** §2.2.2 (Global Definitions), §5.1.3
+**Reference:** §4.2.2 (Global Definitions), §5.1.3
+
+**Related reading:** [Topology of cyber attacks — Bridge vs Internal](https://www.tlctc.net/tlctc-topology-of-cyber-attacks.html)
+
+
+
 
 ### Domain Boundary Operator (||) *(V2.0)*
 
 Notation: `||[context][@Source→@Target]||`. Used to explicitly mark where an attack path crosses responsibility spheres. The operator SHOULD accompany bridge cluster steps (`#8`, `#9`, `#10`) and MAY be used with any step that crosses a domain boundary. The context describes the transition type (e.g., [dev], [idp], [update]) and the arrow shows the direction of trust crossing. The boundary test: "If removing the third-party trust link would stop the step from succeeding, #10 belongs there". Enables precise mapping of responsibility shifts and supply chain attack analysis.
 
-**Reference:** §2.2.2 (Global Definitions), §3.3 (Domain Boundary Operator), §5.3
+**Reference:** §4.2.2 (Global Definitions), §11.3 (Domain Boundary Operator), §5.3
+
+**Related reading:** [MITRE ATT&CK & STIX × TLCTC V2.0 — implementation guide](https://www.tlctc.net/stix-tlctc.html), [IEC 62443 × TLCTC v2.0 — industrial cybersecurity](https://www.tlctc.net/tlctc-iec62443-v2.html), [FAIR × TLCTC — enhanced quantitative risk](https://www.tlctc.net/tlctc-fair.html), [ISO/SAE 21434 × TLCTC V2.0 — automotive](https://www.tlctc.net/tlctc-blog-IsoSae21434.html), [Enhancing CVE records with TLCTC v2.1](https://www.tlctc.net/tlctc-cve-nvd.html), [EU cyber regulation needs a common taxonomy](https://www.tlctc.net/blog-eu-regulation-tlctc-taxonomy.html), [DORA TLPT × TLCTC V2.1 — boundary & velocity](https://www.tlctc.net/tlctc-regulation-dora-tlpt.html), [TLCTC classification decision tree V2.0/V2.1](https://www.tlctc.net/tlctc-decision-tree.html), [Topology of cyber attacks — Bridge vs Internal](https://www.tlctc.net/tlctc-topology-of-cyber-attacks.html), [TLCTC+ for NCSCs & CERTs — national reporting](https://www.tlctc.net/tlctc-plus-ncsc-proposal.html)
+
+
+
 
 ### DAST (Dynamic Application Security Testing) *(Industry Term)*
 
@@ -505,6 +630,11 @@ See also: Phishing, Social Engineering (#9), Typosquatting
 
 An EU regulation establishing ICT risk management requirements for financial entities. Like NIS2, DORA emphasizes incident reporting but lacks a unified threat categorization system. The TLCTC framework addresses this gap by providing a standardized taxonomy that supports compliance with DORA's requirements for threat classification and incident reporting. DORA requirements can be mapped as Regulatory Trigger Points in the TLCTC event chain model.
 
+
+
+
+**Related reading:** [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [EU cyber regulation needs a common taxonomy](https://www.tlctc.net/blog-eu-regulation-tlctc-taxonomy.html), [EU regulation (NIS2/DORA/CRA) vs TLCTC](https://www.tlctc.net/tlctc-eu-regulation.html), [Why DORA will fail regarding cyber risks](https://www.tlctc.net/tlctc-dora-cyber-risk-failure.html), [DORA TLPT × TLCTC V2.1 — boundary & velocity](https://www.tlctc.net/tlctc-regulation-dora-tlpt.html), [TLCTC vs 30+ standards & regulations](https://www.tlctc.net/tlctc-regulatorsANDstandards.html), [Logical impossibility of control-first regulation](https://www.tlctc.net/tlctc-control-first-regulation.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [TLCTC v2.1 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html)
+
 See also: NIS2, Regulatory Trigger Point, Eₙ Event Notation
 
 ### Drive-By Download *(Industry Term)*
@@ -519,7 +649,7 @@ See also: Exploiting Client (#3), Malware (#7), Watering Hole Attack
 
 A legitimate administrative utility that can be used for both legitimate administrative purposes and malicious activities when invoked by an attacker. Examples include PowerShell, PsExec, WMI, and remote administration tools. In TLCTC: invocation/abuse of the tool may be `#1` (if no implementation flaw is exploited), while the actual execution of attacker-controlled FEC through that tool is `#7`, resulting in a `#1 → #7` sequence.
 
-**Reference:** §2.2.4 (R-EXEC, LOLBAS Clarification)
+**Reference:** §4.2.5 (R-EXEC, LOLBAS Clarification)
 
 ---
 
@@ -529,13 +659,13 @@ A legitimate administrative utility that can be used for both legitimate adminis
 
 A transition between two adjacent Attack Steps, represented by the sequence operator `→`. Δt (Attack Velocity) is an edge property.
 
-**Reference:** §3.1 (Sequence Operator), §4.0.2
+**Reference:** §11.1 (Sequence Operator), §12.0.2
 
 ### Estimated Δt
 
 An approximate Δt value derived from partial evidence when precise timestamps are unavailable. Notation: `Δt~15m`.
 
-**Reference:** §4.0.3, §4.2.3
+**Reference:** §12.0.3, §12.2.3
 
 ### Eₙ Event Notation (Regulatory) *(V2.0)*
 
@@ -559,9 +689,13 @@ Foreign code that targets specific vulnerabilities to modify software behavior, 
 
 A threat cluster where an attacker targets and leverages flaws originating directly within the source code implementation of any software acting in a client role (requesting/processing data from a server or resource). These vulnerabilities allow manipulation of client behavior or unauthorized access using Exploit Code, often when the client interacts with malicious content. The generic vulnerability is the presence of exploitable flaws within client-side source code stemming from insecure coding practices.
 
+**Related reading:** [Kernel as Client: CVE-2025-21333 (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-21510: Windows Shell SmartScreen bypass](https://www.tlctc.net/cve-2026-21510.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
+
 ### Exploiting Server (#2)
 
 A threat cluster where an attacker targets and leverages flaws originating directly within the server-side application's source code implementation. These vulnerabilities allow manipulation of server behavior or unauthorized access using Exploit Code, forcing a data→code transition where exploit code executes as new, foreign code in the server context. The generic vulnerability is the presence of exploitable flaws within server-side source code implementation stemming from insecure coding practices.
+
+**Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-31431 (Copy Fail): Linux kernel AF_ALG](https://www.tlctc.net/cve-2026-31431.html), [CVE-2026-35414: 15-year-old OpenSSH cert flaw](https://www.tlctc.net/cve-2026-35414.html), [CVE-2026-46300 (Fragnesia): Linux kernel XFRM](https://www.tlctc.net/cve-2026-46300.html), [Verizon DBIR 2025 — TLCTC](https://www.tlctc.net/tlctc-dbir-2025.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
 
 ### EDR (Endpoint Detection and Response) *(Industry Term)*
 
@@ -573,7 +707,12 @@ See also: Fast Velocity Class, SIEM, SOAR
 
 A causal sequence where one outcome event triggers subsequent events, following the consequence chain **SRE → DRE → BRE\***. The chain cascades from the System Risk Event (central event) through Data Risk Events to one or more Business Risk Events. BREs may themselves chain (`BRE₁ → BRE₂ → ... → BREₙ`), with each transition having its own Δt representing a detection and intervention window where all six NIST CSF functions apply. Example: System Compromise (SRE) → Data Breach involving PII (DRE [C]) → GDPR notification obligation (BRE₁) + NIS2 incident report (BRE₂) → Regulatory fine (BRE₃). Understanding event chains is critical for designing Respond/Recover controls and regulatory compliance workflows.
 
-**Reference:** §1.4.3.1 (The Consequence Chain), V1.9.1 §Data Risk Event Types, §Clarification on Central Event Position
+**Reference:** §6.3.1 (The Consequence Chain), V1.9.1 §Data Risk Event Types, §Clarification on Central Event Position
+
+
+
+
+**Related reading:** [blog-cyber-bow-tie-business-risk-event-chain.html](https://www.tlctc.net/blog-cyber-bow-tie-business-risk-event-chain.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
 
 See also: System Risk Event (SRE), Data Risk Event (DRE), Business Risk Event (BRE), Business Impact (BI), Eₙ Event Notation, RS Container, Propagated PR
 
@@ -597,6 +736,8 @@ A velocity classification where attack progression occurs within minutes. Typica
 
 A threat cluster where an attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to disruption, degradation, or denial of service for legitimate users. The generic vulnerability is the finite capacity limitations inherent in any system component (network bandwidth, CPU, memory, storage, database limits, application quotas, API rate limits, process/thread pools). Outcome is typically Loss of Availability.
 
+**Related reading:** [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html)
+
 ### Fileless Execution / Fileless Malware *(Industry Term)*
 
 An attack technique where malicious code executes entirely in memory without writing traditional files to disk, often using legitimate system tools (PowerShell, WMI, .NET reflection) as execution vehicles. In TLCTC: fileless execution still maps to `#7 Malware` — the FEC definition explicitly includes in-memory execution, interpreted code, and reflective loading with no "on-disk" requirement. The invocation of the legitimate tool to enable fileless execution may be `#1 Abuse of Functions`, making the typical sequence `#1 → #7`.
@@ -607,7 +748,12 @@ See also: Foreign Executable Content (FEC), Living Off the Land / LOLBAS, Dual-U
 
 Attacker-controlled (or otherwise untrusted) program text or bytes that are **interpreted, loaded, or executed** by a **general-purpose execution engine** in the target environment. Includes attacker-controlled commands fed into interpreters. FEC execution includes in-memory (fileless) execution, interpreted code, macro execution, and reflective loading—no "on-disk" requirement exists.
 
-**Reference:** §2.2.2 (Global Definitions)
+**Reference:** §4.2.2 (Global Definitions)
+
+**Related reading:** [The File Type Fallacy — extension blocklists](https://www.tlctc.net/tlctc-file-type-fallacy.html), [GovCERT-CH blocked filetypes × TLCTC](https://www.tlctc.net/tlctc-govcert-blocked-filetypes.html)
+
+
+
 
 ### Framework Layer *(V2.0)*
 
@@ -623,7 +769,12 @@ The single root-level vulnerability category defining a cluster — the **strate
 
 The 10 generic vulnerabilities (attack surfaces) are: functional scope/trust (#1), server-side implementation flaws (#2), client-side implementation flaws (#3), identity-artifact binding (#4), lack of end-to-end communication protection (#5), finite capacity limitations (#6), designed execution capability (#7), physical accessibility (#8), human psychological factors (#9), and third-party trust dependencies (#10).
 
-**Reference:** §2.2.2 (Global Definitions), §2.2.7 (Step 2), Axiom VI (§1.2)
+**Reference:** §4.2.2 (Global Definitions), §4.2.8 (Step 2), Axiom VI (§2)
+
+
+
+
+**Related reading:** [Mandiant M-Trends 2025 — TLCTC](https://www.tlctc.net/tlctc-mtrends-2025.html), [ENISA Threat Landscape 2025 — TLCTC](https://www.tlctc.net/tlctc-enisa-2025-threat-report.html), [ENISA Gap Analysis — TLCTC](https://www.tlctc.net/tlctc-enisa-gap-analysis.html), [Same Attack, Four Stories — vendor report comparison](https://www.tlctc.net/tlctc-threat-report-chaos.html), [NIST threat definitions — structural gap](https://www.tlctc.net/tlctc-NIST-Threat-Definition.html), [22 NIST definitions of "threat" — TLCTC](https://www.tlctc.net/tlctc-nist-threat-chaos.html), [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html), [LINDDUN vs TLCTC — complementary approaches](https://www.tlctc.net/tlctc-LINDDUN.html), [PASTA threat modeling × TLCTC](https://www.tlctc.net/tlctc-pasta.html), [IEC 62443 × TLCTC v2.0 — industrial cybersecurity](https://www.tlctc.net/tlctc-iec62443-v2.html), [Diamond Model × TLCTC — structuring the empty spaces](https://www.tlctc.net/tlctc-diamond-model.html), [ISO/SAE 21434 × TLCTC V2.0 — automotive](https://www.tlctc.net/tlctc-blog-IsoSae21434.html), [ISO 27000 × TLCTC — name vs game](https://www.tlctc.net/blog-iso27001-iso27005.html), [OCTAVE × TLCTC v2.0 — causal taxonomy](https://www.tlctc.net/blog-tlctc-octave.html), [MITRE CWE needs a taxonomic reboot](https://www.tlctc.net/tlctc-cwe-reboot.html), [EU Cybersecurity Act (CSA) × TLCTC V2.0](https://www.tlctc.net/blog-eu-cybersecurity-act-csa.html), [Cyber Resilience Act (CRA) — TLCTC pain points & fixes](https://www.tlctc.net/blog-tlctc-cra-pain-points.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc-threat-modeling-manifesto.html), [End of Semantic Diffusion — Kuhn & TLCTC](https://www.tlctc.net/tlctc-semantic-diffusion.html), [Logical foundations of TLCTC](https://www.tlctc.net/tlctc-logical-foundation.html), [Why exactly ten? — TLCTC architecture](https://www.tlctc.net/tlctc-why10-explainer.html), [Generic vulnerabilities — software & hardware failure](https://www.tlctc.net/tlctc-generic-vulnerabilities.html), [blog-tlctc-two-layer-framework.html](https://www.tlctc.net/blog-tlctc-two-layer-framework.html), [Why TLCTC does not need the "Hazard"](https://www.tlctc.net/tlctc-hazard-omission.html), [Agentic AI under the microscope — TLCTC](https://www.tlctc.net/tlctc-agentic-ai-microscope.html), [AI conversation deep dive on TLCTC](https://www.tlctc.net/blog-tlctc-ai-conversation-from-scratch.html), [TLCTC — the missing link between strategy and ops](https://www.tlctc.net/tlctc-fillthegap.html), [Tactics evolve, 10 threats are constant](https://www.tlctc.net/blog-cyber-hype.html), [Tactics evolve, 10 threats are constant — TLCTC](https://www.tlctc.net/tlctc-blog-cyber-hype.html), [TLCTC for everyone — the Blind Spot method](https://www.tlctc.net/tlctc-everyone-blind-spot.html), [Programmer vs Coder in TLCTC (Secure-Dev pt 1)](https://www.tlctc.net/tlctc-sdlc-prog-coder.html), [SSDLC phase-by-phase reference — TLCTC v2.1](https://www.tlctc.net/tlctc-ssdlc-integration.html), [TLCTC v2.1 monster prompt — DevSecOps](https://www.tlctc.net/tlctc-prompt-devsecops.html), [Understanding cyber threats — a common language](https://www.tlctc.net/tlctc-executive-summary.html), [TLCTC — the missing link (brief)](https://www.tlctc.net/tlctc-brief-doc.html)
 
 See also: Vulnerability, Attack Vector, Attack Surface Analysis
 
@@ -662,17 +813,19 @@ A threat cluster where an attacker targets weaknesses in identity and access man
 
 Non-Overlap Rule: Credential acquisition maps to the enabling threat cluster; credential use always maps to #4.
 
+**Related reading:** [AD → Domain Admin → Ransomware cascade](https://www.tlctc.net/ad-ransomware-tlctc-cascade.html), [CVE-2026-35414: 15-year-old OpenSSH cert flaw](https://www.tlctc.net/cve-2026-35414.html), [CrowdStrike 2025 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-analysis.html), [CrowdStrike 2025 Global Threat Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-report.html), [CrowdStrike 2025 Threat Report — Strategy & Velocity](https://www.tlctc.net/tlctc-crowdstrike-2025-threat-report.html), [Verizon DBIR 2025 — TLCTC](https://www.tlctc.net/tlctc-dbir-2025.html), [blog-MFAbypass.html](https://www.tlctc.net/blog-MFAbypass.html)
+
 ### Implementation Defect (Availability Context)
 
 A flaw in code logic, parsing, memory handling, or resource handling that causes crash, hang, or degradation when triggered—**without** requiring volume/intensity to exceed normal capacity. Includes algorithmic complexity weaknesses (e.g., ReDoS). Maps to `#2` or `#3` per R-ROLE, not `#6`.
 
-**Reference:** §2.2.2 (Global Definitions), R-FLOOD (§2.2.4)
+**Reference:** §4.2.2 (Global Definitions), R-FLOOD (§4.2.5)
 
 ### Implementation Flaw
 
 A defect in source code implementation (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered. Implementation flaws are exploited by `#2 Exploiting Server` (server-role) or `#3 Exploiting Client` (client-role).
 
-**Reference:** §2.2.2 (Global Definitions), §2.1 (#2 and #3 Definitions)
+**Reference:** §4.2.2 (Global Definitions), §4.1 (#2 and #3 Definitions)
 
 ### Intelligence Layer *(V2.0)*
 
@@ -682,7 +835,7 @@ The dynamic component of the TLCTC JSON architecture containing specific attack 
 
 A TLCTC cluster that operates primarily **within the software domain's** attack surfaces, without inherently crossing to a different responsibility sphere. Internal clusters are: `#1` through `#7`.
 
-**Reference:** §2.2.2 (Global Definitions), §5.1.5, §5.2 (Topology Classification)
+**Reference:** §4.2.2 (Global Definitions), §5.1.5, §5.2 (Topology Classification)
 
 ### Insecure Deserialization *(Industry Term)*
 
@@ -696,7 +849,7 @@ See also: Exploiting Server (#2), Exploiting Client (#3), Implementation Flaw
 
 Notation: `|[type][@from→@to]|`. Used to annotate boundary crossings **within a single host or system**, such as sandbox escapes, privilege escalations, process boundary violations, and VM escapes. Uses single pipe delimiters to distinguish from the inter-sphere Domain Boundary Operator (`||...||`). Defined boundary types: `sandbox`, `privilege`, `process`, `hypervisor`. The `memory` type is reserved and MUST NOT be used (R-INTRA-9). Intra-system boundaries are observability annotations and never change cluster classification (R-INTRA-7). Example: `#3 |[sandbox][@renderer→@os]|` — browser exploit escaping renderer sandbox.
 
-**Reference:** §3.3.6 (Intra-System Boundary Operator)
+**Reference:** §11.3.6 (Intra-System Boundary Operator)
 
 ---
 
@@ -721,6 +874,8 @@ This architecture separates universal framework definitions from specific attack
 
 A metric that measures the operational performance of security controls, verifying that intended actions are taken at the appropriate frequency. KCIs provide insights on the ability to apply correct controls correctly, highlighting process weaknesses and tool effectiveness. Example: "Frequency of patch deployments per day" or "Scan verification of implemented patches" for a control requiring critical systems to be patched within 24 hours.
 
+**Related reading:** [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
+
 ### KPI (Key Performance Indicator)
 
 A measurable value demonstrating the outcome and performance of security processes in reaching security objectives. KPIs must be time-based and reflect effectiveness over time. Example: "Average time to restore critical services to full operation within a 4-hour window." In TLCTC V2.0, the Detection Coverage Score (DCS) is introduced as a strategic KPI.
@@ -743,6 +898,11 @@ A model describing the stages of a cyber attack from reconnaissance through expl
 
 **Reference:** V1.9.1 §F (Oversimplification)
 
+
+
+
+**Related reading:** [The Kill Chain Fallacy — process is not taxonomy](https://www.tlctc.net/tlctc-KillChainFallacy.html), [CKC + ATT&CK + TLCTC — Holy Trinity of Defense](https://www.tlctc.net/blog-ckc-attack-tlctc-synthesis.html)
+
 See also: Attack Path, Sequence, MITRE ATT&CK
 
 ### KxI Framework
@@ -757,17 +917,24 @@ The integrated hierarchical framework of Key Risk Indicators (KRIs), Key Control
 
 A velocity classification where attack progression occurs over days to months. Typical threat clusters: #10 (Supply Chain), #7 (APT Implants). Control strategy focuses on log retention and threat hunting, as detection windows are extended. Example: Supply chain compromises with long dwell times, persistent APT campaigns prioritizing stealth over speed.
 
+**Related reading:** [tlctc-attack-velocity.html](https://www.tlctc.net/tlctc-attack-velocity.html)
+
 ### Living Off the Land / LOLBAS (Living Off the Land Binaries and Scripts)
 
 An attack technique using only software functions and binaries already present on a (potentially compromised) system, invoked with legitimate inputs/parameters, without introducing foreign code initially. Legitimate system binaries are used to execute attacker-controlled content. In TLCTC: the invocation of the legitimate binary may be `#1` (if no implementation flaw is exploited), while the execution of attacker-controlled content through it is `#7`. The sequence `#1 → #7` applies. Examples: Using cmd.exe, PowerShell, WMI, or Task Scheduler to execute attacker-controlled scripts.
 
-**Reference:** §2.2.4 (R-EXEC, LOLBAS Clarification)
+**Reference:** §4.2.5 (R-EXEC, LOLBAS Clarification)
 
 ### Lateral Movement *(Industry Term)*
 
 The techniques an attacker uses to progressively move through a network after initial compromise, seeking higher-value targets and expanded access. In TLCTC: lateral movement is not a single cluster — it is an attack path composed of multiple sequential steps. Typical lateral movement sequences include: `#4 → #1` (using stolen credentials to access another system's functions), `#4 → #7` (deploying malware on additional systems using stolen credentials), or `#1 → #7` (abusing legitimate remote tools to execute code on other systems). Each step in lateral movement maps to its own cluster based on the generic vulnerability exploited.
 
 **Reference:** V1.9.1 §Bridging Strategy and Operations, §E (Real World Examples)
+
+
+
+
+**Related reading:** [AD → Domain Admin → Ransomware cascade](https://www.tlctc.net/ad-ransomware-tlctc-cascade.html)
 
 See also: Attack Path, Sequence, Identity Theft (#4)
 
@@ -793,7 +960,7 @@ A Data Risk Event outcome where an attacker gains unauthorized access to data. F
 
 The central event in the Cyber Bow-Tie model, abbreviated **SRE** (System Risk Event), representing the point at which the attacker achieves unauthorized control over a system's behavior, privileges, data, or trust relationships. This serves as the pivot point between threat realization (cause) and potential consequences (effect). The SRE is the first event in the consequence chain: **SRE → DRE → BRE\***. Some attacks may have delayed data risk events (creating a detection window), while others lead to immediate data risk events. Examples: A server exploit (#2) enabling remote code execution leading to malware (#7) represents loss of control before any data breach occurs. In contrast, successful SQL injection (#2) can immediately result in Loss of Confidentiality.
 
-**Reference:** §1.4.3 (Central Event), §1.4.3.1 (The Consequence Chain)
+**Reference:** §6.3 (Central Event), §6.3.1 (The Consequence Chain)
 
 See also: System Risk Event (SRE), Data Risk Event (DRE), Business Risk Event (BRE)
 
@@ -829,9 +996,13 @@ See also: Drive-By Download, Watering Hole Attack, Phishing
 
 A threat cluster where an attacker abuses the inherent ability of a software environment to execute foreign executable content, including inherently malicious Malware Code or legitimate tools/scripts when they execute attacker-controlled or otherwise foreign code ("dual-use"). The generic vulnerability is the software environment's designed capability to execute potentially untrusted 'foreign' code, scripts, or binaries. Distinguished from #2/#3 which use Exploit Code targeting implementation flaws, and from #1 which manipulates existing functions without executing foreign code/scripts/binaries.
 
+**Related reading:** [CVE-2026-21510: Windows Shell SmartScreen bypass](https://www.tlctc.net/cve-2026-21510.html), [CrowdStrike 2025 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-analysis.html), [CrowdStrike 2025 Global Threat Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-report.html), [Cobalt Strike capabilities × TLCTC V2.0](https://www.tlctc.net/tlctc-cobaltstrike-mapping.html), [The File Type Fallacy — extension blocklists](https://www.tlctc.net/tlctc-file-type-fallacy.html), [GovCERT-CH blocked filetypes × TLCTC](https://www.tlctc.net/tlctc-govcert-blocked-filetypes.html)
+
 ### Man in the Middle (#5)
 
 A threat cluster where an attacker intercepts, eavesdrops on, modifies, or relays communication between two parties without their knowledge or consent, by exploiting a privileged position on the communication path. The generic vulnerability is the lack of sufficient control, integrity protection, or confidentiality over the communication channel/path, including the implicit trust placed in local networks and intermediate network infrastructure in standard IP networking. Position might be gained locally (shared Wi-Fi) or by leveraging control over existing network intermediaries.
+
+**Related reading:** [tlctc-mitm-encryption-scion.html](https://www.tlctc.net/tlctc-mitm-encryption-scion.html)
 
 ### Medium Velocity Class *(V2.0)*
 
@@ -841,11 +1012,13 @@ A velocity classification where attack progression occurs within hours. Typical 
 
 In the Bow-Tie model: barriers on the right (effect) side that detect, contain, reduce impact, or enable recovery after the central event occurs. Corresponds to NIST CSF functions: RESPOND, RECOVER.
 
-**Reference:** §1.4.1 (Bow-Tie Structure)
+**Reference:** §6.1 (Bow-Tie Structure)
 
 ### MITRE ATT&CK
 
 A globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. In the TLCTC framework, MITRE techniques are considered operational-level detail that map to the strategic-level threat clusters. TLCTC V2.0 proposes enhancement through adding cluster mappings and typical velocity attributes to techniques.
+
+**Related reading:** [MITRE ATT&CK & STIX integration with TLCTC](https://www.tlctc.net/mitre-tlctc.html), [TLCTC × MITRE ATT&CK — interactive explorer](https://www.tlctc.net/tlctc-mitre-mapping.html), [MITRE ATT&CK & TLCTC — detection meets risk](https://www.tlctc.net/tlctc-mitre-enterprise.html), [TLCTC × CWE — interactive explorer](https://www.tlctc.net/tlctc-mitre-cwe.html), [TLCTC × CWE — context is king](https://www.tlctc.net/tlctc-mitre-cwe-mapping.html), [MITRE ATLAS × TLCTC integration](https://www.tlctc.net/tlctc-mitre-ai.html), [MITRE ATT&CK for ML (AML) × TLCTC](https://www.tlctc.net/tlctc-mitre-aml-mapping.html), [NIST AI RMF + MITRE ATLAS × TLCTC](https://www.tlctc.net/tlctc-nist-ai-rmf-mitre-cti.html), [MITRE ATT&CK & STIX × TLCTC V2.0 — implementation guide](https://www.tlctc.net/stix-tlctc.html), [CKC + ATT&CK + TLCTC — Holy Trinity of Defense](https://www.tlctc.net/blog-ckc-attack-tlctc-synthesis.html), [D3FEND × TLCTC — the missing axis](https://www.tlctc.net/missing-axis-d3fend-tlctc.html), [Grok AI 4.1 — independent TLCTC validation](https://www.tlctc.net/tlctc-grok-ai-validation.html), [Cobalt Strike capabilities × TLCTC V2.0](https://www.tlctc.net/tlctc-cobaltstrike-mapping.html), [TLCTC v2.1 monster prompt — SOC & Detection](https://www.tlctc.net/tlctc-prompt-soc.html)
 
 ### MFA Bombing / MFA Fatigue *(Industry Term)*
 
@@ -866,7 +1039,7 @@ See also: Identity Theft (#4), Abuse of Functions (#1), Social Engineering (#9)
 
 A controlled point on a communication path that enables interception, observation, modification, injection, replay, or protocol downgrade/stripping. The attacker has achieved the ability to influence communication between two endpoints.
 
-**Reference:** §2.2.2 (Global Definitions), R-MITM (§2.2.4)
+**Reference:** §4.2.2 (Global Definitions), R-MITM (§4.2.5)
 
 ---
 
@@ -876,11 +1049,18 @@ A controlled point on a communication path that enables interception, observatio
 
 The National Institute of Standards and Technology Cybersecurity Framework providing guidelines for managing cybersecurity risk. The TLCTC framework integrates with NIST CSF by mapping the 10 threat clusters to the five core functions (Identify, Protect, Detect, Respond, Recover) and the GOVERN function in CSF 2.0. TLCTC proposes formal adoption of the 10 clusters as the standard taxonomy for Threat Identification in the ID.RA (Risk Assessment) category.
 
+**Related reading:** [NIST CSF × TLCTC — critical analysis](https://www.tlctc.net/nist-csf-tlctc.html), [NIST CSF × TLCTC — bridging the gap](https://www.tlctc.net/tlctc-NIST-CSF-Integration.html), [NIST NICE × TLCTC — workforce capabilities](https://www.tlctc.net/tlctc-NIST-NICE.html), [NIST SP 800-218 (SSDF) × TLCTC](https://www.tlctc.net/tlctc-NIST.SP.800-218.html), [NIST threat definitions — structural gap](https://www.tlctc.net/tlctc-NIST-Threat-Definition.html), [NIST AI RMF + MITRE ATLAS × TLCTC](https://www.tlctc.net/tlctc-nist-ai-rmf-mitre-cti.html), [22 NIST definitions of "threat" — TLCTC](https://www.tlctc.net/tlctc-nist-threat-chaos.html), [SABSA × TLCTC — architecture × threat ontology](https://www.tlctc.net/sabsa-tlctc-blog.html), [TLCTC vs 30+ standards & regulations](https://www.tlctc.net/tlctc-regulatorsANDstandards.html), [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html), [Control Matrix for SME & Private (TLCTC v2.0)](https://www.tlctc.net/tlctc-sme-private-controls.html), [Capability-based planning via 10×(6×2) matrix](https://www.tlctc.net/tlctc-capability-based-planning.html), [TLCTC v2.1 monster prompt — CISO & Risk](https://www.tlctc.net/tlctc-prompt-ciso.html), [The Risk Appetite Conversation Your Board Isn't Having](https://www.tlctc.net/tlctc-strategy.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
+
 ### NIS2 (Network and Information Security Directive 2) *(Industry Term)*
 
 The EU directive establishing cybersecurity risk management and incident reporting obligations for essential and important entities. In TLCTC: NIS2 is an **incident-triggered regulation** — its reporting obligations activate at E1 (Significant Incident / System Compromise) regardless of whether personal data is involved. This contrasts with GDPR, which is **data-triggered** (activates at E2 when PII is affected). NIS2 Art. 23 requires a 24-hour early warning, creating a shorter event chain length (E1→E3b = 2 events) compared to GDPR's 72-hour notification timeline (E1→E2→E3a = 3 events).
 
 **Reference:** V1.9.1 §Cyber Threat Radars
+
+
+
+
+**Related reading:** [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [NIS2 Directive × TLCTC — implementation guide](https://www.tlctc.net/tlctc-NIS2.html), [NIS2 — TLCTC pain points & fixes](https://www.tlctc.net/blog-NIS2-Pain-Points.html), [EU cyber regulation needs a common taxonomy](https://www.tlctc.net/blog-eu-regulation-tlctc-taxonomy.html), [EU regulation (NIS2/DORA/CRA) vs TLCTC](https://www.tlctc.net/tlctc-eu-regulation.html), [GDPR vs NIS2 — different trigger points](https://www.tlctc.net/tlctc-gdpr-nis2-triggers.html), [TLCTC vs 30+ standards & regulations](https://www.tlctc.net/tlctc-regulatorsANDstandards.html), [Logical impossibility of control-first regulation](https://www.tlctc.net/tlctc-control-first-regulation.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [TLCTC v2.1 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html)
 
 See also: DORA, Regulatory Trigger Point, Event Chain Length, Eₙ Event Notation
 
@@ -888,7 +1068,7 @@ See also: DORA, Regulatory Trigger Point, Event Chain Length, Eₙ Event Notatio
 
 The keywords MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in the TLCTC specification are interpreted as described in RFC 2119 / RFC 8174. When these keywords appear in lowercase, they carry their ordinary English meaning.
 
-**Reference:** §2.2
+**Reference:** §4.2 (Normative Keywords)
 
 ### Notation Systems
 
@@ -907,13 +1087,13 @@ Both notations remain fully compatible and can be used interchangeably based on 
 
 A Δt value computed from two concrete time observations.
 
-**Reference:** §4.0.3
+**Reference:** §12.0.3
 
 ### Operational Layer
 
 The detailed implementation level where security controls are implemented, monitored, and adjusted. Includes specific vulnerability management, threat intelligence (using frameworks like MITRE ATT&CK), TTP mapping, attack path analysis, vulnerability management (CVE reports), incident response, security testing, and monitoring. Uses the machine-first naming convention `TLCTC-XX.YY`, where XX is the two-digit cluster number (01–10) and YY is the two-digit sub-cluster number (00–99), for tool integration, SIEM rules, automation, threat intelligence exchange, and detailed documentation.
 
-**Reference:** §2.2.1 (Two-Layer Naming Convention)
+**Reference:** §4.2.1 (Two-Layer Naming Convention)
 
 ### Operational Risk (OpRisk) *(Industry Term)*
 
@@ -921,13 +1101,18 @@ The broader category of risks arising from inadequate or failed internal process
 
 **Reference:** V1.9.1 §Introduction
 
+
+
+
+**Related reading:** [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html)
+
 See also: Cyber Risk, Business Risk Event
 
 ### Operational Security Layer
 
 The layer of TLCTC that addresses specific vulnerabilities, techniques, and procedures. Contains concrete vulnerabilities (CVEs), operational techniques (TTPs), and indicators used in detection, response, and engineering. Corresponds to `TLCTC-XX.YY` where YY ≠ 00.
 
-**Reference:** Axiom VIII (§1.2), §2.2.1
+**Reference:** Axiom VIII (§2), §4.2.1
 
 ### OAuth Attack *(Industry Term — Decomposition Required)*
 
@@ -960,13 +1145,13 @@ See also: STRIDE, Sub-Threat, Operational Layer
 
 Notation that denotes **concurrent** (or effectively concurrent) steps—actions that occur in the same phase where their ordering is not meaningful. Parallel steps MUST be grouped using parentheses: `(#X + #Y)`. Each element inside a parallel group is a separate Attack Step mapped to exactly one cluster.
 
-**Reference:** §2.2.2 (Global Definitions), §3.2 (Parallel Operator)
+**Reference:** §4.2.2 (Global Definitions), §11.2 (Parallel Operator)
 
 ### Parallel Steps
 
 Two or more clusters occurring simultaneously or in tight coordination within the same attack phase. Use when distinct generic vulnerabilities are exploited concurrently rather than sequentially.
 
-**Reference:** §2.2.2 (Global Definitions), §3.2 (Parallel Operator)
+**Reference:** §4.2.2 (Global Definitions), §11.2 (Parallel Operator)
 
 ### Pass-the-Hash / Pass-the-Ticket *(Industry Term)*
 
@@ -1014,6 +1199,8 @@ A threat cluster where an attacker gains unauthorized physical interaction with 
 - **Direct Physical Access Attacks (#8.1):** Require physical touch or direct interaction (tampering, theft, physical intrusion, unauthorized device connection)
 - **Indirect Physical Access Attacks (#8.2):** Exploit physical properties without direct contact (TEMPEST, signal jamming, acoustic attacks, environmental disruption)
 
+**Related reading:** [CWE-514 (covert channel) → TLCTC #8](https://www.tlctc.net/blog-cwe-514-covert-channel-mapping.html), [Topology of cyber attacks — Bridge vs Internal](https://www.tlctc.net/tlctc-topology-of-cyber-attacks.html)
+
 ### Pineapple Attack *(Industry Term)*
 
 An attack using a Wi-Fi Pineapple (or similar rogue access point device) to create fake wireless networks that victims connect to, enabling traffic interception. In TLCTC: the physical deployment of the device maps to `#8 Physical Attack` (requiring physical proximity). Once victims connect, the attacker gains a MitM position — exploitation of that position maps to `#5 Man in the Middle`. The full sequence is `#8 → #5`. Some variants also involve `#4` (faking SSID identity).
@@ -1034,13 +1221,13 @@ See also: Flooding Attack (#6), Implementation Defect (Availability Context)
 
 For `#5 Man in the Middle`: **Gaining** a MitM position maps to another cluster (`#1`, `#8`, `#9`, `#10`, or `#2/#3` depending on initial generic vulnerability). **Exploiting** a MitM position (intercept, modify, relay, inject, replay, downgrade actions) maps to `#5`.
 
-**Reference:** §2.2.2 (Global Definitions), R-MITM (§2.2.4)
+**Reference:** §4.2.2 (Global Definitions), R-MITM (§4.2.5)
 
 ### Preventive Controls
 
 In the Bow-Tie model: barriers on the left (cause) side that reduce likelihood of threats reaching the central event. Corresponds to NIST CSF functions: IDENTIFY, PROTECT.
 
-**Reference:** §1.4.1 (Bow-Tie Structure)
+**Reference:** §6.1 (Bow-Tie Structure)
 
 ### Pretexting *(Industry Term)*
 
@@ -1063,6 +1250,11 @@ Distinguishing the underlying technique allows for more targeted control impleme
 
 **Reference:** V1.9.1 Clarifications
 
+
+
+
+**Related reading:** [AD → Domain Admin → Ransomware cascade](https://www.tlctc.net/ad-ransomware-tlctc-cascade.html), [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [CVE-2026-31431 (Copy Fail): Linux kernel AF_ALG](https://www.tlctc.net/cve-2026-31431.html), [CVE-2026-46300 (Fragnesia): Linux kernel XFRM](https://www.tlctc.net/cve-2026-46300.html)
+
 See also: Abuse of Functions (#1), Exploiting Server (#2), Identity Theft (#4), Intra-System Boundary Operator
 
 ### Process Injection *(Industry Term)*
@@ -1082,11 +1274,15 @@ See also: Abuse of Functions (#1), Exploiting Server (#2), Implementation Flaw
 
 A development role focused on architecture and strategy, responsible for designing overall software architecture and component interactions, making strategic decisions about frameworks and protocols, establishing secure coding standards and security requirements, and considering system-wide security implications. Primary responsibility for addressing threat clusters #1, #4, #5, #10 at an architectural level. Contrasts with the Coder role which focuses on implementation and craftsmanship.
 
+**Related reading:** [Taming SonarQube with TLCTC (Secure-Dev pt 2)](https://www.tlctc.net/tlctc-sdlc-dev-blog.html), [Programmer vs Coder in TLCTC (Secure-Dev pt 1)](https://www.tlctc.net/tlctc-sdlc-prog-coder.html), [Adding the Developer's View to TLCTC](https://www.tlctc.net/tlctc-definitions-sdlc-prog-coder.html)
+
 ### Propagated PR *(V2.0)*
 
 A Protection Requirement that "propagates backward" from a downstream event into the RS (Respond) container of an earlier event due to regulatory or policy requirements. Notation: `RS(Eₙ) = { Response } ∪ { Propagated PR(Eₙ₊₁) } ∪ { Propagated PR(Eₙ₊ₓ) }`.
 
 This mechanism explains how multiple regulatory obligations stack into a single incident response workflow. Example: A ransomware attack triggers E1 (System Compromise). If PII is affected, E2 (Data Risk Event) occurs, propagating GDPR notification requirements back into RS(E1). Simultaneously, if the organization is NIS2-scoped, the incident itself propagates NIS2 reporting into RS(E1). The result: two separate Propagated PR controls in the same RS container, with different timelines (72h vs 24h+72h) and different authorities. See also: RS Container, Eₙ Event Notation.
+
+**Related reading:** [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html)
 
 ### Protection Ring Architecture
 
@@ -1100,31 +1296,41 @@ The layered privilege model in computing systems (Ring 0 through Ring 3) where e
 
 Global mapping rule: If the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as `#1 Abuse of Functions`.
 
-**Reference:** §2.2.4 (R-ABUSE)
+**Reference:** §4.2.5 (R-ABUSE)
 
 ### R-CRED (Credential Lifecycle Non-Overlap)
 
 Global mapping rule: Credential acquisition maps to the enabling cluster; credential application MUST always map to `#4 Identity Theft`. If both occur, they MUST be represented as at least two steps: `(enabling cluster) → #4`.
 
-**Reference:** §2.2.4 (R-CRED)
+**Reference:** §4.2.5 (R-CRED)
+
+**Related reading:** [Cobalt Strike capabilities × TLCTC V2.0](https://www.tlctc.net/tlctc-cobaltstrike-mapping.html)
+
+
+
 
 ### R-EXEC (Foreign Execution Recording Rule)
 
 Global mapping rule: Whenever Foreign Executable Content (FEC) is interpreted, loaded, or executed, a `#7 Malware` step MUST be recorded at the moment of execution, independent of how execution was enabled. `#7` is additive (does not replace the enabling cluster).
 
-**Reference:** §2.2.4 (R-EXEC)
+**Reference:** §4.2.5 (R-EXEC)
+
+**Related reading:** [Cobalt Strike capabilities × TLCTC V2.0](https://www.tlctc.net/tlctc-cobaltstrike-mapping.html), [The File Type Fallacy — extension blocklists](https://www.tlctc.net/tlctc-file-type-fallacy.html), [GovCERT-CH blocked filetypes × TLCTC](https://www.tlctc.net/tlctc-govcert-blocked-filetypes.html)
+
+
+
 
 ### R-FLOOD (Capacity Exhaustion vs Implementation Defect)
 
 Global mapping rule: If the primary mechanism is volume or intensity exhausting finite resources, classify as `#6 Flooding Attack`. If the primary mechanism is an implementation defect that causes crash/hang/degradation (including algorithmic complexity), classify as `#2` or `#3` per R-ROLE.
 
-**Reference:** §2.2.4 (R-FLOOD)
+**Reference:** §4.2.5 (R-FLOOD)
 
 ### R-HUMAN (Human Manipulation Isolation)
 
 Global mapping rule: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as `#9 Social Engineering`, and any subsequent technical steps MUST be classified separately.
 
-**Reference:** §2.2.4 (R-HUMAN)
+**Reference:** §4.2.5 (R-HUMAN)
 
 ### R-INTRA (Intra-System Boundary Rules) *(V2.1)*
 
@@ -1148,25 +1354,30 @@ The complete intra-system boundary rule set governing use of the intra-system op
 
 Global mapping rule: The method of gaining a privileged communication-path position maps to another cluster. `#5 Man in the Middle` begins only once the attacker controls a point on the communication path and performs MitM actions.
 
-**Reference:** §2.2.4 (R-MITM)
+**Reference:** §4.2.5 (R-MITM)
 
 ### R-PHYSICAL (Physical Domain Isolation)
 
 Global mapping rule: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately.
 
-**Reference:** §2.2.4 (R-PHYSICAL)
+**Reference:** §4.2.5 (R-PHYSICAL)
 
 ### R-ROLE (Server vs Client Determination)
 
 Global mapping rule: If the vulnerable component accepts and handles inbound requests relative to the attacker, classify as `#2 Exploiting Server`. If the vulnerable component consumes external responses/content relative to the attacker, classify as `#3 Exploiting Client`.
 
-**Reference:** §2.2.4 (R-ROLE)
+**Reference:** §4.2.5 (R-ROLE)
+
+**Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [Kernel as Client: CVE-2025-21333 (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html)
+
+
+
 
 ### R-SUPPLY (Trust Acceptance Event Placement)
 
 Global mapping rule: `#10 Supply Chain Attack` MUST be placed at the Trust Acceptance Event (TAE)—the moment where the third-party trust link is honored and the trust artifact becomes authoritative inside the organization's domain.
 
-**Reference:** §2.2.4 (R-SUPPLY)
+**Reference:** §4.2.5 (R-SUPPLY)
 
 ### R-TRANSIT (Transit Boundary Rules) *(V2.1)*
 
@@ -1202,7 +1413,7 @@ Understanding regulatory trigger points enables CISOs to build precise IR playbo
 
 The organizational owner of a domain, denoted as `@Entity`. Examples: `@Org`, `@Vendor`, `@Facilities`, `@HR`, `@CloudProvider`, `@MSP`. Different spheres have different policies, teams, governance structures, and potentially different legal boundaries. Domain boundary definitions identify where responsibility and control shift during an attack, which is critical for incident response, forensics, and legal responsibility. Defined in `tlctc-responsibility-spheres.json` and customizable per organization. Standard spheres include: Attacker Side, Third-Party/Vendor Side, Victim Side, Shared/Transit. Used in conjunction with the domain boundary operator (||) in attack path notation.
 
-**Reference:** §2.2.2 (Global Definitions), §3.4, §5.1.2
+**Reference:** §4.2.2 (Global Definitions), §11.4, §5.1.2
 
 ### Risk Event
 
@@ -1212,7 +1423,7 @@ In the TLCTC Bow-Tie model, the central occurrence that represents the materiali
 
 Classification of a component as server-role or client-role based on its behavior in the specific interaction being classified. The same software product MAY appear as server-role in one interaction and client-role in another. Classification MUST follow the role of the component being exploited in the step.
 
-**Reference:** §2.2.2 (Global Definitions), R-ROLE (§2.2.4)
+**Reference:** §4.2.2 (Global Definitions), R-ROLE (§4.2.5)
 
 ### RS Container (Respond Container) *(V2.0)*
 
@@ -1229,6 +1440,11 @@ Malware that encrypts a victim's data and demands payment for the decryption key
 
 **Reference:** V1.9.1 §Definitions (#7), §Data Risk Event Types, §E (Emotet@Heise)
 
+
+
+
+**Related reading:** [AD → Domain Admin → Ransomware cascade](https://www.tlctc.net/ad-ransomware-tlctc-cascade.html), [Chaos Ransomware — TLCTC forensic](https://www.tlctc.net/chaos-ransomware-tlctc-analysis.html), [Verizon DBIR 2025 — TLCTC](https://www.tlctc.net/tlctc-dbir-2025.html), [20 annotated attack paths (Ransomware, BEC, OT, ...)](https://www.tlctc.net/tlctc-attack-path-examples.html)
+
 See also: Malware (#7), Accessibility (Data Risk Event), Loss of Accessibility
 
 ### RCE (Remote Code Execution) *(Industry Term — Decomposition Required)*
@@ -1242,6 +1458,11 @@ A commonly used but imprecise term describing CVEs that enable an attacker to ex
 This decomposition is essential because it identifies two distinct generic vulnerabilities being exploited, each requiring different controls.
 
 **Reference:** V1.9.1 §F (Industry Term Decomposition)
+
+
+
+
+**Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [Kernel as Client: CVE-2025-21333 (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html)
 
 See also: Exploiting Server (#2), Exploiting Client (#3), Malware (#7)
 
@@ -1325,6 +1546,8 @@ See also: Exploiting Client (#3), Scope of Server Software
 
 A structured approach to embedding security throughout the software development process. The TLCTC framework integrates into each SSDLC phase, with programmer-level decisions during Requirements and Design, coder-level implementation during the Implementation phase, and both roles contributing to verification during Testing and ongoing vigilance during Maintenance.
 
+**Related reading:** [Taming SonarQube with TLCTC (Secure-Dev pt 2)](https://www.tlctc.net/tlctc-sdlc-dev-blog.html), [Programmer vs Coder in TLCTC (Secure-Dev pt 1)](https://www.tlctc.net/tlctc-sdlc-prog-coder.html), [SSDLC for developers — the "S" problem](https://www.tlctc.net/tlctc-ssdlc.html), [SSDLC phase-by-phase reference — TLCTC v2.1](https://www.tlctc.net/tlctc-ssdlc-integration.html), [Adding the Developer's View to TLCTC](https://www.tlctc.net/tlctc-definitions-sdlc-prog-coder.html)
+
 ### Sequence
 
 The ordered progression of threat clusters in an attack. The TLCTC framework recognizes that identified Top-Level Threats must also be seen as sequence components in the attack scenario, with attackers using these components in varying orders depending on their script (Axiom VIII). Example: A phishing attack might follow #9→#3→#7, or a more complex attack might be #9→#7→#4→(#1+#7).
@@ -1333,13 +1556,13 @@ The ordered progression of threat clusters in an attack. The TLCTC framework rec
 
 The operator meaning: the right-hand step occurs after the left-hand step, and the left-hand step enables or makes possible the right-hand step in the described scenario. ASCII alternative: `->`.
 
-**Reference:** §3.1 (Sequence Operator)
+**Reference:** §11.1 (Sequence Operator)
 
 ### Server-Role Component
 
 A component that **accepts and handles inbound requests or stimuli** relative to the attacker. The component is in "server role" for the specific interaction being classified.
 
-**Reference:** §2.2.2 (Global Definitions), R-ROLE (§2.2.4)
+**Reference:** §4.2.2 (Global Definitions), R-ROLE (§4.2.5)
 
 ### Session Hijacking *(Industry Term)*
 
@@ -1383,13 +1606,15 @@ The central event in the TLCTC Cyber Bow-Tie model: **Loss of Control / System C
 
 > **Disambiguation:** "Loss of Control" is always abbreviated **SRE**, never "LoC". The abbreviation **LoC** is reserved exclusively for Loss of Confidentiality, a *consequence*-side Data Risk Event. See **Loss of Confidentiality (LoC)**.
 
-**Reference:** §1.4.3 (Central Event), §1.4.3.1 (The Consequence Chain)
+**Reference:** §6.3 (Central Event), §6.3.1 (The Consequence Chain)
 
 See also: Loss of Control / System Compromise, Data Risk Event (DRE), Business Risk Event (BRE)
 
 ### Social Engineering (#9)
 
 A threat cluster where an attacker psychologically manipulates individuals into performing actions counter to their or their organization's best interests, such as divulging confidential information, granting access, executing code, or bypassing security procedures. The generic vulnerability is human psychological factors: gullibility, trust, ignorance, fear, urgency, authority bias, curiosity, or general compromisability. Often serves as the initial vector enabling other threat clusters (e.g., #9→#4 for credential harvesting, #9→#7 for malware installation, #9→#1 for feature misconfiguration).
+
+**Related reading:** [CVE-2026-21510: Windows Shell SmartScreen bypass](https://www.tlctc.net/cve-2026-21510.html), [Topology of cyber attacks — Bridge vs Internal](https://www.tlctc.net/tlctc-topology-of-cyber-attacks.html), [tlctc-social-engineering-bifurcation.html](https://www.tlctc.net/tlctc-social-engineering-bifurcation.html), [TLCTC+ for NCSCs & CERTs — national reporting](https://www.tlctc.net/tlctc-plus-ncsc-proposal.html)
 
 ### Spear Phishing *(Industry Term)*
 
@@ -1421,6 +1646,11 @@ An implementation flaw where an attacker induces the server to make requests to 
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#2)
 
+
+
+
+**Related reading:** [CVE-2026-44578: Next.js WebSocket SSRF](https://www.tlctc.net/cve-2026-44578.html)
+
 See also: Exploiting Server (#2), Implementation Flaw
 
 ### SSL Stripping *(Industry Term)*
@@ -1435,11 +1665,18 @@ See also: Man in the Middle (#5), ARP Spoofing, Position Acquisition vs Position
 
 A standardized language for representing cyber threat information. TLCTC integrates with STIX at the **classification layer**: cluster identifiers can be carried as custom properties (e.g., `x_tlctc_primary_cluster`) or controlled-vocabulary tags on existing STIX objects such as `attack-pattern` and `indicator`. **Layer 3 attack path instances do not round-trip to STIX 2.1** — Δt annotations, parallel groups, boundary operators (`||...||`, `⇒`, `|...|`), DRE tags, and unresolved operators (`?`, `…`) have no native STIX 2.1 equivalents and cannot be reconstructed from `attack-pattern` + SRO decomposition. Full Layer 3 exchange requires a custom STIX extension or transporting the TLCTC JSON instance as an out-of-band artifact.
 
+**Related reading:** [MITRE ATT&CK & STIX integration with TLCTC](https://www.tlctc.net/mitre-tlctc.html), [MITRE ATT&CK & STIX × TLCTC V2.0 — implementation guide](https://www.tlctc.net/stix-tlctc.html)
+
 ### STRIDE *(Industry Term)*
 
 A threat modeling methodology developed by Microsoft that categorizes threats into six types: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege. In TLCTC: STRIDE is considered "per se incomplete" — it conflates causes with outcomes (e.g., "Information Disclosure" is an outcome/DRE, not a cause) and lacks coverage of human and physical threat vectors. TLCTC's cause-oriented 10-cluster model provides a more logically consistent foundation, and TLCTC recommends always starting threat assessment with its clusters rather than STRIDE alone.
 
 **Reference:** V1.9.1 §Standardizing Strategic Cybersecurity, §Operational Layer
+
+
+
+
+**Related reading:** [Beyond STRIDE — TLCTC superior approach](https://www.tlctc.net/tlctc-stride.html), [Beyond STRIDE — upgrading Microsoft TM Tool](https://www.tlctc.net/tlctc-microsoft-threat-modeling-stride.html), [End of semantic diffusion — DREAD vs STRIDE vs TLCTC](https://www.tlctc.net/tlctc-semantic-diffusion-dread-stride.html)
 
 See also: OWASP, TLCTC
 
@@ -1455,17 +1692,19 @@ See also: Flooding Attack (#6), DDoS, UDP Flood
 
 A naming convention for TLCTC clusters using the format `#X` where X ∈ {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}. Used for executive communication, risk registers, board reporting, strategic planning, and high-level attack path discussion.
 
-**Reference:** §2.2.1 (Two-Layer Naming Convention)
+**Reference:** §4.2.1 (Two-Layer Naming Convention)
 
 ### Strategic Management Layer
 
 The stable top-level layer of TLCTC containing the 10 clusters and their generic vulnerabilities. Used for governance, control mapping, and comparable incident documentation. Focuses on risk management, policy-making, and program governance, including threat cluster categorization, generic vulnerability identification, risk appetite and tolerance definition, security program management, compliance and governance, and resource allocation. Corresponds to cluster identifiers `#1`–`#10` or `TLCTC-XX.00`. Uses strategic notation (#X) for executive communication.
 
-**Reference:** Axiom VIII (§1.2), §2.2.1
+**Reference:** Axiom VIII (§2), §4.2.1
 
 ### Sub-Threat
 
 Specific, detailed attack techniques or methods that fall within a broader Top Level Cyber Threat Cluster. Sub-threats represent the operational-level detail beneath the strategic-level clusters. Example: Under #2 Exploiting Server, sub-threats include SQL Injection, Buffer Overflows, RCE via Deserialization, SSRF, and XXE Injection.
+
+**Related reading:** [Dual-layer notation — TLCTC-XX.YY enumeration](https://www.tlctc.net/tlctc-enumeration.html)
 
 ### Supply Chain Attack (#10)
 
@@ -1480,6 +1719,8 @@ A top-level threat cluster on the cause side of the bow-tie, where an attacker c
 - **#10.3 Hardware Supply Chain Vector:** Hardware component, firmware, or manufacturing/assembly compromise
 
 **Control-Level Third-Party Dependencies (Not #10):** Dependencies on third parties for patch delivery, security updates, or managed services are treated as *governance/control dependencies* on the right side of the bow-tie. They are **not themselves** a #10 Supply Chain Attack unless the trusted integration channel is directly abused as an attack vector.
+
+**Related reading:** [Topology of cyber attacks — Bridge vs Internal](https://www.tlctc.net/tlctc-topology-of-cyber-attacks.html), [20 annotated attack paths (Ransomware, BEC, OT, ...)](https://www.tlctc.net/tlctc-attack-path-examples.html), [blog-attack-path-supply-chain.html](https://www.tlctc.net/blog-attack-path-supply-chain.html), [tlctc-npm-supply-chain.html](https://www.tlctc.net/tlctc-npm-supply-chain.html)
 
 ### System Compromise
 
@@ -1535,19 +1776,19 @@ Enables precise velocity analysis, detection coverage score calculation, and rea
 
 Notation: `||[context][@Source⇒@Carrier→@Target]||`. An extension to the Domain Boundary Operator that marks responsibility spheres which **carry or relay** the attack without being the source or the target. The `⇒` symbol denotes transit (relay), while `→` denotes delivery to the final target. Chained transit uses right-to-left relay order: `||[context][@Source⇒@CarrierB⇒@CarrierA→@Target]||`. Transit is distinct from `#10 Supply Chain Attack`: transit marks a passive relay, while `#10` marks a Trust Acceptance Event. Key rule (R-TRANSIT-3): vendor code running on the target device is NOT transit — it is the attack surface (classify by R-ROLE). Example: `#9 ||[human][@Attacker⇒@SMSProvider→@Victim]||` — phishing SMS relayed through carrier.
 
-**Reference:** §3.3.5 (Transit Boundary Operator)
+**Reference:** §11.3.5 (Transit Boundary Operator)
 
 ### Third-Party Trust Link (TTL)
 
 Any reliance relationship where a third party can influence your domain. Examples: software components/libraries/dependencies, update/distribution channels, federation relationships (IdP/SP), managed control planes, SaaS admin consoles, signing/attestation/provenance chains, firmware/hardware supply chains, CI/CD pipeline integrations.
 
-**Reference:** §2.2.2 (Global Definitions), §2.1 (#10 Definition)
+**Reference:** §4.2.2 (Global Definitions), §4.1 (#10 Definition)
 
 ### Threat (in TLCTC)
 
 An initiating force that exploits a generic vulnerability and can trigger the central event (Loss of Control), implemented as a set of tactics, techniques, and procedures (TTP) that attackers apply to provoke an event or incident. In TLCTC, threats are implemented as the 10 Top Level Cyber Threat Clusters, each defined by exactly one generic vulnerability. Threats are positioned on the cause side of the Bow-Tie model, distinct from vulnerabilities, events, and consequences (Axiom III). Threats are NOT outcomes, actors, or control failures.
 
-**Reference:** §1.4.1 (Bow-Tie Structure), Axioms III–V (§1.2)
+**Reference:** §6.1 (Bow-Tie Structure), Axioms III–V (§2)
 
 ### Threat Cluster
 
@@ -1563,7 +1804,7 @@ A structural property of TLCTC describing whether a threat cluster (or a concret
 
 Precedence rules applied when a step appears to fit multiple clusters. Applied in order: (1) classify by initial generic vulnerability, (2) implementation flaw vs legitimate function misuse, (3) credential use always wins for the use step, (4) MitM starts at controlled position, (5) flooding is about capacity, (6) FEC execution must be explicit, (7) human/physical/third-party are not shortcuts, (8) document non-obvious decisions.
 
-**Reference:** §2.2.5 (Tie-Breaker / Precedence Rules)
+**Reference:** §4.2.6 (Tie-Breaker / Precedence Rules)
 
 ### TEMPEST *(Industry Term)*
 
@@ -1622,17 +1863,19 @@ A structured identifier system (`TLCTC-XX.YY`) where:
 
 This provides machine readability, consistent sorting, and extensibility for sub-categorization.
 
+**Related reading:** [Dual-layer notation — TLCTC-XX.YY enumeration](https://www.tlctc.net/tlctc-enumeration.html)
+
 ### Trust Acceptance Event (TAE)
 
 The moment your domain **honors** the Third-Party Trust Link and treats a Trust Artifact/Decision as authoritative. Actions at TAE include: validate, accept, install, apply, execute, attach privileges. `#10 Supply Chain Attack` is placed at the TAE.
 
-**Reference:** §2.2.2 (Global Definitions), R-SUPPLY (§2.2.4), §2.1 (#10 Definition)
+**Reference:** §4.2.2 (Global Definitions), R-SUPPLY (§4.2.5), §4.1 (#10 Definition)
 
 ### Trust Artifact / Trust Decision (TAD)
 
 What crosses the boundary and is accepted as authoritative in a third-party trust relationship. Examples: SAML/OIDC assertions, federated tokens, signed packages/updates/container images, CI build artifacts/release binaries, policy/configuration pushes, admin actions from managed platforms, firmware images.
 
-**Reference:** §2.2.2 (Global Definitions), §2.1 (#10 Definition)
+**Reference:** §4.2.2 (Global Definitions), §4.1 (#10 Definition)
 
 ### TTP (Tactics, Techniques, and Procedures)
 
@@ -1665,7 +1908,7 @@ Security measures that provide protection for groups of IT systems within their 
 
 A Δt value where no supported time statement can be made. Notation: `Δt=?`.
 
-**Reference:** §4.0.3, §4.2.3
+**Reference:** §12.0.3, §12.2.3
 
 ### Unresolved-Step Operators (`?`, `…`) *(V2.1)*
 
@@ -1689,7 +1932,7 @@ See also: Physical Attack (#8), Malware (#7), Evil Maid Attack
 
 Notation: `→[Δt=value]` or `→[Δt=Xh]`, `→[Δt=Xm]`, `→[Δt=Xs]`. Indicates the observed or estimated time interval between one Attack Step and the next. Velocity annotations are OPTIONAL but RECOMMENDED for operational analysis and threat intelligence sharing.
 
-**Reference:** §2.2.2 (Global Definitions), §3.5.2, §4.2 (Δt Notation)
+**Reference:** §4.2.2 (Global Definitions), §11.5.2, §12.2 (Δt Notation)
 
 ### Velocity Class
 
@@ -1700,7 +1943,7 @@ Categorical labels for Δt ranges that describe the defender's feasible response
 - **VC-3: Operational / Fast** (minutes): Automation (SOAR/EDR), rapid containment, prebuilt playbooks
 - **VC-4: Real-Time** (seconds → milliseconds): Architecture & circuit breakers, rate-limits, hardening, automatic isolation
 
-**Reference:** §4.4 (Operational Velocity Classes)
+**Reference:** §12.4 (Operational Velocity Classes)
 
 ### Van Eck Phreaking *(Industry Term)*
 
@@ -1825,7 +2068,12 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 | **#9** | Social Engineering | Human psychological factors | Bridge |
 | **#10** | Supply Chain Attack | Third-party trust dependencies | Bridge |
 
-**Reference:** §2.1 (Cluster Definitions), §5.2 (Topology Classification)
+**Reference:** §4.1 (Cluster Definitions), §5.2 (Topology Classification)
+
+**Related reading:** [Mandiant M-Trends 2025 — TLCTC](https://www.tlctc.net/tlctc-mtrends-2025.html), [ENISA Threat Landscape 2025 — TLCTC](https://www.tlctc.net/tlctc-enisa-2025-threat-report.html), [Same Attack, Four Stories — vendor report comparison](https://www.tlctc.net/tlctc-threat-report-chaos.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc-threat-modeling-manifesto.html), [End of Semantic Diffusion — Kuhn & TLCTC](https://www.tlctc.net/tlctc-semantic-diffusion.html), [TLCTC classification decision tree V2.0/V2.1](https://www.tlctc.net/tlctc-decision-tree.html), [Logical foundations of TLCTC](https://www.tlctc.net/tlctc-logical-foundation.html), [Why exactly ten? — TLCTC architecture](https://www.tlctc.net/tlctc-why10-explainer.html), [10×10×10 — fun fact about TLCTC](https://www.tlctc.net/tlctc-10x10x10-fun-fact.html), [Agentic AI under the microscope — TLCTC](https://www.tlctc.net/tlctc-agentic-ai-microscope.html), [Quantum & AI — new magic, same 10 threats](https://www.tlctc.net/tlctc-quantum-ai-velocity.html), [AI conversation deep dive on TLCTC](https://www.tlctc.net/blog-tlctc-ai-conversation-from-scratch.html), [Grok AI 4.1 — independent TLCTC validation](https://www.tlctc.net/tlctc-grok-ai-validation.html), [G7 SBOM-for-AI — control fixation critique](https://www.tlctc.net/sbom-for-ai-control-fixation.html), [Capability-based planning via 10×(6×2) matrix](https://www.tlctc.net/tlctc-capability-based-planning.html), [TLCTC — the missing link between strategy and ops](https://www.tlctc.net/tlctc-fillthegap.html), [Tactics evolve, 10 threats are constant](https://www.tlctc.net/blog-cyber-hype.html), [Tactics evolve, 10 threats are constant — TLCTC](https://www.tlctc.net/tlctc-blog-cyber-hype.html), [TLCTC for everyone — the Blind Spot method](https://www.tlctc.net/tlctc-everyone-blind-spot.html), [Emerging technologies as threat enablers](https://www.tlctc.net/tlctc-emerging-tech-radar.html), [TLCTC v2.1 monster prompt — CISO & Risk](https://www.tlctc.net/tlctc-prompt-ciso.html), [TLCTC v2.1 monster prompt — CTI & Forensic](https://www.tlctc.net/tlctc-prompt-cti.html), [TLCTC v2.1 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html), [TLCTC v2.1 AI analysis prompt — teach any LLM](https://www.tlctc.net/tlctc-ai-analysis-prompt.html), [TLCTC v2.1 monster prompts — index](https://www.tlctc.net/tlctc-prompt-index.html), [The Risk Appetite Conversation Your Board Isn't Having](https://www.tlctc.net/tlctc-strategy.html), [Understanding cyber threats — a common language](https://www.tlctc.net/tlctc-executive-summary.html), [TLCTC — the missing link (brief)](https://www.tlctc.net/tlctc-brief-doc.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
+
+
+
 
 ### Axiom Quick Reference
 
@@ -1842,7 +2090,7 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 | **IX** | Sequence + Velocity | Sequences | Clusters chain; Δt measures velocity |
 | **X** | Credential Duality | Sequences | Acquisition vs application |
 
-**Reference:** §1.2 (Axioms and Assumptions)
+**Reference:** §2 (Axioms and Assumptions)
 
 ### R-* Rules Quick Reference
 
