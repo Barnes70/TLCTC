@@ -135,8 +135,8 @@ Reconnaissance is mixed: some techniques cross into `@Org`, others stay outside 
 
 **Rule:** Classify by whether the technique crosses the `@Org` boundary, not by which kill-chain phase it sits in.
 
-- **Active probing of `@Org` infrastructure** — `#1 Abuse of Functions + [DRE: C]`. Target services respond through their designed interfaces and disclose information; that response function is the generic vulnerability. Path: `||[api][@External→@Org]|| #1 + [DRE: C]`. Applies to T1595 Active Scanning and its sub-techniques.
-- **Human elicitation against `@Org`** — `#9 Social Engineering + [DRE: C]`. Same generic vulnerability as T1566 phishing; only the goal differs (info disclosure rather than payload execution). Path: `||[human][@External→@Org]|| #9 + [DRE: C]`. Applies to T1598 Phishing for Information and its sub-techniques.
+- **Active probing of `@Org` infrastructure** — `#1 Abuse of Functions + [DRE: C]`. Target services respond through their designed interfaces and disclose information; that response function is the generic vulnerability. Path: `#1 ||[api][@External→@Org]|| + [DRE: C]`. Applies to T1595 Active Scanning and its sub-techniques.
+- **Human elicitation against `@Org`** — `#9 Social Engineering + [DRE: C]`. Same generic vulnerability as T1566 phishing; only the goal differs (info disclosure rather than payload execution). Path: `#9 ||[human][@External→@Org]|| + [DRE: C]`. Applies to T1598 Phishing for Information and its sub-techniques.
 - **OSINT / closed-source collection** — **N/A**. No `@Org` boundary crossing; data is held by `@External` (registrars, DNS, search engines, breach dumps, dark-web markets) or was voluntarily published by `@Org`. This is a Layer-2 exposure condition, not a Layer-3 step. Applies to T1593, T1594, T1596, T1597, T1681 and the OSINT mode of the umbrella techniques T1589/T1590/T1591/T1592.
 - **Resource Development** — generally **N/A** (`@AttackerInfra`).
 
@@ -176,7 +176,7 @@ Initial Access techniques always cross the @Org boundary. The key distinctions:
 - T1566 Phishing parent → `#9` (the social-engineering act).
 - T1566.001 Spearphishing Attachment → `#9 → #7` (FEC executes when attachment opened).
 - T1566.002 Spearphishing Link → `(#9 → #3 → #7) | (#9 → #4)` — browser-exploit chain ends in `#7` per R-EXEC; credential-harvest path ends at `#4`. Always chain `#7` after `#3` when FEC executes.
-- T1566.003 Spearphishing via Service → use transit operator `⇒@Service` for the relaying platform. Path: `||[human][@External⇒@Service→@Org]|| #9 → …`.
+- T1566.003 Spearphishing via Service → use transit operator `⇒@Service` for the relaying platform. Path: `#9 ||[human][@External⇒@Service→@Org]|| → …`.
 - T1566.004 Spearphishing Voice (vishing) → use `⇒@Telco`. Outcomes include `#9 → #1` (victim performs an authorized business function under attacker direction — wire transfer, password reset, config change), in addition to `#9 → #4` and `#9 → #7`.
 
 **Supply chain placement (R-SUPPLY)**:
@@ -477,7 +477,7 @@ For T1041 (over C2 channel) and T1048* (alternative protocol), the destination i
 
 **Physical media (T1052*) is `#1`, not `#8`:**
 
-The older mapping pass had T1052 / T1052.001 (USB exfil) as `#8 Physical Attack`. Corrected: copying data to a connected USB is designed-function abuse (`#1`), not physical exploitation. `#8` only applies when the attacker first **bypasses physical security** to insert their own medium — in which case prepend it: `||[physical][@External→@Org]|| #8 → #1 + [DRE: C]`.
+The older mapping pass had T1052 / T1052.001 (USB exfil) as `#8 Physical Attack`. Corrected: copying data to a connected USB is designed-function abuse (`#1`), not physical exploitation. `#8` only applies when the attacker first **bypasses physical security** to insert their own medium — in which case prepend it: `#8 ||[physical][@External→@Org]|| → #1 + [DRE: C]`.
 
 **T1041 Exfiltration Over C2 must allow `#1` mode:**
 
@@ -515,7 +515,7 @@ The `Av` vs `Ac` distinction matters operationally: ransomware (`Ac`) leaves rec
 - T1485.001 Lifecycle-Triggered Deletion → `#1 + [DRE: Av]` (cloud platform performs the deletion per policy)
 - T1490 Inhibit System Recovery → `#1 + [DRE: Av]` (admin tool deletes shadows)
 - T1491 Defacement → `#7 + [DRE: I]`
-- T1498.002 Reflection Amplification → `||[network][@External⇒@Reflectors→@Org]|| #6 + [DRE: A]`
+- T1498.002 Reflection Amplification → `#6 ||[network][@External⇒@Reflectors→@Org]|| + [DRE: A]`
 - T1565.002 Transmitted Data Manipulation → `#1 | #5 + [DRE: I]` (host-side abuse vs MitM)
 - T1667 Email Bombing → `#6 + [DRE: A]` (volumetric, not function-abuse)
 

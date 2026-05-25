@@ -47,7 +47,7 @@
       "patternName": "Maintainer Account Compromise via Phishing",
       "description": "Attacker phishes an npm maintainer's credentials, authenticates as the maintainer, and publishes trojanized versions of the maintainer's packages.",
       "vector": "update",
-      "tlctcNotation": "#9 ||[human][@External→@Maintainer]|| + [DRE: C] → #4 → #1 + [DRE: I] ||[update][@Maintainer⇒@npm→@Consumers]|| #10 → #1 → #7",
+      "tlctcNotation": "#9 ||[human][@External→@Maintainer]|| + [DRE: C] → #4 → #1 + [DRE: I] → #10 ||[update][@Maintainer⇒@npm→@Consumers]|| → #1 → #7",
       "tlctcClusters": ["#9", "#4", "#1", "#10", "#1", "#7"],
       "tlctcClusterNames": ["Social Engineering", "Identity Theft", "Abuse of Functions", "Supply Chain Attack", "Abuse of Functions", "Malware"],
       "mappingRationale": "#9 is the phishing step — human psychological susceptibility. DRE: C records credential acquisition with #9 as enabling cluster. #4 records credential use (R-CRED: always #4). First #1 records the legitimate publish API call. #10 fires at the TAE when consumers pull the update. Second #1 records install processing. #7 records payload execution. The #9→#4 transition is the critical kill chain: controls at either boundary break the chain.",

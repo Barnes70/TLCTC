@@ -65,7 +65,7 @@ The Nx monorepo tool's GitHub repository used a `pull_request_target` workflow �
 ```
 #1 →[0s] #7 + [DRE: C]
 →[minutes] #4 →[0s] #1 + [DRE: I]
-||[dev][@Nrwl(Nx)⇒@npm→@Consumers]|| #10.2
+→ #10.2 ||[dev][@Nrwl(Nx)⇒@npm→@Consumers]||
 →[hours-days] #1 →[0s] #7
 →[0s] #1 + [DRE: C] →[0s] #7 →[0s] #1 + [DRE: C]
 ```
@@ -84,7 +84,7 @@ The Nx monorepo tool's GitHub repository used a `pull_request_target` workflow �
 
 **#1**: The attacker invokes npm's legitimate `publish` command to push trojanized versions. The publish API works as designed. `+ [DRE: I]` — package integrity compromised.
 
-**Phase C — Trust Acceptance and consumer-side execution** `||[dev][@Nrwl(Nx)⇒@npm→@Consumers]|| #10.2 →[hours-days] #1 →[0s] #7 →[0s] #1 + [DRE: C] →[0s] #7 →[0s] #1 + [DRE: C]`
+**Phase C — Trust Acceptance and consumer-side execution** `#10.2 ||[dev][@Nrwl(Nx)⇒@npm→@Consumers]|| →[hours-days] #1 →[0s] #7 →[0s] #1 + [DRE: C] →[0s] #7 →[0s] #1 + [DRE: C]`
 
 **#10.2** (Development Vector): The Trust Acceptance Event. Consumers pull the trojanized Nx version during dependency installation. The v2.1 transit notation shows npm as intermediary with its own control surface (abuse detection, provenance checking). Boundary test: if the consumer had no dependency on Nx, the attack would not reach them.
 
@@ -117,7 +117,7 @@ The payload was sophisticated: obfuscated JavaScript operating exclusively in br
 ```
 #9 →[Δt≈3d] + [DRE: C]
 →[0s] #4 →[0s] #1 + [DRE: I]
-||[update][@Maintainer(Qix)⇒@npm→@Consumers]|| #10.1
+→ #10.1 ||[update][@Maintainer(Qix)⇒@npm→@Consumers]||
 →[hours] #1 →[0s] #7 →[0s] #1 + [DRE: C, I]
 ```
 
@@ -135,7 +135,7 @@ The velocity annotation `→[Δt≈3d]` records that the phishing domain was reg
 
 **#1**: Trojanized versions of 18+ packages published via the legitimate publish API. `+ [DRE: I]`.
 
-**Phase C — Trust Acceptance and browser-side payload** `||[update][@Maintainer(Qix)⇒@npm→@Consumers]|| #10.1 →[hours] #1 →[0s] #7 →[0s] #1 + [DRE: C, I]`
+**Phase C — Trust Acceptance and browser-side payload** `#10.1 ||[update][@Maintainer(Qix)⇒@npm→@Consumers]|| →[hours] #1 →[0s] #7 →[0s] #1 + [DRE: C, I]`
 
 **#10.1** (Update Vector): The Trust Acceptance Event. Unlike Campaign 1, this is #10.1: these were *existing* packages receiving new versions through npm's update channel. Consumers with permissive semver ranges pulled the poisoned versions as routine updates.
 
@@ -165,12 +165,12 @@ The payload (`bundle.js`, 3MB+) executed during `postinstall` and performed a ca
 
 ```
 (#9 | #4) →[0s] #1 + [DRE: I]
-||[update][@Patient0⇒@npm→@Victim₁]|| #10.1
+→ #10.1 ||[update][@Patient0⇒@npm→@Victim₁]||
 →[hours] #1 →[0s] #7
 →[0s] #1 + [DRE: C] →[0s] #7 →[0s] #1 + [DRE: C]
 →[0s] #4 →[0s] #1 + [DRE: C, I]
 →[0s] #4 →[0s] #1 + [DRE: I]
-||[update][@Victim₁⇒@npm→@Victim₂...ₙ]|| #10.1
+→ #10.1 ||[update][@Victim₁⇒@npm→@Victim₂...ₙ]||
 → [RECURSIVE]
 ```
 
@@ -182,7 +182,7 @@ The payload (`bundle.js`, 3MB+) executed during `postinstall` and performed a ca
 
 **#1**: The attacker publishes a trojanized version via the legitimate publish API. `+ [DRE: I]`.
 
-**Phase B — Trust Acceptance (Victim₁)** `||[update][@Patient0⇒@npm→@Victim₁]|| #10.1 →[hours] #1 →[0s] #7`
+**Phase B — Trust Acceptance (Victim₁)** `#10.1 ||[update][@Patient0⇒@npm→@Victim₁]|| →[hours] #1 →[0s] #7`
 
 **#10.1** (Update Vector): The Trust Acceptance Event. Victim₁ installs the compromised package.
 
@@ -202,7 +202,7 @@ The payload (`bundle.js`, 3MB+) executed during `postinstall` and performed a ca
 
 **#1**: Legitimate GitHub APIs exploited to create the "Shai-Hulud" repository, commit exfiltrated data, inject workflow files, create pull requests, and convert private repositories to public. `+ [DRE: C, I]`.
 
-**Phase D — Worm propagation** `#4 →[0s] #1 + [DRE: I] ||[update][@Victim₁⇒@npm→@Victim₂...ₙ]|| #10.1 → [RECURSIVE]`
+**Phase D — Worm propagation** `#4 →[0s] #1 + [DRE: I] → #10.1 ||[update][@Victim₁⇒@npm→@Victim₂...ₙ]|| → [RECURSIVE]`
 
 **#4**: Stolen npm tokens authenticate as Victim₁.
 
@@ -277,7 +277,7 @@ For practitioners. Clip and use.
 `#10.2 ||[dev][@Public⇒@npm→@Org]|| → #1 → #7`
 
 **Maintainer-account compromise (phishing):**
-`#9 + [DRE: C] → #4 → #1 + [DRE: I] ||[update][@Vendor⇒@npm→@Org]|| #10.1 → #1 → #7`
+`#9 + [DRE: C] → #4 → #1 + [DRE: I] → #10.1 ||[update][@Vendor⇒@npm→@Org]|| → #1 → #7`
 
 **Typosquatting:**
 `#9 → #10.2 ||[dev][@Public⇒@npm→@Org]|| → #1 → #7`

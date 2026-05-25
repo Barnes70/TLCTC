@@ -31,7 +31,7 @@ Apply the TLCTC classification rules to each causal step:
 ```
 #9 ||[human][@External→@Maintainer(Qix)]|| →[~3d] + [DRE: C]
 → #4 → #1 + [DRE: I]
-||[update][@Maintainer(Qix)⇒@npm→@Consumers]|| #10
+→ #10 ||[update][@Maintainer(Qix)⇒@npm→@Consumers]||
 → #1 → #7 → #1 + [DRE: C, I]
 ```
 

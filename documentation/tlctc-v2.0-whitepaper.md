@@ -3357,8 +3357,8 @@ Domain boundary operators (`||[context][@Source→@Target]||`), transit operator
 
 Valid:
 ```
-#10 → ||[cloud][@Vendor→@Org]|| ? → #7
-… → ||[prod][@DMZ→@Internal]|| #4 → #1
+#10 → ? ||[cloud][@Vendor→@Org]|| → #7
+… → #4 ||[prod][@DMZ→@Internal]|| → #1
 ```
 
 **R-UNRES-7 — Resolution Obligation.**
@@ -3419,13 +3419,13 @@ Classification is binary: a step is either resolved to a definitive cluster (`#1
 
 **Boundary crossing with unknown mechanism:**
 ```
-#10 → ||[saas][@Vendor→@Org]|| ? → #7 + [DRE: C]
+#10 → ? ||[saas][@Vendor→@Org]|| → #7 + [DRE: C]
 ```
 > *Supply chain compromise of a SaaS vendor is confirmed. Malware was subsequently found executing within the organization's environment, and data exfiltration is confirmed as a consequence of the malware step. The mechanism by which the supply chain compromise translated into code execution inside the organizational boundary — the step between the boundary crossing and the malware — has not been determined. Candidates include a trojanized update (#10 continuation), exploitation of an integration API (#2), or abuse of a legitimate sync function (#1).*
 
 **Entirely unknown prefix:**
 ```
-… → ||[prod][@External→@Internal]|| #4 → #1 → #7 →[Δt=0s] + [DRE: Ac]
+… → #4 ||[prod][@External→@Internal]|| → #1 → #7 →[Δt=0s] + [DRE: Ac]
 ```
 > *Incident response identified the attack from the credential use stage onward: an external actor authenticated with valid domain admin credentials, abused administrative tools, and deployed ransomware. Everything preceding the boundary crossing — how the credentials were obtained, how the attacker reached the perimeter — is unknown. The gap may span multiple steps and weeks of attacker activity.*
 
