@@ -451,21 +451,25 @@ Each `attack_step` may carry the following under `extensions.ti`:
 {
   "step_id": "s1",
   "cluster": "#10",
-  "delta_t_to_next": "~6mo",
-  "outcomes": ["C"],
-  "notes": "Build pipeline compromised.",
+  "topology_boundary": {
+    "context": "update",
+    "source_sphere": "@Vendor",
+    "target_sphere": "@Org"
+  },
+  "delta_t_to_next": "~14d",
+  "notes": "Trust Acceptance Event (R-SUPPLY): signed vendor update accepted by target via legitimate update channel; trojanized artifact passes signature/trust verification. Upstream build-pipeline compromise is recorded as causal TI context (CVE/CWE/MITRE), not as a separate #10 step on the vendor side.",
   "extensions": {
     "ti": {
-      "sphere": "@Vendor",
+      "sphere": "@Org",
       "stage": "initial",
       "velocity_class": "VC-1",
 
       "software": [
         {
-          "name": "SolarWinds Orion Build Environment",
-          "version": "N/A",
+          "name": "SolarWinds Orion Platform",
+          "version": "2019.4 HF 5 through 2020.2.1 HF 1",
           "vendor": "SolarWinds",
-          "role": "vulnerability-source",
+          "role": "exploit-delivery",
           "cpe": "cpe:2.3:a:solarwinds:orion_platform:*"
         }
       ],
@@ -473,7 +477,7 @@ Each `attack_step` may carry the following under `extensions.ti`:
       "vulnerabilities": {
         "cves": ["CVE-2020-10148"],
         "cwes": ["CWE-506"],
-        "description": "Attackers compromised the SolarWinds build environment."
+        "description": "Trojanized signed build artifact distributed via legitimate update channel; upstream build environment compromise enabled injection at compile time."
       },
 
       "mitre_mapping": {
@@ -482,28 +486,17 @@ Each `attack_step` may carry the following under `extensions.ti`:
       },
 
       "temporal": {
-        "date": "2019-09-01",
-        "duration_minutes": 525600,
+        "date": "2020-03-26",
         "detection_date": "2020-12-13",
-        "detection_gap_days": 470
+        "detection_gap_days": 262
       },
-
-      "data_risk_events": [
-        {
-          "dre_id": "dre-1",
-          "type": "C",
-          "description": "Build pipeline source code and signing keys exposed.",
-          "data_type": "source code",
-          "volume": "Entire Orion build system"
-        }
-      ],
 
       "evidence": {
         "iocs": [
           { "type": "hash", "value": "b91ce2fa41029f6955bff20079468448" }
         ],
-        "artifacts": ["Compromised build server logs", "Modified build scripts"],
-        "log_sources": ["SolarWinds build system logs", "Version control system"]
+        "artifacts": ["SolarWinds.Orion.Core.BusinessLayer.dll (trojanized)", "Update server logs"],
+        "log_sources": ["Update server logs", "Endpoint install logs"]
       }
     }
   }
@@ -565,7 +558,7 @@ At the root level of the instance document, `extensions.ti` carries:
         "attribution_confidence": "high"
       },
 
-      "attack_path_notation": "#10 → #7 → #7 ||[update][@Vendor→@Org]|| → #7 → #4 → #1 → #4 ||[auth][@Org→@Cloud]|| → #1 → #1",
+      "attack_path_notation": "#10 ||[update][@Vendor→@Org]|| →[Δt=~14d] #7 →[Δt=~2w] #7 →[Δt=~2w] #4 →[Δt=~2w] #1 →[Δt=~2w] #4 ||[auth][@Org→@Cloud]|| →[Δt=instant] #1 →[Δt=~2w] #1 + [DRE: C]",
 
       "business_impacts": [
         {
@@ -635,8 +628,10 @@ When SolarWinds happened, instead of every organization describing it differentl
 ### Attack Path Notation
 
 ```
-#10 → #7 → #7 ||[update][@SolarWinds→@Org]|| → #7 → #4 → #1 → #4 ||[auth][@Org→@Microsoft]|| → #1 → #1
+#10 ||[update][@SolarWinds→@Org]|| →[Δt=~14d] #7 →[Δt=~2w] #7 →[Δt=~2w] #4 →[Δt=~2w] #1 →[Δt=~2w] #4 ||[auth][@Org→@Microsoft]|| →[Δt=instant] #1 →[Δt=~2w] #1 + [DRE: C]
 ```
+
+Per **R-SUPPLY**, `#10` is placed at the **Trust Acceptance Event** — the moment the signed Orion update becomes authoritative inside `@Org`. The upstream build-pipeline compromise on `@SolarWinds` is recorded as causal context in the step's TI extension, not as a separate `#10` step on the vendor side.
 
 ### `incident-APT29-SOLARWINDS-2020.json`
 
@@ -655,37 +650,44 @@ When SolarWinds happened, instead of every organization describing it differentl
   "path_sequence": [
     {
       "step_id": "s1",
-      "cluster": "TLCTC-10.02",
-      "delta_t_to_next": "~6mo",
-      "notes": "Supply chain compromise via development vector: attackers infiltrate SolarWinds build pipeline.",
+      "cluster": "#10",
+      "topology_boundary": {
+        "context": "update",
+        "source_sphere": "@SolarWinds",
+        "target_sphere": "@Org"
+      },
+      "delta_t_to_next": "~14d",
+      "notes": "Trust Acceptance Event (R-SUPPLY): the signed SolarWinds Orion update (v2019.4 HF 5 through 2020.2.1 HF 1) — containing the SUNBURST backdoor inside SolarWinds.Orion.Core.BusinessLayer.dll — is accepted and installed by the target via the legitimate vendor update channel and passes signature/trust verification. Upstream cause (recorded as TI context, not as a separate step): attackers compromised the SolarWinds build environment ~6 months earlier (Sep 2019) and injected SUNBURST during compilation. Per R-SUPPLY, #10 is placed here at the TAE inside @Org, not at the upstream build-pipeline event on @SolarWinds.",
       "extensions": {
         "ti": {
-          "sphere": "@SolarWinds",
+          "sphere": "@Org",
           "stage": "initial",
           "velocity_class": "VC-1",
           "software": [
+            { "name": "SolarWinds Orion Platform", "version": "2019.4 HF 5 through 2020.2.1 HF 1", "vendor": "SolarWinds", "role": "exploit-delivery" },
             { "name": "SolarWinds Orion Build Environment", "version": "N/A", "vendor": "SolarWinds", "role": "vulnerability-source" }
           ],
           "vulnerabilities": {
+            "cves": ["CVE-2020-10148"],
             "cwes": ["CWE-506"],
-            "description": "Attackers compromised SolarWinds build environment to inject malicious code during compilation."
+            "description": "Trojanized signed build artifact distributed via legitimate update channel; upstream build environment compromise enabled injection at compile time."
           },
           "mitre_mapping": {
             "tactics": ["TA0001"],
             "techniques": ["T1195.002"]
           },
           "temporal": {
-            "date": "2019-09-01",
-            "duration_minutes": 525600,
+            "date": "2020-03-26",
             "detection_date": "2020-12-13",
-            "detection_gap_days": 470
+            "detection_gap_days": 262
           },
           "evidence": {
             "iocs": [
-              { "type": "hash", "value": "b91ce2fa41029f6955bff20079468448" }
+              { "type": "hash", "value": "b91ce2fa41029f6955bff20079468448" },
+              { "type": "hash", "value": "c15abaf51e78ca56c0376522d699c978" }
             ],
-            "artifacts": ["Compromised build server logs", "Modified build scripts"],
-            "log_sources": ["SolarWinds build system logs", "Version control system"]
+            "artifacts": ["SolarWinds.Orion.Core.BusinessLayer.dll (trojanized)", "Compromised build server logs", "Modified build scripts"],
+            "log_sources": ["Update server logs", "SolarWinds build system logs", "Version control system"]
           }
         }
       }
@@ -695,56 +697,20 @@ When SolarWinds happened, instead of every organization describing it differentl
       "step_id": "s2",
       "cluster": "#7",
       "fec_executed": true,
-      "delta_t_to_next": "~2w",
-      "notes": "SUNBURST backdoor embedded in signed SolarWinds DLL, packaged for distribution to 18,000+ customers.",
-      "extensions": {
-        "ti": {
-          "sphere": "@SolarWinds",
-          "stage": "intermediate",
-          "software": [
-            { "name": "SUNBURST Backdoor", "version": "Embedded in SolarWinds.Orion.Core.BusinessLayer.dll", "role": "malware" },
-            { "name": "SolarWinds Orion Platform", "version": "2019.4 HF 5 through 2020.2.1 HF 1", "vendor": "SolarWinds", "role": "exploit-delivery" }
-          ],
-          "mitre_mapping": {
-            "tactics": ["TA0002", "TA0003", "TA0011"],
-            "techniques": ["T1543.003", "T1071.001", "T1132.001"]
-          },
-          "temporal": { "date": "2020-03-01", "duration_minutes": 20160 },
-          "evidence": {
-            "iocs": [
-              { "type": "hash", "value": "c15abaf51e78ca56c0376522d699c978" },
-              { "type": "domain", "value": "avsvmcloud.com" }
-            ],
-            "artifacts": ["SolarWinds.Orion.Core.BusinessLayer.dll (trojanized)", "C2 communication logs"],
-            "log_sources": ["Network traffic logs", "DNS logs", "EDR telemetry"]
-          }
-        }
-      }
-    },
-
-    {
-      "step_id": "s3",
-      "cluster": "#7",
-      "fec_executed": true,
-      "topology_boundary": {
-        "context": "update",
-        "source_sphere": "@SolarWinds",
-        "target_sphere": "@Org"
-      },
       "outcomes": ["C"],
       "delta_t_to_next": "~2w",
-      "notes": "SUNBURST executes in customer environment via trusted update channel. C2 communication exposes network topology.",
+      "notes": "FEC execution via designed capability (R-EXEC): SUNBURST loads inside the legitimate solarwinds.businesslayerhost.exe service using the platform's intended DLL loading mechanism — an intended data→code transition, not an exploit. After a ~14-day dormancy SUNBURST initiates C2 over DNS (avsvmcloud.com), exposing internal network topology to the attacker.",
       "extensions": {
         "ti": {
           "sphere": "@Org",
           "stage": "intermediate",
           "velocity_class": "VC-1",
           "software": [
-            { "name": "SUNBURST Backdoor", "role": "malware" }
+            { "name": "SUNBURST Backdoor", "version": "Embedded in SolarWinds.Orion.Core.BusinessLayer.dll", "role": "malware" }
           ],
           "mitre_mapping": {
             "tactics": ["TA0002", "TA0011"],
-            "techniques": ["T1071.001", "T1573.001"]
+            "techniques": ["T1543.003", "T1071.001", "T1573.001", "T1132.001"]
           },
           "temporal": { "date": "2020-03-15", "duration_minutes": 43200 },
           "data_risk_events": [
@@ -768,7 +734,7 @@ When SolarWinds happened, instead of every organization describing it differentl
     },
 
     {
-      "step_id": "s4",
+      "step_id": "s3",
       "cluster": "#7",
       "fec_executed": true,
       "delta_t_to_next": "~2w",
@@ -798,11 +764,11 @@ When SolarWinds happened, instead of every organization describing it differentl
     },
 
     {
-      "step_id": "s5",
+      "step_id": "s4",
       "cluster": "#4",
       "outcomes": ["C"],
       "delta_t_to_next": "~2w",
-      "notes": "Identity Theft: use of stolen domain/admin credentials to impersonate identities. Acquisition occurred via prior #7 activity.",
+      "notes": "Identity Theft (R-CRED, Axiom X): use of stolen domain/admin credentials to authenticate. Credential acquisition occurred during prior #7 activity (consequence of malware access — recorded as DRE:C on s2/s3); credential application is always #4 regardless of acquisition method.",
       "extensions": {
         "ti": {
           "sphere": "@Org",
@@ -827,7 +793,7 @@ When SolarWinds happened, instead of every organization describing it differentl
     },
 
     {
-      "step_id": "s6",
+      "step_id": "s5",
       "cluster": "#1",
       "delta_t_to_next": "~2w",
       "notes": "Abuse of Functions: lateral movement via legitimate remote admin/authentication services after #4 impersonation.",
@@ -845,7 +811,7 @@ When SolarWinds happened, instead of every organization describing it differentl
     },
 
     {
-      "step_id": "s7",
+      "step_id": "s6",
       "cluster": "#4",
       "topology_boundary": {
         "context": "auth",
@@ -854,7 +820,7 @@ When SolarWinds happened, instead of every organization describing it differentl
       },
       "outcomes": ["C"],
       "delta_t_to_next": "instant",
-      "notes": "Identity Theft in cloud: use of credentials/tokens to assume identities in M365/Azure AD across federated trust boundary.",
+      "notes": "Identity Theft in cloud (R-CRED): use of forged SAML tokens (signed with stolen ADFS signing key) to assume identities in M365/Azure AD across the federated trust boundary.",
       "extensions": {
         "ti": {
           "sphere": "@Microsoft",
@@ -876,7 +842,7 @@ When SolarWinds happened, instead of every organization describing it differentl
     },
 
     {
-      "step_id": "s8",
+      "step_id": "s7",
       "cluster": "#1",
       "outcomes": ["C"],
       "delta_t_to_next": "~2w",
@@ -902,7 +868,7 @@ When SolarWinds happened, instead of every organization describing it differentl
     },
 
     {
-      "step_id": "s9",
+      "step_id": "s8",
       "cluster": "#1",
       "outcomes": ["C"],
       "notes": "Abuse of Functions: data exfiltration through legitimate HTTPS/cloud storage APIs.",
@@ -931,7 +897,7 @@ When SolarWinds happened, instead of every organization describing it differentl
         "attribution_confidence": "high"
       },
 
-      "attack_path_notation": "#10 → #7 → #7 ||[update][@SolarWinds→@Org]|| → #7 → #4 → #1 → #4 ||[auth][@Org→@Microsoft]|| → #1 → #1",
+      "attack_path_notation": "#10 ||[update][@SolarWinds→@Org]|| →[Δt=~14d] #7 →[Δt=~2w] #7 →[Δt=~2w] #4 →[Δt=~2w] #1 →[Δt=~2w] #4 ||[auth][@Org→@Microsoft]|| →[Δt=instant] #1 →[Δt=~2w] #1 + [DRE: C]",
 
       "business_impacts": [
         {
@@ -939,7 +905,7 @@ When SolarWinds happened, instead of every organization describing it differentl
           "category": "regulatory",
           "description": "Mandatory breach notifications to multiple government agencies and affected organizations.",
           "severity": "critical",
-          "linked_to_step": "s3",
+          "linked_to_step": "s2",
           "linked_to_dre": "dre-1"
         },
         {
@@ -954,7 +920,7 @@ When SolarWinds happened, instead of every organization describing it differentl
           "category": "financial",
           "description": "Global incident response, remediation, and legal costs.",
           "severity": "critical",
-          "linked_to_step": "s9",
+          "linked_to_step": "s8",
           "estimated_cost": {
             "amount": 1000000000,
             "currency": "USD",
@@ -973,7 +939,7 @@ When SolarWinds happened, instead of every organization describing it differentl
           "category": "operational",
           "description": "Mass emergency patching and system rebuilds across 18,000+ organizations.",
           "severity": "critical",
-          "linked_to_step": "s3"
+          "linked_to_step": "s2"
         }
       ],
 
@@ -1026,7 +992,7 @@ The following changes were made compared to earlier v1.x representations of this
 | v1.x Pattern | v2.0 Pattern | Rationale |
 |---|---|---|
 | `step_number` (integer) | `step_id` (string, e.g., `"s1"`) | Enables stable cross-referencing; survives step insertion/reordering |
-| `tlctc_cluster: { strategic, operational }` | `cluster: "#10"` or `"TLCTC-10.02"` | Single field; strategic or operational notation as appropriate |
+| `tlctc_cluster: { strategic, operational }` | `cluster: "#10"` or `"TLCTC-10.20"` | Single field; strategic or operational notation as appropriate |
 | Standalone boundary steps | `topology_boundary` on the cluster step | Boundaries annotate steps, not replace them |
 | `responsibility_sphere` on step | `extensions.ti.sphere` | Base schema carries boundaries; sphere per step is enrichment |
 | `impact.data_risk_events[]` | `outcomes: ["C"]` + `extensions.ti.data_risk_events[]` | Base tags for validation; rich DREs for intelligence sharing |
