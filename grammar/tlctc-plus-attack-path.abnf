@@ -1,5 +1,5 @@
 ; TLCTC+ Attack Path / Record Notation — Formal Grammar
-; Version: TLCTC+ v0.3 (base framework: TLCTC v2.1)
+; Version: TLCTC+ v0.6 (base framework: TLCTC v2.1)
 ; Format:  ABNF (RFC 5234), UTF-8 source encoding required.
 ; Canonical prose specification: documentation/tlctc-plus-specification.md §8
 ; License: CC BY 4.0
@@ -9,10 +9,12 @@
 ;     v0.1 free-text BRE extension). Use that grammar for plain v2.1
 ;     attack paths and v0.1-style records.
 ;   This file (tlctc-plus-attack-path.abnf) is a self-contained mirror
-;     of TLCTC+ v0.3 §8. Use it to validate TLCTC+ records:
-;       - record_type = core_cyber_incident
-;       - record_type = hybrid_cyber_enabled_harm
-;       - record_type = pure_9_digital_crime
+;     of TLCTC+ v0.6 §8. Use it to validate TLCTC+ records:
+;       - record_type = compromise_record   (TLCTC path + SRE present)
+;       - record_type = pure_9_record       (#9 anchor, no SRE)
+;     v0.6 collapsed the v0.3-v0.5 three-class enumeration
+;     (core_cyber_incident, hybrid_cyber_enabled_harm, pure_9_digital_harm)
+;     into the two structural record types above, split on SRE presence.
 ;     Structured PATTERN/BRE/IMPACT/REPORT codes are required;
 ;     free-text BRE labels (v0.1) are NOT accepted by this grammar.
 ;
@@ -54,20 +56,24 @@
 ; Top-level record
 ; =====================================================================
 
-TLCTC_PLUS_RECORD = CYBER_RECORD / PURE_9_RECORD
+TLCTC_PLUS_RECORD = COMPROMISE_RECORD / PURE_9_RECORD
 
-; -- Cyber record -----------------------------------------------------
-; A core_cyber_incident or hybrid_cyber_enabled_harm record.
+; -- Compromise record ------------------------------------------------
+; A compromise_record (TLCTC path with SRE present). v0.6 collapses the
+; v0.5 "core_cyber_incident" and "hybrid_cyber_enabled_harm" classes
+; into this single structural type; the cyber-side-dominant vs
+; consequence-side-dominant flavor is observable via the BRE family
+; selection, not via record_type.
 ; SRE annotation is permitted at most once per record. The grammar
-; accepts zero SRE_TAGs (pre-compromise hypothesis records, §8.2 note);
-; R-SRE makes SRE_TAG REQUIRED once Loss of Control / System Compromise
-; has occurred — that is a validator-level rule.
-CYBER_RECORD    = TLCTC_PATH
-                  [SP+ SRE_TAG]
-                  *(SP+ DRE_TAG)
-                  *(SP+ BRE_TAG)
-                  *(SP+ IMPACT_TAG)
-                  *(SP+ REPORT_TAG)
+; accepts zero SRE_TAGs (pre-compromise hypothesis records, sre.status
+; = "hypothesized"); R-SRE makes SRE_TAG REQUIRED once Loss of Control
+; / System Compromise has occurred — that is a validator-level rule.
+COMPROMISE_RECORD = TLCTC_PATH
+                    [SP+ SRE_TAG]
+                    *(SP+ DRE_TAG)
+                    *(SP+ BRE_TAG)
+                    *(SP+ IMPACT_TAG)
+                    *(SP+ REPORT_TAG)
 
 ; -- Pure-#9 record ---------------------------------------------------
 ; SRE forbidden by definition (no IT system was compromised).
