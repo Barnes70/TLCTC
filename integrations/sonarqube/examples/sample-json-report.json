@@ -1,0 +1,251 @@
+{
+  "generated_at": "2026-05-29T19:06:27.385418+00:00",
+  "tlctc_version": "2.1",
+  "sonar_project": "demo",
+  "totals": {
+    "issues_seen": 7,
+    "issues_classified": 6,
+    "issues_low_confidence": 1,
+    "issues_unmapped": 0,
+    "issues_no_cwe": 0
+  },
+  "cluster_summary": {
+    "#2": {
+      "count": 3,
+      "tag": "tlctc-02",
+      "issue_keys": [
+        "ISSUE-001",
+        "ISSUE-002",
+        "ISSUE-006"
+      ]
+    },
+    "#3": {
+      "count": 1,
+      "tag": "tlctc-03",
+      "issue_keys": [
+        "ISSUE-003"
+      ]
+    },
+    "#4": {
+      "count": 1,
+      "tag": "tlctc-04",
+      "issue_keys": [
+        "ISSUE-004"
+      ]
+    },
+    "#10": {
+      "count": 1,
+      "tag": "tlctc-10",
+      "issue_keys": [
+        "ISSUE-007"
+      ]
+    }
+  },
+  "findings": [
+    {
+      "issue_key": "ISSUE-001",
+      "component": "demo:src/main/java/com/example/UserRepo.java",
+      "severity": "BLOCKER",
+      "type": "VULNERABILITY",
+      "rule": "java:S2077",
+      "message": "Format SQL queries using parameterized binding rather than string concatenation.",
+      "cwe_refs": [
+        "CWE-89"
+      ],
+      "primary_clusters": [
+        "#2"
+      ],
+      "tlctc_tags": [
+        "tlctc-02"
+      ],
+      "resolutions": [
+        {
+          "cwe_id": "CWE-89",
+          "verdict": "Allowed",
+          "raw_mapping": "#2",
+          "resolved_path": "#2",
+          "role": null,
+          "matched_glob": null,
+          "reason": "no alternation; no role resolution required",
+          "rationale": "Server-side coding flaw allowing data->code transition in DB query (SQL is code). Explicitly #2 in Whitepaper."
+        }
+      ]
+    },
+    {
+      "issue_key": "ISSUE-002",
+      "component": "demo:src/main/java/com/example/render/JspRenderer.java",
+      "severity": "CRITICAL",
+      "type": "VULNERABILITY",
+      "rule": "java:S5131",
+      "message": "User-supplied data is rendered into the response without contextual escaping.",
+      "cwe_refs": [
+        "CWE-79"
+      ],
+      "primary_clusters": [
+        "#2"
+      ],
+      "tlctc_tags": [
+        "tlctc-02",
+        "tlctc-07"
+      ],
+      "resolutions": [
+        {
+          "cwe_id": "CWE-79",
+          "verdict": "Allowed",
+          "raw_mapping": "#2 → #7 | #3",
+          "resolved_path": "#2 → #7",
+          "role": "server",
+          "matched_glob": null,
+          "reason": "no glob match; fell back to default_role=server",
+          "rationale": "Reflected/Stored XSS exploits a server-side coding flaw (#2) to deliver a script that the browser executes (#7). DOM-based XSS exploits a client-side coding flaw (#3)."
+        }
+      ]
+    },
+    {
+      "issue_key": "ISSUE-003",
+      "component": "demo:src/main/webapp/components/CommentList.tsx",
+      "severity": "MAJOR",
+      "type": "VULNERABILITY",
+      "rule": "typescript:S5247",
+      "message": "DOM sink receives data from a URL parameter without sanitization.",
+      "cwe_refs": [
+        "CWE-79"
+      ],
+      "primary_clusters": [
+        "#3"
+      ],
+      "tlctc_tags": [
+        "tlctc-03"
+      ],
+      "resolutions": [
+        {
+          "cwe_id": "CWE-79",
+          "verdict": "Allowed",
+          "raw_mapping": "#2 → #7 | #3",
+          "resolved_path": "#3",
+          "role": "client",
+          "matched_glob": "**/*.tsx",
+          "reason": "component path matched client glob '**/*.tsx'",
+          "rationale": "Reflected/Stored XSS exploits a server-side coding flaw (#2) to deliver a script that the browser executes (#7). DOM-based XSS exploits a client-side coding flaw (#3)."
+        }
+      ]
+    },
+    {
+      "issue_key": "ISSUE-004",
+      "component": "demo:src/main/java/com/example/config/AwsClient.java",
+      "severity": "BLOCKER",
+      "type": "VULNERABILITY",
+      "rule": "secrets:S6290",
+      "message": "Hardcoded AWS access key detected in source.",
+      "cwe_refs": [
+        "CWE-798"
+      ],
+      "primary_clusters": [
+        "#4"
+      ],
+      "tlctc_tags": [
+        "tlctc-04"
+      ],
+      "resolutions": [
+        {
+          "cwe_id": "CWE-798",
+          "verdict": "Allowed",
+          "raw_mapping": "#4",
+          "resolved_path": "#4",
+          "role": null,
+          "matched_glob": null,
+          "reason": "no alternation; no role resolution required",
+          "rationale": "Hard-coded credentials baked into the product (passwords, API keys, cryptographic keys) — once extracted from binaries/firmware, every deployment becomes impersonable. Decision tree Q3 -> #4."
+        }
+      ]
+    },
+    {
+      "issue_key": "ISSUE-006",
+      "component": "demo:src/main/java/com/example/api/SessionLoader.java",
+      "severity": "CRITICAL",
+      "type": "VULNERABILITY",
+      "rule": "java:S5135",
+      "message": "Deserialization of untrusted data without integrity verification.",
+      "cwe_refs": [
+        "CWE-502"
+      ],
+      "primary_clusters": [
+        "#2"
+      ],
+      "tlctc_tags": [
+        "tlctc-02",
+        "tlctc-07"
+      ],
+      "resolutions": [
+        {
+          "cwe_id": "CWE-502",
+          "verdict": "Allowed",
+          "raw_mapping": "#2 → #7 | #3 → #7",
+          "resolved_path": "#2 → #7",
+          "role": "server",
+          "matched_glob": "**/api/**",
+          "reason": "component path matched server glob '**/api/**'",
+          "rationale": "Implementation flaw deserializing attacker-controlled bytes into language objects, triggering gadget-chain code execution (e.g., Java/Python pickle). Server-role (#2) or client-role (#3) per R-ROLE. Per R-EXEC, append → #7."
+        }
+      ]
+    },
+    {
+      "issue_key": "ISSUE-007",
+      "component": "demo:pom.xml",
+      "severity": "MAJOR",
+      "type": "VULNERABILITY",
+      "rule": "xml:S6320",
+      "message": "Dependency declared without an integrity-verifying checksum or signature.",
+      "cwe_refs": [
+        "CWE-829"
+      ],
+      "primary_clusters": [
+        "#10"
+      ],
+      "tlctc_tags": [
+        "tlctc-10",
+        "tlctc-07"
+      ],
+      "resolutions": [
+        {
+          "cwe_id": "CWE-829",
+          "verdict": "Allowed",
+          "raw_mapping": "#10 → #7",
+          "resolved_path": "#10 → #7",
+          "role": null,
+          "matched_glob": null,
+          "reason": "no alternation; no role resolution required",
+          "rationale": "Trust acceptance event (#10): the product loads functionality (library, script, plugin) from outside its intended security domain. Per R-EXEC, included functionality runs in the host's execution context — append → #7."
+        }
+      ]
+    }
+  ],
+  "low_confidence": [
+    {
+      "issue_key": "ISSUE-005",
+      "component": "demo:src/main/java/com/example/api/UploadHandler.java",
+      "severity": "MAJOR",
+      "type": "VULNERABILITY",
+      "rule": "java:S2755",
+      "message": "Validate inputs against an allow list before use.",
+      "cwe_refs": [
+        "CWE-20"
+      ],
+      "primary_clusters": [],
+      "tlctc_tags": [],
+      "resolutions": [
+        {
+          "cwe_id": "CWE-20",
+          "verdict": "Discouraged",
+          "raw_mapping": "N/A",
+          "resolved_path": "N/A",
+          "role": null,
+          "matched_glob": null,
+          "reason": "CWE is Discouraged and maps to N/A (too generic for a single cluster)",
+          "rationale": "Too generic to map. Input validation failures are the root cause for #2 (Injection), #3 (Client-side XSS), #6 (DoS), and #1 (Logic abuse)."
+        }
+      ]
+    }
+  ],
+  "unmapped": []
+}

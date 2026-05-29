@@ -1,0 +1,94 @@
+{
+  "_comment": "Canned /api/issues/search payload used by examples and tests. Each issue corresponds to a TC-N in test-cases.md.",
+  "paging": {
+    "pageIndex": 1,
+    "pageSize": 100,
+    "total": 7
+  },
+  "issues": [
+    {
+      "_test_case": "TC-1 CWE-89 SQL Injection (R-EXEC, Axiom VI)",
+      "key": "ISSUE-001",
+      "rule": "java:S2077",
+      "severity": "BLOCKER",
+      "component": "demo:src/main/java/com/example/UserRepo.java",
+      "project": "demo",
+      "type": "VULNERABILITY",
+      "message": "Format SQL queries using parameterized binding rather than string concatenation.",
+      "tags": ["cwe", "owasp-a03", "sql"],
+      "securityStandards": ["cwe:89", "owaspTop10:a3"]
+    },
+    {
+      "_test_case": "TC-2 CWE-79 XSS on server-side template (R-ROLE -> server)",
+      "key": "ISSUE-002",
+      "rule": "java:S5131",
+      "severity": "CRITICAL",
+      "component": "demo:src/main/java/com/example/render/JspRenderer.java",
+      "project": "demo",
+      "type": "VULNERABILITY",
+      "message": "User-supplied data is rendered into the response without contextual escaping.",
+      "tags": ["cwe", "xss"],
+      "securityStandards": ["cwe:79"]
+    },
+    {
+      "_test_case": "TC-3 CWE-79 XSS on client-side TSX (R-ROLE inverse -> client)",
+      "key": "ISSUE-003",
+      "rule": "typescript:S5247",
+      "severity": "MAJOR",
+      "component": "demo:src/main/webapp/components/CommentList.tsx",
+      "project": "demo",
+      "type": "VULNERABILITY",
+      "message": "DOM sink receives data from a URL parameter without sanitization.",
+      "tags": ["cwe", "xss", "dom"],
+      "securityStandards": ["cwe:79"]
+    },
+    {
+      "_test_case": "TC-4 CWE-798 Hardcoded credentials (R-CRED)",
+      "key": "ISSUE-004",
+      "rule": "secrets:S6290",
+      "severity": "BLOCKER",
+      "component": "demo:src/main/java/com/example/config/AwsClient.java",
+      "project": "demo",
+      "type": "VULNERABILITY",
+      "message": "Hardcoded AWS access key detected in source.",
+      "tags": ["cwe", "secrets"],
+      "securityStandards": ["cwe:798"]
+    },
+    {
+      "_test_case": "TC-5 CWE-20 Improper Input Validation (Discouraged verdict; appears in low-confidence section)",
+      "key": "ISSUE-005",
+      "rule": "java:S2755",
+      "severity": "MAJOR",
+      "component": "demo:src/main/java/com/example/api/UploadHandler.java",
+      "project": "demo",
+      "type": "VULNERABILITY",
+      "message": "Validate inputs against an allow list before use.",
+      "tags": ["cwe"],
+      "securityStandards": ["cwe:20"]
+    },
+    {
+      "_test_case": "TC-6 CWE-502 Insecure Deserialization (#2 -> #7 | #3 -> #7) on server-side file",
+      "key": "ISSUE-006",
+      "rule": "java:S5135",
+      "severity": "CRITICAL",
+      "component": "demo:src/main/java/com/example/api/SessionLoader.java",
+      "project": "demo",
+      "type": "VULNERABILITY",
+      "message": "Deserialization of untrusted data without integrity verification.",
+      "tags": ["cwe"],
+      "securityStandards": ["cwe:502"]
+    },
+    {
+      "_test_case": "TC-7 CWE-829 Supply Chain (#10 -> #7) on dependency manifest",
+      "key": "ISSUE-007",
+      "rule": "xml:S6320",
+      "severity": "MAJOR",
+      "component": "demo:pom.xml",
+      "project": "demo",
+      "type": "VULNERABILITY",
+      "message": "Dependency declared without an integrity-verifying checksum or signature.",
+      "tags": ["cwe"],
+      "securityStandards": ["cwe:829"]
+    }
+  ]
+}

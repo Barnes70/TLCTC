@@ -1,0 +1,23 @@
+{
+  "name": "TLCTC SonarQube",
+  "description": "Translates SonarQube SAST findings into TLCTC v2.1 cluster exposure. A Python CLI sidecar that pulls issues via the SonarQube Web API (self-hosted or SonarCloud), joins them against the canonical 987-entry CWE->TLCTC mapping, applies R-ROLE context-aware logic for ambiguous mappings, and emits JSON / Markdown / SARIF reports. Read-only by default; opt-in write-back via `tlctc-0N` tags. Includes a zero-Python declarative starter (tag import, quality profile, dashboard).",
+  "support": "community",
+  "currentVersion": "1.0.0",
+  "author": "TLCTC Project",
+  "url": "https://www.tlctc.net",
+  "email": "",
+  "categories": ["DevSecOps", "SAST"],
+  "tags": ["TLCTC", "SonarQube", "SonarCloud", "SAST", "CWE", "Cause-Oriented"],
+  "useCases": ["Vulnerability Management", "Secure SDLC"],
+  "keywords": ["TLCTC", "SonarQube", "SonarCloud", "CWE", "SARIF", "Threat Cluster"],
+  "pythonMinVersion": "3.11",
+  "dependencies": {
+    "tlctc-cwe-mapping": "../../mappings/mitre-cwe/tlctc-cwe.json"
+  },
+  "thirdPartyDependencies": [],
+  "supportDetails": {
+    "url": "https://www.tlctc.net"
+  },
+  "githubUser": ["tlctc-project"],
+  "created": "2026-05-29T00:00:00Z"
+}

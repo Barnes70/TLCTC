@@ -1,0 +1,51 @@
+{
+  "_comment": "JSON-format equivalent of tlctc-sonar.toml. Use with `--config tlctc-sonar.json` on Python 3.10 where stdlib tomllib is unavailable.",
+  "tlctc-sonar": {
+    "mapping_file": "../../../mappings/mitre-cwe/tlctc-cwe.json",
+    "default_role": "server"
+  },
+  "role": {
+    "server": {
+      "globs": [
+        "**/src/main/java/**",
+        "**/src/main/kotlin/**",
+        "**/src/main/scala/**",
+        "**/server/**",
+        "**/api/**",
+        "**/backend/**",
+        "**/handlers/**",
+        "**/routes/**",
+        "**/controllers/**",
+        "**/services/**",
+        "**/*.controller.*",
+        "**/*Controller.java",
+        "**/*Repository.java",
+        "**/*Service.java",
+        "**/*.go",
+        "**/*.py",
+        "**/*.rb",
+        "**/*.php"
+      ]
+    },
+    "client": {
+      "globs": [
+        "**/src/main/webapp/**",
+        "**/static/**",
+        "**/public/**",
+        "**/web/**",
+        "**/frontend/**",
+        "**/client/**",
+        "**/ui/**",
+        "**/*.html",
+        "**/*.htm",
+        "**/*.jsx",
+        "**/*.tsx",
+        "**/*.vue",
+        "**/*.svelte"
+      ]
+    }
+  },
+  "fail_on": {
+    "clusters": []
+  }
+}

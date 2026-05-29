@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  TLCTC Quality Profile overlay.
+
+  Raises the severity of rules that map to high-impact TLCTC clusters
+  (Malware #7, Server #2, Identity Theft #4, Supply Chain #10).
+  Apply on top of "Sonar way" via SonarQube > Quality Profiles > Restore.
+
+  Note: this overlay targets common Sonar rule keys for SQLi, deserialization,
+  hardcoded credentials, and command injection. Adjust to your language profile
+  by editing the `<rule>` entries below.
+-->
+<profile>
+  <name>TLCTC Sonar way</name>
+  <language>java</language>
+  <rules>
+    <!-- #2 Exploiting Server / R-EXEC: SQL Injection -->
+    <rule>
+      <repositoryKey>java</repositoryKey>
+      <key>S2077</key>
+      <priority>BLOCKER</priority>
+    </rule>
+    <!-- #2 -> #7 Malware via OS command injection -->
+    <rule>
+      <repositoryKey>java</repositoryKey>
+      <key>S2076</key>
+      <priority>BLOCKER</priority>
+    </rule>
+    <!-- #2 -> #7 Malware via insecure deserialization -->
+    <rule>
+      <repositoryKey>java</repositoryKey>
+      <key>S5135</key>
+      <priority>BLOCKER</priority>
+    </rule>
+    <!-- #3 Exploiting Client: XSS sink -->
+    <rule>
+      <repositoryKey>java</repositoryKey>
+      <key>S5131</key>
+      <priority>CRITICAL</priority>
+    </rule>
+    <!-- #4 Identity Theft: hardcoded credentials -->
+    <rule>
+      <repositoryKey>secrets</repositoryKey>
+      <key>S6290</key>
+      <priority>BLOCKER</priority>
+    </rule>
+    <!-- #10 Supply Chain: untrusted dependency / inclusion -->
+    <rule>
+      <repositoryKey>xml</repositoryKey>
+      <key>S6320</key>
+      <priority>CRITICAL</priority>
+    </rule>
+  </rules>
+</profile>

@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "title": "Tiny CWE mapping for tests",
+    "tlctc_version": "2.1",
+    "cwe_version": "4.16",
+    "total_entries": 10
+  },
+  "mappings": [
+    {
+      "cweId": "CWE-79",
+      "cweName": "XSS",
+      "cweStatus": "Stable",
+      "tlctcMapping": "#2 → #7 | #3",
+      "tlctcMappingName": "Exploiting Server -> Malware | Exploiting Client",
+      "mappingRationale": "Reflected/stored XSS server-side; DOM XSS client-side.",
+      "mappingVerdict": "Allowed",
+      "contextDependent": true,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-89",
+      "cweName": "SQL Injection",
+      "cweStatus": "Stable",
+      "tlctcMapping": "#2",
+      "tlctcMappingName": "Exploiting Server",
+      "mappingRationale": "Server-side flaw.",
+      "mappingVerdict": "Allowed",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-119",
+      "cweName": "Buffer overflow",
+      "cweStatus": "Stable",
+      "tlctcMapping": "#2 | #3",
+      "tlctcMappingName": "Exploiting Server | Exploiting Client",
+      "mappingRationale": "Memory error; role-dependent.",
+      "mappingVerdict": "Allowed",
+      "contextDependent": true,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-798",
+      "cweName": "Hardcoded credentials",
+      "cweStatus": "Stable",
+      "tlctcMapping": "#4",
+      "tlctcMappingName": "Identity Theft",
+      "mappingRationale": "Credential exposure.",
+      "mappingVerdict": "Allowed",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-502",
+      "cweName": "Deserialization of Untrusted Data",
+      "cweStatus": "Stable",
+      "tlctcMapping": "#2 → #7 | #3 → #7",
+      "tlctcMappingName": "Server RCE | Client RCE",
+      "mappingRationale": "Deserialization that yields foreign code execution.",
+      "mappingVerdict": "Allowed",
+      "contextDependent": true,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-829",
+      "cweName": "Inclusion from Untrusted Sphere",
+      "cweStatus": "Incomplete",
+      "tlctcMapping": "#10 → #7",
+      "tlctcMappingName": "Supply Chain -> Malware",
+      "mappingRationale": "Untrusted artifact accepted; runs as code.",
+      "mappingVerdict": "Allowed",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-20",
+      "cweName": "Improper Input Validation",
+      "cweStatus": "Stable",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Generic Root Cause",
+      "mappingRationale": "Umbrella CWE; too generic.",
+      "mappingVerdict": "Discouraged",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-1011",
+      "cweName": "Category placeholder",
+      "cweStatus": "Stable",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Category",
+      "mappingRationale": "Category node.",
+      "mappingVerdict": "Prohibited",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-330",
+      "cweName": "Predictable random",
+      "cweStatus": "Stable",
+      "tlctcMapping": "#4 | #5",
+      "tlctcMappingName": "Identity | MITM",
+      "mappingRationale": "Token vs key context.",
+      "mappingVerdict": "Allowed-with-Review",
+      "contextDependent": true,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-285",
+      "cweName": "Improper Authorization",
+      "cweStatus": "Draft",
+      "tlctcMapping": "#1",
+      "tlctcMappingName": "Abuse of Functions",
+      "mappingRationale": "Logic flaw, not coding flaw.",
+      "mappingVerdict": "Allowed",
+      "contextDependent": false,
+      "cveReferences": []
+    }
+  ]
+}

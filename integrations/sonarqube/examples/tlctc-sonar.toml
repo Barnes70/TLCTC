@@ -1,0 +1,62 @@
+# tlctc-sonar.toml — default configuration for the TLCTC SonarQube sidecar.
+#
+# Override per project: copy this file to your project root as `tlctc-sonar.toml`
+# and adjust the role globs to match your repository layout. The CLI loads the
+# nearest config it can find: --config first, then ./tlctc-sonar.toml, then this
+# file as a fallback.
+#
+# Credentials are NEVER read from this file. Use SONAR_URL / SONAR_TOKEN env
+# vars or the --sonar-url / --token flags.
+
+[tlctc-sonar]
+# Path to the canonical CWE -> TLCTC mapping. Relative paths are resolved
+# relative to THIS config file.
+mapping_file = "../../../mappings/mitre-cwe/tlctc-cwe.json"
+
+# Used when a CWE has a #2 | #3 alternation and the issue's `component` path
+# matches neither server nor client globs.
+default_role = "server"
+
+[role.server]
+globs = [
+    "**/src/main/java/**",
+    "**/src/main/kotlin/**",
+    "**/src/main/scala/**",
+    "**/server/**",
+    "**/api/**",
+    "**/backend/**",
+    "**/handlers/**",
+    "**/routes/**",
+    "**/controllers/**",
+    "**/services/**",
+    "**/*.controller.*",
+    "**/*Controller.java",
+    "**/*Repository.java",
+    "**/*Service.java",
+    "**/*.go",
+    "**/*.py",
+    "**/*.rb",
+    "**/*.php",
+]
+
+[role.client]
+globs = [
+    "**/src/main/webapp/**",
+    "**/static/**",
+    "**/public/**",
+    "**/web/**",
+    "**/frontend/**",
+    "**/client/**",
+    "**/ui/**",
+    "**/*.html",
+    "**/*.htm",
+    "**/*.jsx",
+    "**/*.tsx",
+    "**/*.vue",
+    "**/*.svelte",
+]
+
+[fail_on]
+# Cluster IDs (as integers) that should fail CI when matched. Populated by
+# --fail-on-cluster on the command line; this list is a config-file default.
+clusters = []

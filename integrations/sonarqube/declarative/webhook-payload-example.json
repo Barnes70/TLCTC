@@ -1,0 +1,28 @@
+{
+  "_comment": "REFERENCE ONLY — no webhook receiver is shipped in v1. This file documents the payload shape a future receiver would consume so teams who want to build one have a starting point. Replace the values with real data from your SonarQube webhook configuration.",
+  "serverUrl": "https://sonarqube.example.com",
+  "taskId": "AYZ...task...",
+  "status": "SUCCESS",
+  "analysedAt": "2026-05-29T12:34:56+0000",
+  "project": {
+    "key": "demo",
+    "name": "demo",
+    "url": "https://sonarqube.example.com/dashboard?id=demo"
+  },
+  "qualityGate": {
+    "name": "Sonar way",
+    "status": "ERROR",
+    "conditions": [
+      {
+        "metric": "new_security_hotspots_reviewed",
+        "status": "ERROR",
+        "value": "70",
+        "errorThreshold": "100"
+      }
+    ]
+  },
+  "tlctc_extension": {
+    "_comment": "Proposed extension: the receiver invokes tlctc-sonar classify against this project and posts cluster_summary back to a downstream system (Slack, Jira, etc.).",
+    "command_template": "python -m tlctc_sonar classify --sonar-url $SONAR_URL --token $SONAR_TOKEN --project-key {project.key} --out-md report.md"
+  }
+}

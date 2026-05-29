@@ -1,0 +1,11 @@
+tag,description
+tlctc-01,"TLCTC #1 Abuse of Functions — a designed feature is used outside its intended boundaries. See https://www.tlctc.net/tlctc-10-definitions.html#abuse-of-functions"
+tlctc-02,"TLCTC #2 Exploiting Server — a server-role component has a coding/implementation flaw. See https://www.tlctc.net/tlctc-10-definitions.html#exploiting-server"
+tlctc-03,"TLCTC #3 Exploiting Client — a client-role component has a coding/implementation flaw. See https://www.tlctc.net/tlctc-10-definitions.html#exploiting-client"
+tlctc-04,"TLCTC #4 Identity Theft — a credential, key, or session artifact is stolen, forged, or applied. See https://www.tlctc.net/tlctc-10-definitions.html#identity-theft"
+tlctc-05,"TLCTC #5 Man in the Middle — a communication path is intercepted, relayed, or altered. See https://www.tlctc.net/tlctc-10-definitions.html#man-in-the-middle"
+tlctc-06,"TLCTC #6 Flooding Attack — resources are exhausted by volume. See https://www.tlctc.net/tlctc-10-definitions.html#flooding-attack"
+tlctc-07,"TLCTC #7 Malware — foreign executable content runs in the target system. See https://www.tlctc.net/tlctc-10-definitions.html#malware"
+tlctc-08,"TLCTC #8 Physical Attack — a physical/local attack vector compromises the system. See https://www.tlctc.net/tlctc-10-definitions.html#physical-attack"
+tlctc-09,"TLCTC #9 Social Engineering — a human is manipulated into taking an attacker-desired action. See https://www.tlctc.net/tlctc-10-definitions.html#social-engineering"
+tlctc-10,"TLCTC #10 Supply Chain Attack — a trusted artifact carrying attacker control is accepted. See https://www.tlctc.net/tlctc-10-definitions.html#supply-chain-attack"

@@ -1,0 +1,21 @@
+{
+  "_comment": "SonarQube portfolio definition pivoting issues by tlctc-* tags. Import via SonarQube > Administration > Portfolios > New Portfolio. The 'projects' array is a placeholder — replace with your tenant's project keys.",
+  "key": "TLCTC_PORTFOLIO",
+  "name": "TLCTC Cluster Exposure",
+  "description": "Portfolio that aggregates SAST findings by TLCTC cluster (#1 through #10). Driven by the tlctc-NN tag namespace applied by the tlctc-sonar CLI.",
+  "qualifier": "VW",
+  "visibility": "private",
+  "projects": [],
+  "filters": [
+    { "name": "Abuse of Functions",    "tag": "tlctc-01" },
+    { "name": "Exploiting Server",     "tag": "tlctc-02" },
+    { "name": "Exploiting Client",     "tag": "tlctc-03" },
+    { "name": "Identity Theft",        "tag": "tlctc-04" },
+    { "name": "Man in the Middle",     "tag": "tlctc-05" },
+    { "name": "Flooding Attack",       "tag": "tlctc-06" },
+    { "name": "Malware",               "tag": "tlctc-07" },
+    { "name": "Physical Attack",       "tag": "tlctc-08" },
+    { "name": "Social Engineering",    "tag": "tlctc-09" },
+    { "name": "Supply Chain Attack",   "tag": "tlctc-10" }
+  ]
+}

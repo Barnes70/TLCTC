@@ -7,8 +7,9 @@ your platform; behaviour is identical across builds.
 |---|---|---|---|
 | [`cortex-xsoar/`](cortex-xsoar/) | Cortex XSOAR **6.2.x** | Per-object YAML/JSON | Click-by-click via Settings UI (25 steps) |
 | [`cortex-xsoar-8/`](cortex-xsoar-8/) | Cortex XSOAR **8.x** + Cortex **XSIAM** | Marketplace Content Pack (`marketplaces: ["xsoar","marketplacev2"]`) | `demisto-sdk validate / lint / zip-packs / upload` |
+| [`sonarqube/`](sonarqube/) | SonarQube **self-hosted** + **SonarCloud** | Python 3.11+ CLI (stdlib only) + declarative starter assets | `git clone` then `python -m cli classify` (see [`sonarqube/deploy.md`](sonarqube/deploy.md)) |
 
-Both builds:
+The two Cortex builds:
 
 - Tag incidents with TLCTC cluster at ingestion via an ATT&CK→TLCTC classifier.
 - Route to 10 cluster-scoped master playbooks (Axiom III: classify by cause, not outcome).
@@ -19,4 +20,13 @@ Both builds:
 
 The 6.2 build will not import on 8.x without conversion; the 8.x build will not
 import on 6.2 (different object schemas, LayoutsContainer, content-pack format).
+
+The SonarQube build:
+
+- Translates SAST findings to TLCTC clusters via the canonical 987-entry CWE→TLCTC mapping (`mappings/mitre-cwe/tlctc-cwe.json`).
+- Applies R-ROLE context-aware logic (file-path globs) for ambiguous `#2 | #3` mappings.
+- Read-only by default (emits JSON / Markdown / SARIF); opt-in `--apply-tags` writes `tlctc-NN` tags back via `/api/issues/set_tags`.
+- Works equally on self-hosted SonarQube and SonarCloud (Web-API based).
+- Does NOT emit Layer 3 — SAST findings are weaknesses, not realised attack paths.
+
 Each directory has its own README, deploy runbook, and test cases.
