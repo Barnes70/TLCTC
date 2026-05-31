@@ -58,5 +58,54 @@ def walk_rules(rules_dir: Path):
     for path in sorted(Path(rules_dir).rglob("*.yml")):
         try:
             yield parse_rule(path)
-        except yaml.YAMLError:
-            continue  # skip non-rule YAML (e.g. config) silently
+        except yaml.YAMLError as e:
+            print(f"[skip] unparseable Sigma YAML: {path}: {e}", file=sys.stderr)
+            continue
+
+
+_CLUSTER_RE = re.compile(r"#(\d+)")
+
+
+def load_attack_index(attack_path=ATTACK_MAPPING):
+    """techniqueId -> tlctcMapping expression (e.g. 'T1059' -> '#1')."""
+    doc = json.loads(Path(attack_path).read_text(encoding="utf-8"))
+    return {e["techniqueId"]: e.get("tlctcMapping", "") for e in doc["mappings"]}
+
+
+def _clusters(expr):
+    """'#1 | #7' -> ['#1','#7'] (lowest-numbered first); 'N/A' -> []."""
+    nums = sorted(int(n) for n in _CLUSTER_RE.findall(expr or ""))
+    return [f"#{n}" for n in nums]
+
+
+def derive_record(rule, attack_index):
+    cluster_set, any_alt, any_unmapped = [], False, False
+    for tech in rule["techniques"]:
+        expr = attack_index.get(tech)
+        clusters = _clusters(expr) if expr is not None else []
+        if not clusters:
+            any_unmapped = True
+            continue
+        if len(clusters) > 1:
+            any_alt = True
+        for c in clusters:
+            if c not in cluster_set:
+                cluster_set.append(c)
+    cluster_set = [f"#{n}" for n in sorted(int(c[1:]) for c in cluster_set)]
+    if not cluster_set:
+        status, primary = "unmapped", None
+    elif any_alt or len(cluster_set) > 1:
+        status, primary = "ambiguous", cluster_set[0]
+    else:
+        status, primary = "ok", cluster_set[0]
+    if any_unmapped and cluster_set:
+        status = "ambiguous"  # partial resolution
+    return {
+        "ruleId": rule["ruleId"],
+        "ruleTitle": rule["ruleTitle"],
+        "logsource": rule["logsource"],
+        "techniques": rule["techniques"],
+        "clusterSet": cluster_set,
+        "primaryCluster": primary,
+        "derivationStatus": status,
+    }
