@@ -1,0 +1,6 @@
+{
+  "metadata": {"title": "tiny"},
+  "mappings": [
+    {"cveID": "CVE-2021-44228", "primaryCluster": "#2", "clusterSet": ["#2"], "confidence": "Allowed-with-Review", "sourceCwes": ["CWE-502"]}
+  ]
+}

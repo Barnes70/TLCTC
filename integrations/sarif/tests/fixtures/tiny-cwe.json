@@ -1,0 +1,9 @@
+{
+  "metadata": {"title": "tiny"},
+  "mappings": [
+    {"cweId": "CWE-89", "tlctcMapping": "#2", "tlctcMappingName": "Exploiting Server", "mappingVerdict": "Allowed", "contextDependent": false},
+    {"cweId": "CWE-79", "tlctcMapping": "#2 | #3", "tlctcMappingName": "Exploiting Server | Exploiting Client", "mappingVerdict": "Allowed-with-Review", "contextDependent": true},
+    {"cweId": "CWE-20", "tlctcMapping": "#1", "tlctcMappingName": "Abuse of Functions", "mappingVerdict": "Discouraged", "contextDependent": false},
+    {"cweId": "CWE-0", "tlctcMapping": "N/A", "tlctcMappingName": "Unmapped", "mappingVerdict": "Prohibited", "contextDependent": false}
+  ]
+}
