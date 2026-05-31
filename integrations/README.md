@@ -8,6 +8,7 @@ your platform; behaviour is identical across builds.
 | [`cortex-xsoar/`](cortex-xsoar/) | Cortex XSOAR **6.2.x** | Per-object YAML/JSON | Click-by-click via Settings UI (25 steps) |
 | [`cortex-xsoar-8/`](cortex-xsoar-8/) | Cortex XSOAR **8.x** + Cortex **XSIAM** | Marketplace Content Pack (`marketplaces: ["xsoar","marketplacev2"]`) | `demisto-sdk validate / lint / zip-packs / upload` |
 | [`sonarqube/`](sonarqube/) | SonarQube **self-hosted** + **SonarCloud** | Python 3.11+ CLI (stdlib only) + declarative starter assets | `git clone` then `python -m cli classify` (see [`sonarqube/deploy.md`](sonarqube/deploy.md)) |
+| [`sarif/`](sarif/) | Any **SARIF 2.1.0** producer (Semgrep, CodeQL, Trivy, Grype, Bandit, gosec) | Python 3.10+ CLI (stdlib only) | `git clone` then `python -m cli classify scan.sarif` |
 
 The two Cortex builds:
 
@@ -28,5 +29,13 @@ The SonarQube build:
 - Read-only by default (emits JSON / Markdown / SARIF); opt-in `--apply-tags` writes `tlctc-NN` tags back via `/api/issues/set_tags`.
 - Works equally on self-hosted SonarQube and SonarCloud (Web-API based).
 - Does NOT emit Layer 3 — SAST findings are weaknesses, not realised attack paths.
+
+The SARIF build:
+
+- Classifies findings from any SARIF 2.1.0 producer to TLCTC clusters.
+- CWE-first via the canonical 987-entry CWE→TLCTC mapping; CVE-only findings fall back to the offline KEV→TLCTC table (`mappings/cisa-kev/tlctc-kev.json`).
+- Applies R-ROLE (file-path globs) for ambiguous `#2 | #3` mappings.
+- Emits JSON / Markdown / TLCTC-enriched SARIF; `--fail-on-cluster` gates CI.
+- Does NOT emit Layer 3 — SARIF findings are weaknesses, not realised attack paths.
 
 Each directory has its own README, deploy runbook, and test cases.

@@ -39,6 +39,11 @@ class TestCli(unittest.TestCase):
                              "--config", str(self.cfgfile), "--fail-on-cluster", "#2"])
         self.assertEqual(code, 2)
 
+    def test_unknown_format_errors_cleanly(self):
+        with self.assertRaises(SystemExit):
+            self._run(["classify", str(FIX / "semgrep-min.sarif"),
+                       "--config", str(self.cfgfile), "--format", "csv"])
+
 
 if __name__ == "__main__":
     unittest.main()

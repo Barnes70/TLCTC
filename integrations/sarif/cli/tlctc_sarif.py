@@ -1,6 +1,5 @@
 """argparse entrypoint for the TLCTC SARIF classifier."""
 import argparse
-import sys
 
 from cli import __version__
 from cli.config import load_config
@@ -18,6 +17,10 @@ def _cmd_classify(args):
         cfg.fail_on_cluster = [c.strip() for c in args.fail_on_cluster.split(",")]
     if args.format:
         cfg.formats = [f.strip() for f in args.format.split(",")]
+    unknown = [f for f in cfg.formats if f not in _REPORTERS]
+    if unknown:
+        raise SystemExit(f"Unknown format(s): {', '.join(unknown)}. "
+                         f"Choose from: {', '.join(_REPORTERS)}")
     ml = MappingLoader(cfg.cwe_mapping_path, cfg.kev_mapping_path)
     findings = load_findings(args.sarif_file)
     classified = [classify(f, ml, cfg.source_globs) for f in findings]

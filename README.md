@@ -496,7 +496,8 @@ tlctc/
 │   ├── README.md                             # Index of available integration packs
 │   ├── cortex-xsoar/                         # Cortex XSOAR 6.2.x per-object YAML/JSON pack
 │   ├── cortex-xsoar-8/                       # Cortex XSOAR 8.x / XSIAM Marketplace Content Pack
-│   └── sonarqube/                            # SonarQube & SonarCloud sidecar (Python CLI + declarative starter)
+│   ├── sonarqube/                            # SonarQube & SonarCloud sidecar (Python CLI + declarative starter)
+│   └── sarif/                                # Generic SARIF 2.1.0 classifier (Python CLI, stdlib only)
 ├── glossary/
 │   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
 │   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, boundary operators
@@ -589,7 +590,7 @@ tlctc/
 8. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
 9. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
 10. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.1 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.3 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment) and [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification).
-11. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), and SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping).
+11. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping), and the generic SARIF classifier (any SARIF 2.1.0 producer → TLCTC clusters; CWE-first with CVE→KEV fallback; stdlib-only).
 
 ## Contributing
 
