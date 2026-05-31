@@ -12,7 +12,7 @@
       "Mapping quality depends on each rule's attack.t* tagging; untagged rules are 'unmapped'.",
       "Derived mechanically from the experimental AI-generated ATT&CK->TLCTC mapping.",
       "Sub-techniques are folded to their parent technique.",
-      "No Sigma rule detection bodies are reproduced \u2014 titles + GUIDs + derivation only."
+      "No Sigma rule detection bodies are reproduced - titles + GUIDs + derivation only."
     ]
   },
   "mappings": [

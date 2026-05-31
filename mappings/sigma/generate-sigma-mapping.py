@@ -13,7 +13,7 @@ Outputs:
   mappings/sigma/tlctc-sigma.json        per-rule records
   mappings/sigma/tlctc-sigma-stats.json  aggregate statistics
 
-No rule detection bodies are copied — only id, title, logsource, techniques,
+No rule detection bodies are copied - only id, title, logsource, techniques,
 and our derived clusters (license-safe).
 """
 import argparse
@@ -23,7 +23,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-import yaml  # PyYAML — build-time dependency only
+import yaml  # PyYAML - build-time dependency only
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
@@ -128,7 +128,7 @@ def build(rules_dir, attack_path, sigma_commit="unknown"):
                 "Mapping quality depends on each rule's attack.t* tagging; untagged rules are 'unmapped'.",
                 "Derived mechanically from the experimental AI-generated ATT&CK->TLCTC mapping.",
                 "Sub-techniques are folded to their parent technique.",
-                "No Sigma rule detection bodies are reproduced — titles + GUIDs + derivation only.",
+                "No Sigma rule detection bodies are reproduced - titles + GUIDs + derivation only.",
             ],
         },
         "mappings": records,
