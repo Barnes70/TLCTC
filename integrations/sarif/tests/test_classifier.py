@@ -45,6 +45,21 @@ class TestClassifier(unittest.TestCase):
         r = self._classify(Finding("x", "m", "x.py", "Trivy", cve=["CVE-0000-0000"]))
         self.assertEqual(r.status, "unmapped")
 
+    def test_skippable_cwe_then_valid_cwe_classifies(self):
+        # First CWE is N/A/Prohibited (CWE-0); a later usable CWE must still win.
+        r = self._classify(Finding("multi", "m", "src/api/u.py", "CodeQL",
+                                   cwe=["CWE-0", "CWE-89"]))
+        self.assertEqual(r.status, "classified")
+        self.assertEqual(r.primary_cluster, "#2")
+        self.assertEqual(r.provenance["identifier"], "CWE-89")
+
+    def test_prohibited_cwe_then_cve_falls_back(self):
+        # A Prohibited/N/A CWE must not block the independent CVE→KEV fallback.
+        r = self._classify(Finding("mix", "m", "pom.xml", "Trivy",
+                                   cwe=["CWE-0"], cve=["CVE-2021-44228"]))
+        self.assertEqual(r.status, "classified")
+        self.assertEqual(r.provenance["table"], "tlctc-kev")
+
 
 if __name__ == "__main__":
     unittest.main()
