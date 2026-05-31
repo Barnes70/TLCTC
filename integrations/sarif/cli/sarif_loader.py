@@ -2,7 +2,9 @@
 
 Producer variance (Semgrep, CodeQL, Trivy, Grype, Bandit, gosec) is absorbed
 here: identifiers are mined from taxa, rule relationships, properties, tags,
-and ruleId heuristics, in priority order.
+and ruleId heuristics, in priority order.  Mining is deliberately broad (every
+string under properties/taxa/relationships is scanned), so downstream TLCTC
+classification is expected to act as the precision filter.
 """
 import json
 import re
@@ -58,6 +60,7 @@ def load_findings(path: Path):
                     "artifactLocation", {}).get("uri", "")
             cwes, cves = set(), set()
             # Mine result properties/tags, rule properties, taxa, and the ruleId.
+            # Broad mining across structured fields; may include noise (filtered downstream).
             for src in (res.get("properties"), res.get("taxa"),
                         rule.get("properties"), rule.get("relationships"),
                         run.get("taxonomies"), rule_id):

@@ -23,9 +23,12 @@ class TestSarifLoader(unittest.TestCase):
         self.assertIn("CVE-2021-44228", f.cve)
 
     def test_ruleid_cwe_heuristic(self):
-        # ruleId like external/cwe/cwe-79 is mined when no properties present
-        findings = load_findings(FIX / "semgrep-min.sarif")
-        self.assertTrue(all(hasattr(f, "rule_id") for f in findings))
+        # CWE appears only in the ruleId (external/cwe/cwe-79) — must be mined.
+        findings = load_findings(FIX / "ruleid-cwe-min.sarif")
+        f = findings[0]
+        self.assertIn("CWE-79", f.cwe)
+        self.assertEqual(f.cve, [])
+        self.assertEqual(f.tool, "CodeQL")
 
 
 if __name__ == "__main__":
