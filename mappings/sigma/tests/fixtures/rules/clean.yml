@@ -1,0 +1,8 @@
+title: Suspicious PowerShell Download
+id: 11111111-1111-1111-1111-111111111111
+logsource:
+  product: windows
+  category: process_creation
+tags:
+  - attack.execution
+  - attack.t1059

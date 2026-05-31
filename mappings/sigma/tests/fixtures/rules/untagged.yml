@@ -1,0 +1,6 @@
+title: Generic Anomaly
+id: 33333333-3333-3333-3333-333333333333
+logsource:
+  product: windows
+tags:
+  - attack.defense_evasion
