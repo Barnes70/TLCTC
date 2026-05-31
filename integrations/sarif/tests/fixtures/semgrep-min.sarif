@@ -1,0 +1,13 @@
+{
+  "version": "2.1.0",
+  "runs": [{
+    "tool": {"driver": {"name": "Semgrep", "rules": [
+      {"id": "sqli", "properties": {"cwe": ["CWE-89: SQL Injection"]}}
+    ]}},
+    "results": [{
+      "ruleId": "sqli",
+      "message": {"text": "SQL injection"},
+      "locations": [{"physicalLocation": {"artifactLocation": {"uri": "src/api/users.py"}}}]
+    }]
+  }]
+}
