@@ -40,6 +40,16 @@ class TestDerive(unittest.TestCase):
         self.assertEqual(rec["primaryCluster"], "#1")  # lowest-numbered
         self.assertEqual(rec["clusterSet"], ["#1", "#7"])
 
+    def test_partial_resolution_is_ambiguous(self):
+        # One known technique (#1) + one unknown → status upgraded to ambiguous,
+        # but primaryCluster is preserved.
+        rec = gen.derive_record(
+            {"ruleId": "x", "ruleTitle": "t", "logsource": {},
+             "techniques": ["T1059", "T9999"]}, self.idx)
+        self.assertEqual(rec["derivationStatus"], "ambiguous")
+        self.assertEqual(rec["primaryCluster"], "#1")
+        self.assertEqual(rec["clusterSet"], ["#1"])
+
 
 if __name__ == "__main__":
     unittest.main()

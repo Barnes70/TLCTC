@@ -109,3 +109,57 @@ def derive_record(rule, attack_index):
         "primaryCluster": primary,
         "derivationStatus": status,
     }
+
+
+def build(rules_dir, attack_path, sigma_commit="unknown"):
+    idx = load_attack_index(attack_path)
+    records = [derive_record(r, idx) for r in walk_rules(rules_dir)]
+    mapping = {
+        "metadata": {
+            "title": "TLCTC Sigma Mapping (SigmaHQ rules -> TLCTC)",
+            "description": "Per-rule TLCTC cluster derivation from Sigma ATT&CK tags via ATT&CK->TLCTC.",
+            "tlctc_version": "2.1",
+            "sigma_commit": sigma_commit,
+            "attack_mapping": str(Path(attack_path).name),
+            "total_rules": len(records),
+            "license": "CC-BY-4.0",
+            "publisher": "TLCTC Project",
+            "caveats": [
+                "Mapping quality depends on each rule's attack.t* tagging; untagged rules are 'unmapped'.",
+                "Derived mechanically from the experimental AI-generated ATT&CK->TLCTC mapping.",
+                "Sub-techniques are folded to their parent technique.",
+                "No Sigma rule detection bodies are reproduced — titles + GUIDs + derivation only.",
+            ],
+        },
+        "mappings": records,
+    }
+    dist = Counter(r["primaryCluster"] for r in records
+                   if r["derivationStatus"] == "ok" and r["primaryCluster"])
+    stats = {
+        "total_rules": len(records),
+        "cluster_distribution": dict(sorted(dist.items(), key=lambda kv: int(kv[0][1:]))),
+        "status_counts": dict(Counter(r["derivationStatus"] for r in records)),
+        "logsource_breakdown": dict(Counter(
+            (r["logsource"] or {}).get("category", "(none)") for r in records)),
+    }
+    return mapping, stats
+
+
+def write_outputs(mapping, stats):
+    OUTPUT_MAP.write_text(json.dumps(mapping, indent=2) + "\n", encoding="utf-8")
+    OUTPUT_STATS.write_text(json.dumps(stats, indent=2) + "\n", encoding="utf-8")
+
+
+def main(argv=None):
+    p = argparse.ArgumentParser(description="Generate the TLCTC Sigma mapping.")
+    p.add_argument("--rules-dir", required=True, help="path to a SigmaHQ rules clone")
+    p.add_argument("--sigma-commit", default="unknown", help="commit SHA of the rules clone")
+    args = p.parse_args(argv)
+    mapping, stats = build(args.rules_dir, ATTACK_MAPPING, args.sigma_commit)
+    write_outputs(mapping, stats)
+    print(f"Wrote {len(mapping['mappings'])} rule records to {OUTPUT_MAP.name}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
