@@ -1,0 +1,13 @@
+{
+  "version": "2.1.0",
+  "runs": [{
+    "tool": {"driver": {"name": "Trivy", "rules": [
+      {"id": "CVE-2021-44228", "properties": {"cve": "CVE-2021-44228"}}
+    ]}},
+    "results": [{
+      "ruleId": "CVE-2021-44228",
+      "message": {"text": "log4shell"},
+      "locations": [{"physicalLocation": {"artifactLocation": {"uri": "pom.xml"}}}]
+    }]
+  }]
+}

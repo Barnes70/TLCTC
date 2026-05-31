@@ -1,0 +1,29 @@
+{
+  "cluster_summary": {
+    "#2": 1
+  },
+  "findings": [
+    {
+      "rule_id": "sqli",
+      "tool": "Semgrep",
+      "uri": "src/api/users.py",
+      "message": "SQL injection",
+      "cwe": [
+        "CWE-89"
+      ],
+      "cve": [],
+      "primary_cluster": "#2",
+      "cluster_set": [
+        "#2"
+      ],
+      "role_reason": "",
+      "provenance": {
+        "identifier": "CWE-89",
+        "table": "tlctc-cwe",
+        "verdict": "Allowed"
+      }
+    }
+  ],
+  "low_confidence": [],
+  "unmapped": []
+}

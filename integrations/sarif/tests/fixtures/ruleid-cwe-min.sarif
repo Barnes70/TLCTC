@@ -1,0 +1,11 @@
+{
+  "version": "2.1.0",
+  "runs": [{
+    "tool": {"driver": {"name": "CodeQL", "rules": [{"id": "py/sql-injection"}]}},
+    "results": [{
+      "ruleId": "external/cwe/cwe-79",
+      "message": {"text": "XSS"},
+      "locations": [{"physicalLocation": {"artifactLocation": {"uri": "app/templates/page.html"}}}]
+    }]
+  }]
+}

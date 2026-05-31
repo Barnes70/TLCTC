@@ -1,0 +1,11 @@
+{
+  "name": "TLCTC SARIF Classifier",
+  "version": "1.0.0",
+  "description": "Generic SARIF 2.1.0 -> TLCTC cluster classifier. CWE-first via tlctc-cwe.json with a CVE->KEV fallback. Standalone, stdlib-only.",
+  "tlctc_version": "2.1",
+  "license": "CC-BY-4.0",
+  "publisher": "TLCTC Project",
+  "supported_producers": ["Semgrep", "CodeQL", "Trivy", "Grype", "Bandit", "gosec", "OWASP Dependency-Check"],
+  "canonical_inputs": ["mappings/mitre-cwe/tlctc-cwe.json", "mappings/cisa-kev/tlctc-kev.json"],
+  "python_requires": ">=3.10"
+}

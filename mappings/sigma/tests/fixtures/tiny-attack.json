@@ -1,0 +1,6 @@
+{
+  "metadata": {"title": "tiny attack"},
+  "mappings": [
+    {"techniqueId": "T1059", "tlctcMapping": "#1", "tlctcMappingName": "Abuse of Functions"}
+  ]
+}

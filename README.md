@@ -404,8 +404,14 @@ tlctc/
 │   │       └── cluster-exposure-walkthrough.md # Worked example: vendor stack → exposure
 │   ├── mandiant-2026/                        # Mandiant M-Trends 2026 ATT&CK → TLCTC
 │   │   └── tlctc-mandiant-2026-attck-mapping.json # Mandiant 2026 technique mapping
-│   └── splunk-cisco/                         # Splunk/Cisco Top-50 comparison
-│       └── splunk-top50-tlctc-comparison.html # Interactive Splunk Top-50 vs TLCTC view
+│   ├── splunk-cisco/                         # Splunk/Cisco Top-50 comparison
+│   │   └── splunk-top50-tlctc-comparison.html # Interactive Splunk Top-50 vs TLCTC view
+│   └── sigma/                                # SigmaHQ detection rules → TLCTC
+│       ├── README.md                         # Mapping documentation & caveats
+│       ├── generate-sigma-mapping.py         # Deterministic ETL generator (PyYAML)
+│       ├── tlctc-sigma.json                  # 3,132 per-rule derivations
+│       ├── decision-tree.md                  # Derivation algorithm
+│       └── tests/                            # Generator unit tests
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
@@ -496,7 +502,8 @@ tlctc/
 │   ├── README.md                             # Index of available integration packs
 │   ├── cortex-xsoar/                         # Cortex XSOAR 6.2.x per-object YAML/JSON pack
 │   ├── cortex-xsoar-8/                       # Cortex XSOAR 8.x / XSIAM Marketplace Content Pack
-│   └── sonarqube/                            # SonarQube & SonarCloud sidecar (Python CLI + declarative starter)
+│   ├── sonarqube/                            # SonarQube & SonarCloud sidecar (Python CLI + declarative starter)
+│   └── sarif/                                # Generic SARIF 2.1.0 classifier (Python CLI, stdlib only)
 ├── glossary/
 │   ├── tlctc-glossary.schema.json            # Schema for universal cyber security glossary
 │   └── tlctc-glossary.json                   # 72 terms: clusters, axioms, rules, notation, architecture, boundary operators
@@ -586,10 +593,11 @@ tlctc/
 5. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
 6. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
 7. **Track active exploitation** — See [`mappings/cisa-kev/`](mappings/cisa-kev/) for a TLCTC-cluster view of the CISA Known Exploited Vulnerabilities catalog (1,568 CVEs, weekly-refreshable, deterministically derived).
-8. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
-9. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
-10. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.1 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.3 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment) and [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification).
-11. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), and SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping).
+8. **Audit your detection coverage** — See [`mappings/sigma/`](mappings/sigma/) for a per-rule TLCTC cluster derivation of 3,132 SigmaHQ detection rules — cross-walk your SOC ruleset against the strategic cluster model.
+9. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
+10. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
+11. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.1 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.3 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment) and [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification).
+12. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping), and the generic SARIF classifier (any SARIF 2.1.0 producer → TLCTC clusters; CWE-first with CVE→KEV fallback; stdlib-only).
 
 ## Contributing
 

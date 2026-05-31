@@ -1,0 +1,7 @@
+{
+  "formats": ["json", "markdown", "sarif"],
+  "source_globs": {
+    "server": ["**/api/**", "**/server/**"],
+    "client": ["**/ui/**", "**/*.html", "**/*.js"]
+  }
+}
