@@ -19,7 +19,8 @@ class MappingLoader:
         cwe_doc = json.loads(Path(cwe_path).read_text(encoding="utf-8"))
         kev_doc = json.loads(Path(kev_path).read_text(encoding="utf-8"))
         self._cwe = {e["cweId"].upper(): e for e in cwe_doc["mappings"]}
-        self._kev = {e["cveID"].upper(): e for e in kev_doc["mappings"]}
+        kev_list = kev_doc.get("mappings") or kev_doc.get("entries", [])
+        self._kev = {e["cveID"].upper(): e for e in kev_list}
 
     def cwe(self, token: str):
         norm = normalize_cwe(token)
