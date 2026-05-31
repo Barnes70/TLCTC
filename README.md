@@ -314,6 +314,20 @@ Quick examples:
 
 See the [mapping README](mappings/mitre-attack-enterprise/README.md) for notation conventions, the [decision tree](mappings/mitre-attack-enterprise/decision-tree.md) for classification methodology, and the [SOC-to-risk walkthrough](mappings/mitre-attack-enterprise/examples/soc-to-risk-walkthrough.md) for a worked example.
 
+### Sigma Detection Rules → TLCTC
+
+Detection rules carry the strategic cluster their logic defends. The [`mappings/sigma/`](mappings/sigma/) directory contains a **per-rule TLCTC derivation of 3,132 SigmaHQ detection rules**, generated mechanically from each rule's `attack.t*` tags joined against the ATT&CK→TLCTC mapping. This lets a SOC cross-walk its detection coverage against the ten clusters — which causes are well-instrumented, and which are blind spots.
+
+Each rule resolves to one of three states: `ok` (a single concrete cluster), `ambiguous` (the rule spans multiple clusters or an alternation), or `unmapped` (no usable ATT&CK technique tag). No rule detection bodies are reproduced — only titles, GUIDs, log sources, and the derived clusters (license-safe). The committed snapshot is rebuilt by a deterministic, dependency-free generator (`primaryCluster` is the lowest-numbered cluster in the resolved set).
+
+See the [mapping README](mappings/sigma/README.md) for the record schema and regeneration recipe, and the [decision tree](mappings/sigma/decision-tree.md) for the resolution algorithm.
+
+> **Note:** Like the ATT&CK and CWE mappings, the Sigma derivation inherits the experimental, AI-generated ATT&CK→TLCTC mapping.
+
+### SARIF Scanner Findings → TLCTC
+
+Any scanner that emits SARIF 2.1.0 (Semgrep, CodeQL, Trivy, Grype, Bandit, gosec) can be cluster-classified without a per-tool adapter. The [`integrations/sarif/`](integrations/sarif/) pack is a standalone, stdlib-only Python CLI that mines CWE/CVE identifiers from any SARIF file, classifies CWE-first against the canonical [CWE→TLCTC mapping](mappings/mitre-cwe/) with a CVE→KEV fallback, resolves ambiguous `#2 | #3` findings by file-path role (R-ROLE), and emits JSON, Markdown, or TLCTC-enriched SARIF. A `--fail-on-cluster` gate turns it into a CI check. See the [pack README](integrations/sarif/README.md) and [deploy guide](integrations/sarif/deploy.md).
+
 ### NIST CSF 2.0 → TLCTC
 
 Controls are organized in a cluster × function matrix. NIST CSF 2.0 defines **6 functions**: GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER. GOVERN operates as the overarching strategic governance layer providing assurance controls, while the remaining 5 map directly to Bow-Tie positions:
@@ -410,6 +424,7 @@ tlctc/
 │       ├── README.md                         # Mapping documentation & caveats
 │       ├── generate-sigma-mapping.py         # Deterministic ETL generator (PyYAML)
 │       ├── tlctc-sigma.json                  # 3,132 per-rule derivations
+│       ├── tlctc-sigma-stats.json            # Cluster distribution & status counts
 │       ├── decision-tree.md                  # Derivation algorithm
 │       └── tests/                            # Generator unit tests
 ├── json-schemas/
