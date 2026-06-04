@@ -53,6 +53,20 @@ class TestClassifier(unittest.TestCase):
         self.assertEqual(r.primary_cluster, "#2")
         self.assertEqual(r.provenance["identifier"], "CWE-89")
 
+    def test_multi_cwe_union_is_order_independent(self):
+        # Two usable CWEs mapping to different clusters: the primary must be the
+        # lowest-numbered of the union (#1) regardless of CWE input order, not
+        # whichever CWE sorts first as a string. CWE-89 → #2, CWE-94 → #1.
+        forward = self._classify(Finding("m", "m", "x.py", "CodeQL",
+                                         cwe=["CWE-89", "CWE-94"]))
+        reverse = self._classify(Finding("m", "m", "x.py", "CodeQL",
+                                         cwe=["CWE-94", "CWE-89"]))
+        self.assertEqual(forward.primary_cluster, "#1")
+        self.assertEqual(reverse.primary_cluster, "#1")
+        self.assertEqual(forward.cluster_set, ["#1", "#2"])
+        self.assertEqual(reverse.cluster_set, ["#1", "#2"])
+        self.assertEqual(forward.provenance["contributing_cwes"], ["CWE-89", "CWE-94"])
+
     def test_prohibited_cwe_then_cve_falls_back(self):
         # A Prohibited/N/A CWE must not block the independent CVE→KEV fallback.
         r = self._classify(Finding("mix", "m", "pom.xml", "Trivy",

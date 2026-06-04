@@ -2,7 +2,7 @@
 
 Parses any SARIF 2.1.0 file, extracts CWE and CVE identifiers from findings,
 classifies them to TLCTC v2.1 clusters, and emits JSON / Markdown /
-enriched-SARIF reports. Works with any SARIF producer — Semgrep, CodeQL,
+TLCTC-SARIF reports. Works with any SARIF producer — Semgrep, CodeQL,
 Trivy, Grype, Bandit, gosec, OWASP Dependency-Check, and others. The pack
 is **standalone and stdlib-only**: no third-party dependencies, no network
 calls, no build step.
@@ -27,8 +27,12 @@ calls, no build step.
 - Emits any combination of three artefacts:
   - **JSON**: cluster summary + per-finding array + low-confidence + unmapped
   - **Markdown**: PR-comment body with a cluster table and per-cluster sections
-  - **enriched SARIF**: original SARIF with `properties.tlctc` injected per
-    result and a TLCTC taxonomy node added to each run
+  - **TLCTC SARIF**: a standalone SARIF 2.1.0 document (driver
+    `tlctc-sarif`) containing the classified findings, each tagged with
+    `properties.tlctc` and a TLCTC taxonomy node on the run. It is a fresh
+    report, not an in-place rewrite of the producer's file — the source
+    location (`uri` + original `region` line anchors) and the originating
+    tool name are preserved on every result.
 - `--fail-on-cluster` exits 2 when findings land in nominated clusters,
   enabling a hard CI gate without a separate policy engine.
 
@@ -66,7 +70,7 @@ integrations/sarif/
 
 | TLCTC concept | SARIF object |
 |---|---|
-| Cluster (`#1` … `#10`) | `result.properties.tlctc.cluster` (injected by enriched-SARIF reporter) |
+| Cluster (`#1` … `#10`) | `result.properties.tlctc.cluster` (on each result of the standalone TLCTC SARIF report) |
 | CWE→TLCTC mapping | Lookup via canonical `tlctc-cwe.json`; never duplicated |
 | R-ROLE resolution (#2 vs #3) | Glob match on `result.locations[].physicalLocation.artifactLocation.uri` |
 | Provenance (source field) | `result.properties.tlctc.source` (`"cwe"`, `"kev"`, or `"unmapped"`) |

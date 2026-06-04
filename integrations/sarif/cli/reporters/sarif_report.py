@@ -1,3 +1,12 @@
+"""Emit a standalone TLCTC SARIF 2.1.0 report.
+
+This is a fresh SARIF document (driver = ``tlctc-sarif``), NOT an in-place
+rewrite of the producer's original file: it carries only the findings TLCTC
+classified, each tagged with ``properties.tlctc``. The source location is
+preserved — ``artifactLocation.uri`` plus the original ``region`` when present
+— so line/column anchors survive for code-scanning UIs, and the originating
+tool is recorded under ``properties.tlctc.source_tool``.
+"""
 import json
 
 _CLUSTERS = {
@@ -22,14 +31,17 @@ def render(classified) -> str:
         if r.status not in ("classified", "low_confidence"):
             continue
         f = r.finding
+        phys = {"artifactLocation": {"uri": f.uri}}
+        if f.region:
+            phys["region"] = f.region
         results.append({
             "ruleId": f.rule_id,
             "message": {"text": f.message},
-            "locations": [{"physicalLocation": {"artifactLocation": {"uri": f.uri}}}],
+            "locations": [{"physicalLocation": phys}],
             "properties": {"tlctc": {
                 "cluster": r.primary_cluster, "cluster_set": r.cluster_set,
                 "status": r.status, "role_resolution": {"reason": r.role_reason},
-                "source": r.provenance,
+                "source": r.provenance, "source_tool": f.tool,
             }},
         })
     doc = {"version": "2.1.0",

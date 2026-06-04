@@ -44,12 +44,34 @@ def _pick_primary(cluster_set, finding, globs):
     return cluster_set[0], "multi-cluster: lowest-numbered chosen as primary"
 
 
+def _resolve_hits(finding, status, hits, globs):
+    """Combine all same-status CWE hits into one deterministic result.
+
+    A finding can carry several usable CWEs that map to different clusters.
+    Rather than returning on whichever CWE happens to sort first as a string
+    (the old behaviour — 'CWE-100' < 'CWE-89' lexically), we union every
+    candidate cluster and pick the primary by the framework's lowest-numbered
+    convention (R-ROLE still resolves an exact #2|#3 split). Selection is thus
+    independent of CWE iteration order.
+    """
+    union = sorted({c for _cwe, cset, _p in hits for c in cset},
+                   key=lambda c: int(c[1:]))
+    primary, reason = _pick_primary(union, finding, globs)
+    # Provenance: attribute to the CWE whose mapping carries the chosen primary.
+    prov = next((p for _cwe, cset, p in hits if primary in cset), hits[0][2])
+    if len(hits) > 1:
+        prov = dict(prov)
+        prov["contributing_cwes"] = [cwe for cwe, _cset, _p in hits]
+    return ClassifiedFinding(finding, status, primary, union, reason, prov)
+
+
 def classify(finding, mapping_loader, source_globs) -> ClassifiedFinding:
-    # 1. CWE-first. A usable mapping (classify / low-confidence) wins immediately.
-    #    Prohibited or N/A (empty cluster-set) CWEs are not usable on their own,
-    #    so we remember the first one and keep scanning the remaining CWEs
-    #    instead of terminating — a finding can carry several CWEs.
+    # 1. CWE-first. Gather every usable mapping before deciding so the primary
+    #    cluster does not depend on CWE string-sort order. Prohibited or N/A
+    #    (empty cluster-set) CWEs are unusable on their own; remember the first
+    #    one but keep scanning — a finding can carry several CWEs.
     skip_prov = None
+    classify_hits, low_conf_hits = [], []
     for cwe in finding.cwe:
         entry = mapping_loader.cwe(cwe)
         if not entry:
@@ -58,14 +80,16 @@ def classify(finding, mapping_loader, source_globs) -> ClassifiedFinding:
         cset = _clusters(entry.get("tlctcMapping", ""))
         prov = {"identifier": cwe, "table": "tlctc-cwe", "verdict": verdict}
         if cset and verdict in _CLASSIFY_VERDICTS:
-            primary, reason = _pick_primary(cset, finding, source_globs)
-            return ClassifiedFinding(finding, "classified", primary, cset, reason, prov)
-        if cset and verdict == "Discouraged":
-            primary, reason = _pick_primary(cset, finding, source_globs)
-            return ClassifiedFinding(finding, "low_confidence", primary, cset, reason, prov)
-        # Prohibited verdict or N/A: unusable. Remember the first, keep looking.
-        if skip_prov is None:
+            classify_hits.append((cwe, cset, prov))
+        elif cset and verdict == "Discouraged":
+            low_conf_hits.append((cwe, cset, prov))
+        elif skip_prov is None:
+            # Prohibited verdict or N/A: unusable. Remember the first.
             skip_prov = prov
+    if classify_hits:
+        return _resolve_hits(finding, "classified", classify_hits, source_globs)
+    if low_conf_hits:
+        return _resolve_hits(finding, "low_confidence", low_conf_hits, source_globs)
     # 2. CVE → KEV fallback (independent evidence; runs even past a Prohibited CWE).
     for cve in finding.cve:
         entry = mapping_loader.kev(cve)

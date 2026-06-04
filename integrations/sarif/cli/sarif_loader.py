@@ -23,6 +23,7 @@ class Finding:
     tool: str
     cwe: list = field(default_factory=list)
     cve: list = field(default_factory=list)
+    region: dict = None      # original physicalLocation.region (line anchors), if any
 
 
 def _mine(text):
@@ -53,11 +54,12 @@ def load_findings(path: Path):
         for res in run.get("results", []):
             rule_id = res.get("ruleId", "")
             rule = rules_by_id.get(rule_id, {})
-            uri = ""
+            uri, region = "", None
             locs = res.get("locations", [])
             if locs:
-                uri = locs[0].get("physicalLocation", {}).get(
-                    "artifactLocation", {}).get("uri", "")
+                phys = locs[0].get("physicalLocation", {})
+                uri = phys.get("artifactLocation", {}).get("uri", "")
+                region = phys.get("region")
             cwes, cves = set(), set()
             # Mine result properties/tags, rule properties, taxa, and the ruleId.
             # Broad mining across structured fields; may include noise (filtered downstream).
@@ -75,5 +77,6 @@ def load_findings(path: Path):
                 tool=tool,
                 cwe=sorted(cwes),
                 cve=sorted(cves),
+                region=region,
             ))
     return findings
