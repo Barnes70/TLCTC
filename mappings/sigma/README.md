@@ -77,7 +77,7 @@ Each rule is classified mechanically: **Sigma rule `attack.t*` tags → parent t
 | Value | Meaning |
 |-------|---------|
 | `ok` | All tagged techniques resolved to exactly one concrete cluster — `clusterSet` has a single entry |
-| `ambiguous` | Tagged techniques resolve to multiple clusters, or at least one technique maps to an alternation expression (e.g., `#2 \| #3`) — `primaryCluster` is the lowest-numbered fallback |
+| `ambiguous` | Tagged techniques resolve to multiple clusters, or at least one technique maps to an alternation expression (e.g., `#2 \| #3`), or partial resolution — at least one technique resolved while another was absent from the ATT&CK mapping (so `clusterSet` may hold a single entry) — `primaryCluster` is the lowest-numbered fallback |
 | `unmapped` | Rule carries no `attack.t*` tags, or every tagged technique is absent from `tlctc-enterprise-attack.json` — `primaryCluster` is `null` |
 
 `primaryCluster` is always the **lowest-numbered** cluster in `clusterSet` (e.g., if `clusterSet` is `["#1","#7"]` then `primaryCluster` is `"#1"`). For `ok` records this is unambiguous; for `ambiguous` records it is an auditable default, not a confident assertion.

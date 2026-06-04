@@ -140,7 +140,7 @@ tags → strip non-technique tags → techniques = ["T1059"]
 
 T1059 in tlctc-enterprise-attack.json? → Yes
 tlctcMapping = "#1"
-clusters("​#1") → ["#1"]
+clusters("#1") → ["#1"]
 
 cluster_set = ["#1"]   any_alt = False   any_unmapped = False
 → status = "ok"   primaryCluster = "#1"
