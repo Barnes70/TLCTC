@@ -1,0 +1,91 @@
+{
+  "schema_version": "tlctc-actor-profile.v2",
+  "score_scale": "1=Low,2=Medium,3=High,4=Champion",
+  "exported_at": "2026-06-04T00:00:00Z",
+  "actors": [
+    {
+      "threat_actor": "AI Agentic Capability — Frontier (2026)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 3,
+        "TLCTC-02.00": 4,
+        "TLCTC-03.00": 3,
+        "TLCTC-04.00": 3,
+        "TLCTC-05.00": 2,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 4,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 3
+      },
+      "notes": "Demonstrated PEAK capability of current frontier models wielded as autonomous/agentic operators (GTG-1002, Claude Mythos Preview, OpenAI 5.3-Codex, AISLE, ARTEMIS). The standout uplift is server-side vulnerability discovery and exploit development (#2=Champion): AISLE independently found all 12 zero-days in the Jan-2026 OpenSSL release (some missed by decades of fuzzing/audit); Claude Mythos found thousands of high/critical vulns incl. decades-old zero-days; OpenAI 5.3-Codex was first to formally hit the 'High' cyber threshold (working remote zero-day exploits vs. well-defended systems); ARTEMIS outperformed 9/10 human pros across ~8,000 hosts. Malware authoring is mature and ubiquitous (#7=Champion). Post-compromise abuse of legitimate functions/LOTL, backdoor creation, and discovery are strong (#1=High). Credential harvesting + reuse is High (#4) but bounded by occasional credential hallucination — still an obstacle to FULL autonomy. Social engineering capability is high (deepfakes, hyper-personalized phishing, autonomous conversational agents) but observed malicious use is shifting deeper into the chain (#9=High). Supply-chain compromise (dependency/package poisoning at scale, e.g. Shai-Hulud-class worms) is rising (#10=High). NO meaningful AI uplift for Man-in-the-Middle (#5), Flooding/DDoS (#6, a botnet/resource game), or Physical (#8) — these stay Low and keep the radar honest rather than uniformly inflated. In GTG-1002 the model executed 80-90% of the operation autonomously at thousands of requests/sec, with humans intervening at only 4-6 decision points.",
+      "sources": [
+        "Anthropic, 'What we learned mapping a year's worth of AI-enabled cyber threats' (MITRE ATT&CK mapping, 832 banned accounts, Mar 2025-Mar 2026), Jun 2026",
+        "Anthropic, 'Disrupting the first reported AI-orchestrated cyber espionage campaign' (GTG-1002), Nov 2025",
+        "AISLE OpenSSL Jan-2026 zero-day disclosure; OpenAI Preparedness Framework 'High' cyber threshold (5.3-Codex), Feb 2026",
+        "arXiv 2603.11214 'Measuring AI Agents' Progress on Multi-Step Cyber Attack Scenarios'; CVE-Bench (arXiv 2503.17332); ARTEMIS multi-agent enterprise red-team result"
+      ],
+      "sequence": "#02 → #04 → #01 → #07",
+      "last_updated": "2026-06-04",
+      "origin_country": "N/A (capability profile, not a named group)",
+      "motivation": [
+        "Capability Force-Multiplier",
+        "Espionage",
+        "Financial Gain"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services",
+        "Chemical Manufacturing",
+        "Government",
+        "Critical Infrastructure"
+      ],
+      "observed_paths": [
+        {
+          "incident_id": "GTG-1002-2025",
+          "notation": "#2 →[Δt=VC-4] #4 →[Δt=VC-3] (#1 + #7) + [DRE: C]",
+          "cluster_sequence": [2, 4, 1, 7],
+          "dre_outcomes": {
+            "C": 1,
+            "I": 0,
+            "A": 0,
+            "Ac": 0
+          }
+        }
+      ]
+    },
+    {
+      "threat_actor": "AI Agentic Capability — Commodity Uplift (2026)",
+      "tlctc_scores": {
+        "TLCTC-01.00": 2,
+        "TLCTC-02.00": 2,
+        "TLCTC-03.00": 2,
+        "TLCTC-04.00": 2,
+        "TLCTC-05.00": 1,
+        "TLCTC-06.00": 1,
+        "TLCTC-07.00": 3,
+        "TLCTC-08.00": 1,
+        "TLCTC-09.00": 3,
+        "TLCTC-10.00": 2
+      },
+      "notes": "The TYPICAL real-world picture of AI-assisted malicious users, derived from Anthropic's study of 832 accounts banned for cyber misuse (Mar 2025-Mar 2026), rather than the frontier ceiling. Malware writing is the single most common AI-assisted activity (560/832 = 67.3%), so #7=High. Social-engineering content generation remains a strong uplift at scale (#9=High), though AI-assisted phishing actually DECLINED 8.6% in the dataset as actors shifted effort deeper into the chain. Post-compromise uses grew: account/network discovery +8.9%, lateral movement 54/832 = 6.5% (#1=Medium). Most exploitation and credential work is AI-assisted rather than AI-led, so #2/#3/#4=Medium. The proportion of medium/high-risk actors using AI jumped from 33% to 56% (1.7x) across the year — AI raises the floor broadly even where it doesn't reach frontier autonomy. No uplift for MitM (#5), Flooding (#6), or Physical (#8).",
+      "sources": [
+        "Anthropic, 'What we learned mapping a year's worth of AI-enabled cyber threats' (832 banned accounts mapped to MITRE ATT&CK, Mar 2025-Mar 2026), Jun 2026",
+        "CERT-EU, 'AI is changing the economics of vulnerability discovery', 2026"
+      ],
+      "sequence": "#09 → #07 → #01 → #04",
+      "last_updated": "2026-06-04",
+      "origin_country": "N/A (capability profile, not a named group)",
+      "motivation": [
+        "Financial Gain",
+        "Capability Force-Multiplier"
+      ],
+      "target_sectors": [
+        "Technology",
+        "Financial Services",
+        "Healthcare",
+        "Education"
+      ],
+      "observed_paths": []
+    }
+  ]
+}
