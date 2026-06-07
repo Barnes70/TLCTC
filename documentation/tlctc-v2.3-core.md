@@ -76,7 +76,7 @@ Topology is a structural property and does not change cluster classification, wh
 
 ## 4. The Ten Threat Clusters
 
-Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.3.json`) so that this paper and the schema cannot drift. Supporting prose for each cluster is drawn from the canonical cluster definitions.
+Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.3.json`) so that this paper and the schema cannot drift. The developer's view — the defensive design responsibility implied by each cluster — and the supporting prose are drawn from the canonical cluster definitions (whitepaper §4.1); the developer's view is editorial guidance and is not carried in the JSON dictionary.
 
 ### #1 Abuse of Functions
 
@@ -85,6 +85,7 @@ Each cluster is identified by a strategic ID (`#N`) for management-level use and
 - **Name:** Abuse of Functions
 - **Definition:** An attacker abuses the logic or scope of existing, legitimate software functions for malicious purposes without exploiting a code flaw.
 - **Attacker's view:** "I abuse a functionality, not a coding issue."
+- **Developer's view:** "I must understand and constrain the functional domain of my code. Every feature and configuration surface needs explicit boundaries and misuse assumptions."
 - **Generic vulnerability:** The inherent trust, scope, and complexity designed into software functionality and configuration.
 - **Topology:** Internal.
 
@@ -97,6 +98,7 @@ This cluster covers the manipulation of legitimate software capabilities — fea
 - **Name:** Exploiting Server
 - **Definition:** An attacker targets flaws within the server-side application's source code implementation.
 - **Attacker's view:** "I abuse a flaw in the application's source code on the server side."
+- **Developer's view:** "I must apply language-specific secure coding principles for all server-side code and implement appropriate safeguards for known pitfalls."
 - **Generic vulnerability:** Server-side implementation flaws enable unintended behavior.
 - **Topology:** Internal.
 
@@ -109,6 +111,7 @@ The vulnerable component accepts and handles inbound requests or stimuli relativ
 - **Name:** Exploiting Client
 - **Definition:** An attacker targets flaws within the source code implementation of any software acting in a client role.
 - **Attacker's view:** "I abuse a flaw in the source code of software acting as a client."
+- **Developer's view:** "I must apply secure coding principles for client-role code and never trust incoming data from servers, files, URLs, or APIs."
 - **Generic vulnerability:** Client-side implementation flaws enable unintended behavior.
 - **Topology:** Internal.
 
@@ -121,6 +124,7 @@ The vulnerable component consumes external responses, content, or state. Exploit
 - **Name:** Identity Theft
 - **Definition:** An attacker misuses authentication credentials to impersonate an identity.
 - **Attacker's view:** "I abuse stolen or forged credentials to act as someone else."
+- **Developer's view:** "I must implement secure credential lifecycle management: storage, transmission, session handling, and robust authentication/authorization with defense-in-depth."
 - **Generic vulnerability:** Weak identity management processes and/or inadequate credential protection mechanisms throughout the identity lifecycle.
 - **Topology:** Internal.
 
@@ -133,6 +137,7 @@ This cluster covers the presentation or use of credentials, tokens, keys, sessio
 - **Name:** Man in the Middle
 - **Definition:** An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.
 - **Attacker's view:** "I abuse my position between communicating parties."
+- **Developer's view:** "I must ensure confidentiality and integrity of data in transit: strong E2E protection, proper certificate/path validation, and designs that assume uncontrolled networks are hostile."
 - **Generic vulnerability:** The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.
 - **Topology:** Internal.
 
@@ -145,6 +150,7 @@ The cluster covers interception, observation, modification, injection, replay, o
 - **Name:** Flooding Attack
 - **Definition:** An attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to denial of service.
 - **Attacker's view:** "I abuse the circumstance of always limited capacity."
+- **Developer's view:** "I must implement efficient resource management: limits, timeouts, quotas, circuit breakers, and scalable designs—every loop and allocation must consider abuse."
 - **Generic vulnerability:** Finite capacity limitations inherent in any system component.
 - **Topology:** Internal.
 
@@ -157,6 +163,7 @@ The cluster covers exhaustion of finite resources — bandwidth, CPU, memory, st
 - **Name:** Malware
 - **Definition:** An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.
 - **Attacker's view:** "I abuse the environment's designed capability to execute malware code, malicious scripts, or foreign-introduced tools for my purposes."
+- **Developer's view:** "I must control execution paths: allow-listing, code signing/verification, sandboxing, safe file handling, and avoiding uncontrolled dynamic execution."
 - **Generic vulnerability:** The software environment's designed capability to execute potentially untrusted foreign code.
 - **Topology:** Internal.
 
@@ -169,6 +176,7 @@ The cluster covers execution of Foreign Executable Content (FEC) through the env
 - **Name:** Physical Attack
 - **Definition:** Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.
 - **Attacker's view:** "I abuse the physical accessibility or properties of hardware, devices, and signals."
+- **Developer's view:** "I must assume physical access can mean compromise: secure key storage, encryption at rest, tamper evidence, secure failure modes, and exposure-minimizing designs."
 - **Generic vulnerability:** Physical accessibility of infrastructure and the exploitability of physical-layer properties.
 - **Topology:** Bridge (Physical → Cyber).
 
@@ -181,6 +189,7 @@ The cluster spans direct contact with hardware, facilities, media, and interface
 - **Name:** Social Engineering
 - **Definition:** An attacker psychologically manipulates individuals into performing actions counter to their best interests.
 - **Attacker's view:** "I abuse human trust and psychology."
+- **Developer's view:** "I must design interfaces and processes that promote secure behavior: clear indicators, safe defaults, and friction for high-risk actions."
 - **Generic vulnerability:** Humans can be influenced into unsafe actions or decisions.
 - **Topology:** Bridge (Human → Cyber).
 
@@ -193,6 +202,7 @@ The cluster covers psychological manipulation that causes a human to disclose in
 - **Name:** Supply Chain Attack
 - **Definition:** An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.
 - **Attacker's view:** "I abuse the trust in third-party components."
+- **Developer's view:** "I must minimize and compartmentalize third-party trust, harden trust-acceptance points, verify provenance/attestations, and ensure trust is continuously re-validated and revocable."
 - **Generic vulnerability:** Trust in third-party components and update channels can be subverted.
 - **Topology:** Bridge (Third-party → Organization).
 
