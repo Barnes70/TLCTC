@@ -14,7 +14,7 @@ v2.3 introduces NO new normative content. Every element traces to finalized v2.1
 | Cause–Event–Consequence model (SRE→DRE→BRE) | whitepaper §6.1 / §6.3 / §6.3.1 |
 | Per-cluster Boundary Tests | whitepaper §4.1 (verbatim) |
 | Strategic/Operational two-layer naming (TLCTC-XX.YY) | whitepaper §4.2.1 |
-| Attack-path notation | whitepaper §11 (condensed) |
+| Attack-path notation (incl. velocity Δt, DCS) | whitepaper §11 / §12 / §10.6 (condensed) |
 | Concise glossary | `tlctc-glossary.md` (subset) |
 | References | adjacent frameworks named in spec / Scholar plan WP3 |
 
