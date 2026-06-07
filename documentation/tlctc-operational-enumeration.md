@@ -4,6 +4,7 @@
 **Layer:** Operational (the `TLCTC-XX.YY` sub-cluster catalogue)
 **Status:** Living document — community-extensible, **not** frozen with the core's DOI.
 **Author:** Bernhard Kreinz · License: CC BY 4.0
+**Machine-readable twin:** `json-schemas/operational/tlctc-operational-enumeration.json` (validated by `tlctc-operational-enumeration.schema.json`; sub-cluster IDs use the same `TLCTC-XX.YY` shape that Layer-3 and Layer-4 already reference).
 
 > **Why this is separate from the core.** The ten strategic clusters (`#1`–`#10`) are derived
 > axiomatically and frozen as the citable core. The operational layer below them is the

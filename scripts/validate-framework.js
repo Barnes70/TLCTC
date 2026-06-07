@@ -1,4 +1,5 @@
-// Validates a TLCTC framework JSON against the Layer-1 schema.
+// Validates a TLCTC JSON document against a JSON Schema (Layer-1 framework, operational enumeration, etc.).
+// Deps (package.json is gitignored in this repo): npm install ajv ajv-formats
 // Usage: node scripts/validate-framework.js <schema.json> <data.json>
 const fs = require("fs");
 const Ajv = require("ajv");
