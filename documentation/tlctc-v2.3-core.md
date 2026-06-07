@@ -525,7 +525,23 @@ OAuth phishing — email and identity providers are topological intermediaries; 
 #1 + [DRE: C]
 ```
 
-## 8. Glossary
+## 8. Limitations and Open Questions
+
+This paper presents a framework, not a validated result, and several limitations should be stated plainly.
+
+**The derivation is argued, not formally proven.** The decomposition in Section 2 yields ten clusters and is claimed to be complete and mutually exclusive by construction, but that claim rests on the analytical argument given here, not a formal proof. The number ten is a *consequence* of the decomposition, not a target — and it is offered with an explicit invitation: if ten is the wrong number, a better decomposition should say what the right number is, and why.
+
+**The operational layer is only partially developed.** Reference sub-cluster decompositions are provided for four clusters (#2, #3, #8, #10); the remaining six are analytically feasible but left open for community refinement and empirical validation (Section 4). The two-layer model is therefore complete at the strategic layer and deliberately incomplete at the operational layer.
+
+**Empirical validation is outstanding.** The reproducibility claim — that independent analysts, guided by the axioms and boundary tests, classify the same incident the same way — is testable but not yet tested at scale here. Inter-rater agreement studies and large mapping studies against public incident corpora are the natural next step and are deferred to companion work.
+
+**Scope is bounded by design.** This core deliberately excludes the control, indicator, and governance material (NIST CSF mapping, KRI/KCI/KPI, the full bow-tie control treatment), which belong to a separate application document; a reader seeking control guidance will not find it here.
+
+**Classification still requires judgment.** Most rules are enforced by analyst judgment rather than mechanically (Section 6); boundary cases — particularly the #1/#2/#3 distinction and the #4 credential boundary — depend on correctly identifying the generic vulnerability, and reasonable analysts may disagree before the boundary tests are applied.
+
+Stating these limits is itself part of the method. A framework that specifies where it is unproven, and how it could fail, is one that can be improved by evidence rather than defended by assertion.
+
+## 9. Glossary
 
 The following one-line definitions cover the terms used in this paper so that it is self-contained. They are condensed from the canonical glossary; see `tlctc-glossary.md` for the exhaustive, authoritative version.
 
@@ -552,7 +568,7 @@ The following one-line definitions cover the terms used in this paper so that it
 
 For the complete glossary, including all terms and cross-references not used in this paper, see `tlctc-glossary.md`.
 
-## 9. References
+## 10. References
 
 The following adjacent frameworks are referenced in this paper for positioning. Citations are provided for the canonical source of each; URLs were current at the time of writing.
 
