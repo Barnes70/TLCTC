@@ -294,9 +294,15 @@ The cluster is placed at the Trust Acceptance Event (TAE) — the moment the org
 - Downstream effects map normally: often `#10 → #7` (accepted artifact leads to FEC execution) or `#10 → #1` (accepted authorization/entitlement enables function abuse).
 - Federation clarity: credential use at the identity provider is #4; acceptance of the IdP assertion/token at the service provider is #10.
 
-### Strategic and Operational Layers
+### The Two-Layer Model: Strategic and Operational Layers
 
-Each cluster carries two equivalent identifiers serving different needs (Axiom VIII). The **strategic layer** uses the human-readable form `#X` (X ∈ {1…10}) for executive communication, risk registers, and board reporting. The **operational layer** uses the machine-readable form `TLCTC-XX.YY` for tooling, SIEM rules, threat-intelligence exchange, and sub-threat granularity.
+TLCTC is deliberately a two-layer framework, and each cluster carries two equivalent identifiers, one per layer (Axiom VIII).
+
+The **Strategic (Management) Layer** uses the human-readable form `#X` (X ∈ {1…10}) — the ten clusters and their generic vulnerabilities. It is the layer of governance: executive communication, risk registers, board reporting, and the attack-path notation (Section 7), which expresses whole intrusions in cluster terms without operational detail. It answers *which generic vulnerabilities matter and how they chain.*
+
+The **Operational (Security) Layer** uses the machine-readable form `TLCTC-XX.YY` — operational sub-threats, and beneath them the specific vulnerabilities (CVEs), techniques, and controls. This single layer serves the **two operational audiences**: **security operations** (SOC detection and response, threat-intelligence exchange, SIEM and tooling) and **secure development** (the per-cluster Developer's View and the secure development lifecycle). It answers *through which concrete vector, and with which control, this cluster is realized and prevented.*
+
+The two layers are linked by strict semantic equivalence (below), so a single cluster carries one consistent meaning from the boardroom to the SOC to the developer's backlog. Governance lives at the strategic layer; development and operations share the operational layer.
 
 **Equivalence and stability (normative):**
 
