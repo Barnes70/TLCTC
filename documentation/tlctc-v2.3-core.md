@@ -226,7 +226,41 @@ The axioms fall into four groups: scope (I–II), separation (III–V), classifi
 
 ## 6. Classification Rules
 
-<filled by Task 8>
+The classification rules operationalize the axioms, resolving recurring boundary questions so that assignment remains reproducible. Each rule statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.3.json`), together with its enforcement level. All fourteen rules carry the enforcement level **must**. Two are machine-enforceable (R-EXEC, R-INTRA-9); the remainder are enforced through analyst judgment guided by the stated rule.
+
+The rules are presented in two groups: the six core rules, and the eight v2.1 extension rules covering transit, intra-system boundaries, and unresolved steps.
+
+### 6.1 Core Rules
+
+**R-EXEC** (must, machine-enforceable). If Foreign Executable Content executes, a #7 step MUST be recorded at the execution moment.
+
+**R-ROLE** (must). Classify by the role of the component containing the flaw relative to the attacker: server-role flaw = #2, client-role flaw = #3.
+
+**R-FLOOD** (must). If the primary mechanism is volume or intensity exhausting finite resources, classify as #6. If it is an implementation defect causing crash/hang/degradation, classify as #2 or #3 per R-ROLE.
+
+**R-SUPPLY** (must). #10 Supply Chain Attack MUST be placed at the Trust Acceptance Event (TAE) — the moment the third-party trust link is honored and the trust artifact becomes authoritative inside the target domain.
+
+**R-MITM** (must). Position acquisition maps to the enabling cluster; once position is established, interception/modification/relay actions map to #5.
+
+**R-CRED** (must). Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method. These are separate attack steps.
+
+### 6.2 v2.1 Extension Rules
+
+**R-TRANSIT-3** (must). Vendor code running on the target device is NOT transit. Software executing on the victim's own device is the attack surface, classified by R-ROLE (typically #3), not a transit (relay/carrier) party.
+
+**R-INTRA-7** (must). Intra-system boundary crossings never change cluster classification. They are observability annotations, not classification inputs.
+
+**R-INTRA-9** (must, machine-enforceable). The 'memory' intra-system boundary type is deferred and MUST NOT be used.
+
+**R-UNRES-2** (must). '?' and '…' are epistemic annotations, NOT clusters. They have no generic vulnerability, do not appear in cluster definitions, and must not be referenced as if they were '#11'/'#12'.
+
+**R-UNRES-3** (must). '?'/'…' are excluded from statistics — they represent absence of knowledge, not a category.
+
+**R-UNRES-5** (must). DRE tags ('+ [DRE: ...]') MUST NOT be appended to '?'/'…'. Without a classified cluster there is no causal basis for asserting a data risk event in the notation.
+
+**R-UNRES-8** (must). Any path containing '?'/'…' MUST carry a prose annotation explaining what is unresolved and why.
+
+**R-UNRES-9** (must). Binary rule: if any cluster can be defended — even weakly — use '#X [conf=low]', not '?'. Reserve '?'/'…' for genuine 'we know something happened, we don't know what' situations.
 
 ## 7. Attack-Path Notation
 
