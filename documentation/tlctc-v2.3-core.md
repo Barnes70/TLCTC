@@ -27,6 +27,10 @@ TLCTC does not claim to be a finished paradigm. It is offered as a testable prop
 
 ## 2. The Thought Experiment: Deriving the Ten Clusters
 
+TLCTC is built deductively rather than by cataloguing observed attacks. An empirical catalogue grows with every new observation but never reaches closure; a purely heuristic grouping is convenient but cannot be shown to be wrong. An analytical approach instead derives the categories from the intrinsic structure of what is being protected — which is what lets the framework claim completeness and mutual exclusivity *by construction* rather than by enumeration. Two devices carry this method: the **thought experiment** that follows, which decomposes the IT landscape one attack surface at a time into the generic vulnerabilities an attacker can target, and the **axioms** (Section 5), which state explicitly the premises that constrain how the resulting clusters may be interpreted — the kind of foundation a shared language requires but that most threat vocabularies leave implicit.
+
+The approach is also testable in Popper's sense [13]: each cluster carries boundary tests (Section 4) specifying the conditions under which a classification would be *wrong*. The supply-chain test is the clearest case — remove the third-party trust relationship, and if the attack still succeeds the step was never #10. A taxonomy that states how it could be falsified can be argued about on evidence rather than preference.
+
 The ten TLCTC clusters are not an arbitrary enumeration or an industry convention; they are derived through a systematic decomposition of the attack surfaces present in information technology. Imagine the complex world of IT as a single object. Although robust and seemingly closed, this object exposes various attack surfaces — the generic vulnerabilities, or root weaknesses. Examining each surface in turn yields, one at a time, the full set of clusters.
 
 **1.** Begin at the software asset. Concentrating first on the essentials, consider the functional domain and scope, and observe that every function can be abused and that more scope also means more attack surface. This yields the first threat cluster: **Abuse of Functions**.
@@ -575,3 +579,5 @@ The following adjacent frameworks are referenced in this paper for positioning. 
 11. Caltagirone, S., Pendergast, A., and Betz, C. *The Diamond Model of Intrusion Analysis.* Center for Cyber Intelligence Analysis and Threat Research (CCIATR), 2013.
 
 12. Kuhn, T. S. *The Structure of Scientific Revolutions.* University of Chicago Press, 1962.
+
+13. Popper, K. R. *The Logic of Scientific Discovery.* Hutchinson, 1959 (orig. *Logik der Forschung*, 1934).
