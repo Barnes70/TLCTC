@@ -17,7 +17,7 @@ Cybersecurity suffers from a persistent language problem: the field describes fu
 
 This semantic blur has practical costs. When cause, technique, actor, and outcome share a vocabulary, it becomes difficult to compare incidents across organizations, aggregate threat intelligence into stable categories, design controls that target a specific root weakness, or communicate cyber risk consistently between leadership, risk functions, and technical teams. The same event may be classified differently by two analysts not because they disagree about the facts, but because the underlying terms admit multiple readings. Outcome-named categories such as "ransomware" or "data breach" compound the problem: they describe an effect, not the generic vulnerability an attacker exploited, so they cannot anchor a reproducible mapping from threat to control.
 
-Existing frameworks address adjacent layers of this space but leave the cause side underspecified. Control catalogues and management standards organize what an organization should do; adversary-technique knowledge bases enumerate observed behaviours; software-weakness and vulnerability registries catalogue concrete defects; and quantitative methods estimate loss. Each is valuable within its scope, yet none provides a compact, non-overlapping taxonomy of the generic vulnerabilities that compromises ultimately exploit — a stable backbone that holds across enterprise IT, cloud, OT, IoT, and endpoint environments without being tied to a particular technology or actor.
+Existing frameworks address adjacent layers of this space but leave the cause side underspecified. Control catalogues and management standards (e.g. the NIST Cybersecurity Framework, and risk-assessment guidance such as NIST SP 800-30) organize what an organization should do; adversary-technique knowledge bases (e.g. MITRE ATT&CK) enumerate observed behaviours; software-weakness and vulnerability registries (e.g. MITRE CWE and CVE) catalogue concrete defects; and quantitative methods (e.g. FAIR) estimate loss. Adjacent threat-classification and attack-lifecycle models — STRIDE, VERIS, the Lockheed Martin Cyber Kill Chain, the Diamond Model, and threat-landscape reporting such as the ENISA Threat Landscape — describe techniques, incident attributes, intrusion phases, or observed activity. Each is valuable within its scope, yet none provides a compact, non-overlapping taxonomy of the generic vulnerabilities that compromises ultimately exploit — a stable backbone that holds across enterprise IT, cloud, OT, IoT, and endpoint environments without being tied to a particular technology or actor.
 
 The Top Level Cyber Threat Clusters (TLCTC) framework addresses this gap by anchoring analysis in causality. A cyber threat is defined by the generic vulnerability (root weakness) it exploits, not by who performs it and not by the consequence that follows. The framework's contribution is a compact set of ten non-overlapping, cause-side threat clusters, each defined by the single generic vulnerability it initially targets. Threats are kept on the cause side and separated from outcomes, actor identity, and control failures, so that complete real-world intrusions can be expressed as ordered sequences of cluster steps — attack paths — without changing the meaning of the individual steps. By separating a stable strategic management view (clusters and generic vulnerabilities) from a concrete operational security view (specific vulnerabilities, techniques, and procedures), TLCTC is intended to function as a shared, cause-oriented vocabulary that links strategic risk governance and operational security practice.
 
@@ -405,4 +405,26 @@ For the complete glossary, including all terms and cross-references not used in 
 
 ## 9. References
 
-<filled by Task 11>
+The following adjacent frameworks are referenced in this paper for positioning. Citations are provided for the canonical source of each; URLs were current at the time of writing.
+
+1. Shostack, A. *Threat Modeling: Designing for Security.* Wiley, 2014. (STRIDE threat-modeling methodology, originally developed at Microsoft.)
+
+2. Verizon. *The VERIS Framework (Vocabulary for Event Recording and Incident Sharing).* http://veriscommunity.net/
+
+3. MITRE Corporation. *MITRE ATT&CK: Adversarial Tactics, Techniques, and Common Knowledge.* https://attack.mitre.org/
+
+4. MITRE Corporation. *Common Weakness Enumeration (CWE).* https://cwe.mitre.org/
+
+5. MITRE Corporation. *Common Vulnerabilities and Exposures (CVE).* https://www.cve.org/
+
+6. ENISA (European Union Agency for Cybersecurity). *ENISA Threat Landscape.* https://www.enisa.europa.eu/topics/cyber-threats/threats-and-trends
+
+7. National Institute of Standards and Technology. *Framework for Improving Critical Infrastructure Cybersecurity (NIST Cybersecurity Framework), Version 1.1.* NIST, 2018. https://www.nist.gov/cyberframework
+
+8. Joint Task Force Transformation Initiative. *NIST Special Publication 800-30 Revision 1: Guide for Conducting Risk Assessments.* NIST, 2012. https://doi.org/10.6028/NIST.SP.800-30r1
+
+9. Freund, J., and Jones, J. *Measuring and Managing Information Risk: A FAIR Approach.* Butterworth-Heinemann, 2014. (Factor Analysis of Information Risk; see also The Open Group, Open FAIR standard.)
+
+10. Hutchins, E. M., Cloppert, M. J., and Amin, R. M. *Intelligence-Driven Computer Network Defense Informed by Analysis of Adversary Campaigns and Intrusion Kill Chains.* Lockheed Martin Corporation, 2011. (The Cyber Kill Chain.)
+
+11. Caltagirone, S., Pendergast, A., and Betz, C. *The Diamond Model of Intrusion Analysis.* Center for Cyber Intelligence Analysis and Threat Research (CCIATR), 2013.
