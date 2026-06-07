@@ -200,7 +200,29 @@ The cluster is placed at the Trust Acceptance Event (TAE) — the moment the org
 
 ## 5. The Ten Axioms
 
-<filled by Task 7>
+The framework relies on non-negotiable axioms as constraints on interpretation. They prevent category errors and ensure that independent practitioners classify the same situation the same way, making analysis comparable, auditable, and operationally useful. Each axiom statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.3.json`), with one clarifying sentence drawn from the canonical axioms section.
+
+The axioms fall into four groups: scope (I–II), separation (III–V), classification (VI–VIII), and sequence (IX–X).
+
+**Axiom I — No System-Type Differentiation.** The framework is generic and applies to all IT systems; it does not differentiate by system type. Sector labels (e.g., SCADA, IoT, cloud, medical devices) do not create new threat classes; they only change the specific vulnerabilities and controls at the operational level.
+
+**Axiom II — Client–Server as the Universal Interaction Model.** All networked systems can be abstracted as client-server interaction. The clusters address the generic vulnerabilities arising from these interactions, independent of protocol or architecture depth.
+
+**Axiom III — Threats Are Causes, Not Outcomes.** Threats are on the cause side; outcomes and events are not threats. Threat clusters must not be conflated with data risk events such as Loss of Confidentiality, Integrity, or Availability/Accessibility.
+
+**Axiom IV — Threats Are Not Threat Actors.** Threat clusters are separate from threat actors. Actor identity (attribution, motivation, capability) is not a structuring element for threat categorization; TLCTC classifies actions and exploited generic vulnerabilities, not "who."
+
+**Axiom V — Control Failure Is Not a Threat.** Control failures are not threats. Control failure is control-risk; risk remains structured as Threat → Event/Incident → Consequences, and controls influence likelihood and impact but do not define the threat cluster.
+
+**Axiom VI — One Step, One Generic Vulnerability, One Cluster.** For every generic vulnerability, there is one threat cluster (non-overlap). Every distinct attack step exploits exactly one generic vulnerability in the attack surface, and each generic vulnerability maps to exactly one cluster.
+
+**Axiom VII — Attack Vectors Are Defined by the Initial Generic Vulnerability.** Each distinct attack vector is defined by the generic vulnerability it initially targets. Classification is anchored in this initial cause, not in technique labels or downstream effects.
+
+**Axiom VIII — Strategic vs Operational Layering.** Top-level clusters have sub-threats (strategic vs operational layering). This separates a stable Strategic Management Layer (clusters / generic vulnerabilities) from an Operational Security Layer (specific vulnerabilities, techniques, and procedures).
+
+**Axiom IX — Clusters Chain into Attack Paths; Δt Expresses Velocity.** Clusters can be used in sequence to describe an attack path; Δt measures velocity. The time between successive cluster steps is a scenario attribute (Δt), and the set of Δt values expresses the attack velocity of the path.
+
+**Axiom X — Credentials Have Dual Operational Nature.** Credentials are system control elements; acquisition and application are distinct steps. Acquisition (credential as data) maps to the enabling cluster, while application (presenting the credential to authenticate) always maps to #4 Identity Theft.
 
 ## 6. Classification Rules
 
