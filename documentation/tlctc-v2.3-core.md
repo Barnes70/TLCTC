@@ -264,7 +264,122 @@ The rules are presented in two groups: the six core rules, and the eight v2.1 ex
 
 ## 7. Attack-Path Notation
 
-<filled by Task 9>
+A complete intrusion is expressed as an **attack path**: an ordered list of attack steps, each mapping to exactly one cluster (Axiom VI), connected by operators. A path is read left-to-right as best-estimate chronological progression. This section defines only the primitives needed to *read* a path; the formal grammar lives in the whitepaper §11.7 and the `grammar/` ABNF.
+
+### 7.1 Sequence and Parallel
+
+The **sequence operator** `→` means the right-hand step occurs after, and is enabled by, the left-hand step:
+
+```
+#9 → #4 → #1 → #7
+```
+
+The **parallel operator** `+`, always inside parentheses, denotes effectively concurrent steps whose ordering is not meaningful — for example enabling persistence while executing a payload:
+
+```
+#4 → (#1 + #7)
+```
+
+Each element of a parallel group is still a separate step and must be a single cluster reference. If an order exists — even a fast one — use `→` rather than `+`.
+
+### 7.2 Velocity (Δt)
+
+A Δt annotation attaches to the sequence operator and records the elapsed time between two steps:
+
+```
+#9 →[Δt=2h] #4 →[Δt=5m] #1 →[Δt=instant] #7
+```
+
+The set of Δt values across a path expresses its **attack velocity** (Axiom IX). Four velocity classes group transitions by time scale and by the defense mode that can realistically operate at that speed:
+
+| Class | Δt scale | Primary defense mode |
+| --- | --- | --- |
+| **VC-1: Strategic** | days → months | log retention, threat hunting |
+| **VC-2: Tactical** | hours | SIEM alerting, analyst triage |
+| **VC-3: Operational** | minutes | automation (SOAR/EDR), rapid containment |
+| **VC-4: Real-Time** | seconds → ms | architecture, rate limits, automatic isolation |
+
+A transition at VC-3 or faster is structurally too fast for purely human response at that edge; defense must be automated or architectural.
+
+### 7.3 Domain Boundary Operator
+
+The domain boundary operator makes a **responsibility-sphere transition** explicit. It annotates the boundary-crossing step (it is never a step on its own) and is required for the bridge clusters #8, #9, #10:
+
+```
+||[context][@Source→@Target]||
+```
+
+`[context]` names the channel (e.g. `update`, `auth`, `human`, `physical`); `@Source` and `@Target` are the originating and receiving spheres. For example, a supply-chain update accepted and then executed:
+
+```
+#10 ||[update][@Vendor→@Org]|| → #7
+```
+
+### 7.4 Transit Operator (v2.1)
+
+The **transit operator** `⇒` marks a sphere that *carries or relays* the attack but is neither its source nor its target. It appears inside a domain boundary operator and never changes cluster classification. Chained transit reads **right-to-left** (the rightmost carrier delivers to the target):
+
+```
+#9 ||[human][@Attacker⇒@SMSProvider→@Victim]||
+#5 ||[signaling][@Attacker⇒@CarrierB(SS7)⇒@CarrierA→@Target]||
+```
+
+Transit (`⇒`, a passive relay) is distinct from #10 (the Trust Acceptance Event, where a trust artifact becomes authoritative inside the target domain). Per R-TRANSIT-3, vendor code running on the target device is the attack surface (classified by R-ROLE, typically #3), not transit.
+
+### 7.5 Intra-System Boundary Operator (v2.1)
+
+The **intra-system operator** `|[type][@from→@to]|` (single pipes) marks a boundary crossing *within a single host*. There are four defined types — `sandbox`, `privilege`, `process`, `hypervisor` (the `memory` type is deferred per R-INTRA-9). These are observability annotations only and never change classification (R-INTRA-7):
+
+```
+#3 |[sandbox][@renderer→@os]|
+#2 |[privilege][@user→@root]|
+#2 |[hypervisor][@guest→@host]|
+#7 |[process][@malware→@lsass]|
+```
+
+### 7.6 Data Risk Event Tags
+
+A DRE tag records an **outcome** — never a step — appended with `+ [DRE: …]`, using C (Confidentiality), I (Integrity), and A (Availability/Accessibility). When the distinction is operationally relevant, use `Av` (data gone or unreachable) versus `Ac` (data present but unusable, e.g. ransomware encryption):
+
+```
+#6 + [DRE: Av]            availability loss after a flood — service unreachable
+#2 → #7 + [DRE: Ac]       execution leading to ransomware encryption
+```
+
+### 7.7 Epistemic States and Unresolved Steps
+
+Incident analysis is iterative, so a path may mix four epistemic states for a step:
+
+| State | Syntax | Use when |
+| --- | --- | --- |
+| Classified | `#X` | cluster assigned, evidence supports it |
+| Low-confidence | `#X [conf=low]` | best-supported cluster, explicit caveat |
+| Inferred | `#X [inferred]` | not observed but logically required |
+| Unresolved | `?` or `…` | something happened, no cluster defensible |
+
+The **unresolved-step operators** are `?` (exactly one step occurred, cluster unknown) and `…` (a gap of one or more steps, both count and clusters unknown). Per R-UNRES-9, if *any* cluster can be defended — even weakly — use `#X [conf=low]` rather than `?`. Unresolved operators are epistemic annotations, not clusters (R-UNRES-2): they are excluded from statistics, never carry DRE tags, and every path containing one must carry a prose note explaining what is unresolved.
+
+```
+#3 →[Δt=0s] #7 →[Δt=4h] ? →[Δt=<10m] #4 → #1
+```
+
+### 7.8 Worked Examples
+
+Pegasus network injection — a carrier relays the redirection (transit), Safari on the device is the exploited client (#3 with an internal privilege crossing), and the payload execution is #7:
+
+```
+#5 ||[network][@NSO_Operator⇒@MobileCarrier→@Target]|| →[Δt≈0s]
+#3 ||[browser][@NSO(free247downloads.com)→@Target(Safari)]|| |[privilege][@user→@root]| →[Δt≈0s]
+#7 + [DRE: C]
+```
+
+OAuth phishing — email and identity providers are topological intermediaries; the use of coerced authorization is #4, and subsequent abuse of legitimate cloud functions is #1:
+
+```
+#9 ||[email][@Attacker⇒@Microsoft(M365)→@Target]|| →[Δt=hours]
+#4 ||[auth][@Attacker⇒@AzureAD.OAuth→@Target(CloudResources)]|| →[Δt≈0s]
+#1 + [DRE: C]
+```
 
 ## 8. Glossary
 
