@@ -423,7 +423,7 @@ The following adjacent frameworks are referenced in this paper for positioning. 
 
 1. Shostack, A. *Threat Modeling: Designing for Security.* Wiley, 2014. (STRIDE threat-modeling methodology, originally developed at Microsoft.)
 
-2. Verizon. *The VERIS Framework (Vocabulary for Event Recording and Incident Sharing).* http://veriscommunity.net/
+2. Verizon. *The VERIS Framework (Vocabulary for Event Recording and Incident Sharing).* https://veriscommunity.net/
 
 3. MITRE Corporation. *MITRE ATT&CK: Adversarial Tactics, Techniques, and Common Knowledge.* https://attack.mitre.org/
 
@@ -433,12 +433,12 @@ The following adjacent frameworks are referenced in this paper for positioning. 
 
 6. ENISA (European Union Agency for Cybersecurity). *ENISA Threat Landscape.* https://www.enisa.europa.eu/topics/cyber-threats/threats-and-trends
 
-7. National Institute of Standards and Technology. *Framework for Improving Critical Infrastructure Cybersecurity (NIST Cybersecurity Framework), Version 1.1.* NIST, 2018. https://www.nist.gov/cyberframework
+7. National Institute of Standards and Technology. *The NIST Cybersecurity Framework (CSF) 2.0.* NIST Cybersecurity White Paper NIST CSWP 29, February 26, 2024. https://doi.org/10.6028/NIST.CSWP.29
 
 8. Joint Task Force Transformation Initiative. *NIST Special Publication 800-30 Revision 1: Guide for Conducting Risk Assessments.* NIST, 2012. https://doi.org/10.6028/NIST.SP.800-30r1
 
 9. Freund, J., and Jones, J. *Measuring and Managing Information Risk: A FAIR Approach.* Butterworth-Heinemann, 2014. (Factor Analysis of Information Risk; see also The Open Group, Open FAIR standard.)
 
-10. Hutchins, E. M., Cloppert, M. J., and Amin, R. M. *Intelligence-Driven Computer Network Defense Informed by Analysis of Adversary Campaigns and Intrusion Kill Chains.* Lockheed Martin Corporation, 2011. (The Cyber Kill Chain.)
+10. Hutchins, E. M., Cloppert, M. J., and Amin, R. M. *Intelligence-Driven Computer Network Defense Informed by Analysis of Adversary Campaigns and Intrusion Kill Chains.* Leading Issues in Information Warfare & Security Research, Vol. 1, 2011. Lockheed Martin Corporation. (The Cyber Kill Chain.)
 
 11. Caltagirone, S., Pendergast, A., and Betz, C. *The Diamond Model of Intrusion Analysis.* Center for Cyber Intelligence Analysis and Threat Research (CCIATR), 2013.
