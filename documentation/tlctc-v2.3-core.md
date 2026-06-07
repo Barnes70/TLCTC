@@ -328,7 +328,7 @@ Four clusters have reference sub-cluster decompositions; the remaining six are l
 | **#8 Physical Attack** | `#8.1` mechanical (contact) · `#8.2` signal (no contact) |
 | **#10 Supply Chain Attack** | `#10.1` update · `#10.2` development · `#10.3` hardware |
 
-The `#2`/`#3` symmetry yields a complete 2×3 matrix (server/client × protocol/core/handler): any code exploit on a networked component maps to exactly one cell. This operational layer is where specific vulnerabilities (CVEs), techniques, and tooling attach beneath the stable strategic clusters.
+The `#2`/`#3` symmetry yields a complete 2×3 matrix (server/client × protocol/core/handler): any code exploit on a networked component maps to exactly one cell. This operational layer is where specific vulnerabilities (CVEs), techniques, and tooling attach beneath the stable strategic clusters. The four decompositions above are reference examples that demonstrate the method; the full and evolving sub-cluster catalogue — including proposals for the remaining six clusters — is maintained separately in the *TLCTC Operational Enumeration* companion document, which is community-extensible and deliberately not frozen with this core.
 
 ## 5. The Ten Axioms
 
