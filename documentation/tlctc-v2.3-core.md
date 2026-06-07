@@ -76,7 +76,127 @@ Topology is a structural property and does not change cluster classification, wh
 
 ## 4. The Ten Threat Clusters
 
-<filled by Task 6>
+Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.3.json`) so that this paper and the schema cannot drift. Supporting prose for each cluster is drawn from the canonical cluster definitions.
+
+### #1 Abuse of Functions
+
+- **Strategic ID:** #1
+- **Operational root ID:** TLCTC-01.00
+- **Name:** Abuse of Functions
+- **Definition:** An attacker abuses the logic or scope of existing, legitimate software functions for malicious purposes without exploiting a code flaw.
+- **Attacker's view:** "I abuse a functionality, not a coding issue."
+- **Generic vulnerability:** The inherent trust, scope, and complexity designed into software functionality and configuration.
+- **Topology:** Internal.
+
+This cluster covers the manipulation of legitimate software capabilities — features, APIs, configurations, administrative settings, and workflows — through standard interfaces using built-in input types and valid sequences of actions, achieving an attacker advantage without requiring an implementation flaw.
+
+### #2 Exploiting Server
+
+- **Strategic ID:** #2
+- **Operational root ID:** TLCTC-02.00
+- **Name:** Exploiting Server
+- **Definition:** An attacker targets flaws within the server-side application's source code implementation.
+- **Attacker's view:** "I abuse a flaw in the application's source code on the server side."
+- **Generic vulnerability:** Server-side implementation flaws enable unintended behavior.
+- **Topology:** Internal.
+
+The vulnerable component accepts and handles inbound requests or stimuli relative to the attacker. Crafted payloads (for example SQL injection strings, buffer overflows, or XXE payloads) trigger specific implementation bugs, forcing unintended behavior or enabling code execution.
+
+### #3 Exploiting Client
+
+- **Strategic ID:** #3
+- **Operational root ID:** TLCTC-03.00
+- **Name:** Exploiting Client
+- **Definition:** An attacker targets flaws within the source code implementation of any software acting in a client role.
+- **Attacker's view:** "I abuse a flaw in the source code of software acting as a client."
+- **Generic vulnerability:** Client-side implementation flaws enable unintended behavior.
+- **Topology:** Internal.
+
+The vulnerable component consumes external responses, content, or state. Exploitation targets coding mistakes in parsing, rendering, state management, or response handling, typically through crafted content delivered during outbound interaction.
+
+### #4 Identity Theft
+
+- **Strategic ID:** #4
+- **Operational root ID:** TLCTC-04.00
+- **Name:** Identity Theft
+- **Definition:** An attacker misuses authentication credentials to impersonate an identity.
+- **Attacker's view:** "I abuse stolen or forged credentials to act as someone else."
+- **Generic vulnerability:** Weak identity management processes and/or inadequate credential protection mechanisms throughout the identity lifecycle.
+- **Topology:** Internal.
+
+This cluster covers the presentation or use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act as an identity different from the presenter's own. Credential acquisition maps to the enabling cluster; credential use always maps here (see R-CRED).
+
+### #5 Man in the Middle
+
+- **Strategic ID:** #5
+- **Operational root ID:** TLCTC-05.00
+- **Name:** Man in the Middle
+- **Definition:** An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.
+- **Attacker's view:** "I abuse my position between communicating parties."
+- **Generic vulnerability:** The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.
+- **Topology:** Internal.
+
+The cluster covers interception, observation, modification, injection, replay, or protocol downgrade/stripping from a controlled position on a communication path. Gaining the position maps to another cluster; #5 begins once the position is controlled (see R-MITM).
+
+### #6 Flooding Attack
+
+- **Strategic ID:** #6
+- **Operational root ID:** TLCTC-06.00
+- **Name:** Flooding Attack
+- **Definition:** An attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to denial of service.
+- **Attacker's view:** "I abuse the circumstance of always limited capacity."
+- **Generic vulnerability:** Finite capacity limitations inherent in any system component.
+- **Topology:** Internal.
+
+The cluster covers exhaustion of finite resources — bandwidth, CPU, memory, storage, quotas, or pools — through volume or intensity that exceeds capacity limits. Availability loss caused primarily by an implementation defect is classified as #2 or #3 instead (see R-FLOOD).
+
+### #7 Malware
+
+- **Strategic ID:** #7
+- **Operational root ID:** TLCTC-07.00
+- **Name:** Malware
+- **Definition:** An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.
+- **Attacker's view:** "I abuse the environment's designed capability to execute malware code, malicious scripts, or foreign-introduced tools for my purposes."
+- **Generic vulnerability:** The software environment's designed capability to execute potentially untrusted foreign code.
+- **Topology:** Internal.
+
+The cluster covers execution of Foreign Executable Content (FEC) through the environment's designed execution capabilities — binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters — including dual-use tooling when it executes attacker-controlled content. If FEC executes, a #7 step must be recorded at the execution moment (see R-EXEC).
+
+### #8 Physical Attack
+
+- **Strategic ID:** #8
+- **Operational root ID:** TLCTC-08.00
+- **Name:** Physical Attack
+- **Definition:** Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.
+- **Attacker's view:** "I abuse the physical accessibility or properties of hardware, devices, and signals."
+- **Generic vulnerability:** Physical accessibility of infrastructure and the exploitability of physical-layer properties.
+- **Topology:** Bridge (Physical → Cyber).
+
+The cluster spans direct contact with hardware, facilities, media, and interfaces (including removable media) as well as exploitation of physical-layer properties such as wireless spectrum, emanations, and environmental dependencies.
+
+### #9 Social Engineering
+
+- **Strategic ID:** #9
+- **Operational root ID:** TLCTC-09.00
+- **Name:** Social Engineering
+- **Definition:** An attacker psychologically manipulates individuals into performing actions counter to their best interests.
+- **Attacker's view:** "I abuse human trust and psychology."
+- **Generic vulnerability:** Humans can be influenced into unsafe actions or decisions.
+- **Topology:** Bridge (Human → Cyber).
+
+The cluster covers psychological manipulation that causes a human to disclose information, grant access, execute content, modify configuration, or bypass procedures. #9 is only the human manipulation step; subsequent technical steps map to their own clusters. Technical vulnerabilities are never #9.
+
+### #10 Supply Chain Attack
+
+- **Strategic ID:** #10
+- **Operational root ID:** TLCTC-10.00
+- **Name:** Supply Chain Attack
+- **Definition:** An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.
+- **Attacker's view:** "I abuse the trust in third-party components."
+- **Generic vulnerability:** Trust in third-party components and update channels can be subverted.
+- **Topology:** Bridge (Third-party → Organization).
+
+The cluster is placed at the Trust Acceptance Event (TAE) — the moment the organization's domain honors the third-party trust link and treats a trust artifact or decision as authoritative (validate, accept, install, apply, execute, or attach privileges). Downstream effects map normally, often `#10 → #7` or `#10 → #1` (see R-SUPPLY).
 
 ## 5. The Ten Axioms
 
