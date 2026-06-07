@@ -51,7 +51,7 @@ Through this thought experiment and a careful examination of the vulnerabilities
 
 ### 3.1 Cause-Orientation and the Cause/Event/Consequence Separation
 
-TLCTC is a cause-oriented taxonomy. A threat cluster sits on the *cause* side of an attack: it names the generic vulnerability an attacker exploits, not the event that follows or the consequence that results. Conceptually, this corresponds to the cause side of a bow-tie model, where threats are the causes that converge on a central risk event, and losses of confidentiality, integrity, or availability are recorded separately as outcomes on the consequence side. (The full bow-tie treatment, including control frameworks and indicators, belongs to a separate application and governance document and is out of scope here; the model is used only as the conceptual anchor for keeping cause, event, and consequence distinct.)
+TLCTC is a cause-oriented taxonomy. A threat cluster sits on the *cause* side of an attack: it names the generic vulnerability an attacker exploits, not the event that follows or the consequence that results. Conceptually, this corresponds to the cause side of a bow-tie model, where threats are the causes that converge on a central risk event, and losses of confidentiality, integrity, or availability are recorded separately as outcomes on the consequence side. (Section 3.4 develops this cause–event–consequence model; the *control* side of the bow-tie — control frameworks, indicators, and governance mapping — belongs to a separate application document and is out of scope here.)
 
 The practical consequence is that outcomes are never threats. Labels such as "data breach," "service outage," or "ransomware" describe effects, not the generic vulnerability that was exploited to produce them. They are recorded as data risk events on the consequence side, while the threat that caused them is classified by its cause. Keeping these layers apart is what allows two analysts to classify the same incident the same way and what makes mappings from threat to control reproducible.
 
@@ -74,9 +74,31 @@ Topology matters for control ownership and defense alignment: internal threats c
 
 Topology is a structural property and does not change cluster classification, which remains anchored in the initial generic vulnerability. Cluster-level topology (a stable property of the cluster definition) is related to but distinct from step-level topology (whether a specific step crosses a concrete domain boundary in a given scenario). Every #8, #9, and #10 step is normally a bridge step; internal-cluster steps (#1–#7) may also cross a boundary in multi-tenant or partner contexts, in which case the crossing is annotated in the attack-path notation (Section 7) rather than reclassified.
 
+### 3.4 The Cause–Event–Consequence Model
+
+TLCTC anchors its cause/outcome separation (Axiom III) in a bow-tie risk structure with a single central event. The ten clusters sit on the cause (left) side; outcomes sit on the consequence (right) side; the two are joined by one pivot event:
+
+> **System Risk Event (SRE) — Loss of Control / System Compromise:** the point at which the attacker achieves unauthorized control over the system's behavior, privileges, data, or trust relationships, sufficient to pursue attack objectives.
+
+The SRE is positioned deliberately *before* outcomes. Compromise can exist without immediate observable impact — an attacker may hold persistent control for weeks before exfiltration — so the central event opens a detection window between initial compromise and any data loss. Other threats cause an outcome effectively at the moment of compromise (a successful SQL injection reading data, a flood exhausting capacity). The model accommodates both: the SRE is the pivot, whether consequences are delayed or simultaneous.
+
+Consequences follow a structured, variable-length chain:
+
+> **SRE → DRE → BRE\*** (System Risk Event → Data Risk Event → Business Risk Event(s))
+
+| Event | Definition | Examples |
+| --- | --- | --- |
+| **SRE** | Loss of Control / System Compromise — the central event | RCE achieved; persistent access established |
+| **DRE** | Loss of Confidentiality, Integrity, or Availability/Accessibility | data exfiltrated `[DRE: C]`; records altered `[DRE: I]`; service encrypted `[DRE: Ac]` |
+| **BRE** | A discrete business-level event triggered by a DRE or a preceding BRE | regulatory notification; outage declared; fine imposed |
+
+Business Risk Events may cascade (`SRE → DRE → BRE₁ → … → BREₙ`); chain length is organization-dependent. An organization's risk appetite determines at which BRE the chain reaches its terminal **Business Impact** — a role a BRE can hold, not a separate event type. Every transition carries its own Δt detection-and-intervention window, and the chain can break at any point: not every SRE leads to a DRE, and not every DRE leads to a BRE.
+
+Crucially, **outcomes are never threats.** A data risk event such as "data breach" or "ransomware impact" records *what happened*; it never changes the cluster classification of the step that caused it. This is the operational form of Axiom III, and it is what allows the same outcome to be traced back to different cause-side clusters.
+
 ## 4. The Ten Threat Clusters
 
-Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.3.json`) so that this paper and the schema cannot drift. The developer's view — the defensive design responsibility implied by each cluster — and the supporting prose are drawn from the canonical cluster definitions (whitepaper §4.1); the developer's view is editorial guidance and is not carried in the JSON dictionary.
+Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.3.json`) so that this paper and the schema cannot drift. The developer's view — the defensive design responsibility implied by each cluster — the normative **boundary tests**, and the supporting prose are drawn from the canonical cluster definitions (whitepaper §4.1); these are editorial/normative guidance and are not carried in the JSON dictionary.
 
 ### #1 Abuse of Functions
 
@@ -91,6 +113,12 @@ Each cluster is identified by a strategic ID (`#N`) for management-level use and
 
 This cluster covers the manipulation of legitimate software capabilities — features, APIs, configurations, administrative settings, and workflows — through standard interfaces using built-in input types and valid sequences of actions, achieving an attacker advantage without requiring an implementation flaw.
 
+**Boundary tests (normative):**
+
+- If an implementation flaw is required → #2 or #3.
+- If this step enables execution of FEC → record #1 for enablement and `→ #7` for execution (`#1 → #7`).
+- If the step is primarily credential use/presentation → #4.
+
 ### #2 Exploiting Server
 
 - **Strategic ID:** #2
@@ -103,6 +131,14 @@ This cluster covers the manipulation of legitimate software capabilities — fea
 - **Topology:** Internal.
 
 The vulnerable component accepts and handles inbound requests or stimuli relative to the attacker. Crafted payloads (for example SQL injection strings, buffer overflows, or XXE payloads) trigger specific implementation bugs, forcing unintended behavior or enabling code execution.
+
+**Boundary tests (normative):**
+
+- If behavior is achieved without an implementation flaw (pure feature/config misuse) → #1.
+- If the vulnerable component is in a client role → #3.
+- TOCTOU / race conditions are implementation flaws → #2 (and `→ #7` only if FEC executes).
+- If exploitation results in FEC execution → append `→ #7` (`#2 → #7`) per R-EXEC.
+- If exploitation yields security impact without FEC execution (e.g. authorization bypass, SQLi data read/write) → #2 only; document outcomes as Data Risk Events.
 
 ### #3 Exploiting Client
 
@@ -117,6 +153,13 @@ The vulnerable component accepts and handles inbound requests or stimuli relativ
 
 The vulnerable component consumes external responses, content, or state. Exploitation targets coding mistakes in parsing, rendering, state management, or response handling, typically through crafted content delivered during outbound interaction.
 
+**Boundary tests (normative):**
+
+- If behavior is achieved without an implementation flaw (pure feature misuse) → #1.
+- If the vulnerable component is in a server role → #2.
+- If exploitation results in FEC execution → append `→ #7` (`#3 → #7`) per R-EXEC.
+- If exploitation yields security impact without FEC execution → #3 only; document outcomes as Data Risk Events.
+
 ### #4 Identity Theft
 
 - **Strategic ID:** #4
@@ -129,6 +172,12 @@ The vulnerable component consumes external responses, content, or state. Exploit
 - **Topology:** Internal.
 
 This cluster covers the presentation or use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act as an identity different from the presenter's own. Credential acquisition maps to the enabling cluster; credential use always maps here (see R-CRED).
+
+**Boundary tests (normative):**
+
+- Credential acquisition/exposure/derivation/forgery maps to the enabling cluster; credential use/presentation always maps to #4 (R-CRED).
+- If the step creates fraudulent credentials, certificates, or tokens, map that creation/derivation to the enabling mechanism (#1/#2/#3/#7/#10 as appropriate), then map subsequent use to #4.
+- If the step is primarily persuading a human to reveal or approve → #9 for that manipulation step.
 
 ### #5 Man in the Middle
 
@@ -143,6 +192,11 @@ This cluster covers the presentation or use of credentials, tokens, keys, sessio
 
 The cluster covers interception, observation, modification, injection, replay, or protocol downgrade/stripping from a controlled position on a communication path. Gaining the position maps to another cluster; #5 begins once the position is controlled (see R-MITM).
 
+**Boundary tests (normative):**
+
+- Gaining the privileged position maps to another cluster; #5 begins once the position is controlled (R-MITM).
+- If the primary act is credential use after capture → #4 for the use step.
+
 ### #6 Flooding Attack
 
 - **Strategic ID:** #6
@@ -155,6 +209,12 @@ The cluster covers interception, observation, modification, injection, replay, o
 - **Topology:** Internal.
 
 The cluster covers exhaustion of finite resources — bandwidth, CPU, memory, storage, quotas, or pools — through volume or intensity that exceeds capacity limits. Availability loss caused primarily by an implementation defect is classified as #2 or #3 instead (see R-FLOOD).
+
+**Boundary tests (normative):**
+
+- If availability loss is primarily caused by an implementation defect (crash, algorithmic-complexity weakness such as ReDoS) → #2/#3.
+- If availability loss is primarily capacity exhaustion by volume/intensity → #6 (R-FLOOD).
+- If attackers amplify load by abusing legitimate functions, the enabling step may be #1, but the exhaustion event remains #6.
 
 ### #7 Malware
 
@@ -169,6 +229,13 @@ The cluster covers exhaustion of finite resources — bandwidth, CPU, memory, st
 
 The cluster covers execution of Foreign Executable Content (FEC) through the environment's designed execution capabilities — binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters — including dual-use tooling when it executes attacker-controlled content. If FEC executes, a #7 step must be recorded at the execution moment (see R-EXEC).
 
+**Boundary tests (normative):**
+
+- If FEC executes → #7 (R-EXEC), even if execution is in-memory and no files are created.
+- If legitimate function misuse enables FEC execution → `#1 → #7`.
+- If an exploit payload triggers an implementation flaw and results in FEC execution → `#2/#3 → #7`.
+- If an implementation flaw is exploited but no FEC executes → do not add #7.
+
 ### #8 Physical Attack
 
 - **Strategic ID:** #8
@@ -181,6 +248,10 @@ The cluster covers execution of Foreign Executable Content (FEC) through the env
 - **Topology:** Bridge (Physical → Cyber).
 
 The cluster spans direct contact with hardware, facilities, media, and interfaces (including removable media) as well as exploitation of physical-layer properties such as wireless spectrum, emanations, and environmental dependencies.
+
+**Boundary tests (normative):**
+
+- If the physical step leads to FEC execution → `#8 → #7`.
 
 ### #9 Social Engineering
 
@@ -195,6 +266,12 @@ The cluster spans direct contact with hardware, facilities, media, and interface
 
 The cluster covers psychological manipulation that causes a human to disclose information, grant access, execute content, modify configuration, or bypass procedures. #9 is only the human manipulation step; subsequent technical steps map to their own clusters. Technical vulnerabilities are never #9.
 
+**Boundary tests (normative):**
+
+- Technical vulnerabilities (CVEs) are never #9.
+- #9 is only the human manipulation step; subsequent technical steps map to their own clusters.
+- Typical sequences: `#9 → #4`, `#9 → #7`, `#9 → #1`.
+
 ### #10 Supply Chain Attack
 
 - **Strategic ID:** #10
@@ -207,6 +284,37 @@ The cluster covers psychological manipulation that causes a human to disclose in
 - **Topology:** Bridge (Third-party → Organization).
 
 The cluster is placed at the Trust Acceptance Event (TAE) — the moment the organization's domain honors the third-party trust link and treats a trust artifact or decision as authoritative (validate, accept, install, apply, execute, or attach privileges). Downstream effects map normally, often `#10 → #7` or `#10 → #1` (see R-SUPPLY).
+
+**Boundary tests (normative):**
+
+- Place #10 at the Trust Acceptance Event (TAE), where the third-party trust link is honored and becomes authoritative inside the organization.
+- Falsifiability: if removing the third-party trust link stops this step from succeeding → #10 belongs here.
+- Downstream effects map normally: often `#10 → #7` (accepted artifact leads to FEC execution) or `#10 → #1` (accepted authorization/entitlement enables function abuse).
+- Federation clarity: credential use at the identity provider is #4; acceptance of the IdP assertion/token at the service provider is #10.
+
+### Strategic and Operational Layers
+
+Each cluster carries two equivalent identifiers serving different needs (Axiom VIII). The **strategic layer** uses the human-readable form `#X` (X ∈ {1…10}) for executive communication, risk registers, and board reporting. The **operational layer** uses the machine-readable form `TLCTC-XX.YY` for tooling, SIEM rules, threat-intelligence exchange, and sub-threat granularity.
+
+**Equivalence and stability (normative):**
+
+- `#X` and `TLCTC-0X.00` (or `TLCTC-10.00`) refer to the same top-level cluster and MUST be treated as semantically equivalent.
+- `TLCTC-XX.00` is reserved for the top-level cluster; sub-cluster `00` MUST NOT carry any other meaning.
+- `TLCTC-XX.YY` with `YY ≠ 00` MAY express an operational sub-threat but MUST NOT change the top-level meaning of cluster `XX`.
+- Cluster identifiers `#1`–`#10` / `TLCTC-01`–`TLCTC-10` are immutable; their definitions MUST NOT change without axiom-level justification.
+
+The two-digit suffix `YY` is hierarchical: `TLCTC-XX.Y0` (tens digit) is a **sub-cluster** — a vector class within the cluster — and `TLCTC-XX.YZ` (ones digit ≠ 0) is a **refinement** within that sub-cluster, yielding up to 81 operational positions per cluster (strategic shorthand `#X.Y`, e.g. `#8.1` = `TLCTC-08.10`). Every sub-cluster must answer: *through which vector does the attacker reach the same generic vulnerability?* If the answer requires a different generic vulnerability, it belongs in a different cluster.
+
+Four clusters have reference sub-cluster decompositions; the remaining six are left open for community refinement:
+
+| Cluster | Sub-cluster vectors |
+| --- | --- |
+| **#2 Exploiting Server** | `#2.1` protocol · `#2.2` core function · `#2.3` external handler |
+| **#3 Exploiting Client** | `#3.1` protocol · `#3.2` core function · `#3.3` external handler |
+| **#8 Physical Attack** | `#8.1` mechanical (contact) · `#8.2` signal (no contact) |
+| **#10 Supply Chain Attack** | `#10.1` update · `#10.2` development · `#10.3` hardware |
+
+The `#2`/`#3` symmetry yields a complete 2×3 matrix (server/client × protocol/core/handler): any code exploit on a networked component maps to exactly one cell. This operational layer is where specific vulnerabilities (CVEs), techniques, and tooling attach beneath the stable strategic clusters.
 
 ## 5. The Ten Axioms
 
