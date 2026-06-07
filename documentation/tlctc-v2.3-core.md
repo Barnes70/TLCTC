@@ -226,9 +226,9 @@ The axioms fall into four groups: scope (I–II), separation (III–V), classifi
 
 ## 6. Classification Rules
 
-The classification rules operationalize the axioms, resolving recurring boundary questions so that assignment remains reproducible. Each rule statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.3.json`), together with its enforcement level. All fourteen rules carry the enforcement level **must**. Two are machine-enforceable (R-EXEC, R-INTRA-9); the remainder are enforced through analyst judgment guided by the stated rule.
+The classification rules operationalize the axioms, resolving recurring boundary questions so that assignment remains reproducible. Each rule statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.3.json`), together with its enforcement level. Most rules carry the enforcement level **must**; R-UNRES-7 is **should** and R-UNRES-6 is **may**. Two are machine-enforceable (R-EXEC, R-INTRA-9); the remainder are enforced through analyst judgment guided by the stated rule.
 
-The rules are presented in two groups: the six core rules, and the eight v2.1 extension rules covering transit, intra-system boundaries, and unresolved steps.
+The rules are presented in two groups: the six core rules, and the ten v2.1 extension rules covering transit, intra-system boundaries, and unresolved steps.
 
 ### 6.1 Core Rules
 
@@ -257,6 +257,10 @@ The rules are presented in two groups: the six core rules, and the eight v2.1 ex
 **R-UNRES-3** (must). '?'/'…' are excluded from statistics — they represent absence of knowledge, not a category.
 
 **R-UNRES-5** (must). DRE tags ('+ [DRE: ...]') MUST NOT be appended to '?'/'…'. Without a classified cluster there is no causal basis for asserting a data risk event in the notation.
+
+**R-UNRES-6** (may). Boundary operators ('||...||', '⇒', '|...|') MAY appear adjacent to '?'/'…' — boundaries are independently observable.
+
+**R-UNRES-7** (should). Every '?'/'…' is an open analytical task. Progressively replace with classified steps as evidence matures.
 
 **R-UNRES-8** (must). Any path containing '?'/'…' MUST carry a prose annotation explaining what is unresolved and why.
 

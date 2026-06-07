@@ -186,6 +186,18 @@
       "machine_enforceable": false
     },
     {
+      "rule_id": "R-UNRES-6",
+      "statement": "Boundary operators ('||...||', '⇒', '|...|') MAY appear adjacent to '?'/'…' — boundaries are independently observable.",
+      "enforcement_level": "may",
+      "machine_enforceable": false
+    },
+    {
+      "rule_id": "R-UNRES-7",
+      "statement": "Every '?'/'…' is an open analytical task. Progressively replace with classified steps as evidence matures.",
+      "enforcement_level": "should",
+      "machine_enforceable": false
+    },
+    {
       "rule_id": "R-UNRES-8",
       "statement": "Any path containing '?'/'…' MUST carry a prose annotation explaining what is unresolved and why.",
       "enforcement_level": "must",
