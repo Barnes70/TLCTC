@@ -175,7 +175,23 @@ The full 987-entry mapping, with verdicts, rationale, and CVE references, is at 
 
 ## 7. The Bow-Tie in Governance
 
-<filled by Task 8>
+The core paper anchors TLCTC's cause/outcome separation in a bow-tie risk structure (core §3.4): the ten clusters sit on the cause side, outcomes sit on the consequence side, and the two are joined by a single pivot, the **System Risk Event (SRE)** — Loss of Control / System Compromise. This section does not re-derive that model; it operationalizes it as the organizing frame for control placement. A complete bow-tie has five elements, and each element answers a distinct governance question.
+
+| Element | Position | Governance role |
+|---|---|---|
+| **Threats** | Left (cause) | The initiating forces. In TLCTC these are the ten clusters; an attack path is a sequence of cluster steps on this side. |
+| **Preventive controls** | Left | Barriers that reduce the likelihood that a cluster step reaches the central event. |
+| **Central event (SRE)** | Knot | The decisive loss-of-control state; the pivot between cause and effect. |
+| **Mitigating controls** | Right | Barriers that detect, contain, reduce impact, or enable recovery once compromise has occurred. |
+| **Consequences (DRE → BRE\*)** | Right (effect) | The outcome chain — Data Risk Events (loss of C/I/A) cascading into Business Risk Events (core §3.4). |
+
+The single most consequential property for governance is that **controls are placed by their position relative to the central event, not by the outcome they are imagined to prevent.** A control's bow-tie position fixes both what it can do and how it is measured.
+
+**Preventive controls** act on the left side. Their objective is to lower the probability that a given cluster step succeeds — input validation against `#2`, phishing-resistant authentication against `#4`, application allowlisting that denies `#7` execution. These map naturally onto the IDENTIFY and PROTECT functions: a preventive control is only meaningful once the weakness enabling a specific cluster has been identified, and it is then engineered to deny that step. Because each cluster is defined by exactly one generic vulnerability, preventive controls inherit a clean per-cluster structure — the same cluster step always invites the same class of preventive objective, which is what makes control coverage comparable across systems and incidents.
+
+**Mitigating controls** act on the right side, after the SRE. Their objective is no longer to stop the cluster step — that step has, by hypothesis, already reached the central event — but to compress the consequence chain: detect the loss of control, contain and eradicate it, and restore trustworthy capability before a Data Risk Event matures into a Business Risk Event. These map onto DETECT, RESPOND, and RECOVER. EDR recognizing a `#7` execution, token revocation cutting short `#4`, and restoration from known-good backups that limits a `[DRE: Ac]` are all right-side controls, distinguished by which transition in the consequence chain they target.
+
+This placement discipline yields two governance benefits the whitepaper makes explicit (§6.5). First, **comparable control mapping**: because threats and outcomes are held apart, every control can be assigned an unambiguous position and function, so two incidents with the same outcome but different causes — `#9 → #4` versus `#2`, both ending in exposed data — are still analyzed and remediated against different left-side controls. Second, the **detection window** the SRE creates is itself a managed object: the span between compromise and consequence is where mitigating controls earn their value, and its existence is precisely why control failure is tracked on a separate dimension from threats rather than folded into an outcome label such as "breach" or "ransomware." Governance therefore reasons about two distinct levers — reduce the likelihood of reaching the SRE (left), and reduce the severity and reach of what follows it (right) — without ever conflating the cause-side cluster with the effect-side outcome.
 
 ## 8. Mapping to the NIST Cybersecurity Framework
 
