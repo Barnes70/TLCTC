@@ -102,7 +102,42 @@ Two practitioner cautions follow directly from the boundary. First, never append
 
 ## 5. Worked Examples
 
-<filled by Task 6>
+The following three examples apply the procedure (§2), the decision tree (§3), and the outcome-recording rules (§4) end to end. Each is drawn verbatim from the published attack-path corpus; the source JSON is cited so the full step-by-step analysis can be consulted.
+
+### 5.1 SolarWinds / SUNBURST (2020)
+
+*Scenario.* A trojanized SolarWinds Orion update, digitally signed by the vendor, was distributed through the legitimate update channel; once installed it gave the actor a foothold from which forged SAML tokens unlocked cloud resources. Source: `json-schemas/layer-3/examples/solarwinds-2020.json`.
+
+*Path.*
+```
+#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]
+```
+
+*Reasoning.* The first step is **#10 at the Trust Acceptance Event** (R-SUPPLY): the cluster is placed not at the upstream vendor compromise but at the moment the signed update is accepted and becomes authoritative inside `@Org` — the falsifiability test holds, since declining the update would have prevented the step. The signed backdoor DLL then executing in the Orion service is a separate **#7** step (R-EXEC fires; `fec_executed: true`), recorded at the execution moment even though delivery used a designed loading mechanism. Roughly two weeks later, forged SAML tokens are *presented* to authenticate — credential **application**, always **#4** regardless of how the signing key was obtained (Axiom X / R-CRED). The final step is **#1**: using the now-valid identity to abuse Azure AD and Office 365 APIs as designed, with `[DRE: C]` recording the confidentiality breach. No code flaw appears anywhere in the path — the whole intrusion runs on trust and designed functionality.
+
+### 5.2 Chaos / MuddyWater False-Flag (2026)
+
+*Scenario.* An Iranian state actor used a Microsoft Teams chat impersonating IT support to harvest credentials and hijack MFA enrollment, then deployed RMM tools and an operator-gated RAT, exfiltrating data under a "Chaos ransomware" brand that performed no encryption. Source: `attack-paths/chaos-muddywater-falseflag-2026.json`.
+
+*Path.*
+```
+#9 ||[human][@Attacker⇒@MSTeams→@Org]|| →[Δt=?] #4 →[Δt=?] #1 →[Δt=?] #4
+   →[Δt=?] #1 →[Δt=~5s] #7 →[Δt=?] #7 + [DRE: C]
+```
+
+*Reasoning.* The opening step is **#9**, with Microsoft Teams marked as **transit** (`⇒@MSTeams`) per R-TRANSIT-3: Teams relays the deceptive content but is not itself exploited, so it is a carrier, not the attack surface. Credential acquisition happens *inside* the #9 step (the enabling cluster); the subsequent presentation of those credentials to the VPN/SSO is the separate **#4** step (R-CRED / Axiom X). The MFA self-enrollment hijack is **#1**, not #4: a flawlessly implemented self-service enrollment endpoint still permits it, so the cause is designed functional scope, and folding it into the surrounding #4 chain would erase the single highest-leverage detection point. A fresh **#4** records re-authentication now that the attacker controls the second factor. LOLBAS invocation of `curl`/installers is **#1**; the RMM and RAT binaries then executing are **#7** (R-EXEC, including dual-use tools running attacker-controlled content). Critically, the path closes on **`[DRE: C]` only** — the "ransomware" brand is extortion pressure, not a data event; tagging `[DRE: Ac]` because the report says "ransomware" would violate Axiom III.
+
+### 5.3 Active Directory Domain-Admin → Ransomware Cascade (2025)
+
+*Scenario.* A composite reference pattern grounded in three 2025 human-operated intrusions (Lynx, Storm-2603, Storm-0300/Akira): valid credentials reach Domain Admin, the attacker harvests the directory and destroys recovery tiers, then encrypts. Source: `attack-paths/ad-domain-admin-cascade-2025.json`.
+
+*Path (abridged tail).*
+```
+… → #4 ||[prod][@Attacker→@Org]|| → #1 → #4 → #1 … → #1 + [DRE: C] (DCSync)
+   → #4 (PtH/Golden Ticket) → … → #7 + [DRE: C] (exfil) → … → #7 + [DRE: Ac] (encrypt)
+```
+
+*Reasoning.* The acquisition prefix is modeled as an **unresolved gap** (`…`, R-UNRES-8) so the one file serves all five documented variants; defenders replace it with their own classified prefix. The RDP foothold with valid credentials is **#4** (clean authentication, no brute-force noise — R-CRED). The post-foothold tail is structurally **#1 Abuse of Functions**: enumeration, account creation, group elevation, and DCSync all invoke designed Active Directory capabilities at the authority the attacker holds. DCSync is the key teaching case — it is **#1 + [DRE: C]** (designed replication function abused, confidentiality breach on credential material), and its paired use (pass-the-hash or Golden Ticket presentation) is the separate **#4** with *no* DRE, because per R-CRED the DRE attaches at acquisition, never at re-use. Two `[DRE: C]` subjects appear and stay distinct: credential material (DCSync) and business file data (exfiltration). Recovery destruction (`vssadmin delete shadows`, backup-console deletion) stays **#1 + [DRE: Av]** — admin tools, data *gone*. Finally the ransomware payload running on each host is **#7 + [DRE: Ac]** — data present but encrypted; "ransomware" is the outcome label, the cluster is FEC execution.
 
 ## 6. Using the Mappings
 
