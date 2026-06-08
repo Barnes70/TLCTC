@@ -295,12 +295,31 @@ These two jobs are the same governance lever viewed from both sides of the bow-t
 
 ## 12. Limitations and Scope
 
-<filled by Task 13>
+This paper *applies* the TLCTC framework; it does not *validate* it. Empirical validation — inter-rater agreement on classification and large-scale mapping studies against incident corpora — is the subject of separate work.
+
+The control placements, NIST CSF mapping, and indicator targets in Part B are guidance, not prescriptions: they show how to position controls and measure effectiveness against each cluster, but concrete control selection, thresholds, and risk-appetite boundaries are organization-specific. The DCS and velocity-adjusted targets assume an organization can measure attack velocity (Δt) and mean time to detect (MTTD) with reasonable accuracy — instrumentation many organizations still lack.
+
+The ATT&CK→TLCTC and CWE→TLCTC mappings are reference aids for translating operational artifacts to causes; the CWE mapping in particular is AI-generated and experimental. Finally, the taxonomy itself — the ten clusters, the axioms, the rules, and the notation — is defined and bounded by the core paper; this paper neither extends nor alters it.
 
 ## 13. Glossary (Application Terms)
 
-<filled by Task 13>
+This glossary defines only the application- and governance-layer terms used in this paper. For taxonomy terms (cluster, generic vulnerability, attack path, SRE/DRE/BRE, FEC, TAE, topology, and so on) see the core paper and the full `tlctc-glossary.md`.
+
+- **Control objective** — the specific risk-mitigation aim a control is intended to achieve for a particular cluster.
+- **Preventive control** — a control on the cause side of the bow-tie that reduces the likelihood of a cluster step reaching the central event (IDENTIFY/PROTECT).
+- **Mitigating control** — a control on the consequence side that detects, contains, or enables recovery after the system risk event (DETECT/RESPOND/RECOVER).
+- **Local control** — a control protecting a specific system or asset.
+- **Umbrella control** — a control protecting a group of systems at once.
+- **KRI (Key Risk Indicator)** — a measure of risk exposure, per cluster, against a threshold derived from risk appetite.
+- **KCI (Key Control Indicator)** — a measure of control effectiveness against its objective.
+- **KPI (Key Performance Indicator)** — a measure of the operational performance of a control or process (e.g. MTTD); the performance facet of a KCI.
+- **MTTD (Mean Time to Detect)** — the average elapsed time from the occurrence of an attack step to its detection.
+- **Risk appetite** — the level of cyber-risk exposure an organization chooses to accept; it sets KRI thresholds, DCS targets, and the terminal Business Impact boundary.
 
 ## 14. References
 
-<filled by Task 13>
+1. Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.3). 2026. — the core paper this document accompanies.
+2. National Institute of Standards and Technology. *The NIST Cybersecurity Framework (CSF) 2.0.* NIST Cybersecurity White Paper NIST CSWP 29, 2024. https://doi.org/10.6028/NIST.CSWP.29
+3. MITRE Corporation. *MITRE ATT&CK: Adversarial Tactics, Techniques, and Common Knowledge.* https://attack.mitre.org/
+4. MITRE Corporation. *Common Weakness Enumeration (CWE).* https://cwe.mitre.org/
+5. MITRE Corporation. *Common Vulnerabilities and Exposures (CVE).* https://www.cve.org/
