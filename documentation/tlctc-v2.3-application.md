@@ -88,7 +88,17 @@ Two ordering consequences are worth noting. First, because Q1 precedes Q7, the L
 
 ## 4. Recording Outcomes in Practice
 
-<filled by Task 5>
+The cause–event–consequence model (core §3.4) places the ten clusters on the cause side and outcomes on the consequence side, joined by one pivot — the **System Risk Event (SRE)**, the loss of control / system compromise. Consequences then follow a variable-length chain: **SRE → DRE → BRE\***. This section is about the *practice* of recording the consequence side alongside a classified step — when and how to tag — not about redefining the model, for which the core is authoritative.
+
+**The hard boundary.** Outcomes are never clusters. A "data breach," a "ransomware impact," an "outage" record *what happened*; none of them is a generic vulnerability and none changes the cluster of the step that caused it. This is the operational form of Axiom III. In practice it means the analyst classifies the step first (§2), and only then asks whether that step also produced a data-level effect worth recording.
+
+**Tagging Data Risk Events.** A DRE is recorded as a tag appended to a classified step: `#X + [DRE: C]`, `#X + [DRE: I]`, `#X + [DRE: A]`. The letters are the impacted property — Confidentiality, Integrity, Availability/Accessibility (general). When the availability distinction matters operationally, use the two refinements from core §7.6: `Av` for *Availability* (data gone or unreachable — wiped, deleted) and `Ac` for *Accessibility* (data present but unusable — encrypted, locked behind a disabled account). The distinction is load-bearing for response: `Ac` (ransomware) leaves recovery options that `Av` (wiper) destroys. Tags may be combined (`+ [DRE: C, I]`). A DRE is recorded at the step where the impact *first occurs* — confidentiality is breached at the read/collection step, not re-cited at every later staging or exfiltration step that handles the same data.
+
+**The SRE pivot, in practice.** The SRE marks the moment the attacker holds control sufficient to pursue objectives. It is not a tag on a step; it is a position in the path. Recording it matters because it opens the detection window: compromise can exist for weeks before any DRE, so naming the SRE tells responders where "we are compromised" began even when no data has yet moved. In some paths the DRE coincides with the SRE (a SQL injection that reads data the instant it succeeds); in others the SRE precedes the first DRE by days. Both are accommodated — the SRE is the pivot regardless of whether consequences are simultaneous or delayed.
+
+**BRE chaining for reporting.** Beyond the DRE, business-level effects are recorded as Business Risk Events (`SRE → DRE → BRE₁ → … → BREₙ`): a regulatory notification, a declared outage, an imposed fine. These chain for reporting and governance (Part B), and the chain can break at any point — not every SRE yields a DRE, and not every DRE yields a BRE. In Layer-3 attack-path notation, BREs are generally narrated in prose rather than appended to steps; the notation carries the cause-side path and the DRE tags, and the business chain is reconstructed from them.
+
+Two practitioner cautions follow directly from the boundary. First, never append a DRE to an unresolved step (`?`/`…`): without a classified cluster there is no causal basis for asserting the data effect in notation (core R-UNRES-5); record it in prose if independently confirmed. Second, never let the *name* of an outcome drive classification — a report that says "ransomware" still classifies the encryption execution as #7 and tags `[DRE: Ac]`; the brand is not the cause.
 
 ## 5. Worked Examples
 
