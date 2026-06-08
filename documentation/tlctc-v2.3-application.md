@@ -195,7 +195,7 @@ This placement discipline yields two governance benefits the whitepaper makes ex
 
 ## 8. Mapping to the NIST Cybersecurity Framework
 
-The NIST Cybersecurity Framework 2.0 [NIST CSF 2.0] supplies a stable set of six functions — **GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER** — that name *what an organization does* about cyber risk. TLCTC supplies the complementary half: the ten clusters name *what was exploited*. The two combine cleanly because they answer different questions and never compete to classify the same thing — clusters are nouns (causes), CSF functions are verbs (responses). The combination becomes precise, rather than a loose pairing of vocabularies, only when the functions are anchored to a point in the cause–event–consequence lifecycle of §7.
+The NIST Cybersecurity Framework 2.0 (CSF 2.0) supplies a stable set of six functions — **GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER** — that name *what an organization does* about cyber risk. TLCTC supplies the complementary half: the ten clusters name *what was exploited*. The two combine cleanly because they answer different questions and never compete to classify the same thing — clusters are nouns (causes), CSF functions are verbs (responses). The combination becomes precise, rather than a loose pairing of vocabularies, only when the functions are anchored to a point in the cause–event–consequence lifecycle of §7.
 
 The event lifecycle is `cluster step(s) → SRE → DRE → BRE chain`, and each function has a *primary* emphasis depending on whether it acts before, at, or after the SRE. The table below states primary emphasis; in a mature program any function may contribute at any point, but a control objective is only meaningful when attached to a specific lifecycle position.
 
@@ -245,7 +245,7 @@ The cluster × function matrix of §8 becomes measurable through a small hierarc
 
 A performance indicator measured in isolation is uninterpretable, because control performance is only *sufficient* or *insufficient* relative to attacker speed. Consider an identical four-hour mean time to detect (MTTD) against two attacks:
 
-- **APT campaign**, `#4 →[Δt=14 days] #1`: detection occurs roughly 336× faster than the attacker completes the transition. The control is highly effective — there is ample buffer.
+- **APT campaign**, `#4 →[Δt=14 days] #1`: detection occurs roughly 84× faster than the attacker completes the transition (a 4-hour MTTD against a 336-hour transition). The control is highly effective — there is ample buffer.
 - **Automated ransomware**, `#4 →[Δt=10 min] #1`: detection occurs ~24× *slower* than the transition. The same four-hour MTTD is now ineffective — the attacker wins the transition long before detection fires.
 
 The MTTD did not change; the verdict did. The missing variable is the attack velocity Δt of the transition being defended (core §7.2).
@@ -272,10 +272,10 @@ Because DCS is appetite-bounded, an organization sets a DCS target per velocity 
 
 | Velocity class | Typical Δt | DCS target | Required MTTD | Investment focus |
 |---|---|---|---|---|
-| Latent (VC-1) | 7 days | ≤ 0.5 | < 3.5 days | Threat-hunting cycles |
-| Medium (VC-2) | 4 hours | ≤ 0.8 | < 3.2 hours | SOC SLA, alert tuning |
-| Fast (VC-3) | 10 min | ≤ 0.8 | < 8 min | Automation, playbooks |
-| Realtime (VC-4) | 30 sec | N/A | N/A | Prevention only |
+| Strategic (VC-1) | 7 days | ≤ 0.5 | < 3.5 days | Threat-hunting cycles |
+| Tactical (VC-2) | 4 hours | ≤ 0.8 | < 3.2 hours | SOC SLA, alert tuning |
+| Operational (VC-3) | 10 min | ≤ 0.8 | < 8 min | Automation, playbooks |
+| Real-Time (VC-4) | 30 sec | N/A | N/A | Prevention only |
 
 The realtime row carries the most important governance message: below roughly one minute of Δt, detection-and-response is structurally too slow regardless of MTTD investment, and the rational target is not a faster DCS but architectural prevention (rate limits, automatic isolation, design that denies the step). For all other classes the table reads top-down: risk appetite fixes the DCS target, the DCS target and the cluster's typical Δt fix the required MTTD, and that MTTD becomes the procedural KCI's SLO.
 
