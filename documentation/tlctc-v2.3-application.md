@@ -233,7 +233,55 @@ Defense-in-depth across clusters follows directly. Because an attack path is a s
 
 ## 10. Indicators: KRI, KCI, KPI
 
-<filled by Task 11>
+The cluster × function matrix of §8 becomes measurable through a small hierarchy of strategic indicators, each attached to a different layer of the bow-tie and each anchored, ultimately, to the organization's risk appetite. Three indicator types and one derived measure cover the lifecycle.
+
+**KRI — Key Risk Indicators** sit at the risk-event layer (the consequence side and the realized cluster steps that reach it). A KRI measures *exposure to threat pressure* per cluster: how often risk events and near-misses occur for a given cause. They are bounded *directly* by risk appetite — their thresholds are the tolerance line. Crucially, KRIs must count **near-misses**, not just incidents: a near-miss is a case where the threat event materialized (the attacker acted) but a control held and prevented business impact. A phishing email with harvested credentials that reaches an inbox but is reported before use is a realized `#9 → #4` whose control held; it is a KRI data point, not a non-event. Examples by cluster: exploitation attempts against internet-facing services (`#2`), credential stuffing/spray volume (`#4`), malware execution attempts (`#7`), each split into blocked (near-miss) and successful (incident).
+
+**KCI — Key Control Indicators** sit at the control-objectives layer and measure whether each objective in the matrix is achieved relative to a target *derived* from risk appetite. KCIs come in two forms. **Technical KCIs** measure state and coverage — "what *is* the posture?" — against a threshold target: percent of privileged accounts with hardware MFA (`#4`), percent of endpoints with application allowlisting (`#7`), percent of internet-facing services with no critical CVEs (`#2`). **Procedural KCIs** measure process performance — "how fast/well do we execute?" — against an SLA/SLO target: mean time to patch critical CVEs (`#1`/`#2`), mean time to revoke compromised tokens (`#4`), mean time to isolate an infected endpoint (`#7`).
+
+**KPI — Key Performance Indicators** are, in this scheme, the procedural KCIs viewed as process-performance measures; the paper treats KPI as the performance facet of KCI rather than a separate fourth indicator type. The distinction that matters strategically is the three-way one — risk exposure (KRI), control state (technical KCI), control performance (procedural KCI/KPI) — all reporting upward against risk-appetite-derived targets.
+
+### 10.1 Velocity context: the same MTTD can be effective or ineffective
+
+A performance indicator measured in isolation is uninterpretable, because control performance is only *sufficient* or *insufficient* relative to attacker speed. Consider an identical four-hour mean time to detect (MTTD) against two attacks:
+
+- **APT campaign**, `#4 →[Δt=14 days] #1`: detection occurs roughly 336× faster than the attacker completes the transition. The control is highly effective — there is ample buffer.
+- **Automated ransomware**, `#4 →[Δt=10 min] #1`: detection occurs ~24× *slower* than the transition. The same four-hour MTTD is now ineffective — the attacker wins the transition long before detection fires.
+
+The MTTD did not change; the verdict did. The missing variable is the attack velocity Δt of the transition being defended (core §7.2).
+
+### 10.2 DCS as a Key Control Indicator
+
+The core (§7.2) defines the **Detection Coverage Score** as the time relationship between the defender's detection and the attacker's velocity at an edge:
+
+```
+DCS = MTTD / Δt
+```
+
+The core establishes DCS as a velocity relationship; here it is operationalized as a *control-effectiveness KCI* — the full control-indicator treatment deferred from the core. As a KCI, DCS sits between the control-objectives layer and the risk-event layer: it contextualizes raw MTTD (a procedural KCI) by the threat reality (Δt), turning "how fast do we detect?" into "do we detect fast *enough* to matter?" Interpretation:
+
+- **DCS < 1.0** — detection completes before the attacker completes the transition; the defender is ahead; the control is effective.
+- **DCS = 1.0** — detection matches attack speed; marginal, with no buffer.
+- **DCS > 1.0** — the transition completes before detection fires; the attacker wins the transition; the control is ineffective at that edge.
+
+The two scenarios above are DCS ≈ 0.012 (APT, highly effective) versus DCS ≈ 24 (ransomware, ineffective) for the identical MTTD — which is the quantitative form of the velocity verdict.
+
+### 10.3 Velocity-adjusted DCS targets
+
+Because DCS is appetite-bounded, an organization sets a DCS target per velocity class, and the target then *derives* the required MTTD that the procedural KCI must meet. The velocity classes are those of core §7.2.
+
+| Velocity class | Typical Δt | DCS target | Required MTTD | Investment focus |
+|---|---|---|---|---|
+| Latent (VC-1) | 7 days | ≤ 0.5 | < 3.5 days | Threat-hunting cycles |
+| Medium (VC-2) | 4 hours | ≤ 0.8 | < 3.2 hours | SOC SLA, alert tuning |
+| Fast (VC-3) | 10 min | ≤ 0.8 | < 8 min | Automation, playbooks |
+| Realtime (VC-4) | 30 sec | N/A | N/A | Prevention only |
+
+The realtime row carries the most important governance message: below roughly one minute of Δt, detection-and-response is structurally too slow regardless of MTTD investment, and the rational target is not a faster DCS but architectural prevention (rate limits, automatic isolation, design that denies the step). For all other classes the table reads top-down: risk appetite fixes the DCS target, the DCS target and the cluster's typical Δt fix the required MTTD, and that MTTD becomes the procedural KCI's SLO.
+
+### 10.4 Indicator hierarchy and axiom compliance
+
+The indicators nest under risk appetite: appetite sets KRI thresholds (max incidents/near-misses), KCI targets (coverage and MTTD), and DCS targets (per velocity class); operational raw metrics and calculated indicators feed these strategic aggregates from below. Two guardrails preserve framework integrity. First, control failure is never a threat (Axiom III): an indicator must read "lack of MFA reduces control effectiveness against `#4`," not "lack of MFA is a risk," and "high DCS means controls are ineffective for fast-velocity attacks," not "slow detection is a vulnerability." Second, indicators are excluded from threat statistics in the same way the framework keeps causes and outcomes apart — KRIs count realized events per cluster, but they never re-classify a cluster by its control state. This keeps the indicator system measuring the matrix without disturbing the taxonomy it measures against.
 
 ## 11. Risk Appetite and Business Impact
 
