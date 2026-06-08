@@ -52,7 +52,39 @@ The procedure is deliberately cause-first and step-local: never classify the inc
 
 ## 3. The Decision Tree
 
-<filled by Task 4>
+The procedure in §2 establishes *what to ask*; the decision tree provides a fast, ordered triage for *answering it*. The two are complementary — the tree is a cause-first shortcut for Steps 2 and 3, not a replacement for the full procedure. It is condensed here; the complete tree, with per-tactic guidance and worked corrections, lives in `mappings/mitre-attack-enterprise/decision-tree.md`.
+
+**Two prerequisites** must be settled before walking the tree:
+
+1. **Domain.** Where does this step execute relative to the organization? `@Org` → classify. `@AttackerInfra` or `@OtherVictims` (attacker-side preparation, compromise of someone else) → **N/A**: it is threat potential, not a threat to this organization. `@3P` (a third party) → consider **#10** only if a trust boundary is crossed into the environment.
+2. **Protected asset.** Name a concrete asset in scope that the step affects. TLCTC requires a concrete target; an abstract technique description without a target asset cannot be classified.
+
+**The ordered questions.** Walk Q1→Q10 in order and **stop at the first match.** The ordering is deliberate: designed-function abuse is tested before code flaws, and identity application before lower-level mechanics, so that the most common and most generic causes are caught first.
+
+```
+Q1  Abusing a DESIGNED function/feature/API/config, no code flaw, no foreign
+    binary required?                                  → #1 Abuse of Functions
+Q2  Exploiting a CODE IMPLEMENTATION FLAW, SERVER-role component?
+                                                      → #2 Exploiting Server
+Q3  Exploiting a CODE IMPLEMENTATION FLAW, CLIENT-role component?
+                                                      → #3 Exploiting Client
+Q4  Acting as a LEGITIMATE IDENTITY by presenting credentials/tokens/keys
+    (credential APPLICATION, not acquisition)?        → #4 Identity Theft
+Q5  Intercepting/modifying/relaying communication from a privileged position
+    on the path?                                      → #5 Man in the Middle
+Q6  Overwhelming finite resources by volume or intensity? (a code bug that
+    crashes is #2/#3, not #6)                         → #6 Flooding Attack
+Q7  Is FOREIGN CODE executing? (if launched via a legitimate tool, #1 → #7)
+                                                      → #7 Malware
+Q8  Requires physical interaction with hardware/facilities?
+                                                      → #8 Physical Attack
+Q9  Psychologically manipulating a human?             → #9 Social Engineering
+Q10 Exploiting trust in a third-party component/service/update (placed at the
+    Trust Acceptance Event)?                          → #10 Supply Chain Attack
+    └─ no match → re-examine; one of the above must apply.
+```
+
+Two ordering consequences are worth noting. First, because Q1 precedes Q7, the LOLBAS pattern naturally resolves to two steps: the legitimate tool invoked through its designed interface stops at Q1 (#1), and the attacker-supplied content that subsequently runs is a second step at Q7 (#7) — the `#1 → #7` shape required by R-EXEC. Second, because Q4 (credential *application*) sits above the lower mechanics, credential *acquisition* is not classified here at all; it is classified by *how* it was acquired (a separate, earlier step) and only its use lands at Q4. When a single observation seems to match two questions, that is the signal to split it into separate steps (Step 6 of §2), each re-entering the tree on its own.
 
 ## 4. Recording Outcomes in Practice
 
