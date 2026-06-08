@@ -285,7 +285,13 @@ The indicators nest under risk appetite: appetite sets KRI thresholds (max incid
 
 ## 11. Risk Appetite and Business Impact
 
-<filled by Task 12>
+Risk appetite is the governance input that closes the loop between the consequence chain and the indicator system. It performs two jobs: it sets the thresholds against which indicators are judged, and it designates the terminal Business Impact in the consequence chain. Both follow from the cause–event–consequence model of the core (core §3.4), and neither introduces a new event type.
+
+**Setting indicator thresholds.** Every target in §10 is *derived* from risk appetite rather than chosen in isolation. Appetite states how much risk exposure the organization will accept, and that statement propagates downward: it fixes the KRI thresholds (the maximum tolerable rate of incidents and near-misses per cluster), the KCI targets (required coverage and process performance), and the DCS targets per velocity class. The DCS target is the sharpest example of appetite expressed as a control objective — declaring "DCS ≤ 0.8 for fast-velocity attacks" is a risk-appetite decision that then derives a required MTTD, which becomes a measurable SLO. Without an appetite statement the indicators have no calibrated meaning; with one, each KRI/KCI/DCS reading is a direct test of whether the organization is operating inside or outside its accepted exposure.
+
+**Designating Business Impact.** On the consequence side, the chain runs `SRE → DRE → BRE*` (core §3.4), and Business Risk Events may cascade — a leaked database triggers a notification obligation, then media coverage, then customer churn, then a regulatory fine. Risk appetite determines at which BRE the chain reaches its terminal **Business Impact (BI)**: the consequence threshold beyond which further causal decomposition stops being operationally useful. BI is therefore a **role a BRE can hold, not a separate event type** — what one organization treats as its BI (say, the notification obligation) may be a mid-chain BRE for another whose appetite tolerates more downstream consequence before declaring the terminal point. The framework supplies the chain structure; appetite supplies the cut.
+
+These two jobs are the same governance lever viewed from both sides of the bow-tie. On the cause side, appetite-derived DCS and KRI thresholds govern how hard the organization works to keep an attack path from reaching the SRE and progressing along it. On the consequence side, the BI designation fixes how far down the BRE chain the organization is willing to let an event run before it counts as a material loss. Tying the governance targets of §10 back to the consequence chain in this way keeps risk reporting coherent: a breached KRI threshold and a realized terminal BI are two expressions of the same appetite boundary, one measured as exposure and one observed as impact.
 
 ## 12. Limitations and Scope
 
