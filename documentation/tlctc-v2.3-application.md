@@ -26,7 +26,29 @@ The paper serves two distinct audiences, and is organized accordingly. **Part A 
 
 ## 2. The Classification Procedure
 
-<filled by Task 3>
+Classification operates on **attack steps**, not on incidents as a whole. An incident is decomposed into a sequence of steps, and each step is classified independently into exactly one cluster (Axiom VI). The procedure below consolidates the seven-step minimal procedure from the whitepaper (§4.2.8) into an actionable checklist. The classification rules referenced by ID (R-EXEC, R-ROLE, R-CRED, R-FLOOD, R-MITM, R-SUPPLY) are defined in full in the core paper §6; only a one-line reminder is given here.
+
+**Step 1 — Identify the attacker action and target.** State plainly what the attacker did in this step, which asset or component was targeted, and what the step was trying to achieve. A step without a concrete protected asset cannot be classified; abstract descriptions ("they moved laterally") must be resolved to a specific action against a specific target before proceeding.
+
+**Step 2 — Identify the initial generic vulnerability.** Ask the cause question: *what root weakness did the attacker exploit to make this step succeed?* The answer must map to exactly one of the ten generic vulnerabilities underlying the ten clusters — designed functional scope (#1), server-side code flaw (#2), client-side code flaw (#3), identity-artifact/credential application (#4), lack of end-to-end communication protection (#5), finite-capacity exhaustion (#6), designed execution capability for untrusted content (#7), physical accessibility (#8), human psychological factors (#9), or third-party trust dependency (#10). Classify by the cause that made *this* step work, not by the outcome it produced.
+
+**Step 3 — Apply the R-\* rules.** Check each rule for applicability and let it disambiguate:
+- **R-ROLE** — implementation flaw? Server-role component = #2, client-role component = #3.
+- **R-CRED** — credentials involved? Acquisition maps to the enabling cluster; application (authenticating) is always #4. Separate steps.
+- **R-MITM** — communication-path position? Gaining position maps to the enabling cluster; interception/modification/relay is #5.
+- **R-FLOOD** — availability impact by volume/intensity exhausting finite capacity = #6; by an implementation defect (crash/hang) = #2 or #3 per R-ROLE.
+- **R-EXEC** — does Foreign Executable Content execute here? If yes, a #7 step **must** be recorded at the execution moment (in addition to the enabling cluster).
+- **R-SUPPLY** — third-party trust link? Place #10 at the Trust Acceptance Event — the moment the trust artifact becomes authoritative inside the target domain.
+
+**Step 4 — Apply tie-breakers if needed.** If more than one cluster still seems plausible, select the cluster matching the **initial** generic vulnerability — the weakness that made the step possible, not a downstream effect. If genuine ambiguity remains, assign the best-supported cluster and record the rationale; use the epistemic-state annotations (`#X [conf=low]`, `?`) from core §6/§7 only when no cluster can be defended.
+
+**Step 5 — Record outcomes separately as DRE.** If the step produced data impact, record it as a Data Risk Event tag appended to the step (`#X + [DRE: C]`, etc.). Outcomes never change the cluster; they are recorded alongside it. The mechanics are detailed in §4.
+
+**Step 6 — Split multi-cause steps.** If what looked like one step actually contains two distinct attacker actions exploiting two different generic vulnerabilities, split it. Each resulting step maps to exactly one cluster, expressed as a path (`#X → #Y`). The canonical case is credential acquisition followed by credential use: two steps, two clusters, never one.
+
+**Step 7 — Document.** Record the cluster assignment (in strategic and/or operational notation), a brief rationale where the classification was non-obvious, any DRE tags, the step's position in the path, and velocity annotations (Δt) where temporal evidence exists. Documentation is what makes a classification auditable and reproducible by a second analyst.
+
+The procedure is deliberately cause-first and step-local: never classify the incident, always classify the step; never classify the outcome, always classify the weakness that the step exploited.
 
 ## 3. The Decision Tree
 
