@@ -195,7 +195,33 @@ This placement discipline yields two governance benefits the whitepaper makes ex
 
 ## 8. Mapping to the NIST Cybersecurity Framework
 
-<filled by Task 9>
+The NIST Cybersecurity Framework 2.0 [NIST CSF 2.0] supplies a stable set of six functions — **GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER** — that name *what an organization does* about cyber risk. TLCTC supplies the complementary half: the ten clusters name *what was exploited*. The two combine cleanly because they answer different questions and never compete to classify the same thing — clusters are nouns (causes), CSF functions are verbs (responses). The combination becomes precise, rather than a loose pairing of vocabularies, only when the functions are anchored to a point in the cause–event–consequence lifecycle of §7.
+
+The event lifecycle is `cluster step(s) → SRE → DRE → BRE chain`, and each function has a *primary* emphasis depending on whether it acts before, at, or after the SRE. The table below states primary emphasis; in a mature program any function may contribute at any point, but a control objective is only meaningful when attached to a specific lifecycle position.
+
+| Lifecycle position | Management question | Primary CSF functions |
+|---|---|---|
+| Threat exposure / precondition | Which generic vulnerability is present? | GOVERN, IDENTIFY, PROTECT |
+| Cluster step realized | Did the attacker exploit the cluster step? | DETECT, RESPOND |
+| Central event (SRE) | Has the attacker achieved loss of control? | DETECT, RESPOND |
+| Data Risk Event (DRE) | What C/I/A effect occurred? | RESPOND, RECOVER |
+| Business Risk Event chain | What business consequences are unfolding? | GOVERN, RESPOND, RECOVER |
+| Post-event improvement | What must change to reduce recurrence? | GOVERN, IDENTIFY, PROTECT, RECOVER |
+
+GOVERN is cross-cutting and does not counter any single cluster: it sets ownership, risk appetite, taxonomy adoption, and metrics governance so that all clusters are managed consistently. The five operational functions distribute across the lifecycle as above — IDENTIFY and PROTECT shape the left (cause) side, DETECT and RESPOND straddle the central event, and RESPOND and RECOVER act on the right (consequence) side.
+
+A single cluster's controls therefore distribute across all six functions. This is the **TLCTC × CSF matrix**: clusters as rows, functions as columns. Reading one row — one cluster — gives the full control objective set for that cause, with the objective type changing by column and the cause type fixed by the row. Two rows, drawn from the whitepaper's worked examples (§8.1.5–§8.1.6), illustrate the per-cluster distribution:
+
+| Function | `#2` Exploiting Server | `#4` Identity Theft |
+|---|---|---|
+| GOVERN | Ownership and risk treatment for server-side flaws | Ownership and risk treatment for credential/session assurance |
+| IDENTIFY | SAST/DAST, fuzzing, vulnerability scanning, attack-surface review | Credential and session-lifecycle audits, auth-flow review |
+| PROTECT | Patching, secure coding, input validation, WAF/API hardening | MFA, phishing-resistant auth, secure credential storage, PAM |
+| DETECT | Application/server telemetry, exception monitoring, SIEM analytics | Anomaly and session-misuse detection, impossible-travel, UEBA |
+| RESPOND | Emergency patch, isolate service, remove vulnerable component | Token revocation, session invalidation, account lockout |
+| RECOVER | Restore from known-good artifacts, rebuild, validation testing | Credential reset, re-enrollment of authenticators |
+
+The matrix is a structure for control *objectives*, not a control catalog: it tells an organization which objective each cell must satisfy for each cause, leaving the choice of specific control products to the implementer. Its practical payoff is incident learning. Given a classified attack path such as `#9 → #7 → #4 → (#1 + #7)`, an analyst walks the clusters that occurred and, for each, asks which IDENTIFY/PROTECT objective should have prevented the step, which DETECT objective should have caught it before the next step (judged against the Δt window of §10), and which RESPOND objective should have contained it. Because the same cluster always maps to the same objective row, post-incident reviews stay comparable across incidents and across the organization. Threat identification under CSF is then expressed as *(cluster(s) + typical path(s))* rather than as outcome labels, which keeps the risk-assessment activity aligned with the cause-side discipline of §7.
 
 ## 9. Local and Umbrella Controls
 
