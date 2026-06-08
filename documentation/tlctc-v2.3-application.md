@@ -141,7 +141,35 @@ The following three examples apply the procedure (§2), the decision tree (§3),
 
 ## 6. Using the Mappings
 
-<filled by Task 7>
+Two large reference mappings translate established industry taxonomies into TLCTC clusters: MITRE ATT&CK Enterprise (698 techniques) and MITRE CWE (987 weaknesses). They sit at different points of one hierarchy:
+
+```
+Weakness (CWE) → Vulnerability (CVE) → Generic Vulnerability (TLCTC) → Cluster (#1–#10)
+```
+
+A CWE names a *class* of flaw; a CVE is a *specific instance* of a CWE; TLCTC classifies by the *generic vulnerability* the flaw lets an attacker exploit, which resolves to one of the ten clusters. The CWE mapping enters this chain at the weakness end (translating scan and code-audit findings into strategic risk exposure); the ATT&CK mapping enters at the technique/behavior end (translating observed adversary actions into clusters). Both are reference aids for §2 — they accelerate, but do not replace, the per-step procedure, because the same label can map differently by context.
+
+**Using the ATT&CK mapping.** Each entry gives a technique a `tlctcMapping` in attack-path notation. A technique that resolves to a path (`#1 → #7`) is telling the analyst the technique spans more than one step: record both. Three illustrative rows:
+
+| Technique | TLCTC | Why |
+|---|---|---|
+| T1190 Exploit Public-Facing Application | `#2` | Implementation flaw in a server-role component (R-ROLE). |
+| T1078 Valid Accounts | `#4` | Credential application — authenticating with valid/stolen credentials (R-CRED). |
+| T1566 Phishing | `#9` | Human psychological manipulation is the operative mechanism. |
+
+The complete 698-technique mapping, with per-technique rationale and the cause-first decision tree, is at `mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json` and `mappings/mitre-attack-enterprise/decision-tree.md`.
+
+**Using the CWE mapping.** Each entry classifies a weakness by the generic vulnerability it enables; context-dependent weaknesses carry alternatives (`#2 | #3`) resolved at the CVE instance level by R-ROLE. Three illustrative rows:
+
+| CWE | TLCTC | Why |
+|---|---|---|
+| CWE-89 SQL Injection | `#2` | Server-side code flaw enabling injection. |
+| CWE-79 Cross-site Scripting | `#2 → #7 \| #3` | Server-delivered script that executes client-side; DOM-based variants are a client-side flaw (#3). |
+| CWE-787 Out-of-bounds Write | `#2 \| #3` | Role-dependent: server-side = #2, client-side = #3 (R-ROLE). |
+
+The full 987-entry mapping, with verdicts, rationale, and CVE references, is at `mappings/mitre-cwe/tlctc-cwe.json` (methodology in `mappings/mitre-cwe/README.md` and `mappings/mitre-cwe/decision-tree.md`).
+
+**A caution on the CWE mapping.** Per its README, the CWE→TLCTC mapping is AI-generated and human-reviewed, and is treated as experimental. It carries an explicit verdict system — `Allowed` (high confidence), `Allowed-with-Review` (resolve at instance level), `Discouraged` (CWE too abstract or consequence-only), `Prohibited` (category/view/deprecated node) — and the verdict should be read before relying on any single row. Umbrella CWEs (e.g. CWE-20 Improper Input Validation) span multiple clusters and are deliberately not given a single cluster. For both mappings, when an entry is context-dependent or carries a path, the analyst still owns the final call via §2; the mapping is a starting point, not an oracle.
 
 # Part B — Governance, Controls, and Indicators
 
