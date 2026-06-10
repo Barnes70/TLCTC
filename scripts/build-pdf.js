@@ -3,6 +3,7 @@
 // Usage: node scripts/build-pdf.js <input.md> <output.pdf>
 const fs = require("fs");
 const path = require("path");
+const { pathToFileURL } = require("url");
 const { marked } = require("marked");
 const puppeteer = require("puppeteer");
 
@@ -39,16 +40,26 @@ const css = `
   th, td { border: 1px solid #ccc; padding: 4px 7px; text-align: left; vertical-align: top; }
   th { background: #f0f0f0; }
   h1 + p { color: #333; }
+  img { max-width: 100%; height: auto; display: block; margin: 10pt auto; page-break-inside: avoid; }
 `;
 
 const html = `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><title>TLCTC</title><style>${css}</style></head>
 <body>${bodyHtml}</body></html>`;
 
+// Serve the HTML from a temp file in the markdown's own directory so that
+// relative image paths (e.g. images/foo.svg) resolve; page.setContent()
+// renders at about:blank, which cannot load file:// subresources.
+const tmpHtmlPath = path.join(
+  path.dirname(path.resolve(inPath)),
+  `.${path.basename(inPath)}.build-pdf.tmp.html`
+);
+
 (async () => {
+  fs.writeFileSync(tmpHtmlPath, html);
   const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
   const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: "networkidle0" });
+  await page.goto(pathToFileURL(tmpHtmlPath).href, { waitUntil: "networkidle0" });
   await page.pdf({
     path: outPath,
     format: "A4",
@@ -62,9 +73,11 @@ const html = `<!DOCTYPE html>
     margin: { top: "22mm", bottom: "16mm", left: "20mm", right: "20mm" },
   });
   await browser.close();
+  fs.unlinkSync(tmpHtmlPath);
   const kb = (fs.statSync(outPath).size / 1024).toFixed(0);
   console.log(`PDF written: ${path.resolve(outPath)} (${kb} KB)`);
 })().catch((e) => {
+  try { fs.unlinkSync(tmpHtmlPath); } catch {}
   console.error(e);
   process.exit(1);
 });
