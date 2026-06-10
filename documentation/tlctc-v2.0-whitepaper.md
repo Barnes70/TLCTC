@@ -163,7 +163,7 @@ When both occur in a scenario, express as a sequence: `(enabling cluster) → #4
 
 ## 3. The Thought Experiment
 
-> Deriving the 10 Clusters Through Systematic Decomposition: The 10 TLCTC clusters aren't an arbitrary enumeration or industry convention—they are logically derived through a systematic decomposition technique that ensures completeness and mutual exclusivity. It's a logical trick.
+> Deriving the 10 Clusters Through Systematic Decomposition: The 10 TLCTC clusters aren't an arbitrary enumeration or industry convention—they are derived by systematically decomposing the IT-landscape object along its generic vulnerabilities. The decomposition delivers **mutual exclusivity by construction**: each generic vulnerability is assigned to exactly one cluster. **Collective exhaustiveness, by contrast, is not a deductive guarantee**—it rests on the claim that the enumeration of attack surfaces below is itself complete, which is an ontological commitment about the object, not a proof. That commitment is deliberately **falsifiable**: if ten is the wrong number, the test is to exhibit a generic vulnerability that fits none of the ten clusters, or a cluster that must split into two. Until such a counterexample is produced, ten stands.
 
 Imagine the complex world of information technology as a single object. This object, although robust and seemingly closed, has various attack surfaces – the generic vulnerabilities (**root weaknesses**).
 
@@ -567,7 +567,7 @@ The same three-vector structure mirrors `#2`. This falls directly out of Axiom V
 | `TLCTC-03.20` | `#3.2` | Core function vector | Internal processing / parsing flaws |
 | `TLCTC-03.30` | `#3.3` | External handler vector | Delegated processing flaws |
 
-The structural symmetry between `#2` and `#3` produces a 2×3 matrix of exploit vectors — server/client × protocol/core/handler — that is complete by construction. Any code exploit on any networked software component maps to exactly one cell.
+The structural symmetry between `#2` and `#3` produces a 2×3 matrix of exploit vectors — server/client × protocol/core/handler. Relative to this architectural decomposition the matrix is exhaustive: any code exploit on a networked software component maps to exactly one cell. As with the top-level set, that exhaustiveness is contingent on the decomposition itself and is falsifiable — by exhibiting a code exploit that fits no cell — rather than guaranteed a priori.
 
 **#8 Physical Attack** — *Generic vulnerability: Physical accessibility of IT assets.*
 
@@ -1088,6 +1088,9 @@ When legitimate system binaries (cmd.exe, PowerShell, certutil, mshta, wmic, etc
 - The sequence `#1 → #7` applies
 
 This distinction is critical: the binary itself is legitimate (`#1` abuse), but the attacker's payload executing through it constitutes FEC (`#7`).
+
+**Design note — the `#1`/`#7` boundary is a convention (non-normative):**
+"Designed functional scope" (`#1`) and "designed execution capability" (`#7`) are conceptually adjacent — executing foreign content is itself a designed capability. TLCTC does **not** claim the line between them falls out of the object's properties. It is a deliberate taxonomic convention, enforced operationally by R-EXEC: the moment Foreign Executable Content executes, `#7` is recorded as its own step, independent of how execution was enabled. This is legitimate taxonomy design — boundaries drawn by rule rather than discovered, as biological ranks are — and it is precisely what keeps `#1` (function abuse *without* execution) and `#7` (execution of foreign content) mutually exclusive in practice.
 
 **Common Execution Patterns:**
 
