@@ -2,7 +2,7 @@
 
 This directory contains the mapping of **MITRE Common Weakness Enumeration (CWE)** entries to **TLCTC threat clusters**, connecting weakness taxonomy to cause-oriented threat classification.
 
-> **Provenance:** AI-generated, human-reviewed. The 2026-05-05 v2.1 audit closed the Unreviewed bucket, applied R-EXEC consistently to execution-enabling CWEs, reclassified enabling-condition CWEs to the cluster they enable (per policy ruling), and narrowed the Allowed-with-Review queue to genuine context-dependence cases. See `tlctc-cwe.json` `metadata.audit_history` for the change log.
+> **Provenance:** AI-generated, human-reviewed. The 2026-05-05 v2.1 audit closed the Unreviewed bucket, applied R-EXEC consistently to execution-enabling CWEs, reclassified enabling-condition CWEs to the cluster they enable (per policy ruling), and narrowed the Allowed-with-Review queue to genuine context-dependence cases. See `tlctc-cwe.json` `metadata.audit_history` for the change log. These assignments are not yet independently validated; the **SARIF classifier** and any CVE/KEV overlays derive from this base, so errors propagate downstream. A stratified human-expert validation (Cohen's κ) of a ~100-CWE sample is the planned highest-leverage check.
 
 ## Purpose
 

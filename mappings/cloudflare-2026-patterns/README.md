@@ -12,7 +12,7 @@ Cloudflare, *2026 Cloudflare Threat Report: How adversaries are weaponizing the 
 |----|---------|---------------|----------------|
 | CF26-PAT-001 | SaaS-to-SaaS Pivot | `#1 → #4 → #1` | MOE in SaaS Supply Chain (p. 7) |
 | CF26-PAT-002 | Living off the XaaS (LotX) C2 | `#9 → #7 → #1` | MOE in Cloud Resources (pp. 10-11) |
-| CF26-PAT-003 | Infostealer-to-Ransomware Pipeline | `#7 → #1 → #4 → #1 → (#1 + #7)` | Infostealer Engine / Ransomware 2.0 (pp. 39-41) |
+| CF26-PAT-003 | Infostealer-to-Ransomware Pipeline | `#7 → #1 → #4 → #1 → #7 → #1` | Infostealer Engine / Ransomware 2.0 (pp. 39-41) |
 | CF26-PAT-004 | PhaaS AitM Token Theft | `#9 → #5 → #4 → #1` | Industrialized PhaaS (pp. 35-36) |
 | CF26-PAT-005 | Bot Chain Lifecycle | `#4 → #1 → #7 → #6` | Triple-Threat Bot Chain (pp. 42-45) |
 | CF26-PAT-006 | Deepfake Identity Infiltration | `#9 → #4 → #1` | Industrialization of Insider Threats (pp. 12, 24-27) |

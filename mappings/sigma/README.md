@@ -4,7 +4,7 @@ This directory derives a **TLCTC cluster view of SigmaHQ detection rules** — t
 
 > ### Experimental derivation chain — read before using
 >
-> This artifact is **derived** from [`mitre-attack-enterprise/tlctc-enterprise-attack.json`](../mitre-attack-enterprise/README.md), which classifies 698 ATT&CK Enterprise techniques into TLCTC clusters. That upstream mapping is the source of truth. Mapping quality is bounded by (a) how consistently each Sigma rule's author tagged it with `attack.t*` tags, and (b) the quality of the ATT&CK→TLCTC mapping for those techniques. Untagged rules and rules whose techniques are absent from the ATT&CK mapping surface as `unmapped` or `ambiguous`.
+> This artifact is **derived** from [`mitre-attack-enterprise/tlctc-enterprise-attack.json`](../mitre-attack-enterprise/README.md), which classifies 698 ATT&CK Enterprise techniques into TLCTC clusters. That upstream mapping is the source of truth. Mapping quality is bounded by (a) how consistently each Sigma rule's author tagged it with `attack.t*` tags, and (b) the quality of the ATT&CK→TLCTC mapping for those techniques. Untagged rules and rules whose techniques are absent from the ATT&CK mapping surface as `unmapped` or `ambiguous`. The upstream ATT&CK→TLCTC base is AI-generated and not yet independently validated; a stratified human-expert validation (Cohen's κ) of that base is the planned check that would validate this derived view.
 
 ## Purpose
 

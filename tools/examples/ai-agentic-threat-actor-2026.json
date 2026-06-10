@@ -42,7 +42,7 @@
       "observed_paths": [
         {
           "incident_id": "GTG-1002-2025",
-          "notation": "#2 →[Δt=VC-4] #4 →[Δt=VC-3] (#1 + #7) + [DRE: C]",
+          "notation": "#2 →[Δt=VC-4] #4 →[Δt=VC-3] #1 → #7 + [DRE: C]",
           "cluster_sequence": [2, 4, 1, 7],
           "dre_outcomes": {
             "C": 1,

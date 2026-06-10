@@ -53,7 +53,7 @@ npx apg-api grammar/tlctc-attack-path.abnf -o parser.js
 ```js
 import { Parser } from './parser.js';
 const p = new Parser();
-const ok = p.parse('#9 → #7 → #4 → (#1 + #7) + [DRE: Ac]');
+const ok = p.parse('#4 → (#1 + #7) + [DRE: Ac]');
 console.log(ok ? 'valid' : 'syntax error');
 ```
 

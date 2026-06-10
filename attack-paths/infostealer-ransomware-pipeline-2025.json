@@ -5,7 +5,7 @@
     "tlctc_version": "2.1",
     "framework_ref": "tlctc-framework.v2.0.json",
     "created_at": "2026-04-09T00:00:00Z",
-    "notes": "Canonical infostealer-to-ransomware pipeline as described in the Cloudflare 2026 Threat Report. This represents the standard operational baseline for the 2026 ransomware ecosystem. The pipeline: (1) Infostealers like LummaC2 harvest credentials for Citrix, Microsoft RDWeb, browser-based VPNs, and live session tokens that bypass MFA. (2) Initial access brokers (IABs) purchase logs from infostealer operators, validate credentials, and auction high-value corporate access. (3) Ransomware affiliates purchase access and execute data theft and direct extortion. Per Verizon DBIR 2025, 54% of all ransomware attacks traced back to infostealer-enabled credential theft. GenAI has compressed attack timelines from days to minutes. Manufacturing and critical infrastructure represent over 50% of targeted attacks. Attack path: #7 -> #4 -> #1 + [DRE: C] -> (#1 + #7) + [DRE: Ac]. Sources: Cloudflare 2026 Threat Report (pp. 39-41), Verizon 2025 DBIR, HellCat ransomware breaches (Jaguar Land Rover, Telefonica). AI-GENERATED EXAMPLE: This is a composite/canonical pattern derived from multiple incidents described in the report."
+    "notes": "Canonical infostealer-to-ransomware pipeline as described in the Cloudflare 2026 Threat Report. This represents the standard operational baseline for the 2026 ransomware ecosystem. The pipeline: (1) Infostealers like LummaC2 harvest credentials for Citrix, Microsoft RDWeb, browser-based VPNs, and live session tokens that bypass MFA. (2) Initial access brokers (IABs) purchase logs from infostealer operators, validate credentials, and auction high-value corporate access. (3) Ransomware affiliates purchase access and execute data theft and direct extortion. Per Verizon DBIR 2025, 54% of all ransomware attacks traced back to infostealer-enabled credential theft. GenAI has compressed attack timelines from days to minutes. Manufacturing and critical infrastructure represent over 50% of targeted attacks. Attack path: #7 -> #4 -> #1 + [DRE: C] -> #7 + [DRE: Ac] -> #1. Sources: Cloudflare 2026 Threat Report (pp. 39-41), Verizon 2025 DBIR, HellCat ransomware breaches (Jaguar Land Rover, Telefonica). AI-GENERATED EXAMPLE: This is a composite/canonical pattern derived from multiple incidents described in the report."
   },
   "path_sequence": [
     {
@@ -36,23 +36,17 @@
       "notes": "Ransomware affiliate uses legitimate tools for lateral movement and data exfiltration. GenAI is used in real time to rewrite code that bypasses EDR and map complex network topologies for rapid lateral movement. All tools and protocols function as designed. This is #1 Abuse of Functions. DRE: C — sensitive data exfiltrated for double-extortion leverage. In a majority of observed cases, exfiltrated data is used as ransom leverage while bypassing traditional backup-and-restore defenses."
     },
     {
-      "mode": "parallel",
-      "group_id": "g5-ransomware-deployment",
-      "steps": [
-        {
-          "step_id": "s5a-ransomware-execution",
-          "cluster": "#7",
-          "fec_executed": true,
-          "outcomes": ["Ac"],
-          "notes": "Ransomware payload deployed and executed across the target network, encrypting critical data. R-EXEC: foreign executable content — #7 with fec_executed: true. DRE: Ac — data present but unusable (encrypted). Axiom III: 'ransomware' is an outcome label; the cause is FEC execution (#7)."
-        },
-        {
-          "step_id": "s5b-extortion-demand",
-          "cluster": "#1",
-          "notes": "Extortion demand issued leveraging both the encryption and the exfiltrated data. The communication channels and payment infrastructure (cryptocurrency) all function as designed — legitimate functionality abused for criminal purposes. Pure extortion (data theft leverage) has become the new standard, often more effective than encryption alone."
-        }
-      ],
-      "notes": "Ransomware deployment and extortion demand occur in parallel. The encryption and data leak threat serve as complementary leverage. Manufacturing and critical infrastructure represent over 50% of targets due to the immense cost of operational downtime creating desperate incentive for high-value payouts."
+      "step_id": "s5a-ransomware-execution",
+      "cluster": "#7",
+      "fec_executed": true,
+      "outcomes": ["Ac"],
+      "delta_t_to_next": "~hours",
+      "notes": "Ransomware payload deployed and executed across the target network, encrypting critical data. R-EXEC: foreign executable content — #7 with fec_executed: true. DRE: Ac — data present but unusable (encrypted). Axiom III: 'ransomware' is an outcome label; the cause is FEC execution (#7)."
+    },
+    {
+      "step_id": "s5b-extortion-demand",
+      "cluster": "#1",
+      "notes": "Extortion demand issued leveraging both the encryption and the exfiltrated data — recorded after the encryption event (the demand presupposes completed encryption / exfil leverage), so #7 → #1 sequential, not a parallel group (§11.2.2 and R-EXEC). The communication channels and payment infrastructure (cryptocurrency) all function as designed — legitimate functionality abused for criminal purposes. Pure extortion (data theft leverage) has become the new standard, often more effective than encryption alone. Manufacturing and critical infrastructure represent over 50% of targets due to the immense cost of operational downtime creating desperate incentive for high-value payouts."
     }
   ]
 }

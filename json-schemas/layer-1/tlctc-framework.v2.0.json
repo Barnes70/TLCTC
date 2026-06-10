@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "tlctc_version": "2.0",
+    "tlctc_version": "2.1",
     "release_date": "2025-12-14",
     "schema_id": "tlctc-framework",
-    "schema_version": "2.0.0",
+    "schema_version": "2.1.0",
     "publisher": "TLCTC Project",
     "license": "CC-BY-4.0",
-    "notes": "Framework dictionary for TLCTC v2.0"
+    "notes": "Framework dictionary for TLCTC v2.1. The cluster definitions, axioms, and rule identifiers are unchanged since v2.0 (release_date reflects that stable content); v2.1 introduced only attack-path *grammar* extensions — transit boundaries, intra-system boundaries, and unresolved-step operators — which live in the ABNF grammar (grammar/tlctc-attack-path.abnf) and White Paper §11, not in this Layer 1 dictionary. The filename tlctc-framework.v2.0.json is retained for link and reference stability (Layer 3 instances reference it via framework_ref)."
   },
   "clusters": {
     "#1": {

@@ -50,7 +50,7 @@
       },
       "notes": "[DIAMOND MODEL — ADVERSARY] This story is a composite of the infostealer → initial access broker (IAB) → ransomware-affiliate pipeline that dominated 2025. Mandiant observed hand-off times under 30 seconds between credential theft and active ransomware intrusion — an industrialized supply chain in which three distinct actors each play a tightly scoped role.\n\n[DIAMOND MODEL — CAPABILITY] High Social Engineering (#9) — ClickFix lures and fake software download pages trick the victim into running an infostealer. Champion Malware (#7) — Lumma, RedLine, or StealC harvests browser-stored credentials, session cookies, and VPN profiles. The stealer is loud but short-lived (seconds to minutes on the host). Champion Identity Theft (#4) — credentials land in an underground market within minutes; an IAB aggregates them and a ransomware affiliate purchases the 'right' ones (corporate VPN, Citrix, RDP). Champion Malware again (#7) — the affiliate logs in using stolen VPN creds and deploys ransomware with hours, not days, of dwell. The <30-second hand-off is the shocking metric: a user's browser is infected at 10:00:00 and by 10:00:28 the attacker has already performed a first interactive login.\n\n[DIAMOND MODEL — INFRASTRUCTURE] A drive-by download site or malicious ad. A Telegram-delivered stealer. A log-market bot (often on Telegram or a specialized forum). A VPN concentrator or RDP jump host. No single adversary owns the full chain — the infrastructure is a marketplace.\n\n[DIAMOND MODEL — VICTIM] Any employee with cached corporate credentials in their browser. The victim is not the intended target of the initial infection — they are inventory. The actual target organization is selected downstream, by the ransomware affiliate, based on the credentials available for purchase.\n\n[ANALYST ASSESSMENT] The pipeline model defeats detection strategies built around 'dwell time' as a KPI. By the time the ransomware affiliate logs in, the infostealer is gone, the C2 is cold, and the only remaining artifact is a legitimate VPN authentication from a residential IP. Defenders must assume that every infostealer detection — even on a personal device used to access corporate resources — is already a credential-compromise incident. Mandatory session-cookie invalidation, conditional access policies that flag impossible-travel logins, and infostealer-feed integration with the IdP are no longer optional.",
       "sources": ["Mandiant M-Trends 2026 (pp. 55-59)"],
-      "sequence": "#09 → #07 → #04 → (#01 + #07)",
+      "sequence": "#09 → #07 → #04 → #01 → #07",
       "last_updated": "2026-04-14",
       "origin_country": "Unknown",
       "motivation": ["Financial Gain"],
@@ -58,7 +58,7 @@
       "observed_paths": [
         {
           "incident_id": "MANDIANT-HANDOFF-RANSOMWARE-2025",
-          "notation": "#9 ||[human][@External→@Victim]|| →[Δt=~1h] #7 →[Δt=<30s] #4 →[Δt=~hours] (#1 + #7) + [DRE: Ac]",
+          "notation": "#9 ||[human][@External→@Victim]|| →[Δt=~1h] #7 →[Δt=<30s] #4 →[Δt=~hours] #1 → #7 + [DRE: Ac]",
           "cluster_sequence": [9, 7, 4, 1, 7],
           "dre_outcomes": { "C": 1, "I": 0, "A": 0, "Ac": 1 }
         }
