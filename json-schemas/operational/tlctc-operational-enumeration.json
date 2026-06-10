@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "tlctc_version": "2.3",
+    "release_date": "2026-06-07",
+    "schema_id": "tlctc-operational-enumeration",
+    "schema_version": "1.0.0",
+    "publisher": "TLCTC Project",
+    "license": "CC-BY-4.0",
+    "notes": "Evolving operational sub-cluster (TLCTC-XX.YY) catalogue — companion to the frozen Layer-1 strategic core. Seeded with the four reference decompositions; the six open clusters and any refinements are community-extensible. Machine-readable twin of documentation/tlctc-operational-enumeration.md."
+  },
+  "sub_clusters": [
+    {
+      "id": "TLCTC-02.10",
+      "strategic_id": "#2.1",
+      "parent_cluster": "#2",
+      "name": "Protocol vector",
+      "definition": "Server-side protocol-handling flaws.",
+      "status": "reference",
+      "examples": "Heartbleed (server TLS implementation)."
+    },
+    {
+      "id": "TLCTC-02.20",
+      "strategic_id": "#2.2",
+      "parent_cluster": "#2",
+      "name": "Core function vector",
+      "definition": "Internal processing / parsing flaws.",
+      "status": "reference",
+      "examples": "SQL injection through the application's query parser."
+    },
+    {
+      "id": "TLCTC-02.30",
+      "strategic_id": "#2.3",
+      "parent_cluster": "#2",
+      "name": "External handler vector",
+      "definition": "Delegated processing flaws.",
+      "status": "reference",
+      "examples": "Flaw in a server-side PHP engine or Apache module."
+    },
+    {
+      "id": "TLCTC-03.10",
+      "strategic_id": "#3.1",
+      "parent_cluster": "#3",
+      "name": "Protocol vector",
+      "definition": "Client-side protocol-handling flaws.",
+      "status": "reference"
+    },
+    {
+      "id": "TLCTC-03.20",
+      "strategic_id": "#3.2",
+      "parent_cluster": "#3",
+      "name": "Core function vector",
+      "definition": "Internal processing / parsing flaws.",
+      "status": "reference"
+    },
+    {
+      "id": "TLCTC-03.30",
+      "strategic_id": "#3.3",
+      "parent_cluster": "#3",
+      "name": "External handler vector",
+      "definition": "Delegated processing flaws.",
+      "status": "reference"
+    },
+    {
+      "id": "TLCTC-08.10",
+      "strategic_id": "#8.1",
+      "parent_cluster": "#8",
+      "name": "Mechanical vector",
+      "definition": "Physical contact with matter (tampering, theft, intrusion into secure areas).",
+      "status": "reference"
+    },
+    {
+      "id": "TLCTC-08.20",
+      "strategic_id": "#8.2",
+      "parent_cluster": "#8",
+      "name": "Signal vector",
+      "definition": "Energy propagation with no direct contact (electromagnetic side-channels/TEMPEST, acoustic, environmental).",
+      "status": "reference"
+    },
+    {
+      "id": "TLCTC-10.10",
+      "strategic_id": "#10.1",
+      "parent_cluster": "#10",
+      "name": "Update vector",
+      "definition": "Post-deployment, active delivery channel.",
+      "status": "reference",
+      "examples": "Compromised software update pushed to customers (e.g. SolarWinds 2020 at the trust acceptance event)."
+    },
+    {
+      "id": "TLCTC-10.20",
+      "strategic_id": "#10.2",
+      "parent_cluster": "#10",
+      "name": "Development vector",
+      "definition": "Pre-deployment, silent insertion.",
+      "status": "reference",
+      "examples": "Backdoor injected into a build pipeline or a malicious library dependency."
+    },
+    {
+      "id": "TLCTC-10.30",
+      "strategic_id": "#10.3",
+      "parent_cluster": "#10",
+      "name": "Hardware vector",
+      "definition": "Physical component supply chain.",
+      "status": "reference",
+      "examples": "Hardware implant introduced during manufacturing."
+    }
+  ]
+}

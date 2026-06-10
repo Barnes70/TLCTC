@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TLCTC Operational Enumeration (Sub-Clusters) — Schema",
+  "description": "Validates the evolving TLCTC-XX.YY sub-cluster catalogue (operational layer). Companion to the Layer-1 framework dictionary, kept separate so it can evolve without re-minting the frozen strategic core. Sub-cluster IDs validate against the same TLCTC-XX.YY shape used by Layer-3 and Layer-4 cluster references.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metadata", "sub_clusters"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tlctc_version", "release_date"],
+      "properties": {
+        "tlctc_version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+        "release_date": { "type": "string", "format": "date" },
+        "schema_id": { "type": "string" },
+        "schema_version": { "type": "string" },
+        "publisher": { "type": "string" },
+        "license": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "sub_clusters": {
+      "type": "array",
+      "description": "Flat list of operational sub-clusters and refinements across all ten strategic clusters.",
+      "items": { "$ref": "#/definitions/sub_cluster" }
+    }
+  },
+  "definitions": {
+    "sub_cluster": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "strategic_id", "parent_cluster", "name", "definition", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^TLCTC-(0[1-9]|10)\\.[0-9]{2}$",
+          "description": "Operational ID. TLCTC-XX.Y0 = sub-cluster (vector class); TLCTC-XX.YZ (Z≠0) = refinement. XX.00 is reserved for the top-level cluster and MUST NOT appear here."
+        },
+        "strategic_id": {
+          "type": "string",
+          "pattern": "^#(10|[1-9])\\.[0-9]{1,2}$",
+          "description": "Strategic shorthand, e.g. #2.1 (= TLCTC-02.10)."
+        },
+        "parent_cluster": {
+          "type": "string",
+          "pattern": "^(#[1-9]|#10)$",
+          "description": "The strategic cluster this sub-cluster refines. Per R-SUBCLUSTER it MUST reach the same generic vulnerability as the parent."
+        },
+        "name": { "type": "string", "description": "Vector name." },
+        "definition": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["reference", "proposed", "open"],
+          "description": "reference = published in the core as a method demonstration; proposed = candidate awaiting review/validation; open = placeholder, no decomposition yet."
+        },
+        "examples": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}
