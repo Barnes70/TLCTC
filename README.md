@@ -456,6 +456,7 @@ tlctc/
 │   ├── tlctc-v2.0-json-architecture.md       # JSON Architecture Specification
 │   ├── tlctc-fair-integration-proposal.md    # FAIR integration proposal (Layer 4 spec)
 │   ├── tlctc-cve-extension-proposal.md       # CVE extension proposal
+│   ├── tlctc-replication-notation-proposal.md # Replication notation (×N fan-out / ×* self-propagation) — conceptual proposal (v0.1)
 │   ├── tlctc-plus-ncsc-proposal.md           # TLCTC+ national reporting extension — policy proposal (v0.1)
 │   ├── tlctc-plus-specification.md           # TLCTC+ implementation specification (v0.3) — grammar, conformance, catalogues
 │   ├── propagated-controls.md                # Managing controls over event chains — generalizes Propagated PR to BCM, contractual, and policy sources
