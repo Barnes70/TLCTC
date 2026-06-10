@@ -1,12 +1,27 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.1** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
+**Version 2.3** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.3-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
 A cause-oriented, axiomatic cyber threat taxonomy. We are aware of no prior framework that classifies threats by the generic vulnerability exploited rather than by outcome or actor.
 
 TLCTC provides the missing semantic foundation for cybersecurity: a stable, non-overlapping classification of cyber threats based on **why** compromise happens — the generic vulnerability exploited — rather than **what** happens afterwards (outcomes like "data breach," "ransomware," or "denial of service").
 
 > *A cyber threat is defined by the generic vulnerability it exploits, not by who performs it and not by what consequence follows.*
+
+---
+
+## Framework Documents
+
+TLCTC v2.3 is a **consolidation freeze** of the finalized v2.1 framework — no new clusters, axioms, or rules (see [`tlctc-v2.3-traceability.md`](documentation/tlctc-v2.3-traceability.md)). The documents form a deliberate hierarchy:
+
+| Document | Role |
+|---|---|
+| [**Core Paper**](documentation/tlctc-v2.3-core.md) ([PDF](documentation/tlctc-v2.3-core.pdf)) | **The canonical, citable definition** of the framework: derivation, 10 clusters, 10 axioms, 16 classification rules, attack-path notation, glossary, references. Cite this. |
+| [**Application Paper**](documentation/tlctc-v2.3-application.md) ([PDF](documentation/tlctc-v2.3-application.pdf)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. |
+| [**White Paper**](documentation/tlctc-v2.0-whitepaper.md) ([web](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)) | The extended practitioner handbook: full notation grammar (§11), boundary catalogs, decision procedures, anti-patterns, and worked detail beyond the core. Conforms to the core; filename kept for link stability. |
+| [**Operational Enumeration**](documentation/tlctc-operational-enumeration.md) ([JSON](json-schemas/operational/tlctc-operational-enumeration.json)) | The *evolving* `TLCTC-XX.YY` sub-cluster catalogue. The strategic layer (10 clusters) is frozen; the operational layer grows by contribution. |
+
+Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.3.json`](json-schemas/layer-1/tlctc-framework.v2.3.json).
 
 ---
 
@@ -430,7 +445,8 @@ tlctc/
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
-│   │   └── tlctc-framework.v2.0.json         # V2.0 content: clusters, axioms, rules
+│   │   ├── tlctc-framework.v2.0.json         # V2.1 content (filename kept for link stability)
+│   │   └── tlctc-framework.v2.3.json         # V2.3 citable baseline: clusters, axioms, 16 rules
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
 │   │   └── example-registry.json             # Example org-specific registry
@@ -441,15 +457,27 @@ tlctc/
 │   │       ├── chalk-debug-2025.json         # npm phishing campaign incident
 │   │       ├── midnight-blizzard-microsoft-2024.json # Midnight Blizzard → Microsoft OAuth pivot
 │   │       └── unresolved-step-example-2026.json # Unresolved-step operators (?/…) reference
-│   └── layer-4/                              # FAIR Risk Quantification (Risk)
-│       ├── tlctc-fair-risk.schema.json       # Schema for FAIR risk assessment instances
-│       └── examples/
-│           └── scattered-spider-2024-fair.json # SCATTERED SPIDER FAIR risk assessment
+│   ├── layer-4/                              # FAIR Risk Quantification (Risk)
+│   │   ├── tlctc-fair-risk.schema.json       # Schema for FAIR risk assessment instances
+│   │   └── examples/
+│   │       └── scattered-spider-2024-fair.json # SCATTERED SPIDER FAIR risk assessment
+│   └── operational/                          # Operational sub-cluster enumeration (evolving)
+│       ├── tlctc-operational-enumeration.schema.json # Schema for the enumeration
+│       └── tlctc-operational-enumeration.json # TLCTC-XX.YY catalogue (JSON twin of the md)
 ├── grammar/                                  # Standalone ABNF grammar for path notation
 │   ├── README.md                             # Grammar documentation & tooling notes
 │   └── tlctc-attack-path.abnf                # ABNF grammar for TLCTC attack-path syntax
+├── scripts/                                  # Build & validation tooling (Node.js)
+│   ├── build-pdf.js                          # markdown → text PDF (marked + puppeteer)
+│   └── validate-framework.js                 # ajv JSON Schema validator
 ├── documentation/
-│   ├── tlctc-v2.0-whitepaper.md              # Canonical V2.1 White Paper (filename kept for link stability)
+│   ├── tlctc-v2.3-core.md                    # ⭐ Citable core paper (v2.3) — canonical definition
+│   ├── tlctc-v2.3-core.pdf                   # PDF of the core paper (citation target)
+│   ├── tlctc-v2.3-application.md             # Application & governance companion (v2.3)
+│   ├── tlctc-v2.3-application.pdf            # PDF of the application paper
+│   ├── tlctc-v2.3-traceability.md            # v2.1 → v2.3 consolidation traceability
+│   ├── tlctc-operational-enumeration.md      # Evolving TLCTC-XX.YY sub-cluster catalogue
+│   ├── tlctc-v2.0-whitepaper.md              # Extended practitioner handbook (v2.1 content; filename kept for link stability)
 │   ├── tlctc-v2.0-whitepaper.pdf             # PDF export of the white paper
 │   ├── tlctc-glossary.md                     # Comprehensive definitions
 │   ├── tlctc-glossary.pdf                    # PDF export of the glossary
@@ -602,18 +630,19 @@ tlctc/
 
 ## Getting Started
 
-1. **Read the axioms** — They are the non-negotiable foundation. If you skip them, you'll misclassify.
-2. **Understand the Bow-Tie** — Threats are causes, outcomes are consequences. Never confuse them.
-3. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation.
-4. **Use the JSON schemas** — Validate your attack path instances against Layer 3 schema.
-5. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
-6. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
-7. **Track active exploitation** — See [`mappings/cisa-kev/`](mappings/cisa-kev/) for a TLCTC-cluster view of the CISA Known Exploited Vulnerabilities catalog (1,568 CVEs, weekly-refreshable, deterministically derived).
-8. **Audit your detection coverage** — See [`mappings/sigma/`](mappings/sigma/) for a per-rule TLCTC cluster derivation of 3,132 SigmaHQ detection rules — cross-walk your SOC ruleset against the strategic cluster model.
-9. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
-10. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
-11. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.1 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.3 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment) and [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification).
-12. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping), and the generic SARIF classifier (any SARIF 2.1.0 producer → TLCTC clusters; CWE-first with CVE→KEV fallback; stdlib-only).
+1. **Read the core paper** — [`documentation/tlctc-v2.3-core.md`](documentation/tlctc-v2.3-core.md) is the canonical, citable definition: derivation, clusters, axioms, rules, and notation in one self-contained paper.
+2. **Read the axioms** — They are the non-negotiable foundation. If you skip them, you'll misclassify.
+3. **Understand the Bow-Tie** — Threats are causes, outcomes are consequences. Never confuse them.
+4. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation. The [Application Paper](documentation/tlctc-v2.3-application.md) walks the procedure end-to-end.
+5. **Use the JSON schemas** — Validate your attack path instances against Layer 3 schema.
+6. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
+7. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
+8. **Track active exploitation** — See [`mappings/cisa-kev/`](mappings/cisa-kev/) for a TLCTC-cluster view of the CISA Known Exploited Vulnerabilities catalog (1,568 CVEs, weekly-refreshable, deterministically derived).
+9. **Audit your detection coverage** — See [`mappings/sigma/`](mappings/sigma/) for a per-rule TLCTC cluster derivation of 3,132 SigmaHQ detection rules — cross-walk your SOC ruleset against the strategic cluster model.
+10. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
+11. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
+12. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.1 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.3 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment), [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification), and [`tlctc-replication-notation-proposal.md`](documentation/tlctc-replication-notation-proposal.md) (replication notation — ×N fan-out / ×* self-propagation, conceptual).
+13. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping), and the generic SARIF classifier (any SARIF 2.1.0 producer → TLCTC clusters; CWE-first with CVE→KEV fallback; stdlib-only).
 
 ## Contributing
 
@@ -630,8 +659,10 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 
 | Resource | Description |
 |---|---|
+| [Core Paper v2.3](documentation/tlctc-v2.3-core.md) ([PDF](documentation/tlctc-v2.3-core.pdf)) | The canonical, citable definition of the framework |
+| [Application Paper v2.3](documentation/tlctc-v2.3-application.md) ([PDF](documentation/tlctc-v2.3-application.pdf)) | Classification in practice, governance, controls, and indicators |
 | [tlctc.net](https://tlctc.net) | Official TLCTC website with documentation, visuals, and tools |
-| [V2.1 White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Canonical definitions, boundary logic, epistemic operators, and complete specification |
+| [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Extended practitioner handbook: boundary logic, epistemic operators, and complete notation specification |
 | [barnes.ch](https://barnes.ch) | Author's site with foundational analysis on cybersecurity's language problem |
 
 ## License
