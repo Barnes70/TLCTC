@@ -789,7 +789,7 @@ DRE tags record outcomes. They do NOT change cluster classification and MUST NOT
 **Path**: #9 → #X →[Δt~minutes] #7
 **Description**: [How an attacker could exploit this]
 #### Scenario 2: Chained Exploitation
-**Path**: #4 → #X →[Δt~seconds] (#1 + #7)
+**Path**: #4 → #X →[Δt~seconds] #1 → #7
 **Description**: [Alternative attack progression]
 ### FEC Execution Assessment (R-EXEC)
 - **Does exploitation enable FEC execution?** [Yes/No]
@@ -821,7 +821,7 @@ DRE tags record outcomes. They do NOT change cluster classification and MUST NOT
 | #10 | [Specific techniques] | High/Med/Low | [Rating] |
 ### Common Attack Patterns
 #### Pattern 1: [Descriptive Name]
-**Path**: #9 ||[human][@External→@Org]|| → #7 →[Δt=minutes] #4 →[Δt=hours] (#1 + #7)
+**Path**: #9 ||[human][@External→@Org]|| → #7 →[Δt=minutes] #4 →[Δt=hours] #1 → #7
 **Velocity Profile**: VC-2 (Tactical) to VC-3 (Operational)
 **Frequency**: [How often observed]
 **Notable Campaigns**: [Examples]

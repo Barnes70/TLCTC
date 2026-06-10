@@ -2,7 +2,7 @@
 
 **Version 2.1** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
-The first cause-oriented, axiomatic cyber threat taxonomy.
+A cause-oriented, axiomatic cyber threat taxonomy. We are aware of no prior framework that classifies threats by the generic vulnerability exploited rather than by outcome or actor.
 
 TLCTC provides the missing semantic foundation for cybersecurity: a stable, non-overlapping classification of cyber threats based on **why** compromise happens — the generic vulnerability exploited — rather than **what** happens afterwards (outcomes like "data breach," "ransomware," or "denial of service").
 
@@ -240,7 +240,7 @@ If *any* cluster can be defended — even weakly — use `#X [conf=low]`, not `?
 
 **TLCTC Attack Path:**
 ```
-#9 ||[human][@External→@Org]|| →[Δt=24h] #7 →[Δt=5m] #4 →[Δt=15m] (#1 + #7) + [DRE: Ac]
+#9 ||[human][@External→@Org]|| →[Δt=24h] #7 →[Δt=5m] #4 →[Δt=15m] #1 → #7 + [DRE: Ac]
 ```
 
 Reading this notation:
@@ -250,7 +250,7 @@ Reading this notation:
 4. **→[Δt=5m]** — 5 minutes later, credentials are exfiltrated
 5. **#4** — Stolen credentials are used (identity theft — credential application)
 6. **→[Δt=15m]** — 15 minutes of lateral movement
-7. **(#1 + #7)** — Simultaneous abuse of AD functions (#1) and encryption payload execution (#7)
+7. **#1 → #7** — AD function abuse deploys/pushes the encryption payload (#1), then the payload executes (#7); per R-EXEC, #7 is recorded at the execution moment — after its enabler. The order is known, so this is sequential, not parallel (see White Paper §11.2.2)
 8. **+ [DRE: Ac]** — Consequence: Loss of Accessibility (data exists but is unusable)
 
 Note: The consequence is Loss of **Accessibility** (data present but encrypted/unusable), not Loss of Availability (data gone or infrastructure unreachable). This distinction matters for incident response.

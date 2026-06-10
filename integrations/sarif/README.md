@@ -7,6 +7,8 @@ Trivy, Grype, Bandit, gosec, OWASP Dependency-Check, and others. The pack
 is **standalone and stdlib-only**: no third-party dependencies, no network
 calls, no build step.
 
+> **Provenance & validation.** Cluster assignments inherit from the AI-generated, human-reviewed [CWE→TLCTC](../../mappings/mitre-cwe/README.md) and [ATT&CK→TLCTC](../../mappings/mitre-attack-enterprise/README.md) mappings, which are not yet independently validated; classification errors in those bases propagate here. A stratified human-expert validation (Cohen's κ) of those bases is the planned highest-leverage check.
+
 ## What this pack does
 
 - Parses `runs[].results[]` from any SARIF 2.1.0 producer.

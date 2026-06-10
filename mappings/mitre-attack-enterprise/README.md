@@ -2,6 +2,8 @@
 
 This directory contains the complete mapping of **MITRE ATT&CK Enterprise** techniques to **TLCTC threat clusters**, bridging operational detection with strategic risk management.
 
+> **Provenance & validation (read before relying on the numbers).** These cluster assignments are AI-generated and human-reviewed, but not yet independently validated. This mapping is the source of truth for the derived **Sigma** view, so any classification error here propagates downstream. A stratified human-expert validation (Cohen's κ) of a ~100-technique sample is the planned highest-leverage check — validating this base also validates everything derived from it.
+
 ## Purpose
 
 MITRE ATT&CK and TLCTC answer fundamentally different questions:

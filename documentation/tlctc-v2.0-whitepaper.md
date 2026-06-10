@@ -651,7 +651,7 @@ Notation: `(#X + #Y)`
 
 Indicates two or more clusters occurring simultaneously or in tight coordination within the same attack phase. Use when distinct generic vulnerabilities are exploited concurrently rather than sequentially.
 
-Example: `#9 → #7 → #4 → (#1 + #7)` — credential theft followed by simultaneous function abuse and malware execution (e.g., Ryuk ransomware deployment pattern).
+Example: `#4 → (#1 + #7)` — after credential use, persistence is established via function abuse (#1) **concurrently** with payload execution (#7); the two are independent actions in the same phase, so their order is not meaningful. Contrast the *deployment* case, where function abuse pushes a payload that then runs: there the order is known, so it is written `#1 → #7` (sequential), not a parallel group — see §11.2.2 and R-EXEC.
 
 ##### Outcome Terms
 
@@ -2197,7 +2197,7 @@ This mapping is only possible when threats and outcomes are separated.
 
 Labels like "ransomware", "DDoS", or "breach" are permitted as *descriptions* in operational communication, but they are **not valid threat categories** in TLCTC:
 
-- "Ransomware attack" describes an outcome (encryption/extortion) and possibly a tool (#7), but the threat path might be `#9 → #7 → #4 → (#1 + #7)` and causes loss of accessibility/availability
+- "Ransomware attack" describes an outcome (encryption/extortion) and possibly a tool (#7), but the threat path might be `#9 → #7 → #4 → #1 → #7` and causes loss of accessibility/availability
 - "DDoS attack" describes an outcome (Loss of Availability/Accessibility) that may result from #6 (capacity exhaustion) or #2/#3 (implementation flaw causing crash)
 - "Data breach" is a Data Risk Event (Loss of Confidentiality), not a threat
 
@@ -2463,7 +2463,7 @@ To keep CSF use consistent, adopt TLCTC as the standard cyber threat taxonomy fo
 
 #### 8.1.8 Incident learning: from attack path → control gaps
 
-For any incident record with a TLCTC attack path (e.g., `#9 → #7 → #4 → (#1 + #7)`):
+For any incident record with a TLCTC attack path (e.g., `#9 → #7 → #4 → #1 → #7`):
 
 1. **List the clusters that occurred** (cause-side steps).
 2. For each cluster, review the **GOV/ID/PR/DE/RS/RC** objectives:
@@ -4203,11 +4203,13 @@ If some Δt values are unknown:
    ```
    #2 →[Δt<30s] #7
    ```
-4. **Ransomware-style final phase (parallel):**
+4. **Concurrent persistence and payload execution, with a group-level DRE:**
 
    ```
    #4 →[Δt=10m] (#1 + #7) + [DRE: Ac]
    ```
+
+   Here function abuse for persistence (#1) and payload execution (#7) occur concurrently — order is not meaningful — and the group's net data outcome is `[DRE: Ac]`. Contrast *deployment*, where function abuse pushes a payload that then runs: that order is known and is written `#1 → #7` (§11.2.2), not a parallel group.
 
 ---
 
@@ -5369,7 +5371,7 @@ To support this, steps carry:
           "step_id": "s4b",
           "cluster": "#7",
           "fec_executed": true,
-          "notes": "Parallel malware execution (e.g., payload deployment)."
+          "notes": "Payload executes concurrently with the function abuse — two independent actions, order not meaningful. (A deploy-then-run sequence would instead be #1 → #7.)"
         }
       ],
       "delta_t_to_next": "?",
@@ -5584,7 +5586,7 @@ In TLCTC, TI SHOULD be organized into:
 - **Step intelligence:** what we know about a specific cluster step
 - **Edge intelligence:** what we know about a transition `#X → #Y` including `Δt`
 - **Path intelligence:** recurring patterns like:
-  - `#9 → #7 → #4 → (#1 + #7)` (ransomware-like)
+  - `#9 → #7 → #4 → #1 → #7` (ransomware-like)
   - `#10 ||[update][@Vendor→@Org]|| → #7` (trusted update execution)
 
 **Why edges matter:** defenses fail on *transitions*. If `Δt(#4→#1)` is minutes, detection that alerts in hours is structurally insufficient.
