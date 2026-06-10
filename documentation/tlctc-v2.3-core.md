@@ -4,6 +4,7 @@
 **Version:** 2.3
 **Date:** 2026-06-07
 **License:** CC BY 4.0
+**DOI:** [10.5281/zenodo.20633177](https://doi.org/10.5281/zenodo.20633177)
 
 ## Abstract
 

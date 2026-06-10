@@ -1,6 +1,6 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.3** · CC BY 4.0 · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.3-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
+**Version 2.3** · CC BY 4.0 · [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20633177.svg)](https://doi.org/10.5281/zenodo.20633177) · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.3-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
 A cause-oriented, axiomatic cyber threat taxonomy. We are aware of no prior framework that classifies threats by the generic vulnerability exploited rather than by outcome or actor.
 
@@ -664,6 +664,23 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 | [tlctc.net](https://tlctc.net) | Official TLCTC website with documentation, visuals, and tools |
 | [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Extended practitioner handbook: boundary logic, epistemic operators, and complete notation specification |
 | [barnes.ch](https://barnes.ch) | Author's site with foundational analysis on cybersecurity's language problem |
+
+## How to Cite
+
+> Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.3.0) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.20633177
+
+```bibtex
+@misc{kreinz2026tlctc,
+  author    = {Kreinz, Bernhard},
+  title     = {A Cause-Oriented Cyber Threat Taxonomy: The Top Level
+               Cyber Threat Clusters Framework},
+  year      = {2026},
+  version   = {2.3.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.20633177},
+  url       = {https://doi.org/10.5281/zenodo.20633177}
+}
+```
 
 ## License
 
