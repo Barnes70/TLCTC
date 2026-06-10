@@ -2,6 +2,9 @@
 CLAUDE.md
 .claude/
 
+# Superpowers workflow scaffolding (internal plans/specs, not deliverables)
+docs/superpowers/
+
 # OS files
 .DS_Store
 Thumbs.db
