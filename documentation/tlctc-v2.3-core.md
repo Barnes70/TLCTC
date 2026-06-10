@@ -90,6 +90,10 @@ TLCTC anchors its cause/outcome separation (Axiom III) in a bow-tie risk structu
 
 The SRE is positioned deliberately *before* outcomes. Compromise can exist without immediate observable impact — an attacker may hold persistent control for weeks before exfiltration — so the central event opens a detection window between initial compromise and any data loss. Other threats cause an outcome effectively at the moment of compromise (a successful SQL injection reading data, a flood exhausting capacity). The model accommodates both: the SRE is the pivot, whether consequences are delayed or simultaneous.
 
+![The TLCTC Cyber Bow-Tie: the ten threat clusters on the cause side, the System Risk Event as central pivot, and Data/Business Risk Events on the consequence side](images/tlctc-cyber-bow-tie.svg)
+
+*Figure 1 — The Cyber Bow-Tie. The ten clusters act exclusively on the cause (left) side; the System Risk Event ("Loss of Control") is the single central pivot; Data Risk Events and cascading Business Risk Events sit on the consequence (right) side.*
+
 Consequences follow a structured, variable-length chain:
 
 > **SRE → DRE → BRE\*** (System Risk Event → Data Risk Event → Business Risk Event(s))
@@ -101,6 +105,10 @@ Consequences follow a structured, variable-length chain:
 | **BRE** | A discrete business-level event triggered by a DRE or a preceding BRE | regulatory notification; outage declared; fine imposed |
 
 Business Risk Events may cascade (`SRE → DRE → BRE₁ → … → BREₙ`); chain length is organization-dependent. An organization's risk appetite determines at which BRE the chain reaches its terminal **Business Impact** — a role a BRE can hold, not a separate event type. Every transition carries its own Δt detection-and-intervention window, and the chain can break at any point: not every SRE leads to a DRE, and not every DRE leads to a BRE.
+
+![The consequence chain SRE → DRE → BRE*, with Δt detection windows at every transition and the risk-appetite boundary designating the terminal BRE as Business Impact](images/tlctc-consequence-chain.svg)
+
+*Figure 2 — The consequence chain. Every node is a risk event and every Δt a detection-and-intervention window; the organization's risk appetite designates the terminal BRE as its Business Impact.*
 
 Crucially, **outcomes are never threats.** A data risk event such as "data breach" or "ransomware impact" records *what happened*; it never changes the cluster classification of the step that caused it. This is the operational form of Axiom III, and it is what allows the same outcome to be traced back to different cause-side clusters.
 
