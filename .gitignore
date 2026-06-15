@@ -34,7 +34,6 @@ reports/
 
 # Report generator
 tools/generate-*-report.js
-package.json
 package-lock.json
 
 # Build artifacts
