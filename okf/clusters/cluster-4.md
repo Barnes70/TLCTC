@@ -1,0 +1,49 @@
+---
+type: "cluster"
+title: "#4 Identity Theft"
+description: "An attacker misuses authentication credentials to impersonate an identity."
+resource: "tlctc:cluster:#4"
+tags:
+  - "taxonomy"
+  - "cluster"
+  - "internal"
+strategic_id: "#4"
+operational_root_id: "TLCTC-04.00"
+generic_vulnerability: "Weak identity management processes and/or inadequate credential protection mechanisms throughout the identity lifecycle."
+topology: "internal"
+---
+# #4 Identity Theft
+
+**Definition:** Presentation/use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act **as an identity different from the presenter’s own**.
+
+**Generic Vulnerability:** Weak binding between identity and authentication artifacts, combined with insufficient credential and session lifecycle controls (issuance, storage, transmission, validation, rotation, revocation).
+
+**Attacker’s View:** “I abuse credentials to operate as a legitimate identity.”
+
+**Developer’s View:** “I must implement secure credential lifecycle management: storage, transmission, session handling, and robust authentication/authorization with defense-in-depth.”
+
+**Boundary Tests (normative):**
+
+- Credential acquisition/exposure/derivation/forgery maps to the enabling cluster; credential use/presentation always maps to **#4** (**R-CRED**).
+- If the step involves creating fraudulent credentials, certificates, or tokens, map **that creation/derivation** to the enabling mechanism (**#1/#2/#3/#7/#10** as appropriate), then map subsequent use to **#4**.
+- If the step is primarily persuading a human to reveal/approve → **#9** for that manipulation step.
+
+**Topology:** Internal.
+
+**Analytical note (non-normative):** #4 can be analyzed as a **micro-bridge** across the AuthN→AuthZ decision boundary, while still remaining within a single organizational control regime.
+
+---
+
+# Schema
+
+- **Strategic ID:** #4
+- **Operational root:** TLCTC-04.00
+- **Generic vulnerability:** Weak identity management processes and/or inadequate credential protection mechanisms throughout the identity lifecycle.
+- **Topology:** internal
+
+# Relationships
+
+- Governing axioms: [Axiom III](/axioms/axiom-iii.md), [Axiom VI](/axioms/axiom-vi.md), [Axiom VII](/axioms/axiom-vii.md)
+- Classification rules: see [/rules/index.md](/rules/index.md)
+- Control objectives: [/controls/cluster-4.md](/controls/cluster-4.md)
+- Mapped techniques: [ATT&CK](/mappings/attack/cluster-4.md) · [CWE](/mappings/cwe/cluster-4.md) · [Sigma](/mappings/sigma/cluster-4.md)

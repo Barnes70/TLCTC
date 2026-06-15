@@ -1,0 +1,49 @@
+---
+type: "attack-path"
+title: "COZY-BEAR-OAUTH-NGO-2025"
+description: "COZY BEAR's multi-layered trust exploitation campaign targeting a U.S.-based NGO (August 2025)."
+resource: "tlctc:attack-path:cozy-bear-oauth-ngo-2025"
+tags:
+  - "attack-path"
+  - "cluster-9"
+  - "cluster-4"
+  - "cluster-1"
+  - "confidence-high"
+timestamp: "2026-04-16T00:00:00Z"
+tlctc_version: "2.1"
+---
+# COZY-BEAR-OAUTH-NGO-2025
+
+## Attack path
+
+```
+||[human][@CozyBear→@Target-NGO]|| #9 →[Δt=~6h] #9 →[Δt=~1h] #4 →[Δt=~5m] #1 →[Δt=~10m] ||[human][@CozyBear→@Target-NGO]|| #9 →[Δt=~26d] #4 →[Δt=?] #1 →[Δt=?] #1 + [DRE: C]
+```
+
+# Schema
+
+| Step | Cluster | Boundary | Δt→next | DRE |
+|---|---|---|---|---|
+| s1-initial-contact | [#9](/clusters/cluster-9.md) | \|\|[human][@CozyBear→@Target-NGO]\|\| | ~6h |  |
+| s2-oauth-phishing | [#9](/clusters/cluster-9.md) |  | ~1h |  |
+| s3-auth-code-exchange | [#4](/clusters/cluster-4.md) |  | ~5m |  |
+| s4-outlook-blocked | [#1](/clusters/cluster-1.md) |  | ~10m |  |
+| s5-persistent-se | [#9](/clusters/cluster-9.md) | \|\|[human][@CozyBear→@Target-NGO]\|\| | ~26d |  |
+| s6-successful-reauth | [#4](/clusters/cluster-4.md) |  | ? |  |
+| s7-windows-hello-persistence | [#1](/clusters/cluster-1.md) |  | ? |  |
+| s8-m365-exfiltration | [#1](/clusters/cluster-1.md) |  |  | C |
+
+## Step notes
+
+- **s1-initial-contact:** Day 1, 07:56: COZY BEAR initiates contact with the target user via instant message, impersonating a known, trusted professional contact — an employee from an international NGO branch or pro-Ukraine organization. The adversary uses compromised individuals' legitimate email accounts alongside burner communication channels to reinforce the impersonation's authenticity. This is #9 Social Engineering: the target is manipulated through exploitation of an existing professional trust relationship. Boundary crossing: the attack traverses from the external adversary sphere through the human trust boundary into the target NGO. COZY BEAR's heavy investment in substantiating impersonations represents a deliberate strategy to exploit interpersonal trust rather than technical vulnerabilities.
+- **s2-oauth-phishing:** Day 1, 13:25: Within the established trusted conversation, COZY BEAR sends a phishing link initiating an Entra ID OAuth 2.0 authorization code flow targeting the device registration application. The link redirects to authentic Microsoft login pages — the target sees only legitimate Microsoft infrastructure throughout the authentication process. This is a second distinct #9 Social Engineering step: the adversary leverages the rapport established in s1 to convince the target to click the link. CrowdStrike notes: 'This technique removed the traditional phishing warning sign: suspicious domains.' Platform trust abuse: no IOCs from suspicious domains, all authentication traffic flows to legitimate Microsoft endpoints.
+- **s3-auth-code-exchange:** Day 1, 14:26-14:29: Target user logs in via the threat actor-provided device registration URL (14:26:21), then sends the URL containing the authorization code to the threat actor via instant message (14:28:00). The threat actor immediately authenticates using the authorization code (14:29:09). R-CRED: credential application is always #4 regardless of acquisition method. Axiom X: the authorization code was obtained via social engineering (#9, s2 as enabling cluster); its use to authenticate is a separate #4 step. The 3-minute window from victim login to attacker authentication demonstrates real-time operational coordination.
+- **s4-outlook-blocked:** Day 1, 14:33: Attacker attempts to access Outlook using the authenticated session but is blocked by a conditional access policy requiring Intune enrollment. At 14:39, the attacker sends a follow-up authorization code URL targeting the Outlook mobile app, hoping the mobile path bypasses the Intune requirement. This step is modeled as #1 Abuse of Functions: the attacker uses legitimate OAuth token-based API access (the function works as designed) but the conditional access control denies the resource request. The step demonstrates defense-in-depth working — the conditional access policy successfully prevented the attacker from reaching the target resource. This failed access attempt directly motivates the persistent social engineering campaign that follows.
+- **s5-persistent-se:** Days 1-5: Persistent, multi-day social engineering campaign despite the target's growing suspicion. Day 1, 14:44 — target requests email-based verification of the threat actor's identity. Day 1, 14:45 — attacker claims no PC access, asks to reschedule. Day 2, 07:39 — attacker claims email access restored. Day 2, 10:14 — attacker responds from the impersonated individual's actual compromised legitimate email account, reinforcing the impersonation. Day 2, 10:11 — attacker contacts another user at the organization, impersonating a pro-Ukrainian NGO and delivering multiple authorization code URLs including one targeting Microsoft Power Platform. Day 2, 13:31 — sends third auth code URL targeting Microsoft Intune Company Portal. Day 4 — emails phishing link from the compromised account. Day 5 — final email attempt. This is #9 Social Engineering: sustained multi-channel manipulation across IM, email, and multiple targets within the organization. The multi-day persistence and cross-channel coordination indicate high-value intelligence targeting consistent with SVR operations.
+- **s6-successful-reauth:** Target eventually authenticates via device code or authorization code flow on a subsequent attempt during the multi-day campaign. The attacker obtains OAuth tokens granting access to Microsoft 365 resources. Between the initial compromises and Day 31, the attacker 'spends multiple hours throughout three days attempting to bypass the conditional access policy by registering devices with various mobile and PC naming conventions and attempting to authenticate to various applications and resources using multiple authentication flows.' R-CRED: token-based authentication is always #4.
+- **s7-windows-hello-persistence:** Day 31: The attacker establishes persistence by registering a Windows Hello for Business credential and passwordless phone sign-in. This is #1 Abuse of Functions: the Windows Hello enrollment process is a legitimate Microsoft identity feature used exactly as designed — the attacker registers their own biometric/PIN credential for the compromised account, creating a persistent passwordless authentication path that bypasses password-based conditional access controls. This persistence mechanism survives password resets and does not depend on continued social engineering. The 31-day timeline from initial contact to persistence establishment reflects COZY BEAR's patience and operational discipline in pursuing high-value targets.
+- **s8-m365-exfiltration:** With persistent Windows Hello-based access to Microsoft 365, the adversary accesses the target's mailbox and associated document repositories. Email and document exfiltration targets diplomatic communications, intelligence on Ukraine-related activities, and organizational strategy. This is #1 Abuse of Functions: legitimate Microsoft 365 API access and mail/document retrieval functions used exactly as designed — the generic vulnerability is that these functions serve an unauthorized actor holding a valid credential. DRE: C — diplomatic and intelligence-related communications exfiltrated from the NGO. COZY BEAR's multi-day investment per target and focus on NGOs working on Ukraine-related issues is consistent with SVR intelligence collection priorities. The absence of suspicious domain IOCs (all authentication through legitimate Microsoft infrastructure) makes this attack chain exceptionally difficult to detect via traditional URL-based security controls.
+
+# Citations
+
+COZY BEAR's multi-layered trust exploitation campaign targeting a U.S.-based NGO (August 2025). The adversary combined three techniques: (1) interpersonal trust exploitation via impersonation of known professional contacts using compromised legitimate accounts, (2) platform trust abuse via Entra ID OAuth 2.0 phishing that redirected to authentic Microsoft login pages (eliminating suspicious domain indicators), and (3) multi-channel social engineering across IM, email, and video conferencing spanning 31+ days. Despite conditional access policies blocking initial Outlook access, persistent social engineering and repeated authentication attempts eventually yielded Windows Hello for Business persistence on Day 31. Attack path: #9 ||[human][@CozyBear→@Target-NGO]|| →[Δt=~6h] #9 →[Δt=~1h] #4 →[Δt=~5m] #1 →[Δt=~10m] #9 →[Δt=~26d] #4 →[Δt=?] #1 →[Δt=?] #1 + [DRE: C]. Source: CrowdStrike 2026 Global Threat Report, pp. 42-43, Figure 20.

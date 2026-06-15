@@ -1,0 +1,251 @@
+# glossary
+
+247 document(s).
+
+- [Abuse of Functions (#1)](/glossary/abuse-of-functions-1.md) — `term`
+- [Accessibility (Data Risk Event)](/glossary/accessibility-data-risk-event.md) — `term`
+- [Actor Archetype](/glossary/actor-archetype.md) — `term`
+- [Actor Group](/glossary/actor-group.md) — `term`
+- [Adware](/glossary/adware.md) — `term`
+- [AI / AGI / ASI (Positioning in TLCTC)](/glossary/ai-agi-asi-positioning-in-tlctc.md) — `term`
+- [Amplification Attack](/glossary/amplification-attack.md) — `term`
+- [ARP Spoofing](/glossary/arp-spoofing.md) — `term`
+- [Attack Path Notation](/glossary/attack-path-notation.md) — `term`
+- [Attack Path](/glossary/attack-path.md) — `term`
+- [Attack Sequence Schema](/glossary/attack-sequence-schema.md) — `term`
+- [Attack Step](/glossary/attack-step.md) — `term`
+- [Attack Vector](/glossary/attack-vector.md) — `term`
+- [Attack Velocity (Δt)](/glossary/attack-velocity-t.md) — `term`
+- [Attacker Profile](/glossary/attacker-profile.md) — `term`
+- [Attacker's View](/glossary/attackers-view.md) — `term`
+- [Availability (Data Risk Event)](/glossary/availability-data-risk-event.md) — `term`
+- [Axiom Quick Reference](/glossary/axiom-quick-reference.md) — `term`
+- [Axiom](/glossary/axiom.md) — `term`
+- [BEC (Business Email Compromise) / CEO Fraud](/glossary/bec-business-email-compromise-ceo-fraud.md) — `term`
+- [BGP Hijacking](/glossary/bgp-hijacking.md) — `term`
+- [Botnet](/glossary/botnet.md) — `term`
+- [Bounded Δt](/glossary/bounded-t.md) — `term`
+- [Bow-Tie Model](/glossary/bow-tie-model.md) — `term`
+- [Bridge Cluster](/glossary/bridge-cluster.md) — `term`
+- [Bridge Step](/glossary/bridge-step.md) — `term`
+- [Brute-Force Attack](/glossary/brute-force-attack.md) — `term`
+- [Buffer Overflow](/glossary/buffer-overflow.md) — `term`
+- [Business Impact (BI)](/glossary/business-impact-bi.md) — `term`
+- [Business Risk Event (BRE)](/glossary/business-risk-event-bre.md) — `term`
+- [BxIs (Base Level Indicators)](/glossary/bxis-base-level-indicators.md) — `term`
+- [Call-Level Mapping Rule](/glossary/call-level-mapping-rule.md) — `term`
+- [Capacity Exhaustion](/glossary/capacity-exhaustion.md) — `term`
+- [CAPEC (Common Attack Pattern Enumeration and Classification)](/glossary/capec-common-attack-pattern-enumeration-and-classification.md) — `term`
+- [Central Event](/glossary/central-event.md) — `term`
+- [Client-Role Component](/glossary/client-role-component.md) — `term`
+- [Client-Server Relationship](/glossary/client-server-relationship.md) — `term`
+- [Cluster Quick Reference](/glossary/cluster-quick-reference.md) — `term`
+- [Coder](/glossary/coder.md) — `term`
+- [Command Injection](/glossary/command-injection.md) — `term`
+- [Consequences](/glossary/consequences.md) — `term`
+- [Control Design Effectiveness](/glossary/control-design-effectiveness.md) — `term`
+- [Control Failure](/glossary/control-failure.md) — `term`
+- [Control Objective](/glossary/control-objective.md) — `term`
+- [Control Operational Effectiveness](/glossary/control-operational-effectiveness.md) — `term`
+- [Control](/glossary/control.md) — `term`
+- [Credential Acquisition](/glossary/credential-acquisition.md) — `term`
+- [Credential Application](/glossary/credential-application.md) — `term`
+- [Credential Forgery](/glossary/credential-forgery.md) — `term`
+- [Credential / Identity Artifact](/glossary/credential-identity-artifact.md) — `term`
+- [Cross-Site Scripting (XSS)](/glossary/cross-site-scripting-xss.md) — `term`
+- [CVE (Common Vulnerabilities and Exposures)](/glossary/cve-common-vulnerabilities-and-exposures.md) — `term`
+- [CWE (Common Weakness Enumeration)](/glossary/cwe-common-weakness-enumeration.md) — `term`
+- [Cyber Bow-Tie](/glossary/cyber-bow-tie.md) — `term`
+- [Cyber Incident](/glossary/cyber-incident.md) — `term`
+- [Cyber Risk Event](/glossary/cyber-risk-event.md) — `term`
+- [Cyber Risk](/glossary/cyber-risk.md) — `term`
+- [Cyber Threat Radar](/glossary/cyber-threat-radar.md) — `term`
+- [DAST (Dynamic Application Security Testing)](/glossary/dast-dynamic-application-security-testing.md) — `term`
+- [Data Processing Pathways](/glossary/data-processing-pathways.md) — `term`
+- [Data Risk Event (DRE)](/glossary/data-risk-event-dre.md) — `term`
+- [Data vs Code Boundary](/glossary/data-vs-code-boundary.md) — `term`
+- [DDoS (Distributed Denial of Service)](/glossary/ddos-distributed-denial-of-service.md) — `term`
+- [Defense-in-Depth](/glossary/defense-in-depth.md) — `term`
+- [Delta t (Δt)](/glossary/delta-t-t.md) — `term`
+- [Designed Execution Capability](/glossary/designed-execution-capability.md) — `term`
+- [Detection Coverage Score (DCS)](/glossary/detection-coverage-score-dcs.md) — `term`
+- [Developer's View](/glossary/developers-view.md) — `term`
+- [Directory Traversal](/glossary/directory-traversal.md) — `term`
+- [DNS Spoofing](/glossary/dns-spoofing.md) — `term`
+- [Domain Boundary Operator (||)](/glossary/domain-boundary-operator.md) — `term`
+- [Domain Boundary](/glossary/domain-boundary.md) — `term`
+- [Domain Squatting](/glossary/domain-squatting.md) — `term`
+- [Domain](/glossary/domain.md) — `term`
+- [DORA (Digital Operational Resilience Act)](/glossary/dora-digital-operational-resilience-act.md) — `term`
+- [Drive-By Download](/glossary/drive-by-download.md) — `term`
+- [Dual-Use Tool](/glossary/dual-use-tool.md) — `term`
+- [Eₙ Event Notation (Regulatory)](/glossary/e-event-notation-regulatory.md) — `term`
+- [Edge (in attack path)](/glossary/edge-in-attack-path.md) — `term`
+- [EDR (Endpoint Detection and Response)](/glossary/edr-endpoint-detection-and-response.md) — `term`
+- [Estimated Δt](/glossary/estimated-t.md) — `term`
+- [Event Chain Length](/glossary/event-chain-length.md) — `term`
+- [Event Chain](/glossary/event-chain.md) — `term`
+- [Evil Maid Attack](/glossary/evil-maid-attack.md) — `term`
+- [Exploit Code](/glossary/exploit-code.md) — `term`
+- [Exploiting Client (#3)](/glossary/exploiting-client-3.md) — `term`
+- [Exploiting Server (#2)](/glossary/exploiting-server-2.md) — `term`
+- [Fast Velocity Class](/glossary/fast-velocity-class.md) — `term`
+- [Fileless Execution / Fileless Malware](/glossary/fileless-execution-fileless-malware.md) — `term`
+- [Flooding Attack (#6)](/glossary/flooding-attack-6.md) — `term`
+- [Foreign Executable Content (FEC)](/glossary/foreign-executable-content-fec.md) — `term`
+- [Framework Layer](/glossary/framework-layer.md) — `term`
+- [Generic Vulnerability](/glossary/generic-vulnerability.md) — `term`
+- [GOVERN (GV)](/glossary/govern-gv.md) — `term`
+- [HTTP Flood](/glossary/http-flood.md) — `term`
+- [ICMP Flooding](/glossary/icmp-flooding.md) — `term`
+- [Identity Theft (#4)](/glossary/identity-theft-4.md) — `term`
+- [Implementation Defect (Availability Context)](/glossary/implementation-defect-availability-context.md) — `term`
+- [Implementation Flaw](/glossary/implementation-flaw.md) — `term`
+- [Insecure Deserialization](/glossary/insecure-deserialization.md) — `term`
+- [Intelligence Layer](/glossary/intelligence-layer.md) — `term`
+- [Internal Cluster](/glossary/internal-cluster.md) — `term`
+- [Intra-System Boundary Operator (|...|)](/glossary/intra-system-boundary-operator.md) — `term`
+- [JSON Architecture](/glossary/json-architecture.md) — `term`
+- [KCI (Key Control Indicator)](/glossary/kci-key-control-indicator.md) — `term`
+- [Keylogger](/glossary/keylogger.md) — `term`
+- [Kill Chain](/glossary/kill-chain.md) — `term`
+- [KPI (Key Performance Indicator)](/glossary/kpi-key-performance-indicator.md) — `term`
+- [KRI (Key Risk Indicator)](/glossary/kri-key-risk-indicator.md) — `term`
+- [KxI Framework](/glossary/kxi-framework.md) — `term`
+- [Latent/Slow Velocity Class](/glossary/latent-slow-velocity-class.md) — `term`
+- [Lateral Movement](/glossary/lateral-movement.md) — `term`
+- [Living Off the Land / LOLBAS (Living Off the Land Binaries and Scripts)](/glossary/living-off-the-land-lolbas-living-off-the-land-binaries-and-scripts.md) — `term`
+- [Local Controls](/glossary/local-controls.md) — `term`
+- [Loss of Accessibility (LoAc)](/glossary/loss-of-accessibility-loac.md) — `term`
+- [Loss of Availability (LoA)](/glossary/loss-of-availability-loa.md) — `term`
+- [Loss of Confidentiality (LoC)](/glossary/loss-of-confidentiality-loc.md) — `term`
+- [Loss of Control / System Compromise](/glossary/loss-of-control-system-compromise.md) — `term`
+- [Loss of Integrity (LoI)](/glossary/loss-of-integrity-loi.md) — `term`
+- [Malicious Code](/glossary/malicious-code.md) — `term`
+- [Malvertising](/glossary/malvertising.md) — `term`
+- [Malware (#7)](/glossary/malware-7.md) — `term`
+- [Man in the Middle (#5)](/glossary/man-in-the-middle-5.md) — `term`
+- [Medium Velocity Class](/glossary/medium-velocity-class.md) — `term`
+- [MFA Bombing / MFA Fatigue](/glossary/mfa-bombing-mfa-fatigue.md) — `term`
+- [Mitigating Controls](/glossary/mitigating-controls.md) — `term`
+- [MitM Position](/glossary/mitm-position.md) — `term`
+- [MITRE ATT&CK](/glossary/mitre-att-ck.md) — `term`
+- [NIS2 (Network and Information Security Directive 2)](/glossary/nis2-network-and-information-security-directive-2.md) — `term`
+- [NIST CSF (Cybersecurity Framework)](/glossary/nist-csf-cybersecurity-framework.md) — `term`
+- [Normative Keywords](/glossary/normative-keywords.md) — `term`
+- [Notation Systems](/glossary/notation-systems.md) — `term`
+- [OAuth Attack](/glossary/oauth-attack.md) — `term`
+- [Observed Δt](/glossary/observed-t.md) — `term`
+- [Operational Layer](/glossary/operational-layer.md) — `term`
+- [Operational Risk (OpRisk)](/glossary/operational-risk-oprisk.md) — `term`
+- [Operational Security Layer](/glossary/operational-security-layer.md) — `term`
+- [OWASP (Open Worldwide Application Security Project)](/glossary/owasp-open-worldwide-application-security-project.md) — `term`
+- [Parallel Operator (+)](/glossary/parallel-operator.md) — `term`
+- [Parallel Steps](/glossary/parallel-steps.md) — `term`
+- [Pass-the-Hash / Pass-the-Ticket](/glossary/pass-the-hash-pass-the-ticket.md) — `term`
+- [Password Spraying](/glossary/password-spraying.md) — `term`
+- [Patient Zero](/glossary/patient-zero.md) — `term`
+- [Phishing](/glossary/phishing.md) — `term`
+- [Physical Attack (#8)](/glossary/physical-attack-8.md) — `term`
+- [Pineapple Attack](/glossary/pineapple-attack.md) — `term`
+- [Ping of Death](/glossary/ping-of-death.md) — `term`
+- [Position Acquisition vs Position Exploitation](/glossary/position-acquisition-vs-position-exploitation.md) — `term`
+- [Pretexting](/glossary/pretexting.md) — `term`
+- [Preventive Controls](/glossary/preventive-controls.md) — `term`
+- [Privilege Escalation](/glossary/privilege-escalation.md) — `term`
+- [Process Injection](/glossary/process-injection.md) — `term`
+- [Programmer](/glossary/programmer.md) — `term`
+- [Propagated PR](/glossary/propagated-pr.md) — `term`
+- [Protection Ring Architecture](/glossary/protection-ring-architecture.md) — `term`
+- [R-ABUSE (Function Misuse Determination)](/glossary/r-abuse-function-misuse-determination.md) — `term`
+- [R-CRED (Credential Lifecycle Non-Overlap)](/glossary/r-cred-credential-lifecycle-non-overlap.md) — `term`
+- [R-EXEC (Foreign Execution Recording Rule)](/glossary/r-exec-foreign-execution-recording-rule.md) — `term`
+- [R-FLOOD (Capacity Exhaustion vs Implementation Defect)](/glossary/r-flood-capacity-exhaustion-vs-implementation-defect.md) — `term`
+- [R-HUMAN (Human Manipulation Isolation)](/glossary/r-human-human-manipulation-isolation.md) — `term`
+- [R-INTRA (Intra-System Boundary Rules)](/glossary/r-intra-intra-system-boundary-rules.md) — `term`
+- [R-MITM (Position vs Action)](/glossary/r-mitm-position-vs-action.md) — `term`
+- [R-PHYSICAL (Physical Domain Isolation)](/glossary/r-physical-physical-domain-isolation.md) — `term`
+- [R-ROLE (Server vs Client Determination)](/glossary/r-role-server-vs-client-determination.md) — `term`
+- [R-* Rules Quick Reference](/glossary/r-rules-quick-reference.md) — `term`
+- [R-SUPPLY (Trust Acceptance Event Placement)](/glossary/r-supply-trust-acceptance-event-placement.md) — `term`
+- [R-TRANSIT (Transit Boundary Rules)](/glossary/r-transit-transit-boundary-rules.md) — `term`
+- [Ransomware](/glossary/ransomware.md) — `term`
+- [RCE (Remote Code Execution)](/glossary/rce-remote-code-execution.md) — `term`
+- [Realtime Velocity Class](/glossary/realtime-velocity-class.md) — `term`
+- [Regulatory Trigger Point](/glossary/regulatory-trigger-point.md) — `term`
+- [Responsibility Sphere](/glossary/responsibility-sphere.md) — `term`
+- [RFID Skimming](/glossary/rfid-skimming.md) — `term`
+- [Risk Appetite / Risk Tolerance](/glossary/risk-appetite-risk-tolerance.md) — `term`
+- [Risk Event](/glossary/risk-event.md) — `term`
+- [Rogue Hotspot](/glossary/rogue-hotspot.md) — `term`
+- [Role Determination](/glossary/role-determination.md) — `term`
+- [Rootkit](/glossary/rootkit.md) — `term`
+- [RS Container (Respond Container)](/glossary/rs-container-respond-container.md) — `term`
+- [SAST (Static Application Security Testing)](/glossary/sast-static-application-security-testing.md) — `term`
+- [SBOM (Software Bill of Materials)](/glossary/sbom-software-bill-of-materials.md) — `term`
+- [SCA (Software Composition Analysis)](/glossary/sca-software-composition-analysis.md) — `term`
+- [Scope of Client Software](/glossary/scope-of-client-software.md) — `term`
+- [Scope of Server Software](/glossary/scope-of-server-software.md) — `term`
+- [Secure Software Development Life Cycle (SSDLC)](/glossary/secure-software-development-life-cycle-ssdlc.md) — `term`
+- [Semantic Guardrails Quick Reference](/glossary/semantic-guardrails-quick-reference.md) — `term`
+- [Semantic Guardrails (SG-1 through SG-7)](/glossary/semantic-guardrails-sg-1-through-sg-7.md) — `term`
+- [Sequence Operator (→)](/glossary/sequence-operator.md) — `term`
+- [Sequence](/glossary/sequence.md) — `term`
+- [Server-Role Component](/glossary/server-role-component.md) — `term`
+- [Session Hijacking](/glossary/session-hijacking.md) — `term`
+- [SIEM (Security Information and Event Management)](/glossary/siem-security-information-and-event-management.md) — `term`
+- [Slowloris](/glossary/slowloris.md) — `term`
+- [Smishing](/glossary/smishing.md) — `term`
+- [SOAR (Security Orchestration, Automation, and Response)](/glossary/soar-security-orchestration-automation-and-response.md) — `term`
+- [Social Engineering (#9)](/glossary/social-engineering-9.md) — `term`
+- [Spear Phishing](/glossary/spear-phishing.md) — `term`
+- [Spyware](/glossary/spyware.md) — `term`
+- [SQL Injection](/glossary/sql-injection.md) — `term`
+- [SSL Stripping](/glossary/ssl-stripping.md) — `term`
+- [SSRF (Server-Side Request Forgery)](/glossary/ssrf-server-side-request-forgery.md) — `term`
+- [STIX (Structured Threat Information Expression)](/glossary/stix-structured-threat-information-expression.md) — `term`
+- [Strategic Layer (Human-First)](/glossary/strategic-layer-human-first.md) — `term`
+- [Strategic Management Layer](/glossary/strategic-management-layer.md) — `term`
+- [STRIDE](/glossary/stride.md) — `term`
+- [Sub-Threat](/glossary/sub-threat.md) — `term`
+- [Supply Chain Attack (#10)](/glossary/supply-chain-attack-10.md) — `term`
+- [SYN Flood](/glossary/syn-flood.md) — `term`
+- [System Compromise](/glossary/system-compromise.md) — `term`
+- [System Risk Event (SRE)](/glossary/system-risk-event-sre.md) — `term`
+- [Tailgating](/glossary/tailgating.md) — `term`
+- [Tech Enablers Overlay](/glossary/tech-enablers-overlay.md) — `term`
+- [Techniques (TTPs)](/glossary/techniques-ttps.md) — `term`
+- [TEMPEST](/glossary/tempest.md) — `term`
+- [Temporal Notation](/glossary/temporal-notation.md) — `term`
+- [Third-Party Trust Link (TTL)](/glossary/third-party-trust-link-ttl.md) — `term`
+- [Threat Cluster](/glossary/threat-cluster.md) — `term`
+- [Threat (in TLCTC)](/glossary/threat-in-tlctc.md) — `term`
+- [Threat Topology](/glossary/threat-topology.md) — `term`
+- [Tie-Breaker Rules](/glossary/tie-breaker-rules.md) — `term`
+- [TLCTC Enumeration](/glossary/tlctc-enumeration.md) — `term`
+- [TLCTC (Top Level Cyber Threat Clusters)](/glossary/tlctc-top-level-cyber-threat-clusters.md) — `term`
+- [Token Hijacking](/glossary/token-hijacking.md) — `term`
+- [Transit Boundary Operator (⇒)](/glossary/transit-boundary-operator.md) — `term`
+- [Trojan](/glossary/trojan.md) — `term`
+- [Trust Acceptance Event (TAE)](/glossary/trust-acceptance-event-tae.md) — `term`
+- [Trust Artifact / Trust Decision (TAD)](/glossary/trust-artifact-trust-decision-tad.md) — `term`
+- [TTP (Tactics, Techniques, and Procedures)](/glossary/ttp-tactics-techniques-and-procedures.md) — `term`
+- [Two-Tiered Approach](/glossary/two-tiered-approach.md) — `term`
+- [Typosquatting](/glossary/typosquatting.md) — `term`
+- [UDP Flood](/glossary/udp-flood.md) — `term`
+- [Umbrella Controls](/glossary/umbrella-controls.md) — `term`
+- [Unknown Δt](/glossary/unknown-t.md) — `term`
+- [Unresolved-Step Operators (`?`, `…`)](/glossary/unresolved-step-operators.md) — `term`
+- [USB Baiting](/glossary/usb-baiting.md) — `term`
+- [Van Eck Phreaking](/glossary/van-eck-phreaking.md) — `term`
+- [Velocity Annotation](/glossary/velocity-annotation.md) — `term`
+- [Velocity Class](/glossary/velocity-class.md) — `term`
+- [Vertical Stack Application](/glossary/vertical-stack-application.md) — `term`
+- [Vishing](/glossary/vishing.md) — `term`
+- [Vulnerability](/glossary/vulnerability.md) — `term`
+- [WAF (Web Application Firewall)](/glossary/waf-web-application-firewall.md) — `term`
+- [Watering Hole Attack](/glossary/watering-hole-attack.md) — `term`
+- [Weakness](/glossary/weakness.md) — `term`
+- [Whaling](/glossary/whaling.md) — `term`
+- [Worm](/glossary/worm.md) — `term`
+- [XXE (XML External Entity) Injection](/glossary/xxe-xml-external-entity-injection.md) — `term`

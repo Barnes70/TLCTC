@@ -1,0 +1,39 @@
+---
+type: "attack-path"
+title: "FAMOUS-CHOLLIMA-BEAVERTAIL-2025"
+description: "FAMOUS CHOLLIMA's fake recruiter campaign delivering BeaverTail malware via malicious npm packages (January–May 2025)."
+resource: "tlctc:attack-path:famous-chollima-beavertail-2025"
+tags:
+  - "attack-path"
+  - "cluster-9"
+  - "cluster-10"
+  - "cluster-7"
+  - "confidence-medium"
+timestamp: "2026-04-16T00:00:00Z"
+tlctc_version: "2.1"
+---
+# FAMOUS-CHOLLIMA-BEAVERTAIL-2025
+
+## Attack path
+
+```
+||[human][@FamousChollima→@Target-Dev]|| #9 →[Δt=?] ||[update][@npm⇒@FamousChollima→@Target-Dev]|| #10 →[Δt=instant] #7 (FEC) + [DRE: C]
+```
+
+# Schema
+
+| Step | Cluster | Boundary | Δt→next | DRE |
+|---|---|---|---|---|
+| s1-fake-recruiter-se | [#9](/clusters/cluster-9.md) | \|\|[human][@FamousChollima→@Target-Dev]\|\| | ? |  |
+| s2-npm-supply-chain-tae | [#10](/clusters/cluster-10.md) | \|\|[update][@npm⇒@FamousChollima→@Target-Dev]\|\| | instant |  |
+| s3-beavertail-execution | [#7](/clusters/cluster-7.md) (FEC) |  |  | C |
+
+## Step notes
+
+- **s1-fake-recruiter-se:** FAMOUS CHOLLIMA operators masquerade as legitimate job recruiters and contact targeted software developers. The adversary asks the developer to review or improve a project as part of a purported employment assessment, directing them to specific npm packages. This is #9 Social Engineering: the developer is manipulated through exploitation of job-seeking trust — the desire for employment and the expectation that a recruiter's technical assessment is legitimate. Boundary crossing: the attack traverses from the external DPRK-nexus operator sphere through the human trust boundary to the developer. This technique is distinct from the DPRK IT worker infiltration scheme (nk-it-worker-infiltration-2025.json), where operatives fake identities to get hired as employees. Here, the attacker poses as a recruiter to deliver malware to external developers — a shorter, more targeted exploitation chain.
+- **s2-npm-supply-chain-tae:** Trust Acceptance Event: the developer runs npm install, pulling the malicious packages from the npm registry into their development environment. R-SUPPLY: #10 is placed at the moment the trust artifact — the npm package — becomes authoritative on the developer's system. The developer trusts the npm ecosystem to deliver safe packages; FAMOUS CHOLLIMA published over 30 malicious packages to exploit this trust. The npm registry is a transit party (⇒): it stores and distributes the malicious packages but is not the source or target of the attack. Boundary: ||[update][@FamousChollima⇒@npm→@Target-Dev]||. Note: the social engineering in s1 directed the developer to these specific packages, but the trust relationship exploited at the TAE is with the npm supply chain — the developer uses npm install (a trusted tool) to retrieve and install code. Collateral infection path: these same packages were incorporated as dependencies in other software, causing an estimated 8,000+ downstream infections where developers unknowingly pulled the malicious code without any social engineering contact.
+- **s3-beavertail-execution:** The malicious npm packages deploy BeaverTail malware payloads on the developer's machine. R-EXEC: foreign executable content runs — recorded as #7 with fec_executed: true. BeaverTail is a DPRK-nexus information stealer that targets browser credentials, cryptocurrency wallet data, and development-related secrets. The malware executes via npm postinstall hooks or direct script execution as part of the purported assessment project. DRE: C — developer credentials, cryptocurrency wallet contents, and potentially sensitive source code or API keys are exfiltrated to adversary-controlled infrastructure. These stolen credentials and secrets may enable follow-on attacks: access to corporate repositories, CI/CD pipelines, or cryptocurrency wallets. The campaign operated from January to May 2025, with FAMOUS CHOLLIMA continuously publishing new packages as earlier ones were discovered and removed by npm security teams.
+
+# Citations
+
+FAMOUS CHOLLIMA's fake recruiter campaign delivering BeaverTail malware via malicious npm packages (January–May 2025). Operators masquerade as legitimate job recruiters and direct targeted software developers to download and execute malicious npm packages as part of a purported employment assessment. Between January and May 2025, more than 30 malicious packages were deployed to npm. Adversary-linked packages were downloaded over 8,000 times — many collateral infections from incorporation as dependencies in other software. This path models the direct social engineering vector (recruiter → developer → npm install → BeaverTail). Collateral infections follow a pure supply chain path: #10 ||[update][@FamousChollima⇒@npm→@Victim]|| →[instant] #7 + [DRE: C], where the developer unknowingly pulls the malicious package as a transitive dependency. Attack path (direct): #9 ||[human][@FamousChollima→@Target-Dev]|| →[Δt=?] #10 ||[update][@FamousChollima⇒@npm→@Target-Dev]|| →[Δt=instant] #7 + [DRE: C]. See also nk-it-worker-infiltration-2025.json (different DPRK technique: fake employee identities, not fake recruiters) and shai-hulud-worm-2025.json (different npm supply chain attack: self-propagating worm, same ecosystem). Source: CrowdStrike 2026 Global Threat Report, pp. 32-33.

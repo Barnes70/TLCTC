@@ -1,0 +1,39 @@
+---
+type: "attack-path"
+title: "PUNK-SPIDER-SMB-ENCRYPTION-2025"
+description: "PUNK SPIDER's remote file encryption via SMB shares from unmanaged hosts (2025)."
+resource: "tlctc:attack-path:punk-spider-smb-encryption-2025"
+tags:
+  - "attack-path"
+  - "cluster-2"
+  - "cluster-7"
+  - "cluster-1"
+  - "confidence-medium"
+timestamp: "2026-04-16T00:00:00Z"
+tlctc_version: "2.1"
+---
+# PUNK-SPIDER-SMB-ENCRYPTION-2025
+
+## Attack path
+
+```
+#2 →[Δt=?] #7 (FEC) →[Δt=instant] #1 + [DRE: Ac]
+```
+
+# Schema
+
+| Step | Cluster | Boundary | Δt→next | DRE |
+|---|---|---|---|---|
+| s1-iot-exploit | [#2](/clusters/cluster-2.md) |  | ? |  |
+| s2-akira-execution | [#7](/clusters/cluster-7.md) (FEC) |  | instant |  |
+| s3-smb-remote-encryption | [#1](/clusters/cluster-1.md) |  |  | Ac |
+
+## Step notes
+
+- **s1-iot-exploit:** PUNK SPIDER identifies and exploits an unpatched IoT device on the corporate network — in the documented variant, a network-connected webcam. R-ROLE: the webcam is in a server role relative to the attacker (accepting network connections, exposing a vulnerable service), classified as #2 Exploiting Server. The critical property of this device: it is unmanaged — no EDR agent, no security monitoring, no patch management. This makes it an ideal ransomware execution platform. The exploitation method is not detailed in the CrowdStrike reporting; the webcam likely exposed a vulnerable web interface or RTSP service. In PUNK SPIDER's broader 2025 operations, the adversary operates from various unmanaged hosts including decommissioned servers, IoT devices, and attacker-provisioned VMs. The choice of execution platform — not the initial network access vector — is the strategic decision.
+- **s2-akira-execution:** PUNK SPIDER deploys and executes Akira ransomware on the compromised unmanaged device. R-EXEC: foreign executable content runs on the IoT device — recorded as #7 with fec_executed: true. Axiom III: ransomware is an outcome class, not a cluster — the payload execution is classified as #7 (Malware). The ransomware is configured to target remote SMB shares rather than local storage, making the unmanaged device a ransomware proxy. Because the device has no EDR sensor, the ransomware process runs with zero endpoint visibility. No security alert is generated at the execution point. The ransomware binary and process exist entirely outside the organization's endpoint detection perimeter.
+- **s3-smb-remote-encryption:** The Akira ransomware on the unmanaged device performs remote file encryption via Windows SMB shares (Figure 12): (1) enumerates accessible SMB shares on managed hosts across the network; (2) reads files from those shares over SMB to the unmanaged device; (3) encrypts the files locally on the unmanaged device; (4) writes the encrypted files back to the original SMB shares on managed hosts, replacing the originals. This is #1 Abuse of Functions: Windows SMB file sharing operates exactly as designed — the protocol handles read and write requests from an authenticated network peer without regard to whether that peer is a managed endpoint. The generic vulnerability is that SMB's legitimate file-sharing capability serves the ransomware's encryption workflow. DRE: Ac — data is present but unusable (encrypted in place). From the managed hosts' perspective, they see only legitimate SMB read/write operations from a network peer — no ransomware process, no suspicious file access patterns from a local process, no EDR trigger. CrowdStrike notes that Falcon Prevent's File System Containment capability protects against this technique by detecting anomalous SMB-based file modifications regardless of whether the modifying process runs locally or remotely.
+
+# Citations
+
+PUNK SPIDER's remote file encryption via SMB shares from unmanaged hosts (2025). PUNK SPIDER was the most active Big Game Hunting adversary in 2025, conducting 198 intrusions (134% increase year-over-year). The core technique: execute Akira ransomware on an unmanaged host (no EDR sensor), pull files from managed hosts via Windows SMB shares, encrypt locally, and push encrypted files back. Managed endpoints never see ransomware execution. This path models the webcam variant: PUNK SPIDER identified an unpatched webcam on a corporate network and executed Akira from this unmanaged IoT device. Other BGH actors also used remote encryption variations in 2025, including RECESS SPIDER, TRAVELING SPIDER affiliates, and WANDERING SPIDER. Analyst confidence is medium: the webcam variant is referenced from third-party reporting (S-RM) with limited detail; the SMB technique is described at a composite level across 198 intrusions. Attack path: #2 →[Δt=?] #7 →[Δt=instant] #1 + [DRE: Ac]. Source: CrowdStrike 2026 Global Threat Report, pp. 24-25, Figure 12; S-RM Inform report on Akira webcam deployment.
