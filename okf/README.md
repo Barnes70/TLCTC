@@ -13,6 +13,12 @@ node scripts/build-okf.js
 node scripts/validate-okf.js okf/
 ```
 
+## Machine-readable inventory
+
+[`manifest.json`](manifest.json) lists every document with its `path`, `type`, `title`,
+`description`, `resource`, and `tags` — plus per-type counts — so programmatic consumers
+can index the bundle without walking links. It is deterministic (no build timestamp).
+
 ## Contents
 
 Generated from TLCTC v2.3. 412 concept documents across

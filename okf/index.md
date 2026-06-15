@@ -12,3 +12,5 @@ generated from the canonical JSON schemas and documentation. See [README.md](/RE
 - [mappings](/mappings/index.md) — Mappings to MITRE ATT&CK, MITRE CWE, and SigmaHQ.
 - [rules](/rules/index.md) — Classification rules (R-*).
 - [spheres](/spheres/index.md) — Responsibility spheres (Layer 2).
+
+[manifest.json](/manifest.json) — machine-readable inventory of every document (path, type, title, tags).

@@ -56,6 +56,8 @@ function firstSentence(s) {
 const dirEntries = new Map();
 let docCount = 0;
 const typeCounts = new Map();
+// flat inventory of every concept doc, for manifest.json
+const manifest = [];
 
 function recordEntry(relFile, title, type) {
   const dir = path.dirname(relFile);
@@ -98,6 +100,14 @@ function writeDoc(relFile, frontmatterObj, body) {
   recordEntry(relFile, frontmatterObj.title || relFile, frontmatterObj.type || '');
   docCount++;
   typeCounts.set(frontmatterObj.type, (typeCounts.get(frontmatterObj.type) || 0) + 1);
+  manifest.push({
+    path: '/' + relFile.split(path.sep).join('/'),
+    type: frontmatterObj.type || '',
+    title: frontmatterObj.title || '',
+    description: frontmatterObj.description || '',
+    resource: frontmatterObj.resource || '',
+    tags: frontmatterObj.tags || [],
+  });
 }
 
 // write a reserved file (index.md / log.md / README.md) — NO frontmatter
@@ -694,6 +704,7 @@ function writeRoot() {
   for (const d of topDirs()) {
     lines.push(`- [${d}](/${d}/index.md) — ${sections[d] || ''}`);
   }
+  lines.push('', '[manifest.json](/manifest.json) — machine-readable inventory of every document (path, type, title, tags).');
   writeReserved('index.md', lines.join('\n'));
 
   const today = new Date().toISOString().slice(0, 10);
@@ -711,6 +722,10 @@ function writeRoot() {
     '(JSON schemas in `json-schemas/`, documentation in `documentation/`, tools in `tools/`) remain',
     'the single source of truth.', '',
     '## Regenerate', '', '```bash', 'node scripts/build-okf.js', 'node scripts/validate-okf.js okf/', '```', '',
+    '## Machine-readable inventory', '',
+    '[`manifest.json`](manifest.json) lists every document with its `path`, `type`, `title`,',
+    '`description`, `resource`, and `tags` — plus per-type counts — so programmatic consumers',
+    'can index the bundle without walking links. It is deterministic (no build timestamp).', '',
     '## Contents', '',
     `Generated from TLCTC v${framework.metadata.tlctc_version}. ${docCount} concept documents across`,
     `${topDirs().length} sections (clusters, axioms, rules, spheres, contexts, glossary, attack-paths,`,
@@ -722,6 +737,23 @@ function writeRoot() {
     '- CWE mappings are AI-generated and experimental.', '',
     '## License', '', 'CC BY 4.0 — see [../LICENSE](../LICENSE).',
   ].join('\n'));
+}
+
+// machine-readable inventory of every concept doc (deterministic: no timestamp)
+function writeManifest() {
+  const documents = manifest.slice().sort((a, b) => a.path.localeCompare(b.path));
+  const type_counts = {};
+  for (const t of [...typeCounts.keys()].sort()) type_counts[t] = typeCounts.get(t);
+  const data = {
+    bundle: 'tlctc-okf',
+    okf_spec_version: '0.1',
+    tlctc_version: framework.metadata.tlctc_version,
+    generator: 'scripts/build-okf.js',
+    document_count: documents.length,
+    type_counts,
+    documents,
+  };
+  fs.writeFileSync(path.join(OUT, 'manifest.json'), JSON.stringify(data, null, 2) + '\n', 'utf8');
 }
 
 // ═════════════════════════ MAIN ══════════════════════════════════════════════
@@ -744,8 +776,9 @@ function main() {
 
   writeIndexes();
   writeRoot();
+  writeManifest();
 
-  console.log(`\nWrote ${docCount} concept documents.`);
+  console.log(`\nWrote ${docCount} concept documents + manifest.json`);
   for (const [t, n] of [...typeCounts].sort()) console.log(`  ${t}: ${n}`);
   console.log(`Sections: ${topDirs().join(', ')}`);
 }
