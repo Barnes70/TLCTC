@@ -354,6 +354,23 @@ The cause–event–consequence chain of §4 and §11 is also a reporting backbo
 
 *Caveat.* A two-hop, mechanically derived map (Sigma → ATT&CK → cluster) inherits the limits of the mapping it rides on; these projections are *coverage audits*, not per-incident classifications. When an artifact is context-dependent, the analyst still owns the final call via the §2 procedure — the projection accelerates triage, it does not replace it. Integration details and conformance notes are in `integrations/README.md`.
 
+## 15. Secure Development (SSDLC): Programmer vs Coder
+
+Every TLCTC cluster definition carries a sixth field, the **Developer's View**, and it splits secure development into two roles with distinct cluster responsibilities. The **Programmer** works on the cause (left) side of the bow-tie — architecture and strategy — and holds primary responsibility for clusters **#1, #4, #5, and #10 at an architectural level**: what functionality exists and how it could be misused, which authentication and communication architectures are chosen, which third-party trust is accepted. The **Coder** works at the centre, the event — implementation and craftsmanship — and holds primary responsibility for **#2 and #3, and the implementation details of #4, #5, and #7**. The division is deliberately not a clean partition: #4 and #5 are co-owned, architected by the programmer and implemented by the coder, which is precisely TLCTC's #1-by-design versus #2/#3-by-implementation logic projected onto roles. In one line: *the programmer prevents the generic vulnerability from being architected into the system; the coder prevents the specific vulnerability from being written into the code.* Making each SSDLC phase emit cluster-tagged deliverables is what turns "secure by design" from a slogan into a discipline.
+
+| SSDLC phase | Owning role | Clusters emphasized | Primary control |
+|---|---|---|---|
+| Requirements | Programmer | Cluster-coverage matrix (all ten in/out); misuse cases (#1) | Cluster-tagged threat model + attack-path hypotheses |
+| Design / Architecture | Programmer | #1, #4, #5, #10 (architectural decisions) | Attack-path design review with named interruptions |
+| Implementation | Coder | #2, #3 + implementation details of #4, #5, #7 | Code review, SAST, CWE → cluster, cluster-tagged commits |
+| Testing / Verification | Both | All clusters; verify the interruptions hold | SAST / DAST / SCA / fuzzing, each mapped to its cluster(s) |
+| Deployment | Both | #1 baseline, #4 secrets, #5 TLS, #6 rate-limits, #10 → #7 signing | Cluster-mapped operational controls |
+| Maintenance / Decommission | Both | Cluster-tagged metrics; #4 revoke, #8 wipe, #10 notify | Incident-as-attack-path; de-provisioning |
+
+*Worked illustration — the interruption table.* The design-review artifact is an attack path with a named interruption at every step. Walking `#9 → #4 → #1 → #7` in review: phishing `#9` is interrupted by phishing-resistant MFA ✔; stolen credentials `#4` by device-bound tokens ✔; abuse of admin APIs `#1` by step-up authentication — **✘ gap**; malware `#7` by an EDR allowlist ✔. A step without a named interruption is not a diagram annotation; it *is* the review's finding.
+
+*Caveat.* Programmer versus coder is a *responsibility lens* drawn from the Developer's View — it assigns ownership and selects the review type; it does not change the cluster, which is still fixed by the generic vulnerability (Axiom VI). The same CWE-787 is #2 or #3 by execution context (R-ROLE), not by who wrote it. TLCTC sits *above* OWASP, CERT, and the secure-coding standards as a stable threat vocabulary; it does not replace them, and it aligns structurally with the NIST SSDF (SP 800-218) practice groups (PO / PV / PS). The role definitions are canonical in `okf/glossary/programmer.md`, `okf/glossary/coder.md`, and `okf/glossary/developers-view.md`; CWE-to-cluster is in `mappings/mitre-cwe/`.
+
 ## 17. Limitations and Scope
 
 This paper *applies* the TLCTC framework; it does not *validate* it. Empirical validation — inter-rater agreement on classification and large-scale mapping studies against incident corpora — is the subject of separate work.
