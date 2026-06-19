@@ -413,6 +413,11 @@ This glossary defines only the application- and governance-layer terms used in t
 - **KPI (Key Performance Indicator)** — a measure of the operational performance of a control or process (e.g. MTTD); the performance facet of a KCI.
 - **MTTD (Mean Time to Detect)** — the average elapsed time from the occurrence of an attack step to its detection.
 - **Risk appetite** — the level of cyber-risk exposure an organization chooses to accept; it sets KRI thresholds, DCS targets, and the terminal Business Impact boundary.
+- **Developer's View** — the secure-development field of each cluster definition, split into Programmer (architectural) and Coder (implementation) responsibilities.
+- **Programmer / Coder distinction** — a responsibility lens from the Developer's View: the programmer owns the architectural level of #1/#4/#5/#10, the coder owns #2/#3 and the implementation details of #4/#5/#7. It assigns review type, not cluster.
+- **Consequence amplifier** — a factor (notably agent autonomy) that increases the velocity, scope, or reach of the consequence chain without introducing a new cause cluster.
+- **OKF (Open Knowledge Format)** — the generated, agent-consumable markdown view of the taxonomy under `okf/`, built from the canonical sources; a view, never a normative fork.
+- **Harmonization (threat-taxonomy slot)** — using TLCTC to supply the cause-taxonomy layer that other methods (STRIDE, Kill Chain, FAIR, Diamond, D3FEND) leave implicit, without replacing their own axis.
 
 ## 19. References
 
@@ -421,3 +426,13 @@ This glossary defines only the application- and governance-layer terms used in t
 3. MITRE Corporation. *MITRE ATT&CK: Adversarial Tactics, Techniques, and Common Knowledge.* https://attack.mitre.org/
 4. MITRE Corporation. *Common Weakness Enumeration (CWE).* https://cwe.mitre.org/
 5. MITRE Corporation. *Common Vulnerabilities and Exposures (CVE).* https://www.cve.org/
+6. European Parliament and Council. *Directive (EU) 2022/2555 (NIS2).* 2022.
+7. European Parliament and Council. *Regulation (EU) 2022/2554 (DORA).* 2022.
+8. European Parliament and Council. *Regulation (EU) 2024/2847 (Cyber Resilience Act).* 2024.
+9. International Electrotechnical Commission. *IEC 62443: Security for industrial automation and control systems.*
+10. Shostack, A. *Threat Modeling: Designing for Security* (STRIDE). Wiley, 2014.
+11. The Open Group. *Risk Taxonomy (O-RT) / Open FAIR.* https://www.opengroup.org/
+12. MITRE Corporation. *D3FEND: A knowledge graph of cybersecurity countermeasures.* https://d3fend.mitre.org/
+13. SigmaHQ. *Sigma — Generic Signature Format for SIEM Systems.* https://github.com/SigmaHQ/sigma
+14. OASIS. *Static Analysis Results Interchange Format (SARIF) Version 2.1.0.* 2020.
+15. National Institute of Standards and Technology. *Secure Software Development Framework (SSDF) Version 1.1.* NIST SP 800-218, 2022. https://doi.org/10.6028/NIST.SP.800-218
