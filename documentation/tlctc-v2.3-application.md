@@ -338,6 +338,22 @@ The cause–event–consequence chain of §4 and §11 is also a reporting backbo
 
 *Caveat.* TLCTC supplies the threat and trigger vocabulary, not the legal thresholds, notification timelines, or materiality cuts — those remain regime-specific and are set by counsel, not by the taxonomy. A proposed national-reporting profile, **TLCTC+**, operationalizes this mapping with additive Business-Risk-Event tags; it is a proposal, not part of the frozen core, and is cited here as related work (`documentation/tlctc-plus-specification.md`, `documentation/tlctc-plus-ncsc-proposal.md`). The standing control obligations that regulations impose across event chains are treated in `documentation/propagated-controls.md`.
 
+## 14. Detection & Tooling Integration
+
+§6 read two *static* reference mappings (ATT&CK, CWE) to translate a technique or a weakness into a cluster. The same cause-projection works on the *live* artifacts an operations or development team already produces — and turns each pile of findings into a cluster-level coverage picture. A SIEM's detection rules, a scanner's findings, and a SOAR platform's playbooks all gain a cluster, and once they share that axis the organizing principle inverts: one response playbook per *cause*, not one per outcome. The repository ships these projections as concrete artifacts rather than prose.
+
+| Artifact / tool | What it emits | TLCTC projection | Canonical artifact |
+|---|---|---|---|
+| Sigma | Detection rules | Cluster-level coverage map (two-hop via ATT&CK) | `mappings/sigma/tlctc-sigma.json` |
+| SARIF | Static-analysis findings | Per-finding cluster (via CWE → cluster) | `integrations/sarif/cli/` |
+| Cortex XSOAR / XSIAM | Response playbooks | One master playbook per cluster, velocity-routed | `integrations/cortex-xsoar/`, `integrations/cortex-xsoar-8/` |
+| SonarQube | SAST findings (CWE) | Cluster via the CWE map | `integrations/sonarqube/` |
+| Splunk / Cisco | Detections & telemetry | Cluster mapping | `mappings/splunk-cisco/` |
+
+*Worked illustration — a finding becomes a cause.* A SARIF result whose `ruleId` carries CWE-89 (SQL injection) projects through the CWE → cluster map to **#2 Exploiting Server**, and lands in the coverage view beside every other finding tagged by cause. A thousand undifferentiated findings become "N findings enabling #2, M enabling #4" — the same reframing the development view applies in §15.
+
+*Caveat.* A two-hop, mechanically derived map (Sigma → ATT&CK → cluster) inherits the limits of the mapping it rides on; these projections are *coverage audits*, not per-incident classifications. When an artifact is context-dependent, the analyst still owns the final call via the §2 procedure — the projection accelerates triage, it does not replace it. Integration details and conformance notes are in `integrations/README.md`.
+
 ## 17. Limitations and Scope
 
 This paper *applies* the TLCTC framework; it does not *validate* it. Empirical validation — inter-rater agreement on classification and large-scale mapping studies against incident corpora — is the subject of separate work.
