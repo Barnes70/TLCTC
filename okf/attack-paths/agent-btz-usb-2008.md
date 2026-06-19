@@ -1,0 +1,43 @@
+---
+type: "attack-path"
+title: "AGENT-BTZ-USB-2008"
+description: "Agent.BTZ / Operation Buckshot Yankee (2008)."
+resource: "tlctc:attack-path:agent-btz-usb-2008"
+tags:
+  - "attack-path"
+  - "cluster-8"
+  - "cluster-9"
+  - "cluster-7"
+  - "cluster-4"
+  - "cluster-1"
+  - "confidence-high"
+timestamp: "2026-03-20T00:00:00Z"
+tlctc_version: "2.1"
+---
+# AGENT-BTZ-USB-2008
+
+## Attack path
+
+```
+(#8 + #9) →[Δt=~10s] #7 (FEC) →[Δt=~2d] #4 →[Δt=~30d] #1 + [DRE: C]
+```
+
+# Schema
+
+| Step | Cluster | Boundary | Δt→next | DRE |
+|---|---|---|---|---|
+| g1-usb-plant | [#8](/clusters/cluster-8.md) + [#9](/clusters/cluster-9.md) | | ~10s | |
+| s2-agent-btz-execution | [#7](/clusters/cluster-7.md) (FEC) |  | ~2d |  |
+| s3-credential-harvest | [#4](/clusters/cluster-4.md) |  | ~30d |  |
+| s4-data-exfiltration | [#1](/clusters/cluster-1.md) |  |  | C |
+
+## Step notes
+
+- **g1-usb-plant:** Parallel group: the USB drive simultaneously exploits physical access (#8) and human curiosity (#9). The ~10s delta represents the approximate time between USB insertion and malware execution (autorun trigger or user clicking the disguised payload). These two steps are parallel because they describe two simultaneous generic vulnerabilities exploited by a single attack artifact at the same moment — the physical presence of the device and the psychological manipulation of the finder.
+- **s2-agent-btz-execution:** Foreign Executable Content execution: Agent.BTZ worm payload executed upon USB insertion, likely triggered by Windows autorun functionality (exploiting the default autorun policy for removable media in Windows XP, the predominant OS on military systems at that time) or via a crafted .LNK shortcut file exploiting the Windows Shell LNK vulnerability. R-EXEC satisfied: FEC execution recorded as #7 with fec_executed=true. Upon execution, Agent.BTZ performed several actions: (1) established persistence via registry modifications and file copying to system directories, (2) began scanning for and propagating to other connected USB drives to enable further spreading, (3) propagated across Windows network shares (ADMIN$, C$) within the local network segment, (4) created covert C2 communication channels using HTTP-based beaconing disguised as legitimate web traffic, and (5) began fingerprinting the compromised system (OS version, network configuration, user accounts). The worm's propagation mechanism was particularly effective in the military environment because network segmentation between workstations was minimal within each classification level. The ~2d delta to the next step represents the approximate time for the worm to propagate sufficiently to begin harvesting reusable credentials from multiple compromised hosts.
+- **s3-credential-harvest:** Credential application for lateral movement: Agent.BTZ harvested cached Windows credentials, Kerberos tickets, and authentication tokens from compromised machines' memory (via techniques similar to what would later be known as 'pass-the-hash' and 'pass-the-ticket'). These stolen credentials were then USED to authenticate to additional systems across both SIPRNet and NIPRNet, enabling the worm to spread to network segments it could not reach via simple share enumeration alone. R-CRED / Axiom X (Credential Duality): the credential ACQUISITION occurred as a consequence of the #7 step (the malware's memory scraping capability); the credential APPLICATION — the act of using those credentials to authenticate as legitimate users — is always classified as #4 Identity Theft regardless of the acquisition method. The attacker impersonated legitimate military personnel to access systems and data they were not authorized to reach. The ~30d delta represents the extended dwell time during which the worm operated undetected, continuously spreading and collecting data before the exfiltration activity was identified. This extended dwell time highlights the detection gap: without network behavior analysis or endpoint detection capabilities (which were nascent in 2008), the credential-based lateral movement appeared indistinguishable from legitimate user activity.
+- **s4-data-exfiltration:** Abuse of legitimate functions for data exfiltration: classified data was collected from compromised SIPRNet systems and staged for exfiltration through Agent.BTZ's covert C2 channels. The worm abused legitimate network protocols (HTTP/HTTPS) and standard Windows file handling APIs to package and transmit classified military data to external C2 servers. No additional code vulnerability was exploited at this stage — the attacker operated through the malware's designed exfiltration functionality, which in turn leveraged the network's legitimate communication capabilities. DRE: C (Loss of Confidentiality) — classified military intelligence, operational plans, and sensitive communications were compromised and exfiltrated to adversary-controlled infrastructure. This is the terminal step. The scope of the breach was significant enough that the DoD's remediation effort (Operation Buckshot Yankee) took over 14 months and led directly to the establishment of USCYBERCOM. Post-incident, the DoD implemented a blanket ban on USB removable media on classified networks (since partially relaxed with mandatory device scanning), demonstrating how a single physical vector can trigger enterprise-wide policy changes.
+
+# Citations
+
+Agent.BTZ / Operation Buckshot Yankee (2008). A USB flash drive containing the Agent.BTZ worm was planted in a parking lot at a US military base in the Middle East, almost certainly by Russian intelligence (later attributed to the Turla group / APT). A soldier found the drive and inserted it into a laptop connected to SIPRNet (Secret Internet Protocol Router Network), the DoD's classified network. The worm spread via USB propagation and Windows network shares across both SIPRNet and NIPRNet (unclassified network), establishing covert C2 channels to exfiltrate classified data. The breach was not detected for approximately 14 months. This incident was the catalyst for the creation of United States Cyber Command (USCYBERCOM) in 2009. Attack path: (#8 + #9) ||[physical/human][@External→@Military]|| →[Δt=~10s] #7 →[Δt=~2d] #4 →[Δt=~30d] #1 + [DRE: C]. Sources: William J. Lynn III, 'Defending a New Domain' (Foreign Affairs, September/October 2010); Pentagon press statements (November 2008); DoD Operation Buckshot Yankee declassified summary; Kaspersky Lab Turla/Agent.BTZ technical analysis (2014); SANS Institute case study on removable media threats.

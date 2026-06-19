@@ -1,0 +1,4575 @@
+{
+  "bundle": "tlctc-okf",
+  "okf_spec_version": "0.1",
+  "tlctc_version": "2.3",
+  "generator": "scripts/build-okf.js",
+  "document_count": 412,
+  "type_counts": {
+    "attack-path": 51,
+    "axiom": 10,
+    "boundary-context": 17,
+    "cluster": 10,
+    "control-objective-set": 10,
+    "csf-function": 6,
+    "effectiveness-model": 1,
+    "indicator-framework": 1,
+    "intra-boundary-type": 4,
+    "mapping-set": 30,
+    "rule": 16,
+    "sphere": 9,
+    "term": 247
+  },
+  "documents": [
+    {
+      "path": "/attack-paths/ad-domain-admin-cascade-2025.md",
+      "type": "attack-path",
+      "title": "AD-DOMAIN-ADMIN-CASCADE-2025",
+      "description": "Canonical reference path for the Active Directory Domain-Admin → ransomware cascade — a composite/pattern analysis grounded in three 2025 incidents: Lynx (DFIR Report, March 2025), Storm-2603 / ToolShell (Cisco Talos, August 2025), and Storm-0300 / Akira (Microsoft Security Blog, April 2025).",
+      "resource": "tlctc:attack-path:ad-domain-admin-cascade-2025",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/agent-btz-usb-2008.md",
+      "type": "attack-path",
+      "title": "AGENT-BTZ-USB-2008",
+      "description": "Agent.BTZ / Operation Buckshot Yankee (2008).",
+      "resource": "tlctc:attack-path:agent-btz-usb-2008",
+      "tags": [
+        "attack-path",
+        "cluster-8",
+        "cluster-9",
+        "cluster-7",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/aisuru-ddos-2025.md",
+      "type": "attack-path",
+      "title": "AISURU-DDOS-2025",
+      "description": "Aisuru botnet hyper-volumetric DDoS attacks, 2025.",
+      "resource": "tlctc:attack-path:aisuru-ddos-2025",
+      "tags": [
+        "attack-path",
+        "cluster-7",
+        "cluster-6",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/authorized-insider-extortion-2025.md",
+      "type": "attack-path",
+      "title": "AUTHORIZED-INSIDER-EXTORTION-2025",
+      "description": "Authorized insider threat and extortion campaign investigated by Cloudforce One REACT.",
+      "resource": "tlctc:attack-path:authorized-insider-extortion-2025",
+      "tags": [
+        "attack-path",
+        "cluster-1",
+        "cluster-9",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/blockade-spider-embargo-2025.md",
+      "type": "attack-path",
+      "title": "BLOCKADE-SPIDER-EMBARGO-2025",
+      "description": "BLOCKADE SPIDER's cross-domain Embargo ransomware campaigns (throughout 2025).",
+      "resource": "tlctc:attack-path:blockade-spider-embargo-2025",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-4",
+        "cluster-1",
+        "cluster-7",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/bot-chain-lifecycle-2025.md",
+      "type": "attack-path",
+      "title": "BOT-CHAIN-LIFECYCLE-2025",
+      "description": "Triple-threat bot chain lifecycle as described by Cloudforce One (Cloudflare 2026 Threat Report).",
+      "resource": "tlctc:attack-path:bot-chain-lifecycle-2025",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-7",
+        "cluster-6",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/capital-one-2019.md",
+      "type": "attack-path",
+      "title": "CAPITAL-ONE-2019",
+      "description": "Capital One data breach, March 2019 (disclosed July 2019).",
+      "resource": "tlctc:attack-path:capital-one-2019",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/chalk-debug-phishing-2025.md",
+      "type": "attack-path",
+      "title": "CHALK-DEBUG-PHISHING-2025",
+      "description": "Chalk/Debug npm phishing campaign (September 8, 2025).",
+      "resource": "tlctc:attack-path:chalk-debug-phishing-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-4",
+        "cluster-1",
+        "cluster-10",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/change-healthcare-2024.md",
+      "type": "attack-path",
+      "title": "CHANGE-HEALTHCARE-2024",
+      "description": "ALPHV/BlackCat ransomware attack on Change Healthcare (UnitedHealth Group), February 2024.",
+      "resource": "tlctc:attack-path:change-healthcare-2024",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/chaos-muddywater-falseflag-2026.md",
+      "type": "attack-path",
+      "title": "CHAOS-MUDDYWATER-FALSEFLAG-2026",
+      "description": "MuddyWater (Seedworm / Iranian MOIS) intrusion campaign branded as 'Chaos ransomware' but operationally a state-sponsored exfiltration operation — the Chaos RaaS skin is a false flag for plausible deniability.",
+      "resource": "tlctc:attack-path:chaos-muddywater-falseflag-2026",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-4",
+        "cluster-1",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/chatty-spider-lawfirm-2025.md",
+      "type": "attack-path",
+      "title": "CHATTY-SPIDER-LAWFIRM-2025",
+      "description": "CHATTY SPIDER's four-minute vishing-to-exfiltration intrusion targeting a U.S.-based law firm (2025).",
+      "resource": "tlctc:attack-path:chatty-spider-lawfirm-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-7",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/cloudflare-http-ddos-2023.md",
+      "type": "attack-path",
+      "title": "CLOUDFLARE-HTTP2-DDOS-2023",
+      "description": "Record-breaking HTTP/2 Rapid Reset DDoS attack, October 2023.",
+      "resource": "tlctc:attack-path:cloudflare-http-ddos-2023",
+      "tags": [
+        "attack-path",
+        "cluster-6",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/clumsytoad-snakedisk-2025.md",
+      "type": "attack-path",
+      "title": "CLUMSYTOAD-SNAKEDISK-2025",
+      "description": "ClumsyToad (Mustang Panda/BASIN/Earth Preta) SnakeDisk USB worm campaign targeting Thailand, September 2025.",
+      "resource": "tlctc:attack-path:clumsytoad-snakedisk-2025",
+      "tags": [
+        "attack-path",
+        "cluster-8",
+        "cluster-7",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/colonial-pipeline-2021.md",
+      "type": "attack-path",
+      "title": "COLONIAL-PIPELINE-2021",
+      "description": "DarkSide ransomware attack on Colonial Pipeline, May 2021.",
+      "resource": "tlctc:attack-path:colonial-pipeline-2021",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/cozy-bear-oauth-ngo-2025.md",
+      "type": "attack-path",
+      "title": "COZY-BEAR-OAUTH-NGO-2025",
+      "description": "COZY BEAR's multi-layered trust exploitation campaign targeting a U.S.-based NGO (August 2025).",
+      "resource": "tlctc:attack-path:cozy-bear-oauth-ngo-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/credential-stuffing-2020.md",
+      "type": "attack-path",
+      "title": "ZOOM-CREDENTIAL-STUFFING-2020",
+      "description": "Zoom credential stuffing attacks (April 2020).",
+      "resource": "tlctc:attack-path:credential-stuffing-2020",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/darkhotel-wifi-2014.md",
+      "type": "attack-path",
+      "title": "DARKHOTEL-WIFI-2014",
+      "description": "DarkHotel APT campaign targeting business executives via luxury hotel WiFi networks, documented by Kaspersky in November 2014 (active since ~2007).",
+      "resource": "tlctc:attack-path:darkhotel-wifi-2014",
+      "tags": [
+        "attack-path",
+        "cluster-8",
+        "cluster-9",
+        "cluster-5",
+        "cluster-7",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/famous-chollima-beavertail-2025.md",
+      "type": "attack-path",
+      "title": "FAMOUS-CHOLLIMA-BEAVERTAIL-2025",
+      "description": "FAMOUS CHOLLIMA's fake recruiter campaign delivering BeaverTail malware via malicious npm packages (January–May 2025).",
+      "resource": "tlctc:attack-path:famous-chollima-beavertail-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-10",
+        "cluster-7",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/fancy-bear-lamehug-2025.md",
+      "type": "attack-path",
+      "title": "FANCY-BEAR-LAMEHUG-2025",
+      "description": "FANCY BEAR's deployment of LAMEHUG, a novel LLM-enabled malware family, against Ukrainian government entities (mid-2025).",
+      "resource": "tlctc:attack-path:fancy-bear-lamehug-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-7",
+        "cluster-1",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/frumpytoad-toughprogress-2025.md",
+      "type": "attack-path",
+      "title": "FRUMPYTOAD-TOUGHPROGRESS-2025",
+      "description": "FrumpyToad (APT41/Wicked Panda/Brass Typhoon) TOUGHPROGRESS campaign, October 2024 through mid-2025.",
+      "resource": "tlctc:attack-path:frumpytoad-toughprogress-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-7",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/grub1-saas-pivot-2025.md",
+      "type": "attack-path",
+      "title": "GRUB1-SAAS-PIVOT-2025",
+      "description": "GRUB1 SaaS-to-SaaS supply chain pivot, tracked by Cloudforce One (Cloudflare 2026 Threat Report).",
+      "resource": "tlctc:attack-path:grub1-saas-pivot-2025",
+      "tags": [
+        "attack-path",
+        "cluster-1",
+        "cluster-4",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/infostealer-ransomware-pipeline-2025.md",
+      "type": "attack-path",
+      "title": "INFOSTEALER-RANSOMWARE-PIPELINE-2025",
+      "description": "Canonical infostealer-to-ransomware pipeline as described in the Cloudflare 2026 Threat Report.",
+      "resource": "tlctc:attack-path:infostealer-ransomware-pipeline-2025",
+      "tags": [
+        "attack-path",
+        "cluster-7",
+        "cluster-1",
+        "cluster-4",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/lockbit-byovd-2023.md",
+      "type": "attack-path",
+      "title": "LOCKBIT-BYOVD-2023",
+      "description": "LockBit affiliate attack using Bring Your Own Vulnerable Driver (BYOVD) technique, representative of multiple 2023 incidents.",
+      "resource": "tlctc:attack-path:lockbit-byovd-2023",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-3",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/lojax-uefi-2018.md",
+      "type": "attack-path",
+      "title": "LOJAX-UEFI-ROOTKIT-2018",
+      "description": "LoJax UEFI rootkit (September 2018).",
+      "resource": "tlctc:attack-path:lojax-uefi-2018",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-7",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/mandiant-edge-device-exploitation-2025.md",
+      "type": "attack-path",
+      "title": "MANDIANT-EDGE-DEVICE-EXPLOITATION-2025",
+      "description": "Attack path derived from Mandiant M-Trends 2026 'Systematic Exploitation of Edge and Core Network Devices' (pp.",
+      "resource": "tlctc:attack-path:mandiant-edge-device-exploitation-2025",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-7",
+        "cluster-5",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/mandiant-esxi-virtualization-2025.md",
+      "type": "attack-path",
+      "title": "MANDIANT-ESXI-VIRTUALIZATION-2025",
+      "description": "Attack path derived from Mandiant M-Trends 2026 'Adversary Focus on Virtualized Infrastructure' (pp.",
+      "resource": "tlctc:attack-path:mandiant-esxi-virtualization-2025",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/mandiant-handoff-ransomware-2025.md",
+      "type": "attack-path",
+      "title": "MANDIANT-HANDOFF-RANSOMWARE-2025",
+      "description": "Composite attack path representing the infostealer → initial access broker (IAB) → ransomware-affiliate pipeline described in Mandiant M-Trends 2026 'A Minor Infection Today Can Be a Ransomware Attack Tomorrow' (pp.",
+      "resource": "tlctc:attack-path:mandiant-handoff-ransomware-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-7",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/mandiant-multi-year-espionage-2025.md",
+      "type": "attack-path",
+      "title": "MANDIANT-MULTI-YEAR-ESPIONAGE-2025",
+      "description": "Composite attack path modeled on Mandiant M-Trends 2026 'Multi-Year Intrusions Highlighting Extreme Persistence' (pp.",
+      "resource": "tlctc:attack-path:mandiant-multi-year-espionage-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-7",
+        "cluster-1",
+        "cluster-4",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/mandiant-recovery-denial-2025.md",
+      "type": "attack-path",
+      "title": "MANDIANT-RECOVERY-DENIAL-2025",
+      "description": "Composite attack path for the 'recovery denial' ransomware pattern from Mandiant M-Trends 2026 'Ransomware is Now a Resilience Problem' (pp.",
+      "resource": "tlctc:attack-path:mandiant-recovery-denial-2025",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/mandiant-saas-cascade-2025.md",
+      "type": "attack-path",
+      "title": "MANDIANT-SAAS-CASCADE-2025",
+      "description": "Attack path derived from Mandiant M-Trends 2026 'The Cascading Impact of Third-Party SaaS Compromises' (pp.",
+      "resource": "tlctc:attack-path:mandiant-saas-cascade-2025",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-7",
+        "cluster-1",
+        "cluster-4",
+        "cluster-10",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/mirai-botnet-2016.md",
+      "type": "attack-path",
+      "title": "MIRAI-BOTNET-DYN-2016",
+      "description": "Mirai botnet recruitment and Dyn DNS DDoS attack (October 2016).",
+      "resource": "tlctc:attack-path:mirai-botnet-2016",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-7",
+        "cluster-6",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/nastyshrew-ukraine-2025.md",
+      "type": "attack-path",
+      "title": "NASTYSHREW-UKRAINE-2025",
+      "description": "NastyShrew (Gamaredon/Primitive Bear/UAC-0010/Aqua Blizzard) persistent campaigns targeting Ukrainian government and critical infrastructure, 2025.",
+      "resource": "tlctc:attack-path:nastyshrew-ukraine-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-7",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/nk-it-worker-infiltration-2025.md",
+      "type": "attack-path",
+      "title": "NK-IT-WORKER-INFILTRATION-2025",
+      "description": "North Korean state-sponsored IT worker infiltration scheme, industrialized by 2025.",
+      "resource": "tlctc:attack-path:nk-it-worker-infiltration-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/okta-lapsus-2022.md",
+      "type": "attack-path",
+      "title": "OKTA-LAPSUS-2022",
+      "description": "Lapsus$ attack on Okta via Sitel (third-party support contractor), January 2022 (disclosed March 2022).",
+      "resource": "tlctc:attack-path:okta-lapsus-2022",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/opencode-exploit-chain-2025.md",
+      "type": "attack-path",
+      "title": "OPENCODE-EXPLOIT-CHAIN-2025",
+      "description": "OpenCode vulnerability chain discovered by Cloudflare's product security team in December 2025.",
+      "resource": "tlctc:attack-path:opencode-exploit-chain-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-3",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/pegasus-forcedentry-2021.md",
+      "type": "attack-path",
+      "title": "PEGASUS-FORCEDENTRY-2021",
+      "description": "NSO Group Pegasus spyware delivered via FORCEDENTRY zero-click exploit, 2021.",
+      "resource": "tlctc:attack-path:pegasus-forcedentry-2021",
+      "tags": [
+        "attack-path",
+        "cluster-3",
+        "cluster-7",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/pressure-chollima-bybit-2025.md",
+      "type": "attack-path",
+      "title": "PRESSURE-CHOLLIMA-BYBIT-2025",
+      "description": "PRESSURE CHOLLIMA's supply chain compromise of Safe{Wallet} to steal $1.46 billion USD from Bybit (February 2025), the largest cryptocurrency theft in history.",
+      "resource": "tlctc:attack-path:pressure-chollima-bybit-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-7",
+        "cluster-4",
+        "cluster-1",
+        "cluster-10",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/punk-spider-smb-encryption-2025.md",
+      "type": "attack-path",
+      "title": "PUNK-SPIDER-SMB-ENCRYPTION-2025",
+      "description": "PUNK SPIDER's remote file encryption via SMB shares from unmanaged hosts (2025).",
+      "resource": "tlctc:attack-path:punk-spider-smb-encryption-2025",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-7",
+        "cluster-1",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/punytoad-f5-bigip-2025.md",
+      "type": "attack-path",
+      "title": "PUNYTOAD-F5-BIGIP-2025",
+      "description": "PunyToad (UNC5221/UTA0178/Warp Panda) F5 BIG-IP breach, confirmed October 2025 by Cloudforce One.",
+      "resource": "tlctc:attack-path:punytoad-f5-bigip-2025",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-7",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/raccoon-phaas-aitm-2025.md",
+      "type": "attack-path",
+      "title": "RACCOON-PHAAS-AITM-2025",
+      "description": "RaccoonO365 Phishing-as-a-Service (PhaaS) adversary-in-the-middle (AitM) campaign, disrupted by Cloudforce One in 2025.",
+      "resource": "tlctc:attack-path:raccoon-phaas-aitm-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-5",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/rottenshrew-signal-2025.md",
+      "type": "attack-path",
+      "title": "ROTTENSHREW-SIGNAL-2025",
+      "description": "RottenShrew (UAC-0185/Lost Potential/UNC4221) Signal device-linking campaign, 2025.",
+      "resource": "tlctc:attack-path:rottenshrew-signal-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/s1ngularity-nx-2025.md",
+      "type": "attack-path",
+      "title": "S1NGULARITY-NX-2025",
+      "description": "S1ngularity / Nx monorepo tool supply chain compromise (August 26, 2025).",
+      "resource": "tlctc:attack-path:s1ngularity-nx-2025",
+      "tags": [
+        "attack-path",
+        "cluster-1",
+        "cluster-7",
+        "cluster-4",
+        "cluster-10",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/scattered-spider-unmanaged-vm-2025.md",
+      "type": "attack-path",
+      "title": "SCATTERED-SPIDER-UNMANAGED-VM-2025",
+      "description": "SCATTERED SPIDER's abuse of unmanaged virtual machines to dump Active Directory credentials, as documented in the CrowdStrike 2026 Global Threat Report (pp.",
+      "resource": "tlctc:attack-path:scattered-spider-unmanaged-vm-2025",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-4",
+        "cluster-7",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/shai-hulud-worm-2025.md",
+      "type": "attack-path",
+      "title": "SHAI-HULUD-WORM-2025",
+      "description": "Shai-Hulud recursive npm supply chain worm (September 14 – November 2025).",
+      "resource": "tlctc:attack-path:shai-hulud-worm-2025",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-10",
+        "cluster-7",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/tesla-insider-2023.md",
+      "type": "attack-path",
+      "title": "TESLA-INSIDER-2023",
+      "description": "Tesla insider data breach (May 2023).",
+      "resource": "tlctc:attack-path:tesla-insider-2023",
+      "tags": [
+        "attack-path",
+        "cluster-1",
+        "cluster-8",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/tesla-k8s-cryptojacking-2018.md",
+      "type": "attack-path",
+      "title": "TESLA-K8S-CRYPTOJACKING-2018",
+      "description": "Tesla Kubernetes cryptojacking incident, February 2018 (discovered by RedLock).",
+      "resource": "tlctc:attack-path:tesla-k8s-cryptojacking-2018",
+      "tags": [
+        "attack-path",
+        "cluster-1",
+        "cluster-7",
+        "cluster-4",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/twitter-hack-2020.md",
+      "type": "attack-path",
+      "title": "TWITTER-HACK-2020",
+      "description": "Twitter account takeover attack, July 15, 2020.",
+      "resource": "tlctc:attack-path:twitter-hack-2020",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/uber-breach-2016.md",
+      "type": "attack-path",
+      "title": "UBER-BREACH-2016",
+      "description": "Uber data breach of 2016 (disclosed November 2017).",
+      "resource": "tlctc:attack-path:uber-breach-2016",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/ubiquiti-bec-2015.md",
+      "type": "attack-path",
+      "title": "UBIQUITI-BEC-2015",
+      "description": "Business Email Compromise (BEC) attack on Ubiquiti Networks, June 2015.",
+      "resource": "tlctc:attack-path:ubiquiti-bec-2015",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/ukraine-power-grid-2015.md",
+      "type": "attack-path",
+      "title": "UKRAINE-POWER-GRID-2015",
+      "description": "Ukraine power grid cyberattack (December 23, 2015).",
+      "resource": "tlctc:attack-path:ukraine-power-grid-2015",
+      "tags": [
+        "attack-path",
+        "cluster-9",
+        "cluster-7",
+        "cluster-4",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/watering-hole-iphonedevsdk-2013.md",
+      "type": "attack-path",
+      "title": "WATERING-HOLE-IPHONEDEVSDK-2013",
+      "description": "Watering hole attack targeting Apple, Facebook, Twitter, and Microsoft employees, February 2013.",
+      "resource": "tlctc:attack-path:watering-hole-iphonedevsdk-2013",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-3",
+        "cluster-7",
+        "cluster-1",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-i.md",
+      "type": "axiom",
+      "title": "Axiom I",
+      "description": "The framework is generic and applies to all IT systems; it does not differentiate by system type.",
+      "resource": "tlctc:axiom:axiom-i",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-ii.md",
+      "type": "axiom",
+      "title": "Axiom II",
+      "description": "All networked systems can be abstracted as client-server interaction.",
+      "resource": "tlctc:axiom:axiom-ii",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-iii.md",
+      "type": "axiom",
+      "title": "Axiom III",
+      "description": "Threats are on the cause side; outcomes and events are not threats.",
+      "resource": "tlctc:axiom:axiom-iii",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-iv.md",
+      "type": "axiom",
+      "title": "Axiom IV",
+      "description": "Threat clusters are separate from threat actors.",
+      "resource": "tlctc:axiom:axiom-iv",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-ix.md",
+      "type": "axiom",
+      "title": "Axiom IX",
+      "description": "Clusters can be used in sequence to describe an attack path; Δt measures velocity.",
+      "resource": "tlctc:axiom:axiom-ix",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-v.md",
+      "type": "axiom",
+      "title": "Axiom V",
+      "description": "Control failures are not threats.",
+      "resource": "tlctc:axiom:axiom-v",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-vi.md",
+      "type": "axiom",
+      "title": "Axiom VI",
+      "description": "For every generic vulnerability, there is one threat cluster (non-overlap).",
+      "resource": "tlctc:axiom:axiom-vi",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-vii.md",
+      "type": "axiom",
+      "title": "Axiom VII",
+      "description": "Each distinct attack vector is defined by the generic vulnerability it initially targets.",
+      "resource": "tlctc:axiom:axiom-vii",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-viii.md",
+      "type": "axiom",
+      "title": "Axiom VIII",
+      "description": "Top-level clusters have sub-threats (strategic vs operational layering).",
+      "resource": "tlctc:axiom:axiom-viii",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/axioms/axiom-x.md",
+      "type": "axiom",
+      "title": "Axiom X",
+      "description": "Credentials are system control elements; acquisition and application are distinct steps.",
+      "resource": "tlctc:axiom:axiom-x",
+      "tags": [
+        "taxonomy",
+        "axiom"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-1.md",
+      "type": "cluster",
+      "title": "#1 Abuse of Functions",
+      "description": "An attacker abuses the logic or scope of existing, legitimate software functions for malicious purposes without exploiting a code flaw.",
+      "resource": "tlctc:cluster:#1",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "internal"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-10.md",
+      "type": "cluster",
+      "title": "#10 Supply Chain Attack",
+      "description": "An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.",
+      "resource": "tlctc:cluster:#10",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "bridge"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-2.md",
+      "type": "cluster",
+      "title": "#2 Exploiting Server",
+      "description": "An attacker targets flaws within the server-side application's source code implementation.",
+      "resource": "tlctc:cluster:#2",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "internal"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-3.md",
+      "type": "cluster",
+      "title": "#3 Exploiting Client",
+      "description": "An attacker targets flaws within the source code implementation of any software acting in a client role.",
+      "resource": "tlctc:cluster:#3",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "internal"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-4.md",
+      "type": "cluster",
+      "title": "#4 Identity Theft",
+      "description": "An attacker misuses authentication credentials to impersonate an identity.",
+      "resource": "tlctc:cluster:#4",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "internal"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-5.md",
+      "type": "cluster",
+      "title": "#5 Man in the Middle",
+      "description": "An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.",
+      "resource": "tlctc:cluster:#5",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "internal"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-6.md",
+      "type": "cluster",
+      "title": "#6 Flooding Attack",
+      "description": "An attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to denial of service.",
+      "resource": "tlctc:cluster:#6",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "internal"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-7.md",
+      "type": "cluster",
+      "title": "#7 Malware",
+      "description": "An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.",
+      "resource": "tlctc:cluster:#7",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "internal"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-8.md",
+      "type": "cluster",
+      "title": "#8 Physical Attack",
+      "description": "Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.",
+      "resource": "tlctc:cluster:#8",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "bridge"
+      ]
+    },
+    {
+      "path": "/clusters/cluster-9.md",
+      "type": "cluster",
+      "title": "#9 Social Engineering",
+      "description": "An attacker psychologically manipulates individuals into performing actions counter to their best interests.",
+      "resource": "tlctc:cluster:#9",
+      "tags": [
+        "taxonomy",
+        "cluster",
+        "bridge"
+      ]
+    },
+    {
+      "path": "/contexts/admin.md",
+      "type": "boundary-context",
+      "title": "admin",
+      "description": "Administrative / management plane boundary",
+      "resource": "tlctc:context:admin",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/api.md",
+      "type": "boundary-context",
+      "title": "api",
+      "description": "API integration / service-to-service boundary",
+      "resource": "tlctc:context:api",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/auth.md",
+      "type": "boundary-context",
+      "title": "auth",
+      "description": "Identity provider / authentication responsibility boundary",
+      "resource": "tlctc:context:auth",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/browser.md",
+      "type": "boundary-context",
+      "title": "browser",
+      "description": "Browser / web rendering boundary",
+      "resource": "tlctc:context:browser",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/cdn.md",
+      "type": "boundary-context",
+      "title": "cdn",
+      "description": "Content delivery network boundary",
+      "resource": "tlctc:context:cdn",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/cloud.md",
+      "type": "boundary-context",
+      "title": "cloud",
+      "description": "Cloud shared responsibility boundary",
+      "resource": "tlctc:context:cloud",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/dev.md",
+      "type": "boundary-context",
+      "title": "dev",
+      "description": "Build/CI/CD responsibility boundary",
+      "resource": "tlctc:context:dev",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/email.md",
+      "type": "boundary-context",
+      "title": "email",
+      "description": "Email transport / relay boundary",
+      "resource": "tlctc:context:email",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/exploit.md",
+      "type": "boundary-context",
+      "title": "exploit",
+      "description": "Exploit delivery infrastructure boundary",
+      "resource": "tlctc:context:exploit",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/human.md",
+      "type": "boundary-context",
+      "title": "human",
+      "description": "Human decision / manipulation boundary (bridge by #9)",
+      "resource": "tlctc:context:human",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/intra-hypervisor.md",
+      "type": "intra-boundary-type",
+      "title": "hypervisor (intra-system)",
+      "description": "Escape from a virtual machine to the hypervisor or to another VM on the same host.",
+      "resource": "tlctc:intra-boundary:hypervisor",
+      "tags": [
+        "registry",
+        "intra-system-boundary"
+      ]
+    },
+    {
+      "path": "/contexts/intra-privilege.md",
+      "type": "intra-boundary-type",
+      "title": "privilege (intra-system)",
+      "description": "Elevation from a lower privilege level to a higher one within the same system.",
+      "resource": "tlctc:intra-boundary:privilege",
+      "tags": [
+        "registry",
+        "intra-system-boundary"
+      ]
+    },
+    {
+      "path": "/contexts/intra-process.md",
+      "type": "intra-boundary-type",
+      "title": "process (intra-system)",
+      "description": "Crossing from one process's address space or security context into another on the same host.",
+      "resource": "tlctc:intra-boundary:process",
+      "tags": [
+        "registry",
+        "intra-system-boundary"
+      ]
+    },
+    {
+      "path": "/contexts/intra-sandbox.md",
+      "type": "intra-boundary-type",
+      "title": "sandbox (intra-system)",
+      "description": "Escape from an application sandbox or restricted execution environment to the host OS or a less-restricted context.",
+      "resource": "tlctc:intra-boundary:sandbox",
+      "tags": [
+        "registry",
+        "intra-system-boundary"
+      ]
+    },
+    {
+      "path": "/contexts/legal.md",
+      "type": "boundary-context",
+      "title": "legal",
+      "description": "Legal / jurisdictional boundary",
+      "resource": "tlctc:context:legal",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/media.md",
+      "type": "boundary-context",
+      "title": "media",
+      "description": "Media delivery / streaming boundary",
+      "resource": "tlctc:context:media",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/messaging.md",
+      "type": "boundary-context",
+      "title": "messaging",
+      "description": "Messaging platform boundary (SMS, instant messaging, chat)",
+      "resource": "tlctc:context:messaging",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/network.md",
+      "type": "boundary-context",
+      "title": "network",
+      "description": "Network infrastructure / routing boundary",
+      "resource": "tlctc:context:network",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/physical.md",
+      "type": "boundary-context",
+      "title": "physical",
+      "description": "Physical domain boundary (bridge by #8)",
+      "resource": "tlctc:context:physical",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/signaling.md",
+      "type": "boundary-context",
+      "title": "signaling",
+      "description": "Signaling protocol boundary (SS7, SIP, Diameter)",
+      "resource": "tlctc:context:signaling",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/contexts/update.md",
+      "type": "boundary-context",
+      "title": "update",
+      "description": "Third-party update / dependency boundary (bridge by #10)",
+      "resource": "tlctc:context:update",
+      "tags": [
+        "registry",
+        "boundary-context"
+      ]
+    },
+    {
+      "path": "/controls/cluster-1.md",
+      "type": "control-objective-set",
+      "title": "Controls → #1 Abuse of Functions",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #1 Abuse of Functions.",
+      "resource": "tlctc:controls:cluster-1",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-1"
+      ]
+    },
+    {
+      "path": "/controls/cluster-10.md",
+      "type": "control-objective-set",
+      "title": "Controls → #10 Supply Chain Attack",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #10 Supply Chain Attack.",
+      "resource": "tlctc:controls:cluster-10",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-10"
+      ]
+    },
+    {
+      "path": "/controls/cluster-2.md",
+      "type": "control-objective-set",
+      "title": "Controls → #2 Exploiting Server",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #2 Exploiting Server.",
+      "resource": "tlctc:controls:cluster-2",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-2"
+      ]
+    },
+    {
+      "path": "/controls/cluster-3.md",
+      "type": "control-objective-set",
+      "title": "Controls → #3 Exploiting Client",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #3 Exploiting Client.",
+      "resource": "tlctc:controls:cluster-3",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-3"
+      ]
+    },
+    {
+      "path": "/controls/cluster-4.md",
+      "type": "control-objective-set",
+      "title": "Controls → #4 Identity Theft",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #4 Identity Theft.",
+      "resource": "tlctc:controls:cluster-4",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-4"
+      ]
+    },
+    {
+      "path": "/controls/cluster-5.md",
+      "type": "control-objective-set",
+      "title": "Controls → #5 Man in the Middle",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #5 Man in the Middle.",
+      "resource": "tlctc:controls:cluster-5",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-5"
+      ]
+    },
+    {
+      "path": "/controls/cluster-6.md",
+      "type": "control-objective-set",
+      "title": "Controls → #6 Flooding Attack",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #6 Flooding Attack.",
+      "resource": "tlctc:controls:cluster-6",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-6"
+      ]
+    },
+    {
+      "path": "/controls/cluster-7.md",
+      "type": "control-objective-set",
+      "title": "Controls → #7 Malware",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #7 Malware.",
+      "resource": "tlctc:controls:cluster-7",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-7"
+      ]
+    },
+    {
+      "path": "/controls/cluster-8.md",
+      "type": "control-objective-set",
+      "title": "Controls → #8 Physical Attack",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #8 Physical Attack.",
+      "resource": "tlctc:controls:cluster-8",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-8"
+      ]
+    },
+    {
+      "path": "/controls/cluster-9.md",
+      "type": "control-objective-set",
+      "title": "Controls → #9 Social Engineering",
+      "description": "NIST CSF control objectives and ISO 27001:2022 Annex A starter controls for TLCTC #9 Social Engineering.",
+      "resource": "tlctc:controls:cluster-9",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "iso27001",
+        "cluster-9"
+      ]
+    },
+    {
+      "path": "/controls/effectiveness-model.md",
+      "type": "effectiveness-model",
+      "title": "Control Effectiveness Model (CDE → COE → ECR, DCS)",
+      "description": "Three-layer control effectiveness model: CDE_max, CDE_fitness, COE, ECR, and the Detection Coverage Score.",
+      "resource": "tlctc:controls:effectiveness-model",
+      "tags": [
+        "controls",
+        "effectiveness",
+        "dcs",
+        "metrics"
+      ]
+    },
+    {
+      "path": "/controls/functions/detect.md",
+      "type": "csf-function",
+      "title": "DETECT",
+      "description": "Recognize the cluster step / loss of control within its Δt window.",
+      "resource": "tlctc:csf-function:DE",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "DE"
+      ]
+    },
+    {
+      "path": "/controls/functions/govern.md",
+      "type": "csf-function",
+      "title": "GOVERN",
+      "description": "Set direction, accountability and ownership, risk appetite, and assurance so all clusters are managed consistently.",
+      "resource": "tlctc:csf-function:GV",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "GV"
+      ]
+    },
+    {
+      "path": "/controls/functions/identify.md",
+      "type": "csf-function",
+      "title": "IDENTIFY",
+      "description": "Find the weaknesses and exposure that enable the cluster step.",
+      "resource": "tlctc:csf-function:ID",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "ID"
+      ]
+    },
+    {
+      "path": "/controls/functions/protect.md",
+      "type": "csf-function",
+      "title": "PROTECT",
+      "description": "Prevent or reduce the likelihood of the cluster step succeeding.",
+      "resource": "tlctc:csf-function:PR",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "PR"
+      ]
+    },
+    {
+      "path": "/controls/functions/recover.md",
+      "type": "csf-function",
+      "title": "RECOVER",
+      "description": "Restore trustworthy capability and limit the consequence chain after the central event.",
+      "resource": "tlctc:csf-function:RC",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "RC"
+      ]
+    },
+    {
+      "path": "/controls/functions/respond.md",
+      "type": "csf-function",
+      "title": "RESPOND",
+      "description": "Contain and eradicate the realized step before a Data Risk Event matures into a Business Risk Event.",
+      "resource": "tlctc:csf-function:RS",
+      "tags": [
+        "controls",
+        "nist-csf",
+        "RS"
+      ]
+    },
+    {
+      "path": "/controls/indicators.md",
+      "type": "indicator-framework",
+      "title": "Indicators: KRI, KCI, KPI, DCS",
+      "description": "Strategic indicator hierarchy (KRI / KCI / KPI / DCS) for measuring the TLCTC × CSF control matrix.",
+      "resource": "tlctc:controls:indicators",
+      "tags": [
+        "controls",
+        "indicators",
+        "kri",
+        "kci",
+        "kpi",
+        "dcs"
+      ]
+    },
+    {
+      "path": "/glossary/abuse-of-functions-1.md",
+      "type": "term",
+      "title": "Abuse of Functions (#1)",
+      "description": "A threat cluster where an attacker misuses the logic, scope, or configuration of existing, legitimate software functions for malicious purposes.",
+      "resource": "tlctc:term:abuse-of-functions-1",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/accessibility-data-risk-event.md",
+      "type": "term",
+      "title": "Accessibility (Data Risk Event)",
+      "description": "The operational state in which data or resources can be used for their intended purpose by authorized processes (Facility, IT, or Business processes).",
+      "resource": "tlctc:term:accessibility-data-risk-event",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/actor-archetype.md",
+      "type": "term",
+      "title": "Actor Archetype",
+      "description": "The typical, recurring attack sequence pattern that characterizes how an actor (or an Actor Group) chains TLCTC clusters across incidents — e.g., 9 → 7 → 4 → 1 .",
+      "resource": "tlctc:term:actor-archetype",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/actor-group.md",
+      "type": "term",
+      "title": "Actor Group",
+      "description": "A generalized categorization of threat actors used in TLCTC overlays (Attacker Profiles, Tech Enablers Overlay) to group actors by motivation and resourcing level — rather than by named identity.",
+      "resource": "tlctc:term:actor-group",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/adware.md",
+      "type": "term",
+      "title": "Adware",
+      "description": "A type of malware that delivers unwanted advertisements, often bundled with legitimate software.",
+      "resource": "tlctc:term:adware",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/ai-agi-asi-positioning-in-tlctc.md",
+      "type": "term",
+      "title": "AI / AGI / ASI (Positioning in TLCTC)",
+      "description": "Artificial Intelligence, Artificial General Intelligence, and Artificial Super Intelligence occupy three distinct roles in the TLCTC framework: As an IT system: AI is exposed to the same 10 threat clusters as any other IT system (software + hardware).",
+      "resource": "tlctc:term:ai-agi-asi-positioning-in-tlctc",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/amplification-attack.md",
+      "type": "term",
+      "title": "Amplification Attack",
+      "description": "A flooding technique where an attacker sends small requests to third party services (e.g., NTP, DNS, memcached) that respond with disproportionately large replies directed at the victim.",
+      "resource": "tlctc:term:amplification-attack",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/arp-spoofing.md",
+      "type": "term",
+      "title": "ARP Spoofing",
+      "description": "A technique where an attacker sends falsified ARP (Address Resolution Protocol) messages on a local network, linking the attacker's MAC address to a legitimate IP address.",
+      "resource": "tlctc:term:arp-spoofing",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/attack-path-notation.md",
+      "type": "term",
+      "title": "Attack Path Notation",
+      "description": "The standardized format for describing cyber attack sequences using TLCTC clusters.",
+      "resource": "tlctc:term:attack-path-notation",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/attack-path.md",
+      "type": "term",
+      "title": "Attack Path",
+      "description": "The sequence of applied Attack Vectors in a cyber incident, representing an ordered sequence of Attack Steps describing a complete attack scenario.",
+      "resource": "tlctc:term:attack-path",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/attack-sequence-schema.md",
+      "type": "term",
+      "title": "Attack Sequence Schema",
+      "description": "The JSON schema that defines the required structure for documenting attack path instances.",
+      "resource": "tlctc:term:attack-sequence-schema",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/attack-step.md",
+      "type": "term",
+      "title": "Attack Step",
+      "description": "A single attacker action or event that exploits exactly one generic vulnerability in a specific context.",
+      "resource": "tlctc:term:attack-step",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/attack-vector.md",
+      "type": "term",
+      "title": "Attack Vector",
+      "description": "The specific path or method used by an attacker to gain unauthorized access to a target system.",
+      "resource": "tlctc:term:attack-vector",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/attack-velocity-t.md",
+      "type": "term",
+      "title": "Attack Velocity (Δt)",
+      "description": "The temporal dimension of cyber risk representing the time interval between two adjacent Attack Steps in an attack path.",
+      "resource": "tlctc:term:attack-velocity-t",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/attacker-profile.md",
+      "type": "term",
+      "title": "Attacker Profile",
+      "description": "An informative overlay on the Cyber Threat Radar that describes a threat actor's (or Actor Group's) observed preferences across the 10 clusters: per cluster capability scores, preferred cluster sequences, and typical boundary crossings.",
+      "resource": "tlctc:term:attacker-profile",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/attackers-view.md",
+      "type": "term",
+      "title": "Attacker's View",
+      "description": "A perspective included in each TLCTC threat cluster definition that describes how the attacker perceives or approaches the exploitation of the specific generic vulnerability.",
+      "resource": "tlctc:term:attackers-view",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/availability-data-risk-event.md",
+      "type": "term",
+      "title": "Availability (Data Risk Event)",
+      "description": "The technical state in which data or resources exist and can be reached by the infrastructure.",
+      "resource": "tlctc:term:availability-data-risk-event",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/axiom-quick-reference.md",
+      "type": "term",
+      "title": "Axiom Quick Reference",
+      "description": "| | Name | Group | Core Statement | | | | | | | I | No System Type Differentiation | Scope | Generic IT assets; sector labels don't create threat classes | | II | Client–Server Model | Scope | Universal interaction abstraction | | III | Causes, Not Outcomes | Separation | Threats ≠ data risk events | | IV | Not Threat Actors | Separation | Threats ≠ actor identity | | V | Not Control Failure | Separation | Control risk ≠ threat category | | VI | Single Cluster Rule | Classification | One step = one vulnerability = one cluster | | VII | Initial Vulnerability Rule | Classification | Vector defined by initial generic vulnerability | | VIII | Strategic–Operational Layering | Classification | Clusters → sub threats | | IX | Sequence + Velocity | Sequences | Clusters chain; Δt measures velocity | | X | Credential Duality | Sequences | Acquisition vs application | Reference: §2 (Axioms and Assumptions)",
+      "resource": "tlctc:term:axiom-quick-reference",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/axiom.md",
+      "type": "term",
+      "title": "Axiom",
+      "description": "A foundational premise that defines what terms mean and what kinds of statements are allowed in TLCTC.",
+      "resource": "tlctc:term:axiom",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/bec-business-email-compromise-ceo-fraud.md",
+      "type": "term",
+      "title": "BEC (Business Email Compromise) / CEO Fraud",
+      "description": "A social engineering attack where an adversary impersonates a senior executive or trusted business partner (often via compromised or spoofed email) to trick employees into transferring funds, revealing sensitive information, or taking other harmful actions.",
+      "resource": "tlctc:term:bec-business-email-compromise-ceo-fraud",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/bgp-hijacking.md",
+      "type": "term",
+      "title": "BGP Hijacking",
+      "description": "A technique where an attacker manipulates Border Gateway Protocol routing tables to redirect internet traffic through attacker controlled infrastructure.",
+      "resource": "tlctc:term:bgp-hijacking",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/botnet.md",
+      "type": "term",
+      "title": "Botnet",
+      "description": "A network of compromised devices (\"bots\" or \"zombies\") controlled by an attacker, typically used to amplify attack capabilities.",
+      "resource": "tlctc:term:botnet",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/bounded-t.md",
+      "type": "term",
+      "title": "Bounded Δt",
+      "description": "A minimum or maximum bound for Δt derived from known constraints when precise timestamps are unavailable.",
+      "resource": "tlctc:term:bounded-t",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/bow-tie-model.md",
+      "type": "term",
+      "title": "Bow-Tie Model",
+      "description": "A risk model that represents risk as a structure with five elements: Threats (left side), Preventive Controls (left side), Central Event (knot), Mitigating Controls (right side), and Consequences (right side).",
+      "resource": "tlctc:term:bow-tie-model",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/bridge-cluster.md",
+      "type": "term",
+      "title": "Bridge Cluster",
+      "description": "A TLCTC cluster whose generic vulnerability inherently enables crossing into (or leveraging over) a different domain's control regime.",
+      "resource": "tlctc:term:bridge-cluster",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/bridge-step.md",
+      "type": "term",
+      "title": "Bridge Step",
+      "description": "A step level instance of a bridge cluster that crosses a specific domain boundary.",
+      "resource": "tlctc:term:bridge-step",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/brute-force-attack.md",
+      "type": "term",
+      "title": "Brute-Force Attack",
+      "description": "A method of systematically trying all possible credential combinations (passwords, PINs, encryption keys) to gain unauthorized access.",
+      "resource": "tlctc:term:brute-force-attack",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/buffer-overflow.md",
+      "type": "term",
+      "title": "Buffer Overflow",
+      "description": "A class of implementation flaw where a program writes data beyond the boundaries of allocated memory, potentially allowing an attacker to execute arbitrary code or crash the application.",
+      "resource": "tlctc:term:buffer-overflow",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/business-impact-bi.md",
+      "type": "term",
+      "title": "Business Impact (BI)",
+      "description": "A role assigned to the terminal Business Risk Event in a consequence chain — the BRE beyond which further causal decomposition is no longer operationally useful for a given organization.",
+      "resource": "tlctc:term:business-impact-bi",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/business-risk-event-bre.md",
+      "type": "term",
+      "title": "Business Risk Event (BRE)",
+      "description": "A discrete, observable business level event on the consequence side of the Bow Tie model, triggered by a Data Risk Event or by a preceding BRE.",
+      "resource": "tlctc:term:business-risk-event-bre",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/bxis-base-level-indicators.md",
+      "type": "term",
+      "title": "BxIs (Base Level Indicators)",
+      "description": "The lowest level of indicators that still make operational sense, representing metrics at the operational level directly translated into measurable values.",
+      "resource": "tlctc:term:bxis-base-level-indicators",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/call-level-mapping-rule.md",
+      "type": "term",
+      "title": "Call-Level Mapping Rule",
+      "description": "A TLCTC classification principle for function call level threat analysis: Parameter tampering , unauthorized function selection, or misuse of valid functions without executing foreign code → always 1 Abuse of Functions .",
+      "resource": "tlctc:term:call-level-mapping-rule",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/capacity-exhaustion.md",
+      "type": "term",
+      "title": "Capacity Exhaustion",
+      "description": "Degradation or denial of service caused primarily by volume or intensity exceeding finite resources.",
+      "resource": "tlctc:term:capacity-exhaustion",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/capec-common-attack-pattern-enumeration-and-classification.md",
+      "type": "term",
+      "title": "CAPEC (Common Attack Pattern Enumeration and Classification)",
+      "description": "A MITRE maintained dictionary of known attack patterns, each describing a method of exploiting known weaknesses.",
+      "resource": "tlctc:term:capec-common-attack-pattern-enumeration-and-classification",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/central-event.md",
+      "type": "term",
+      "title": "Central Event",
+      "description": "In the TLCTC Bow Tie model: Loss of Control / System Compromise — the point at which the attacker achieves unauthorized control over the system's behavior, privileges, data, or trust relationships—sufficient to pursue attack objectives.",
+      "resource": "tlctc:term:central-event",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/client-role-component.md",
+      "type": "term",
+      "title": "Client-Role Component",
+      "description": "A component that consumes external responses, content, or state relative to the attacker.",
+      "resource": "tlctc:term:client-role-component",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/client-server-relationship.md",
+      "type": "term",
+      "title": "Client-Server Relationship",
+      "description": "A fundamental principle (Axiom II) stating that every networked software system is based on client server or caller called function interaction at various levels.",
+      "resource": "tlctc:term:client-server-relationship",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/cluster-quick-reference.md",
+      "type": "term",
+      "title": "Cluster Quick Reference",
+      "description": "| | Name | Generic Vulnerability | Topology | | | | | | | 1 | Abuse of Functions | Functional scope/trust (designed capabilities abused) | Internal | | 2 | Exploiting Server | Server side code implementation flaws | Internal | | 3 | Exploiting Client | Client side code implementation flaws | Internal | | 4 | Identity Theft | Identity artifact binding / credential lifecycle (use) | Internal | | 5 | Man in the Middle | Lack of end to end communication protection | Internal | | 6 | Flooding Attack | Finite capacity limitations | Internal | | 7 | Malware | Designed execution capability for untrusted content | Internal | | 8 | Physical Attack | Physical accessibility/interference | Bridge | | 9 | Social Engineering | Human psychological factors | Bridge | | 10 | Supply Chain Attack | Third party trust dependencies | Bridge | Reference: §4.1 (Cluster Definitions), §5.2 (Topology Classification) Related reading: [Mandiant M Trends 2025 — TLCTC](https://www.tlctc.net/tlctc mtrends 2025.html), [ENISA Threat Landscape 2025 — TLCTC](https://www.tlctc.net/tlctc enisa 2025 threat report.html), [Same Attack, Four Stories — vendor report comparison](https://www.tlctc.net/tlctc threat report chaos.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc threat modeling manifesto.html), [End of Semantic Diffusion — Kuhn & TLCTC](https://www.tlctc.net/tlctc semantic diffusion.html), [TLCTC classification decision tree V2.0/V2.1](https://www.tlctc.net/tlctc decision tree.html), [Logical foundations of TLCTC](https://www.tlctc.net/tlctc logical foundation.html), [Why exactly ten?",
+      "resource": "tlctc:term:cluster-quick-reference",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/coder.md",
+      "type": "term",
+      "title": "Coder",
+      "description": "A development role focused on implementation and craftsmanship, responsible for writing functional, efficient code according to established patterns, implementing specific security controls at the code level, and following secure coding practices.",
+      "resource": "tlctc:term:coder",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/command-injection.md",
+      "type": "term",
+      "title": "Command Injection",
+      "description": "An attack where an attacker injects operating system commands into an application that passes user input to a system shell.",
+      "resource": "tlctc:term:command-injection",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/consequences.md",
+      "type": "term",
+      "title": "Consequences",
+      "description": "In the Bow Tie model: what results after the central event, including technical and business impact (event chains).",
+      "resource": "tlctc:term:consequences",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/control-design-effectiveness.md",
+      "type": "term",
+      "title": "Control Design Effectiveness",
+      "description": "An evaluation of whether a control, as conceived and structured, is theoretically capable of achieving its objective if it operates as intended.",
+      "resource": "tlctc:term:control-design-effectiveness",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/control-failure.md",
+      "type": "term",
+      "title": "Control Failure",
+      "description": "A deviation from a control objective or lack of effectiveness.",
+      "resource": "tlctc:term:control-failure",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/control-objective.md",
+      "type": "term",
+      "title": "Control Objective",
+      "description": "The specific aim or purpose that a control is intended to achieve, defining what the control should accomplish in terms of risk mitigation for a particular threat cluster.",
+      "resource": "tlctc:term:control-objective",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/control-operational-effectiveness.md",
+      "type": "term",
+      "title": "Control Operational Effectiveness",
+      "description": "An evaluation of whether a control is actually working as designed in practice, examining if the control is being executed correctly and consistently over time to meet its objective.",
+      "resource": "tlctc:term:control-operational-effectiveness",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/control.md",
+      "type": "term",
+      "title": "Control",
+      "description": "A security measure implemented to mitigate threats, reduce vulnerabilities, or minimize the impact of security incidents.",
+      "resource": "tlctc:term:control",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/credential-acquisition.md",
+      "type": "term",
+      "title": "Credential Acquisition",
+      "description": "The act of obtaining, capturing, exposing, deriving, or forging a credential/identity artifact.",
+      "resource": "tlctc:term:credential-acquisition",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/credential-application.md",
+      "type": "term",
+      "title": "Credential Application",
+      "description": "The act of presenting, using, replaying, or leveraging a credential to authenticate and operate as an identity.",
+      "resource": "tlctc:term:credential-application",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/credential-forgery.md",
+      "type": "term",
+      "title": "Credential Forgery",
+      "description": "The act of creating a credential without possessing the legitimate secret.",
+      "resource": "tlctc:term:credential-forgery",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/credential-identity-artifact.md",
+      "type": "term",
+      "title": "Credential / Identity Artifact",
+      "description": "Any secret, token, key, or session artifact that enables authentication or authorization decisions.",
+      "resource": "tlctc:term:credential-identity-artifact",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/cross-site-scripting-xss.md",
+      "type": "term",
+      "title": "Cross-Site Scripting (XSS)",
+      "description": "A class of implementation flaw where an application includes untrusted data in web output without proper validation or encoding, allowing attacker controlled scripts to execute in a victim's browser.",
+      "resource": "tlctc:term:cross-site-scripting-xss",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/cve-common-vulnerabilities-and-exposures.md",
+      "type": "term",
+      "title": "CVE (Common Vulnerabilities and Exposures)",
+      "description": "A standardized identifier for publicly known cybersecurity vulnerabilities.",
+      "resource": "tlctc:term:cve-common-vulnerabilities-and-exposures",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/cwe-common-weakness-enumeration.md",
+      "type": "term",
+      "title": "CWE (Common Weakness Enumeration)",
+      "description": "A community developed list of common software and hardware weakness types maintained by MITRE.",
+      "resource": "tlctc:term:cwe-common-weakness-enumeration",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/cyber-bow-tie.md",
+      "type": "term",
+      "title": "Cyber Bow-Tie",
+      "description": "The specific application of the Bow Tie Model to cyber risk management, with the 10 Top Level Cyber Threat Clusters on the cause side, \"Loss of Control\" or \"System Compromise\" as the central event, and Data Risk Events and Business Risk Events on the consequence side.",
+      "resource": "tlctc:term:cyber-bow-tie",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/cyber-incident.md",
+      "type": "term",
+      "title": "Cyber Incident",
+      "description": "An actual security breach or system compromise that has occurred, representing the materialization of a cyber risk event where control over IT systems or persons has been lost due to one or more of the 10 Top Level Cyber Threat Clusters.",
+      "resource": "tlctc:term:cyber-incident",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/cyber-risk-event.md",
+      "type": "term",
+      "title": "Cyber Risk Event",
+      "description": "A potential occurrence that could lead to a system breach or compromise.",
+      "resource": "tlctc:term:cyber-risk-event",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/cyber-risk.md",
+      "type": "term",
+      "title": "Cyber Risk",
+      "description": "The probability of occurrence of a cyber event in which control over IT systems or persons is lost due to one or more of the 10 Top Level Cyber Threat Clusters, leading (via event chains) to consequential damage (impact).",
+      "resource": "tlctc:term:cyber-risk",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/cyber-threat-radar.md",
+      "type": "term",
+      "title": "Cyber Threat Radar",
+      "description": "A standard visualization methodology for communicating threat posture, change over time, and comparative exposure across the 10 TLCTC clusters.",
+      "resource": "tlctc:term:cyber-threat-radar",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/dast-dynamic-application-security-testing.md",
+      "type": "term",
+      "title": "DAST (Dynamic Application Security Testing)",
+      "description": "A testing methodology that analyzes a running application by simulating attacks against it to identify security vulnerabilities.",
+      "resource": "tlctc:term:dast-dynamic-application-security-testing",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/data-processing-pathways.md",
+      "type": "term",
+      "title": "Data Processing Pathways",
+      "description": "The four distinct paths that data can follow during an attack, each mapping to specific TLCTC clusters: 1.",
+      "resource": "tlctc:term:data-processing-pathways",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/data-risk-event-dre.md",
+      "type": "term",
+      "title": "Data Risk Event (DRE)",
+      "description": "An outcome event describing Loss of Confidentiality (C) (data stolen / unauthorized access), Loss of Integrity (I) (data modified / unauthorized changes), or Loss of Availability/Accessibility (A) (data gone or unreachable, or data present but unusable).",
+      "resource": "tlctc:term:data-risk-event-dre",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/data-vs-code-boundary.md",
+      "type": "term",
+      "title": "Data vs Code Boundary",
+      "description": "A normative classification principle: Domain specific expressions (e.g., SQL, LDAP, XPath, GraphQL, template syntax, configuration languages) are treated as data unless they directly cause FEC execution via a general purpose execution engine.",
+      "resource": "tlctc:term:data-vs-code-boundary",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/ddos-distributed-denial-of-service.md",
+      "type": "term",
+      "title": "DDoS (Distributed Denial of Service)",
+      "description": "An attack where multiple compromised systems (typically a botnet) simultaneously flood a target with traffic or requests.",
+      "resource": "tlctc:term:ddos-distributed-denial-of-service",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/defense-in-depth.md",
+      "type": "term",
+      "title": "Defense-in-Depth",
+      "description": "A security strategy employing multiple layers of controls so that if one layer fails, another provides protection.",
+      "resource": "tlctc:term:defense-in-depth",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/delta-t-t.md",
+      "type": "term",
+      "title": "Delta t (Δt)",
+      "description": "Symbol representing the time interval between threat cluster transitions in an attack sequence.",
+      "resource": "tlctc:term:delta-t-t",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/designed-execution-capability.md",
+      "type": "term",
+      "title": "Designed Execution Capability",
+      "description": "The environment's intended capability to load, interpret, or execute program content.",
+      "resource": "tlctc:term:designed-execution-capability",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/detection-coverage-score-dcs.md",
+      "type": "term",
+      "title": "Detection Coverage Score (DCS)",
+      "description": "A strategic Key Performance Indicator (KPI) for measuring security effectiveness derived from Attack Velocity.",
+      "resource": "tlctc:term:detection-coverage-score-dcs",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/developers-view.md",
+      "type": "term",
+      "title": "Developer's View",
+      "description": "A perspective included in each TLCTC threat cluster definition that provides guidance on secure development practices specific to preventing that cluster.",
+      "resource": "tlctc:term:developers-view",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/directory-traversal.md",
+      "type": "term",
+      "title": "Directory Traversal",
+      "description": "An attack where an attacker manipulates file path references (e.g., using ../ sequences) to access files or directories outside the intended scope.",
+      "resource": "tlctc:term:directory-traversal",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/dns-spoofing.md",
+      "type": "term",
+      "title": "DNS Spoofing",
+      "description": "A technique where an attacker corrupts DNS resolution to redirect traffic to attacker controlled infrastructure.",
+      "resource": "tlctc:term:dns-spoofing",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/domain-boundary-operator.md",
+      "type": "term",
+      "title": "Domain Boundary Operator (||)",
+      "description": "Notation: ||[context][@Source→@Target]|| .",
+      "resource": "tlctc:term:domain-boundary-operator",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/domain-boundary.md",
+      "type": "term",
+      "title": "Domain Boundary",
+      "description": "A point where responsibility spheres or control regimes change.",
+      "resource": "tlctc:term:domain-boundary",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/domain-squatting.md",
+      "type": "term",
+      "title": "Domain Squatting",
+      "description": "Registering domain names similar to legitimate ones (typosquatting, homograph attacks) to deceive users into visiting attacker controlled websites.",
+      "resource": "tlctc:term:domain-squatting",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/domain.md",
+      "type": "term",
+      "title": "Domain",
+      "description": "A set of assets governed by a coherent control regime (policies, monitoring, enforcement, and accountability).",
+      "resource": "tlctc:term:domain",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/dora-digital-operational-resilience-act.md",
+      "type": "term",
+      "title": "DORA (Digital Operational Resilience Act)",
+      "description": "An EU regulation establishing ICT risk management requirements for financial entities.",
+      "resource": "tlctc:term:dora-digital-operational-resilience-act",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/drive-by-download.md",
+      "type": "term",
+      "title": "Drive-By Download",
+      "description": "An attack where malware is automatically downloaded and potentially executed when a user visits a compromised or malicious website, typically by exploiting a browser or plugin vulnerability.",
+      "resource": "tlctc:term:drive-by-download",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/dual-use-tool.md",
+      "type": "term",
+      "title": "Dual-Use Tool",
+      "description": "A legitimate administrative utility that can be used for both legitimate administrative purposes and malicious activities when invoked by an attacker.",
+      "resource": "tlctc:term:dual-use-tool",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/e-event-notation-regulatory.md",
+      "type": "term",
+      "title": "Eₙ Event Notation (Regulatory)",
+      "description": "A numbered event sequence notation used to map attack chains to regulatory compliance triggers: E1: System Compromise / Loss of Control (the central Bow Tie event) E2: Data Risk Event (e.g., PII exposure — GDPR trigger) E3a, E3b, ...: Compliance violation events (e.g., GDPR breach notification, NIS2 incident report) The subscript (a, b, etc.) distinguishes parallel regulatory branches triggered by the same upstream event.",
+      "resource": "tlctc:term:e-event-notation-regulatory",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/edge-in-attack-path.md",
+      "type": "term",
+      "title": "Edge (in attack path)",
+      "description": "A transition between two adjacent Attack Steps, represented by the sequence operator → .",
+      "resource": "tlctc:term:edge-in-attack-path",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/edr-endpoint-detection-and-response.md",
+      "type": "term",
+      "title": "EDR (Endpoint Detection and Response)",
+      "description": "A category of security tools that monitor endpoint devices for suspicious activity and provide automated response capabilities.",
+      "resource": "tlctc:term:edr-endpoint-detection-and-response",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/estimated-t.md",
+      "type": "term",
+      "title": "Estimated Δt",
+      "description": "An approximate Δt value derived from partial evidence when precise timestamps are unavailable.",
+      "resource": "tlctc:term:estimated-t",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/event-chain-length.md",
+      "type": "term",
+      "title": "Event Chain Length",
+      "description": "The number of causal events between the initial incident (E1) and a regulatory trigger point (E3x).",
+      "resource": "tlctc:term:event-chain-length",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/event-chain.md",
+      "type": "term",
+      "title": "Event Chain",
+      "description": "A causal sequence where one outcome event triggers subsequent events, following the consequence chain SRE → DRE → BRE\\ .",
+      "resource": "tlctc:term:event-chain",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/evil-maid-attack.md",
+      "type": "term",
+      "title": "Evil Maid Attack",
+      "description": "A physical attack where an adversary with brief unsupervised access to a device (e.g., left in a hotel room) tampers with it — installing hardware keyloggers, modifying boot loaders, or extracting encryption keys.",
+      "resource": "tlctc:term:evil-maid-attack",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/exploit-code.md",
+      "type": "term",
+      "title": "Exploit Code",
+      "description": "Foreign code that targets specific vulnerabilities to modify software behavior, creating an UNINTENDED data→code transition.",
+      "resource": "tlctc:term:exploit-code",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/exploiting-client-3.md",
+      "type": "term",
+      "title": "Exploiting Client (#3)",
+      "description": "A threat cluster where an attacker targets and leverages flaws originating directly within the source code implementation of any software acting in a client role (requesting/processing data from a server or resource).",
+      "resource": "tlctc:term:exploiting-client-3",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/exploiting-server-2.md",
+      "type": "term",
+      "title": "Exploiting Server (#2)",
+      "description": "A threat cluster where an attacker targets and leverages flaws originating directly within the server side application's source code implementation.",
+      "resource": "tlctc:term:exploiting-server-2",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/fast-velocity-class.md",
+      "type": "term",
+      "title": "Fast Velocity Class",
+      "description": "A velocity classification where attack progression occurs within minutes.",
+      "resource": "tlctc:term:fast-velocity-class",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/fileless-execution-fileless-malware.md",
+      "type": "term",
+      "title": "Fileless Execution / Fileless Malware",
+      "description": "An attack technique where malicious code executes entirely in memory without writing traditional files to disk, often using legitimate system tools (PowerShell, WMI, .NET reflection) as execution vehicles.",
+      "resource": "tlctc:term:fileless-execution-fileless-malware",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/flooding-attack-6.md",
+      "type": "term",
+      "title": "Flooding Attack (#6)",
+      "description": "A threat cluster where an attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to disruption, degradation, or denial of service for legitimate users.",
+      "resource": "tlctc:term:flooding-attack-6",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/foreign-executable-content-fec.md",
+      "type": "term",
+      "title": "Foreign Executable Content (FEC)",
+      "description": "Attacker controlled (or otherwise untrusted) program text or bytes that are interpreted, loaded, or executed by a general purpose execution engine in the target environment.",
+      "resource": "tlctc:term:foreign-executable-content-fec",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/framework-layer.md",
+      "type": "term",
+      "title": "Framework Layer",
+      "description": "The static, universal component of the TLCTC JSON architecture containing threat cluster definitions, generic vulnerabilities, data risk events, bow tie model principles, attack path notation rules, and framework axioms.",
+      "resource": "tlctc:term:framework-layer",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/generic-vulnerability.md",
+      "type": "term",
+      "title": "Generic Vulnerability",
+      "description": "The single root level vulnerability category defining a cluster — the strategic level attack surface towards a specific class of threats.",
+      "resource": "tlctc:term:generic-vulnerability",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/govern-gv.md",
+      "type": "term",
+      "title": "GOVERN (GV)",
+      "description": "The governance function in NIST CSF 2.0, operating at a strategic level to establish the overall cybersecurity risk management framework.",
+      "resource": "tlctc:term:govern-gv",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/http-flood.md",
+      "type": "term",
+      "title": "HTTP Flood",
+      "description": "An application layer denial of service attack that overwhelms a web server with seemingly legitimate HTTP requests.",
+      "resource": "tlctc:term:http-flood",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/icmp-flooding.md",
+      "type": "term",
+      "title": "ICMP Flooding",
+      "description": "A network layer denial of service attack that overwhelms a target with ICMP echo request (ping) packets.",
+      "resource": "tlctc:term:icmp-flooding",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/identity-theft-4.md",
+      "type": "term",
+      "title": "Identity Theft (#4)",
+      "description": "A threat cluster where an attacker targets weaknesses in identity and access management processes or credential protection mechanisms to illegitimately misuse authentication credentials (passwords, tokens, keys, session identifiers, biometrics) to impersonate a legitimate identity (human or technical).",
+      "resource": "tlctc:term:identity-theft-4",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/implementation-defect-availability-context.md",
+      "type": "term",
+      "title": "Implementation Defect (Availability Context)",
+      "description": "A flaw in code logic, parsing, memory handling, or resource handling that causes crash, hang, or degradation when triggered— without requiring volume/intensity to exceed normal capacity.",
+      "resource": "tlctc:term:implementation-defect-availability-context",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/implementation-flaw.md",
+      "type": "term",
+      "title": "Implementation Flaw",
+      "description": "A defect in source code implementation (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered.",
+      "resource": "tlctc:term:implementation-flaw",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/insecure-deserialization.md",
+      "type": "term",
+      "title": "Insecure Deserialization",
+      "description": "A class of implementation flaw where an application deserializes untrusted data without proper validation, potentially allowing arbitrary code execution or object manipulation.",
+      "resource": "tlctc:term:insecure-deserialization",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/intelligence-layer.md",
+      "type": "term",
+      "title": "Intelligence Layer",
+      "description": "The dynamic component of the TLCTC JSON architecture containing specific attack instances, software versions & CVEs, timeline & actor TTPs, domain boundaries, and impact assessments.",
+      "resource": "tlctc:term:intelligence-layer",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/internal-cluster.md",
+      "type": "term",
+      "title": "Internal Cluster",
+      "description": "A TLCTC cluster that operates primarily within the software domain's attack surfaces, without inherently crossing to a different responsibility sphere.",
+      "resource": "tlctc:term:internal-cluster",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/intra-system-boundary-operator.md",
+      "type": "term",
+      "title": "Intra-System Boundary Operator (|...|)",
+      "description": "Notation: |[type][@from→@to]| .",
+      "resource": "tlctc:term:intra-system-boundary-operator",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/json-architecture.md",
+      "type": "term",
+      "title": "JSON Architecture",
+      "description": "The standardized data structure for threat intelligence sharing in TLCTC V2.0, consisting of four complementary JSON files: 1.",
+      "resource": "tlctc:term:json-architecture",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/kci-key-control-indicator.md",
+      "type": "term",
+      "title": "KCI (Key Control Indicator)",
+      "description": "A metric that measures the operational performance of security controls, verifying that intended actions are taken at the appropriate frequency.",
+      "resource": "tlctc:term:kci-key-control-indicator",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/keylogger.md",
+      "type": "term",
+      "title": "Keylogger",
+      "description": "Malware (software) or a hardware device that records keystrokes to capture sensitive information such as passwords, credit card numbers, or other data.",
+      "resource": "tlctc:term:keylogger",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/kill-chain.md",
+      "type": "term",
+      "title": "Kill Chain",
+      "description": "A model describing the stages of a cyber attack from reconnaissance through exploitation to objective completion (originally Lockheed Martin Cyber Kill Chain).",
+      "resource": "tlctc:term:kill-chain",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/kpi-key-performance-indicator.md",
+      "type": "term",
+      "title": "KPI (Key Performance Indicator)",
+      "description": "A measurable value demonstrating the outcome and performance of security processes in reaching security objectives.",
+      "resource": "tlctc:term:kpi-key-performance-indicator",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/kri-key-risk-indicator.md",
+      "type": "term",
+      "title": "KRI (Key Risk Indicator)",
+      "description": "A leading indicator demonstrating the potential for a future cyber threat.",
+      "resource": "tlctc:term:kri-key-risk-indicator",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/kxi-framework.md",
+      "type": "term",
+      "title": "KxI Framework",
+      "description": "The integrated hierarchical framework of Key Risk Indicators (KRIs), Key Control Indicators (KCIs), and Key Performance Indicators (KPIs), providing a practical mechanism to operationalize the 10 Top Level Cyber Threat Clusters.",
+      "resource": "tlctc:term:kxi-framework",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/latent-slow-velocity-class.md",
+      "type": "term",
+      "title": "Latent/Slow Velocity Class",
+      "description": "A velocity classification where attack progression occurs over days to months.",
+      "resource": "tlctc:term:latent-slow-velocity-class",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/lateral-movement.md",
+      "type": "term",
+      "title": "Lateral Movement",
+      "description": "The techniques an attacker uses to progressively move through a network after initial compromise, seeking higher value targets and expanded access.",
+      "resource": "tlctc:term:lateral-movement",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/living-off-the-land-lolbas-living-off-the-land-binaries-and-scripts.md",
+      "type": "term",
+      "title": "Living Off the Land / LOLBAS (Living Off the Land Binaries and Scripts)",
+      "description": "An attack technique using only software functions and binaries already present on a (potentially compromised) system, invoked with legitimate inputs/parameters, without introducing foreign code initially.",
+      "resource": "tlctc:term:living-off-the-land-lolbas-living-off-the-land-binaries-and-scripts",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/local-controls.md",
+      "type": "term",
+      "title": "Local Controls",
+      "description": "Security measures implemented directly on or for specific IT systems.",
+      "resource": "tlctc:term:local-controls",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/loss-of-accessibility-loac.md",
+      "type": "term",
+      "title": "Loss of Accessibility (LoAc)",
+      "description": "A Data Risk Event outcome where data or resources exist and can be reached by the infrastructure, but cannot be used for their intended purpose by authorized processes.",
+      "resource": "tlctc:term:loss-of-accessibility-loac",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/loss-of-availability-loa.md",
+      "type": "term",
+      "title": "Loss of Availability (LoA)",
+      "description": "A Data Risk Event outcome where data or resources are gone or unreachable — the resource no longer exists or cannot be technically accessed by the infrastructure.",
+      "resource": "tlctc:term:loss-of-availability-loa",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/loss-of-confidentiality-loc.md",
+      "type": "term",
+      "title": "Loss of Confidentiality (LoC)",
+      "description": "A Data Risk Event outcome where an attacker gains unauthorized access to data.",
+      "resource": "tlctc:term:loss-of-confidentiality-loc",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/loss-of-control-system-compromise.md",
+      "type": "term",
+      "title": "Loss of Control / System Compromise",
+      "description": "The central event in the Cyber Bow Tie model, abbreviated SRE (System Risk Event), representing the point at which the attacker achieves unauthorized control over a system's behavior, privileges, data, or trust relationships.",
+      "resource": "tlctc:term:loss-of-control-system-compromise",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/loss-of-integrity-loi.md",
+      "type": "term",
+      "title": "Loss of Integrity (LoI)",
+      "description": "A Data Risk Event outcome where an attacker successfully makes unauthorized changes to data.",
+      "resource": "tlctc:term:loss-of-integrity-loi",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/malicious-code.md",
+      "type": "term",
+      "title": "Malicious Code",
+      "description": "Code written with harmful intent, distinguished in TLCTC between: Exploit Code: Targets specific vulnerabilities to modify software behavior ( 2/ 3) Malware Code: Operates within expected execution paths for harmful purposes ( 7) Malware Software: Comprehensive suite of tools (foreign code) that may incorporate multiple techniques, including exploit capabilities",
+      "resource": "tlctc:term:malicious-code",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/malvertising.md",
+      "type": "term",
+      "title": "Malvertising",
+      "description": "The use of online advertising to distribute malware or redirect users to malicious websites.",
+      "resource": "tlctc:term:malvertising",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/malware-7.md",
+      "type": "term",
+      "title": "Malware (#7)",
+      "description": "A threat cluster where an attacker abuses the inherent ability of a software environment to execute foreign executable content, including inherently malicious Malware Code or legitimate tools/scripts when they execute attacker controlled or otherwise foreign code (\"dual use\").",
+      "resource": "tlctc:term:malware-7",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/man-in-the-middle-5.md",
+      "type": "term",
+      "title": "Man in the Middle (#5)",
+      "description": "A threat cluster where an attacker intercepts, eavesdrops on, modifies, or relays communication between two parties without their knowledge or consent, by exploiting a privileged position on the communication path.",
+      "resource": "tlctc:term:man-in-the-middle-5",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/medium-velocity-class.md",
+      "type": "term",
+      "title": "Medium Velocity Class",
+      "description": "A velocity classification where attack progression occurs within hours.",
+      "resource": "tlctc:term:medium-velocity-class",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/mfa-bombing-mfa-fatigue.md",
+      "type": "term",
+      "title": "MFA Bombing / MFA Fatigue",
+      "description": "An authentication bypass technique where an attacker, having obtained valid credentials, repeatedly triggers MFA push notifications to overwhelm the user into accidentally approving one.",
+      "resource": "tlctc:term:mfa-bombing-mfa-fatigue",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/mitigating-controls.md",
+      "type": "term",
+      "title": "Mitigating Controls",
+      "description": "In the Bow Tie model: barriers on the right (effect) side that detect, contain, reduce impact, or enable recovery after the central event occurs.",
+      "resource": "tlctc:term:mitigating-controls",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/mitm-position.md",
+      "type": "term",
+      "title": "MitM Position",
+      "description": "A controlled point on a communication path that enables interception, observation, modification, injection, replay, or protocol downgrade/stripping.",
+      "resource": "tlctc:term:mitm-position",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/mitre-att-ck.md",
+      "type": "term",
+      "title": "MITRE ATT&CK",
+      "description": "A globally accessible knowledge base of adversary tactics and techniques based on real world observations.",
+      "resource": "tlctc:term:mitre-att-ck",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/nis2-network-and-information-security-directive-2.md",
+      "type": "term",
+      "title": "NIS2 (Network and Information Security Directive 2)",
+      "description": "The EU directive establishing cybersecurity risk management and incident reporting obligations for essential and important entities.",
+      "resource": "tlctc:term:nis2-network-and-information-security-directive-2",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/nist-csf-cybersecurity-framework.md",
+      "type": "term",
+      "title": "NIST CSF (Cybersecurity Framework)",
+      "description": "The National Institute of Standards and Technology Cybersecurity Framework providing guidelines for managing cybersecurity risk.",
+      "resource": "tlctc:term:nist-csf-cybersecurity-framework",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/normative-keywords.md",
+      "type": "term",
+      "title": "Normative Keywords",
+      "description": "The keywords MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in the TLCTC specification are interpreted as described in RFC 2119 / RFC 8174.",
+      "resource": "tlctc:term:normative-keywords",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/notation-systems.md",
+      "type": "term",
+      "title": "Notation Systems",
+      "description": "The TLCTC framework employs two complementary notation systems: Strategic Notation: Human readable format using X (e.g., 1, 10) for executive communication and risk assessment Operational Notation: Machine readable format using TLCTC XX.YY (e.g., TLCTC 01.00) for tool integration, automation, and SIEM Both notations remain fully compatible and can be used interchangeably based on context.",
+      "resource": "tlctc:term:notation-systems",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/oauth-attack.md",
+      "type": "term",
+      "title": "OAuth Attack",
+      "description": "A commonly used but imprecise term that conflates multiple distinct attack mechanisms targeting OAuth implementations.",
+      "resource": "tlctc:term:oauth-attack",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/observed-t.md",
+      "type": "term",
+      "title": "Observed Δt",
+      "description": "A Δt value computed from two concrete time observations.",
+      "resource": "tlctc:term:observed-t",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/operational-layer.md",
+      "type": "term",
+      "title": "Operational Layer",
+      "description": "The detailed implementation level where security controls are implemented, monitored, and adjusted.",
+      "resource": "tlctc:term:operational-layer",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/operational-risk-oprisk.md",
+      "type": "term",
+      "title": "Operational Risk (OpRisk)",
+      "description": "The broader category of risks arising from inadequate or failed internal processes, people, and systems, or from external events.",
+      "resource": "tlctc:term:operational-risk-oprisk",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/operational-security-layer.md",
+      "type": "term",
+      "title": "Operational Security Layer",
+      "description": "The layer of TLCTC that addresses specific vulnerabilities, techniques, and procedures.",
+      "resource": "tlctc:term:operational-security-layer",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/owasp-open-worldwide-application-security-project.md",
+      "type": "term",
+      "title": "OWASP (Open Worldwide Application Security Project)",
+      "description": "A nonprofit foundation providing freely available resources for web application security, including the OWASP Top 10 list of critical web application security risks.",
+      "resource": "tlctc:term:owasp-open-worldwide-application-security-project",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/parallel-operator.md",
+      "type": "term",
+      "title": "Parallel Operator (+)",
+      "description": "Notation that denotes concurrent (or effectively concurrent) steps—actions that occur in the same phase where their ordering is not meaningful.",
+      "resource": "tlctc:term:parallel-operator",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/parallel-steps.md",
+      "type": "term",
+      "title": "Parallel Steps",
+      "description": "Two or more clusters occurring simultaneously or in tight coordination within the same attack phase.",
+      "resource": "tlctc:term:parallel-steps",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/pass-the-hash-pass-the-ticket.md",
+      "type": "term",
+      "title": "Pass-the-Hash / Pass-the-Ticket",
+      "description": "Attack techniques where an attacker uses captured NTLM hashes (Pass the Hash) or Kerberos tickets (Pass the Ticket) to authenticate as a legitimate user without knowing the actual password.",
+      "resource": "tlctc:term:pass-the-hash-pass-the-ticket",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/password-spraying.md",
+      "type": "term",
+      "title": "Password Spraying",
+      "description": "An attack that tries a small number of commonly used passwords against many accounts simultaneously, avoiding account lockout thresholds.",
+      "resource": "tlctc:term:password-spraying",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/patient-zero.md",
+      "type": "term",
+      "title": "Patient Zero",
+      "description": "In TLCTC context: the first system compromised in an attack, representing the initial entry point before lateral movement occurs.",
+      "resource": "tlctc:term:patient-zero",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/phishing.md",
+      "type": "term",
+      "title": "Phishing",
+      "description": "A social engineering technique using deceptive communications (email, SMS, voice) to trick individuals into taking actions that compromise security.",
+      "resource": "tlctc:term:phishing",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/physical-attack-8.md",
+      "type": "term",
+      "title": "Physical Attack (#8)",
+      "description": "A threat cluster where an attacker gains unauthorized physical interaction with or causes physical interference to hardware, devices, facilities, or data transmission media (including wireless signals).",
+      "resource": "tlctc:term:physical-attack-8",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/pineapple-attack.md",
+      "type": "term",
+      "title": "Pineapple Attack",
+      "description": "An attack using a Wi Fi Pineapple (or similar rogue access point device) to create fake wireless networks that victims connect to, enabling traffic interception.",
+      "resource": "tlctc:term:pineapple-attack",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/ping-of-death.md",
+      "type": "term",
+      "title": "Ping of Death",
+      "description": "A denial of service attack that sends malformed or oversized ICMP packets to crash or destabilize a target system.",
+      "resource": "tlctc:term:ping-of-death",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/position-acquisition-vs-position-exploitation.md",
+      "type": "term",
+      "title": "Position Acquisition vs Position Exploitation",
+      "description": "For 5 Man in the Middle : Gaining a MitM position maps to another cluster ( 1 , 8 , 9 , 10 , or 2/ 3 depending on initial generic vulnerability).",
+      "resource": "tlctc:term:position-acquisition-vs-position-exploitation",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/pretexting.md",
+      "type": "term",
+      "title": "Pretexting",
+      "description": "A social engineering technique where an attacker creates a fabricated scenario (pretext) to manipulate a target into divulging information or performing actions.",
+      "resource": "tlctc:term:pretexting",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/preventive-controls.md",
+      "type": "term",
+      "title": "Preventive Controls",
+      "description": "In the Bow Tie model: barriers on the left (cause) side that reduce likelihood of threats reaching the central event.",
+      "resource": "tlctc:term:preventive-controls",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/privilege-escalation.md",
+      "type": "term",
+      "title": "Privilege Escalation",
+      "description": "A commonly used but multi faceted term describing an attacker gaining higher level permissions than initially authorized.",
+      "resource": "tlctc:term:privilege-escalation",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/process-injection.md",
+      "type": "term",
+      "title": "Process Injection",
+      "description": "A technique where an attacker inserts code into the address space of another running process.",
+      "resource": "tlctc:term:process-injection",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/programmer.md",
+      "type": "term",
+      "title": "Programmer",
+      "description": "A development role focused on architecture and strategy, responsible for designing overall software architecture and component interactions, making strategic decisions about frameworks and protocols, establishing secure coding standards and security requirements, and considering system wide security implications.",
+      "resource": "tlctc:term:programmer",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/propagated-pr.md",
+      "type": "term",
+      "title": "Propagated PR",
+      "description": "A Protection Requirement that \"propagates backward\" from a downstream event into the RS (Respond) container of an earlier event due to regulatory or policy requirements.",
+      "resource": "tlctc:term:propagated-pr",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/protection-ring-architecture.md",
+      "type": "term",
+      "title": "Protection Ring Architecture",
+      "description": "The layered privilege model in computing systems (Ring 0 through Ring 3) where each ring represents a different privilege level.",
+      "resource": "tlctc:term:protection-ring-architecture",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-abuse-function-misuse-determination.md",
+      "type": "term",
+      "title": "R-ABUSE (Function Misuse Determination)",
+      "description": "Global mapping rule: If the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as 1 Abuse of Functions .",
+      "resource": "tlctc:term:r-abuse-function-misuse-determination",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-cred-credential-lifecycle-non-overlap.md",
+      "type": "term",
+      "title": "R-CRED (Credential Lifecycle Non-Overlap)",
+      "description": "Global mapping rule: Credential acquisition maps to the enabling cluster; credential application MUST always map to 4 Identity Theft .",
+      "resource": "tlctc:term:r-cred-credential-lifecycle-non-overlap",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-exec-foreign-execution-recording-rule.md",
+      "type": "term",
+      "title": "R-EXEC (Foreign Execution Recording Rule)",
+      "description": "Global mapping rule: Whenever Foreign Executable Content (FEC) is interpreted, loaded, or executed, a 7 Malware step MUST be recorded at the moment of execution, independent of how execution was enabled.",
+      "resource": "tlctc:term:r-exec-foreign-execution-recording-rule",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-flood-capacity-exhaustion-vs-implementation-defect.md",
+      "type": "term",
+      "title": "R-FLOOD (Capacity Exhaustion vs Implementation Defect)",
+      "description": "Global mapping rule: If the primary mechanism is volume or intensity exhausting finite resources, classify as 6 Flooding Attack .",
+      "resource": "tlctc:term:r-flood-capacity-exhaustion-vs-implementation-defect",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-human-human-manipulation-isolation.md",
+      "type": "term",
+      "title": "R-HUMAN (Human Manipulation Isolation)",
+      "description": "Global mapping rule: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as 9 Social Engineering , and any subsequent technical steps MUST be classified separately.",
+      "resource": "tlctc:term:r-human-human-manipulation-isolation",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-intra-intra-system-boundary-rules.md",
+      "type": "term",
+      "title": "R-INTRA (Intra-System Boundary Rules)",
+      "description": "The complete intra system boundary rule set governing use of the intra system operator ( |...| ): | Rule | Name | Summary | | | | | | R INTRA 1 | Single System Scope | Operator MUST be used only for boundaries within a single system instance | | R INTRA 2 | Cluster Attachment | Operator MUST be attached to the cluster step that accomplishes the crossing | | R INTRA 3 | No Standalone Use | Operator MUST NOT appear without an associated cluster step | | R INTRA 4 | No Cluster Change | Operator MUST NOT change cluster classification | | R INTRA 5 | Optional Precision | Operator is OPTIONAL; mainly recommended for forensic or vendor facing use | | R INTRA 6 | Multiple Crossings | Multiple annotations MAY follow one step when compressed form is justified | | R INTRA 7 | Distinct Vulnerabilities | If crossing requires a separately evidenced vulnerability, a new cluster step MUST be added | | R INTRA 8 | Compressed Form | If evidence does not distinguish separate exploit causes, compressed single step form MAY be used | | R INTRA 9 | Anti Effect Rule / Memory Deferral | Effects (privilege escalation, sandbox escape, etc.) are NOT independent threat categories; memory boundary type is deferred and MUST NOT be used | Reference: §4.2.5 (R INTRA), §11.3.6 (Intra System Boundary Operator)",
+      "resource": "tlctc:term:r-intra-intra-system-boundary-rules",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-mitm-position-vs-action.md",
+      "type": "term",
+      "title": "R-MITM (Position vs Action)",
+      "description": "Global mapping rule: The method of gaining a privileged communication path position maps to another cluster.",
+      "resource": "tlctc:term:r-mitm-position-vs-action",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-physical-physical-domain-isolation.md",
+      "type": "term",
+      "title": "R-PHYSICAL (Physical Domain Isolation)",
+      "description": "Global mapping rule: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as 8 Physical Attack , and subsequent technical steps MUST be classified separately.",
+      "resource": "tlctc:term:r-physical-physical-domain-isolation",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-role-server-vs-client-determination.md",
+      "type": "term",
+      "title": "R-ROLE (Server vs Client Determination)",
+      "description": "Global mapping rule: If the vulnerable component accepts and handles inbound requests relative to the attacker, classify as 2 Exploiting Server .",
+      "resource": "tlctc:term:r-role-server-vs-client-determination",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-rules-quick-reference.md",
+      "type": "term",
+      "title": "R-* Rules Quick Reference",
+      "description": "| Rule | Distinguishes | Key Decision | | | | | | R ROLE | 2 vs 3 | Server role (accepts inbound) → 2 ; Client role (consumes external) → 3 | | R CRED | Acquisition vs Use | Acquisition → enabling cluster; Use → always 4 | | R MITM | Gaining vs Exploiting | Gaining position → enabling cluster; Exploiting position → 5 | | R FLOOD | Capacity vs Defect | Volume exhaustion → 6 ; Implementation defect → 2/ 3 | | R EXEC | FEC Execution | If FEC executes → 7 MUST be recorded (plus enabling cluster) | | R SUPPLY | TAE Placement | 10 at Trust Acceptance Event where third party trust is honored | | R HUMAN | Human Manipulation | Psychological manipulation → 9 ; subsequent tech steps separate | | R PHYSICAL | Physical Access | Physical interaction → 8 ; subsequent tech steps separate | | R ABUSE | Function Misuse | No flaw required, legitimate capability abused → 1 | | R TRANSIT 1 (V2.1) | Distinct Parties | @Transit MUST be distinct from @Source and @Target | | R TRANSIT 2 (V2.1) | True Intermediary Topology | Operator only when intermediary sits between source and target | | R TRANSIT 3 (V2.1) | Transit vs Attack Surface | Vendor code on target device → classify by R ROLE, not transit | | R TRANSIT 4 (V2.1) | Control Relevance | SHOULD annotate when intermediary has control responsibility | | R TRANSIT 5 (V2.1) | Pure Conduit Fallback | MAY omit transit if intermediary adds no useful control surface | | R TRANSIT 6 (V2.1) | Compromise Separation | Intermediary compromise → preceding cluster step; transit alone insufficient | | R TRANSIT 7 (V2.1) | Cluster Independence | Transit annotation MUST NOT change cluster classification | | R TRANSIT 8 (V2.1) | Multiple Transit Parties | Chained transit MAY be used when each party has independent relevance | | R INTRA 1 (V2.1) | Single System Scope | Operator only for boundaries within a single system instance | | R INTRA 2 (V2.1) | Cluster Attachment | Operator MUST be attached to the cluster step | | R INTRA 3 (V2.1) | No Standalone Use | Operator MUST NOT appear without an associated cluster step | | R INTRA 4 (V2.1) | No Cluster Change | Operator MUST NOT change cluster classification | | R INTRA 5 (V2.1) | Optional Precision | Operator is OPTIONAL; recommended for forensic/vendor facing use | | R INTRA 6 (V2.1) | Multiple Crossings | Multiple annotations MAY follow one step when compressed form justified | | R INTRA 7 (V2.1) | Distinct Vulnerabilities | Separately evidenced vulnerability → new cluster step required | | R INTRA 8 (V2.1) | Compressed Form | Compressed single step MAY be used when evidence doesn't distinguish causes | | R INTRA 9 (V2.1) | Anti Effect / Memory Deferral | Effects are not threats; memory boundary type deferred → MUST NOT use | | R UNRES 1 (V2.1) | Semantic Constraint | ?",
+      "resource": "tlctc:term:r-rules-quick-reference",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-supply-trust-acceptance-event-placement.md",
+      "type": "term",
+      "title": "R-SUPPLY (Trust Acceptance Event Placement)",
+      "description": "Global mapping rule: 10 Supply Chain Attack MUST be placed at the Trust Acceptance Event (TAE)—the moment where the third party trust link is honored and the trust artifact becomes authoritative inside the organization's domain.",
+      "resource": "tlctc:term:r-supply-trust-acceptance-event-placement",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-transit-transit-boundary-rules.md",
+      "type": "term",
+      "title": "R-TRANSIT (Transit Boundary Rules)",
+      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 1 | Distinct Parties | @Transit MUST be distinct from both @Source and @Target | | R TRANSIT 2 | True Intermediary Topology | Operator MUST be used only when the intermediary sits between source and target in the delivery path | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | | R TRANSIT 4 | Control Relevance | Operator SHOULD be used when the intermediary has meaningful control responsibility; MAY be omitted when analytically incidental | | R TRANSIT 5 | Pure Conduit Fallback | If the intermediary adds no useful control surface, the analyst MAY use the binary v2.0 boundary or omit the transit annotation | | R TRANSIT 6 | Compromise or Coercion Is Separate | If transit is enabled by compromise or coercion of the intermediary, that enabling condition MUST be modeled as a preceding cluster step | | R TRANSIT 7 | Cluster Independence | Transit annotation MUST NOT change cluster classification | | R TRANSIT 8 | Multiple Transit Parties | Chained transit MAY be used when each intermediary has independent analytical relevance | Reference: §4.2.4 (R TRANSIT), §11.3.5 (Transit Boundary Operator)",
+      "resource": "tlctc:term:r-transit-transit-boundary-rules",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/ransomware.md",
+      "type": "term",
+      "title": "Ransomware",
+      "description": "Malware that encrypts a victim's data and demands payment for the decryption key.",
+      "resource": "tlctc:term:ransomware",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/rce-remote-code-execution.md",
+      "type": "term",
+      "title": "RCE (Remote Code Execution)",
+      "description": "A commonly used but imprecise term describing CVEs that enable an attacker to execute arbitrary code on a remote target.",
+      "resource": "tlctc:term:rce-remote-code-execution",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/realtime-velocity-class.md",
+      "type": "term",
+      "title": "Realtime Velocity Class",
+      "description": "A velocity classification where attack progression occurs within seconds or milliseconds.",
+      "resource": "tlctc:term:realtime-velocity-class",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/regulatory-trigger-point.md",
+      "type": "term",
+      "title": "Regulatory Trigger Point",
+      "description": "The specific event type in a TLCTC event chain that activates a regulatory notification or compliance obligation.",
+      "resource": "tlctc:term:regulatory-trigger-point",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/responsibility-sphere.md",
+      "type": "term",
+      "title": "Responsibility Sphere",
+      "description": "The organizational owner of a domain, denoted as @Entity .",
+      "resource": "tlctc:term:responsibility-sphere",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/rfid-skimming.md",
+      "type": "term",
+      "title": "RFID Skimming",
+      "description": "The unauthorized reading of RFID (Radio Frequency Identification) chips from proximity, typically to clone access cards or extract stored data.",
+      "resource": "tlctc:term:rfid-skimming",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/risk-appetite-risk-tolerance.md",
+      "type": "term",
+      "title": "Risk Appetite / Risk Tolerance",
+      "description": "Risk Appetite: The level and type of cyber risk an organization is willing to accept in pursuit of its objectives.",
+      "resource": "tlctc:term:risk-appetite-risk-tolerance",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/risk-event.md",
+      "type": "term",
+      "title": "Risk Event",
+      "description": "In the TLCTC Bow Tie model, the central occurrence that represents the materialization of a threat, positioned between causes (threats) and effects (consequences).",
+      "resource": "tlctc:term:risk-event",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/rogue-hotspot.md",
+      "type": "term",
+      "title": "Rogue Hotspot",
+      "description": "A fraudulent Wi Fi access point set up by an attacker to intercept traffic from unsuspecting users.",
+      "resource": "tlctc:term:rogue-hotspot",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/role-determination.md",
+      "type": "term",
+      "title": "Role Determination",
+      "description": "Classification of a component as server role or client role based on its behavior in the specific interaction being classified.",
+      "resource": "tlctc:term:role-determination",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/rootkit.md",
+      "type": "term",
+      "title": "Rootkit",
+      "description": "Malware designed to provide continued privileged access to a system while actively hiding its presence.",
+      "resource": "tlctc:term:rootkit",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/rs-container-respond-container.md",
+      "type": "term",
+      "title": "RS Container (Respond Container)",
+      "description": "The logical collection of RESPOND function controls and actions for a specific event (Eₙ) in the TLCTC event chain.",
+      "resource": "tlctc:term:rs-container-respond-container",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/sast-static-application-security-testing.md",
+      "type": "term",
+      "title": "SAST (Static Application Security Testing)",
+      "description": "A testing methodology that analyzes application source code, bytecode, or binary code for security vulnerabilities without executing the program.",
+      "resource": "tlctc:term:sast-static-application-security-testing",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/sbom-software-bill-of-materials.md",
+      "type": "term",
+      "title": "SBOM (Software Bill of Materials)",
+      "description": "A formal, machine readable inventory of all software components, libraries, and dependencies used in a software product.",
+      "resource": "tlctc:term:sbom-software-bill-of-materials",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/sca-software-composition-analysis.md",
+      "type": "term",
+      "title": "SCA (Software Composition Analysis)",
+      "description": "Automated tools that identify open source and third party components in a codebase, flagging known vulnerabilities and license compliance issues.",
+      "resource": "tlctc:term:sca-software-composition-analysis",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/scope-of-client-software.md",
+      "type": "term",
+      "title": "Scope of Client Software",
+      "description": "In TLCTC: encompasses Client APIs, incorporated Library APIs, Socket APIs, and Local APIs that operate on the client side of a communication.",
+      "resource": "tlctc:term:scope-of-client-software",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/scope-of-server-software.md",
+      "type": "term",
+      "title": "Scope of Server Software",
+      "description": "In TLCTC: includes Server APIs, incorporated Library APIs, Socket APIs, and Local APIs that run on server side systems to provide services and resources to clients.",
+      "resource": "tlctc:term:scope-of-server-software",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/secure-software-development-life-cycle-ssdlc.md",
+      "type": "term",
+      "title": "Secure Software Development Life Cycle (SSDLC)",
+      "description": "A structured approach to embedding security throughout the software development process.",
+      "resource": "tlctc:term:secure-software-development-life-cycle-ssdlc",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/semantic-guardrails-quick-reference.md",
+      "type": "term",
+      "title": "Semantic Guardrails Quick Reference",
+      "description": "| ID | Rule | Key Constraint | | | | | | SG 1 | Cause First | Classify by generic vulnerability exploited, not topology or effect | | SG 2 | Topology ≠ Classification | Transit/intra system annotations MUST NOT define or imply a cluster | | SG 3 | Annotations Subordinate | Annotations MUST NOT appear as independent path elements or replace clusters | | SG 4 | Effects ≠ Threats | Sandbox escape, privilege escalation, etc.",
+      "resource": "tlctc:term:semantic-guardrails-quick-reference",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/semantic-guardrails-sg-1-through-sg-7.md",
+      "type": "term",
+      "title": "Semantic Guardrails (SG-1 through SG-7)",
+      "description": "Normative rules that prevent V2.1 operators (transit boundary, intra system boundary, unresolved step) from drifting the classification model.",
+      "resource": "tlctc:term:semantic-guardrails-sg-1-through-sg-7",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/sequence-operator.md",
+      "type": "term",
+      "title": "Sequence Operator (→)",
+      "description": "The operator meaning: the right hand step occurs after the left hand step, and the left hand step enables or makes possible the right hand step in the described scenario.",
+      "resource": "tlctc:term:sequence-operator",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/sequence.md",
+      "type": "term",
+      "title": "Sequence",
+      "description": "The ordered progression of threat clusters in an attack.",
+      "resource": "tlctc:term:sequence",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/server-role-component.md",
+      "type": "term",
+      "title": "Server-Role Component",
+      "description": "A component that accepts and handles inbound requests or stimuli relative to the attacker.",
+      "resource": "tlctc:term:server-role-component",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/session-hijacking.md",
+      "type": "term",
+      "title": "Session Hijacking",
+      "description": "An attack where an adversary takes over an active session by stealing or predicting session tokens/cookies.",
+      "resource": "tlctc:term:session-hijacking",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/siem-security-information-and-event-management.md",
+      "type": "term",
+      "title": "SIEM (Security Information and Event Management)",
+      "description": "A category of security tools that aggregate and analyze log data from across an organization's infrastructure to detect security events.",
+      "resource": "tlctc:term:siem-security-information-and-event-management",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/slowloris.md",
+      "type": "term",
+      "title": "Slowloris",
+      "description": "An application layer denial of service attack that holds many connections to the target web server open by sending partial HTTP requests, slowly exhausting server connection resources.",
+      "resource": "tlctc:term:slowloris",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/smishing.md",
+      "type": "term",
+      "title": "Smishing",
+      "description": "Social engineering attacks delivered via SMS text messages.",
+      "resource": "tlctc:term:smishing",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/soar-security-orchestration-automation-and-response.md",
+      "type": "term",
+      "title": "SOAR (Security Orchestration, Automation, and Response)",
+      "description": "A category of security tools that enable automated incident response through predefined playbooks.",
+      "resource": "tlctc:term:soar-security-orchestration-automation-and-response",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/social-engineering-9.md",
+      "type": "term",
+      "title": "Social Engineering (#9)",
+      "description": "A threat cluster where an attacker psychologically manipulates individuals into performing actions counter to their or their organization's best interests, such as divulging confidential information, granting access, executing code, or bypassing security procedures.",
+      "resource": "tlctc:term:social-engineering-9",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/spear-phishing.md",
+      "type": "term",
+      "title": "Spear Phishing",
+      "description": "A targeted social engineering attack directed at specific individuals or organizations, using personalized information to increase credibility.",
+      "resource": "tlctc:term:spear-phishing",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/spyware.md",
+      "type": "term",
+      "title": "Spyware",
+      "description": "Malware that covertly monitors user activity, collects data (keystrokes, browsing history, credentials), and transmits it to the attacker.",
+      "resource": "tlctc:term:spyware",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/sql-injection.md",
+      "type": "term",
+      "title": "SQL Injection",
+      "description": "An implementation flaw where an attacker inserts malicious SQL statements into application queries through unvalidated input, enabling unauthorized database access.",
+      "resource": "tlctc:term:sql-injection",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/ssl-stripping.md",
+      "type": "term",
+      "title": "SSL Stripping",
+      "description": "A MitM technique where an attacker downgrades HTTPS connections to HTTP by intercepting and modifying communication between client and server.",
+      "resource": "tlctc:term:ssl-stripping",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/ssrf-server-side-request-forgery.md",
+      "type": "term",
+      "title": "SSRF (Server-Side Request Forgery)",
+      "description": "An implementation flaw where an attacker induces the server to make requests to unintended locations, potentially accessing internal resources or services.",
+      "resource": "tlctc:term:ssrf-server-side-request-forgery",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/stix-structured-threat-information-expression.md",
+      "type": "term",
+      "title": "STIX (Structured Threat Information Expression)",
+      "description": "A standardized language for representing cyber threat information.",
+      "resource": "tlctc:term:stix-structured-threat-information-expression",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/strategic-layer-human-first.md",
+      "type": "term",
+      "title": "Strategic Layer (Human-First)",
+      "description": "A naming convention for TLCTC clusters using the format X where X ∈ {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}.",
+      "resource": "tlctc:term:strategic-layer-human-first",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/strategic-management-layer.md",
+      "type": "term",
+      "title": "Strategic Management Layer",
+      "description": "The stable top level layer of TLCTC containing the 10 clusters and their generic vulnerabilities.",
+      "resource": "tlctc:term:strategic-management-layer",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/stride.md",
+      "type": "term",
+      "title": "STRIDE",
+      "description": "A threat modeling methodology developed by Microsoft that categorizes threats into six types: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege.",
+      "resource": "tlctc:term:stride",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/sub-threat.md",
+      "type": "term",
+      "title": "Sub-Threat",
+      "description": "Specific, detailed attack techniques or methods that fall within a broader Top Level Cyber Threat Cluster.",
+      "resource": "tlctc:term:sub-threat",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/supply-chain-attack-10.md",
+      "type": "term",
+      "title": "Supply Chain Attack (#10)",
+      "description": "A top level threat cluster on the cause side of the bow tie, where an attacker compromises systems by abusing the trust relationship within an organization's supply chain.",
+      "resource": "tlctc:term:supply-chain-attack-10",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/syn-flood.md",
+      "type": "term",
+      "title": "SYN Flood",
+      "description": "A network layer denial of service attack that exploits the TCP three way handshake by sending many SYN requests without completing the handshake, exhausting the target's connection table.",
+      "resource": "tlctc:term:syn-flood",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/system-compromise.md",
+      "type": "term",
+      "title": "System Compromise",
+      "description": "Alternative term for \"Loss of Control\" in the Cyber Bow Tie model.",
+      "resource": "tlctc:term:system-compromise",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/system-risk-event-sre.md",
+      "type": "term",
+      "title": "System Risk Event (SRE)",
+      "description": "The central event in the TLCTC Cyber Bow Tie model: Loss of Control / System Compromise .",
+      "resource": "tlctc:term:system-risk-event-sre",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/tailgating.md",
+      "type": "term",
+      "title": "Tailgating",
+      "description": "A physical social engineering technique where an unauthorized person follows an authorized person through a secured entrance.",
+      "resource": "tlctc:term:tailgating",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/tech-enablers-overlay.md",
+      "type": "term",
+      "title": "Tech Enablers Overlay",
+      "description": "A forward looking informative overlay on the Cyber Threat Radar that maps emerging technologies (e.g., agentic AI, quantum resistant crypto, deepfake toolchains, commodity exploit kits) against two axes: the cluster axis (which generic vulnerability the technology amplifies, 1 – 10 ) and the Actor Group axis (Nation State / Cybercriminal Ransomware / Cybercriminal General / Hacktivist / Insider / Amateur ScriptKiddie).",
+      "resource": "tlctc:term:tech-enablers-overlay",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/techniques-ttps.md",
+      "type": "term",
+      "title": "Techniques (TTPs)",
+      "description": "Specific methods, procedures, and tactics that attackers use to exploit vulnerabilities and achieve their objectives.",
+      "resource": "tlctc:term:techniques-ttps",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/tempest.md",
+      "type": "term",
+      "title": "TEMPEST",
+      "description": "A codename for standards and techniques related to electromagnetic emanation security — both the interception of unintentional electromagnetic emissions from electronic equipment and the shielding against such interception.",
+      "resource": "tlctc:term:tempest",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/temporal-notation.md",
+      "type": "term",
+      "title": "Temporal Notation",
+      "description": "The V2.0 extension to standard attack path notation that explicitly annotates time intervals between threat cluster transitions (Δt) using the format →[time] .",
+      "resource": "tlctc:term:temporal-notation",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/third-party-trust-link-ttl.md",
+      "type": "term",
+      "title": "Third-Party Trust Link (TTL)",
+      "description": "Any reliance relationship where a third party can influence your domain.",
+      "resource": "tlctc:term:third-party-trust-link-ttl",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/threat-cluster.md",
+      "type": "term",
+      "title": "Threat Cluster",
+      "description": "An organizational construct that groups a set of threats exploiting a common generic vulnerability related to IT systems and humans.",
+      "resource": "tlctc:term:threat-cluster",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/threat-in-tlctc.md",
+      "type": "term",
+      "title": "Threat (in TLCTC)",
+      "description": "An initiating force that exploits a generic vulnerability and can trigger the central event (Loss of Control), implemented as a set of tactics, techniques, and procedures (TTP) that attackers apply to provoke an event or incident.",
+      "resource": "tlctc:term:threat-in-tlctc",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/threat-topology.md",
+      "type": "term",
+      "title": "Threat Topology",
+      "description": "A structural property of TLCTC describing whether a threat cluster (or a concrete attack step) operates primarily within the software domain's technical attack surfaces ( internal ) or enables crossing domain boundaries ( bridge ).",
+      "resource": "tlctc:term:threat-topology",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/tie-breaker-rules.md",
+      "type": "term",
+      "title": "Tie-Breaker Rules",
+      "description": "Precedence rules applied when a step appears to fit multiple clusters.",
+      "resource": "tlctc:term:tie-breaker-rules",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/tlctc-enumeration.md",
+      "type": "term",
+      "title": "TLCTC Enumeration",
+      "description": "A structured identifier system ( TLCTC XX.YY ) where: TLCTC prefix ensures proper attribution to the model XX represents the primary cluster number (01 10), zero padded for consistent formatting .YY suffix designed for future refinement ( .00 designates current high level definitions) This provides machine readability, consistent sorting, and extensibility for sub categorization.",
+      "resource": "tlctc:term:tlctc-enumeration",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/tlctc-top-level-cyber-threat-clusters.md",
+      "type": "term",
+      "title": "TLCTC (Top Level Cyber Threat Clusters)",
+      "description": "A pragmatic and structured framework for targeted threat identification that provides a universal approach to cybersecurity applicable across diverse IT systems and contexts.",
+      "resource": "tlctc:term:tlctc-top-level-cyber-threat-clusters",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/token-hijacking.md",
+      "type": "term",
+      "title": "Token Hijacking",
+      "description": "The theft or manipulation of authentication tokens (OAuth tokens, session tokens, API keys, bearer tokens) to gain unauthorized access.",
+      "resource": "tlctc:term:token-hijacking",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/transit-boundary-operator.md",
+      "type": "term",
+      "title": "Transit Boundary Operator (⇒)",
+      "description": "Notation: ||[context][@Source⇒@Carrier→@Target]|| .",
+      "resource": "tlctc:term:transit-boundary-operator",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/trojan.md",
+      "type": "term",
+      "title": "Trojan",
+      "description": "Malware disguised as legitimate software to trick users into installing it.",
+      "resource": "tlctc:term:trojan",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/trust-acceptance-event-tae.md",
+      "type": "term",
+      "title": "Trust Acceptance Event (TAE)",
+      "description": "The moment your domain honors the Third Party Trust Link and treats a Trust Artifact/Decision as authoritative.",
+      "resource": "tlctc:term:trust-acceptance-event-tae",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/trust-artifact-trust-decision-tad.md",
+      "type": "term",
+      "title": "Trust Artifact / Trust Decision (TAD)",
+      "description": "What crosses the boundary and is accepted as authoritative in a third party trust relationship.",
+      "resource": "tlctc:term:trust-artifact-trust-decision-tad",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/ttp-tactics-techniques-and-procedures.md",
+      "type": "term",
+      "title": "TTP (Tactics, Techniques, and Procedures)",
+      "description": "A detailed description of attacker behavior.",
+      "resource": "tlctc:term:ttp-tactics-techniques-and-procedures",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/two-tiered-approach.md",
+      "type": "term",
+      "title": "Two-Tiered Approach",
+      "description": "The TLCTC structure distinguishing between: Strategic Management Layer: High level risk management, policy making, and governance using the 10 Top Level Cyber Threat Clusters Operational Layer: Detailed implementation of controls, specific vulnerability management, and threat intelligence using sub threats and TTPs",
+      "resource": "tlctc:term:two-tiered-approach",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/typosquatting.md",
+      "type": "term",
+      "title": "Typosquatting",
+      "description": "Registering domain names or package names that are slight misspellings of legitimate ones to deceive users or automated systems.",
+      "resource": "tlctc:term:typosquatting",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/udp-flood.md",
+      "type": "term",
+      "title": "UDP Flood",
+      "description": "A network layer denial of service attack that overwhelms a target with UDP packets, consuming bandwidth and processing resources.",
+      "resource": "tlctc:term:udp-flood",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/umbrella-controls.md",
+      "type": "term",
+      "title": "Umbrella Controls",
+      "description": "Security measures that provide protection for groups of IT systems within their scope, such as firewalls, proxies, network zones, or external network filters.",
+      "resource": "tlctc:term:umbrella-controls",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/unknown-t.md",
+      "type": "term",
+      "title": "Unknown Δt",
+      "description": "A Δt value where no supported time statement can be made.",
+      "resource": "tlctc:term:unknown-t",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/unresolved-step-operators.md",
+      "type": "term",
+      "title": "Unresolved-Step Operators (`?`, `…`)",
+      "description": "Notation operators for partially resolved attack paths where forensic evidence confirms that a step (or gap of steps) exists but the cluster cannot yet be determined.",
+      "resource": "tlctc:term:unresolved-step-operators",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/usb-baiting.md",
+      "type": "term",
+      "title": "USB Baiting",
+      "description": "A physical attack where an attacker leaves malicious USB devices in locations where targets are likely to find and connect them (parking lots, lobbies, conference rooms).",
+      "resource": "tlctc:term:usb-baiting",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/van-eck-phreaking.md",
+      "type": "term",
+      "title": "Van Eck Phreaking",
+      "description": "A technique for eavesdropping on the contents of a CRT or LCD display by detecting and decoding the electromagnetic emissions produced by the display.",
+      "resource": "tlctc:term:van-eck-phreaking",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/velocity-annotation.md",
+      "type": "term",
+      "title": "Velocity Annotation",
+      "description": "Notation: →[Δt=value] or →[Δt=Xh] , →[Δt=Xm] , →[Δt=Xs] .",
+      "resource": "tlctc:term:velocity-annotation",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/velocity-class.md",
+      "type": "term",
+      "title": "Velocity Class",
+      "description": "Categorical labels for Δt ranges that describe the defender's feasible response mode and determine appropriate control strategies.",
+      "resource": "tlctc:term:velocity-class",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/vertical-stack-application.md",
+      "type": "term",
+      "title": "Vertical Stack Application",
+      "description": "The implementation of TLCTC across the layered architecture of IT systems (from application level to hardware), analyzing client/server roles at each protection ring boundary (e.g., Ring 3 to Ring 0) and directional vulnerabilities.",
+      "resource": "tlctc:term:vertical-stack-application",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/vishing.md",
+      "type": "term",
+      "title": "Vishing",
+      "description": "Social engineering attacks delivered via voice calls (phone).",
+      "resource": "tlctc:term:vishing",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/vulnerability.md",
+      "type": "term",
+      "title": "Vulnerability",
+      "description": "An exploitable condition in a system that constitutes the attack surface towards a threat .",
+      "resource": "tlctc:term:vulnerability",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/waf-web-application-firewall.md",
+      "type": "term",
+      "title": "WAF (Web Application Firewall)",
+      "description": "A security control that monitors, filters, and blocks HTTP traffic to and from a web application.",
+      "resource": "tlctc:term:waf-web-application-firewall",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/watering-hole-attack.md",
+      "type": "term",
+      "title": "Watering Hole Attack",
+      "description": "An attack where an adversary compromises a website frequently visited by the target group, then uses the compromised site to deliver exploits or malware to visitors.",
+      "resource": "tlctc:term:watering-hole-attack",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/weakness.md",
+      "type": "term",
+      "title": "Weakness",
+      "description": "A flaw, bug, or error in software, hardware, or processes that enables vulnerabilities to exist.",
+      "resource": "tlctc:term:weakness",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/whaling.md",
+      "type": "term",
+      "title": "Whaling",
+      "description": "A targeted phishing attack aimed specifically at senior executives or high value targets within an organization.",
+      "resource": "tlctc:term:whaling",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/worm.md",
+      "type": "term",
+      "title": "Worm",
+      "description": "Self replicating malware that spreads across networks without requiring user interaction, typically by exploiting vulnerabilities in network accessible services.",
+      "resource": "tlctc:term:worm",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/xxe-xml-external-entity-injection.md",
+      "type": "term",
+      "title": "XXE (XML External Entity) Injection",
+      "description": "An implementation flaw where an application processes XML input containing references to external entities, potentially leading to data disclosure, SSRF, or denial of service.",
+      "resource": "tlctc:term:xxe-xml-external-entity-injection",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-1.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #1 Abuse of Functions",
+      "description": "471 ATT&CK techniques entries mapped to TLCTC #1 Abuse of Functions.",
+      "resource": "tlctc:mapping:attack:cluster-1",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-1"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-10.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #10 Supply Chain Attack",
+      "description": "5 ATT&CK techniques entries mapped to TLCTC #10 Supply Chain Attack.",
+      "resource": "tlctc:mapping:attack:cluster-10",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-10"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-2.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #2 Exploiting Server",
+      "description": "7 ATT&CK techniques entries mapped to TLCTC #2 Exploiting Server.",
+      "resource": "tlctc:mapping:attack:cluster-2",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-2"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-3.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #3 Exploiting Client",
+      "description": "2 ATT&CK techniques entries mapped to TLCTC #3 Exploiting Client.",
+      "resource": "tlctc:mapping:attack:cluster-3",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-3"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-4.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #4 Identity Theft",
+      "description": "33 ATT&CK techniques entries mapped to TLCTC #4 Identity Theft.",
+      "resource": "tlctc:mapping:attack:cluster-4",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-4"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-5.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #5 Man in the Middle",
+      "description": "3 ATT&CK techniques entries mapped to TLCTC #5 Man in the Middle.",
+      "resource": "tlctc:mapping:attack:cluster-5",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-5"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-6.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #6 Flooding Attack",
+      "description": "8 ATT&CK techniques entries mapped to TLCTC #6 Flooding Attack.",
+      "resource": "tlctc:mapping:attack:cluster-6",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-6"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-7.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #7 Malware",
+      "description": "58 ATT&CK techniques entries mapped to TLCTC #7 Malware.",
+      "resource": "tlctc:mapping:attack:cluster-7",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-7"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-8.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #8 Physical Attack",
+      "description": "4 ATT&CK techniques entries mapped to TLCTC #8 Physical Attack.",
+      "resource": "tlctc:mapping:attack:cluster-8",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-8"
+      ]
+    },
+    {
+      "path": "/mappings/attack/cluster-9.md",
+      "type": "mapping-set",
+      "title": "ATT&CK techniques → #9 Social Engineering",
+      "description": "18 ATT&CK techniques entries mapped to TLCTC #9 Social Engineering.",
+      "resource": "tlctc:mapping:attack:cluster-9",
+      "tags": [
+        "mapping",
+        "attack",
+        "cluster-9"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-1.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #1 Abuse of Functions",
+      "description": "165 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions.",
+      "resource": "tlctc:mapping:cwe:cluster-1",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-1"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-10.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #10 Supply Chain Attack",
+      "description": "18 CWE weaknesses entries mapped to TLCTC #10 Supply Chain Attack.",
+      "resource": "tlctc:mapping:cwe:cluster-10",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-10"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-2.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #2 Exploiting Server",
+      "description": "411 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
+      "resource": "tlctc:mapping:cwe:cluster-2",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-2"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-3.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #3 Exploiting Client",
+      "description": "12 CWE weaknesses entries mapped to TLCTC #3 Exploiting Client.",
+      "resource": "tlctc:mapping:cwe:cluster-3",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-3"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-4.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #4 Identity Theft",
+      "description": "50 CWE weaknesses entries mapped to TLCTC #4 Identity Theft.",
+      "resource": "tlctc:mapping:cwe:cluster-4",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-4"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-5.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #5 Man in the Middle",
+      "description": "19 CWE weaknesses entries mapped to TLCTC #5 Man in the Middle.",
+      "resource": "tlctc:mapping:cwe:cluster-5",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-5"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-6.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #6 Flooding Attack",
+      "description": "27 CWE weaknesses entries mapped to TLCTC #6 Flooding Attack.",
+      "resource": "tlctc:mapping:cwe:cluster-6",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-6"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-7.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #7 Malware",
+      "description": "4 CWE weaknesses entries mapped to TLCTC #7 Malware.",
+      "resource": "tlctc:mapping:cwe:cluster-7",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-7"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-8.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #8 Physical Attack",
+      "description": "90 CWE weaknesses entries mapped to TLCTC #8 Physical Attack.",
+      "resource": "tlctc:mapping:cwe:cluster-8",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-8"
+      ]
+    },
+    {
+      "path": "/mappings/cwe/cluster-9.md",
+      "type": "mapping-set",
+      "title": "CWE weaknesses → #9 Social Engineering",
+      "description": "8 CWE weaknesses entries mapped to TLCTC #9 Social Engineering.",
+      "resource": "tlctc:mapping:cwe:cluster-9",
+      "tags": [
+        "mapping",
+        "cwe",
+        "cluster-9"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-1.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #1 Abuse of Functions",
+      "description": "2294 Sigma rules entries mapped to TLCTC #1 Abuse of Functions.",
+      "resource": "tlctc:mapping:sigma:cluster-1",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-1"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-10.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #10 Supply Chain Attack",
+      "description": "2 Sigma rules entries mapped to TLCTC #10 Supply Chain Attack.",
+      "resource": "tlctc:mapping:sigma:cluster-10",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-10"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-2.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #2 Exploiting Server",
+      "description": "55 Sigma rules entries mapped to TLCTC #2 Exploiting Server.",
+      "resource": "tlctc:mapping:sigma:cluster-2",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-2"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-3.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #3 Exploiting Client",
+      "description": "7 Sigma rules entries mapped to TLCTC #3 Exploiting Client.",
+      "resource": "tlctc:mapping:sigma:cluster-3",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-3"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-4.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #4 Identity Theft",
+      "description": "104 Sigma rules entries mapped to TLCTC #4 Identity Theft.",
+      "resource": "tlctc:mapping:sigma:cluster-4",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-4"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-5.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #5 Man in the Middle",
+      "description": "9 Sigma rules entries mapped to TLCTC #5 Man in the Middle.",
+      "resource": "tlctc:mapping:sigma:cluster-5",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-5"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-6.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #6 Flooding Attack",
+      "description": "5 Sigma rules entries mapped to TLCTC #6 Flooding Attack.",
+      "resource": "tlctc:mapping:sigma:cluster-6",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-6"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-7.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #7 Malware",
+      "description": "79 Sigma rules entries mapped to TLCTC #7 Malware.",
+      "resource": "tlctc:mapping:sigma:cluster-7",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-7"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-8.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #8 Physical Attack",
+      "description": "2 Sigma rules entries mapped to TLCTC #8 Physical Attack.",
+      "resource": "tlctc:mapping:sigma:cluster-8",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-8"
+      ]
+    },
+    {
+      "path": "/mappings/sigma/cluster-9.md",
+      "type": "mapping-set",
+      "title": "Sigma rules → #9 Social Engineering",
+      "description": "16 Sigma rules entries mapped to TLCTC #9 Social Engineering.",
+      "resource": "tlctc:mapping:sigma:cluster-9",
+      "tags": [
+        "mapping",
+        "sigma",
+        "cluster-9"
+      ]
+    },
+    {
+      "path": "/rules/r-cred.md",
+      "type": "rule",
+      "title": "R-CRED",
+      "description": "Credential acquisition maps to the enabling cluster.",
+      "resource": "tlctc:rule:R-CRED",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-exec.md",
+      "type": "rule",
+      "title": "R-EXEC",
+      "description": "If Foreign Executable Content executes, a #7 step MUST be recorded at the execution moment.",
+      "resource": "tlctc:rule:R-EXEC",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-flood.md",
+      "type": "rule",
+      "title": "R-FLOOD",
+      "description": "If the primary mechanism is volume or intensity exhausting finite resources, classify as #6.",
+      "resource": "tlctc:rule:R-FLOOD",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-intra-7.md",
+      "type": "rule",
+      "title": "R-INTRA-7",
+      "description": "Intra-system boundary crossings never change cluster classification.",
+      "resource": "tlctc:rule:R-INTRA-7",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-intra-9.md",
+      "type": "rule",
+      "title": "R-INTRA-9",
+      "description": "The 'memory' intra-system boundary type is deferred and MUST NOT be used.",
+      "resource": "tlctc:rule:R-INTRA-9",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-mitm.md",
+      "type": "rule",
+      "title": "R-MITM",
+      "description": "Position acquisition maps to the enabling cluster; once position is established, interception/modification/relay actions map to #5.",
+      "resource": "tlctc:rule:R-MITM",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-role.md",
+      "type": "rule",
+      "title": "R-ROLE",
+      "description": "Classify by the role of the component containing the flaw relative to the attacker: server-role flaw = #2, client-role flaw = #3.",
+      "resource": "tlctc:rule:R-ROLE",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-supply.md",
+      "type": "rule",
+      "title": "R-SUPPLY",
+      "description": "#10 Supply Chain Attack MUST be placed at the Trust Acceptance Event (TAE) — the moment the third-party trust link is honored and the trust artifact becomes authoritative inside the target domain.",
+      "resource": "tlctc:rule:R-SUPPLY",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-transit-3.md",
+      "type": "rule",
+      "title": "R-TRANSIT-3",
+      "description": "Vendor code running on the target device is NOT transit.",
+      "resource": "tlctc:rule:R-TRANSIT-3",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-unres-2.md",
+      "type": "rule",
+      "title": "R-UNRES-2",
+      "description": "'?' and '…' are epistemic annotations, NOT clusters.",
+      "resource": "tlctc:rule:R-UNRES-2",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-unres-3.md",
+      "type": "rule",
+      "title": "R-UNRES-3",
+      "description": "'?'/'…' are excluded from statistics — they represent absence of knowledge, not a category.",
+      "resource": "tlctc:rule:R-UNRES-3",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-unres-5.md",
+      "type": "rule",
+      "title": "R-UNRES-5",
+      "description": "DRE tags ('+ [DRE: ...]') MUST NOT be appended to '?'/'…'.",
+      "resource": "tlctc:rule:R-UNRES-5",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-unres-6.md",
+      "type": "rule",
+      "title": "R-UNRES-6",
+      "description": "Boundary operators ('||...||', '⇒', '|...|') MAY appear adjacent to '?'/'…' — boundaries are independently observable.",
+      "resource": "tlctc:rule:R-UNRES-6",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "may"
+      ]
+    },
+    {
+      "path": "/rules/r-unres-7.md",
+      "type": "rule",
+      "title": "R-UNRES-7",
+      "description": "Every '?'/'…' is an open analytical task.",
+      "resource": "tlctc:rule:R-UNRES-7",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "should"
+      ]
+    },
+    {
+      "path": "/rules/r-unres-8.md",
+      "type": "rule",
+      "title": "R-UNRES-8",
+      "description": "Any path containing '?'/'…' MUST carry a prose annotation explaining what is unresolved and why.",
+      "resource": "tlctc:rule:R-UNRES-8",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-unres-9.md",
+      "type": "rule",
+      "title": "R-UNRES-9",
+      "description": "Binary rule: if any cluster can be defended — even weakly — use '#X [conf=low]', not '?'.",
+      "resource": "tlctc:rule:R-UNRES-9",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/spheres/attacker.md",
+      "type": "sphere",
+      "title": "@Attacker",
+      "description": "Attacker-controlled infrastructure and assets",
+      "resource": "tlctc:sphere:@Attacker",
+      "tags": [
+        "registry",
+        "sphere",
+        "third-party"
+      ]
+    },
+    {
+      "path": "/spheres/cloudprovider.md",
+      "type": "sphere",
+      "title": "@CloudProvider",
+      "description": "Cloud platform governance domain",
+      "resource": "tlctc:sphere:@CloudProvider",
+      "tags": [
+        "registry",
+        "sphere",
+        "third-party"
+      ]
+    },
+    {
+      "path": "/spheres/external.md",
+      "type": "sphere",
+      "title": "@External",
+      "description": "Outside the organization boundary",
+      "resource": "tlctc:sphere:@External",
+      "tags": [
+        "registry",
+        "sphere",
+        "third-party"
+      ]
+    },
+    {
+      "path": "/spheres/facilities.md",
+      "type": "sphere",
+      "title": "@Facilities",
+      "description": "Physical facilities / building management",
+      "resource": "tlctc:sphere:@Facilities",
+      "tags": [
+        "registry",
+        "sphere",
+        "physical"
+      ]
+    },
+    {
+      "path": "/spheres/human.md",
+      "type": "sphere",
+      "title": "@Human",
+      "description": "Human decision/actions within the org",
+      "resource": "tlctc:sphere:@Human",
+      "tags": [
+        "registry",
+        "sphere",
+        "human"
+      ]
+    },
+    {
+      "path": "/spheres/msp.md",
+      "type": "sphere",
+      "title": "@MSP",
+      "description": "Managed service provider domain",
+      "resource": "tlctc:sphere:@MSP",
+      "tags": [
+        "registry",
+        "sphere",
+        "third-party"
+      ]
+    },
+    {
+      "path": "/spheres/org.md",
+      "type": "sphere",
+      "title": "@Org",
+      "description": "Primary organization responsibility sphere",
+      "resource": "tlctc:sphere:@Org",
+      "tags": [
+        "registry",
+        "sphere",
+        "cyber"
+      ]
+    },
+    {
+      "path": "/spheres/partner.md",
+      "type": "sphere",
+      "title": "@Partner",
+      "description": "Partner organization domain",
+      "resource": "tlctc:sphere:@Partner",
+      "tags": [
+        "registry",
+        "sphere",
+        "third-party"
+      ]
+    },
+    {
+      "path": "/spheres/vendor.md",
+      "type": "sphere",
+      "title": "@Vendor",
+      "description": "Vendor-managed assets or services",
+      "resource": "tlctc:sphere:@Vendor",
+      "tags": [
+        "registry",
+        "sphere",
+        "third-party"
+      ]
+    }
+  ]
+}

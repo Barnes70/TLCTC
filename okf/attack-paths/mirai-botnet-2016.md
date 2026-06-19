@@ -1,0 +1,39 @@
+---
+type: "attack-path"
+title: "MIRAI-BOTNET-DYN-2016"
+description: "Mirai botnet recruitment and Dyn DNS DDoS attack (October 2016)."
+resource: "tlctc:attack-path:mirai-botnet-2016"
+tags:
+  - "attack-path"
+  - "cluster-4"
+  - "cluster-7"
+  - "cluster-6"
+  - "confidence-high"
+timestamp: "2026-03-20T00:00:00Z"
+tlctc_version: "2.1"
+---
+# MIRAI-BOTNET-DYN-2016
+
+## Attack path
+
+```
+#4 →[Δt=instant] #7 (FEC) →[Δt=~30d] #6 + [DRE: A]
+```
+
+# Schema
+
+| Step | Cluster | Boundary | Δt→next | DRE |
+|---|---|---|---|---|
+| s1-default-credential-login | [#4](/clusters/cluster-4.md) |  | instant |  |
+| s2-bot-installation | [#7](/clusters/cluster-7.md) (FEC) |  | ~30d |  |
+| s3-dyn-ddos | [#6](/clusters/cluster-6.md) |  |  | A |
+
+## Step notes
+
+- **s1-default-credential-login:** Mirai's scanner module connects to discovered IoT devices via Telnet (port 23) or SSH (port 22) and authenticates using factory-default credentials from a hardcoded dictionary of 61 username/password pairs (e.g., admin/admin, root/root, root/xc3511, admin/7ujMko0admin). The scanner operates from already-infected devices, making it a self-propagating worm. Classification rationale: default credentials are still valid authentication credentials — the attacker is presenting a legitimate credential that was not assigned to them. R-CRED: the credential (factory default) is publicly known and trivially acquired, but the act of using it to authenticate as the device owner is credential application, which is always #4 Identity Theft regardless of acquisition method. The acquisition is so trivial (hardcoded list) that there is no separate acquisition step — the enabling mechanism is the manufacturer's failure to enforce credential changes, but the generic vulnerability exploited in this step is identity impersonation.
+- **s2-bot-installation:** Upon successful authentication, Mirai downloads and executes its bot payload on the IoT device. The malware binary (compiled for multiple architectures: ARM, MIPS, x86, etc.) performs several actions: (1) kills competing malware processes and blocks remote management ports (Telnet, SSH, HTTP) to prevent reinfection and administrator access, (2) randomizes its process name to evade detection, (3) resolves its C2 server address, (4) begins scanning random IP addresses for additional vulnerable devices (propagation), and (5) awaits DDoS attack commands from the C2 infrastructure. R-EXEC: foreign executable content (Mirai bot binary) is downloaded and executed on the IoT device — this is the FEC execution moment and must be recorded as #7 with fec_executed: true. The malware resides only in memory and does not survive device reboot. The ~30d delta represents the approximate botnet recruitment period from initial infections through the September 2016 Krebs attack to the October 2016 Dyn attack, during which the botnet grew to approximately 600,000 compromised devices.
+- **s3-dyn-ddos:** On October 21, 2016, the Mirai botnet C2 infrastructure issued attack commands directing approximately 600,000 compromised IoT devices to launch a coordinated DDoS attack against Dyn's managed DNS infrastructure. The attack occurred in three waves throughout the day. Attack vectors included massive DNS query floods (DNS water torture / random subdomain attacks) and TCP SYN floods targeting Dyn's DNS resolver infrastructure. Peak traffic was estimated at 1.2 Tbps — an unprecedented volume at the time. The generic vulnerability exploited is the finite capacity of Dyn's DNS infrastructure: no matter how well-provisioned, any system has resource limits that can be overwhelmed by sufficient volume. Classification rationale: this is a pure flooding attack (#6) — the attacker sends legitimate-format traffic in overwhelming volume to exhaust the target's resources. No software vulnerability is exploited; no function is abused beyond its design. The attack simply consumes all available capacity. DRE: A (Loss of Availability) — Dyn's DNS resolution service was disrupted for hours across three attack waves, causing cascading availability loss for hundreds of major internet services (Twitter, Netflix, GitHub, Spotify, Reddit, PayPal, The New York Times, etc.) that depended on Dyn for DNS resolution. Millions of users were affected across the eastern United States and parts of Europe.
+
+# Citations
+
+Mirai botnet recruitment and Dyn DNS DDoS attack (October 2016). Two-phase incident: (1) Botnet recruitment — Mirai malware autonomously scanned the internet for IoT devices (IP cameras, DVRs, home routers) with factory-default credentials, using a hardcoded dictionary of 61 username/password pairs. Approximately 600,000 devices were compromised. (2) DDoS attack — on October 21, 2016, the botnet launched a massive distributed denial-of-service attack against Dyn's managed DNS infrastructure, disrupting access to major internet services including Twitter, Netflix, GitHub, Spotify, Reddit, PayPal, and others for several hours. Peak traffic estimated at 1.2 Tbps. Attack path (Phase 1, per device): #4 →[Δt=instant] #7. Attack path (Phase 2): #6 + [DRE: A]. The recruitment phase repeats across ~600K devices; the DDoS phase represents the coordinated weaponization of the botnet. Mirai source code was publicly released on hackforums.net by 'Anna-senpai' on September 30, 2016, enabling numerous copycat botnets. Krebs on Security (krebsonsecurity.com) was the first major Mirai DDoS target in September 2016 (~620 Gbps). Sources: US-CERT Alert TA16-288A (October 2016), Dyn DNS post-incident analysis, Flashpoint intelligence report on Mirai attribution, Krebs on Security 'Who is Anna-Senpai, the Mirai Worm Author?' (January 2017), Cloudflare Mirai botnet technical analysis, Usenix Security 2017 'Understanding the Mirai Botnet' by Antonakakis et al.

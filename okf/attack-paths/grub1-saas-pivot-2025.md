@@ -1,0 +1,38 @@
+---
+type: "attack-path"
+title: "GRUB1-SAAS-PIVOT-2025"
+description: "GRUB1 SaaS-to-SaaS supply chain pivot, tracked by Cloudforce One (Cloudflare 2026 Threat Report)."
+resource: "tlctc:attack-path:grub1-saas-pivot-2025"
+tags:
+  - "attack-path"
+  - "cluster-1"
+  - "cluster-4"
+  - "confidence-medium"
+timestamp: "2026-04-09T00:00:00Z"
+tlctc_version: "2.1"
+---
+# GRUB1-SAAS-PIVOT-2025
+
+## Attack path
+
+```
+#1 + [DRE: C] →[Δt=~1h] #4 →[Δt=~30m] #1 + [DRE: C]
+```
+
+# Schema
+
+| Step | Cluster | Boundary | Δt→next | DRE |
+|---|---|---|---|---|
+| s1-automated-secret-scanning | [#1](/clusters/cluster-1.md) |  | ~1h | C |
+| s2-saas-credential-use | [#4](/clusters/cluster-4.md) |  | ~30m |  |
+| s3-ai-assisted-saas-navigation | [#1](/clusters/cluster-1.md) |  |  | C |
+
+## Step notes
+
+- **s1-automated-secret-scanning:** Attacker uses automated secret-scanning tools (TruffleHog and similar) to scan SaaS integration code repositories and configuration stores for high-value credentials — API keys, OAuth tokens, database connection strings. The scanning tools function as designed; their scope is abused. This is #1 Abuse of Functions: using legitimate security audit tools for offensive credential discovery. DRE: C — exposure of integration secrets (API keys, tokens, connection strings). The critical distinction: the attacker is not exploiting a software vulnerability (#2/#3) but using designed tool capabilities against a broader target set than intended.
+- **s2-saas-credential-use:** Attacker authenticates to the Salesloft/Drift integration using harvested credentials. R-CRED: credential application (authentication) is always #4 regardless of acquisition method. The credentials were harvested in s1 (#1 as enabling cluster); their use to authenticate is a separate #4 step. Axiom X (Credential Duality): acquisition and use are structurally distinct control surfaces.
+- **s3-ai-assisted-saas-navigation:** Attacker uses generative AI (LLMs) in real time to bridge knowledge gaps in Salesforce's complex data model, pinpointing specific database tables containing the most valuable information. Cloudforce One identified the actor using AI to navigate the SaaS environment moments before gaining unauthorized access to production instances. This is #1: the Salesforce API, query interfaces, and data export functions all operate as designed — the attacker abuses their legitimate functionality with AI as a force multiplier. DRE: C — exfiltration of corporate data across potentially hundreds of Salesforce tenants. The SaaS-to-SaaS pivoting represents a new frontier where security is defined by the most over-privileged integration in the tech stack.
+
+# Citations
+
+GRUB1 SaaS-to-SaaS supply chain pivot, tracked by Cloudforce One (Cloudflare 2026 Threat Report). An unsophisticated individual actor breached hundreds of corporate Salesforce tenants by targeting the connective tissue between SaaS integrations. Phase 1: automated credential discovery using secret-scanning tools (TruffleHog) against code repositories to harvest high-value credentials buried in repository history. Phase 2: AI-assisted navigation using generative AI in real time to navigate unfamiliar Salesforce environments, pinpointing specific database tables containing the most valuable information moments before unauthorized access. The campaign demonstrates the Measure of Effectiveness (MOE) paradigm: maximum disruption with minimum cost. Attack path: #1 + [DRE: C] -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 7), Cloudforce One investigation. AI-GENERATED EXAMPLE: This attack path is reconstructed from Cloudflare's public threat report description. Specific technical details and timing are analyst estimates based on the described campaign characteristics.
