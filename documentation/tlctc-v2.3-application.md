@@ -305,6 +305,23 @@ These two jobs are the same governance lever viewed from both sides of the bow-t
 
 Parts A and B operationalized the taxonomy for two audiences — analysts who classify and the governance functions that act on those classifications. Part C turns outward to a third: the architects, tool owners, compliance leads, and developers who must connect TLCTC to a method, a regulation, a tool, or a pipeline they already run. Each section takes one such domain and shows the same move — supply the cause layer the domain lacks, and let the ten clusters and the attack-path notation carry across the boundary. As in Parts A and B, nothing here is new taxonomy: every section consolidates published material and cites the core paper or a canonical artifact.
 
+## 12. Harmonizing Threat-Modeling Methods & Standards
+
+TLCTC is routinely mistaken for a competitor to the established threat-modeling methods. It is not. Each of those methods is strong on one axis and silent on another, and the axis they most often leave implicit is *cause*: STRIDE enumerates properties an attacker violates (effects), the Cyber Kill Chain and PASTA describe a process, FAIR quantifies frequency and loss without supplying the discrete threat categories the math needs, and the Diamond Model relates actor, capability, infrastructure, and victim without giving the capability vertex any internal causal structure. TLCTC occupies exactly that empty slot — a mutually exclusive cause taxonomy — and leaves each method's own strength untouched. The result is harmonization, not replacement: a STRIDE finding, a Kill-Chain phase, or a FAIR threat-event category each gains a cluster, and the cluster makes findings from different methods comparable.
+
+| Method / standard | What it is (primary axis) | The gap | What TLCTC supplies |
+|---|---|---|---|
+| STRIDE | Property-threat checklist (Spoofing…Elevation) | Properties are effects, not causes | One cause cluster per step; a single STRIDE property spans several clusters |
+| Cyber Kill Chain | Linear process phases | Process ≠ taxonomy; no per-step cause | Clusters per phase plus attack-path notation |
+| Diamond Model | Relational intrusion vertices | The capability vertex lacks internal causal structure | Cause structure for "capability" |
+| FAIR | Quantitative risk (LEF × LM) | Needs discrete threat-event categories to populate frequency | Clusters as the threat-event categories that feed LEF |
+| MITRE D3FEND | Defensive countermeasure graph | Threat-axis gap | The cluster as the threat axis countermeasures map to |
+| VERIS | Incident-description vocabulary | Cause is implicit in the action grid | A cause cluster per recorded action |
+
+*Worked illustration — one STRIDE letter, three clusters.* "Tampering" classifies differently by cause: tampering achieved through a server-side code flaw is **#2**; tampering achieved by modifying data in transit from an on-path position is **#5**; tampering achieved by writing data with a stolen credential is **#4**. The STRIDE property is stable; the cause — and therefore the control that prevents it — is not. Mapping the property to a cluster is what tells the defender *which* control to reach for.
+
+*Caveat.* TLCTC fills the threat-taxonomy slot and only that slot. It does not replace FAIR's quantification, the Kill Chain's sequencing, or SABSA's architectural method; it makes them cause-aware. Where a method already carries a partial cause notion (e.g. ATT&CK techniques), the existing reference mapping (§6) is the bridge. The FAIR pairing is developed further in `documentation/tlctc-fair-integration-proposal.md`.
+
 ## 17. Limitations and Scope
 
 This paper *applies* the TLCTC framework; it does not *validate* it. Empirical validation — inter-rater agreement on classification and large-scale mapping studies against incident corpora — is the subject of separate work.
