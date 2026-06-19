@@ -371,6 +371,26 @@ Every TLCTC cluster definition carries a sixth field, the **Developer's View**, 
 
 *Caveat.* Programmer versus coder is a *responsibility lens* drawn from the Developer's View — it assigns ownership and selects the review type; it does not change the cluster, which is still fixed by the generic vulnerability (Axiom VI). The same CWE-787 is #2 or #3 by execution context (R-ROLE), not by who wrote it. TLCTC sits *above* OWASP, CERT, and the secure-coding standards as a stable threat vocabulary; it does not replace them, and it aligns structurally with the NIST SSDF (SP 800-218) practice groups (PO / PV / PS). The role definitions are canonical in `okf/glossary/programmer.md`, `okf/glossary/coder.md`, and `okf/glossary/developers-view.md`; CWE-to-cluster is in `mappings/mitre-cwe/`.
 
+## 16. AI Integration: Agentic Systems and the OKF Agent-Consumable View
+
+AI meets TLCTC from two directions, and the framework's answer to both is the same discipline that runs through the rest of the paper. *AI as a source of threats* introduces no new cluster: agent threats decompose into the existing ten, and what is genuinely new is on the consequence side, where autonomous tool access acts as an amplifier of velocity, scope, and the reach of the eventual Business Risk Event. *AI as a consumer of the framework* is the mirror image: the taxonomy is rendered into a form an agent can read, so that the §2 procedure can be executed by a pipeline rather than only by a human.
+
+| Agent threat | Existing cluster | Amplification dimension |
+|---|---|---|
+| Direct prompt injection | Abuse of the model's designed instruction-following → #1 | Scope |
+| Indirect / poisoned-content injection | Client-role processing of untrusted content → #3 (or #1) | Scope |
+| Tool / function misuse by the agent | Abuse of a designed tool API → #1 | Autonomy |
+| Model, weights, or plugin supply | Trust acceptance of a third-party artifact → #10 | Scope |
+| Excessive agency / autonomous action | *Not a cause* — compresses the SRE → BRE window | Velocity |
+
+The right-hand column is the load-bearing point: an autonomous agent does not invent a new generic vulnerability, it shortens the time and widens the blast radius between loss of control and business impact. That is a consequence-side phenomenon (§11), measured with the same velocity and DCS apparatus of §10, not a new entry on the cause side.
+
+The second direction is the **Open Knowledge Format (OKF) view**. The `okf/` bundle renders the frozen taxonomy — clusters, axioms, rules, spheres, contexts, glossary, attack paths, mappings, and controls — as a tree of single-purpose markdown documents with YAML frontmatter, generated from the canonical sources by `scripts/build-okf.js` and conformance-checked by `scripts/validate-okf.js`. Because it is a deterministic *view*, never a hand-maintained fork, a retrieval-augmented agent can ground each step of the §2 procedure in the authoritative definition of the cluster or R-rule it is applying. This closes the loop with §14: the OKF bundle is *how* an LLM-based tool runs the classification procedure that the tooling integrations consume.
+
+*Worked illustration — the loop closes.* An agent handed a forensic note ("a poisoned web page caused our assistant to call an internal billing tool and move funds") retrieves the OKF documents for indirect injection and tool misuse, classifies the path as `#3 → #1`, and flags the autonomy amplification that let the action complete before a human could intervene — the same answer a human analyst would reach with §2, produced mechanically against the canonical view.
+
+*Caveat.* "AI security" is not a cluster. Treating it as one would violate the cause/outcome separation the framework is built on: AI shifts velocity, scope, and consequence, not the cause taxonomy. The OKF bundle is a generated view bound to the core paper, which remains the sole normative authority; agent decomposition examples are catalogued in `agentic-ai/` (`agentic-consequence-chains.json`, `agentic-irreversibility-matrix.json`, `agentic-tool-profiles.json`, and the path studies under `agentic-ai/attack-paths/`), and the bundle itself is described in `okf/README.md`.
+
 ## 17. Limitations and Scope
 
 This paper *applies* the TLCTC framework; it does not *validate* it. Empirical validation — inter-rater agreement on classification and large-scale mapping studies against incident corpora — is the subject of separate work.
