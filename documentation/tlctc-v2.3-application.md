@@ -322,6 +322,22 @@ TLCTC is routinely mistaken for a competitor to the established threat-modeling 
 
 *Caveat.* TLCTC fills the threat-taxonomy slot and only that slot. It does not replace FAIR's quantification, the Kill Chain's sequencing, or SABSA's architectural method; it makes them cause-aware. Where a method already carries a partial cause notion (e.g. ATT&CK techniques), the existing reference mapping (§6) is the bridge. The FAIR pairing is developed further in `documentation/tlctc-fair-integration-proposal.md`.
 
+## 13. Regulatory & Compliance Reporting
+
+The cause–event–consequence chain of §4 and §11 is also a reporting backbone. A regulation does not, in practice, ask "what was the root cause?" in the taxonomic sense — it fixes a *trigger point* somewhere on the chain and attaches an obligation to it. GDPR triggers on a personal-data effect (a Data Risk Event touching PII); NIS2 triggers on a significant incident, which corresponds to the System Risk Event — loss of control — irrespective of whether any data moved; DORA triggers on ICT operational impact, a Business Risk Event, and cares about how fast it propagated. Because one classified attack path carries the cluster causes, the SRE pivot, the DRE tags, and the BRE chain all at once, the *same* path can satisfy several regimes without being re-described once per regulator. TLCTC supplies the shared vocabulary that maps each regime to its trigger point on a single artifact.
+
+| Regime | Trigger point on the chain | What TLCTC supplies |
+|---|---|---|
+| GDPR (Art. 33/34) | Personal-data DRE (C/I/A of PII) | Cause cluster + DRE tag naming the breached property |
+| NIS2 | "Significant incident" ≈ SRE (loss of control) | The cluster path that establishes the incident and its cause |
+| DORA | ICT operational impact ≈ BRE + velocity | The BRE chain plus Δt for the resilience view |
+| CRA | Product weakness, pre-event | CWE → cluster exposure on the left (cause) side |
+| IEC 62443 | OT threat-identification gap in the risk method | Clusters + velocity classes as the threat layer for the TARA |
+
+*Worked illustration — one path, two regulators.* Consider `#9 ||[human][@Attacker⇒@SMSProvider→@Org]|| → #4 → #1 + [DRE: C]`. NIS2 triggers at the **SRE** — the moment the attacker reaches loss of control after `#4` — and is satisfied by reporting the cluster path. GDPR triggers later, at the **`[DRE: C]`** node, when personal data is exposed, and is satisfied by reporting the same path's DRE tag and breached property. Neither obligation requires a second incident narrative; they read different nodes of one classified path.
+
+*Caveat.* TLCTC supplies the threat and trigger vocabulary, not the legal thresholds, notification timelines, or materiality cuts — those remain regime-specific and are set by counsel, not by the taxonomy. A proposed national-reporting profile, **TLCTC+**, operationalizes this mapping with additive Business-Risk-Event tags; it is a proposal, not part of the frozen core, and is cited here as related work (`documentation/tlctc-plus-specification.md`, `documentation/tlctc-plus-ncsc-proposal.md`). The standing control obligations that regulations impose across event chains are treated in `documentation/propagated-controls.md`.
+
 ## 17. Limitations and Scope
 
 This paper *applies* the TLCTC framework; it does not *validate* it. Empirical validation — inter-rater agreement on classification and large-scale mapping studies against incident corpora — is the subject of separate work.
