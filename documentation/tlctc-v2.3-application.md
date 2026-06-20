@@ -1,16 +1,16 @@
-# Applying the Top Level Cyber Threat Clusters: Classification in Practice, Governance, Controls, and Indicators
+# Applying the Top Level Cyber Threat Clusters: Classification, Governance, and Cross-Domain Application
 
 **Author:** Bernhard Kreinz
 **Version:** 2.3
-**Date:** 2026-06-08
+**Date:** 2026-06-19
 **License:** CC BY 4.0
 **Companion to:** *A Cause-Oriented Cyber Threat Taxonomy: The TLCTC Framework* (the v2.3 core paper)
 
 ## Abstract
 
-This paper is the application companion to the TLCTC v2.3 core paper, which defines and freezes the taxonomy: ten cause-oriented threat clusters, ten axioms, the classification rules, the attack-path notation, and the two-layer (strategic/operational) model. The companion takes that taxonomy as given and shows how to put it to work. Part A addresses security operations and development audiences: it consolidates the classification procedure into an actionable sequence, condenses the cause-first decision tree, explains how to record outcomes as Data Risk Events without disturbing the cause-side classification, walks through end-to-end worked examples drawn from the published attack-path corpus, and shows how to use the MITRE ATT&CK and MITRE CWE reference mappings within the weakness → vulnerability → generic-vulnerability → cluster hierarchy. Part B addresses governance and risk audiences: it places the cause–event–consequence bow-tie in a governance context, maps the clusters and the SRE→DRE→BRE chain to the NIST Cybersecurity Framework, distinguishes local from umbrella controls, and derives velocity-adjusted detection targets together with key risk, control, and performance indicators. No cluster, axiom, rule, operator, or model element is redefined here; all are cited from the core.
+This paper is the application companion to the TLCTC v2.3 core paper, which defines and freezes the taxonomy: ten cause-oriented threat clusters, ten axioms, the classification rules, the attack-path notation, and the two-layer (strategic/operational) model. The companion takes that taxonomy as given and shows how to put it to work. Part A addresses security operations and development audiences: it consolidates the classification procedure into an actionable sequence, condenses the cause-first decision tree, explains how to record outcomes as Data Risk Events without disturbing the cause-side classification, walks through end-to-end worked examples drawn from the published attack-path corpus, and shows how to use the MITRE ATT&CK and MITRE CWE reference mappings within the weakness → vulnerability → generic-vulnerability → cluster hierarchy. Part B addresses governance and risk audiences: it places the cause–event–consequence bow-tie in a governance context, maps the clusters and the SRE→DRE→BRE chain to the NIST Cybersecurity Framework, distinguishes local from umbrella controls, and derives velocity-adjusted detection targets together with key risk, control, and performance indicators. Part C addresses integration audiences — architects, tool owners, compliance leads, and developers — and shows the taxonomy applied across five domains: harmonizing it with other threat-modeling methods and standards (STRIDE, the Cyber Kill Chain, the Diamond Model, FAIR, D3FEND); driving multi-regime regulatory reporting from one classified path (GDPR, NIS2, DORA, CRA, IEC 62443); projecting live detection and tooling artifacts (Sigma, SARIF, SOAR, SonarQube) onto clusters; structuring secure development through the programmer/coder distinction of the Developer's View; and integrating with AI — agentic threats as a consequence amplifier and the Open Knowledge Format view that lets agents consume the framework directly. No cluster, axiom, rule, operator, or model element is redefined here; all are cited from the core.
 
-**Keywords:** cyber threat classification; attack-path analysis; security operations; threat intelligence; cyber risk governance; NIST CSF; security controls; key risk indicators; detection coverage; TLCTC
+**Keywords:** cyber threat classification; attack-path analysis; security operations; threat intelligence; cyber risk governance; NIST CSF; security controls; key risk indicators; detection coverage; TLCTC; threat-modeling harmonization; STRIDE; FAIR; regulatory reporting; NIS2; DORA; secure development; SSDLC; agentic AI; Open Knowledge Format
 
 # Part A — Classification in Practice
 
@@ -20,7 +20,7 @@ The TLCTC v2.3 core paper completed the framework: it derived the ten clusters f
 
 A taxonomy is only useful if two analysts looking at the same evidence reach the same classification, and if that classification then connects to the decisions an organization actually makes — where to place a control, how to report an incident, which indicator to watch. This paper supplies the connective tissue between the frozen definitions and those decisions. It introduces no new normative content. Every cluster, axiom, rule, operator, and model element used below is used exactly as defined in the core paper (`documentation/tlctc-v2.3-core.md`); where a definition is needed, it is cited rather than restated.
 
-The paper serves two distinct audiences, and is organized accordingly. **Part A (Classification in Practice)** is written for security operations and development teams — the analysts who triage incidents, the responders who reconstruct attack paths, the engineers who translate vulnerability findings into risk. It consolidates the classification procedure, condenses the cause-first decision tree, explains how to record outcomes faithfully, demonstrates the method on published incidents, and shows how to read the two large reference mappings (MITRE ATT&CK and MITRE CWE). **Part B (Governance, Controls, and Indicators)** is written for governance, risk, and management audiences. It places the bow-tie in a governance frame, maps the framework to the NIST Cybersecurity Framework, distinguishes local from umbrella controls, and derives velocity-adjusted detection targets and the corresponding key risk, control, and performance indicators.
+The paper serves three audiences, and is organized accordingly. **Part A (Classification in Practice)** is written for security operations and development teams — the analysts who triage incidents, the responders who reconstruct attack paths, the engineers who translate vulnerability findings into risk. It consolidates the classification procedure, condenses the cause-first decision tree, explains how to record outcomes faithfully, demonstrates the method on published incidents, and shows how to read the two large reference mappings (MITRE ATT&CK and MITRE CWE). **Part B (Governance, Controls, and Indicators)** is written for governance, risk, and management audiences. It places the bow-tie in a governance frame, maps the framework to the NIST Cybersecurity Framework, distinguishes local from umbrella controls, and derives velocity-adjusted detection targets and the corresponding key risk, control, and performance indicators. **Part C (TLCTC Across Domains)** is written for integration audiences — architects, tool owners, compliance leads, and developers. It shows the frozen taxonomy applied beyond classification and governance: harmonized with other threat-modeling methods and standards, driving regulatory reporting, projected onto detection and development tooling, structuring secure development, and integrated with AI systems and agent pipelines.
 
 **How to read this paper.** Practitioners who need to classify an incident can read Part A start to finish and keep §2 (the procedure) and §3 (the decision tree) as desk references; §5 supplies models to copy. Governance readers can begin with Part B, treating §4 (outcome recording) as the bridge that explains why cause-side classification and consequence-side reporting stay separate. Either way, the core paper remains the normative authority: when this paper says "#4 Identity Theft" or "R-CRED" or "Trust Acceptance Event," the binding definition lives in the core, and any apparent conflict should be resolved in favor of the core.
 
@@ -147,7 +147,7 @@ Two large reference mappings translate established industry taxonomies into TLCT
 Weakness (CWE) → Vulnerability (CVE) → Generic Vulnerability (TLCTC) → Cluster (#1–#10)
 ```
 
-A CWE names a *class* of flaw; a CVE is a *specific instance* of a CWE; TLCTC classifies by the *generic vulnerability* the flaw lets an attacker exploit, which resolves to one of the ten clusters. The CWE mapping enters this chain at the weakness end (translating scan and code-audit findings into strategic risk exposure); the ATT&CK mapping enters at the technique/behavior end (translating observed adversary actions into clusters). Both are reference aids for §2 — they accelerate, but do not replace, the per-step procedure, because the same label can map differently by context.
+A CWE names a *class* of flaw; a CVE is a *specific instance* of a CWE; TLCTC classifies by the *generic vulnerability* the flaw lets an attacker exploit, which resolves to one of the ten clusters. The CWE mapping enters this chain at the weakness end (translating scan and code-audit findings into strategic risk exposure); the ATT&CK mapping enters at the technique/behavior end (translating observed adversary actions into clusters). Both are reference aids for §2 — they accelerate, but do not replace, the per-step procedure, because the same label can map differently by context. §14 (Part C) extends these two *static* reference mappings to *live* operational artifacts — detection rules, scanner findings, and response playbooks.
 
 **Using the ATT&CK mapping.** Each entry gives a technique a `tlctcMapping` in attack-path notation. A technique that resolves to a path (`#1 → #7`) is telling the analyst the technique spans more than one step: record both. Three illustrative rows:
 
@@ -301,15 +301,105 @@ Risk appetite is the governance input that closes the loop between the consequen
 
 These two jobs are the same governance lever viewed from both sides of the bow-tie. On the cause side, appetite-derived DCS and KRI thresholds govern how hard the organization works to keep an attack path from reaching the SRE and progressing along it. On the consequence side, the BI designation fixes how far down the BRE chain the organization is willing to let an event run before it counts as a material loss. Tying the governance targets of §10 back to the consequence chain in this way keeps risk reporting coherent: a breached KRI threshold and a realized terminal BI are two expressions of the same appetite boundary, one measured as exposure and one observed as impact.
 
-## 12. Limitations and Scope
+# Part C — TLCTC Across Domains
+
+Parts A and B operationalized the taxonomy for two audiences — analysts who classify and the governance functions that act on those classifications. Part C turns outward to a third: the architects, tool owners, compliance leads, and developers who must connect TLCTC to a method, a regulation, a tool, or a pipeline they already run. Each section takes one such domain and shows the same move — supply the cause layer the domain lacks, and let the ten clusters and the attack-path notation carry across the boundary. As in Parts A and B, nothing here is new taxonomy: every section consolidates published material and cites the core paper or a canonical artifact.
+
+## 12. Harmonizing Threat-Modeling Methods & Standards
+
+TLCTC is routinely mistaken for a competitor to the established threat-modeling methods. It is not. Each of those methods is strong on one axis and silent on another, and the axis they most often leave implicit is *cause*: STRIDE enumerates properties an attacker violates (effects), the Cyber Kill Chain and PASTA describe a process, FAIR quantifies frequency and loss without supplying the discrete threat categories the math needs, and the Diamond Model relates actor, capability, infrastructure, and victim without giving the capability vertex any internal causal structure. TLCTC occupies exactly that empty slot — a mutually exclusive cause taxonomy — and leaves each method's own strength untouched. The result is harmonization, not replacement: a STRIDE finding, a Kill-Chain phase, or a FAIR threat-event category each gains a cluster, and the cluster makes findings from different methods comparable.
+
+| Method / standard | What it is (primary axis) | The gap | What TLCTC supplies |
+|---|---|---|---|
+| STRIDE | Property-threat checklist (Spoofing…Elevation) | Properties are effects, not causes | One cause cluster per step; a single STRIDE property spans several clusters |
+| Cyber Kill Chain | Linear process phases | Process ≠ taxonomy; no per-step cause | Clusters per phase plus attack-path notation |
+| Diamond Model | Relational intrusion vertices | The capability vertex lacks internal causal structure | Cause structure for "capability" |
+| FAIR | Quantitative risk (LEF × LM) | Needs discrete threat-event categories to populate frequency | Clusters as the threat-event categories that feed LEF |
+| MITRE D3FEND | Defensive countermeasure graph | Threat-axis gap | The cluster as the threat axis countermeasures map to |
+| VERIS | Incident-description vocabulary | Cause is implicit in the action grid | A cause cluster per recorded action |
+
+*Worked illustration — one STRIDE letter, three clusters.* "Tampering" classifies differently by cause: tampering achieved through a server-side code flaw is **#2**; tampering achieved by modifying data in transit from an on-path position is **#5**; tampering achieved by writing data with a stolen credential is **#4**. The STRIDE property is stable; the cause — and therefore the control that prevents it — is not. Mapping the property to a cluster is what tells the defender *which* control to reach for.
+
+*Caveat.* TLCTC fills the threat-taxonomy slot and only that slot. It does not replace FAIR's quantification, the Kill Chain's sequencing, or SABSA's architectural method; it makes them cause-aware. Where a method already carries a partial cause notion (e.g. ATT&CK techniques), the existing reference mapping (§6) is the bridge. The FAIR pairing is developed further in `documentation/tlctc-fair-integration-proposal.md`.
+
+## 13. Regulatory & Compliance Reporting
+
+The cause–event–consequence chain of §4 and §11 is also a reporting backbone. A regulation does not, in practice, ask "what was the root cause?" in the taxonomic sense — it fixes a *trigger point* somewhere on the chain and attaches an obligation to it. GDPR triggers on a personal-data effect (a Data Risk Event touching PII); NIS2 triggers on a significant incident, which corresponds to the System Risk Event — loss of control — irrespective of whether any data moved; DORA triggers on ICT operational impact, a Business Risk Event, and cares about how fast it propagated. Because one classified attack path carries the cluster causes, the SRE pivot, the DRE tags, and the BRE chain all at once, the *same* path can satisfy several regimes without being re-described once per regulator. TLCTC supplies the shared vocabulary that maps each regime to its trigger point on a single artifact.
+
+| Regime | Trigger point on the chain | What TLCTC supplies |
+|---|---|---|
+| GDPR (Art. 33/34) | Personal-data DRE (C/I/A of PII) | Cause cluster + DRE tag naming the breached property |
+| NIS2 | "Significant incident" ≈ SRE (loss of control) | The cluster path that establishes the incident and its cause |
+| DORA | ICT operational impact ≈ BRE + velocity | The BRE chain plus Δt for the resilience view |
+| CRA | Product weakness, pre-event | CWE → cluster exposure on the left (cause) side |
+| IEC 62443 | OT threat-identification gap in the risk method | Clusters + velocity classes as the threat layer for the TARA |
+
+*Worked illustration — one path, two regulators.* Consider `#9 ||[human][@Attacker⇒@SMSProvider→@Org]|| → #4 → #1 + [DRE: C]`. NIS2 triggers at the **SRE** — the moment the attacker reaches loss of control after `#4` — and is satisfied by reporting the cluster path. GDPR triggers later, at the **`[DRE: C]`** node, when personal data is exposed, and is satisfied by reporting the same path's DRE tag and breached property. Neither obligation requires a second incident narrative; they read different nodes of one classified path.
+
+*Caveat.* TLCTC supplies the threat and trigger vocabulary, not the legal thresholds, notification timelines, or materiality cuts — those remain regime-specific and are set by counsel, not by the taxonomy. A proposed national-reporting profile, **TLCTC+**, operationalizes this mapping with additive Business-Risk-Event tags; it is a proposal, not part of the frozen core, and is cited here as related work (`documentation/tlctc-plus-specification.md`, `documentation/tlctc-plus-ncsc-proposal.md`). The standing control obligations that regulations impose across event chains are treated in `documentation/propagated-controls.md`.
+
+## 14. Detection & Tooling Integration
+
+§6 read two *static* reference mappings (ATT&CK, CWE) to translate a technique or a weakness into a cluster. The same cause-projection works on the *live* artifacts an operations or development team already produces — and turns each pile of findings into a cluster-level coverage picture. A SIEM's detection rules, a scanner's findings, and a SOAR platform's playbooks all gain a cluster, and once they share that axis the organizing principle inverts: one response playbook per *cause*, not one per outcome. The repository ships these projections as concrete artifacts rather than prose.
+
+| Artifact / tool | What it emits | TLCTC projection | Canonical artifact |
+|---|---|---|---|
+| Sigma | Detection rules | Cluster-level coverage map (two-hop via ATT&CK) | `mappings/sigma/tlctc-sigma.json` |
+| SARIF | Static-analysis findings | Per-finding cluster (via CWE → cluster) | `integrations/sarif/cli/` |
+| Cortex XSOAR / XSIAM | Response playbooks | One master playbook per cluster, velocity-routed | `integrations/cortex-xsoar/`, `integrations/cortex-xsoar-8/` |
+| SonarQube | SAST findings (CWE) | Cluster via the CWE map | `integrations/sonarqube/` |
+| Splunk / Cisco | Detections & telemetry | Cluster mapping | `mappings/splunk-cisco/` |
+
+*Worked illustration — a finding becomes a cause.* A SARIF result whose `ruleId` carries CWE-89 (SQL injection) projects through the CWE → cluster map to **#2 Exploiting Server**, and lands in the coverage view beside every other finding tagged by cause. A thousand undifferentiated findings become "N findings enabling #2, M enabling #4" — the same reframing the development view applies in §15.
+
+*Caveat.* A two-hop, mechanically derived map (Sigma → ATT&CK → cluster) inherits the limits of the mapping it rides on; these projections are *coverage audits*, not per-incident classifications. When an artifact is context-dependent, the analyst still owns the final call via the §2 procedure — the projection accelerates triage, it does not replace it. Integration details and conformance notes are in `integrations/README.md`.
+
+## 15. Secure Development (SSDLC): Programmer vs Coder
+
+Every TLCTC cluster definition carries a sixth field, the **Developer's View**, and it splits secure development into two roles with distinct cluster responsibilities. The **Programmer** works on the cause (left) side of the bow-tie — architecture and strategy — and holds primary responsibility for clusters **#1, #4, #5, and #10 at an architectural level**: what functionality exists and how it could be misused, which authentication and communication architectures are chosen, which third-party trust is accepted. The **Coder** works at the centre, the event — implementation and craftsmanship — and holds primary responsibility for **#2 and #3, and the implementation details of #4, #5, and #7**. The division is deliberately not a clean partition: #4 and #5 are co-owned, architected by the programmer and implemented by the coder, which is precisely TLCTC's #1-by-design versus #2/#3-by-implementation logic projected onto roles. In one line: *the programmer prevents the generic vulnerability from being architected into the system; the coder prevents the specific vulnerability from being written into the code.* Making each SSDLC phase emit cluster-tagged deliverables is what turns "secure by design" from a slogan into a discipline.
+
+| SSDLC phase | Owning role | Clusters emphasized | Primary control |
+|---|---|---|---|
+| Requirements | Programmer | Cluster-coverage matrix (all ten in/out); misuse cases (#1) | Cluster-tagged threat model + attack-path hypotheses |
+| Design / Architecture | Programmer | #1, #4, #5, #10 (architectural decisions) | Attack-path design review with named interruptions |
+| Implementation | Coder | #2, #3 + implementation details of #4, #5, #7 | Code review, SAST, CWE → cluster, cluster-tagged commits |
+| Testing / Verification | Both | All clusters; verify the interruptions hold | SAST / DAST / SCA / fuzzing, each mapped to its cluster(s) |
+| Deployment | Both | #1 baseline, #4 secrets, #5 TLS, #6 rate-limits, #10 → #7 signing | Cluster-mapped operational controls |
+| Maintenance / Decommission | Both | Cluster-tagged metrics; #4 revoke, #8 wipe, #10 notify | Incident-as-attack-path; de-provisioning |
+
+*Worked illustration — the interruption table.* The design-review artifact is an attack path with a named interruption at every step. Walking `#9 → #4 → #1 → #7` in review: phishing `#9` is interrupted by phishing-resistant MFA ✔; stolen credentials `#4` by device-bound tokens ✔; abuse of admin APIs `#1` by step-up authentication — **✘ gap**; malware `#7` by an EDR allowlist ✔. A step without a named interruption is not a diagram annotation; it *is* the review's finding.
+
+*Caveat.* Programmer versus coder is a *responsibility lens* drawn from the Developer's View — it assigns ownership and selects the review type; it does not change the cluster, which is still fixed by the generic vulnerability (Axiom VI). The same CWE-787 is #2 or #3 by execution context (R-ROLE), not by who wrote it. TLCTC sits *above* OWASP, CERT, and the secure-coding standards as a stable threat vocabulary; it does not replace them, and it aligns structurally with the NIST SSDF (SP 800-218) practice groups (PO / PV / PS). The role definitions are canonical in `okf/glossary/programmer.md`, `okf/glossary/coder.md`, and `okf/glossary/developers-view.md`; CWE-to-cluster is in `mappings/mitre-cwe/`.
+
+## 16. AI Integration: Agentic Systems and the OKF Agent-Consumable View
+
+AI meets TLCTC from two directions, and the framework's answer to both is the same discipline that runs through the rest of the paper. *AI as a source of threats* introduces no new cluster: agent threats decompose into the existing ten, and what is genuinely new is on the consequence side, where autonomous tool access acts as an amplifier of velocity, scope, and the reach of the eventual Business Risk Event. *AI as a consumer of the framework* is the mirror image: the taxonomy is rendered into a form an agent can read, so that the §2 procedure can be executed by a pipeline rather than only by a human.
+
+| Agent threat | Existing cluster | Amplification dimension |
+|---|---|---|
+| Direct prompt injection | Abuse of the model's designed instruction-following → #1 | Scope |
+| Indirect / poisoned-content injection | Client-role processing of untrusted content → #3 (or #1) | Scope |
+| Tool / function misuse by the agent | Abuse of a designed tool API → #1 | Autonomy |
+| Model, weights, or plugin supply | Trust acceptance of a third-party artifact → #10 | Scope |
+| Excessive agency / autonomous action | *Not a cause* — compresses the SRE → BRE window | Velocity |
+
+The right-hand column is the load-bearing point: an autonomous agent does not invent a new generic vulnerability, it shortens the time and widens the blast radius between loss of control and business impact. That is a consequence-side phenomenon (§11), measured with the same velocity and DCS apparatus of §10, not a new entry on the cause side.
+
+The second direction is the **Open Knowledge Format (OKF) view**. The `okf/` bundle renders the frozen taxonomy — clusters, axioms, rules, spheres, contexts, glossary, attack paths, mappings, and controls — as a tree of single-purpose markdown documents with YAML frontmatter, generated from the canonical sources by `scripts/build-okf.js` and conformance-checked by `scripts/validate-okf.js`. Because it is a deterministic *view*, never a hand-maintained fork, a retrieval-augmented agent can ground each step of the §2 procedure in the authoritative definition of the cluster or R-rule it is applying. This closes the loop with §14: the OKF bundle is *how* an LLM-based tool runs the classification procedure that the tooling integrations consume.
+
+*Worked illustration — the loop closes.* An agent handed a forensic note ("a poisoned web page caused our assistant to call an internal billing tool and move funds") retrieves the OKF documents for indirect injection and tool misuse, classifies the path as `#3 → #1`, and flags the autonomy amplification that let the action complete before a human could intervene — the same answer a human analyst would reach with §2, produced mechanically against the canonical view.
+
+*Caveat.* "AI security" is not a cluster. Treating it as one would violate the cause/outcome separation the framework is built on: AI shifts velocity, scope, and consequence, not the cause taxonomy. The OKF bundle is a generated view bound to the core paper, which remains the sole normative authority; agent decomposition examples are catalogued in `agentic-ai/` (`agentic-consequence-chains.json`, `agentic-irreversibility-matrix.json`, `agentic-tool-profiles.json`, and the path studies under `agentic-ai/attack-paths/`), and the bundle itself is described in `okf/README.md`.
+
+## 17. Limitations and Scope
 
 This paper *applies* the TLCTC framework; it does not *validate* it. Empirical validation — inter-rater agreement on classification and large-scale mapping studies against incident corpora — is the subject of separate work.
 
 The control placements, NIST CSF mapping, and indicator targets in Part B are guidance, not prescriptions: they show how to position controls and measure effectiveness against each cluster, but concrete control selection, thresholds, and risk-appetite boundaries are organization-specific. The DCS and velocity-adjusted targets assume an organization can measure attack velocity (Δt) and mean time to detect (MTTD) with reasonable accuracy — instrumentation many organizations still lack.
 
-The ATT&CK→TLCTC and CWE→TLCTC mappings are reference aids for translating operational artifacts to causes; the CWE mapping in particular is AI-generated and experimental. Finally, the taxonomy itself — the ten clusters, the axioms, the rules, and the notation — is defined and bounded by the core paper; this paper neither extends nor alters it.
+The ATT&CK→TLCTC and CWE→TLCTC mappings are reference aids for translating operational artifacts to causes; the CWE mapping in particular is AI-generated and experimental. The cross-domain treatments of Part C are likewise illustrative rather than exhaustive: the method, regulatory, and tooling mappings (§12–§14) show how the cause layer attaches to each domain without claiming to be complete crosswalks, the tooling projections inherit the limits of the upstream maps they ride on (§14), and the TLCTC+ reporting profile (§13) is a proposal, not part of the frozen core. Finally, the taxonomy itself — the ten clusters, the axioms, the rules, and the notation — is defined and bounded by the core paper; this paper neither extends nor alters it.
 
-## 13. Glossary (Application Terms)
+## 18. Glossary (Application Terms)
 
 This glossary defines only the application- and governance-layer terms used in this paper. For taxonomy terms (cluster, generic vulnerability, attack path, SRE/DRE/BRE, FEC, TAE, topology, and so on) see the core paper and the full `tlctc-glossary.md`.
 
@@ -323,11 +413,26 @@ This glossary defines only the application- and governance-layer terms used in t
 - **KPI (Key Performance Indicator)** — a measure of the operational performance of a control or process (e.g. MTTD); the performance facet of a KCI.
 - **MTTD (Mean Time to Detect)** — the average elapsed time from the occurrence of an attack step to its detection.
 - **Risk appetite** — the level of cyber-risk exposure an organization chooses to accept; it sets KRI thresholds, DCS targets, and the terminal Business Impact boundary.
+- **Developer's View** — the secure-development field of each cluster definition, split into Programmer (architectural) and Coder (implementation) responsibilities.
+- **Programmer / Coder distinction** — a responsibility lens from the Developer's View: the programmer owns the architectural level of #1/#4/#5/#10, the coder owns #2/#3 and the implementation details of #4/#5/#7. It assigns review type, not cluster.
+- **Consequence amplifier** — a factor (notably agent autonomy) that increases the velocity, scope, or reach of the consequence chain without introducing a new cause cluster.
+- **OKF (Open Knowledge Format)** — the generated, agent-consumable markdown view of the taxonomy under `okf/`, built from the canonical sources; a view, never a normative fork.
+- **Harmonization (threat-taxonomy slot)** — using TLCTC to supply the cause-taxonomy layer that other methods (STRIDE, Kill Chain, FAIR, Diamond, D3FEND) leave implicit, without replacing their own axis.
 
-## 14. References
+## 19. References
 
 1. Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.3). 2026. — the core paper this document accompanies.
 2. National Institute of Standards and Technology. *The NIST Cybersecurity Framework (CSF) 2.0.* NIST Cybersecurity White Paper NIST CSWP 29, 2024. https://doi.org/10.6028/NIST.CSWP.29
 3. MITRE Corporation. *MITRE ATT&CK: Adversarial Tactics, Techniques, and Common Knowledge.* https://attack.mitre.org/
 4. MITRE Corporation. *Common Weakness Enumeration (CWE).* https://cwe.mitre.org/
 5. MITRE Corporation. *Common Vulnerabilities and Exposures (CVE).* https://www.cve.org/
+6. European Parliament and Council. *Directive (EU) 2022/2555 (NIS2).* 2022.
+7. European Parliament and Council. *Regulation (EU) 2022/2554 (DORA).* 2022.
+8. European Parliament and Council. *Regulation (EU) 2024/2847 (Cyber Resilience Act).* 2024.
+9. International Electrotechnical Commission. *IEC 62443: Security for industrial automation and control systems.*
+10. Shostack, A. *Threat Modeling: Designing for Security* (STRIDE). Wiley, 2014.
+11. The Open Group. *Risk Taxonomy (O-RT) / Open FAIR.* https://www.opengroup.org/
+12. MITRE Corporation. *D3FEND: A knowledge graph of cybersecurity countermeasures.* https://d3fend.mitre.org/
+13. SigmaHQ. *Sigma — Generic Signature Format for SIEM Systems.* https://github.com/SigmaHQ/sigma
+14. OASIS. *Static Analysis Results Interchange Format (SARIF) Version 2.1.0.* 2020.
+15. National Institute of Standards and Technology. *Secure Software Development Framework (SSDF) Version 1.1.* NIST SP 800-218, 2022. https://doi.org/10.6028/NIST.SP.800-218
