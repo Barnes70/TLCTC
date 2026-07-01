@@ -4083,7 +4083,7 @@
       "path": "/mappings/cwe/cluster-4.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #4 Identity Theft",
-      "description": "50 CWE weaknesses entries mapped to TLCTC #4 Identity Theft.",
+      "description": "30 CWE weaknesses entries mapped to TLCTC #4 Identity Theft.",
       "resource": "tlctc:mapping:cwe:cluster-4",
       "tags": [
         "mapping",
