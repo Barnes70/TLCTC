@@ -35,18 +35,29 @@ Q2: Is this a CODE IMPLEMENTATION FLAW?
     │         └── NO → stop here
     └── NO ↓
 
-Q3: Is this a CREDENTIAL HANDLING weakness?
-    (weak passwords/tokens stored or transmitted, predictable session IDs,
-     hash strength insufficient for offline cracking, default/hard-coded credentials)
+Q3: Is this a POINT-OF-USE authentication / identity-binding weakness?
+    (the authentication or session mechanism accepts a credential without
+     verifying the presenter is its authentic holder — session fixation/
+     expiration, single-factor auth, no lockout on auth attempts, predictable
+     session/token IDs, acceptance of default/hard-coded/weak credentials)
     ├── YES → #4 Identity Theft
     └── NO ↓
 
-    NOTE — Authentication-LOGIC bypass is NOT this question.
+    NOTE 1 — Authentication-LOGIC bypass is NOT this question.
     Per Axiom X / R-CRED, credential acquisition follows the enabling cluster
     and credential APPLICATION is always #4. But a flaw in the authentication
     function's logic itself (e.g., bypass via spoofed parameter, missing check,
     wrong comparison) is abuse of the auth function and maps to #1 (Q9 below).
     CWE-287 Improper Authentication and similar bypass-class CWEs → #1.
+
+    NOTE 2 — Credential STORAGE / PROTECTION / LIFECYCLE is NOT #4 (v2.3.1).
+    Under the retightened v2.3.1 #4 definition (point-of-use identity-artifact
+    binding), cleartext/recoverable credential storage, weak password hashing or
+    encoding, and password-aging/lifecycle weaknesses are acquisition-side
+    ENABLING CONDITIONS, not #4. Per R-CRED the cluster is set by the acquisition
+    vector at incident time (#2/#5/#7/#8); map these to `enabling-condition`
+    (see the Enabling-Condition CWEs section below). Only weaknesses in the
+    authentication/session mechanism's own acceptance of a credential remain #4.
 
 Q4: Is this a COMMUNICATION PATH weakness?
     (missing encryption in transit, certificate validation failure, channel security)
@@ -134,19 +145,20 @@ For these entries, classify at the **child CWE** or **CVE level** instead.
 
 ## Enabling-Condition CWEs
 
-Some CWEs describe a *state of exposure* rather than a threat action — for example, cleartext password storage, missing encryption in transit, weak crypto algorithm, predictable PRNG. By policy, these map to **the cluster they enable**, not to N/A:
+Some CWEs describe a *state of exposure* rather than a threat action — for example, cleartext password storage, missing encryption in transit, weak crypto algorithm, predictable PRNG. By policy (ruling-2), these map to **the cluster they enable**, not to N/A — **except credential storage/protection/lifecycle weaknesses**, which under TLCTC v2.3.1 map to `enabling-condition` (the retightened #4 covers only point-of-use credential application, so it no longer absorbs storage/protection flaws; the operative cluster is set by the acquisition vector per R-CRED):
 
 | Enabling condition | Cluster | Reason |
 |--------------------|---------|--------|
-| Cleartext storage of credentials/tokens | `#4` | The downstream threat is credential application for impersonation |
-| Cleartext transmission / weak channel encryption | `#5` | The downstream threat is interception |
-| Weak password hash (no salt, fast hash, broken algorithm) | `#4` | Hash is reversible to credential |
+| Cleartext / recoverable storage of credentials/tokens | `enabling-condition` | Acquisition-side; per R-CRED the cluster is the acquisition vector (#2/#5/#7/#8), not #4 (v2.3.1) |
+| Weak password hash (no salt, fast hash, broken algorithm) | `enabling-condition` | Offline crack is acquisition-side; cluster set by acquisition vector (v2.3.1), not #4 |
+| Password aging / lifecycle policy weakness | `enabling-condition` | Enlarges the reuse window but is not point-of-use authentication (v2.3.1) |
+| Cleartext transmission / weak channel encryption | `#5` | The weakness is the communication path itself (#5's generic vulnerability) |
 | Weak encryption algorithm (broken cipher, weak IV, expired key) | `#5` | Channel/data recoverable to interceptor |
-| Predictable PRNG used for security values | `#4 \| #5` | Token use → #4; key/IV use → #5 |
-| Missing rate-limiting on auth endpoint | `#4 \| #6` | Auth → credential brute force; resource → flooding |
+| Predictable PRNG used for security values | `#4 \| #5` | Token accepted at use → #4; key/IV use → #5 |
+| Missing rate-limiting on auth endpoint | `#4 \| #6` | Auth mechanism accepts unlimited attempts → #4; resource → flooding |
 | Maintainability defect (firmware-not-updateable, dead code) | `N/A` (Discouraged) | Does not map to any single cluster |
 
-The `R-CRED` distinction still applies: the *acquisition* step takes its cluster from the access vector (e.g., `#7` malware reading the storage, `#5` MitM intercepting transit). The CWE itself is classified by what the exposure is *for* — the threat the weakness enables once the storage/channel is reached.
+The `R-CRED` distinction still applies: the *acquisition* step takes its cluster from the access vector (e.g., `#7` malware reading the storage, `#5` MitM intercepting transit). For channel/crypto exposures the CWE is classified by the cluster it enables. For **credential storage/protection/lifecycle** exposures (v2.3.1), the CWE is instead marked `enabling-condition`: because the acquisition vector varies (#2/#5/#7/#8) and #4 covers only the later point-of-use application, no single cluster is asserted.
 
 ## Quality Checklist
 
@@ -156,7 +168,7 @@ Before finalizing a CWE mapping, verify:
 - [ ] **Specific enough** — Can determine a single generic vulnerability (or explicit alternatives)
 - [ ] **Role considered** — If code flaw, is it server or client? If unclear, mark `#2 | #3`
 - [ ] **R-EXEC respected** — If the weakness enables foreign code execution, `→ #7` is included (e.g., code injection, deserialization, template injection, RFI, dynamic class loading from untrusted source)
-- [ ] **R-CRED respected** — Authentication-logic bypass = `#1`; credential application = `#4`; credential acquisition takes the cluster of the access vector, not `#4`
-- [ ] **Enabling-condition policy** — If the CWE is a state of exposure (cleartext storage, weak crypto, missing rate-limit), map to the cluster it enables, not N/A
+- [ ] **R-CRED respected** — Authentication-logic bypass = `#1`; credential application (point-of-use) = `#4`; credential acquisition — including cleartext/weakly-hashed credential storage — takes the cluster of the access vector, not `#4` (v2.3.1)
+- [ ] **Enabling-condition policy** — Channel/crypto exposure maps to the cluster it enables (#5); credential storage/protection/lifecycle exposure maps to `enabling-condition` (acquisition vector determines cluster per R-CRED, not #4)
 - [ ] **Cause, not consequence** — Mapping the exploitable flaw, not the resulting impact (Axiom III)
 - [ ] **Verdict assigned** — Confidence level reflects mapping certainty
