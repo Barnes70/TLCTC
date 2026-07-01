@@ -156,10 +156,10 @@ TLCTC distinguishes two fundamentally different execution mechanisms:
 ### #4 Identity Theft
 **Definition:** Presentation/use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act **as an identity different from the presenter's own**.
 
-**Generic Vulnerability:** Weak binding between identity and authentication artifacts, combined with insufficient credential and session lifecycle controls (issuance, storage, transmission, validation, rotation, revocation).
+**Generic Vulnerability:** Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims.
 
 **Attacker's View:** "I abuse credentials to operate as a legitimate identity."
-**Developer's View:** "I must implement secure credential lifecycle management: storage, transmission, session handling, and robust authentication/authorization with defense-in-depth."
+**Developer's View:** "I must verify at authentication time that the presenter is the credential's authentic holder: enforce MFA, bind and validate sessions, detect credential replay/reuse and anomalous authentication, and apply least privilege with defense-in-depth."
 
 **Boundary Tests:**
 - Credential acquisition/exposure/derivation/forgery maps to the **enabling cluster**

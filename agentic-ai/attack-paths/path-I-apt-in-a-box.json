@@ -18,7 +18,7 @@
       "step_id": "s2-credential-use",
       "cluster": "#4",
       "delta_t_to_next": "instant",
-      "notes": "Agent uses harvested/stolen credentials to authenticate to additional systems. Generic vulnerability: identity-artifact binding / credential lifecycle (application phase per R-CRED). Credential acquisition (harvesting) was a consequence of step 1. This step is the APPLICATION of those credentials → always #4 per R-CRED."
+      "notes": "Agent uses harvested/stolen credentials to authenticate to additional systems. Generic vulnerability: insufficient identity-artifact binding at point of use (application phase per R-CRED). Credential acquisition (harvesting) was a consequence of step 1. This step is the APPLICATION of those credentials → always #4 per R-CRED."
     },
     {
       "step_id": "s3-persistent-abuse",

@@ -72,7 +72,7 @@ Each cluster is defined by exactly **one generic vulnerability** (Axiom VI). Eac
 | **#1** | **Abuse of Functions** | The inherent trust, scope, and complexity designed into software functionality and configuration | Internal |
 | **#2** | **Exploiting Server** | Exploitable flaws within server-side source code implementation and its resulting logic, stemming from insecure coding practices | Internal |
 | **#3** | **Exploiting Client** | Exploitable flaws within client-role source code implementation, stemming from insecure handling of external data/responses, UI rendering, or client-side state/resources | Internal |
-| **#4** | **Identity Theft** | Weak binding between identity and authentication artifacts, combined with insufficient credential and session lifecycle controls (issuance, storage, transmission, validation, rotation, revocation) | Internal |
+| **#4** | **Identity Theft** | Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims | Internal |
 | **#5** | **Man in the Middle** | Insufficient end-to-end confidentiality/integrity protection and implicit trust in local networks and intermediate path infrastructure | Internal |
 | **#6** | **Flooding Attack** | Finite capacity limitations inherent in any system component | Internal |
 | **#7** | **Malware** | The environment's intended capability to execute potentially untrusted executable content | Internal |

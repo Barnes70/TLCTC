@@ -1,6 +1,6 @@
 # TLCTC v2.3 Core — Consolidation Traceability
 
-v2.3 introduces NO new normative content. Every element traces to finalized v2.1 source.
+**v2.3.0** introduced NO new normative content. Every element traces to finalized v2.1 source. **v2.3.1** adds one deliberate, axiom-justified normative correction — see the Erratum section below.
 
 | v2.3 element | Source |
 |---|---|
@@ -23,3 +23,17 @@ Version axes: `tlctc_version` 2.0/2.1 → 2.3; `schema_version` unchanged (2.0.0
 Deferred (NOT in this spec): application doc, integration doc, old version-string/tag cleanup, Scholar/DOI pipeline.
 
 Core artifacts: `json-schemas/layer-1/tlctc-framework.v2.3.json`, `documentation/tlctc-v2.3-core.md`.
+
+## Erratum — v2.3.1 (2026-07-01)
+
+A single normative correction to the **#4 Identity Theft** cluster. Cluster identity, IDs (`#4` / `TLCTC-04.00`), definition, attacker's view, topology, and all boundary tests are **unchanged**. Two fields were retightened, and one non-normative clarifier was added.
+
+| Field | Before | After |
+|---|---|---|
+| Generic vulnerability | "Weak identity management processes and/or inadequate credential protection mechanisms throughout the identity lifecycle." | "Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims." |
+| Developer's view | "…secure credential lifecycle management: storage, transmission, session handling…" | "…verify at authentication time that the presenter is the credential's authentic holder: enforce MFA, bind and validate sessions, detect credential replay/reuse and anomalous authentication, and apply least privilege…" |
+| Scope paragraph | — (added) | "Credential storage and transmission are prevention controls that reduce acquisition; failures there classify to the enabling cluster (#2/#5/#7/#8), not to #4." |
+
+**Justification (axiom-level, per the immutability rule).** The prior generic-vulnerability field claimed scope over the *whole* credential lifecycle — including storage and transmission — while the cluster's own boundary tests and **R-CRED** already assign credential acquisition/exposure/protection failures to the enabling cluster (#2/#5/#7/#8). It therefore contradicted **Axiom VI** (one generic vulnerability → one cluster), **Axiom VII** (classification anchored in the initial cause, not downstream effects), and **Axiom X** (acquisition vs. application are distinct steps). The retightened wording names the flaw #4 actually exploits — the authentication-time identity-artifact binding gap — bringing the field into conformance with the axioms and matching the structural pattern of the other nine clusters (whose generic-vulnerability line is scope-defining and 1:1 with their boundary tests). This also removes a downstream control-ownership error: storage/transmission controls belong to the enabling clusters, not #4.
+
+**Harmonization.** The v2.3.1 wording is applied consistently across `tlctc-framework.v2.3.json`, `tlctc-v2.3-core.md`, `tlctc-glossary.md` (prose + quick-reference), `glossary/tlctc-glossary.json`, `tlctc-v2.0-whitepaper.md`, `README.md`, the `tlctc-classify` skill, and the HTML tools. The generated `okf/` bundle is rebuilt from these sources. The frozen `tlctc-framework.v2.0.json` dictionary is left as the historical v2.0 record.
