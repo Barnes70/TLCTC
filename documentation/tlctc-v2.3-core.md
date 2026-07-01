@@ -184,11 +184,11 @@ The vulnerable component consumes external responses, content, or state. Exploit
 - **Name:** Identity Theft
 - **Definition:** An attacker misuses authentication credentials to impersonate an identity.
 - **Attacker's view:** "I abuse stolen or forged credentials to act as someone else."
-- **Developer's view:** "I must implement secure credential lifecycle management: storage, transmission, session handling, and robust authentication/authorization with defense-in-depth."
-- **Generic vulnerability:** Weak identity management processes and/or inadequate credential protection mechanisms throughout the identity lifecycle.
+- **Developer's view:** "I must verify at authentication time that the presenter is the credential's authentic holder: enforce MFA, bind and validate sessions, detect credential replay/reuse and anomalous authentication, and apply least privilege with defense-in-depth."
+- **Generic vulnerability:** Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims.
 - **Topology:** Internal.
 
-This cluster covers the presentation or use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act as an identity different from the presenter's own. Credential acquisition maps to the enabling cluster; credential use always maps here (see R-CRED).
+This cluster covers the presentation or use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act as an identity different from the presenter's own. Credential acquisition maps to the enabling cluster; credential use always maps here (see R-CRED). Credential storage and transmission are prevention controls that reduce acquisition; failures there classify to the enabling cluster (#2/#5/#7/#8), not to #4.
 
 **Boundary tests (normative):**
 

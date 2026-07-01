@@ -231,7 +231,7 @@
       "domain": "tlctc-core",
       "source": "TLCTC v2.0",
       "see_also": ["threat-cluster", "internal-topology", "r-cred", "axiom-x", "credential-application"],
-      "notes": "Generic vulnerability: Weak identity management processes and/or inadequate credential protection mechanisms throughout the identity lifecycle."
+      "notes": "Generic vulnerability: Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims."
     },
     {
       "term_id": "cluster-5-man-in-the-middle",

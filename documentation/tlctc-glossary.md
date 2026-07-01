@@ -804,7 +804,7 @@ See also: Flooding Attack (#6), DDoS
 
 ### Identity Theft (#4)
 
-A threat cluster where an attacker targets weaknesses in identity and access management processes or credential protection mechanisms to illegitimately misuse authentication credentials (passwords, tokens, keys, session identifiers, biometrics) to impersonate a legitimate identity (human or technical). The generic vulnerability is weak Identity Management Processes and/or inadequate credential protection mechanisms throughout the identity lifecycle.
+A threat cluster where an attacker presents or uses authentication credentials (passwords, tokens, keys, session identifiers, biometrics) they do not authentically control to impersonate a legitimate identity (human or technical). The generic vulnerability is insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims. Credential storage and transmission are prevention controls that reduce acquisition; acquisition-side failures classify to the enabling cluster (#2/#5/#7/#8), not to #4.
 
 **Critical distinction:** Credentials have dual operational nature:
 
@@ -2060,7 +2060,7 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 | **#1** | Abuse of Functions | Functional scope/trust (designed capabilities abused) | Internal |
 | **#2** | Exploiting Server | Server-side code implementation flaws | Internal |
 | **#3** | Exploiting Client | Client-side code implementation flaws | Internal |
-| **#4** | Identity Theft | Identity-artifact binding / credential lifecycle (use) | Internal |
+| **#4** | Identity Theft | Insufficient identity-artifact binding at point of use | Internal |
 | **#5** | Man in the Middle | Lack of end-to-end communication protection | Internal |
 | **#6** | Flooding Attack | Finite capacity limitations | Internal |
 | **#7** | Malware | Designed execution capability for untrusted content | Internal |

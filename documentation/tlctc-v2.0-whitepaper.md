@@ -304,11 +304,11 @@ Each cluster below uses the same structure:
 
 **Definition:** Presentation/use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act **as an identity different from the presenter’s own**.
 
-**Generic Vulnerability:** Weak binding between identity and authentication artifacts, combined with insufficient credential and session lifecycle controls (issuance, storage, transmission, validation, rotation, revocation).
+**Generic Vulnerability:** Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims.
 
 **Attacker’s View:** “I abuse credentials to operate as a legitimate identity.”
 
-**Developer’s View:** “I must implement secure credential lifecycle management: storage, transmission, session handling, and robust authentication/authorization with defense-in-depth.”
+**Developer’s View:** “I must verify at authentication time that the presenter is the credential’s authentic holder: enforce MFA, bind and validate sessions, detect credential replay/reuse and anomalous authentication, and apply least privilege with defense-in-depth.”
 
 **Boundary Tests (normative):**
 
@@ -1516,7 +1516,7 @@ The answer **MUST** map to one of the 10 generic vulnerabilities underlying the 
 | 1 | Functional scope/trust (designed capabilities abused) | `#1` |
 | 2 | Server-side code implementation flaws | `#2` |
 | 3 | Client-side code implementation flaws | `#3` |
-| 4 | Identity-artifact binding / credential lifecycle (use) | `#4` |
+| 4 | Insufficient identity-artifact binding at point of use | `#4` |
 | 5 | Lack of end-to-end communication protection | `#5` |
 | 6 | Finite capacity limitations | `#6` |
 | 7 | Designed execution capability for untrusted content | `#7` |
@@ -4855,7 +4855,7 @@ To support this, steps carry:
       "name": "Identity Theft",
       "definition": "An attacker misuses authentication credentials to impersonate an identity. This includes the subsequent use of stolen credentials.",
       "attackers_view": "I abuse credentials to operate as a legitimate identity.",
-      "generic_vulnerability": "Weak binding between identity and authentication artifacts, combined with insufficient credential and session lifecycle controls (issuance, storage, transmission, validation, rotation, revocation).",
+      "generic_vulnerability": "Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims.",
       "topology": "internal"
     },
     "#5": {

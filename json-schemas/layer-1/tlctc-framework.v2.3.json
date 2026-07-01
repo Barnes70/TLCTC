@@ -1,12 +1,12 @@
 {
   "metadata": {
     "tlctc_version": "2.3",
-    "release_date": "2026-06-07",
+    "release_date": "2026-07-01",
     "schema_id": "tlctc-framework",
     "schema_version": "2.0.0",
     "publisher": "TLCTC Project",
     "license": "CC-BY-4.0",
-    "notes": "Framework dictionary for TLCTC v2.3 — consolidation of finalized v2.1 content (transit, intra-system, and unresolved-step extensions) under one version. No new normative content vs v2.1."
+    "notes": "Framework dictionary for TLCTC v2.3. v2.3 consolidated finalized v2.1 content (transit, intra-system, and unresolved-step extensions) with no new normative content vs v2.1. v2.3.1 erratum (2026-07-01): a single axiom-conformance correction — #4 Identity Theft generic_vulnerability retightened from lifecycle/credential-protection wording to the point-of-authentication binding gap, so the field no longer claims scope that R-CRED and Axioms VI/VII/X assign to enabling clusters (storage/transmission/acquisition). Cluster identity and IDs unchanged."
   },
   "clusters": {
     "#1": {
@@ -42,7 +42,7 @@
       "name": "Identity Theft",
       "definition": "An attacker misuses authentication credentials to impersonate an identity.",
       "attackers_view": "I abuse stolen or forged credentials to act as someone else.",
-      "generic_vulnerability": "Weak identity management processes and/or inadequate credential protection mechanisms throughout the identity lifecycle.",
+      "generic_vulnerability": "Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims.",
       "topology": "internal"
     },
     "#5": {
