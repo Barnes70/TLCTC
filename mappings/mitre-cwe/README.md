@@ -37,7 +37,7 @@ Three factors prevent universal one-to-one CWE→TLCTC mapping:
 
 | File | Description |
 |------|-------------|
-| [`tlctc-cwe.json`](tlctc-cwe.json) | 987 CWE mappings with rationale, verdict, and CVE references |
+| [`tlctc-cwe.json`](tlctc-cwe.json) | 985 CWE mappings with rationale, verdict, and CVE references |
 | [`decision-tree.md`](decision-tree.md) | Classification methodology for CWE→TLCTC mapping |
 | [`examples/cwe-to-control-walkthrough.md`](examples/cwe-to-control-walkthrough.md) | Worked example: vulnerability findings to risk controls |
 
@@ -89,44 +89,46 @@ Each mapping carries a confidence verdict:
 
 | Verdict | Count | Meaning |
 |---------|-------|---------|
-| **Allowed** | 756 | High confidence — CWE is specific enough for unambiguous classification |
-| **Allowed-with-Review** | 16 | Cluster genuinely depends on a use-context that varies between CVE instances — review at instance level |
+| **Allowed** | 738 | High confidence — CWE is specific enough for unambiguous classification |
+| **Allowed-with-Review** | 32 | Cluster genuinely depends on a use-context that varies between CVE instances — review at instance level (includes the 20 `enabling-condition` credential-protection CWEs) |
 | **Discouraged** | 171 | CWE is too abstract or generic for reliable mapping (umbrella CWE) OR is a code-quality / maintainability / consequence-only observation with no defensible threat cluster |
 | **Prohibited** | 44 | CWE is a category/view/list/deprecated entry, not a concrete weakness |
 
 ## Statistics
 
-- **987** total CWE entries
-- **22** unique mapping values
-- **229** context-dependent mappings (role-dependent)
-- **756** high-confidence (`Allowed`) mappings
+- **985** total CWE entries
+- **24** unique mapping values
+- **246** context-dependent mappings (role-dependent)
+- **738** high-confidence (`Allowed`) mappings
 
 ### Cluster Distribution
 
 | Mapping | Count | Description |
 |---------|-------|-------------|
-| `#2 \| #3` | 221 | Server or client code flaw (role-dependent) |
-| `N/A` | 176 | Not directly mappable (Discouraged or Prohibited) |
-| `#1` | 169 | Abuse of designed functions |
-| `#2` | 165 | Server-side implementation flaw |
+| `#2 \| #3` | 264 | Server or client code flaw (role-dependent) |
+| `N/A` | 183 | Not directly mappable (Discouraged or Prohibited) |
+| `#1` | 159 | Abuse of designed functions |
+| `#2` | 124 | Server-side implementation flaw |
 | `#8` | 90 | Physical attack |
-| `#4` | 38 | Identity theft / credential weakness |
-| `#6` | 32 | Flooding / resource exhaustion |
-| `#5` | 16 | Man in the Middle / communication path |
+| `#6` | 27 | Flooding / resource exhaustion |
+| `enabling-condition` | 20 | Acquisition-side credential storage/protection/lifecycle weakness — operative cluster set by the acquisition vector per R-CRED (v2.3.1), not #4 |
+| `#4` | 19 | Identity theft — point-of-use credential binding |
+| `#5` | 17 | Man in the Middle / communication path |
 | `#10` | 14 | Supply chain trust weakness |
 | `#3` | 12 | Client-side implementation flaw |
-| `#4 \| #5` | 9 | Predictable random values (token vs key context) |
-| `#9` | 8 | Social engineering / UI deception |
+| `#4 \| #5` | 10 | Predictable random values (token vs key context) |
 | `#2 → #7 \| #3` | 8 | XSS-style: server-delivered script executes client-side |
+| `#9` | 8 | Social engineering / UI deception |
 | `#2 → #7 \| #3 → #7` | 7 | Code injection / deserialization / template injection (role-dependent RCE) |
 | `#2 → #7` | 6 | Server-side code/command injection with execution |
 | `#1 → #7` | 4 | Designed function abused to load foreign code (DLL hijacking, upload+exec) |
 | `#7` | 4 | Direct malware presence |
 | `#10 → #7` | 3 | Trust-accepted untrusted code that subsequently executes |
 | `#5 \| #4` | 2 | Crypto algorithm weakness (channel vs credential context) |
-| `#4 \| #6` | 1 | Missing rate-limiting (auth-endpoint vs resource-endpoint) |
 | `#1 \| #4` | 1 | Predictable values (parent of #4 \| #5 group) |
 | `#10 \| #5` | 1 | Trust artifact compromise vs channel compromise |
+| `#4 \| #6` | 1 | Missing rate-limiting (auth-endpoint vs resource-endpoint) |
+| `#1 \| #8` | 1 | Software-exposed hardware interface (software vs physical access context) |
 
 ## Key Mapping Rules
 

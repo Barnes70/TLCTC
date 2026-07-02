@@ -4059,7 +4059,7 @@
       "path": "/mappings/cwe/cluster-2.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #2 Exploiting Server",
-      "description": "411 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
+      "description": "409 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
       "resource": "tlctc:mapping:cwe:cluster-2",
       "tags": [
         "mapping",

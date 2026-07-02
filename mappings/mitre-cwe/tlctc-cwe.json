@@ -5,12 +5,13 @@
     "tlctc_version": "2.3",
     "cwe_version": "4.16",
     "source": "https://www.tlctc.net/tlctc-mitre-cwe-mapping.html",
-    "total_entries": 987,
+    "total_entries": 985,
     "provenance": "ai_generated_human_reviewed",
     "audit_history": [
       "2026-05-06: Step 9 rationale standardization sweep — 283 stub rationales rewritten with decision-tree-citing prose. Family patterns: sanitization-of-special-elements series (CWE-140-165), server-side info-leak via artifact (CWE-526-550), hardware/SoC flaws (CWE-1190-1334) split into design / debug / side-channel / fault-injection / data-remanence / protection sub-families, resource-exhaustion (CWE-400-410, 770-779, 1325) citing Q5, malware (CWE-507-512) citing Q6 + Axiom III, deprecated entries (CWE-71/92/132/...) citing Prohibited-verdict policy, XSS variants (CWE-82-87) citing CWE-79 parent. After this sweep, 0 entries with rationales under 60 characters remain.",
       "2026-05-05: v2.1 audit — Unreviewed bucket cleared; R-EXEC sweep (15 entries gained → #7); enabling-condition CWEs reclassified to the cluster they enable; #1 cluster fully audited (169 entries): crypto/PRNG re-clustered to #4/#5 per ruling-2 (incl. late-found CWE-1241), code-typo CWEs (CWE-481/482/483/484/486 — incl. Apple goto-fail) and comparison-bug CWEs (CWE-595/597) re-clustered to #2|#3 since they are code implementation flaws (Q2) not logic-abuse (Q9), CWE-757 algorithm-downgrade re-clustered to #5, CWE-1256 SW-HW interface re-clustered to #1|#8; ~130 stub rationales rewritten to cite the abused function and the decision-tree question. #2|#3 cluster audited (228 entries): CWE-318 cleartext-secret-in-executable re-clustered to #4 per ruling-2 (missed in Step 3 because mapping was non-N/A); CWE-21 path-traversal parent demoted to Discouraged; CWE-1066/1097 promoted from Prohibited→Allowed (verdict drift); CWE-1082 mapping → N/A as no real security relevance; ~185 stub rationales (path-traversal CWE-22..58, memory-safety CWE-119..127/131/415..476, sanitization-filtering CWE-790..796, concurrency CWE-362..821, arithmetic CWE-128/191/681) rewritten with R-ROLE-citing prose. Single-cluster spot-check audit (#2/#4/#5/#6/#9/#10): 40 #2-entries re-clustered to #2|#3 where the same flaw applies in either role per R-ROLE (memory-safety CWE-188/241/242/244/588/676/733/762/763/826/843, type-confusion CWE-843 incl. browser JIT, side-channel CWE-204..208, numeric CWE-192/194..198/839, function-call CWE-683/685..688, parser/struct CWE-237..240/253/626, concurrency CWE-663/765/768/828/831/832); CWE-300/311 verdicts Discouraged → Allowed (mappings well-defended, not abstract); CWE-1101 verdict Prohibited → Allowed; CWE-443/769 deprecated entries with non-N/A mappings fixed to N/A for consistency; CWE-1060/1072/1073/1094 performance-only Prohibited+#6 entries reclassified to Discouraged + N/A. ~30 stub rationales rewritten in #4 (credential CWEs CWE-258/259/262/263/307/308/309/321/521/613/1392/1394) and #9 (UI-deception CWE-356/357/446/451) and #10 (supply-chain CWE-510/511/553/1104/1273/1291/1297/1328) clusters. Allowed-with-Review queue narrowed from 90 to 16 intentional remainders; N/A bucket reconciled (verdict drift fixed): 62 'N/A + Allowed' entries (code-quality/consequence/non-threat) reclassified to Discouraged, and 47 'N/A + Prohibited' code-quality entries (CWE-1041–1124 'Bad Coding Practices' cluster) reclassified to Discouraged since they are concrete weakness patterns, not Category/View/Deprecated nodes. Two policy rulings codified: (1) CWE-287-style authentication-logic bypass = #1, credential application is the only #4 case; (2) enabling-condition CWEs map to the cluster they enable. Verdict semantics tightened: Prohibited now reserved exclusively for Category/View/List/Deprecated org nodes (44 entries); code-quality patterns and abstract umbrella CWEs are Discouraged (171 entries). Final state: 756 Allowed / 16 Allowed-with-Review (intentional context-dependence) / 171 Discouraged / 44 Prohibited.",
-      "2026-07-01: v2.3.1 #4 re-alignment — Identity Theft retightened to point-of-use identity-artifact binding (tlctc-v2.3-core §4 erratum). 20 acquisition-side credential CWEs reclassified off #4 to the new 'enabling-condition' mapping (acquisition vector determines cluster per R-CRED): storage/exposure CWE-13/256/257/260/261/312/313/314/315/316/318/522/555/1004, hashing CWE-328/759/760/916, aging CWE-262/263. This reverses ruling-2 for credential-protection weaknesses (they no longer inherit the enabled #4). Point-of-use binding CWEs retained as #4 (auth-mechanism 307/308/309, session 6/384/613, weak/default/hard-coded/predictable credential acceptance 258/259/321/340/341/342/343/521/798/1391/1392/1393/1394). Only the #4 cluster was revisited against v2.3.1; other clusters not re-audited. #4 count 39->19."
+      "2026-07-01: v2.3.1 #4 re-alignment — Identity Theft retightened to point-of-use identity-artifact binding (tlctc-v2.3-core §4 erratum). 20 acquisition-side credential CWEs reclassified off #4 to the new 'enabling-condition' mapping (acquisition vector determines cluster per R-CRED): storage/exposure CWE-13/256/257/260/261/312/313/314/315/316/318/522/555/1004, hashing CWE-328/759/760/916, aging CWE-262/263. This reverses ruling-2 for credential-protection weaknesses (they no longer inherit the enabled #4). Point-of-use binding CWEs retained as #4 (auth-mechanism 307/308/309, session 6/384/613, weak/default/hard-coded/predictable credential acceptance 258/259/321/340/341/342/343/521/798/1391/1392/1393/1394). Only the #4 cluster was revisited against v2.3.1; other clusters not re-audited. #4 count 39->19.",
+      "2026-07-03: deduplication — two duplicate records removed. CWE-316 appeared twice with divergent mappings: the pre-v2.3.1 record ('#2 | #3', 'Memory exposure...') survived the 2026-07-01 reclassification alongside the updated 'enabling-condition' record; the stale record is removed, the v2.3.1 record retained. CWE-1389 appeared twice as byte-identical records; one copy removed. total_entries 987->985; statistics recomputed. Downstream consumers (tools/cwe-explorer.html embedded dataset, okf/ views) re-synced from this file."
     ],
     "license": "CC-BY-4.0",
     "publisher": "TLCTC Project",
@@ -28,14 +29,14 @@
     },
     "statistics": {
       "by_verdict": {
-        "Allowed": 740,
+        "Allowed": 738,
         "Allowed-with-Review": 32,
         "Prohibited": 44,
         "Discouraged": 171,
         "Unreviewed": 0
       },
       "by_mapping": {
-        "#2 | #3": 266,
+        "#2 | #3": 264,
         "N/A": 183,
         "#1": 159,
         "#2": 124,
@@ -60,7 +61,7 @@
         "#4 | #6": 1,
         "#1 | #8": 1
       },
-      "context_dependent": 248
+      "context_dependent": 246
     }
   },
   "mappings": [
@@ -4775,21 +4776,6 @@
       "tlctcMappingName": "Enabling Condition (R-CRED)",
       "mappingRationale": "Cleartext Storage of Sensitive Information in Memory: a credential storage / protection / lifecycle weakness. Under TLCTC v2.3.1 the #4 Identity Theft cluster is retightened to point-of-use identity-artifact binding, so this is an acquisition-side enabling condition, not #4. Per R-CRED the operative cluster is set by the acquisition vector that reaches the exposed credential at incident time (e.g. #2 server exploit, #7 malware, #8 physical, #5 transit); #4 is reserved for the later credential application. Not itself a single cluster (see decision-tree Q3 / ruling-2, revised for v2.3.1).",
       "mappingVerdict": "Allowed-with-Review",
-      "contextDependent": true,
-      "cveReferences": [
-        "CVE-2001-1517",
-        "CVE-2001-0984",
-        "CVE-2003-0291"
-      ]
-    },
-    {
-      "cweId": "CWE-316",
-      "cweName": "Cleartext Storage of Sensitive Information in Memory",
-      "cweStatus": "Draft",
-      "tlctcMapping": "#2 | #3",
-      "tlctcMappingName": "Exploiting Server or Exploiting Client",
-      "mappingRationale": "Memory exposure. A critical issue for Client apps (#3) where physical/local access is more likely.",
-      "mappingVerdict": "Allowed",
       "contextDependent": true,
       "cveReferences": [
         "CVE-2001-1517",
@@ -14197,25 +14183,6 @@
         "CVE-2017-5754",
         "CVE-2022-0001",
         "CVE-2021-33149"
-      ]
-    },
-    {
-      "cweId": "CWE-1389",
-      "cweName": "Incorrect Parsing of Numbers with Different Radices",
-      "cweStatus": "Incomplete",
-      "tlctcMapping": "#2 | #3",
-      "tlctcMappingName": "Exploiting Server or Exploiting Client",
-      "mappingRationale": "Numeric parsing accepts different radices (octal-leading-zero, 0x hex) inconsistently between security check and consumer, producing parsing-discrepancy bypass. Arithmetic/numeric code implementation flaw (overflow, underflow, sign issue, precision). Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
-      "mappingVerdict": "Allowed",
-      "contextDependent": true,
-      "cveReferences": [
-        "CVE-2021-29662",
-        "CVE-2021-28918",
-        "CVE-2021-29921",
-        "CVE-2021-29923",
-        "CVE-2021-29424",
-        "CVE-2016-4029",
-        "CVE-2020-13776"
       ]
     },
     {
