@@ -14,11 +14,13 @@ topology: "internal"
 ---
 # #5 Man in the Middle
 
-**Definition:** Exploitation of a controlled position on a communication path through interception, observation, modification, injection, replay, or protocol downgrade/stripping.
+**Definition:** An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.
 
-**Generic Vulnerability:** Insufficient end-to-end confidentiality/integrity protection and implicit trust in local networks and intermediate path infrastructure.
+**Scope:** Exploitation of a controlled position on a communication path—on the local network or via control over an intermediary—through interception, observation, modification, injection, replay, or protocol downgrade/stripping.
 
-**Attacker’s View:** “I abuse my position (on the local network or via control over an intermediary) between communicating parties.”
+**Generic Vulnerability:** The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.
+
+**Attacker’s View:** “I abuse my position between communicating parties.”
 
 **Developer’s View:** “I must ensure confidentiality and integrity of data in transit: strong E2E protection, proper certificate/path validation, and designs that assume uncontrolled networks are hostile.”
 

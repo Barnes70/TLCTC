@@ -8,7 +8,7 @@ tags:
 ---
 # TEMPEST
 
-A codename for standards and techniques related to electromagnetic emanation security — both the interception of unintentional electromagnetic emissions from electronic equipment and the shielding against such interception. In TLCTC: TEMPEST attacks map to `#8 Physical Attack` (specifically `#8.2 Indirect Physical Access`) — exploiting physical emanation properties without direct contact with the target device. Related techniques include Van Eck Phreaking.
+A codename for standards and techniques related to electromagnetic emanation security — both the interception of unintentional electromagnetic emissions from electronic equipment and the shielding against such interception. In TLCTC: TEMPEST attacks map to `#8 Physical Attack` (specifically the `#8.2` signal vector, no contact) — exploiting physical emanation properties without direct contact with the target device. Related techniques include Van Eck Phreaking.
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#8)
 

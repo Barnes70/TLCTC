@@ -14,11 +14,13 @@ topology: "internal"
 ---
 # #3 Exploiting Client
 
-**Definition:** Triggering an **implementation flaw** in **client-role** software through crafted content/responses/state (“exploit payload”), exploiting coding mistakes in parsing, rendering, state management, or response handling.
+**Definition:** An attacker targets flaws within the source code implementation of any software acting in a client role.
+
+**Scope:** Triggering an **implementation flaw** in **client-role** software through crafted content/responses/state (“exploit payload”), exploiting coding mistakes in parsing, rendering, state management, or response handling.
 
 **Role criterion:** The vulnerable component **consumes external responses, content, or state**.
 
-**Generic Vulnerability:** Exploitable flaws within client-role source code implementation, stemming from insecure handling of external data/responses, UI rendering, or client-side state/resources.
+**Generic Vulnerability:** Client-side implementation flaws enable unintended behavior.
 
 **Attacker’s View:** “I abuse a flaw in the source code of software acting as a client.”
 

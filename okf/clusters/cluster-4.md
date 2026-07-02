@@ -14,11 +14,13 @@ topology: "internal"
 ---
 # #4 Identity Theft
 
-**Definition:** Presentation/use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act **as an identity different from the presenter’s own**.
+**Definition:** An attacker misuses authentication credentials to impersonate an identity.
+
+**Scope:** Presentation/use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act **as an identity different from the presenter’s own**. Credential storage and transmission are prevention controls that reduce acquisition; failures there classify to the enabling cluster (#2/#5/#7/#8), not to #4.
 
 **Generic Vulnerability:** Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims.
 
-**Attacker’s View:** “I abuse credentials to operate as a legitimate identity.”
+**Attacker’s View:** “I abuse stolen or forged credentials to act as someone else.”
 
 **Developer’s View:** “I must verify at authentication time that the presenter is the credential’s authentic holder: enforce MFA, bind and validate sessions, detect credential replay/reuse and anomalous authentication, and apply least privilege with defense-in-depth.”
 

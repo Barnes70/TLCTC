@@ -223,17 +223,22 @@ The classification grammar consists of:
 Each cluster below uses the same structure:
 
 - **Definition**
+- **Scope**
 - **Generic Vulnerability**
 - **Attacker’s View**
 - **Developer’s View**
 - **Boundary Tests**
 - **Topology**
 
+> **Canonical-source note (normative):** The **Definition**, **Generic Vulnerability**, and **Attacker’s View** strings below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.3.json`), so that this document and the schema cannot drift. The **Scope**, **Developer’s View**, and **Boundary Tests** fields are canonical in this document and are not carried in the JSON dictionary. Where a conflict is suspected, the JSON dictionary governs the three JSON-owned fields and this document governs the rest.
+
 ---
 
 #### #1 Abuse of Functions
 
-**Definition:** Manipulation of legitimate software capabilities—features, APIs, configurations, administrative settings, workflows—through standard interfaces using built-in input types and valid sequences of actions (including configuration changes). The step achieves an attacker advantage **without requiring an implementation flaw**.
+**Definition:** An attacker abuses the logic or scope of existing, legitimate software functions for malicious purposes without exploiting a code flaw.
+
+**Scope:** Manipulation of legitimate software capabilities—features, APIs, configurations, administrative settings, workflows—through standard interfaces using built-in input types and valid sequences of actions (including configuration changes). The step achieves an attacker advantage **without requiring an implementation flaw**.
 
 **Generic Vulnerability:** The inherent trust, scope, and complexity designed into software functionality and configuration.
 
@@ -253,13 +258,15 @@ Each cluster below uses the same structure:
 
 #### #2 Exploiting Server
 
-**Definition:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. This forces an UNINTENDED data→code transition.
+**Definition:** An attacker targets flaws within the server-side application's source code implementation.
+
+**Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. This forces an UNINTENDED data→code transition.
 
 **Exploit Code Mechanism:** Crafted payloads (SQL injection strings, buffer overflow, XXE payloads, etc.) that trigger specific implementation bugs to achieve unauthorized behavior or enable code execution.
 
 **Role criterion:** The vulnerable component **accepts and handles inbound requests or stimuli** relative to the attacker.
 
-**Generic Vulnerability:** Exploitable flaws within server-side source code implementation and its resulting logic, stemming from insecure coding practices.
+**Generic Vulnerability:** Server-side implementation flaws enable unintended behavior.
 
 **Attacker’s View:** “I abuse a flaw in the application’s source code on the server side.”
 
@@ -279,11 +286,13 @@ Each cluster below uses the same structure:
 
 #### #3 Exploiting Client
 
-**Definition:** Triggering an **implementation flaw** in **client-role** software through crafted content/responses/state (“exploit payload”), exploiting coding mistakes in parsing, rendering, state management, or response handling.
+**Definition:** An attacker targets flaws within the source code implementation of any software acting in a client role.
+
+**Scope:** Triggering an **implementation flaw** in **client-role** software through crafted content/responses/state (“exploit payload”), exploiting coding mistakes in parsing, rendering, state management, or response handling.
 
 **Role criterion:** The vulnerable component **consumes external responses, content, or state**.
 
-**Generic Vulnerability:** Exploitable flaws within client-role source code implementation, stemming from insecure handling of external data/responses, UI rendering, or client-side state/resources.
+**Generic Vulnerability:** Client-side implementation flaws enable unintended behavior.
 
 **Attacker’s View:** “I abuse a flaw in the source code of software acting as a client.”
 
@@ -302,11 +311,13 @@ Each cluster below uses the same structure:
 
 #### #4 Identity Theft
 
-**Definition:** Presentation/use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act **as an identity different from the presenter’s own**.
+**Definition:** An attacker misuses authentication credentials to impersonate an identity.
+
+**Scope:** Presentation/use of credentials, tokens, keys, session artifacts, or other identity representations to authenticate and act **as an identity different from the presenter’s own**. Credential storage and transmission are prevention controls that reduce acquisition; failures there classify to the enabling cluster (#2/#5/#7/#8), not to #4.
 
 **Generic Vulnerability:** Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims.
 
-**Attacker’s View:** “I abuse credentials to operate as a legitimate identity.”
+**Attacker’s View:** “I abuse stolen or forged credentials to act as someone else.”
 
 **Developer’s View:** “I must verify at authentication time that the presenter is the credential’s authentic holder: enforce MFA, bind and validate sessions, detect credential replay/reuse and anomalous authentication, and apply least privilege with defense-in-depth.”
 
@@ -324,11 +335,13 @@ Each cluster below uses the same structure:
 
 #### #5 Man in the Middle
 
-**Definition:** Exploitation of a controlled position on a communication path through interception, observation, modification, injection, replay, or protocol downgrade/stripping.
+**Definition:** An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.
 
-**Generic Vulnerability:** Insufficient end-to-end confidentiality/integrity protection and implicit trust in local networks and intermediate path infrastructure.
+**Scope:** Exploitation of a controlled position on a communication path—on the local network or via control over an intermediary—through interception, observation, modification, injection, replay, or protocol downgrade/stripping.
 
-**Attacker’s View:** “I abuse my position (on the local network or via control over an intermediary) between communicating parties.”
+**Generic Vulnerability:** The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.
+
+**Attacker’s View:** “I abuse my position between communicating parties.”
 
 **Developer’s View:** “I must ensure confidentiality and integrity of data in transit: strong E2E protection, proper certificate/path validation, and designs that assume uncontrolled networks are hostile.”
 
@@ -349,11 +362,13 @@ Each cluster below uses the same structure:
 
 #### #6 Flooding Attack
 
-**Definition:** Exhaustion of finite system resources (bandwidth, CPU, memory, storage, quotas, pools) through volume or intensity that exceeds capacity limits, causing disruption/degradation/denial of service.
+**Definition:** An attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to denial of service.
+
+**Scope:** Exhaustion of finite system resources (bandwidth, CPU, memory, storage, quotas, pools) through volume or intensity that exceeds capacity limits, causing disruption/degradation/denial of service.
 
 **Generic Vulnerability:** Finite capacity limitations inherent in any system component.
 
-**Attacker’s View:** “I abuse the circumstance of always limited capacity in software and systems.”
+**Attacker’s View:** “I abuse the circumstance of always limited capacity.”
 
 **Developer’s View:** “I must implement efficient resource management: limits, timeouts, quotas, circuit breakers, and scalable designs—every loop and allocation must consider abuse.”
 
@@ -369,9 +384,11 @@ Each cluster below uses the same structure:
 
 #### #7 Malware
 
-**Definition:** Execution of **Foreign Executable Content (FEC)** through the environment’s designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters), including dual-use tooling when it executes attacker-controlled FEC.
+**Definition:** An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.
 
-**Generic Vulnerability:** The environment’s intended capability to execute potentially untrusted executable content.
+**Scope:** Execution of **Foreign Executable Content (FEC)** through the environment’s designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters), including dual-use tooling when it executes attacker-controlled FEC.
+
+**Generic Vulnerability:** The software environment's designed capability to execute potentially untrusted foreign code.
 
 **Attacker’s View:** “I abuse the environment’s designed capability to execute malware code, malicious scripts, or foreign-introduced tools for my purposes.”
 
@@ -395,9 +412,11 @@ Each cluster below uses the same structure:
 
 #### #8 Physical Attack
 
-**Definition:** Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces (including **removable media**), or signals—via direct contact or exploitation of physical phenomena/emanations.
+**Definition:** Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.
 
-**Generic Vulnerability:** Physical accessibility of infrastructure and the exploitability of physical-layer properties (interfaces, wireless spectrum, emanations, environmental dependencies).
+**Scope:** Direct contact with hardware, facilities, media, and interfaces (including **removable media**), as well as exploitation of physical-layer properties such as wireless spectrum, emanations, and environmental dependencies.
+
+**Generic Vulnerability:** Physical accessibility of infrastructure and the exploitability of physical-layer properties.
 
 **Attacker’s View:** “I abuse the physical accessibility or properties of hardware, devices, and signals.”
 
@@ -413,11 +432,13 @@ Each cluster below uses the same structure:
 
 #### #9 Social Engineering
 
-**Definition:** Psychological manipulation that causes a human to perform an action counter to security interests—disclosing information, granting access, executing content, modifying configuration, or bypassing procedures.
+**Definition:** An attacker psychologically manipulates individuals into performing actions counter to their best interests.
 
-**Generic Vulnerability:** Human psychological factors (trust, fear, urgency, authority bias, curiosity, ignorance, fatigue, etc.).
+**Scope:** Psychological manipulation that causes a human to perform an action counter to security interests—disclosing information, granting access, executing content, modifying configuration, or bypassing procedures. Exploited psychological factors include trust, fear, urgency, authority bias, curiosity, ignorance, and fatigue.
 
-**Attacker’s View:** “I abuse human trust and psychology to deceive individuals.”
+**Generic Vulnerability:** Humans can be influenced into unsafe actions or decisions.
+
+**Attacker’s View:** “I abuse human trust and psychology.”
 
 **Developer’s View:** “I must design interfaces and processes that promote secure behavior: clear indicators, safe defaults, and friction for high-risk actions.”
 
@@ -433,7 +454,9 @@ Each cluster below uses the same structure:
 
 #### #10 Supply Chain Attack
 
-**Definition:** Exploitation of an organization’s **third-party trust link** such that the organization (or its systems) **accepts third-party–originating artifacts or decisions as authoritative within the organization’s domain**, enabling unauthorized action or compromise.
+**Definition:** An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.
+
+**Scope:** Exploitation of an organization’s **third-party trust link** such that the organization (or its systems) **accepts third-party–originating artifacts or decisions as authoritative within the organization’s domain**, enabling unauthorized action or compromise.
 
 **Hook terms (normative):**
 
@@ -441,9 +464,9 @@ Each cluster below uses the same structure:
 - **Trust Artifact / Trust Decision (TAD):** what crosses the boundary and is accepted as authoritative (e.g., SAML/OIDC assertion, token, signed update/package, CI build artifact, policy/config push, admin action, firmware image).
 - **Trust Acceptance Event (TAE):** the moment your domain **honors** the TTL and treats a TAD as authoritative (validate/accept/install/apply/execute/attach privileges).
 
-**Generic Vulnerability:** Necessary reliance on, and implicit trust placed in, external suppliers/services and their **trust-transfer mechanisms** (trust anchors, signing/attestation, federation, managed planes) whose security posture is outside direct organizational control.
+**Generic Vulnerability:** Trust in third-party components and update channels can be subverted.
 
-**Attacker’s View:** “I abuse the target’s trust in third parties they rely on.”
+**Attacker’s View:** “I abuse the trust in third-party components.”
 
 **Developer’s View:** “I must minimize and compartmentalize third-party trust, harden trust-acceptance points, verify provenance/attestations, and ensure trust is continuously re-validated and revocable.”
 
@@ -1516,12 +1539,12 @@ The answer **MUST** map to one of the 10 generic vulnerabilities underlying the 
 | 1 | Functional scope/trust (designed capabilities abused) | `#1` |
 | 2 | Server-side code implementation flaws | `#2` |
 | 3 | Client-side code implementation flaws | `#3` |
-| 4 | Insufficient identity-artifact binding at point of use | `#4` |
-| 5 | Lack of end-to-end communication protection | `#5` |
+| 4 | Insufficient credential–holder binding at authentication | `#4` |
+| 5 | Insufficient control/protection over the communication channel/path | `#5` |
 | 6 | Finite capacity limitations | `#6` |
 | 7 | Designed execution capability for untrusted content | `#7` |
 | 8 | Physical accessibility/interference | `#8` |
-| 9 | Human psychological factors | `#9` |
+| 9 | Humans can be influenced into unsafe actions | `#9` |
 | 10 | Third-party trust dependencies | `#10` |
 
 ##### Step 3: Apply Global Mapping Rules
@@ -4807,18 +4830,20 @@ To support this, steps carry:
 }
 ```
 
-#### 14.3.2 Example Content Package: `tlctc-framework.v2.0.json`
+#### 14.3.2 Example Content Package: `tlctc-framework.v2.3.json` (excerpt)
+
+The cluster entries below are reproduced verbatim from the canonical framework dictionary; the `rules` array is truncated to a single example entry.
 
 ```
 {
   "metadata": {
-    "tlctc_version": "2.0",
-    "release_date": "2025-12-14",
+    "tlctc_version": "2.3",
+    "release_date": "2026-07-01",
     "schema_id": "tlctc-framework",
     "schema_version": "2.0.0",
     "publisher": "TLCTC Project",
     "license": "CC-BY-4.0",
-    "notes": "Framework dictionary for TLCTC v2.0"
+    "notes": "Framework dictionary for TLCTC v2.3."
   },
 
   "clusters": {
@@ -4853,45 +4878,45 @@ To support this, steps carry:
       "strategic_id": "#4",
       "operational_root_id": "TLCTC-04.00",
       "name": "Identity Theft",
-      "definition": "An attacker misuses authentication credentials to impersonate an identity. This includes the subsequent use of stolen credentials.",
-      "attackers_view": "I abuse credentials to operate as a legitimate identity.",
+      "definition": "An attacker misuses authentication credentials to impersonate an identity.",
+      "attackers_view": "I abuse stolen or forged credentials to act as someone else.",
       "generic_vulnerability": "Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims.",
       "topology": "internal"
     },
     "#5": {
       "strategic_id": "#5",
       "operational_root_id": "TLCTC-05.00",
-      "name": "Man in the Middle (MitM)",
+      "name": "Man in the Middle",
       "definition": "An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.",
       "attackers_view": "I abuse my position between communicating parties.",
-      "generic_vulnerability": "Communication paths can be observed or altered by an intermediary with privileged placement.",
+      "generic_vulnerability": "The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.",
       "topology": "internal"
     },
     "#6": {
       "strategic_id": "#6",
       "operational_root_id": "TLCTC-06.00",
       "name": "Flooding Attack",
-      "definition": "An attacker overwhelms system resources or capacity limits to cause a denial of service.",
+      "definition": "An attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to denial of service.",
       "attackers_view": "I abuse the circumstance of always limited capacity.",
-      "generic_vulnerability": "Systems have finite capacity that can be exhausted.",
+      "generic_vulnerability": "Finite capacity limitations inherent in any system component.",
       "topology": "internal"
     },
     "#7": {
       "strategic_id": "#7",
       "operational_root_id": "TLCTC-07.00",
       "name": "Malware",
-      "definition": "An attacker abuses an environment's inherent ability to execute foreign executable content, including malicious code, scripts, or introduced dual-use tools used maliciously.",
-      "attackers_view": "I abuse the environment's designed capability to execute Malware Code.",
-      "generic_vulnerability": "Environments execute attacker-controlled code/content when controls fail or are bypassed.",
+      "definition": "An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.",
+      "attackers_view": "I abuse the environment's designed capability to execute malware code, malicious scripts, or foreign-introduced tools for my purposes.",
+      "generic_vulnerability": "The software environment's designed capability to execute potentially untrusted foreign code.",
       "topology": "internal"
     },
     "#8": {
       "strategic_id": "#8",
       "operational_root_id": "TLCTC-08.00",
       "name": "Physical Attack",
-      "definition": "An attacker gains unauthorized physical interaction with or causes physical interference to hardware, facilities, or data media.",
-      "attackers_view": "I abuse the physical accessibility or properties of hardware.",
-      "generic_vulnerability": "Physical access enables manipulation, removal, or interference with assets.",
+      "definition": "Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.",
+      "attackers_view": "I abuse the physical accessibility or properties of hardware, devices, and signals.",
+      "generic_vulnerability": "Physical accessibility of infrastructure and the exploitability of physical-layer properties.",
       "topology": "bridge"
     },
     "#9": {

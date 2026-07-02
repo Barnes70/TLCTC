@@ -12,7 +12,7 @@
       "cluster": "#7",
       "fec_executed": true,
       "delta_t_to_next": "instant",
-      "notes": "Malicious agent executes and begins autonomous operation. Generic vulnerability: the environment's intended capability to execute potentially untrusted executable content."
+      "notes": "Malicious agent executes and begins autonomous operation. Generic vulnerability: the software environment's designed capability to execute potentially untrusted foreign code."
     },
     {
       "step_id": "s2-credential-use",

@@ -23,7 +23,7 @@
       "cluster": "#7",
       "fec_executed": true,
       "delta_t_to_next": "instant",
-      "notes": "Rogue agent executes as Foreign Executable Content via the environment's designed execution capability. Generic vulnerability: the environment's intended capability to execute potentially untrusted executable content. The agent IS the malware. It executes through designed OS/runtime execution paths."
+      "notes": "Rogue agent executes as Foreign Executable Content via the environment's designed execution capability. Generic vulnerability: the software environment's designed capability to execute potentially untrusted foreign code. The agent IS the malware. It executes through designed OS/runtime execution paths."
     },
     {
       "step_id": "s3-function-abuse",

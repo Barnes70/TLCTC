@@ -14,11 +14,13 @@ topology: "bridge"
 ---
 # #9 Social Engineering
 
-**Definition:** Psychological manipulation that causes a human to perform an action counter to security interests—disclosing information, granting access, executing content, modifying configuration, or bypassing procedures.
+**Definition:** An attacker psychologically manipulates individuals into performing actions counter to their best interests.
 
-**Generic Vulnerability:** Human psychological factors (trust, fear, urgency, authority bias, curiosity, ignorance, fatigue, etc.).
+**Scope:** Psychological manipulation that causes a human to perform an action counter to security interests—disclosing information, granting access, executing content, modifying configuration, or bypassing procedures. Exploited psychological factors include trust, fear, urgency, authority bias, curiosity, ignorance, and fatigue.
 
-**Attacker’s View:** “I abuse human trust and psychology to deceive individuals.”
+**Generic Vulnerability:** Humans can be influenced into unsafe actions or decisions.
+
+**Attacker’s View:** “I abuse human trust and psychology.”
 
 **Developer’s View:** “I must design interfaces and processes that promote secure behavior: clear indicators, safe defaults, and friction for high-risk actions.”
 
