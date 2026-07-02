@@ -102,7 +102,7 @@ Consequences follow a structured, variable-length chain:
 | Event | Definition | Examples |
 | --- | --- | --- |
 | **SRE** | Loss of Control / System Compromise — the central event | RCE achieved; persistent access established |
-| **DRE** | Loss of Confidentiality, Integrity, or Availability/Accessibility | data exfiltrated `[DRE: C]`; records altered `[DRE: I]`; service encrypted `[DRE: Ac]` |
+| **DRE** | Loss of Confidentiality, Integrity, or Availability/Accessibility | data exfiltrated `[DRE: C]`; records altered `[DRE: I]`; files encrypted by ransomware `[DRE: Ac]` |
 | **BRE** | A discrete business-level event triggered by a DRE or a preceding BRE | regulatory notification; outage declared; fine imposed |
 
 Business Risk Events may cascade (`SRE → DRE → BRE₁ → … → BREₙ`); chain length is organization-dependent. An organization's risk appetite determines at which BRE the chain reaches its terminal **Business Impact** — a role a BRE can hold, not a separate event type. Every transition carries its own Δt detection-and-intervention window, and the chain can break at any point: not every SRE leads to a DRE, and not every DRE leads to a BRE.
@@ -575,7 +575,7 @@ The following one-line definitions cover the terms used in this paper so that it
 - **TAE (Trust Acceptance Event)** — the moment a domain honors a third-party trust link and treats a trust artifact as authoritative (validate, accept, install, apply, execute, attach privileges). #10 Supply Chain Attack is placed at the TAE (R-SUPPLY).
 - **Threat cluster** — an organizational construct grouping the threats that exploit one common generic vulnerability. TLCTC defines exactly ten, mutually exclusive.
 - **Threat topology** — a structural property of each cluster: *internal* (#1–#7), where the generic vulnerability is exploited within the software domain's control regime, or *bridge* (#8–#10), where it inherently enables crossing into the software domain from a different control regime (physical, human, third-party). Topology never changes classification.
-- **Transit** — a responsibility sphere that carries or relays an attack without being its source or target, marked with `⇒` inside a domain boundary operator; distinct from #10 (a passive relay, not a trust acceptance).
+- **Transit** — a responsibility sphere that carries or relays an attack without being its source or target, marked with `⇒` inside a domain boundary operator. A transit party is a passive relay, not a trust acceptance — distinct from #10, which marks the Trust Acceptance Event.
 
 For the complete glossary, including all terms and cross-references not used in this paper, see `tlctc-glossary.md`.
 
