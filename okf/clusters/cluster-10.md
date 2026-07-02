@@ -14,7 +14,9 @@ topology: "bridge"
 ---
 # #10 Supply Chain Attack
 
-**Definition:** Exploitation of an organization’s **third-party trust link** such that the organization (or its systems) **accepts third-party–originating artifacts or decisions as authoritative within the organization’s domain**, enabling unauthorized action or compromise.
+**Definition:** An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.
+
+**Scope:** Exploitation of an organization’s **third-party trust link** such that the organization (or its systems) **accepts third-party–originating artifacts or decisions as authoritative within the organization’s domain**, enabling unauthorized action or compromise.
 
 **Hook terms (normative):**
 
@@ -22,9 +24,9 @@ topology: "bridge"
 - **Trust Artifact / Trust Decision (TAD):** what crosses the boundary and is accepted as authoritative (e.g., SAML/OIDC assertion, token, signed update/package, CI build artifact, policy/config push, admin action, firmware image).
 - **Trust Acceptance Event (TAE):** the moment your domain **honors** the TTL and treats a TAD as authoritative (validate/accept/install/apply/execute/attach privileges).
 
-**Generic Vulnerability:** Necessary reliance on, and implicit trust placed in, external suppliers/services and their **trust-transfer mechanisms** (trust anchors, signing/attestation, federation, managed planes) whose security posture is outside direct organizational control.
+**Generic Vulnerability:** Trust in third-party components and update channels can be subverted.
 
-**Attacker’s View:** “I abuse the target’s trust in third parties they rely on.”
+**Attacker’s View:** “I abuse the trust in third-party components.”
 
 **Developer’s View:** “I must minimize and compartmentalize third-party trust, harden trust-acceptance points, verify provenance/attestations, and ensure trust is continuously re-validated and revocable.”
 

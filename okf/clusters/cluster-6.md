@@ -14,11 +14,13 @@ topology: "internal"
 ---
 # #6 Flooding Attack
 
-**Definition:** Exhaustion of finite system resources (bandwidth, CPU, memory, storage, quotas, pools) through volume or intensity that exceeds capacity limits, causing disruption/degradation/denial of service.
+**Definition:** An attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to denial of service.
+
+**Scope:** Exhaustion of finite system resources (bandwidth, CPU, memory, storage, quotas, pools) through volume or intensity that exceeds capacity limits, causing disruption/degradation/denial of service.
 
 **Generic Vulnerability:** Finite capacity limitations inherent in any system component.
 
-**Attacker’s View:** “I abuse the circumstance of always limited capacity in software and systems.”
+**Attacker’s View:** “I abuse the circumstance of always limited capacity.”
 
 **Developer’s View:** “I must implement efficient resource management: limits, timeouts, quotas, circuit breakers, and scalable designs—every loop and allocation must consider abuse.”
 

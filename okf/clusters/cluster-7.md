@@ -14,9 +14,11 @@ topology: "internal"
 ---
 # #7 Malware
 
-**Definition:** Execution of **Foreign Executable Content (FEC)** through the environment’s designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters), including dual-use tooling when it executes attacker-controlled FEC.
+**Definition:** An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.
 
-**Generic Vulnerability:** The environment’s intended capability to execute potentially untrusted executable content.
+**Scope:** Execution of **Foreign Executable Content (FEC)** through the environment’s designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters), including dual-use tooling when it executes attacker-controlled FEC.
+
+**Generic Vulnerability:** The software environment's designed capability to execute potentially untrusted foreign code.
 
 **Attacker’s View:** “I abuse the environment’s designed capability to execute malware code, malicious scripts, or foreign-introduced tools for my purposes.”
 

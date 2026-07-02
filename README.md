@@ -70,17 +70,19 @@ Each cluster is defined by exactly **one generic vulnerability** (Axiom VI). Eac
 | # | Cluster | Generic Vulnerability | Topology |
 |---|---|---|---|
 | **#1** | **Abuse of Functions** | The inherent trust, scope, and complexity designed into software functionality and configuration | Internal |
-| **#2** | **Exploiting Server** | Exploitable flaws within server-side source code implementation and its resulting logic, stemming from insecure coding practices | Internal |
-| **#3** | **Exploiting Client** | Exploitable flaws within client-role source code implementation, stemming from insecure handling of external data/responses, UI rendering, or client-side state/resources | Internal |
+| **#2** | **Exploiting Server** | Server-side implementation flaws enable unintended behavior | Internal |
+| **#3** | **Exploiting Client** | Client-side implementation flaws enable unintended behavior | Internal |
 | **#4** | **Identity Theft** | Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims | Internal |
-| **#5** | **Man in the Middle** | Insufficient end-to-end confidentiality/integrity protection and implicit trust in local networks and intermediate path infrastructure | Internal |
+| **#5** | **Man in the Middle** | The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path | Internal |
 | **#6** | **Flooding Attack** | Finite capacity limitations inherent in any system component | Internal |
-| **#7** | **Malware** | The environment's intended capability to execute potentially untrusted executable content | Internal |
-| **#8** | **Physical Attack** | Physical accessibility of infrastructure and the exploitability of physical-layer properties (interfaces, wireless spectrum, emanations, environmental dependencies) | Bridge |
-| **#9** | **Social Engineering** | Human psychological factors (trust, fear, urgency, authority bias, curiosity, ignorance, fatigue, etc.) | Bridge |
-| **#10** | **Supply Chain Attack** | Necessary reliance on, and implicit trust placed in, external suppliers/services and their trust-transfer mechanisms whose security posture is outside direct organizational control | Bridge |
+| **#7** | **Malware** | The software environment's designed capability to execute potentially untrusted foreign code | Internal |
+| **#8** | **Physical Attack** | Physical accessibility of infrastructure and the exploitability of physical-layer properties | Bridge |
+| **#9** | **Social Engineering** | Humans can be influenced into unsafe actions or decisions | Bridge |
+| **#10** | **Supply Chain Attack** | Trust in third-party components and update channels can be subverted | Bridge |
 
-### Canonical Definitions
+### Cluster Scope (operational)
+
+The generic-vulnerability strings above are reproduced verbatim from the canonical framework dictionary (`json-schemas/layer-1/tlctc-framework.v2.3.json`), which also carries the canonical one-line Definition and Attacker's View per cluster. The scope descriptions below are the operational elaborations from the white paper §4.1.
 
 - **#1 Abuse of Functions** — Manipulation of legitimate software capabilities — features, APIs, configurations, administrative settings, workflows — through standard interfaces using built-in input types and valid sequences of actions. The step achieves an attacker advantage **without requiring an implementation flaw**.
 

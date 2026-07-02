@@ -1194,10 +1194,10 @@ See also: Social Engineering (#9), Spear Phishing, Vishing, Smishing
 
 ### Physical Attack (#8)
 
-A threat cluster where an attacker gains unauthorized physical interaction with or causes physical interference to hardware, devices, facilities, or data transmission media (including wireless signals). The generic vulnerability is the physical accessibility of hardware, facilities, and communication media, and the exploitability of Layer 1 (Physical Layer) communications and hardware interfaces. Encompasses two main types:
+A threat cluster where an attacker gains unauthorized physical interaction with or causes physical interference to hardware, devices, facilities, or data transmission media (including wireless signals). The generic vulnerability is the physical accessibility of infrastructure and the exploitability of physical-layer properties. Encompasses two sub-cluster vectors:
 
-- **Direct Physical Access Attacks (#8.1):** Require physical touch or direct interaction (tampering, theft, physical intrusion, unauthorized device connection)
-- **Indirect Physical Access Attacks (#8.2):** Exploit physical properties without direct contact (TEMPEST, signal jamming, acoustic attacks, environmental disruption)
+- **Mechanical vector (#8.1, contact):** Requires physical touch or direct interaction (tampering, theft, physical intrusion, unauthorized device connection)
+- **Signal vector (#8.2, no contact):** Exploits physical properties without direct contact (TEMPEST, signal jamming, acoustic attacks, environmental disruption)
 
 **Related reading:** [CWE-514 (covert channel) → TLCTC #8](https://www.tlctc.net/blog-cwe-514-covert-channel-mapping.html), [Topology of cyber attacks — Bridge vs Internal](https://www.tlctc.net/tlctc-topology-of-cyber-attacks.html)
 
@@ -1468,7 +1468,7 @@ See also: Exploiting Server (#2), Exploiting Client (#3), Malware (#7)
 
 ### RFID Skimming *(Industry Term)*
 
-The unauthorized reading of RFID (Radio-Frequency Identification) chips from proximity, typically to clone access cards or extract stored data. In TLCTC: maps to `#8 Physical Attack` (specifically `#8.2 Indirect Physical Access`) — the attacker exploits physical properties (radio frequency emanations) without direct contact with the target device.
+The unauthorized reading of RFID (Radio-Frequency Identification) chips from proximity, typically to clone access cards or extract stored data. In TLCTC: maps to `#8 Physical Attack` (specifically the `#8.2` signal vector, no contact) — the attacker exploits physical properties (radio frequency emanations) without direct contact with the target device.
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#8)
 
@@ -1808,7 +1808,7 @@ Precedence rules applied when a step appears to fit multiple clusters. Applied i
 
 ### TEMPEST *(Industry Term)*
 
-A codename for standards and techniques related to electromagnetic emanation security — both the interception of unintentional electromagnetic emissions from electronic equipment and the shielding against such interception. In TLCTC: TEMPEST attacks map to `#8 Physical Attack` (specifically `#8.2 Indirect Physical Access`) — exploiting physical emanation properties without direct contact with the target device. Related techniques include Van Eck Phreaking.
+A codename for standards and techniques related to electromagnetic emanation security — both the interception of unintentional electromagnetic emissions from electronic equipment and the shielding against such interception. In TLCTC: TEMPEST attacks map to `#8 Physical Attack` (specifically the `#8.2` signal vector, no contact) — exploiting physical emanation properties without direct contact with the target device. Related techniques include Van Eck Phreaking.
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#8)
 
@@ -1947,7 +1947,7 @@ Categorical labels for Δt ranges that describe the defender's feasible response
 
 ### Van Eck Phreaking *(Industry Term)*
 
-A technique for eavesdropping on the contents of a CRT or LCD display by detecting and decoding the electromagnetic emissions produced by the display. In TLCTC: maps to `#8 Physical Attack` (specifically `#8.2 Indirect Physical Access`) — exploiting electromagnetic emanation properties without direct physical contact.
+A technique for eavesdropping on the contents of a CRT or LCD display by detecting and decoding the electromagnetic emissions produced by the display. In TLCTC: maps to `#8 Physical Attack` (specifically the `#8.2` signal vector, no contact) — exploiting electromagnetic emanation properties without direct physical contact.
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#8)
 
