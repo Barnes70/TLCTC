@@ -12,30 +12,30 @@ The unit tests in `tests/` cover the same logic against
 
 ---
 
-## TC-1 â€” CWEâ†’cluster (CWE-89 SQL Injection)
+## TC-1 — CWE→cluster (CWE-89 SQL Injection)
 
 | | |
 |---|---|
 | Input finding | `cwe=["CWE-89"]`, path `src/api/u.py`, producer Semgrep |
-| Canonical mapping | `#2` (Exploiting Server) â€” `Allowed`, not context-dependent |
+| Canonical mapping | `#2` (Exploiting Server) — `Allowed`, not context-dependent |
 | Expected `primary_cluster` | `#2` |
 | Expected `status` | `classified` |
 | Expected provenance | `table=tlctc-cwe`, `identifier=CWE-89` |
 | Test method | `test_classifier.TestClassifier.test_allowed_cwe_classifies` |
 
 **Why this matters:** Validates the core CWE-first lookup path. CWE-89 maps
-to `#2` in the canonical 985-entry mapping â€” the classifier must resolve it
+to `#2` in the canonical 985-entry mapping — the classifier must resolve it
 directly without context-dependent logic.
 
 ---
 
-## TC-2 â€” #2|#3 R-ROLE resolution
+## TC-2 — #2|#3 R-ROLE resolution
 
 | | |
 |---|---|
 | Input finding | `cwe=["CWE-79"]`, path `src/api/u.py`, producer Semgrep |
-| Canonical mapping | `#2 \| #3` â€” `Allowed`, context-dependent |
-| Expected `primary_cluster` | `#2` (server branch â€” `**/api/**` glob matches) |
+| Canonical mapping | `#2 \| #3` — `Allowed`, context-dependent |
+| Expected `primary_cluster` | `#2` (server branch — `**/api/**` glob matches) |
 | Expected `role_reason` | contains `"server-role"` |
 | Test method | `test_classifier.TestClassifier.test_alternation_resolved_by_rrole` |
 
@@ -45,7 +45,7 @@ resolution; the decision is recorded on the finding so reports show *why*.
 
 ---
 
-## TC-3 â€” Discouraged verdict â†’ low_confidence
+## TC-3 — Discouraged verdict → low_confidence
 
 | | |
 |---|---|
@@ -62,7 +62,7 @@ forcing a misleading single-cluster label.
 
 ---
 
-## TC-4 â€” Prohibited verdict â†’ skipped
+## TC-4 — Prohibited verdict → skipped
 
 | | |
 |---|---|
@@ -78,12 +78,12 @@ misleading classification.
 
 ---
 
-## TC-5 â€” CVEâ†’KEV fallback
+## TC-5 — CVE→KEV fallback
 
 | | |
 |---|---|
 | Input finding | `cve=["CVE-2021-44228"]`, no CWE, path `pom.xml`, producer Trivy |
-| KEV table | CVE-2021-44228 â†’ `#2` (Log4Shell) |
+| KEV table | CVE-2021-44228 → `#2` (Log4Shell) |
 | Expected `primary_cluster` | `#2` |
 | Expected `status` | `classified` |
 | Expected provenance | `table=tlctc-kev` |
@@ -96,7 +96,7 @@ requiring a network call to NVD.
 
 ---
 
-## TC-6 â€” Unmapped finding
+## TC-6 — Unmapped finding
 
 | | |
 |---|---|
@@ -106,11 +106,11 @@ requiring a network call to NVD.
 | Test method | `test_classifier.TestClassifier.test_unmapped` |
 
 **Why this matters:** The classifier must handle findings with no
-classifiable identifier gracefully â€” unmapped does not mean error.
+classifiable identifier gracefully — unmapped does not mean error.
 
 ---
 
-## TC-7 â€” Multi-CWE: skippable CWE then valid CWE classifies
+## TC-7 — Multi-CWE: skippable CWE then valid CWE classifies
 
 | | |
 |---|---|
@@ -121,12 +121,12 @@ classifiable identifier gracefully â€” unmapped does not mean error.
 | Test method | `test_classifier.TestClassifier.test_skippable_cwe_then_valid_cwe_classifies` |
 
 **Why this matters:** A finding may carry multiple CWEs. A Prohibited/N-A
-entry in position 0 must not short-circuit the search â€” the classifier must
+entry in position 0 must not short-circuit the search — the classifier must
 continue to the next CWE and classify on the first usable hit.
 
 ---
 
-## TC-8 â€” `--fail-on-cluster` exits 2
+## TC-8 — `--fail-on-cluster` exits 2
 
 | | |
 |---|---|
