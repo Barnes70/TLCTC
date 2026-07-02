@@ -316,7 +316,7 @@ Every specific CVE is an instance of a generic vulnerability and maps to a prima
 
 Example: An RCE vulnerability in Apache Struts (CVE-2017-5638) is a server-side implementation flaw → **#2 Exploiting Server**. If the exploit leads to code execution → **#2 → #7**.
 
-The [`mappings/mitre-cwe/`](mappings/mitre-cwe/) directory contains the **mapping of 987 CWE weaknesses** to TLCTC clusters, including rationale, confidence verdicts, CVE references, and a decision tree methodology. Because CWE defines the *flaw* while TLCTC defines the *exploit vector*, the same CWE can map to different clusters depending on context (e.g., server-side vs. client-side). See the [CWE mapping README](mappings/mitre-cwe/README.md) for notation and the [decision tree](mappings/mitre-cwe/decision-tree.md) for classification methodology.
+The [`mappings/mitre-cwe/`](mappings/mitre-cwe/) directory contains the **mapping of 985 CWE weaknesses** to TLCTC clusters, including rationale, confidence verdicts, CVE references, and a decision tree methodology. Because CWE defines the *flaw* while TLCTC defines the *exploit vector*, the same CWE can map to different clusters depending on context (e.g., server-side vs. client-side). See the [CWE mapping README](mappings/mitre-cwe/README.md) for notation and the [decision tree](mappings/mitre-cwe/decision-tree.md) for classification methodology.
 
 > **Note:** The CWE mapping was generated with AI assistance and is marked experimental.
 
@@ -423,7 +423,7 @@ tlctc/
 │   │       └── soc-to-risk-walkthrough.md    # Worked example: SOC → risk register
 │   ├── mitre-cwe/                            # MITRE CWE → TLCTC (experimental)
 │   │   ├── README.md                         # Mapping documentation & verdict system
-│   │   ├── tlctc-cwe.json                    # 987 CWE mappings with rationale & CVE refs
+│   │   ├── tlctc-cwe.json                    # 985 CWE mappings with rationale & CVE refs
 │   │   ├── decision-tree.md                  # Classification methodology
 │   │   └── examples/
 │   │       └── cwe-to-control-walkthrough.md # Worked example: vuln findings → controls

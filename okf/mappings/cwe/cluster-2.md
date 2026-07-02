@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "CWE weaknesses → #2 Exploiting Server"
-description: "411 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server."
+description: "409 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server."
 resource: "tlctc:mapping:cwe:cluster-2"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE CWE → TLCTC mapping (`mappings/mitre-cwe/`). AI-generated, human-reviewed; experimental.
 
-Mapped entries: **411**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md).
+Mapped entries: **409**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
@@ -199,7 +199,6 @@ Mapped entries: **411**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md)
 | CWE-253 | Incorrect Check of Function Return Value | #2 \| #3 | Allowed | Incorrect check of function return value (treating partial-success as success, ignoring -1 from system calls). Code implementation flaw — server-role (#2) or client-role (#3) per R-ROLE. |
 | CWE-274 | Improper Handling of Insufficient Privileges | #2 | Discouraged | Parent class for insufficient-privilege error-handling flaws. Specific cases classify at child CWEs. Decision tree Q2 -> #2. |
 | CWE-280 | Improper Handling of Insufficient Permissions or Privileges | #2 \| #3 | Allowed | Error-handling code implementation flaw — failure to detect/propagate the condition leaves the program in an undefined or insecure state. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. |
-| CWE-316 | Cleartext Storage of Sensitive Information in Memory | #2 \| #3 | Allowed | Memory exposure. A critical issue for Client apps (#3) where physical/local access is more likely. |
 | CWE-351 | Insufficient Type Distinction | #2 \| #3 | Allowed | Insufficient type distinction lets attacker substitute one object type for another, causing the consumer to misinterpret content (type confusion). Memory-safety code implementation flaw. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. |
 | CWE-353 | Missing Support for Integrity Check | #2 \| #3 | Allowed | Code implementation flaw (#2/#3) where integrity checking (HMAC, signatures, checksums) was not implemented in the software. The coding omission enables tampering. |
 | CWE-354 | Improper Validation of Integrity Check Value | #2 \| #3 | Allowed | Code implementation flaw (#2/#3) in the logic that validates integrity values (HMAC, checksums, signatures). The validation code itself contains bugs. |
@@ -425,5 +424,4 @@ Mapped entries: **411**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md)
 | CWE-1386 | Insecure Operation on Windows Junction / Mount Point | #2 \| #3 | Allowed | Windows junction/mount-point manipulation lets an attacker redirect privileged file access to attacker-chosen locations. Path-traversal/equivalence variant — code implementation flaw in path canonicalization. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. See CWE-22 for the parent class discussion. |
 | CWE-1389 | Incorrect Parsing of Numbers with Different Radices | #2 \| #3 | Allowed | Numeric parsing accepts different radices (octal-leading-zero, 0x hex) inconsistently between security check and consumer, producing parsing-discrepancy bypass. Arithmetic/numeric code implementation flaw (overflow, underflow, sign issue, precision). Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. |
 | CWE-1419 | Incorrect Initialization of Resource | #2 \| #3 | Allowed | Resource initialized to an incorrect/unsafe value, propagating into security decisions. Input-validation code implementation flaw at the parser/validator boundary. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. |
-| CWE-1389 | Incorrect Parsing of Numbers with Different Radices | #2 \| #3 | Allowed | Numeric parsing accepts different radices (octal-leading-zero, 0x hex) inconsistently between security check and consumer, producing parsing-discrepancy bypass. Arithmetic/numeric code implementation flaw (overflow, underflow, sign issue, precision). Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. |
 | CWE-1427 | Improper Neutralization of Input Used for LLM Prompting | #2 | Allowed | Prompt injection — server-side LLM endpoint concatenates attacker input into the prompt, letting the attacker override system instructions. Decision tree Q2 -> #2. |
