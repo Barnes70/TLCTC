@@ -12,9 +12,9 @@ your platform; behaviour is identical across builds.
 
 The two Cortex builds:
 
-- Tag incidents with TLCTC cluster at ingestion via an ATT&CKâ†’TLCTC classifier.
+- Tag incidents with TLCTC cluster at ingestion via an ATT&CK→TLCTC classifier.
 - Route to 10 cluster-scoped master playbooks (Axiom III: classify by cause, not outcome).
-- Branch response by Velocity Class (VC-1â€¦VC-4).
+- Branch response by Velocity Class (VC-1…VC-4).
 - Enforce Axiom VI / R-EXEC / R-CRED / R-SUPPLY / R-ROLE classification splits.
 - Emit a Layer 3 attack-path JSON on close that validates against `json-schemas/layer-3/tlctc-attack-path.schema.json`.
 - Trigger Propagated PR controls (GDPR Art. 33, NIS2 Art. 23) through the RS Container sub-playbook.
@@ -24,18 +24,18 @@ import on 6.2 (different object schemas, LayoutsContainer, content-pack format).
 
 The SonarQube build:
 
-- Translates SAST findings to TLCTC clusters via the canonical 985-entry CWEâ†’TLCTC mapping (`mappings/mitre-cwe/tlctc-cwe.json`).
+- Translates SAST findings to TLCTC clusters via the canonical 985-entry CWE→TLCTC mapping (`mappings/mitre-cwe/tlctc-cwe.json`).
 - Applies R-ROLE context-aware logic (file-path globs) for ambiguous `#2 | #3` mappings.
 - Read-only by default (emits JSON / Markdown / SARIF); opt-in `--apply-tags` writes `tlctc-NN` tags back via `/api/issues/set_tags`.
 - Works equally on self-hosted SonarQube and SonarCloud (Web-API based).
-- Does NOT emit Layer 3 â€” SAST findings are weaknesses, not realised attack paths.
+- Does NOT emit Layer 3 — SAST findings are weaknesses, not realised attack paths.
 
 The SARIF build:
 
 - Classifies findings from any SARIF 2.1.0 producer to TLCTC clusters.
-- CWE-first via the canonical 985-entry CWEâ†’TLCTC mapping; CVE-only findings fall back to the offline KEVâ†’TLCTC table (`mappings/cisa-kev/tlctc-kev.json`).
+- CWE-first via the canonical 985-entry CWE→TLCTC mapping; CVE-only findings fall back to the offline KEV→TLCTC table (`mappings/cisa-kev/tlctc-kev.json`).
 - Applies R-ROLE (file-path globs) for ambiguous `#2 | #3` mappings.
 - Emits JSON / Markdown / TLCTC-enriched SARIF; `--fail-on-cluster` gates CI.
-- Does NOT emit Layer 3 â€” SARIF findings are weaknesses, not realised attack paths.
+- Does NOT emit Layer 3 — SARIF findings are weaknesses, not realised attack paths.
 
 Each directory has its own README, deploy runbook, and test cases.
