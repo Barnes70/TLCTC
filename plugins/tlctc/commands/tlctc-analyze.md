@@ -1,9 +1,9 @@
 ---
-description: Analyze a security document (forensic report, CVE, threat-intel bulletin, red-team write-up) using the TLCTC v2.1 taxonomy. Produces an attack-path classification with R-* rule citations, Δt velocity annotations, boundary operators, DRE outcomes, and control-gap recommendations.
+description: Analyze a security document (forensic report, CVE, threat-intel bulletin, red-team write-up) using the TLCTC v2.3 taxonomy. Produces an attack-path classification with R-* rule citations, Δt velocity annotations, boundary operators, DRE outcomes, and control-gap recommendations.
 argument-hint: [path-to-document | URL | pasted text]
 ---
 
-Analyze the following security document using the **TLCTC v2.1** framework loaded by the `tlctc-classify` skill.
+Analyze the following security document using the **TLCTC v2.3** framework loaded by the `tlctc-classify` skill.
 
 **Input:** $ARGUMENTS
 
