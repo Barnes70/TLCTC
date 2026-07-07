@@ -205,7 +205,7 @@ Each cluster in `tlctc-framework.v2.3.json` carries:
 | #1 | Abuse of Functions | internal | Trust, scope, and complexity designed into software functionality |
 | #2 | Exploiting Server | internal | Server-side implementation flaws |
 | #3 | Exploiting Client | internal | Client-side implementation flaws |
-| #4 | Identity Theft | internal | Insufficient identity-artifact binding at point of use |
+| #4 | Identity Theft | internal | Insufficient identity-artifact binding at the point of authentication |
 | #5 | Man in the Middle | internal | Communication paths observable/alterable by intermediary |
 | #6 | Flooding Attack | internal | Finite system capacity |
 | #7 | Malware | internal | Environments execute attacker-controlled code/content |

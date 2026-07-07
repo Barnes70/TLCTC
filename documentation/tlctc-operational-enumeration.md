@@ -90,7 +90,7 @@ Proposed sub-clusters go here; each must satisfy R-SUBCLUSTER (same generic vuln
 ### #1 Abuse of Functions — *generic vulnerability: inherent trust/scope/complexity of designed functionality*
 Status: **Open**. *(Proposals to be added.)*
 
-### #4 Identity Theft — *generic vulnerability: insufficient identity-artifact binding at point of use*
+### #4 Identity Theft — *generic vulnerability: insufficient identity-artifact binding at the point of authentication*
 Status: **Open**. *(Proposals to be added.)*
 
 ### #5 Man in the Middle — *generic vulnerability: insufficient end-to-end protection of the channel*

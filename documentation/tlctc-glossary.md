@@ -234,7 +234,7 @@ See also: Flooding Attack (#6), Malware (#7), DDoS
 
 ### Brute-Force Attack *(Industry Term)*
 
-A method of systematically trying all possible credential combinations (passwords, PINs, encryption keys) to gain unauthorized access. In TLCTC: maps to `#4 Identity Theft` — the attacker is attempting to derive and use credentials to impersonate a legitimate identity. The generic vulnerability exploited is weak credential protection (e.g., lack of account lockout, short password requirements).
+A method of systematically trying all possible credential combinations (passwords, PINs, encryption keys) to gain unauthorized access. In TLCTC: maps to `#4 Identity Theft` — the attacker is attempting to derive and use credentials to impersonate a legitimate identity. The generic vulnerability is the insufficient binding, at the point of authentication, between a presented credential and the authentic holder: the endpoint cannot distinguish a guessing attacker from the legitimate holder when controls such as account lockout, rate-limiting, or strong-password requirements are absent. (Weak credential *storage/protection* is a separate, acquisition-side concern that classifies to the enabling cluster, not #4.)
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#4)
 
@@ -1163,7 +1163,7 @@ See also: Identity Theft (#4), Credential Acquisition, Credential Application
 
 ### Password Spraying *(Industry Term)*
 
-An attack that tries a small number of commonly used passwords against many accounts simultaneously, avoiding account lockout thresholds. In TLCTC: maps to `#4 Identity Theft` — the attacker is attempting to derive valid credentials to impersonate a legitimate identity. The generic vulnerability is weak credential protection (predictable passwords, lack of MFA).
+An attack that tries a small number of commonly used passwords against many accounts simultaneously, avoiding account lockout thresholds. In TLCTC: maps to `#4 Identity Theft` — the attacker is attempting to derive valid credentials to impersonate a legitimate identity. The generic vulnerability is the insufficient binding, at the point of authentication, between a presented credential and the authentic holder: a guessed valid password is accepted as if from the legitimate holder when controls such as MFA or lockout are absent (predictable passwords widen the guess space).
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#4)
 
@@ -2060,7 +2060,7 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 | **#1** | Abuse of Functions | Functional scope/trust (designed capabilities abused) | Internal |
 | **#2** | Exploiting Server | Server-side code implementation flaws | Internal |
 | **#3** | Exploiting Client | Client-side code implementation flaws | Internal |
-| **#4** | Identity Theft | Insufficient identity-artifact binding at point of use | Internal |
+| **#4** | Identity Theft | Insufficient identity-artifact binding at the point of authentication | Internal |
 | **#5** | Man in the Middle | Lack of end-to-end communication protection | Internal |
 | **#6** | Flooding Attack | Finite capacity limitations | Internal |
 | **#7** | Malware | Designed execution capability for untrusted content | Internal |

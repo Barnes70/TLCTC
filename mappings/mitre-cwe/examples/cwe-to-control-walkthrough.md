@@ -37,12 +37,11 @@ Stored XSS is a server-side coding flaw (#2) — the server accepts and stores u
 
 ### CWE-328 — Use of Weak Hash
 
-> Q3: Is this a credential/authentication weakness? **YES** — weak password protection
-> This is about credential **protection** (making acquisition easier), not credential use.
+> Q3: Is this a credential/authentication weakness? It concerns credential **protection** — making acquisition easier — **not** the point-of-authentication binding that defines #4.
 
-**Mapping:** `#4`
+**Mapping:** Enabling Condition (R-CRED) — not itself a cluster
 
-Weak hashing makes credential acquisition trivially easier (offline cracking). The weakness is in the identity management mechanism. An attacker who cracks the hash and authenticates exploits #4 Identity Theft.
+Weak hashing makes credential acquisition trivially easier (offline cracking of exposed hashes). Under TLCTC v2.3.1, #4 Identity Theft is retightened to the insufficient binding, at the point of authentication, between a presented credential and the authentic holder; credential *storage/protection* failures are acquisition-side and classify to the enabling cluster that reaches the exposed credential store — here `#2`, the SQL-injection server exploit that dumps it — not to #4. The later use of a cracked credential to authenticate is the separate #4 step. Full chain: `#2 →[offline crack] #4`.
 
 ### CWE-770 — Allocation of Resources Without Limits
 
@@ -70,9 +69,9 @@ Complete attack path if exploited: `#1 → #4` (discover hardcoded credential �
 |---------|----------|------|
 | **#2 Exploiting Server** | CWE-89, CWE-79 | Server-side code flaws enabling injection |
 | **#7 Malware** | CWE-89 → #7, CWE-79 → #7 | Code execution enabled by server flaws |
-| **#4 Identity Theft** | CWE-328 | Weak credential protection |
 | **#6 Flooding Attack** | CWE-770 | Resource exhaustion via API |
-| **#1 Abuse of Functions** | CWE-798 | Hardcoded credential as design flaw |
+| **#1 Abuse of Functions** | CWE-798 | Hardcoded credential as design flaw (enables a later #4) |
+| *Enabling condition (R-CRED)* | CWE-328 | Weak stored-hash eases offline cracking; acquisition-side — routes to the `#2` dump, not #4 |
 
 ### Worst-Case Attack Path
 
@@ -104,7 +103,7 @@ An attacker chains these weaknesses:
 > |---------|------------|-------------------|
 > | **#2** | Input validation failures in server code | Parameterized queries, output encoding, code review |
 > | **#7** | Code execution possible via #2 | WAF rules, sandboxed execution, CSP headers |
-> | **#4** | Weak credential protection | Upgrade to bcrypt/argon2, credential rotation |
+> | *Enabling condition (CWE-328)* | Weak password hashing eases offline cracking | Upgrade to bcrypt/argon2, credential rotation (reduces the credential acquisition that feeds a later #4) |
 > | **#6** | No rate limiting | API gateway rate limits, throttling |
 > | **#1** | Hardcoded credentials | Secrets management (vault), remove from codebase |
 >
