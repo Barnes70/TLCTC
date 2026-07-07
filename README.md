@@ -459,7 +459,6 @@ tlctc/
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
-│   │   ├── tlctc-framework.v2.3.json         # V2.1 content (filename kept for link stability)
 │   │   └── tlctc-framework.v2.3.json         # V2.3 citable baseline: clusters, axioms, 16 rules
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
