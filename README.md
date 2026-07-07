@@ -370,6 +370,8 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 | **Layer 2 — Reference Registry** | Reusable reference objects: responsibility spheres, boundary contexts, intra-system boundary types | `tlctc-reference.schema.json` / `@Org-registry.vX.Y.Z.json` | Organization-specific | Occasionally (org changes) |
 | **Layer 3 — Attack Path Instances** | Specific incidents: sequences, parallel groups, Δt, boundary annotations, DREs | `tlctc-attack-path.schema.json` / `incident-<id>.json` | Per-incident | Constantly (new incidents) |
 
+> **Layer 4 — Risk Quantification (optional extension, *proposed*):** a FAIR bridge that quantifies financial risk over a Layer 3 attack path (Sequence Complexity Factor, Compound Threat Multipliers, Velocity-Weighted Control Effectiveness, Path Variance Analysis). It sits on top of the three core layers and is not required to use them. Schema: [`json-schemas/layer-4/tlctc-fair-risk.schema.json`](json-schemas/layer-4/tlctc-fair-risk.schema.json); rationale: [`documentation/tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md).
+
 ### Design Principles
 
 - **Separation of meaning from measurement** — Layer 1 defines *what a cluster is*; Layer 3 records *what happened*. Incident records must not redefine clusters.
