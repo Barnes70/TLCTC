@@ -506,7 +506,7 @@ tlctc/
 │   ├── tlctc-v2.0-whitepaper.pdf             # PDF export of the white paper
 │   ├── tlctc-glossary.md                     # Comprehensive definitions
 │   ├── tlctc-glossary.pdf                    # PDF export of the glossary
-│   ├── tlctc-v2.3-json-architecture.md       # JSON Architecture Specification
+│   ├── tlctc-ti-sharing-profile.md           # TI Sharing — Extension Profile (companion)
 │   ├── tlctc-fair-integration-proposal.md    # FAIR integration proposal (Layer 4 spec)
 │   ├── tlctc-cve-extension-proposal.md       # CVE extension proposal
 │   ├── tlctc-replication-notation-proposal.md # Replication notation (×N fan-out / ×* self-propagation) — conceptual proposal (v0.1)
