@@ -3,7 +3,7 @@
     "incident_id": "INFOSTEALER-RANSOMWARE-PIPELINE-2025",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-04-09T00:00:00Z",
     "notes": "Canonical infostealer-to-ransomware pipeline as described in the Cloudflare 2026 Threat Report. This represents the standard operational baseline for the 2026 ransomware ecosystem. The pipeline: (1) Infostealers like LummaC2 harvest credentials for Citrix, Microsoft RDWeb, browser-based VPNs, and live session tokens that bypass MFA. (2) Initial access brokers (IABs) purchase logs from infostealer operators, validate credentials, and auction high-value corporate access. (3) Ransomware affiliates purchase access and execute data theft and direct extortion. Per Verizon DBIR 2025, 54% of all ransomware attacks traced back to infostealer-enabled credential theft. GenAI has compressed attack timelines from days to minutes. Manufacturing and critical infrastructure represent over 50% of targeted attacks. Attack path: #7 -> #4 -> #1 + [DRE: C] -> #7 + [DRE: Ac] -> #1. Sources: Cloudflare 2026 Threat Report (pp. 39-41), Verizon 2025 DBIR, HellCat ransomware breaches (Jaguar Land Rover, Telefonica). AI-GENERATED EXAMPLE: This is a composite/canonical pattern derived from multiple incidents described in the report."
   },

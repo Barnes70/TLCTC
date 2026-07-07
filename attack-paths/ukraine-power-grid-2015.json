@@ -3,7 +3,7 @@
     "incident_id": "UKRAINE-POWER-GRID-2015",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "Ukraine power grid cyberattack (December 23, 2015). Russian-attributed attack (Sandworm/Voodoo Bear group, also known as TeleBots) against three Ukrainian power distribution companies: Kyivoblenergo, Prykarpattyaoblenergo, and Chernivtsioblenergo. The attack caused a blackout affecting approximately 230,000 customers for 1-6 hours — the first confirmed cyberattack to take down a power grid. Attack chain: spear-phishing with BlackEnergy 3 trojan macro dropper, ~6 months of reconnaissance and lateral movement, VPN credential theft, SCADA/ICS network access, legitimate HMI commands to open circuit breakers, KillDisk wiper deployment for anti-recovery. Attack path: #9 ||[human][@External→@PowerCompany]|| →[Δt=instant] #7 →[Δt=~6mo] #4 →[Δt=~2h] #1 →[Δt=~4h] #1 + [DRE: A] →[Δt=instant] #7 + [DRE: A]. Axiom IV: attribution to Sandworm/Russia does not affect cluster classification. Sources: CISA ICS-CERT Alert IR-ALERT-H-16-056-01, SANS ICS report 'Analysis of the Cyber Attack on the Ukrainian Power Grid' by Robert M. Lee, Michael J. Assante, and Tim Conway (E-ISAC, March 2016), Symantec BlackEnergy/Sandworm research, Dragos Inc. CRASHOVERRIDE/ELECTRUM analysis."
   },

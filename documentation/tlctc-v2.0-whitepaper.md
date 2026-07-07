@@ -4609,7 +4609,7 @@ Defines the immutable “dictionary” for a TLCTC release:
 **Artifact types**
 
 - `tlctc-framework.schema.json` (schema)
-- `tlctc-framework.v2.0.json` (content package)
+- `tlctc-framework.v2.3.json` (content package)
 
 #### Layer 2 — Reference Registry (Context)
 
@@ -5356,7 +5356,7 @@ The cluster entries below are reproduced verbatim from the canonical framework d
     "incident_id": "EXAMPLE-2025-001",
     "analyst_confidence": "medium",
     "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "registry_ref": "@Org-registry.v1.0.0.json",
     "created_at": "2025-12-14T10:00:00Z",
     "notes": "Illustrative example only"

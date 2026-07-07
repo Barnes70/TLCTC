@@ -4,9 +4,9 @@
 
 | v2.3 element | Source |
 |---|---|
-| 10 clusters | `tlctc-framework.v2.0.json` (verbatim) / whitepaper §4.1 |
-| 10 axioms | `tlctc-framework.v2.0.json` (verbatim) / whitepaper §2 |
-| R-EXEC, R-ROLE, R-FLOOD, R-SUPPLY, R-MITM, R-CRED | `tlctc-framework.v2.0.json` (verbatim) |
+| 10 clusters | `tlctc-framework.v2.3.json` (verbatim) / whitepaper §4.1 |
+| 10 axioms | `tlctc-framework.v2.3.json` (verbatim) / whitepaper §2 |
+| R-EXEC, R-ROLE, R-FLOOD, R-SUPPLY, R-MITM, R-CRED | `tlctc-framework.v2.3.json` (verbatim) |
 | R-TRANSIT-3, R-INTRA-7, R-INTRA-9 | `CLAUDE.md` v2.1 boundary extensions / whitepaper §11 |
 | R-UNRES-2/3/5/6/7/8/9 | `CLAUDE.md` v2.1 unresolved-step rules / whitepaper §11 |
 | Thought experiment | whitepaper §3 |
@@ -36,7 +36,7 @@ A single normative correction to the **#4 Identity Theft** cluster. Cluster iden
 
 **Justification (axiom-level, per the immutability rule).** The prior generic-vulnerability field claimed scope over the *whole* credential lifecycle — including storage and transmission — while the cluster's own boundary tests and **R-CRED** already assign credential acquisition/exposure/protection failures to the enabling cluster (#2/#5/#7/#8). It therefore contradicted **Axiom VI** (one generic vulnerability → one cluster), **Axiom VII** (classification anchored in the initial cause, not downstream effects), and **Axiom X** (acquisition vs. application are distinct steps). The retightened wording names the flaw #4 actually exploits — the authentication-time identity-artifact binding gap — bringing the field into conformance with the axioms and matching the structural pattern of the other nine clusters (whose generic-vulnerability line is scope-defining and 1:1 with their boundary tests). This also removes a downstream control-ownership error: storage/transmission controls belong to the enabling clusters, not #4.
 
-**Harmonization.** The v2.3.1 wording is applied consistently across `tlctc-framework.v2.3.json`, `tlctc-v2.3-core.md`, `tlctc-glossary.md` (prose + quick-reference), `glossary/tlctc-glossary.json`, `tlctc-v2.0-whitepaper.md`, `README.md`, the `tlctc-classify` skill, and the HTML tools. The generated `okf/` bundle is rebuilt from these sources. The frozen `tlctc-framework.v2.0.json` dictionary is left as the historical v2.0 record.
+**Harmonization.** The v2.3.1 wording is applied consistently across `tlctc-framework.v2.3.json`, `tlctc-v2.3-core.md`, `tlctc-glossary.md` (prose + quick-reference), `glossary/tlctc-glossary.json`, `tlctc-v2.0-whitepaper.md`, `README.md`, the `tlctc-classify` skill, and the HTML tools. The generated `okf/` bundle is rebuilt from these sources. The frozen `tlctc-framework.v2.3.json` dictionary is left as the historical v2.0 record.
 
 ## Editorial Alignment — Canonical-String Harmonization (2026-07-02)
 

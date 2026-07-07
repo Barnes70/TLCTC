@@ -21,7 +21,7 @@ Every submission must be a valid JSON file conforming to the Layer 3 attack path
 - **`metadata.incident_id`** — Unique identifier for the incident
 - **`metadata.analyst_confidence`** — `low`, `medium`, or `high`
 - **`metadata.tlctc_version`** — Must be `"2.0"` or `"2.1"`
-- **`metadata.framework_ref`** — Must reference `"tlctc-framework.v2.0.json"`
+- **`metadata.framework_ref`** — Must reference `"tlctc-framework.v2.3.json"`
 - **`metadata.notes`** — Must include the compact attack path notation and source attribution
 
 ### Classification Rules

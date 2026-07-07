@@ -61,7 +61,7 @@ Data Risk Event (DRE) canonical short forms used in attack path outcomes:
 
 These files follow the three-layer architecture defined in §7 of the TLCTC v2.0 specification:
 
-- **Layer 1 (Framework Definition):** Referenced via `framework_ref`, not duplicated. All files point to `tlctc-framework.v2.0.json` as the authoritative cluster definitions.
+- **Layer 1 (Framework Definition):** Referenced via `framework_ref`, not duplicated. All files point to `tlctc-framework.v2.3.json` as the authoritative cluster definitions.
 - **Layer 2 (Reference Registry):** `agentic-tool-profiles.json` and `agentic-irreversibility-matrix.json` extend the reference registry with agentic AI-specific context data.
 - **Layer 3 (Attack Path Instances):** The 9 individual attack path files in `attack-paths/` are instance-level records following the canonical schema.
 

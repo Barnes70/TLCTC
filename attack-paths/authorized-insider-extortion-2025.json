@@ -3,7 +3,7 @@
     "incident_id": "AUTHORIZED-INSIDER-EXTORTION-2025",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-04-09T00:00:00Z",
     "notes": "Authorized insider threat and extortion campaign investigated by Cloudforce One REACT. A company's trusted employee with high-level permissions leaked sensitive client metadata and source code following a personal grievance, then launched a high-value extortion campaign. No traditional malware signatures — investigators mapped a 'shadow path' where the insider staged data over several weeks using legitimate production access during standard working hours. Unmasking involved behavioral science: investigators provoked the insider in internal communications by downplaying the attacker's skill, which provoked linguistic slips in the next ransom email matching internal comments. Sentiment analysis on internal communications matched ransom note patterns, leading to identification and interception during attempted flight from country. Attack path: #1 + [DRE: C] -> #9. Sources: Cloudflare 2026 Threat Report (pp. 41)."
   },

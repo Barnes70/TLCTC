@@ -4,7 +4,7 @@
 
 # TLCTC JSON Architecture
 
-## Standardized Threat Intelligence Sharing — v2.0
+## Standardized Threat Intelligence Sharing — v2.3
 
 &nbsp;
 
@@ -126,7 +126,7 @@ The TLCTC JSON architecture is organized into three layers, matching the white p
 │                  (Universal and Static)                      │
 │                                                             │
 │  tlctc-framework.schema.json        Validation schema       │
-│  tlctc-framework.v2.0.json          Content package         │
+│  tlctc-framework.v2.3.json          Content package         │
 │    ├─ Cluster definitions (#1–#10)                          │
 │    ├─ Axioms (I–X)                                          │
 │    ├─ Rules (R-EXEC, ...)                                   │
@@ -164,7 +164,7 @@ The TLCTC JSON architecture is organized into three layers, matching the white p
 
 | JSON File | Purpose | Scope | Update Frequency |
 |---|---|---|---|
-| `tlctc-framework.v2.0.json` | Core framework definitions | Universal | Rarely (framework updates) |
+| `tlctc-framework.v2.3.json` | Core framework definitions | Universal | Rarely (framework updates) |
 | `@Org-registry.vX.Y.Z.json` | Domain boundary definitions | Customizable | Occasionally (org changes) |
 | `tlctc-attack-path.schema.json` | Validation schema for instances | Universal | Rarely (schema evolution) |
 | `incident-<id>.json` | Specific attack instance | Per-incident | Per incident |
@@ -185,7 +185,7 @@ Provides the common language for threat classification. Every organization refer
 
 ### Cluster Properties (v2.0)
 
-Each cluster in `tlctc-framework.v2.0.json` carries:
+Each cluster in `tlctc-framework.v2.3.json` carries:
 
 | Field | Description |
 |---|---|
@@ -640,8 +640,8 @@ Per **R-SUPPLY**, `#10` is placed at the **Trust Acceptance Event** — the mome
   "metadata": {
     "incident_id": "APT29-SOLARWINDS-2020",
     "analyst_confidence": "high",
-    "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "registry_ref": "@Org-registry.v1.0.0.json",
     "created_at": "2020-12-15T00:00:00Z",
     "notes": "SolarWinds SUNBURST supply chain compromise. Originally documented by FireEye/Mandiant."
@@ -1010,7 +1010,7 @@ INCIDENT ANALYSIS WORKFLOW
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1. FRAMEWORK FOUNDATION
-   └─→ Load tlctc-framework.v2.0.json
+   └─→ Load tlctc-framework.v2.3.json
        ├─ Threat cluster definitions
        ├─ Axioms (I–X)
        └─ Rules (R-EXEC)
@@ -1050,7 +1050,7 @@ INCIDENT ANALYSIS WORKFLOW
 
 | Benefit | How It's Achieved |
 |---|---|
-| Universal Language | Everyone references the same `tlctc-framework.v2.0.json` definitions |
+| Universal Language | Everyone references the same `tlctc-framework.v2.3.json` definitions |
 | Machine-Readable | Structured JSON enables automated ingestion and analysis |
 | Consistent Validation | Schema ensures all instances follow the same structure |
 | Separation of Concerns | Framework (static) vs Intelligence (dynamic) clearly separated |
@@ -1067,7 +1067,7 @@ INCIDENT ANALYSIS WORKFLOW
 
 ### For Security Operations Centers (SOC)
 
-- Load `tlctc-framework.v2.0.json` into your SIEM/TIP
+- Load `tlctc-framework.v2.3.json` into your SIEM/TIP
 - Configure detection rules mapped to TLCTC clusters
 - When incidents occur, create `incident-<id>.json`
 - Share with trusted partners / ISACs / threat intelligence communities
@@ -1082,7 +1082,7 @@ INCIDENT ANALYSIS WORKFLOW
 
 ### For Risk Management
 
-- Reference `tlctc-framework.v2.0.json` for threat taxonomy in risk registers
+- Reference `tlctc-framework.v2.3.json` for threat taxonomy in risk registers
 - Map controls to specific TLCTC clusters using NIST CSF functions (see white paper, Chapter 8)
 - Analyze historical attack paths to identify control gaps
 - Prioritize investments based on cluster frequency in your sector
@@ -1100,7 +1100,7 @@ To document an attack you have observed:
 
 1. **Copy** the base structure from the schema (or use the SolarWinds example as a template).
 2. **For each step** in the attack:
-   - Map to the appropriate TLCTC cluster (use `tlctc-framework.v2.0.json` for reference)
+   - Map to the appropriate TLCTC cluster (use `tlctc-framework.v2.3.json` for reference)
    - Choose strategic (`#X`) or operational (`TLCTC-XX.YY`) notation for the `cluster` field
    - Add `topology_boundary` where the attack crosses a domain boundary
    - Set `fec_executed: true` and ensure a `#7` step exists per R-EXEC
@@ -1159,7 +1159,9 @@ These JSON structures are designed to integrate with:
 
 | This Guide | White Paper | Framework | Schema |
 |---|---|---|---|
-| v2.0 | TLCTC v2.0 White Paper, Chapter 7 | `tlctc-framework.v2.0.json` | `tlctc-attack-path.schema.json` v2.0 |
+| v2.3 | TLCTC v2.0 White Paper, Chapter 7 | `tlctc-framework.v2.3.json` | `tlctc-attack-path.schema.json` v2.0 |
+
+> **Version semantics:** "v2.3" identifies the **framework dictionary content** (`tlctc-framework.v2.3.json`), which this guide is aligned to. The JSON **schemas** (`tlctc-framework.schema.json`, `tlctc-attack-path.schema.json`) remain at **schema version 2.0** — they were not re-versioned by the v2.1/v2.3 content updates, so schema-format references in this guide correctly read "v2.0".
 
 ### Changes from v1.x JSON Architecture
 

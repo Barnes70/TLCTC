@@ -3,7 +3,7 @@
     "incident_id": "CHANGE-HEALTHCARE-2024",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "ALPHV/BlackCat ransomware attack on Change Healthcare (UnitedHealth Group), February 2024. Largest healthcare data breach in US history, affecting ~100 million individuals. Attacker used stolen credentials for a Citrix remote access portal with no MFA. Attack path: #4 →[Δt=~9d] #1 →[Δt=~2d] #1 + [DRE: C] →[Δt=~1d] #7 + [DRE: A]. $22M ransom paid. Sources: UnitedHealth Group CEO testimony to US Senate (May 2024), CISA advisory, HHS breach notification, AHA analysis."
   },

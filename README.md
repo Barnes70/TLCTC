@@ -366,7 +366,7 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 
 | Layer | Purpose | Artifact | Scope | Update Frequency |
 |---|---|---|---|---|
-| **Layer 1 — Framework Definition** | Immutable "dictionary": clusters, axioms, rule IDs, topology types | `tlctc-framework.schema.json` / `tlctc-framework.v2.0.json` | Universal | Rarely (framework evolution) |
+| **Layer 1 — Framework Definition** | Immutable "dictionary": clusters, axioms, rule IDs, topology types | `tlctc-framework.schema.json` / `tlctc-framework.v2.3.json` | Universal | Rarely (framework evolution) |
 | **Layer 2 — Reference Registry** | Reusable reference objects: responsibility spheres, boundary contexts, intra-system boundary types | `tlctc-reference.schema.json` / `@Org-registry.vX.Y.Z.json` | Organization-specific | Occasionally (org changes) |
 | **Layer 3 — Attack Path Instances** | Specific incidents: sequences, parallel groups, Δt, boundary annotations, DREs | `tlctc-attack-path.schema.json` / `incident-<id>.json` | Per-incident | Constantly (new incidents) |
 
@@ -459,7 +459,7 @@ tlctc/
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
-│   │   ├── tlctc-framework.v2.0.json         # V2.1 content (filename kept for link stability)
+│   │   ├── tlctc-framework.v2.3.json         # V2.1 content (filename kept for link stability)
 │   │   └── tlctc-framework.v2.3.json         # V2.3 citable baseline: clusters, axioms, 16 rules
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
@@ -506,7 +506,7 @@ tlctc/
 │   ├── tlctc-v2.0-whitepaper.pdf             # PDF export of the white paper
 │   ├── tlctc-glossary.md                     # Comprehensive definitions
 │   ├── tlctc-glossary.pdf                    # PDF export of the glossary
-│   ├── tlctc-v2.0-json-architecture.md       # JSON Architecture Specification
+│   ├── tlctc-v2.3-json-architecture.md       # JSON Architecture Specification
 │   ├── tlctc-fair-integration-proposal.md    # FAIR integration proposal (Layer 4 spec)
 │   ├── tlctc-cve-extension-proposal.md       # CVE extension proposal
 │   ├── tlctc-replication-notation-proposal.md # Replication notation (×N fan-out / ×* self-propagation) — conceptual proposal (v0.1)

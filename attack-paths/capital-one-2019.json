@@ -3,7 +3,7 @@
     "incident_id": "CAPITAL-ONE-2019",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "Capital One data breach, March 2019 (disclosed July 2019). Former AWS employee Paige Thompson exploited a misconfigured WAF (ModSecurity) on Capital One's AWS infrastructure via Server-Side Request Forgery (SSRF) to reach the EC2 instance metadata service (IMDS v1), obtaining temporary IAM role credentials. Those credentials were used to access S3 buckets containing 106 million customer records (credit card applications, SSNs, bank account numbers). Attack path: #2 + [DRE: C] →[Δt=instant] #4 →[Δt=~4h] #1 + [DRE: C]. Sources: Capital One public statement (July 2019), DOJ criminal complaint, AWS IMDS security guidance, US District Court Western District of Washington case documents."
   },

@@ -3,7 +3,7 @@
     "incident_id": "FRUMPYTOAD-TOUGHPROGRESS-2025",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-04-09T00:00:00Z",
     "notes": "FrumpyToad (APT41/Wicked Panda/Brass Typhoon) TOUGHPROGRESS campaign, October 2024 through mid-2025. Tracked by Cloudforce One. A sophisticated cloud-to-cloud C2 loop weaponizing Google Calendar to blend into legitimate enterprise traffic. Spear-phishing emails redirected through a chain of serverless platforms to host malicious ZIP archives on compromised government sites. The TOUGHPROGRESS malware reads and writes encrypted commands directly into Google Calendar event descriptions — stolen data is embedded in events dated May 30, 2023 (hardcoded); operators place commands in events dated July 30-31, 2023 (polled and executed). This Living off the XaaS (LotX) technique allows the actor to communicate with infected hosts without ever connecting to a malicious domain. Attack path: #9 ||[email][@External->@Org]|| -> #7 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 23), Cloudforce One telemetry."
   },

@@ -3,7 +3,7 @@
     "incident_id": "CHALK-DEBUG-PHISHING-2025",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-19T00:00:00Z",
     "notes": "Chalk/Debug npm phishing campaign (September 8, 2025). Attackers registered npmjs.help (typosquat of npmjs.com) and phished Josh Junon ('Qix'), maintainer of chalk, debug, and 16+ foundational npm packages. Stolen credentials used to publish trojanized versions with browser-targeted payload: obfuscated JavaScript hooking window.ethereum, fetch, and XMLHttpRequest to replace cryptocurrency wallet addresses across six blockchains using Levenshtein distance matching with 280+ hardcoded fallback addresses. Attack path: #9 ||[human][@External→@Maintainer(Qix)]|| →[~3d] + [DRE: C] #4 →[instant] #1 + [DRE: I] → #10 ||[update][@Maintainer(Qix)⇒@npm→@Consumers]|| →[~12h] #1 →[instant] #7 →[instant] #1 + [DRE: C, I]. Update vector (#10.1): existing packages receiving poisoned updates via permissive semver ranges. This example demonstrates: (1) v2.1 transit boundary notation with npm as carrier, (2) R-CRED credential duality (#9 acquisition → #4 use), (3) the #10→#1→#7 canonical install chain, (4) bridge cluster boundary annotations on #9 and #10. Sources: npm security advisory, Sonatype, community disclosure by Josh Junon."
   },

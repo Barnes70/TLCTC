@@ -3,7 +3,7 @@
     "incident_id": "BLOCKADE-SPIDER-EMBARGO-2025",
     "analyst_confidence": "medium",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-04-16T00:00:00Z",
     "notes": "BLOCKADE SPIDER's cross-domain Embargo ransomware campaigns (throughout 2025). Composite path derived from CrowdStrike's description of the adversary's progressive tradecraft spanning four operational domains: edge devices, identity/cloud, SaaS applications, and virtualization infrastructure. Techniques are 'conceptually similar to SCATTERED SPIDER, including creating unmanaged VMs in victim networks and subtly modifying existing identity-oriented security policies. No known link exists between the two adversaries.' Analyst confidence is medium because this is a composite from multiple campaigns, not a single incident with exact timestamps. Attack path: #2 + [DRE: C] →[Δt=?] #4 →[Δt=?] #1 + [DRE: C] →[Δt=?] #1 →[Δt=?] #1 →[Δt=?] #7 →[Δt=?] #1 + [DRE: C] →[Δt=?] #7 + [DRE: Ac]. Source: CrowdStrike 2026 Global Threat Report, pp. 24-25, Figure 13."
   },

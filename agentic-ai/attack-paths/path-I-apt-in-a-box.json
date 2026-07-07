@@ -3,7 +3,7 @@
     "incident_id": "agentic-path-I",
     "analyst_confidence": "high",
     "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "notes": "Path I — Rogue Agent as Persistence Mechanism (APT-in-a-Box). Scenario: MaliciousAgentIntroduced (Layer 2 AI-Specific). The malicious agent harvests credentials (#4 acquisition as consequence), then uses them (#4 application) for persistent, stealthy operations (#1). The agent's autonomous nature makes this an APT-in-a-box. Notation: #7→[instant]#4→[instant]#1 + [DRE: C]. Velocity: VC-4 (initial compromise), then VC-1 (deliberate low-and-slow operation). Paradoxically, the most sophisticated pattern deliberately slows down to avoid detection. The agent trades velocity for stealth — operating just below behavioural baselines over extended periods. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
   },
   "path_sequence": [

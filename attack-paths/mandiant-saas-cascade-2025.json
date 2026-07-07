@@ -3,7 +3,7 @@
     "incident_id": "MANDIANT-SAAS-CASCADE-2025",
     "analyst_confidence": "high",
     "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "registry_ref": "example-registry.json",
     "created_at": "2026-04-14T00:00:00Z",
     "notes": "Attack path derived from Mandiant M-Trends 2026 'The Cascading Impact of Third-Party SaaS Compromises' (pp. 74-77). UNC5221-style pattern: compromise a SaaS provider via a public-facing webshell / SQLi, extract Azure Service Principals and OAuth refresh tokens, then ride the provider's legitimate integration chain into downstream customer tenants. The downstream step is where #10 (Supply Chain) appears — at the customer's Trust Acceptance Event where the provider's service principal is honored. Sources: M-Trends 2026 pp. 21, 74-77."

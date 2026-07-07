@@ -134,7 +134,7 @@ classifier → automations → layout → incident type → incident fields → 
   truth: `mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json`.
   Re-export and re-upload the list whenever ATT&CK is updated upstream
   (typically twice yearly).
-- TLCTC framework JSON (`json-schemas/layer-1/tlctc-framework.v2.0.json`) is
+- TLCTC framework JSON (`json-schemas/layer-1/tlctc-framework.v2.3.json`) is
   immutable per project policy. Cluster IDs and operational IDs in the
   integration map 1:1 to that file — no maintenance needed unless the framework
   version changes.

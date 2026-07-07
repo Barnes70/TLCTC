@@ -3,7 +3,7 @@
     "incident_id": "agentic-path-E",
     "analyst_confidence": "high",
     "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "notes": "Path E — Agent as Execution Vector (LOLBin Pattern). Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). If the agent has designed code-execution capabilities (many agentic frameworks do), function abuse (#1) enables the agent to generate and execute Foreign Executable Content (#7). This is the LOLBAS pattern with the agent itself as the LOLBin. Notation: #1→[instant]#7 + [DRE: C, I, Ac]. Velocity: VC-4 — code generation and execution are near-instantaneous. This is the most underappreciated agentic risk — the agent is a general-purpose code execution engine accessible through natural language. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
   },
   "path_sequence": [

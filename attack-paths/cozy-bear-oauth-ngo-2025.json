@@ -3,7 +3,7 @@
     "incident_id": "COZY-BEAR-OAUTH-NGO-2025",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-04-16T00:00:00Z",
     "notes": "COZY BEAR's multi-layered trust exploitation campaign targeting a U.S.-based NGO (August 2025). The adversary combined three techniques: (1) interpersonal trust exploitation via impersonation of known professional contacts using compromised legitimate accounts, (2) platform trust abuse via Entra ID OAuth 2.0 phishing that redirected to authentic Microsoft login pages (eliminating suspicious domain indicators), and (3) multi-channel social engineering across IM, email, and video conferencing spanning 31+ days. Despite conditional access policies blocking initial Outlook access, persistent social engineering and repeated authentication attempts eventually yielded Windows Hello for Business persistence on Day 31. Attack path: #9 ||[human][@CozyBear→@Target-NGO]|| →[Δt=~6h] #9 →[Δt=~1h] #4 →[Δt=~5m] #1 →[Δt=~10m] #9 →[Δt=~26d] #4 →[Δt=?] #1 →[Δt=?] #1 + [DRE: C]. Source: CrowdStrike 2026 Global Threat Report, pp. 42-43, Figure 20."
   },

@@ -3,7 +3,7 @@
     "incident_id": "agentic-path-J",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-19T00:00:00Z",
     "notes": "Path J — LLM Weaponization via Supply Chain (Real-World Precedent). Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Based on the S1ngularity/Nx campaign (August 2025), where the QUIETVAULT payload detected an LLM coding assistant already present on victims' machines and co-opted it as a credential-scanning tool. This is the first documented real-world instance of malware weaponizing a deployed AI agent. The pattern differs from Paths A–F (direct agent compromise) and G–I (malicious agent introduction): here, the agent is a secondary tool — a LOLBin discovered post-compromise and directed by external malware. The LLM's designed code generation and execution capabilities become an attacker force multiplier. Notation: #10 ||[dev][@Vendor⇒@npm→@Org]|| →[instant] #1 →[instant] #7 →[instant] #1 →[instant] #7 + [DRE: C] →[instant] #1 + [DRE: C]. Velocity: VC-4 — supply chain acceptance through agent weaponization is near-instantaneous once the install trigger fires. Source: S1ngularity/Nx post-mortem (Sysdig TRT, Palo Alto Unit 42, ReversingLabs, 2025)."
   },

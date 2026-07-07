@@ -3,7 +3,7 @@
     "incident_id": "MANDIANT-MULTI-YEAR-ESPIONAGE-2025",
     "analyst_confidence": "high",
     "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "registry_ref": "example-registry.json",
     "created_at": "2026-04-14T00:00:00Z",
     "notes": "Composite attack path modeled on Mandiant M-Trends 2026 'Multi-Year Intrusions Highlighting Extreme Persistence' (pp. 66-69). UNC1549 (Iran, aerospace/defense) and UNC5807 (PRC, edge/core network devices) both maintained years-long dwell. This path represents the UNC1549-style pattern: spear phishing for initial access, custom malware for long-term tasking, living-off-the-land lateral movement, and slow exfiltration over VC-1 timescales. Axiom IV: actor identity does not determine cluster classification. Sources: M-Trends 2026 pp. 66-69."

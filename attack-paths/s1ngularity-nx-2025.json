@@ -3,7 +3,7 @@
     "incident_id": "S1NGULARITY-NX-2025",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-19T00:00:00Z",
     "notes": "S1ngularity / Nx monorepo tool supply chain compromise (August 26, 2025). A pull_request_target GitHub Actions workflow ran attacker-submitted PR code in the base repo's security context, exposing the npm publishing token. Trojanized versions of nx and related packages were published. The QUIETVAULT payload harvested credentials, downloaded TruffleHog, and — notably — weaponized an LLM coding assistant already present on victims' machines for deeper credential scanning. Exfiltrated data was committed to a public GitHub repository. Attack path: #1 →[instant] #7 + [DRE: C] →[~5m] #4 →[instant] #1 + [DRE: I] → #10 ||[dev][@Nrwl(Nx)⇒@npm→@Consumers]|| →[instant] #1 →[instant] #7 →[instant] #1 + [DRE: C] →[instant] #7 →[instant] #1 + [DRE: C]. Development vector (#10.2): consumers pulled trojanized versions during dependency installation. Velocity profile: CI compromise to publication in minutes; consumer exposure hours to days; consumer-side exploitation near-instantaneous. Sources: Sysdig TRT, Palo Alto Unit 42, ReversingLabs, Nx post-mortem disclosure."
   },

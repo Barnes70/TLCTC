@@ -3,7 +3,7 @@
     "incident_id": "MIDNIGHT-BLIZZARD-MICROSOFT-2024",
     "analyst_confidence": "high",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "registry_ref": "example-registry.json",
     "created_at": "2026-03-24T00:00:00Z",
     "notes": "Midnight Blizzard (APT29/Nobelium) compromise of Microsoft corporate email (January 2024). Attack path: #4 →[Δt=VC-1] #1 →[Δt=VC-1] #1 →[Δt=VC-2] #4 →[Δt=VC-3] #1 + [DRE: C]. Password spray against legacy test tenant without MFA, escalation via overly permissive OAuth application, creation of additional malicious OAuth apps, and systematic exfiltration of senior leadership, cybersecurity, and legal staff email. Per Axiom IV, APT29 attribution does not change cluster classification. Sources: Microsoft MSRC blog (January/March 2024), Splunk/Cisco Top 50 Cybersecurity Threats report, CISA Emergency Directive 24-02."

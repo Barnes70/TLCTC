@@ -195,7 +195,7 @@ The Layer 4 schema defines these top-level objects:
     "fair_version": "3.0",
     "attack_path_ref": "scattered-spider-2024.json",
     "attack_path_sha256": "a1b2c3...",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "assessment_date": "2025-12-14T10:00:00Z",
     "time_horizon": "1y",
     "currency": "USD",

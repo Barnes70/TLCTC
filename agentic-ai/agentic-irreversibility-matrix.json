@@ -4,7 +4,7 @@
   "version": "2.0-agentic-20260225",
   "license": "CC BY 4.0 — Bernhard Kreinz / tlctc.net",
   "metadata": {
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "tlctc_version": "2.0",
     "source_paper": "The Consequence Amplifier — Agentic AI on the Right Side of the Bow-Tie, §8",
     "author": "Bernhard Kreinz",

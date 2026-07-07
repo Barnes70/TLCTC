@@ -3,7 +3,7 @@
     "incident_id": "FAMOUS-CHOLLIMA-BEAVERTAIL-2025",
     "analyst_confidence": "medium",
     "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-04-16T00:00:00Z",
     "notes": "FAMOUS CHOLLIMA's fake recruiter campaign delivering BeaverTail malware via malicious npm packages (January–May 2025). Operators masquerade as legitimate job recruiters and direct targeted software developers to download and execute malicious npm packages as part of a purported employment assessment. Between January and May 2025, more than 30 malicious packages were deployed to npm. Adversary-linked packages were downloaded over 8,000 times — many collateral infections from incorporation as dependencies in other software. This path models the direct social engineering vector (recruiter → developer → npm install → BeaverTail). Collateral infections follow a pure supply chain path: #10 ||[update][@FamousChollima⇒@npm→@Victim]|| →[instant] #7 + [DRE: C], where the developer unknowingly pulls the malicious package as a transitive dependency. Attack path (direct): #9 ||[human][@FamousChollima→@Target-Dev]|| →[Δt=?] #10 ||[update][@FamousChollima⇒@npm→@Target-Dev]|| →[Δt=instant] #7 + [DRE: C]. See also nk-it-worker-infiltration-2025.json (different DPRK technique: fake employee identities, not fake recruiters) and shai-hulud-worm-2025.json (different npm supply chain attack: self-propagating worm, same ecosystem). Source: CrowdStrike 2026 Global Threat Report, pp. 32-33."
   },

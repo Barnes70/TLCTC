@@ -3,7 +3,7 @@
     "incident_id": "agentic-path-H",
     "analyst_confidence": "high",
     "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "notes": "Path H — Supply Chain: Trojanised Agent via Marketplace. Scenario: MaliciousAgentIntroduced (Layer 2 AI-Specific). Trojanised agent delivered through trusted vendor channels or AI marketplaces. The SolarWinds pattern adapted for the AI agent ecosystem. The trust dependency on the agent vendor/marketplace is the #10 generic vulnerability. Notation: #10 ||[dev][@Vendor→@Org]|| →[Δt=~2w] #7→[instant]#1 + [DRE: C, I]. Velocity: VC-1 (supply chain dwell), then VC-4 (activation and exploitation). Extended dwell time creates threat hunting opportunity (VC-1). After activation, exploitation is machine-speed. Supply chain validation and code signing are the primary cause-side controls. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
   },
   "path_sequence": [

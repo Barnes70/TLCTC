@@ -33,7 +33,7 @@
       "x_tlctc_incident_id": "SOLARWINDS-SUNBURST-2020",
       "x_tlctc_version": "2.0",
       "x_tlctc_analyst_confidence": "high",
-      "x_tlctc_framework_ref": "tlctc-framework.v2.0.json",
+      "x_tlctc_framework_ref": "tlctc-framework.v2.3.json",
       "x_tlctc_registry_ref": "example-registry.json"
     },
     {

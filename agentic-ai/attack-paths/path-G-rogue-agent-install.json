@@ -3,7 +3,7 @@
     "incident_id": "agentic-path-G",
     "analyst_confidence": "high",
     "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "notes": "Path G — Social Engineering to Install Rogue Agent. Scenario: MaliciousAgentIntroduced (Layer 2 AI-Specific). User is tricked into installing what appears to be a helpful AI agent. Once executing (#7), it abuses legitimate system functions (#1) for reconnaissance, lateral movement, and exfiltration. Notation: #9 ||[human][@External→@Org]|| →[Δt=~1d] #7→[instant]#1 + [DRE: C]. Velocity: VC-1 (social engineering gap), then VC-4 (post-execution). Human-speed gap at step 1 allows user awareness training and installation controls. After execution, the agent operates autonomously at machine speed. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
   },
   "path_sequence": [
