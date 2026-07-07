@@ -2,7 +2,7 @@
   "metadata": {
     "title": "TLCTC KEV Mapping (CISA Known Exploited Vulnerabilities -> TLCTC)",
     "description": "Per-CVE TLCTC cluster derivation from CISA KEV, via CVE -> CWE -> TLCTC traversal with R-ROLE disambiguation.",
-    "tlctc_version": "2.1",
+    "tlctc_version": "2.3",
     "source_catalog_version": "2026.04.14",
     "source_date_released": "2026-04-14T17:02:49.9122Z",
     "total_entries": 1568,

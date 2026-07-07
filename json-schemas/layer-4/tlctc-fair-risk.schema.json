@@ -55,7 +55,7 @@
         "effect": { "type": "string", "description": "Business loss type (FAIR-CRS Effect element)." },
         "attack_path_notation": {
           "type": "string",
-          "description": "Full TLCTC v2.0 attack path notation string for human readability. Informational only — authoritative path data lives in the Layer 3 reference."
+          "description": "Full TLCTC v2.3 attack path notation string for human readability. Informational only — authoritative path data lives in the Layer 3 reference."
         },
         "notes": { "type": "string" },
         "extensions": { "type": "object" }
@@ -353,7 +353,7 @@
         },
         "notation": {
           "type": "string",
-          "description": "TLCTC v2.0 attack path notation for this variant."
+          "description": "TLCTC v2.3 attack path notation for this variant."
         },
         "path_probability": {
           "type": "number",

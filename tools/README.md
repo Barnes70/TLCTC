@@ -127,7 +127,7 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
 ```jsonc
 {
   "$schema": "tlctc-threat-identification-v2",
-  "tlctc_version": "2.0",
+  "tlctc_version": "2.3",
   "metadata": {
     "name": "Project Name",                  // required
     "version": "1.0.0",                      // required

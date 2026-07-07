@@ -2,7 +2,7 @@
   "metadata": {
     "incident_id": "AD-DOMAIN-ADMIN-CASCADE-2025",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
+    "tlctc_version": "2.3",
     "framework_ref": "tlctc-framework.v2.3.json",
     "registry_ref": "example-registry.json",
     "created_at": "2026-04-19T00:00:00Z",

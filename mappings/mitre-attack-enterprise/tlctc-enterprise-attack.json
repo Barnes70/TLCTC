@@ -2,7 +2,7 @@
   "metadata": {
     "title": "TLCTC Enterprise ATT&CK Mapping",
     "description": "Maps MITRE ATT&CK Enterprise techniques to TLCTC threat clusters with rationale and attack path notation.",
-    "tlctc_version": "2.0",
+    "tlctc_version": "2.3",
     "mitre_domain": "enterprise-attack",
     "total_techniques": 698,
     "license": "CC-BY-4.0",

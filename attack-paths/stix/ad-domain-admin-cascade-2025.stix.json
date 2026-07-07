@@ -57,7 +57,7 @@
         }
       ],
       "x_tlctc_incident_id": "AD-DOMAIN-ADMIN-CASCADE-2025",
-      "x_tlctc_version": "2.1",
+      "x_tlctc_version": "2.3",
       "x_tlctc_analyst_confidence": "high",
       "x_tlctc_framework_ref": "tlctc-framework.v2.3.json",
       "x_tlctc_registry_ref": "example-registry.json"

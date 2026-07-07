@@ -1,10 +1,10 @@
-# TLCTC v2.0 — Agentic AI Examples
+# TLCTC v2.3 — Agentic AI Examples
 
 Machine-readable implementation artefacts for the TLCTC Agentic AI analysis.
 
 ## Source Papers
 
-These examples accompany two papers that apply the TLCTC v2.0 framework to agentic AI:
+These examples accompany two papers that apply the TLCTC v2.3 framework to agentic AI:
 
 1. **"Agentic AI Under the Microscope"** — Cause-side analysis (left side of the Bow-Tie).
    Demonstrates that all agentic AI threats decompose into the established 10 clusters, with two primary scenarios: #1 Abuse of Functions (legitimate agent compromised) and #7 Malware (malicious agent introduced). Introduces the two-layer attack surface model (Layer 1: generic software vulnerabilities; Layer 2: AI-specific manifestations of #1).
@@ -59,7 +59,7 @@ Data Risk Event (DRE) canonical short forms used in attack path outcomes:
 
 ## Relationship to TLCTC JSON Architecture
 
-These files follow the three-layer architecture defined in §7 of the TLCTC v2.0 specification:
+These files follow the three-layer architecture defined in §7 of the TLCTC v2.3 specification:
 
 - **Layer 1 (Framework Definition):** Referenced via `framework_ref`, not duplicated. All files point to `tlctc-framework.v2.3.json` as the authoritative cluster definitions.
 - **Layer 2 (Reference Registry):** `agentic-tool-profiles.json` and `agentic-irreversibility-matrix.json` extend the reference registry with agentic AI-specific context data.

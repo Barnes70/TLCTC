@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "TLCTC Mapping — Mandiant M-Trends 2026 MITRE ATT&CK Appendix",
-    "description": "Maps MITRE ATT&CK techniques observed by Mandiant during 2025 incident response (M-Trends 2026 report, pp. 85-101) to TLCTC v2.0 threat clusters. Each technique entry records the observed percentage of investigations, the TLCTC cluster(s) it maps to, and rationale grounded in the framework's classification rules (R-ROLE, R-EXEC, R-CRED, Axiom III, Axiom X). Cluster assignments are cross-referenced against the canonical enterprise mapping (mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json).",
-    "tlctc_version": "2.0",
+    "description": "Maps MITRE ATT&CK techniques observed by Mandiant during 2025 incident response (M-Trends 2026 report, pp. 85-101) to TLCTC v2.3 threat clusters. Each technique entry records the observed percentage of investigations, the TLCTC cluster(s) it maps to, and rationale grounded in the framework's classification rules (R-ROLE, R-EXEC, R-CRED, Axiom III, Axiom X). Cluster assignments are cross-referenced against the canonical enterprise mapping (mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json).",
+    "tlctc_version": "2.3",
     "mitre_domain": "enterprise-attack",
     "license": "CC-BY-4.0",
     "publisher": "TLCTC Project",

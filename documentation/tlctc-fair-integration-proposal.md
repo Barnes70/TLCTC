@@ -1,14 +1,14 @@
-# FAIR Integration with TLCTC v2.0: Layer 4 Risk Quantification Proposal
+# FAIR Integration with TLCTC v2.3: Layer 4 Risk Quantification Proposal
 
 **Author:** Bernhard Kreinz
-**Framework Version:** TLCTC v2.0 / FAIR Model v3.0
+**Framework Version:** TLCTC v2.3 / FAIR Model v3.0
 **License:** CC BY 4.0
 
 ---
 
 ## Abstract
 
-The FAIR (Factor Analysis of Information Risk) framework provides the industry's most rigorous methodology for quantifying information security risk in financial terms. However, FAIR lacks a structured cyber threat taxonomy and has no mechanism for modeling multi-step attack sequences, temporal dynamics, or domain boundary crossings. Conversely, TLCTC v2.0 provides precise cause-oriented threat classification with velocity annotations and boundary modeling, but does not extend into financial risk quantification.
+The FAIR (Factor Analysis of Information Risk) framework provides the industry's most rigorous methodology for quantifying information security risk in financial terms. However, FAIR lacks a structured cyber threat taxonomy and has no mechanism for modeling multi-step attack sequences, temporal dynamics, or domain boundary crossings. Conversely, TLCTC v2.3 provides precise cause-oriented threat classification with velocity annotations and boundary modeling, but does not extend into financial risk quantification.
 
 This proposal defines **Layer 4** of the TLCTC JSON architecture: a machine-readable schema that bridges TLCTC attack path analysis (Layer 3) with FAIR risk quantification. Layer 4 introduces four TLCTC-specific enhancement factors — Sequence Complexity Factor (SCF), Compound Threat Multipliers (CTM), Velocity-Weighted Control Effectiveness (VWCE), and Path Variance Analysis (PVA) — and maps control effectiveness through the NIST Cybersecurity Framework 2.0 functions into FAIR-CAM's Controls Analytics Model.
 
@@ -38,9 +38,9 @@ FAIR (standardized as The Open Group O-RT 3.1 / O-RA 2.1, and extended by the FA
 
 ### 1.3 The Integration Opportunity
 
-TLCTC v2.0 addresses each of these gaps:
+TLCTC v2.3 addresses each of these gaps:
 
-| FAIR Gap | TLCTC v2.0 Capability |
+| FAIR Gap | TLCTC v2.3 Capability |
 |---|---|
 | No threat taxonomy | 10 non-overlapping clusters based on generic vulnerabilities |
 | Single-event model | Multi-step attack path sequences with parallel execution |
@@ -191,7 +191,7 @@ The Layer 4 schema defines these top-level objects:
     "assessment_id": "FAIR-SCATTERED-SPIDER-2025-001",
     "analyst": "Security Risk Team",
     "analyst_confidence": "medium",
-    "tlctc_version": "2.0",
+    "tlctc_version": "2.3",
     "fair_version": "3.0",
     "attack_path_ref": "scattered-spider-2024.json",
     "attack_path_sha256": "a1b2c3...",
@@ -228,7 +228,7 @@ Aligns with the FAIR Cyber Risk Scenario Taxonomy (February 2025):
 }
 ```
 
-The `attack_path_notation` field captures the full TLCTC v2.0 notation string from the referenced Layer 3 instance for human readability. It is informational — the authoritative path data lives in the Layer 3 JSON.
+The `attack_path_notation` field captures the full TLCTC v2.3 notation string from the referenced Layer 3 instance for human readability. It is informational — the authoritative path data lives in the Layer 3 JSON.
 
 ### 5.3 FAIR Factors
 

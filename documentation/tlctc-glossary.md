@@ -353,7 +353,7 @@ A security measure implemented to mitigate threats, reduce vulnerabilities, or m
 
 An evaluation of whether a control, as conceived and structured, is theoretically capable of achieving its objective if it operates as intended. Assesses the control's capability to address the identified risk within its specific threat cluster.
 
-**Related reading:** [D3FEND × TLCTC — the missing axis](https://www.tlctc.net/missing-axis-d3fend-tlctc.html), [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html), [Control Matrix for SME & Private (TLCTC v2.0)](https://www.tlctc.net/tlctc-sme-private-controls.html)
+**Related reading:** [D3FEND × TLCTC — the missing axis](https://www.tlctc.net/missing-axis-d3fend-tlctc.html), [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html), [Control Matrix for SME & Private (TLCTC v2.3)](https://www.tlctc.net/tlctc-sme-private-controls.html)
 
 ### Control Failure
 
@@ -370,7 +370,7 @@ A deviation from a control objective or lack of effectiveness. Control failure i
 
 The specific aim or purpose that a control is intended to achieve, defining what the control should accomplish in terms of risk mitigation for a particular threat cluster. Each control aligns with a single, clear objective.
 
-**Related reading:** [NIST SP 800-218 (SSDF) × TLCTC](https://www.tlctc.net/tlctc-NIST.SP.800-218.html), [SABSA × TLCTC — architecture × threat ontology](https://www.tlctc.net/sabsa-tlctc-blog.html), [D3FEND × TLCTC — the missing axis](https://www.tlctc.net/missing-axis-d3fend-tlctc.html), [Logical impossibility of control-first regulation](https://www.tlctc.net/tlctc-control-first-regulation.html), [G7 SBOM-for-AI — control fixation critique](https://www.tlctc.net/sbom-for-ai-control-fixation.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [The Control Fixation Reflex](https://www.tlctc.net/control-fixation-reflex.html), [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [Control Matrix for SME & Private (TLCTC v2.0)](https://www.tlctc.net/tlctc-sme-private-controls.html), [Capability-based planning via 10×(6×2) matrix](https://www.tlctc.net/tlctc-capability-based-planning.html), [The Audit Trap — compliance ≠ security](https://www.tlctc.net/tlctc-audit-trap.html)
+**Related reading:** [NIST SP 800-218 (SSDF) × TLCTC](https://www.tlctc.net/tlctc-NIST.SP.800-218.html), [SABSA × TLCTC — architecture × threat ontology](https://www.tlctc.net/sabsa-tlctc-blog.html), [D3FEND × TLCTC — the missing axis](https://www.tlctc.net/missing-axis-d3fend-tlctc.html), [Logical impossibility of control-first regulation](https://www.tlctc.net/tlctc-control-first-regulation.html), [G7 SBOM-for-AI — control fixation critique](https://www.tlctc.net/sbom-for-ai-control-fixation.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [The Control Fixation Reflex](https://www.tlctc.net/control-fixation-reflex.html), [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [Control Matrix for SME & Private (TLCTC v2.3)](https://www.tlctc.net/tlctc-sme-private-controls.html), [Capability-based planning via 10×(6×2) matrix](https://www.tlctc.net/tlctc-capability-based-planning.html), [The Audit Trap — compliance ≠ security](https://www.tlctc.net/tlctc-audit-trap.html)
 
 ### Control Operational Effectiveness
 
@@ -857,7 +857,7 @@ Notation: `|[type][@from→@to]|`. Used to annotate boundary crossings **within 
 
 ### JSON Architecture *(V2.0)*
 
-The standardized data structure for threat intelligence sharing in TLCTC V2.0, consisting of four complementary JSON files:
+The standardized data structure for threat intelligence sharing in TLCTC v2.3, consisting of four complementary JSON files:
 
 1. **tlctc-framework.json:** Core framework definitions (universal, rarely updated)
 2. **tlctc-responsibility-spheres.json:** Domain boundary definitions (customizable, occasionally updated)
@@ -878,7 +878,7 @@ A metric that measures the operational performance of security controls, verifyi
 
 ### KPI (Key Performance Indicator)
 
-A measurable value demonstrating the outcome and performance of security processes in reaching security objectives. KPIs must be time-based and reflect effectiveness over time. Example: "Average time to restore critical services to full operation within a 4-hour window." In TLCTC V2.0, the Detection Coverage Score (DCS) is introduced as a strategic KPI.
+A measurable value demonstrating the outcome and performance of security processes in reaching security objectives. KPIs must be time-based and reflect effectiveness over time. Example: "Average time to restore critical services to full operation within a 4-hour window." In TLCTC v2.3, the Detection Coverage Score (DCS) is introduced as a strategic KPI.
 
 ### KRI (Key Risk Indicator)
 
@@ -1016,7 +1016,7 @@ In the Bow-Tie model: barriers on the right (effect) side that detect, contain, 
 
 ### MITRE ATT&CK
 
-A globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. In the TLCTC framework, MITRE techniques are considered operational-level detail that map to the strategic-level threat clusters. TLCTC V2.0 proposes enhancement through adding cluster mappings and typical velocity attributes to techniques.
+A globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. In the TLCTC framework, MITRE techniques are considered operational-level detail that map to the strategic-level threat clusters. TLCTC v2.3 proposes enhancement through adding cluster mappings and typical velocity attributes to techniques.
 
 **Related reading:** [MITRE ATT&CK & STIX integration with TLCTC](https://www.tlctc.net/mitre-tlctc.html), [TLCTC × MITRE ATT&CK — interactive explorer](https://www.tlctc.net/tlctc-mitre-mapping.html), [MITRE ATT&CK & TLCTC — detection meets risk](https://www.tlctc.net/tlctc-mitre-enterprise.html), [TLCTC × CWE — interactive explorer](https://www.tlctc.net/tlctc-mitre-cwe.html), [TLCTC × CWE — context is king](https://www.tlctc.net/tlctc-mitre-cwe-mapping.html), [MITRE ATLAS × TLCTC integration](https://www.tlctc.net/tlctc-mitre-ai.html), [MITRE ATT&CK for ML (AML) × TLCTC](https://www.tlctc.net/tlctc-mitre-aml-mapping.html), [NIST AI RMF + MITRE ATLAS × TLCTC](https://www.tlctc.net/tlctc-nist-ai-rmf-mitre-cti.html), [MITRE ATT&CK & STIX × TLCTC V2.0 — implementation guide](https://www.tlctc.net/stix-tlctc.html), [CKC + ATT&CK + TLCTC — Holy Trinity of Defense](https://www.tlctc.net/blog-ckc-attack-tlctc-synthesis.html), [D3FEND × TLCTC — the missing axis](https://www.tlctc.net/missing-axis-d3fend-tlctc.html), [Grok AI 4.1 — independent TLCTC validation](https://www.tlctc.net/tlctc-grok-ai-validation.html), [Cobalt Strike capabilities × TLCTC V2.0](https://www.tlctc.net/tlctc-cobaltstrike-mapping.html), [TLCTC v2.1 monster prompt — SOC & Detection](https://www.tlctc.net/tlctc-prompt-soc.html)
 
@@ -1049,7 +1049,7 @@ A controlled point on a communication path that enables interception, observatio
 
 The National Institute of Standards and Technology Cybersecurity Framework providing guidelines for managing cybersecurity risk. The TLCTC framework integrates with NIST CSF by mapping the 10 threat clusters to the five core functions (Identify, Protect, Detect, Respond, Recover) and the GOVERN function in CSF 2.0. TLCTC proposes formal adoption of the 10 clusters as the standard taxonomy for Threat Identification in the ID.RA (Risk Assessment) category.
 
-**Related reading:** [NIST CSF × TLCTC — critical analysis](https://www.tlctc.net/nist-csf-tlctc.html), [NIST CSF × TLCTC — bridging the gap](https://www.tlctc.net/tlctc-NIST-CSF-Integration.html), [NIST NICE × TLCTC — workforce capabilities](https://www.tlctc.net/tlctc-NIST-NICE.html), [NIST SP 800-218 (SSDF) × TLCTC](https://www.tlctc.net/tlctc-NIST.SP.800-218.html), [NIST threat definitions — structural gap](https://www.tlctc.net/tlctc-NIST-Threat-Definition.html), [NIST AI RMF + MITRE ATLAS × TLCTC](https://www.tlctc.net/tlctc-nist-ai-rmf-mitre-cti.html), [22 NIST definitions of "threat" — TLCTC](https://www.tlctc.net/tlctc-nist-threat-chaos.html), [SABSA × TLCTC — architecture × threat ontology](https://www.tlctc.net/sabsa-tlctc-blog.html), [TLCTC vs 30+ standards & regulations](https://www.tlctc.net/tlctc-regulatorsANDstandards.html), [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html), [Control Matrix for SME & Private (TLCTC v2.0)](https://www.tlctc.net/tlctc-sme-private-controls.html), [Capability-based planning via 10×(6×2) matrix](https://www.tlctc.net/tlctc-capability-based-planning.html), [TLCTC v2.1 monster prompt — CISO & Risk](https://www.tlctc.net/tlctc-prompt-ciso.html), [The Risk Appetite Conversation Your Board Isn't Having](https://www.tlctc.net/tlctc-strategy.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
+**Related reading:** [NIST CSF × TLCTC — critical analysis](https://www.tlctc.net/nist-csf-tlctc.html), [NIST CSF × TLCTC — bridging the gap](https://www.tlctc.net/tlctc-NIST-CSF-Integration.html), [NIST NICE × TLCTC — workforce capabilities](https://www.tlctc.net/tlctc-NIST-NICE.html), [NIST SP 800-218 (SSDF) × TLCTC](https://www.tlctc.net/tlctc-NIST.SP.800-218.html), [NIST threat definitions — structural gap](https://www.tlctc.net/tlctc-NIST-Threat-Definition.html), [NIST AI RMF + MITRE ATLAS × TLCTC](https://www.tlctc.net/tlctc-nist-ai-rmf-mitre-cti.html), [22 NIST definitions of "threat" — TLCTC](https://www.tlctc.net/tlctc-nist-threat-chaos.html), [SABSA × TLCTC — architecture × threat ontology](https://www.tlctc.net/sabsa-tlctc-blog.html), [TLCTC vs 30+ standards & regulations](https://www.tlctc.net/tlctc-regulatorsANDstandards.html), [TLCTC Control Matrix Manager](https://www.tlctc.net/control-matrix.html), [Control Matrix for SME & Private (TLCTC v2.3)](https://www.tlctc.net/tlctc-sme-private-controls.html), [Capability-based planning via 10×(6×2) matrix](https://www.tlctc.net/tlctc-capability-based-planning.html), [TLCTC v2.1 monster prompt — CISO & Risk](https://www.tlctc.net/tlctc-prompt-ciso.html), [The Risk Appetite Conversation Your Board Isn't Having](https://www.tlctc.net/tlctc-strategy.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
 
 ### NIS2 (Network and Information Security Directive 2) *(Industry Term)*
 
@@ -1758,7 +1758,7 @@ Specific methods, procedures, and tactics that attackers use to exploit vulnerab
 - T1566.001 (Spearphishing Attachment) → #9 Social Engineering → #3 or #7 (depending on payload)
 - T1078 (Valid Accounts) → #4 Identity Theft
 
-**Key distinction:** Techniques describe attacker actions and behaviors (operational detail), while TLCTC clusters categorize the fundamental vulnerabilities being exploited (strategic framework). TLCTC V2.0 proposes enhancing MITRE ATT&CK by adding cluster mappings and typical velocity attributes to each technique.
+**Key distinction:** Techniques describe attacker actions and behaviors (operational detail), while TLCTC clusters categorize the fundamental vulnerabilities being exploited (strategic framework). TLCTC v2.3 proposes enhancing MITRE ATT&CK by adding cluster mappings and typical velocity attributes to each technique.
 
 See also: TTP, Sub-Threat, MITRE ATT&CK, Operational Layer, Weakness
 

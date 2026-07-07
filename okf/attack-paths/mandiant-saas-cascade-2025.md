@@ -12,7 +12,7 @@ tags:
   - "cluster-10"
   - "confidence-high"
 timestamp: "2026-04-14T00:00:00Z"
-tlctc_version: "2.0"
+tlctc_version: "2.3"
 ---
 # MANDIANT-SAAS-CASCADE-2025
 

@@ -11,7 +11,7 @@ tags:
   - "cluster-7"
   - "confidence-medium"
 timestamp: "2026-03-19T00:00:00Z"
-tlctc_version: "2.1"
+tlctc_version: "2.3"
 ---
 # SHAI-HULUD-WORM-2025
 

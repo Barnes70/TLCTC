@@ -2,7 +2,7 @@
   "metadata": {
     "incident_id": "DARKHOTEL-WIFI-2014",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
+    "tlctc_version": "2.3",
     "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "DarkHotel APT campaign targeting business executives via luxury hotel WiFi networks, documented by Kaspersky in November 2014 (active since ~2007). Attackers compromised hotel WiFi infrastructure to MitM executive guests, injecting fake software update prompts that delivered digitally signed malware (keylogger/backdoor). Targeted luxury hotels in Asia. Attack path: (#8 + #9) →[Δt=instant] #5 →[Δt=~5m] #7 →[Δt=~1h] #4 →[Δt=~2h] #1 + [DRE: C]. Sources: Kaspersky Lab 'DarkHotel' report (November 2014), Kaspersky SecureList APT analysis, ESET DarkHotel follow-up research."

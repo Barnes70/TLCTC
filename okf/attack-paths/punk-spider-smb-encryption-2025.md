@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-medium"
 timestamp: "2026-04-16T00:00:00Z"
-tlctc_version: "2.1"
+tlctc_version: "2.3"
 ---
 # PUNK-SPIDER-SMB-ENCRYPTION-2025
 

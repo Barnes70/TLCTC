@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "TLCTC npm Supply Chain Attack Patterns",
-    "description": "Canonical attack path patterns for npm supply chain attacks, decomposed into TLCTC threat cluster sequences. Each pattern represents a structurally distinct attack archetype observed in real-world npm incidents. Patterns use TLCTC v2.0 cluster notation with v2.1 transit boundary extensions.",
-    "tlctc_version": "2.1",
+    "description": "Canonical attack path patterns for npm supply chain attacks, decomposed into TLCTC threat cluster sequences. Each pattern represents a structurally distinct attack archetype observed in real-world npm incidents. Patterns use TLCTC v2.3 cluster notation with v2.1 transit boundary extensions.",
+    "tlctc_version": "2.3",
     "domain": "npm-registry",
     "total_patterns": 5,
     "license": "CC-BY-4.0",

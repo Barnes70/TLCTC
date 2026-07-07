@@ -2,7 +2,7 @@
   "metadata": {
     "incident_id": "AGENT-BTZ-USB-2008",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
+    "tlctc_version": "2.3",
     "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "Agent.BTZ / Operation Buckshot Yankee (2008). A USB flash drive containing the Agent.BTZ worm was planted in a parking lot at a US military base in the Middle East, almost certainly by Russian intelligence (later attributed to the Turla group / APT). A soldier found the drive and inserted it into a laptop connected to SIPRNet (Secret Internet Protocol Router Network), the DoD's classified network. The worm spread via USB propagation and Windows network shares across both SIPRNet and NIPRNet (unclassified network), establishing covert C2 channels to exfiltrate classified data. The breach was not detected for approximately 14 months. This incident was the catalyst for the creation of United States Cyber Command (USCYBERCOM) in 2009. Attack path: (#8 + #9) ||[physical/human][@External→@Military]|| →[Δt=~10s] #7 →[Δt=~2d] #4 →[Δt=~30d] #1 + [DRE: C]. Sources: William J. Lynn III, 'Defending a New Domain' (Foreign Affairs, September/October 2010); Pentagon press statements (November 2008); DoD Operation Buckshot Yankee declassified summary; Kaspersky Lab Turla/Agent.BTZ technical analysis (2014); SANS Institute case study on removable media threats."

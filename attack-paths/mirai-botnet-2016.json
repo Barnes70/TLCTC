@@ -2,7 +2,7 @@
   "metadata": {
     "incident_id": "MIRAI-BOTNET-DYN-2016",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
+    "tlctc_version": "2.3",
     "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "Mirai botnet recruitment and Dyn DNS DDoS attack (October 2016). Two-phase incident: (1) Botnet recruitment — Mirai malware autonomously scanned the internet for IoT devices (IP cameras, DVRs, home routers) with factory-default credentials, using a hardcoded dictionary of 61 username/password pairs. Approximately 600,000 devices were compromised. (2) DDoS attack — on October 21, 2016, the botnet launched a massive distributed denial-of-service attack against Dyn's managed DNS infrastructure, disrupting access to major internet services including Twitter, Netflix, GitHub, Spotify, Reddit, PayPal, and others for several hours. Peak traffic estimated at 1.2 Tbps. Attack path (Phase 1, per device): #4 →[Δt=instant] #7. Attack path (Phase 2): #6 + [DRE: A]. The recruitment phase repeats across ~600K devices; the DDoS phase represents the coordinated weaponization of the botnet. Mirai source code was publicly released on hackforums.net by 'Anna-senpai' on September 30, 2016, enabling numerous copycat botnets. Krebs on Security (krebsonsecurity.com) was the first major Mirai DDoS target in September 2016 (~620 Gbps). Sources: US-CERT Alert TA16-288A (October 2016), Dyn DNS post-incident analysis, Flashpoint intelligence report on Mirai attribution, Krebs on Security 'Who is Anna-Senpai, the Mirai Worm Author?' (January 2017), Cloudflare Mirai botnet technical analysis, Usenix Security 2017 'Understanding the Mirai Botnet' by Antonakakis et al."

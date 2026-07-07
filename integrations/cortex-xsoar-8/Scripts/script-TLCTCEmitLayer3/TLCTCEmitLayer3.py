@@ -87,7 +87,7 @@ def main():
         "metadata": {
             "incident_id": str(incident.get("id") or uuid.uuid4()),
             "analyst_confidence": cf.get("tlctcanalystconfidence", "medium"),
-            "tlctc_version": "2.1",
+            "tlctc_version": "2.3",
             "framework_ref": "tlctc-framework.v2.3.json",
             "created_at": datetime.now(timezone.utc).isoformat(),
             "notes": (

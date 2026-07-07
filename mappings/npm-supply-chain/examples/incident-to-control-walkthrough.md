@@ -154,4 +154,4 @@ Priority:       Implement FIDO2 for npm maintainers (breaks #9→#4)
 
 ---
 
-*This walkthrough uses the TLCTC v2.0 framework with v2.1 transit boundary notation. Full incident analysis: `attack-paths/chalk-debug-phishing-2025.json`. Pattern reference: `tlctc-npm-patterns.json` (NPM-PAT-002).*
+*This walkthrough uses the TLCTC v2.3 framework with v2.1 transit boundary notation. Full incident analysis: `attack-paths/chalk-debug-phishing-2025.json`. Pattern reference: `tlctc-npm-patterns.json` (NPM-PAT-002).*

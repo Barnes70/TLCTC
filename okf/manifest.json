@@ -2475,7 +2475,7 @@
       "path": "/glossary/json-architecture.md",
       "type": "term",
       "title": "JSON Architecture",
-      "description": "The standardized data structure for threat intelligence sharing in TLCTC V2.0, consisting of four complementary JSON files: 1.",
+      "description": "The standardized data structure for threat intelligence sharing in TLCTC v2.3, consisting of four complementary JSON files: 1.",
       "resource": "tlctc:term:json-architecture",
       "tags": [
         "glossary"
