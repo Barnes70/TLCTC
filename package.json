@@ -2,10 +2,6 @@
   "name": "tlctc",
   "version": "2.3.1",
   "description": "TLCTC (Top Level Cyber Threat Clusters) — a cause-oriented, axiomatic cyber threat taxonomy framework. See https://www.tlctc.net",
-  "main": "index.js",
-  "directories": {
-    "example": "examples"
-  },
   "scripts": {
     "validate-framework": "node scripts/validate-framework.js json-schemas/layer-1/tlctc-framework.schema.json json-schemas/layer-1/tlctc-framework.v2.3.json",
     "build-okf": "node scripts/build-okf.js",
@@ -17,8 +13,15 @@
     "type": "git",
     "url": "git+https://github.com/Barnes70/TLCTC.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "tlctc",
+    "cyber-threat-taxonomy",
+    "threat-modeling",
+    "cybersecurity",
+    "attack-path",
+    "threat-classification"
+  ],
+  "author": "Bernhard Kreinz",
   "license": "CC-BY-4.0",
   "type": "commonjs",
   "bugs": {
