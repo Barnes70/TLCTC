@@ -4,7 +4,7 @@
 **Version:** 2.3
 **Date:** 2026-06-19
 **License:** CC BY 4.0
-**Companion to:** *A Cause-Oriented Cyber Threat Taxonomy: The TLCTC Framework* (the v2.3 core paper) — DOI [10.5281/zenodo.20633177](https://doi.org/10.5281/zenodo.20633177)
+**Companion to:** *A Cause-Oriented Cyber Threat Taxonomy: The TLCTC Framework* (the v2.3 core paper) — DOI [10.5281/zenodo.21361169](https://doi.org/10.5281/zenodo.21361169)
 
 ## Abstract
 
@@ -421,7 +421,7 @@ This glossary defines only the application- and governance-layer terms used in t
 
 ## 19. References
 
-1. Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.3). 2026. DOI: 10.5281/zenodo.20633177. https://doi.org/10.5281/zenodo.20633177 — the core paper this document accompanies.
+1. Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.3.1). 2026. DOI: 10.5281/zenodo.21361169. https://doi.org/10.5281/zenodo.21361169 — the core paper this document accompanies.
 2. National Institute of Standards and Technology. *The NIST Cybersecurity Framework (CSF) 2.0.* NIST Cybersecurity White Paper NIST CSWP 29, 2024. https://doi.org/10.6028/NIST.CSWP.29
 3. MITRE Corporation. *MITRE ATT&CK: Adversarial Tactics, Techniques, and Common Knowledge.* https://attack.mitre.org/
 4. MITRE Corporation. *Common Weakness Enumeration (CWE).* https://cwe.mitre.org/
