@@ -339,7 +339,7 @@ Each cluster below uses the same structure:
 
 **Scope:** Exploitation of a controlled position on a communication path—on the local network or via control over an intermediary—through interception, observation, modification, injection, replay, or protocol downgrade/stripping.
 
-**Generic Vulnerability:** The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.
+**Generic Vulnerability:** The lack of sufficient control over the communication path.
 
 **Attacker’s View:** “I abuse my position between communicating parties.”
 
@@ -4889,7 +4889,7 @@ The cluster entries below are reproduced verbatim from the canonical framework d
       "name": "Man in the Middle",
       "definition": "An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.",
       "attackers_view": "I abuse my position between communicating parties.",
-      "generic_vulnerability": "The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.",
+      "generic_vulnerability": "The lack of sufficient control over the communication path.",
       "topology": "internal"
     },
     "#6": {

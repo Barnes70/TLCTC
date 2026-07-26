@@ -18,7 +18,7 @@ topology: "internal"
 
 **Scope:** Exploitation of a controlled position on a communication path—on the local network or via control over an intermediary—through interception, observation, modification, injection, replay, or protocol downgrade/stripping.
 
-**Generic Vulnerability:** The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.
+**Generic Vulnerability:** The lack of sufficient control over the communication path.
 
 **Attacker’s View:** “I abuse my position between communicating parties.”
 
