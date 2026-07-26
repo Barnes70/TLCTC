@@ -9,7 +9,7 @@ tags:
   - "internal"
 strategic_id: "#5"
 operational_root_id: "TLCTC-05.00"
-generic_vulnerability: "The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path."
+generic_vulnerability: "The lack of sufficient control over the communication path."
 topology: "internal"
 ---
 # #5 Man in the Middle
@@ -43,7 +43,7 @@ topology: "internal"
 
 - **Strategic ID:** #5
 - **Operational root:** TLCTC-05.00
-- **Generic vulnerability:** The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.
+- **Generic vulnerability:** The lack of sufficient control over the communication path.
 - **Topology:** internal
 
 # Relationships

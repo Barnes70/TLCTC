@@ -1,12 +1,12 @@
 {
   "metadata": {
     "tlctc_version": "2.3",
-    "release_date": "2026-07-01",
+    "release_date": "2026-07-26",
     "schema_id": "tlctc-framework",
     "schema_version": "2.0.0",
     "publisher": "TLCTC Project",
     "license": "CC-BY-4.0",
-    "notes": "Framework dictionary for TLCTC v2.3. v2.3 consolidated finalized v2.1 content (transit, intra-system, and unresolved-step extensions) with no new normative content vs v2.1. v2.3.1 erratum (2026-07-01): a single axiom-conformance correction — #4 Identity Theft generic_vulnerability retightened from lifecycle/credential-protection wording to the point-of-authentication binding gap, so the field no longer claims scope that R-CRED and Axioms VI/VII/X assign to enabling clusters (storage/transmission/acquisition). Cluster identity and IDs unchanged."
+    "notes": "Framework dictionary for TLCTC v2.3. v2.3 consolidated finalized v2.1 content (transit, intra-system, and unresolved-step extensions) with no new normative content vs v2.1. v2.3.1 erratum (2026-07-01): a single axiom-conformance correction — #4 Identity Theft generic_vulnerability retightened from lifecycle/credential-protection wording to the point-of-authentication binding gap, so the field no longer claims scope that R-CRED and Axioms VI/VII/X assign to enabling clusters (storage/transmission/acquisition). Cluster identity and IDs unchanged. v2.3.2 erratum (2026-07-26): a single axiom-conformance correction — #5 Man in the Middle generic_vulnerability retightened from \"lack of sufficient control, integrity protection, or confidentiality over the communication channel/path\" to \"The lack of sufficient control over the communication path\", removing consequence-side (confidentiality/integrity) and control-side vocabulary from a cause-side field per Axioms III and V. Cluster identity, IDs, definition, attacker's view, topology, and boundary tests unchanged."
   },
   "clusters": {
     "#1": {
@@ -51,7 +51,7 @@
       "name": "Man in the Middle",
       "definition": "An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.",
       "attackers_view": "I abuse my position between communicating parties.",
-      "generic_vulnerability": "The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.",
+      "generic_vulnerability": "The lack of sufficient control over the communication path.",
       "topology": "internal"
     },
     "#6": {

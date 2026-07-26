@@ -1,6 +1,6 @@
 # TLCTC v2.3 Core — Consolidation Traceability
 
-**v2.3.0** introduced NO new normative content. Every element traces to finalized v2.1 source. **v2.3.1** adds one deliberate, axiom-justified normative correction — see the Erratum section below.
+**v2.3.0** introduced NO new normative content. Every element traces to finalized v2.1 source. **v2.3.1** and **v2.3.2** each add one deliberate, axiom-justified normative correction — see the Erratum sections below.
 
 | v2.3 element | Source |
 |---|---|
@@ -37,6 +37,20 @@ A single normative correction to the **#4 Identity Theft** cluster. Cluster iden
 **Justification (axiom-level, per the immutability rule).** The prior generic-vulnerability field claimed scope over the *whole* credential lifecycle — including storage and transmission — while the cluster's own boundary tests and **R-CRED** already assign credential acquisition/exposure/protection failures to the enabling cluster (#2/#5/#7/#8). It therefore contradicted **Axiom VI** (one generic vulnerability → one cluster), **Axiom VII** (classification anchored in the initial cause, not downstream effects), and **Axiom X** (acquisition vs. application are distinct steps). The retightened wording names the flaw #4 actually exploits — the authentication-time identity-artifact binding gap — bringing the field into conformance with the axioms and matching the structural pattern of the other nine clusters (whose generic-vulnerability line is scope-defining and 1:1 with their boundary tests). This also removes a downstream control-ownership error: storage/transmission controls belong to the enabling clusters, not #4.
 
 **Harmonization.** The v2.3.1 wording is applied consistently across `tlctc-framework.v2.3.json`, `tlctc-v2.3-core.md`, `tlctc-glossary.md` (prose + quick-reference), `glossary/tlctc-glossary.json`, `tlctc-v2.0-whitepaper.md`, `README.md`, the `tlctc-classify` skill, and the HTML tools. The generated `okf/` bundle is rebuilt from these sources. The frozen `tlctc-framework.v2.0.json` dictionary is left as the historical v2.0 record.
+
+## Erratum — v2.3.2 (2026-07-26)
+
+A single normative correction to the **#5 Man in the Middle** cluster. Cluster identity, IDs (`#5` / `TLCTC-05.00`), definition, attacker's view, topology, and all boundary tests are **unchanged**. One field was retightened.
+
+| Field | Before | After |
+|---|---|---|
+| Generic vulnerability | "The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path." | "The lack of sufficient control over the communication path." |
+
+**Justification (axiom-level, per the immutability rule).** The prior generic-vulnerability field named *confidentiality* and *integrity* — the very CIA properties that the framework classifies on the **consequence** side as Data Risk Events. Importing that vocabulary into a cause-side field contradicted **Axiom III** (threats are causes, not outcomes): loss of confidentiality or integrity is what *follows* a successful #5 step, not the weakness the step exploits. The phrase "integrity protection" additionally named a **control** (end-to-end protection, certificate/path validation) rather than a vulnerability, contradicting **Axiom V** (control failure is not a threat) — absent encryption is a missing control that raises likelihood, not the generic vulnerability itself. The retightened wording names the single condition #5 actually requires and exploits: insufficient control over the communication path. This also restores the 1:1 relationship between the field and **R-MITM**, which already frames the cluster in terms of *position on the path* ("gaining the position maps to another cluster; #5 begins once the position is controlled") with no reference to CIA properties.
+
+**Consequence-side note (non-normative).** Confidentiality and integrity outcomes of a #5 step continue to be recorded where they belong — as DRE annotations (`+ [DRE: C]`, `+ [DRE: I]`) on the attack path — not in the cluster's cause-side definition.
+
+**Harmonization.** The v2.3.2 wording is applied consistently across `tlctc-framework.v2.3.json`, `tlctc-v2.3-core.md`, `tlctc-glossary.md`, `glossary/tlctc-glossary.json`, `README.md`, the `tlctc-classify` skill, and the HTML tools (`threat-modeling.html`, `control-matrix.html`, `cbp-app.html`). The generated `okf/` bundle is rebuilt from these sources. The frozen `tlctc-framework.v2.0.json` dictionary and the v2.0 whitepaper are left as the historical v2.0 record.
 
 ## Editorial Alignment — Canonical-String Harmonization (2026-07-02)
 

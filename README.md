@@ -73,7 +73,7 @@ Each cluster is defined by exactly **one generic vulnerability** (Axiom VI). Eac
 | **#2** | **Exploiting Server** | Server-side implementation flaws enable unintended behavior | Internal |
 | **#3** | **Exploiting Client** | Client-side implementation flaws enable unintended behavior | Internal |
 | **#4** | **Identity Theft** | Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims | Internal |
-| **#5** | **Man in the Middle** | The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path | Internal |
+| **#5** | **Man in the Middle** | The lack of sufficient control over the communication path | Internal |
 | **#6** | **Flooding Attack** | Finite capacity limitations inherent in any system component | Internal |
 | **#7** | **Malware** | The software environment's designed capability to execute potentially untrusted foreign code | Internal |
 | **#8** | **Physical Attack** | Physical accessibility of infrastructure and the exploitability of physical-layer properties | Bridge |

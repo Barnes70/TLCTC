@@ -1,7 +1,7 @@
 # A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework
 
 **Author:** Bernhard Kreinz
-**Version:** 2.3.1
+**Version:** 2.3.2
 **Date:** 2026-07-01
 **License:** CC BY 4.0
 **DOI:** [10.5281/zenodo.20633177](https://doi.org/10.5281/zenodo.20633177)
@@ -204,7 +204,7 @@ This cluster covers the presentation or use of credentials, tokens, keys, sessio
 - **Definition:** An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.
 - **Attacker's view:** "I abuse my position between communicating parties."
 - **Developer's view:** "I must ensure confidentiality and integrity of data in transit: strong E2E protection, proper certificate/path validation, and designs that assume uncontrolled networks are hostile."
-- **Generic vulnerability:** The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path.
+- **Generic vulnerability:** The lack of sufficient control over the communication path.
 - **Topology:** Internal.
 
 The cluster covers interception, observation, modification, injection, replay, or protocol downgrade/stripping from a controlled position on a communication path. Gaining the position maps to another cluster; #5 begins once the position is controlled (see R-MITM).

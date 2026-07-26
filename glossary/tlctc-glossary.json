@@ -240,7 +240,7 @@
       "domain": "tlctc-core",
       "source": "TLCTC v2.0",
       "see_also": ["threat-cluster", "internal-topology", "r-mitm"],
-      "notes": "Generic vulnerability: The lack of sufficient control, integrity protection, or confidentiality over the communication channel/path."
+      "notes": "Generic vulnerability: The lack of sufficient control over the communication path."
     },
     {
       "term_id": "cluster-6-flooding-attack",
