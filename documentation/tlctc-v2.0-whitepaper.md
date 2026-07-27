@@ -12,6 +12,16 @@
 
 &nbsp;
 
+> **Cluster definitions current as of framework v2.3.2 (2026-07-26).** This
+> paper's structure and argument remain those of Version 2.1. The ten generic
+> vulnerability statements are kept harmonized with the framework dictionary,
+> so errata issued after 2.1 — such as the v2.3.1 retightening of #4 and the
+> v2.3.2 retightening of #5 — are reflected here. For the current citable
+> definition of the framework, see the core paper:
+> [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176).
+
+&nbsp;
+
 March 2026
 
 &nbsp;

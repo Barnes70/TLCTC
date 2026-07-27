@@ -2,9 +2,9 @@
 
 **Author:** Bernhard Kreinz
 **Version:** 2.3.2
-**Date:** 2026-07-01
+**Date:** 2026-07-26
 **License:** CC BY 4.0
-**DOI:** [10.5281/zenodo.21361169](https://doi.org/10.5281/zenodo.21361169)
+**DOI:** [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) (concept DOI — always resolves to the latest version)
 
 ## Abstract
 
