@@ -1,6 +1,6 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.3** · CC BY 4.0 · [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20633177.svg)](https://doi.org/10.5281/zenodo.20633177) · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.3-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
+**Version 2.3.1** · CC BY 4.0 · [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21361169.svg)](https://doi.org/10.5281/zenodo.21361169) · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.3-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
 A cause-oriented, axiomatic cyber threat taxonomy. We are aware of no prior framework that classifies threats by the generic vulnerability exploited rather than by outcome or actor.
 
@@ -366,9 +366,11 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 
 | Layer | Purpose | Artifact | Scope | Update Frequency |
 |---|---|---|---|---|
-| **Layer 1 — Framework Definition** | Immutable "dictionary": clusters, axioms, rule IDs, topology types | `tlctc-framework.schema.json` / `tlctc-framework.v2.0.json` | Universal | Rarely (framework evolution) |
+| **Layer 1 — Framework Definition** | Immutable "dictionary": clusters, axioms, rule IDs, topology types | `tlctc-framework.schema.json` / `tlctc-framework.v2.3.json` | Universal | Rarely (framework evolution) |
 | **Layer 2 — Reference Registry** | Reusable reference objects: responsibility spheres, boundary contexts, intra-system boundary types | `tlctc-reference.schema.json` / `@Org-registry.vX.Y.Z.json` | Organization-specific | Occasionally (org changes) |
 | **Layer 3 — Attack Path Instances** | Specific incidents: sequences, parallel groups, Δt, boundary annotations, DREs | `tlctc-attack-path.schema.json` / `incident-<id>.json` | Per-incident | Constantly (new incidents) |
+
+> **Layer 4 — Risk Quantification (optional extension, *proposed*):** a FAIR bridge that quantifies financial risk over a Layer 3 attack path (Sequence Complexity Factor, Compound Threat Multipliers, Velocity-Weighted Control Effectiveness, Path Variance Analysis). It sits on top of the three core layers and is not required to use them. Schema: [`json-schemas/layer-4/tlctc-fair-risk.schema.json`](json-schemas/layer-4/tlctc-fair-risk.schema.json); rationale: [`documentation/tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md).
 
 ### Design Principles
 
@@ -459,7 +461,6 @@ tlctc/
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
-│   │   ├── tlctc-framework.v2.0.json         # V2.1 content (filename kept for link stability)
 │   │   └── tlctc-framework.v2.3.json         # V2.3 citable baseline: clusters, axioms, 16 rules
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
@@ -506,7 +507,7 @@ tlctc/
 │   ├── tlctc-v2.0-whitepaper.pdf             # PDF export of the white paper
 │   ├── tlctc-glossary.md                     # Comprehensive definitions
 │   ├── tlctc-glossary.pdf                    # PDF export of the glossary
-│   ├── tlctc-v2.0-json-architecture.md       # JSON Architecture Specification
+│   ├── tlctc-ti-sharing-profile.md           # TI Sharing — Extension Profile (companion)
 │   ├── tlctc-fair-integration-proposal.md    # FAIR integration proposal (Layer 4 spec)
 │   ├── tlctc-cve-extension-proposal.md       # CVE extension proposal
 │   ├── tlctc-replication-notation-proposal.md # Replication notation (×N fan-out / ×* self-propagation) — conceptual proposal (v0.1)
@@ -693,7 +694,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 
 ## How to Cite
 
-> Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.3.0) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.20633177
+> Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.3.1) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.21361169
 
 ```bibtex
 @misc{kreinz2026tlctc,
@@ -701,10 +702,10 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
   title     = {A Cause-Oriented Cyber Threat Taxonomy: The Top Level
                Cyber Threat Clusters Framework},
   year      = {2026},
-  version   = {2.3.0},
+  version   = {2.3.1},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.20633177},
-  url       = {https://doi.org/10.5281/zenodo.20633177}
+  doi       = {10.5281/zenodo.21361169},
+  url       = {https://doi.org/10.5281/zenodo.21361169}
 }
 ```
 

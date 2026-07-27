@@ -395,7 +395,7 @@ def main():
         "metadata": {
             "title": "TLCTC KEV Mapping (CISA Known Exploited Vulnerabilities -> TLCTC)",
             "description": "Per-CVE TLCTC cluster derivation from CISA KEV, via CVE -> CWE -> TLCTC traversal with R-ROLE disambiguation.",
-            "tlctc_version": "2.1",
+            "tlctc_version": "2.3",
             "source_catalog_version": kev.get("catalogVersion"),
             "source_date_released": kev.get("dateReleased"),
             "total_entries": len(records),

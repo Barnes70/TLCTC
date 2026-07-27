@@ -7,13 +7,13 @@
   },
   "metadata": {
     "description": "Top Level Cyber Threat Clusters (TLCTC) — cause-oriented, axiomatic cyber threat taxonomy as a Claude Code plugin.",
-    "version": "2.1.0"
+    "version": "2.3.1"
   },
   "plugins": [
     {
       "name": "tlctc",
       "source": "./plugins/tlctc",
-      "description": "Teaches Claude the full TLCTC v2.1 framework — 10 axioms, 10 threat clusters, R-* classification rules, attack-path notation (Δt velocity, ||...||, ⇒, |...|, ?/…), and worked examples — so any session can classify incidents, CVEs, and threat intel through a causal, axiomatic lens.",
+      "description": "Teaches Claude the full TLCTC v2.3 framework — 10 axioms, 10 threat clusters, R-* classification rules, attack-path notation (Δt velocity, ||...||, ⇒, |...|, ?/…), and worked examples — so any session can classify incidents, CVEs, and threat intel through a causal, axiomatic lens.",
       "category": "security",
       "keywords": [
         "tlctc",

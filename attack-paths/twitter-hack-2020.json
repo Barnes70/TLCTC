@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "TWITTER-HACK-2020",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "Twitter account takeover attack, July 15, 2020. Attackers (led by teenager Graham Ivan Clark) vished Twitter employees to gain access to internal admin tools, then took over 130 high-profile accounts (Obama, Musk, Gates, Apple, etc.) to post Bitcoin scam messages. ~$120K in Bitcoin collected. Attack path: #9 ||[human][@External→@Twitter]|| →[Δt=~10m] #4 →[Δt=~5m] #1 →[Δt=~30m] #4 + [DRE: C] →[Δt=~5m] #1 + [DRE: I]. Sources: Twitter official blog post (July 2020), NYDFS investigation report, DOJ criminal complaint against Graham Ivan Clark, Florida State Attorney indictment."
   },

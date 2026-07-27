@@ -1,18 +1,18 @@
 {
-  "title": "TLCTC v2.0 — Agentic AI Tool Category Profiles",
+  "title": "TLCTC v2.3 — Agentic AI Tool Category Profiles",
   "description": "Reference data for agentic AI tool categories, mapping each to its consequence profile (primary DRE, velocity, scope, autonomy characteristics, and irreversibility). Layer 2 reference registry extension. These profiles enable consequence-side risk assessment: for each tool category an agent has access to, the organisation can evaluate the maximum damage potential.",
-  "version": "2.0-agentic-20260225",
+  "version": "2.3-agentic-20260225",
   "license": "CC BY 4.0 — Bernhard Kreinz / tlctc.net",
   "metadata": {
-    "framework_ref": "tlctc-framework.v2.0.json",
-    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.3.json",
+    "tlctc_version": "2.3",
     "source_paper": "The Consequence Amplifier — Agentic AI on the Right Side of the Bow-Tie",
     "author": "Bernhard Kreinz",
     "date": "2026-02-25",
     "registry_type": "Layer 2 — Reference Registry extension for agentic AI tool profiling"
   },
   "velocity_classes": {
-    "description": "TLCTC v2.0 Velocity Classes determine which control types are structurally viable at each speed.",
+    "description": "TLCTC v2.3 Velocity Classes determine which control types are structurally viable at each speed.",
     "VC-1": {
       "range": "Days → months",
       "viable_control_mode": "Strategic: log retention, threat hunting, strategic monitoring, policy review"

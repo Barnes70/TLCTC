@@ -84,7 +84,7 @@ See `deploy.md` for the click-by-click runbook (XSOAR 6.2 paths and required RBA
 
 ## References (in this repo)
 
-- Framework: `json-schemas/layer-1/tlctc-framework.v2.0.json`
+- Framework: `json-schemas/layer-1/tlctc-framework.v2.3.json`
 - Layer 3 schema: `json-schemas/layer-3/tlctc-attack-path.schema.json`
 - ATT&CK→TLCTC mapping (source for the lookup list): `mappings/mitre-attack-enterprise/`
 - Glossary (RS Container, Velocity Class, Operational Notation): `documentation/tlctc-glossary.md`

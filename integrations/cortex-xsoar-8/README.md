@@ -79,7 +79,7 @@ integrations/cortex-xsoar-8/
 
 ## References
 
-- Framework: `json-schemas/layer-1/tlctc-framework.v2.0.json`
+- Framework: `json-schemas/layer-1/tlctc-framework.v2.3.json`
 - Layer 3 schema: `json-schemas/layer-3/tlctc-attack-path.schema.json`
 - ATT&CK→TLCTC mapping (lookup source): `mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json`
 - Glossary (RS Container, Velocity Class, Operational Notation): `documentation/tlctc-glossary.md`

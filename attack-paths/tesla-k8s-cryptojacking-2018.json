@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "TESLA-K8S-CRYPTOJACKING-2018",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "Tesla Kubernetes cryptojacking incident, February 2018 (discovered by RedLock). Attackers found an unauthenticated Kubernetes dashboard exposed to the internet for one of Tesla's AWS environments. Through the dashboard, they deployed a cryptomining container (Stratum protocol, behind CloudFlare to evade IP-based detection), then discovered AWS credentials in Kubernetes secrets, which provided access to additional Tesla data. Attack path: #1 →[Δt=~5m] #7 →[Δt=~20m] #1 →[Δt=~5m] #4 + [DRE: C]. Sources: RedLock CSI Team report (February 2018), The Register reporting, Tesla acknowledgment."
   },

@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "UBIQUITI-BEC-2015",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "Business Email Compromise (BEC) attack on Ubiquiti Networks, June 2015. Attackers impersonated Ubiquiti executives and third-party entities via email, tricking finance department employees into making fraudulent wire transfers totaling $46.7M to overseas accounts ($14.9M later recovered). No malware, no system exploitation — purely social engineering combined with abuse of legitimate financial processes. Attack path: #9 ||[human][@External→@Ubiquiti]|| →[Δt=~2h] #1 + [DRE: I]. Sources: Ubiquiti Networks SEC 10-Q filing (August 2015), FBI IC3 BEC advisories, Krebs on Security reporting."
   },

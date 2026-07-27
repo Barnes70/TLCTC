@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "ROTTENSHREW-SIGNAL-2025",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-04-09T00:00:00Z",
     "notes": "RottenShrew (UAC-0185/Lost Potential/UNC4221) Signal device-linking campaign, 2025. Specialized reconnaissance unit focused on geolocation of Ukrainian military personnel, likely followed by kinetic action. The campaign mimicked the Kropyva application (a proprietary Ukrainian artillery guidance system) to entice military users to link their Signal accounts to RottenShrew-controlled instances. Also targeted Delta (military app), Teneta-related sites (tactical modem/blue force tracking), Diia (digital government), and e-Cherha (border crossing service). Tools: PINPOINT (JS geolocation payload using browser Geolocation API), MESHAGENT (RMM for persistence), custom Signal Phish Kit. Attack path: #9 ||[human][@External->@UkrainianMilitary]|| -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 18), CERT-UA."
   },

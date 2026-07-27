@@ -118,7 +118,7 @@ def build(rules_dir, attack_path, sigma_commit="unknown"):
         "metadata": {
             "title": "TLCTC Sigma Mapping (SigmaHQ rules -> TLCTC)",
             "description": "Per-rule TLCTC cluster derivation from Sigma ATT&CK tags via ATT&CK->TLCTC.",
-            "tlctc_version": "2.1",
+            "tlctc_version": "2.3",
             "sigma_commit": sigma_commit,
             "attack_mapping": str(Path(attack_path).name),
             "total_rules": len(records),

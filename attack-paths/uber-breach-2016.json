@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "UBER-BREACH-2016",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "Uber data breach of 2016 (disclosed November 2017). Attackers accessed a private GitHub repository used by Uber engineers, found AWS access keys hardcoded in the source code, and used those credentials to access S3 buckets containing personal data of 57 million riders and drivers. Uber paid $100K to the attackers through a bug bounty program to suppress disclosure, leading to criminal charges against Uber's CSO. Attack path: #4 →[Δt=instant] #1 + [DRE: C]. Sources: Uber disclosure (November 2017), Bloomberg reporting, FTC investigation, DOJ criminal case against CSO Joseph Sullivan (2022)."
   },

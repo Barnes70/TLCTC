@@ -3,7 +3,7 @@
     "title": "TLCTC KEV Product-Role Heuristic",
     "description": "Vendor/product-pattern rules that resolve R-ROLE server-vs-client ambiguity. Applied ONLY when a source CWE maps to '#2 | #3' (or any expression containing that alternation). Recovers context information that KEV vendorProject/product already encodes but a bare CWE lookup throws away.",
     "version": "1.0",
-    "tlctc_version": "2.1",
+    "tlctc_version": "2.3",
     "applies_to": "KEV entries whose derived mapping expression contains the alternation '#2 | #3'.",
     "match_semantics": {
       "field": "Concatenation of `vendorProject` + ' :: ' + `product` (case-insensitive).",

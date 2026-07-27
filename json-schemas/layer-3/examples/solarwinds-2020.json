@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "SOLARWINDS-SUNBURST-2020",
     "analyst_confidence": "high",
-    "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "registry_ref": "example-registry.json",
     "created_at": "2026-02-23T00:00:00Z",
     "notes": "SolarWinds SUNBURST supply chain compromise (December 2020). Attack path: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]. APT29/Cozy Bear attributed (Axiom IV: actor identity does not change cluster classification). Sources: CISA Alert AA20-352A, Microsoft MSRC, FireEye/Mandiant UNC2452 report."

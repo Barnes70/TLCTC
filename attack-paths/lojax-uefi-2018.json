@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "LOJAX-UEFI-ROOTKIT-2018",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "LoJax UEFI rootkit (September 2018). Attributed to APT28/Fancy Bear/Sednit (Russian GRU Unit 26165). First UEFI rootkit discovered in the wild, targeting government and diplomatic organizations in Central and Eastern Europe. The attackers modified the legitimate LoJack/Computrace anti-theft agent (by Absolute Software) embedded in UEFI/SPI flash firmware, replacing its legitimate C2 server addresses with attacker-controlled domains. The trojanized firmware agent survived OS reinstallation and hard drive replacement, providing extreme persistence. The attack required prior system access (consistent with APT28's documented use of spear-phishing and first-stage tooling like Seduploader and X-Agent) and kernel-level privileges to write to SPI flash using the RWEverything legitimate driver. Attack path: #9 ||[human][@External→@GovAgency]|| →[Δt=~2d] #7 →[Δt=~1d] #1 →[Δt=instant] #7 + [DRE: I] →[Δt=~3mo] #1 + [DRE: C]. Note: the initial access phase is reconstructed from APT28's known operational patterns rather than direct forensic evidence from LoJax-specific incidents. ESET's research focused on the firmware persistence mechanism. Axiom IV: attribution to APT28/GRU does not affect cluster classification. Sources: ESET Research 'LoJax: First UEFI rootkit found in the wild, courtesy of the Sednit group' (September 27, 2018), ESET white paper 'Sednit: What's going on with Zebrocy?' and broader Sednit APT research, NIST SP 800-147 'BIOS Protection Guidelines', Absolute Software/Computrace architecture documentation."
   },

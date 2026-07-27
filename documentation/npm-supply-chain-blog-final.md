@@ -309,6 +309,6 @@ The TLCTC framework does not add complexity for its own sake. It adds causal res
 
 ---
 
-*The TLCTC framework (Top Level Cyber Threat Clusters) is published at [tlctc.net](https://tlctc.net) under CC BY 4.0. Attack path notation follows TLCTC v2.0, with transit boundary notation per the v2.1 draft specification. npm attack details drawn from public reports by Sysdig, Palo Alto Unit 42, Trend Micro, ReversingLabs, Datadog, ArmorCode, Sonatype, and community disclosures.*
+*The TLCTC framework (Top Level Cyber Threat Clusters) is published at [tlctc.net](https://tlctc.net) under CC BY 4.0. Attack path notation follows TLCTC v2.3, with transit boundary notation per the v2.1 draft specification. npm attack details drawn from public reports by Sysdig, Palo Alto Unit 42, Trend Micro, ReversingLabs, Datadog, ArmorCode, Sonatype, and community disclosures.*
 
-*Framework version: TLCTC v2.0 + v2.1 draft transit notation | Date: March 2026*
+*Framework version: TLCTC v2.3 + v2.1 draft transit notation | Date: March 2026*

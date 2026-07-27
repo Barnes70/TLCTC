@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TLCTC Architect V6.0 - Professional Attack Path Documentation</title>
-    <meta name="description" content="TLCTC Architect V6.0. Visual Attack Path Builder with full TLCTC v2.0/v2.1 compliance, JSON Architecture support, and professional incident documentation.">
+    <meta name="description" content="TLCTC Architect V6.0. Visual Attack Path Builder with full TLCTC v2.3 compliance, JSON Architecture support, and professional incident documentation.">
     
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
@@ -746,7 +746,7 @@
 
 <script>
 // ============================================================================
-// TLCTC ARCHITECT V6.0 - Full TLCTC v2.0/v2.1 Compliance
+// TLCTC ARCHITECT V6.0 - Full TLCTC v2.3 Compliance
 // ============================================================================
 
 const STORAGE_KEY = 'tlctc_v6_data';
@@ -1473,7 +1473,7 @@ function importCase(input) {
 }
 
 function convertFromV2Format(data) {
-    // Convert TLCTC v2.0 JSON to internal format
+    // Convert TLCTC v2.3 JSON to internal format
     const c = {
         title: data.metadata?.attack_title || "Imported Incident",
         metadata: {

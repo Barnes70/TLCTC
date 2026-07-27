@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "agentic-path-B",
     "analyst_confidence": "high",
-    "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "notes": "Path B — Indirect Prompt Injection via Data Sources. Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Malicious instructions embedded in documents, emails, or web content the agent is designed to ingest. Agent's data-reading function (first #1) encounters injected instructions, triggering abuse of action capabilities (second #1), leading to unauthorised operations (third #1). Notation: #1→[instant]#1→[instant]#1 + [DRE: C]. Velocity: VC-4 — all three steps execute within the same processing cycle. The critical distinction from Layer 1 attacks: no implementation flaw is involved at any step. Boundary test: if the same file triggered a buffer overflow in the parser → #3 (Exploiting Client). But if the file is parsed correctly and the text contains instructions the agent obeys → #1 (Abuse of Functions). Same file, different generic vulnerability. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
   },
   "path_sequence": [

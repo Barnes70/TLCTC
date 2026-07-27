@@ -2,7 +2,7 @@
   "metadata": {
     "title": "TLCTC Sigma Mapping (SigmaHQ rules -> TLCTC)",
     "description": "Per-rule TLCTC cluster derivation from Sigma ATT&CK tags via ATT&CK->TLCTC.",
-    "tlctc_version": "2.1",
+    "tlctc_version": "2.3",
     "sigma_commit": "994da16651194500b607a3007186c29779e1f961",
     "attack_mapping": "tlctc-enterprise-attack.json",
     "total_rules": 3132,

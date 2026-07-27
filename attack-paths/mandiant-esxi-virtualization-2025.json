@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "MANDIANT-ESXI-VIRTUALIZATION-2025",
     "analyst_confidence": "high",
-    "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "registry_ref": "example-registry.json",
     "created_at": "2026-04-14T00:00:00Z",
     "notes": "Attack path derived from Mandiant M-Trends 2026 'Adversary Focus on Virtualized Infrastructure' (pp. 70-73). Illustrates the VMDK-mount credential-dump technique and ESXi-only ransomware (FOULFOG.LINUX, INC.LINUX) that bypasses endpoint EDR entirely. Initial access presumed to be stolen-credential / VPN login consistent with the broader 2025 pattern. Intra-system hypervisor boundary annotated per v2.1 R-INTRA rules — boundaries are observability annotations and do NOT change cluster classification. Sources: M-Trends 2026 pp. 70-73."

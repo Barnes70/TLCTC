@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "NK-IT-WORKER-INFILTRATION-2025",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-04-09T00:00:00Z",
     "notes": "North Korean state-sponsored IT worker infiltration scheme, industrialized by 2025. Operatives infiltrate Western organizations using fraudulent identities and AI-driven deepfakes to bypass video interviews, funneling hundreds of millions of dollars in revenue back to the regime. Workers maintain domestic residency illusion using US-based 'laptop farms' and facilitators to host corporate hardware, accessing devices via RMM software from abroad. Thousands create comprehensive digital personas on LinkedIn and GitHub, often renting credentials of complicit US citizens. Detection indicators: impossible travel login alerts, mouse-jiggling software, video metadata micro-artifacts from real-time deepfake rendering. Attack path: #9 ||[human][@External->@Org]|| -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 12, 24-27), Cloudforce One analysis."
   },

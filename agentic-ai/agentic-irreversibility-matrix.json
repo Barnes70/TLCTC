@@ -1,11 +1,11 @@
 {
-  "title": "TLCTC v2.0 — Agentic AI Irreversibility Matrix",
+  "title": "TLCTC v2.3 — Agentic AI Irreversibility Matrix",
   "description": "Reference data mapping consequence types to their irreversibility windows and recovery feasibility. The irreversibility window is the time between a consequence event and the point at which it becomes permanent. This is the most critical parameter for consequence-side control design: if the agent's consequence velocity exceeds the irreversibility window, prevention-heavy architectures are the only viable strategy.",
-  "version": "2.0-agentic-20260225",
+  "version": "2.3-agentic-20260225",
   "license": "CC BY 4.0 — Bernhard Kreinz / tlctc.net",
   "metadata": {
-    "framework_ref": "tlctc-framework.v2.0.json",
-    "tlctc_version": "2.0",
+    "framework_ref": "tlctc-framework.v2.3.json",
+    "tlctc_version": "2.3",
     "source_paper": "The Consequence Amplifier — Agentic AI on the Right Side of the Bow-Tie, §8",
     "author": "Bernhard Kreinz",
     "date": "2026-02-25",

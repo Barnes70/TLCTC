@@ -1,6 +1,6 @@
 # Propagated Controls — Managing Controls Over Event Chains
 
-**Status:** Companion note to TLCTC v2.0 — **not part of the core taxonomy** (the 10 clusters, 10 axioms, classification rules). It is a structural aid for the *consequence-chain* side of an incident — the `SRE → DRE → BRE` chain — and the controls that span it.
+**Status:** Companion note to TLCTC v2.3 — **not part of the core taxonomy** (the 10 clusters, 10 axioms, classification rules). It is a structural aid for the *consequence-chain* side of an incident — the `SRE → DRE → BRE` chain — and the controls that span it.
 **Audience:** CISOs, IR designers, BCM/operational-risk owners, GRC architects.
 
 ---

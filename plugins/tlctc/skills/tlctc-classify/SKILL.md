@@ -232,7 +232,7 @@ TLCTC distinguishes two fundamentally different execution mechanisms:
 
 **Generic Vulnerability:** The software environment's designed capability to execute potentially untrusted foreign code.
 
-**Attacker's View:** "I abuse the environment's designed capability to execute malware code, malicious scripts, or foreign-introduced tools."
+**Attacker's View:** "I abuse the environment's designed capability to execute malware code, malicious scripts, or foreign-introduced tools for my purposes."
 **Developer's View:** "I must control execution paths: allow-listing, code signing/verification, sandboxing, safe file handling."
 
 **Boundary Tests:**

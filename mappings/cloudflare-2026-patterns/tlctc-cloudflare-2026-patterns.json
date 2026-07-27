@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "TLCTC Cloudflare 2026 Threat Report Attack Patterns",
-    "description": "Canonical attack path patterns extracted from the Cloudflare 2026 Threat Report, decomposed into TLCTC threat cluster sequences. Each pattern represents a structurally distinct attack archetype defining the 2026 threat landscape. Patterns use TLCTC v2.0 cluster notation with v2.1 boundary extensions.",
-    "tlctc_version": "2.1",
+    "description": "Canonical attack path patterns extracted from the Cloudflare 2026 Threat Report, decomposed into TLCTC threat cluster sequences. Each pattern represents a structurally distinct attack archetype defining the 2026 threat landscape. Patterns use TLCTC v2.3 cluster notation with v2.1 boundary extensions.",
+    "tlctc_version": "2.3",
     "domain": "cloudflare-2026-threat-landscape",
     "total_patterns": 7,
     "license": "CC-BY-4.0",

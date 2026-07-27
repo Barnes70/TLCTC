@@ -11,7 +11,7 @@ tags:
   - "cluster-7"
   - "confidence-high"
 timestamp: "2026-05-08T00:00:00Z"
-tlctc_version: "2.1"
+tlctc_version: "2.3"
 ---
 # CHAOS-MUDDYWATER-FALSEFLAG-2026
 

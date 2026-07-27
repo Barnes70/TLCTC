@@ -97,7 +97,7 @@
         },
         "source": {
           "type": "string",
-          "description": "Authoritative source or origin of this definition (e.g., 'TLCTC v2.0', 'ISO 27000:2022', 'NIST SP 800-53')."
+          "description": "Authoritative source or origin of this definition (e.g., 'TLCTC v2.3', 'ISO 27000:2022', 'NIST SP 800-53')."
         },
         "see_also": {
           "type": "array",

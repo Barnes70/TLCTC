@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "TESLA-INSIDER-2023",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "Tesla insider data breach (May 2023). Two former Tesla employees exploited their legitimate access to internal systems to exfiltrate confidential data affecting 75,735 current and former employees, including Social Security numbers, financial records, salary data, and proprietary manufacturing secrets — including Elon Musk's personal SSN. The data was leaked to Handelsblatt, a German news outlet. Tesla's internal investigation traced the breach to the two individuals, who had violated IT security and data protection policies. Tesla filed lawsuits in Germany and obtained court orders to seize the leaked data and prohibit Handelsblatt from further use or distribution. This is a pure insider threat case with no technical exploitation — the employees used their own legitimate credentials and access to systems whose functions operated as designed. Attack path: #1 + [DRE: C] →[Δt=~2w] #8 + [DRE: C]. Sources: Tesla notification letter to Maine Attorney General (August 18, 2023); Handelsblatt reporting (May 2023); Tesla data breach notification to affected employees; Reuters and Bloomberg coverage of Tesla's German court filings."
   },

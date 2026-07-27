@@ -1708,7 +1708,7 @@
       const exportJSON = () => {
         const data = {
           $schema: 'tlctc-threat-identification-v2',
-          tlctc_version: '2.0',
+          tlctc_version: '2.3',
           metadata: { ...projectMeta, exported: new Date().toISOString() },
           system_model: {
             groups: groups.map(g => ({ id: g.id, name: g.name, type: g.type, position: { x: g.x, y: g.y }, size: { width: g.width, height: g.height }, metadata: g.metadata })),
@@ -1772,7 +1772,7 @@
         const subtitleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         subtitleText.setAttribute('x', '20'); subtitleText.setAttribute('y', '48');
         subtitleText.setAttribute('fill', '#94a3b8'); subtitleText.setAttribute('font-size', '12');
-        subtitleText.textContent = `v${projectMeta.version} | ${projectMeta.sdlcPhase} | TLCTC v2.0/v2.1 | ${new Date().toLocaleDateString()}`;
+        subtitleText.textContent = `v${projectMeta.version} | ${projectMeta.sdlcPhase} | TLCTC v2.3 | ${new Date().toLocaleDateString()}`;
         titleGroup.appendChild(subtitleText);
         
         clonedSvg.insertBefore(titleGroup, clonedSvg.firstChild);
@@ -2925,7 +2925,7 @@
                               </div>
                               {path.notation && (
                                 <div className={`mt-2 px-2 py-1.5 rounded text-[11px] font-mono leading-snug break-all ${darkMode ? 'bg-slate-900/60 text-slate-300 border border-slate-700' : 'bg-slate-100 text-slate-700 border border-slate-300'}`}
-                                  title="Canonical TLCTC v2.0/v2.1 attack path notation">{path.notation}</div>
+                                  title="Canonical TLCTC v2.3 attack path notation">{path.notation}</div>
                               )}
                               <p className="text-xs text-slate-400 mt-2 leading-relaxed">{path.desc}</p>
                               <p className="text-xs text-slate-500 mt-1 italic leading-relaxed">{path.example}</p>

@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "FANCY-BEAR-LAMEHUG-2025",
     "analyst_confidence": "medium",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-04-16T00:00:00Z",
     "notes": "FANCY BEAR's deployment of LAMEHUG, a novel LLM-enabled malware family, against Ukrainian government entities (mid-2025). First observed instance of a state-nexus adversary embedding LLM prompting directly into malware to perform operational tasks. Rather than hardcoding reconnaissance logic, LAMEHUG uses predefined prompts to generate system enumeration and document collection commands at runtime. CrowdStrike assessed that the LLM integration 'did not demonstrate a meaningful increase in effectiveness or sophistication compared to traditional malware' — deterministic model settings and simple prompts suggest experimentation rather than operational reliance. LAMEHUG lacked persistence mechanisms, consistent with short-lived 'smash-and-grab' access. Attack path: #9 ||[human][@FancyBear→@UA-Govt]|| →[Δt=?] #7 →[Δt=?] #1 →[Δt=~5m] #1 + [DRE: C] →[Δt=?] #1 + [DRE: C]. Source: CrowdStrike 2026 Global Threat Report, p. 18, Case Highlight: FANCY BEAR's Use of LLM-Enabled Malware."
   },

@@ -10,7 +10,7 @@ tags:
   - "cluster-7"
   - "confidence-high"
 timestamp: "2026-04-19T00:00:00Z"
-tlctc_version: "2.1"
+tlctc_version: "2.3"
 ---
 # AD-DOMAIN-ADMIN-CASCADE-2025
 

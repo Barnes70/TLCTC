@@ -2,8 +2,8 @@
   "metadata": {
     "incident_id": "COLONIAL-PIPELINE-2021",
     "analyst_confidence": "high",
-    "tlctc_version": "2.1",
-    "framework_ref": "tlctc-framework.v2.0.json",
+    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.3.json",
     "created_at": "2026-03-20T00:00:00Z",
     "notes": "DarkSide ransomware attack on Colonial Pipeline, May 2021. Largest fuel pipeline in the US shut down for 6 days, causing fuel shortages across the US East Coast. Attacker used a compromised VPN password (no MFA, likely from a prior breach). Attack path: #4 →[Δt=~7d] #1 →[Δt=~2h] #1 + [DRE: C] →[Δt=~4h] #7 + [DRE: A]. $4.4M ransom paid (DOJ later recovered $2.3M). Sources: Mandiant incident report, CISA Alert AA21-131A, Bloomberg reporting, DOJ Bitcoin recovery announcement."
   },
