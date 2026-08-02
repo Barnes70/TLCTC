@@ -12,11 +12,16 @@
 
 &nbsp;
 
-> **Cluster definitions current as of framework v2.3.2 (2026-07-26).** This
+> **Cluster definitions current as of framework v2.4 (2026-07-28).** This
 > paper's structure and argument remain those of Version 2.1. The ten generic
 > vulnerability statements are kept harmonized with the framework dictionary,
 > so errata issued after 2.1 — such as the v2.3.1 retightening of #4 and the
-> v2.3.2 retightening of #5 — are reflected here. For the current citable
+> v2.3.2 retightening of #5 — are reflected here. v2.4 adds a single
+> clarification, carrying no change to cluster identity, IDs, or generic
+> vulnerability statements: Axiom II and R-ROLE now state explicitly that the
+> client–server relation does not presuppose a network, so intra-system
+> privilege interfaces (syscall, hypercall, IPC) resolve to `#2`/`#3` by the
+> same role test. For the current citable
 > definition of the framework, see the core paper:
 > [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176).
 
@@ -79,7 +84,7 @@ TLCTC applies to generic IT assets and their context and therefore does not diff
 
 #### Axiom II — Client–Server as the Universal Interaction Model
 
-Any networked system interaction can be modeled as client–server (caller–called) interaction at one or more layers. The TLCTC clusters address the generic vulnerabilities that arise from these interactions, independent of protocol or architecture depth.
+Any system interaction—networked or intra-system—can be modeled as client–server (caller–called) interaction at one or more layers. A network is not a precondition: a syscall, hypercall, or IPC call establishes the same caller–called relation as a remote protocol exchange. The TLCTC clusters address the generic vulnerabilities that arise from these interactions, independent of protocol, transport, or architecture depth.
 
 ---
 
@@ -956,6 +961,7 @@ These rules are **global**: they apply across all clusters and are **normative**
    - Attacker sends malicious request → target processes it → **server-role** (`#2`)
    - Attacker controls resource → target fetches/processes it → **client-role** (`#3`)
 3. Internal components (e.g., a microservice calling another) follow the same logic: the component receiving and processing the call is in server-role for that interaction.
+4. **Server-role does not presuppose a network.** Roles are established by call direction at *any* interface, including intra-system privilege interfaces (syscall, hypercall, IPC, driver IOCTL). A kernel handling a crafted syscall from a lower-privileged process is in **server-role** for that interaction (`#2`); a higher-privileged component that consumes data or responses returned from a lower-privileged one is in **client-role** (`#3`). Per **R-INTRA-7**, the boundary *crossing* remains an observability annotation and **MUST NOT** be treated as a classification input—the cluster follows from the role at the interface, exactly as it does across a network.
 
 **Examples:**
 
@@ -967,6 +973,8 @@ These rules are **global**: they apply across all clusters and are **normative**
 | Email client parses malicious attachment | Client | `#3` |
 | Database processes injected SQL | Server | `#2` |
 | SSH client processes malicious server response | Client | `#3` |
+| Kernel handles crafted syscall from userland process | Server | `#2` |
+| Hypervisor processes malicious hypercall from guest VM | Server | `#2` |
 
 ---
 
@@ -4842,18 +4850,18 @@ To support this, steps carry:
 
 #### 14.3.2 Example Content Package: `tlctc-framework.v2.3.json` (excerpt)
 
-The cluster entries below are reproduced verbatim from the canonical framework dictionary; the `rules` array is truncated to a single example entry.
+The cluster entries below are reproduced verbatim from the canonical framework dictionary — `json-schemas/layer-1/tlctc-framework.v2.4.json`, validated against `json-schemas/layer-1/tlctc-framework.schema.json`. The `axioms` array is reproduced in full; the `rules` array is truncated to a single example entry, and the per-entry `notes` fields carried by Axiom II and R-ROLE in the dictionary are omitted here for brevity.
 
 ```
 {
   "metadata": {
-    "tlctc_version": "2.3",
-    "release_date": "2026-07-01",
+    "tlctc_version": "2.4",
+    "release_date": "2026-07-28",
     "schema_id": "tlctc-framework",
     "schema_version": "2.0.0",
     "publisher": "TLCTC Project",
     "license": "CC-BY-4.0",
-    "notes": "Framework dictionary for TLCTC v2.3."
+    "notes": "Framework dictionary for TLCTC v2.4."
   },
 
   "clusters": {
@@ -4951,7 +4959,7 @@ The cluster entries below are reproduced verbatim from the canonical framework d
 
   "axioms": [
     { "axiom_id": "Axiom I", "statement": "The framework is generic and applies to all IT systems; it does not differentiate by system type." },
-    { "axiom_id": "Axiom II", "statement": "All networked systems can be abstracted as client-server interaction." },
+    { "axiom_id": "Axiom II", "statement": "All system interactions, networked or intra-system, can be abstracted as client-server interaction." },
     { "axiom_id": "Axiom III", "statement": "Threats are on the cause side; outcomes and events are not threats." },
     { "axiom_id": "Axiom IV", "statement": "Threat clusters are separate from threat actors." },
     { "axiom_id": "Axiom V", "statement": "Control failures are not threats." },
@@ -6476,6 +6484,13 @@ Each example is written as:
   - Updated ABNF grammar to include transit arrow (`⇒`), `SPHERE_LIST`, `INTRA_BOUNDARY`, and unresolved-step productions (Section 11.7)
   - Introduced `STEP_TRAILER` production so `PAR_GROUP` can carry group-level annotations and a `DRE_TAG` (e.g., `(#1 + #7) + [DRE: Ac]`), closing the gap between the canonical example in §12.3.4 and the grammar in §11.7
   - Updated conformance rules to recognize all V2.1 operators and implementation requirements (Section 11.6)
+
+- Changes from V2.3.2 to V2.4 *(clarifying, backward-compatible)*
+  - **Dictionary artifact:** `json-schemas/layer-1/tlctc-framework.v2.4.json` (new file; `tlctc-framework.v2.3.json` retained unchanged for records classified under 2.3.x). Validates against `tlctc-framework.schema.json`; differs from v2.3.2 in 13 lines — metadata, the Axiom II statement, and the R-ROLE statement, plus explanatory `notes` on those two entries.
+  - **Axiom II — network precondition removed (Section 2):** restated as "Any system interaction—networked or intra-system—can be modeled as client–server (caller–called) interaction," with syscall / hypercall / IPC named as caller–called relations. Closes a reading in which "networked" was taken as a precondition, leaving intra-system privilege interfaces outside the interaction model.
+  - **R-ROLE — Clarification 4 added (Section 4.2.5):** server-role does not presuppose a network; roles are established by call direction at any interface, including intra-system privilege interfaces. A kernel handling a crafted syscall from a lower-privileged process is server-role (`#2`). Cross-references **R-INTRA-7** so the boundary crossing is not misread as a classification input. Two intra-system rows added to the R-ROLE examples table.
+  - **No change** to cluster identity, IDs, definitions, attacker's view, generic vulnerability statements, topology, boundary tests, the axiom set (count or numbering), or any other rule. Existing classifications remain valid; the clarification resolves an ambiguity rather than altering a decision.
+  - **Not promoted to core:** vertical stack analysis (Section 13.5) remains applied guidance. It introduces no generic vulnerability, axiom, or disambiguation rule, and is fully derivable from Axiom II + R-ROLE + R-INTRA-7 over the `intra-privilege` boundary context.
 
 ---
 
