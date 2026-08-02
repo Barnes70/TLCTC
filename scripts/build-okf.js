@@ -203,7 +203,7 @@ function buildAxioms() {
       description: firstSentence(a.statement),
       resource: `tlctc:axiom:${slug(a.axiom_id)}`,
       tags: ['taxonomy', 'axiom'],
-    }, `# ${a.axiom_id}\n\n${a.statement}\n`);
+    }, `# ${a.axiom_id}\n\n${a.statement}\n${a.notes ? `\n> ${a.notes}\n` : ''}`);
   });
 }
 
@@ -212,6 +212,7 @@ function buildRules() {
     const body = [
       `# ${r.rule_id}`, '',
       r.statement, '',
+      ...(r.notes ? [`> ${r.notes}`, ''] : []),
       '# Schema', '',
       `- **Enforcement level:** ${r.enforcement_level}`,
       `- **Machine enforceable:** ${r.machine_enforceable}`,
