@@ -21,7 +21,7 @@ const OUT = path.join(ROOT, 'okf');
 
 // ───────────────────────── source paths ──────────────────────────────────────
 const SRC = {
-  framework: 'json-schemas/layer-1/tlctc-framework.v2.3.json',
+  framework: 'json-schemas/layer-1/tlctc-framework.v2.4.json',
   registry: 'json-schemas/layer-2/example-registry.json',
   whitepaper: 'documentation/tlctc-v2.0-whitepaper.md',
   glossary: 'documentation/tlctc-glossary.md',
@@ -203,7 +203,7 @@ function buildAxioms() {
       description: firstSentence(a.statement),
       resource: `tlctc:axiom:${slug(a.axiom_id)}`,
       tags: ['taxonomy', 'axiom'],
-    }, `# ${a.axiom_id}\n\n${a.statement}\n`);
+    }, `# ${a.axiom_id}\n\n${a.statement}\n${a.notes ? `\n> ${a.notes}\n` : ''}`);
   });
 }
 
@@ -212,6 +212,7 @@ function buildRules() {
     const body = [
       `# ${r.rule_id}`, '',
       r.statement, '',
+      ...(r.notes ? [`> ${r.notes}`, ''] : []),
       '# Schema', '',
       `- **Enforcement level:** ${r.enforcement_level}`,
       `- **Machine enforceable:** ${r.machine_enforceable}`,
@@ -732,7 +733,7 @@ function writeRoot() {
     'controls, mappings).', '',
     '## Provenance notes', '',
     '- Cluster bodies render the whitepaper §4.1 seven-field definitions (Definition, Generic',
-    '  Vulnerability, and Attacker\'s View verbatim from `tlctc-framework.v2.3.json`; Scope,',
+    '  Vulnerability, and Attacker\'s View verbatim from `tlctc-framework.v2.4.json`; Scope,',
     '  Developer\'s View, and Boundary Tests canonical in the whitepaper).',
     '- Control docs combine NIST CSF objectives (normative) with ISO 27001:2022 Annex A *starter*',
     '  controls (AI-assisted, from `tools/`) — guidance, not a certified control set.',

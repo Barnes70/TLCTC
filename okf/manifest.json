@@ -1,7 +1,7 @@
 {
   "bundle": "tlctc-okf",
   "okf_spec_version": "0.1",
-  "tlctc_version": "2.3",
+  "tlctc_version": "2.4",
   "generator": "scripts/build-okf.js",
   "document_count": 412,
   "type_counts": {
@@ -765,7 +765,7 @@
       "path": "/axioms/axiom-ii.md",
       "type": "axiom",
       "title": "Axiom II",
-      "description": "All networked systems can be abstracted as client-server interaction.",
+      "description": "All system interactions, networked or intra-system, can be abstracted as client-server interaction.",
       "resource": "tlctc:axiom:axiom-ii",
       "tags": [
         "taxonomy",
