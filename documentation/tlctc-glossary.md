@@ -331,7 +331,7 @@ A component that **consumes external responses, content, or state** relative to 
 
 ### Client-Server Relationship
 
-A fundamental principle (Axiom II) stating that every networked software system is based on client-server or caller-called function interaction at various levels. The relationship is contextual: the entity requesting a service is the "client," and the entity providing that service is the "server". Roles can be dynamic and change depending on interaction context, particularly across protection ring boundaries.
+A fundamental principle (Axiom II) stating that every software system interaction — networked or intra-system — is based on client-server or caller-called function interaction at various levels. A network is not a precondition: a syscall, hypercall, or IPC call establishes the same caller-called relation as a remote protocol exchange. The relationship is contextual: the entity requesting a service is the "client," and the entity providing that service is the "server". Roles can be dynamic and change depending on interaction context, particularly across protection ring boundaries.
 
 ### Coder
 
@@ -1364,7 +1364,7 @@ Global mapping rule: If the attacker's advantage comes from unauthorized physica
 
 ### R-ROLE (Server vs Client Determination)
 
-Global mapping rule: If the vulnerable component accepts and handles inbound requests relative to the attacker, classify as `#2 Exploiting Server`. If the vulnerable component consumes external responses/content relative to the attacker, classify as `#3 Exploiting Client`.
+Global mapping rule: If the vulnerable component accepts and handles inbound requests relative to the attacker, classify as `#2 Exploiting Server`. If the vulnerable component consumes external responses/content relative to the attacker, classify as `#3 Exploiting Client`. Roles are established by call direction at **any** interface, including intra-system privilege interfaces (syscall, hypercall, IPC, driver IOCTL) — a network is not a precondition. A kernel handling a crafted syscall from a lower-privileged process is in server-role (`#2`). Per R-INTRA-7, the boundary crossing itself remains an observability annotation and MUST NOT be treated as a classification input.
 
 **Reference:** §4.2.5 (R-ROLE)
 

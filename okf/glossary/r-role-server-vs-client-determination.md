@@ -8,7 +8,7 @@ tags:
 ---
 # R-ROLE (Server vs Client Determination)
 
-Global mapping rule: If the vulnerable component accepts and handles inbound requests relative to the attacker, classify as `#2 Exploiting Server`. If the vulnerable component consumes external responses/content relative to the attacker, classify as `#3 Exploiting Client`.
+Global mapping rule: If the vulnerable component accepts and handles inbound requests relative to the attacker, classify as `#2 Exploiting Server`. If the vulnerable component consumes external responses/content relative to the attacker, classify as `#3 Exploiting Client`. Roles are established by call direction at **any** interface, including intra-system privilege interfaces (syscall, hypercall, IPC, driver IOCTL) — a network is not a precondition. A kernel handling a crafted syscall from a lower-privileged process is in server-role (`#2`). Per R-INTRA-7, the boundary crossing itself remains an observability annotation and MUST NOT be treated as a classification input.
 
 **Reference:** §4.2.5 (R-ROLE)
 

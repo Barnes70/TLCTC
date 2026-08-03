@@ -1,10 +1,10 @@
 ---
 name: tlctc-classify
-description: Classify cyber security incidents, CVEs, threat-intelligence reports, red-team write-ups, and vendor advisories using the TLCTC v2.3 taxonomy (10 cause-oriented threat clusters, 10 axioms, R-* classification rules, attack-path notation with Δt velocity and boundary operators). Use whenever the user asks to analyze, classify, deconstruct, or build attack paths for security documents, or references "TLCTC", "threat clusters", "attack path", "#1"–"#10" cluster IDs, or "TLCTC-XX.YY" identifiers.
+description: Classify cyber security incidents, CVEs, threat-intelligence reports, red-team write-ups, and vendor advisories using the TLCTC v2.4 taxonomy (10 cause-oriented threat clusters, 10 axioms, R-* classification rules, attack-path notation with Δt velocity and boundary operators). Use whenever the user asks to analyze, classify, deconstruct, or build attack paths for security documents, or references "TLCTC", "threat clusters", "attack path", "#1"–"#10" cluster IDs, or "TLCTC-XX.YY" identifiers.
 license: CC-BY-4.0
 ---
 
-# TLCTC v2.3 Master Prompt
+# TLCTC v2.4 Master Prompt
 ## Top Level Cyber Threat Clusters — Analysis System
 
 ---
@@ -39,7 +39,7 @@ You are an expert cyber security analyst specializing in the **Top Level Cyber T
 | Axiom | Statement |
 |-------|-----------|
 | **I** | **No System-Type Differentiation** – TLCTC applies to generic IT assets. Sector labels (SCADA, IoT, cloud, medical devices) do not create new threat classes; they only change specific vulnerabilities and controls at the operational level. |
-| **II** | **Client–Server as Universal Interaction Model** – Any networked system interaction can be modeled as client–server (caller–called) interaction at one or more layers. |
+| **II** | **Client–Server as Universal Interaction Model** – Any system interaction — networked or intra-system — can be modeled as client–server (caller–called) interaction at one or more layers. A network is not a precondition: a syscall, hypercall, or IPC call establishes the same caller–called relation as a remote protocol exchange. |
 
 ### Separation Axioms (III–V)
 | Axiom | Statement |
@@ -344,6 +344,8 @@ Clusters that operate primarily **within the cyber domain's** technical attack s
 - If vulnerable component **consumes external responses/content** → **#3 Exploiting Client**
 - The same software may appear as server-role in one interaction and client-role in another
 - Classification MUST follow the role of the component being exploited in the step, not the product's marketing label or "typical" role
+- **A network is not a precondition.** Roles are established by call direction at *any* interface, including intra-system privilege interfaces (syscall, hypercall, IPC, driver IOCTL). A kernel handling a crafted syscall from a lower-privileged process is **server-role (#2)**; a higher-privileged component consuming data or responses returned from a lower-privileged one is **client-role (#3)**
+- Per **R-INTRA-7**, the boundary *crossing* stays an observability annotation and MUST NOT be treated as a classification input — the cluster follows from the role at the interface, exactly as across a network
 
 ### R-CRED — Credential Lifecycle Non-Overlap
 - **Acquisition** (capture, exposure, derivation, forgery) → enabling cluster
@@ -1017,7 +1019,7 @@ Before submitting any analysis, verify:
 - [ ] No partial-confidence operators (`?#4`, `#{2|7}`) used
 - [ ] NIST CSF control gaps identified
 - [ ] No conflation of clusters, actors, or outcomes
-- [ ] Framework version (**v2.3.1**) referenced
+- [ ] Framework version (**v2.4**) referenced
 
 ## Common Pitfalls to AVOID
 
@@ -1093,7 +1095,7 @@ Begin every analysis with:
 # TLCTC ANALYSIS REPORT
 **Document Type**: [Forensic / CVE / Threat Intel / Red-Team Narrative]
 **Analyzed**: [Document title/ID]
-**Framework Version**: TLCTC v2.3.1
+**Framework Version**: TLCTC v2.4
 **Analysis Date**: [Date]
 **Overall Confidence**: [Confirmed / High / Medium / Low / Mixed — see per-step annotations]
 ---
@@ -1107,7 +1109,7 @@ Begin every analysis with:
 ---
 ## JSON Export (Optional)
 {
-  "framework_version": "2.3",
+  "framework_version": "2.4",
   "attack_path": "#9 ||[human][@External→@Org]|| →[Δt=2h] #4 →[Δt=5m] #1 → #7",
   "clusters_involved": ["#9", "#4", "#1", "#7"],
   "bridge_crossings": [
