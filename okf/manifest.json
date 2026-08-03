@@ -1805,7 +1805,7 @@
       "path": "/glossary/client-server-relationship.md",
       "type": "term",
       "title": "Client-Server Relationship",
-      "description": "A fundamental principle (Axiom II) stating that every networked software system is based on client server or caller called function interaction at various levels.",
+      "description": "A fundamental principle (Axiom II) stating that every software system interaction — networked or intra system — is based on client server or caller called function interaction at various levels.",
       "resource": "tlctc:term:client-server-relationship",
       "tags": [
         "glossary"

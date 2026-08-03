@@ -2,7 +2,7 @@
   "metadata": {
     "glossary_id": "tlctc-cyber-glossary",
     "glossary_version": "0.1.0",
-    "tlctc_version": "2.3",
+    "tlctc_version": "2.4",
     "created_at": "2026-03-07T00:00:00Z",
     "license": "CC-BY-4.0",
     "publisher": "TLCTC Project",
@@ -70,7 +70,7 @@
     {
       "term_id": "axiom-ii",
       "term": "Axiom II — Client-Server Abstraction",
-      "definition": "All networked systems can be abstracted as client-server interaction.",
+      "definition": "All system interactions, networked or intra-system, can be abstracted as client-server interaction.",
       "domain": "tlctc-core",
       "source": "TLCTC v2.3",
       "see_also": ["r-role"]
@@ -160,7 +160,7 @@
     {
       "term_id": "r-role",
       "term": "R-ROLE",
-      "definition": "Classify by the role of the component containing the flaw relative to the attacker: server-role flaw = #2, client-role flaw = #3.",
+      "definition": "Classify by the role of the component containing the flaw relative to the attacker: server-role flaw = #2, client-role flaw = #3. Roles are established by call direction at any interface, including intra-system privilege interfaces (syscall, hypercall, IPC, driver IOCTL); a network is not a precondition.",
       "domain": "tlctc-classification",
       "source": "TLCTC v2.3",
       "see_also": ["cluster-2-exploiting-server", "cluster-3-exploiting-client", "axiom-ii"]

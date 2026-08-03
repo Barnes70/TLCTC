@@ -1,6 +1,6 @@
 # TLCTC v2.3 Core — Consolidation Traceability
 
-**v2.3.0** introduced NO new normative content. Every element traces to finalized v2.1 source. **v2.3.1** and **v2.3.2** each add one deliberate, axiom-justified normative correction — see the Erratum sections below.
+**v2.3.0** introduced NO new normative content. Every element traces to finalized v2.1 source. **v2.3.1** and **v2.3.2** each add one deliberate, axiom-justified normative correction — see the Erratum sections below. **v2.4** adds one clarifying, backward-compatible change to the interaction model — see the Clarification section below.
 
 | v2.3 element | Source |
 |---|---|
@@ -51,6 +51,25 @@ A single normative correction to the **#5 Man in the Middle** cluster. Cluster i
 **Consequence-side note (non-normative).** Confidentiality and integrity outcomes of a #5 step continue to be recorded where they belong — as DRE annotations (`+ [DRE: C]`, `+ [DRE: I]`) on the attack path — not in the cluster's cause-side definition.
 
 **Harmonization.** The v2.3.2 wording is applied consistently across `tlctc-framework.v2.3.json`, `tlctc-v2.3-core.md`, `tlctc-glossary.md`, `glossary/tlctc-glossary.json`, `README.md`, the `tlctc-classify` skill, and the HTML tools (`threat-modeling.html`, `control-matrix.html`, `cbp-app.html`). The generated `okf/` bundle is rebuilt from these sources. The frozen `tlctc-framework.v2.0.json` dictionary and the v2.0 whitepaper are left as the historical v2.0 record.
+
+## Clarification — v2.4 (2026-07-28)
+
+A single clarifying, backward-compatible change to the **interaction model**, touching **Axiom II** and **R-ROLE**. Unlike v2.3.1 and v2.3.2, this is not an erratum: no field was wrong, and no classification changes. Cluster identity, IDs, definitions, attacker's views, generic vulnerabilities, topology, and all boundary tests are **unchanged**; the axiom set is unchanged in count and numbering, and no rule was added or removed. **Classifications valid under v2.3.2 remain valid under v2.4.**
+
+| Element | Before (v2.3.2) | After (v2.4) |
+|---|---|---|
+| Axiom II statement | "All networked systems can be abstracted as client-server interaction." | "All system interactions, networked or intra-system, can be abstracted as client-server interaction." |
+| R-ROLE statement | "Classify by the role of the component containing the flaw relative to the attacker: server-role flaw = #2, client-role flaw = #3." | *(unchanged first sentence)* + "Roles are established by call direction at any interface, including intra-system privilege interfaces (syscall, hypercall, IPC, driver IOCTL); a network is not a precondition." |
+
+**Justification.** The prior Axiom II wording was read by some implementers as making a *network* a precondition of the client–server abstraction, which would place intra-system privilege interfaces — syscall, hypercall, IPC, driver IOCTL — outside the interaction model and leave their exploitation unclassifiable under #2/#3. That reading was never intended: a syscall establishes exactly the same caller–called relation as a remote protocol exchange, and **Axiom I** (the framework is generic and does not differentiate by system type) already forbids treating a transport as a scope boundary. Restating Axiom II without "networked" removes the ambiguity at its source; extending R-ROLE makes the operational consequence explicit, so that a kernel handling a crafted syscall from a lower-privileged process resolves to **server-role (#2)**, and a higher-privileged component consuming data returned from a lower-privileged one resolves to **client-role (#3)**.
+
+**Relationship to R-INTRA-7 (important).** The clarification does **not** make intra-system boundaries a classification input. Per **R-INTRA-7**, the boundary *crossing* remains an observability annotation; the cluster follows from the role at the interface, exactly as it does across a network. The `|[privilege][@user→@root]|` operator records depth of compromise, not category.
+
+**Not promoted to core.** Vertical stack analysis (whitepaper §13.5) remains applied guidance. It introduces no generic vulnerability, axiom, or disambiguation rule, and is fully derivable from Axiom II + R-ROLE + R-INTRA-7 over the intra-system `privilege` boundary context.
+
+**Artifacts.** New dictionary `json-schemas/layer-1/tlctc-framework.v2.4.json` (differs from `tlctc-framework.v2.3.json` in metadata, the Axiom II statement, and the R-ROLE statement, plus explanatory `notes` on those two entries). The v2.3 dictionary is **retained unchanged** as the frozen record for classifications made under 2.3.x.
+
+**Harmonization.** The v2.4 wording is applied consistently across `tlctc-framework.v2.4.json`, `tlctc-v2.3-core.md`, `tlctc-v2.0-whitepaper.md` (Axiom II, R-ROLE Clarification 4, two intra-system rows in the R-ROLE examples table), `tlctc-glossary.md`, `glossary/tlctc-glossary.json`, `README.md`, and the `tlctc-classify` skill. The generated `okf/` bundle is rebuilt from these sources.
 
 ## Editorial Alignment — Canonical-String Harmonization (2026-07-02)
 

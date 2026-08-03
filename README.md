@@ -1,6 +1,6 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.3.2** · CC BY 4.0 · [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20633176.svg)](https://doi.org/10.5281/zenodo.20633176) · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.3-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
+**Version 2.4** · CC BY 4.0 · [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20633176.svg)](https://doi.org/10.5281/zenodo.20633176) · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.3-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
 A cause-oriented, axiomatic cyber threat taxonomy. We are aware of no prior framework that classifies threats by the generic vulnerability exploited rather than by outcome or actor.
 
@@ -21,7 +21,7 @@ TLCTC v2.3 is a **consolidation freeze** of the finalized v2.1 framework — no 
 | [**White Paper**](documentation/tlctc-v2.0-whitepaper.md) ([web](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)) | The extended practitioner handbook: full notation grammar (§11), boundary catalogs, decision procedures, anti-patterns, and worked detail beyond the core. Conforms to the core; filename kept for link stability. |
 | [**Operational Enumeration**](documentation/tlctc-operational-enumeration.md) ([JSON](json-schemas/operational/tlctc-operational-enumeration.json)) | The *evolving* `TLCTC-XX.YY` sub-cluster catalogue. The strategic layer (10 clusters) is frozen; the operational layer grows by contribution. |
 
-Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.3.json`](json-schemas/layer-1/tlctc-framework.v2.3.json).
+Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.4.json`](json-schemas/layer-1/tlctc-framework.v2.4.json). The v2.3 dictionary is retained unchanged as the frozen record for classifications made under 2.3.x.
 
 ---
 
@@ -82,7 +82,7 @@ Each cluster is defined by exactly **one generic vulnerability** (Axiom VI). Eac
 
 ### Cluster Scope (operational)
 
-The generic-vulnerability strings above are reproduced verbatim from the canonical framework dictionary (`json-schemas/layer-1/tlctc-framework.v2.3.json`), which also carries the canonical one-line Definition and Attacker's View per cluster. The scope descriptions below are the operational elaborations from the white paper §4.1.
+The generic-vulnerability strings above are reproduced verbatim from the canonical framework dictionary (`json-schemas/layer-1/tlctc-framework.v2.4.json`), which also carries the canonical one-line Definition and Attacker's View per cluster. The scope descriptions below are the operational elaborations from the white paper §4.1.
 
 - **#1 Abuse of Functions** — Manipulation of legitimate software capabilities — features, APIs, configurations, administrative settings, workflows — through standard interfaces using built-in input types and valid sequences of actions. The step achieves an attacker advantage **without requiring an implementation flaw**.
 
@@ -366,7 +366,7 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 
 | Layer | Purpose | Artifact | Scope | Update Frequency |
 |---|---|---|---|---|
-| **Layer 1 — Framework Definition** | Immutable "dictionary": clusters, axioms, rule IDs, topology types | `tlctc-framework.schema.json` / `tlctc-framework.v2.3.json` | Universal | Rarely (framework evolution) |
+| **Layer 1 — Framework Definition** | Immutable "dictionary": clusters, axioms, rule IDs, topology types | `tlctc-framework.schema.json` / `tlctc-framework.v2.4.json` | Universal | Rarely (framework evolution) |
 | **Layer 2 — Reference Registry** | Reusable reference objects: responsibility spheres, boundary contexts, intra-system boundary types | `tlctc-reference.schema.json` / `@Org-registry.vX.Y.Z.json` | Organization-specific | Occasionally (org changes) |
 | **Layer 3 — Attack Path Instances** | Specific incidents: sequences, parallel groups, Δt, boundary annotations, DREs | `tlctc-attack-path.schema.json` / `incident-<id>.json` | Per-incident | Constantly (new incidents) |
 
@@ -461,7 +461,8 @@ tlctc/
 ├── json-schemas/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
-│   │   └── tlctc-framework.v2.3.json         # V2.3 citable baseline: clusters, axioms, 16 rules
+│   │   ├── tlctc-framework.v2.3.json         # V2.3 frozen record (retained for 2.3.x classifications)
+│   │   └── tlctc-framework.v2.4.json         # V2.4 citable baseline: clusters, axioms, 16 rules
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
 │   │   └── example-registry.json             # Example org-specific registry
@@ -694,7 +695,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 
 ## How to Cite
 
-> Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.3.2) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.20633176
+> Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.4) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.20633176
 
 ```bibtex
 @misc{kreinz2026tlctc,
@@ -702,7 +703,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
   title     = {A Cause-Oriented Cyber Threat Taxonomy: The Top Level
                Cyber Threat Clusters Framework},
   year      = {2026},
-  version   = {2.3.2},
+  version   = {2.4},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.20633176},
   url       = {https://doi.org/10.5281/zenodo.20633176}
