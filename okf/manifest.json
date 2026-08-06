@@ -4035,7 +4035,7 @@
       "path": "/mappings/cwe/cluster-1.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #1 Abuse of Functions",
-      "description": "165 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions.",
+      "description": "162 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions.",
       "resource": "tlctc:mapping:cwe:cluster-1",
       "tags": [
         "mapping",
@@ -4095,7 +4095,7 @@
       "path": "/mappings/cwe/cluster-5.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #5 Man in the Middle",
-      "description": "27 CWE weaknesses entries mapped to TLCTC #5 Man in the Middle.",
+      "description": "30 CWE weaknesses entries mapped to TLCTC #5 Man in the Middle.",
       "resource": "tlctc:mapping:cwe:cluster-5",
       "tags": [
         "mapping",

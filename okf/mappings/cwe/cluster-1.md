@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "CWE weaknesses → #1 Abuse of Functions"
-description: "165 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions."
+description: "162 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions."
 resource: "tlctc:mapping:cwe:cluster-1"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE CWE → TLCTC mapping (`mappings/mitre-cwe/`). AI-generated, human-reviewed; experimental.
 
-Mapped entries: **165**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md).
+Mapped entries: **162**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
@@ -120,7 +120,6 @@ Mapped entries: **165**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md
 | CWE-608 | Struts: Non-private Field in ActionForm Class | #1 | Allowed | Struts ActionForm with non-private fields exposes business state to direct manipulation. Decision tree Q9 -> #1. |
 | CWE-610 | Externally Controlled Reference to a Resource in Another Sphere | #1 | Discouraged | Externally-controlled reference to a resource in another sphere (parent class for IDOR, SSRF, path traversal logic). Specific cases classify at child CWEs. Decision tree Q9 -> #1. |
 | CWE-612 | Improper Authorization of Index Containing Sensitive Information | #1 | Allowed | Index of sensitive items (search index, cache) returns entries the user is not authorized to view. Decision tree Q9 -> #1. |
-| CWE-614 | Sensitive Cookie in HTTPS Session Without 'Secure' Attribute | #1 | Allowed | The Secure attribute is a legitimate configuration parameter that was incorrectly set. This is a configuration/functional scope issue (#1) where the cookie security setting is misconfigured, allowing the cookie to be sent over unencrypted connections. The attacker abuses the insecure configuration. |
 | CWE-620 | Unverified Password Change | #1 | Allowed | Password change endpoint does not verify the current user's identity (no current-password check, no reauth). Decision tree Q9 -> #1 (abuse of the password-change function). |
 | CWE-625 | Permissive Regular Expression | #1 | Allowed | Regex used as a security validator is too permissive, accepting inputs that should have been rejected. Decision tree Q9 -> #1 (abuse of the validation function via inputs the regex permits). |
 | CWE-636 | Not Failing Securely ('Failing Open') | #1 | Allowed | On error, security checks default to permitting the action instead of denying. Decision tree Q9 -> #1 (abuse of the default-permit branch of the security function). |
@@ -162,12 +161,10 @@ Mapped entries: **165**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md
 | CWE-918 | Server-Side Request Forgery (SSRF) | #1 | Allowed | Server fetches a URL whose target is attacker-controlled, letting the attacker reach internal endpoints (cloud metadata, internal services) from the server's network position. Decision tree Q9 -> #1 (abuse of the fetch function). |
 | CWE-921 | Storage of Sensitive Data in a Mechanism without Access Control | #1 | Allowed | Sensitive data stored in a mechanism that lacks access control (world-readable file, unprotected shared memory, public Android intent extra). Decision tree Q9 -> #1. |
 | CWE-922 | Insecure Storage of Sensitive Information | #1 | Allowed | Sensitive data stored without proper access protection (file/dir/registry permissions, missing encryption-at-rest). Decision tree Q9 -> #1 (the storage function is configured to admit the wrong callers). |
-| CWE-923 | Improper Restriction of Communication Channel to Intended Endpoints | #1 | Allowed | Failure to verify the intended endpoint of a communication channel lets an attacker substitute a controlled endpoint. Decision tree Q9 -> #1 (channel-spoofing via the connection-establishment function). |
 | CWE-925 | Improper Verification of Intent by Broadcast Receiver | #1 | Allowed | Android broadcast receiver does not verify the intent's sender/action, letting any app invoke the receiver. Decision tree Q9 -> #1. |
 | CWE-926 | Improper Export of Android Application Components | #1 | Allowed | Android component (Activity, Service, Receiver) is exported without proper permission protection, lettable any app invoke it. Decision tree Q9 -> #1. |
 | CWE-927 | Use of Implicit Intent for Sensitive Communication | #1 | Allowed | Implicit Android intent for sensitive communication can be received by any matching app, including a malicious one. Decision tree Q9 -> #1. |
 | CWE-939 | Improper Authorization in Handler for Custom URL Scheme | #1 | Allowed | Custom URL scheme handler does not authorize the caller, letting any web origin invoke its functions via the registered scheme. Decision tree Q9 -> #1. |
-| CWE-941 | Incorrectly Specified Destination in a Communication Channel | #1 | Allowed | Communication is sent to an incorrectly-specified destination (wrong host, wrong port, wrong topic), letting attacker-controlled endpoints receive the data. Decision tree Q9 -> #1. |
 | CWE-942 | Permissive Cross-domain Policy with Untrusted Domains | #1 | Allowed | Cross-domain policy (Flash crossdomain.xml, Silverlight clientaccesspolicy.xml) lists overly broad domains, letting untrusted origins access cross-origin resources. Decision tree Q9 -> #1. |
 | CWE-1039 | Inadequate Detection or Handling of Adversarial Input Perturbations in Automated Recognition Mechanism | #1 | Allowed | Adversarial-input attacks (data poisoning, evasion) abuse the model's intended inference function by crafting inputs the model processes correctly but the user's downstream logic interprets unsafely. Per Axiom IV (actor identity does not determine cluster), this is #1 regardless of whether the adversary is a user, attacker, or insider. |
 | CWE-1051 | Initialization with Hard-Coded Network Resource Configuration Data | #1 | Allowed | Hard-coded network endpoint (server URL, registry hostname) creates a fixed function the attacker can spoof or redirect by controlling the named resource (DNS hijack, BGP attack). Decision tree Q9 -> #1. |

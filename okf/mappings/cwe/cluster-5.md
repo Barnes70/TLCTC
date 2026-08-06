@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "CWE weaknesses → #5 Man in the Middle"
-description: "27 CWE weaknesses entries mapped to TLCTC #5 Man in the Middle."
+description: "30 CWE weaknesses entries mapped to TLCTC #5 Man in the Middle."
 resource: "tlctc:mapping:cwe:cluster-5"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE CWE → TLCTC mapping (`mappings/mitre-cwe/`). AI-generated, human-reviewed; experimental.
 
-Mapped entries: **27**. Cluster: [#5 Man in the Middle](/clusters/cluster-5.md).
+Mapped entries: **30**. Cluster: [#5 Man in the Middle](/clusters/cluster-5.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
@@ -36,10 +36,13 @@ Mapped entries: **27**. Cluster: [#5 Man in the Middle](/clusters/cluster-5.md).
 | CWE-523 | Unprotected Transport of Credentials | #5 | Allowed | Credentials transmitted over an unprotected channel — interceptor recovers them and subsequently applies them per R-CRED. Decision tree Q4 -> #5 (acquisition step); subsequent credential application is #4. |
 | CWE-593 | Authentication Bypass: OpenSSL CTX Object Modified after SSL Objects are Created | #5 | Allowed | Modifying the SSL_CTX after SSL objects are created means the configured verification settings never apply, defeating certificate verification by construction. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. Per decision-tree NOTE 4, "authentication bypass" here means PEER authenticity of the channel, not identity authentication of a principal, so NOTE 1's #1 ruling does not govern. |
 | CWE-599 | Missing Validation of OpenSSL Certificate | #5 | Allowed | Trusting a certificate without consulting SSL_get_verify_result() means the verification result is never applied — the peer-authenticity control is present but inert. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. |
+| CWE-614 | Sensitive Cookie in HTTPS Session Without 'Secure' Attribute | #5 | Allowed | Omitting the Secure attribute allows a session cookie to be transmitted over an unencrypted connection, placing a credential on a path with no confidentiality control. Per R-CHANNEL (v2.4) the attribute IS the per-cookie channel-encryption control, so its failure is the lack of sufficient control over the communication path (#5); consistent with CWE-319 Cleartext Transmission, already #5, and with the decision-tree enabling-condition table ('cleartext transmission / weak channel encryption -> #5'). The prior #1 rationale classified by substrate ('it is a configuration parameter') rather than by the generic vulnerability. Note CWE-1275 (SameSite) remains #1: SameSite governs cross-site request attachment (CSRF), not channel confidentiality. Reclassified from #1 in the 2026-08-06 R-CHANNEL remainder sweep. |
 | CWE-757 | Selection of Less-Secure Algorithm During Negotiation ('Algorithm Downgrade') | #5 | Allowed | Algorithm-downgrade attack: attacker manipulates protocol negotiation to force selection of a weaker cipher/hash, then exploits the weakened channel. Per ruling-2 (enabling-condition policy) and Q4 (communication-path weakness) -> #5. |
 | CWE-780 | Use of RSA Algorithm without OAEP | #5 | Allowed | Textbook RSA without OAEP padding is vulnerable to chosen-ciphertext / Bleichenbacher-style attacks, recovering plaintext for an interceptor. Per ruling-2 → #5. |
+| CWE-923 | Improper Restriction of Communication Channel to Intended Endpoints | #5 | Allowed | Verifying that a communication channel terminates at the intended endpoint is the peer-authenticity control of that channel. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5). This entry is the parent of CWE-940, which was already #5; the previous #1 mapping left parent and child in different clusters. Reclassified from #1 in the 2026-08-06 R-CHANNEL remainder sweep. |
 | CWE-924 | Improper Enforcement of Message Integrity During Transmission in a Communication Channel | #5 | Allowed | Failure to verify message integrity in transit — attacker on the wire can modify content undetected. Decision tree Q4 -> #5. |
 | CWE-940 | Improper Verification of Source of a Communication Channel | #5 | Allowed | Missing/insufficient verification that a received message originated from the expected source — spoofing/relay possible. Decision tree Q4 -> #5. |
+| CWE-941 | Incorrectly Specified Destination in a Communication Channel | #5 | Allowed | The channel is established to an incorrectly specified destination (wrong host, port, or topic), so data reaches an endpoint that was never authenticated as the intended peer. Per R-CHANNEL (v2.4) endpoint correctness is constitutive of the communication-path control, not a separate function being abused (#1). Child of CWE-923; aligns with CWE-940. Reclassified from #1 in the 2026-08-06 R-CHANNEL remainder sweep. |
 | CWE-1204 | Generation of Weak Initialization Vector (IV) | #5 | Allowed | Weak/predictable IVs degrade encryption confidentiality, recoverable by an interceptor. Per ruling-2 → #5. |
 | CWE-1240 | Use of a Cryptographic Primitive with a Risky Implementation | #5 | Allowed | A flawed primitive implementation (e.g., side-channel-leaking AES, broken curve params) degrades the protection of encrypted data, recoverable by an attacker. Per ruling-2 → #5. |
 | CWE-1428 | Reliance on HTTP instead of HTTPS | #5 | Allowed | Use of HTTP where HTTPS is required leaves the channel exposed to interception, modification, and active downgrade. Decision tree Q4 -> #5. |
