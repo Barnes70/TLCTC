@@ -11,7 +11,8 @@
       "2026-05-06: Step 9 rationale standardization sweep — 283 stub rationales rewritten with decision-tree-citing prose. Family patterns: sanitization-of-special-elements series (CWE-140-165), server-side info-leak via artifact (CWE-526-550), hardware/SoC flaws (CWE-1190-1334) split into design / debug / side-channel / fault-injection / data-remanence / protection sub-families, resource-exhaustion (CWE-400-410, 770-779, 1325) citing Q5, malware (CWE-507-512) citing Q6 + Axiom III, deprecated entries (CWE-71/92/132/...) citing Prohibited-verdict policy, XSS variants (CWE-82-87) citing CWE-79 parent. After this sweep, 0 entries with rationales under 60 characters remain.",
       "2026-05-05: v2.1 audit — Unreviewed bucket cleared; R-EXEC sweep (15 entries gained → #7); enabling-condition CWEs reclassified to the cluster they enable; #1 cluster fully audited (169 entries): crypto/PRNG re-clustered to #4/#5 per ruling-2 (incl. late-found CWE-1241), code-typo CWEs (CWE-481/482/483/484/486 — incl. Apple goto-fail) and comparison-bug CWEs (CWE-595/597) re-clustered to #2|#3 since they are code implementation flaws (Q2) not logic-abuse (Q9), CWE-757 algorithm-downgrade re-clustered to #5, CWE-1256 SW-HW interface re-clustered to #1|#8; ~130 stub rationales rewritten to cite the abused function and the decision-tree question. #2|#3 cluster audited (228 entries): CWE-318 cleartext-secret-in-executable re-clustered to #4 per ruling-2 (missed in Step 3 because mapping was non-N/A); CWE-21 path-traversal parent demoted to Discouraged; CWE-1066/1097 promoted from Prohibited→Allowed (verdict drift); CWE-1082 mapping → N/A as no real security relevance; ~185 stub rationales (path-traversal CWE-22..58, memory-safety CWE-119..127/131/415..476, sanitization-filtering CWE-790..796, concurrency CWE-362..821, arithmetic CWE-128/191/681) rewritten with R-ROLE-citing prose. Single-cluster spot-check audit (#2/#4/#5/#6/#9/#10): 40 #2-entries re-clustered to #2|#3 where the same flaw applies in either role per R-ROLE (memory-safety CWE-188/241/242/244/588/676/733/762/763/826/843, type-confusion CWE-843 incl. browser JIT, side-channel CWE-204..208, numeric CWE-192/194..198/839, function-call CWE-683/685..688, parser/struct CWE-237..240/253/626, concurrency CWE-663/765/768/828/831/832); CWE-300/311 verdicts Discouraged → Allowed (mappings well-defended, not abstract); CWE-1101 verdict Prohibited → Allowed; CWE-443/769 deprecated entries with non-N/A mappings fixed to N/A for consistency; CWE-1060/1072/1073/1094 performance-only Prohibited+#6 entries reclassified to Discouraged + N/A. ~30 stub rationales rewritten in #4 (credential CWEs CWE-258/259/262/263/307/308/309/321/521/613/1392/1394) and #9 (UI-deception CWE-356/357/446/451) and #10 (supply-chain CWE-510/511/553/1104/1273/1291/1297/1328) clusters. Allowed-with-Review queue narrowed from 90 to 16 intentional remainders; N/A bucket reconciled (verdict drift fixed): 62 'N/A + Allowed' entries (code-quality/consequence/non-threat) reclassified to Discouraged, and 47 'N/A + Prohibited' code-quality entries (CWE-1041–1124 'Bad Coding Practices' cluster) reclassified to Discouraged since they are concrete weakness patterns, not Category/View/Deprecated nodes. Two policy rulings codified: (1) CWE-287-style authentication-logic bypass = #1, credential application is the only #4 case; (2) enabling-condition CWEs map to the cluster they enable. Verdict semantics tightened: Prohibited now reserved exclusively for Category/View/List/Deprecated org nodes (44 entries); code-quality patterns and abstract umbrella CWEs are Discouraged (171 entries). Final state: 756 Allowed / 16 Allowed-with-Review (intentional context-dependence) / 171 Discouraged / 44 Prohibited.",
       "2026-07-01: v2.3.1 #4 re-alignment — Identity Theft retightened to point-of-use identity-artifact binding (tlctc-v2.3-core §4 erratum). 20 acquisition-side credential CWEs reclassified off #4 to the new 'enabling-condition' mapping (acquisition vector determines cluster per R-CRED): storage/exposure CWE-13/256/257/260/261/312/313/314/315/316/318/522/555/1004, hashing CWE-328/759/760/916, aging CWE-262/263. This reverses ruling-2 for credential-protection weaknesses (they no longer inherit the enabled #4). Point-of-use binding CWEs retained as #4 (auth-mechanism 307/308/309, session 6/384/613, weak/default/hard-coded/predictable credential acceptance 258/259/321/340/341/342/343/521/798/1391/1392/1393/1394). Only the #4 cluster was revisited against v2.3.1; other clusters not re-audited. #4 count 39->19.",
-      "2026-07-03: deduplication — two duplicate records removed. CWE-316 appeared twice with divergent mappings: the pre-v2.3.1 record ('#2 | #3', 'Memory exposure...') survived the 2026-07-01 reclassification alongside the updated 'enabling-condition' record; the stale record is removed, the v2.3.1 record retained. CWE-1389 appeared twice as byte-identical records; one copy removed. total_entries 987->985; statistics recomputed. Downstream consumers (tools/cwe-explorer.html embedded dataset, okf/ views) re-synced from this file."
+      "2026-07-03: deduplication — two duplicate records removed. CWE-316 appeared twice with divergent mappings: the pre-v2.3.1 record ('#2 | #3', 'Memory exposure...') survived the 2026-07-01 reclassification alongside the updated 'enabling-condition' record; the stale record is removed, the v2.3.1 record retained. CWE-1389 appeared twice as byte-identical records; one copy removed. total_entries 987->985; statistics recomputed. Downstream consumers (tools/cwe-explorer.html embedded dataset, okf/ views) re-synced from this file.",
+      "2026-08-06: R-CHANNEL sweep — certificate/peer-authenticity family re-clustered #3|#2|#3 -> #5 (8 entries: CWE-295, 296, 297, 298, 299, 370, 593, 599). Root cause was an ordering defect in decision-tree.md: Q2 (code implementation flaw) preceded Q4 (communication path), so cert-validation CWEs were captured as code flaws before the channel test ran — even though Q4 explicitly named \"certificate validation failure\" and the #5 Developer's View names \"proper certificate/path validation\". The result was an internal inconsistency in which CWE-940/757/300/311/319 were #5 while CWE-295 and its children were #3. Fixed at the source: new framework rule R-CHANNEL (v2.4) states that where the defective logic is constitutive of a communication-path control, the cluster is #5, with R-ROLE as the residual test for defects merely incidental to that control (e.g. memory-safety bugs in a TLS implementation, which remain #2|#3). decision-tree.md Q2 now carries an explicit guard citing R-CHANNEL and R-FLOOD; Q4 gains NOTE 3 (scope) and NOTE 4 (CWE-593 peer-authenticity vs NOTE 1 principal-authentication disambiguation). Statistics recomputed from the data. Scope caveat: only the certificate/channel family was revisited against v2.4; other clusters have not been re-audited since the 2026-07-01 #4 pass, and no cluster other than #4 and #5 has been re-audited since v2.1. Downstream consumers (tools/cwe-explorer.html embedded dataset, okf/ views) re-synced from this file."
     ],
     "license": "CC-BY-4.0",
     "publisher": "TLCTC Project",
@@ -36,21 +37,21 @@
         "Unreviewed": 0
       },
       "by_mapping": {
-        "#2 | #3": 264,
+        "#2 | #3": 262,
         "N/A": 183,
         "#1": 159,
         "#2": 124,
         "#8": 90,
         "#6": 27,
+        "#5": 25,
         "enabling-condition": 20,
         "#4": 19,
-        "#5": 17,
         "#10": 14,
-        "#3": 12,
         "#4 | #5": 10,
         "#2 → #7 | #3": 8,
         "#9": 8,
         "#2 → #7 | #3 → #7": 7,
+        "#3": 6,
         "#2 → #7": 6,
         "#1 → #7": 4,
         "#7": 4,
@@ -61,7 +62,7 @@
         "#4 | #6": 1,
         "#1 | #8": 1
       },
-      "context_dependent": 246
+      "context_dependent": 244
     }
   },
   "mappings": [
@@ -4370,7 +4371,7 @@
       "cweStatus": "Incomplete",
       "tlctcMapping": "#1",
       "tlctcMappingName": "Abuse of Functions",
-      "mappingRationale": "Replay attacks exploit a weakness in the authentication protocol design (#1) that fails to prevent reuse of captured authentication data. The protocol's functional logic allows replayed messages to be accepted as valid. This is abuse of the protocol's designed behavior, not exploitation of a network position. Note: If credentials are replayed to impersonate identity, the sequence is #1 â†’ #4.",
+      "mappingRationale": "Replay attacks exploit a weakness in the authentication protocol design (#1) that fails to prevent reuse of captured authentication data. The protocol's functional logic allows replayed messages to be accepted as valid. This is abuse of the protocol's designed behavior, not exploitation of a network position. Note: If credentials are replayed to impersonate identity, the sequence is #1 → #4.",
       "mappingVerdict": "Allowed",
       "contextDependent": false,
       "cveReferences": [
@@ -4382,9 +4383,9 @@
       "cweId": "CWE-295",
       "cweName": "Improper Certificate Validation",
       "cweStatus": "Incomplete",
-      "tlctcMapping": "#3",
-      "tlctcMappingName": "Exploiting Client",
-      "mappingRationale": "This is a client-side code implementation flaw (#3) where certificate validation logic is improperly implemented or missing. The vulnerability exists in the client's source code that fails to correctly validate certificates. While this enables MitM scenarios, the threat being exploited is the coding bug itself.",
+      "tlctcMapping": "#5",
+      "tlctcMappingName": "Man in the Middle",
+      "mappingRationale": "Certificate validation is the peer-authenticity control of the communication path. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. Aligns this entry with CWE-940/757/300/311/319, already #5.",
       "mappingVerdict": "Allowed",
       "contextDependent": false,
       "cveReferences": [
@@ -4414,9 +4415,9 @@
       "cweId": "CWE-296",
       "cweName": "Improper Following of a Certificate's Chain of Trust",
       "cweStatus": "Incomplete",
-      "tlctcMapping": "#3",
-      "tlctcMappingName": "Exploiting Client",
-      "mappingRationale": "Client-side code implementation flaw (#3) in certificate chain validation logic. The developer failed to properly implement chain-of-trust verification in the client software.",
+      "tlctcMapping": "#5",
+      "tlctcMappingName": "Man in the Middle",
+      "mappingRationale": "Following a certificate's chain of trust is how the peer-authenticity control resolves to a trust anchor; failing to follow it defeats the control itself. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
       "mappingVerdict": "Allowed",
       "contextDependent": false,
       "cveReferences": [
@@ -4434,9 +4435,9 @@
       "cweId": "CWE-297",
       "cweName": "Improper Validation of Certificate with Host Mismatch",
       "cweStatus": "Incomplete",
-      "tlctcMapping": "#3",
-      "tlctcMappingName": "Exploiting Client",
-      "mappingRationale": "Client-side code implementation flaw (#3) where hostname verification against certificate CN/SAN is missing or incorrectly implemented. The bug is in the client's validation code.",
+      "tlctcMapping": "#5",
+      "tlctcMappingName": "Man in the Middle",
+      "mappingRationale": "Host mismatch validation binds the presented certificate to the intended endpoint — the peer-authenticity control of the communication path. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
       "mappingVerdict": "Allowed",
       "contextDependent": false,
       "cveReferences": [
@@ -4466,9 +4467,9 @@
       "cweId": "CWE-298",
       "cweName": "Improper Validation of Certificate Expiration",
       "cweStatus": "Incomplete",
-      "tlctcMapping": "#3",
-      "tlctcMappingName": "Exploiting Client",
-      "mappingRationale": "Client-side code implementation flaw (#3) where certificate expiration check is missing or improperly implemented in the client software.",
+      "tlctcMapping": "#5",
+      "tlctcMappingName": "Man in the Middle",
+      "mappingRationale": "Certificate expiration validation is the validity-window component of the peer-authenticity control. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
       "mappingVerdict": "Allowed",
       "contextDependent": false,
       "cveReferences": []
@@ -4477,9 +4478,9 @@
       "cweId": "CWE-299",
       "cweName": "Improper Check for Certificate Revocation",
       "cweStatus": "Incomplete",
-      "tlctcMapping": "#3",
-      "tlctcMappingName": "Exploiting Client",
-      "mappingRationale": "Client-side code implementation flaw (#3) where OCSP/CRL revocation checking is missing or improperly implemented. The vulnerability is in the client's certificate handling code.",
+      "tlctcMapping": "#5",
+      "tlctcMappingName": "Man in the Middle",
+      "mappingRationale": "Revocation checking is the withdrawal component of the peer-authenticity control. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
       "mappingVerdict": "Allowed",
       "contextDependent": false,
       "cveReferences": [
@@ -5565,9 +5566,9 @@
       "cweId": "CWE-370",
       "cweName": "Missing Check for Certificate Revocation after Initial Check",
       "cweStatus": "Incomplete",
-      "tlctcMapping": "#3",
-      "tlctcMappingName": "Exploiting Client",
-      "mappingRationale": "Client-side code implementation flaw (#3) in session/connection handling where revocation status is not re-validated during long-lived sessions.",
+      "tlctcMapping": "#5",
+      "tlctcMappingName": "Man in the Middle",
+      "mappingRationale": "Revocation is checked initially but not re-checked, leaving the peer-authenticity control unenforced for the remainder of the session. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
       "mappingVerdict": "Allowed",
       "contextDependent": false,
       "cveReferences": []
@@ -8168,11 +8169,11 @@
       "cweId": "CWE-593",
       "cweName": "Authentication Bypass: OpenSSL CTX Object Modified after SSL Objects are Created",
       "cweStatus": "Incomplete",
-      "tlctcMapping": "#2 | #3",
-      "tlctcMappingName": "Exploiting Server or Exploiting Client",
-      "mappingRationale": "OpenSSL CTX object modified after SSL_set_fd / SSL_new — context changes silently ignored. Code implementation flaw in API usage. Input-validation code implementation flaw at the parser/validator boundary. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
+      "tlctcMapping": "#5",
+      "tlctcMappingName": "Man in the Middle",
+      "mappingRationale": "Modifying the SSL_CTX after SSL objects are created means the configured verification settings never apply, defeating certificate verification by construction. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. Per decision-tree NOTE 4, \"authentication bypass\" here means PEER authenticity of the channel, not identity authentication of a principal, so NOTE 1's #1 ruling does not govern.",
       "mappingVerdict": "Allowed",
-      "contextDependent": true,
+      "contextDependent": false,
       "cveReferences": []
     },
     {
@@ -8236,11 +8237,11 @@
       "cweId": "CWE-599",
       "cweName": "Missing Validation of OpenSSL Certificate",
       "cweStatus": "Draft",
-      "tlctcMapping": "#2 | #3",
-      "tlctcMappingName": "Exploiting Server or Exploiting Client",
-      "mappingRationale": "Missing OpenSSL certificate validation — TLS connection accepts any certificate. Input-validation code implementation flaw at the parser/validator boundary. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
+      "tlctcMapping": "#5",
+      "tlctcMappingName": "Man in the Middle",
+      "mappingRationale": "Trusting a certificate without consulting SSL_get_verify_result() means the verification result is never applied — the peer-authenticity control is present but inert. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
       "mappingVerdict": "Allowed",
-      "contextDependent": true,
+      "contextDependent": false,
       "cveReferences": []
     },
     {

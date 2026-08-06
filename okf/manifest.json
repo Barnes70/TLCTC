@@ -3,7 +3,7 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.4",
   "generator": "scripts/build-okf.js",
-  "document_count": 412,
+  "document_count": 413,
   "type_counts": {
     "attack-path": 51,
     "axiom": 10,
@@ -15,7 +15,7 @@
     "indicator-framework": 1,
     "intra-boundary-type": 4,
     "mapping-set": 30,
-    "rule": 16,
+    "rule": 17,
     "sphere": 9,
     "term": 247
   },
@@ -4059,7 +4059,7 @@
       "path": "/mappings/cwe/cluster-2.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #2 Exploiting Server",
-      "description": "409 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
+      "description": "407 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
       "resource": "tlctc:mapping:cwe:cluster-2",
       "tags": [
         "mapping",
@@ -4071,7 +4071,7 @@
       "path": "/mappings/cwe/cluster-3.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #3 Exploiting Client",
-      "description": "12 CWE weaknesses entries mapped to TLCTC #3 Exploiting Client.",
+      "description": "6 CWE weaknesses entries mapped to TLCTC #3 Exploiting Client.",
       "resource": "tlctc:mapping:cwe:cluster-3",
       "tags": [
         "mapping",
@@ -4095,7 +4095,7 @@
       "path": "/mappings/cwe/cluster-5.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #5 Man in the Middle",
-      "description": "19 CWE weaknesses entries mapped to TLCTC #5 Man in the Middle.",
+      "description": "27 CWE weaknesses entries mapped to TLCTC #5 Man in the Middle.",
       "resource": "tlctc:mapping:cwe:cluster-5",
       "tags": [
         "mapping",
@@ -4269,6 +4269,18 @@
         "mapping",
         "sigma",
         "cluster-9"
+      ]
+    },
+    {
+      "path": "/rules/r-channel.md",
+      "type": "rule",
+      "title": "R-CHANNEL",
+      "description": "If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as #5, not as #2 or #3 under R-ROLE.",
+      "resource": "tlctc:rule:R-CHANNEL",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
       ]
     },
     {

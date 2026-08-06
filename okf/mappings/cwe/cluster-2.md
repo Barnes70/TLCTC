@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "CWE weaknesses → #2 Exploiting Server"
-description: "409 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server."
+description: "407 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server."
 resource: "tlctc:mapping:cwe:cluster-2"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE CWE → TLCTC mapping (`mappings/mitre-cwe/`). AI-generated, human-reviewed; experimental.
 
-Mapped entries: **409**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md).
+Mapped entries: **407**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
@@ -282,12 +282,10 @@ Mapped entries: **409**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md)
 | CWE-588 | Attempt to Access Child of a Non-structure Pointer | #2 \| #3 | Allowed | Access of a child member through a non-structure pointer (e.g., dereferencing a void* as a struct) — type-confusion-class memory error. Memory-safety code implementation flaw. Server-role (#2) or client-role (#3) per R-ROLE. |
 | CWE-590 | Free of Memory not on the Heap | #2 \| #3 | Allowed | Free of memory not on the heap (stack address, static address, mid-allocation pointer) corrupts allocator state. Memory-safety code implementation flaw. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. |
 | CWE-591 | Sensitive Data Storage in Improperly Locked Memory | #2 \| #3 | Allowed | Implementation flaw. Vital for Client apps (#3) to prevent sensitive data from swapping to disk. |
-| CWE-593 | Authentication Bypass: OpenSSL CTX Object Modified after SSL Objects are Created | #2 \| #3 | Allowed | OpenSSL CTX object modified after SSL_set_fd / SSL_new — context changes silently ignored. Code implementation flaw in API usage. Input-validation code implementation flaw at the parser/validator boundary. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. |
 | CWE-594 | J2EE Framework: Saving Unserializable Objects to Disk | #2 | Allowed | J2EE framework saves unserializable objects to disk/session — runtime fails when restoring, causing DoS. Decision tree Q2 -> #2. |
 | CWE-595 | Comparison of Object References Instead of Object Contents | #2 \| #3 | Allowed | Comparing object references instead of object content lets logically-equal-but-differently-allocated objects fail equality and bypass intended logic. Code implementation flaw -> server-role #2 or client-role #3 per R-ROLE. |
 | CWE-597 | Use of Wrong Operator in String Comparison | #2 \| #3 | Allowed | Use of == instead of .equals() in string comparison (Java) compares interned references, not content; auth tokens or secret values can compare unequal even when content matches expectations, or vice versa. Code implementation flaw -> server-role #2 or client-role #3 per R-ROLE. |
 | CWE-598 | Use of GET Request Method With Sensitive Query Strings | #2 | Allowed | Sensitive data in URL query string sent via GET — query strings persist in browser history, server logs, referers, intermediaries. Server-role implementation flaw -> #2. |
-| CWE-599 | Missing Validation of OpenSSL Certificate | #2 \| #3 | Allowed | Missing OpenSSL certificate validation — TLS connection accepts any certificate. Input-validation code implementation flaw at the parser/validator boundary. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. |
 | CWE-600 | Uncaught Exception in Servlet | #2 | Allowed | Uncaught exception in servlet bubbles to the container, often producing a default error page that leaks stack traces. Decision tree Q2 -> #2. |
 | CWE-605 | Multiple Binds to the Same Port | #2 | Allowed | Multiple binds to the same port — the second bind may take over message routing if the first crashes, enabling port hijacking. Decision tree Q2 -> #2. |
 | CWE-609 | Double-Checked Locking | #2 \| #3 | Allowed | Double-checked locking pattern is broken on memory models without proper barriers. Concurrency/race-condition code implementation flaw. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. |

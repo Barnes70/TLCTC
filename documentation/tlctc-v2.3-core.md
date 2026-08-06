@@ -213,6 +213,8 @@ The cluster covers interception, observation, modification, injection, replay, o
 
 - Gaining the privileged position maps to another cluster; #5 begins once the position is controlled (R-MITM).
 - If the primary act is credential use after capture → #4 for the use step.
+- If the defective logic is itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry or revocation checking, channel encryption, algorithm negotiation) → #5, not #2/#3 (R-CHANNEL).
+- If the defect is incidental to that control rather than constitutive of it (e.g. memory corruption in a TLS parser) → #2/#3 per R-ROLE.
 
 ### #6 Flooding Attack
 
@@ -382,6 +384,10 @@ The rules are presented in two groups: the six core rules, and the ten v2.1 exte
 **R-SUPPLY** (must). #10 Supply Chain Attack MUST be placed at the Trust Acceptance Event (TAE) — the moment the third-party trust link is honored and the trust artifact becomes authoritative inside the target domain.
 
 **R-MITM** (must). Position acquisition maps to the enabling cluster; once position is established, interception/modification/relay actions map to #5.
+
+**R-CHANNEL** (must). If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as #5, not as #2 or #3 under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it.
+
+R-CHANNEL is the #5 counterpart to R-FLOOD. Both resolve the same ambiguity — a weakness describable either as "a control failed" or as "the code was wrong" — in favour of the specific generic vulnerability rather than the residual code-flaw test. A missing or incorrect certificate check is not incidentally a code defect; it is the absence of control over the communication path. The distinction is constitutive versus incidental, not server versus client: memory corruption in a TLS parser remains #2/#3 per R-ROLE, because there the exploited generic vulnerability is the code flaw itself. R-CHANNEL classifies the weakness; R-MITM sequences the attack path and is unaffected.
 
 **R-CRED** (must). Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method. These are separate attack steps.
 

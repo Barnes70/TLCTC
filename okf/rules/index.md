@@ -1,7 +1,8 @@
 # rules
 
-16 document(s).
+17 document(s).
 
+- [R-CHANNEL](/rules/r-channel.md) — `rule`
 - [R-CRED](/rules/r-cred.md) — `rule`
 - [R-EXEC](/rules/r-exec.md) — `rule`
 - [R-FLOOD](/rules/r-flood.md) — `rule`
