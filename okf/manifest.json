@@ -4035,7 +4035,7 @@
       "path": "/mappings/cwe/cluster-1.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #1 Abuse of Functions",
-      "description": "162 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions.",
+      "description": "164 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions.",
       "resource": "tlctc:mapping:cwe:cluster-1",
       "tags": [
         "mapping",
@@ -4059,7 +4059,7 @@
       "path": "/mappings/cwe/cluster-2.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #2 Exploiting Server",
-      "description": "407 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
+      "description": "413 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
       "resource": "tlctc:mapping:cwe:cluster-2",
       "tags": [
         "mapping",
@@ -4131,7 +4131,7 @@
       "path": "/mappings/cwe/cluster-8.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #8 Physical Attack",
-      "description": "90 CWE weaknesses entries mapped to TLCTC #8 Physical Attack.",
+      "description": "81 CWE weaknesses entries mapped to TLCTC #8 Physical Attack.",
       "resource": "tlctc:mapping:cwe:cluster-8",
       "tags": [
         "mapping",

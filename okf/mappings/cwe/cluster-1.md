@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "CWE weaknesses → #1 Abuse of Functions"
-description: "162 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions."
+description: "164 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions."
 resource: "tlctc:mapping:cwe:cluster-1"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE CWE → TLCTC mapping (`mappings/mitre-cwe/`). AI-generated, human-reviewed; experimental.
 
-Mapped entries: **162**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md).
+Mapped entries: **164**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
@@ -79,6 +79,7 @@ Mapped entries: **162**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md
 | CWE-360 | Trust of System Event Data | #1 | Allowed | System event data is trusted as authoritative without verifying its origin or integrity. Decision tree Q9 -> #1. |
 | CWE-378 | Creation of Temporary File With Insecure Permissions | #1 | Allowed | Temporary file is created with permissions wider than necessary, exposing its content or letting an attacker substitute it. Decision tree Q9 -> #1. |
 | CWE-379 | Creation of Temporary File in Directory with Insecure Permissions | #1 | Allowed | Temporary file is created in a directory whose permissions allow attackers to substitute or read the file. Decision tree Q9 -> #1. |
+| CWE-385 | Covert Timing Channel | #1 | Allowed | A covert timing channel transfers information along a path that exists by design but was never intended to carry it: a process modulates its own use of a shared resource so that another process can observe the effect in response times. No code flaw is exploited and no physical property is abused — the attacker abuses the scope of designed resource sharing, which is #1's generic vulnerability (the inherent trust, scope, and complexity designed into software functionality). The prior #8 mapping followed decision-tree Q7 on the word 'side-channel'; a covert channel is not a physical-layer weakness. Reclassified from #8 in the 2026-08-06 substrate sweep. |
 | CWE-419 | Unprotected Primary Channel | #1 | Allowed | The product's primary administrative channel is unprotected, letting any caller invoke admin functions. Decision tree Q9 -> #1. |
 | CWE-420 | Unprotected Alternate Channel | #1 | Allowed | An alternate channel (debug port, secondary protocol) is unprotected, letting attackers invoke functions that the primary channel would have authenticated. Decision tree Q9 -> #1. |
 | CWE-422 | Unprotected Windows Messaging Channel ('Shatter') | #1 | Allowed | Abuse of intended messaging functionality (#1) to escalate privilege. |
@@ -100,6 +101,7 @@ Mapped entries: **162**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md
 | CWE-491 | Public cloneable() Method Without Final ('Object Hijack') | #1 | Allowed | Public cloneable() method without final lets an attacker subclass and override clone() to bypass invariants ('object hijacking'). Decision tree Q9 -> #1. |
 | CWE-493 | Critical Public Variable Without Final Modifier | #1 | Allowed | Critical public variable without final modifier can be reassigned by other code, including subclasses, breaking invariants. Decision tree Q9 -> #1. |
 | CWE-500 | Public Static Final Field References Mutable Object | #1 | Allowed | Public static final field references a mutable object; the field reference is final but the underlying state can still be modified. Decision tree Q9 -> #1. |
+| CWE-515 | Covert Storage Channel | #1 | Allowed | A covert storage channel transfers information by writing to and reading from a shared storage location that exists by design but was never intended as a communication path. No code flaw is exploited and no physical property is abused; this is abuse of the scope of designed resource sharing (#1). The prior #8 mapping followed decision-tree Q7 on the word 'side-channel'. Reclassified from #8 in the 2026-08-06 substrate sweep. |
 | CWE-520 | .NET Misconfiguration: Use of Impersonation | #1 | Allowed | ASP.NET impersonation misconfiguration runs code under a different identity than intended. Decision tree Q9 -> #1. |
 | CWE-527 | Exposure of Version-Control Repository to an Unauthorized Control Sphere | #1 | Allowed | Version-control directories (.git, .svn) under the web root expose source code and history. Decision tree Q9 -> #1 (abuse of the file-serving function). |
 | CWE-529 | Exposure of Access Control List Files to an Unauthorized Control Sphere | #1 | Allowed | Access-control list files (.htaccess, web.config) are themselves fetchable, revealing the access policy. Decision tree Q9 -> #1. |

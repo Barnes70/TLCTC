@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "CWE weaknesses → #8 Physical Attack"
-description: "90 CWE weaknesses entries mapped to TLCTC #8 Physical Attack."
+description: "81 CWE weaknesses entries mapped to TLCTC #8 Physical Attack."
 resource: "tlctc:mapping:cwe:cluster-8"
 tags:
   - "mapping"
@@ -12,13 +12,10 @@ tags:
 
 > Source: MITRE CWE → TLCTC mapping (`mappings/mitre-cwe/`). AI-generated, human-reviewed; experimental.
 
-Mapped entries: **90**. Cluster: [#8 Physical Attack](/clusters/cluster-8.md).
+Mapped entries: **81**. Cluster: [#8 Physical Attack](/clusters/cluster-8.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
-| CWE-385 | Covert Timing Channel | #8 | Allowed | Covert timing channel — emanations from execution timing leak data to an observer. Decision tree Q7 (physical-layer / side-channel weakness) -> #8. |
-| CWE-514 | Covert Channel | #8 | Allowed-with-Review | Covert channel — communication path used outside its intended purpose to leak data. Often physical / side-channel in nature, though pure-software covert channels exist (these stay in #2\|#3 at instance level). Decision tree Q7 -> #8. |
-| CWE-515 | Covert Storage Channel | #8 | Allowed | Covert storage channel — data leaked via shared storage that the attacker can observe (cache, registers, side memory). Decision tree Q7 -> #8. |
 | CWE-549 | Missing Password Field Masking | #8 | Allowed | Missing password-field masking — password visible on screen enables shoulder surfing, screen-recording malware, and remote-desktop snooping. Physical/local observation -> #8. |
 | CWE-1189 | Improper Isolation of Shared Resources on System-on-a-Chip (SoC) | #8 | Allowed | Hardware-level implementation flaw (SoC) often reachable via physical/side-channel or low-level exploit. |
 | CWE-1190 | DMA Device Enabled Too Early in Boot Phase | #8 | Allowed | Hardware/SoC design flaw — DMA controller activated before access-control configuration completes, allowing unrestricted memory read during boot. Decision tree Q7 (physical-layer / hardware weakness) -> #8. |
@@ -77,7 +74,6 @@ Mapped entries: **90**. Cluster: [#8 Physical Attack](/clusters/cluster-8.md).
 | CWE-1300 | Improper Protection of Physical Side Channels | #8 | Allowed | Hardware side-channel — missing/insufficient protection against physical side channels (power, EM, acoustic). Information leaks via physical/microarchitectural observation. Decision tree Q7 -> #8. |
 | CWE-1301 | Insufficient or Incomplete Data Removal within Hardware Component | #8 | Allowed | Hardware data-remanence flaw — insufficient/incomplete data removal within hardware (cache lines, register files retain residue). Physical access can recover residual data. Decision tree Q7 -> #8. |
 | CWE-1302 | Missing Source Identifier in Entity Transactions on a System-On-Chip (SOC) | #8 | Allowed | Hardware/SoC design flaw — missing source identifier in fabric transactions — receiver cannot tell who issued the command. Decision tree Q7 (physical-layer / hardware weakness) -> #8. |
-| CWE-1303 | Non-Transparent Sharing of Microarchitectural Resources | #8 | Allowed | Hardware side-channel — non-transparent sharing of microarchitectural resources (Meltdown/Spectre/MDS class). Information leaks via physical/microarchitectural observation. Decision tree Q7 -> #8. |
 | CWE-1304 | Improperly Preserved Integrity of Hardware Configuration State During a Power Save/Restore Operation | #8 | Allowed | Hardware/SoC design flaw — hardware configuration integrity not preserved across state transitions (reset, sleep). Decision tree Q7 (physical-layer / hardware weakness) -> #8. |
 | CWE-1305 | Improper Logic in Memory Address Decoding | #8 | Allowed | Hardware logic flaw exploitable via physical effects (e.g., Rowhammer). Decision tree Q7 (physical-layer weakness) → #8. |
 | CWE-1311 | Improper Translation of Security Attributes by Fabric Bridge | #8 | Allowed | Hardware/SoC design flaw — security attributes mistranslated by fabric bridge between protocol domains. Decision tree Q7 (physical-layer / hardware weakness) -> #8. |
@@ -97,12 +93,7 @@ Mapped entries: **90**. Cluster: [#8 Physical Attack](/clusters/cluster-8.md).
 | CWE-1332 | Improper Handling of Faults that Lead to Instruction Skips | #8 | Allowed | Hardware fault-injection vulnerability — faults that lead to instruction skipping not properly handled — fault injection bypasses checks. Physical perturbation of the chip drives unintended state. Decision tree Q7 -> #8. |
 | CWE-1334 | Unauthorized Error Injection Can Degrade Hardware Redundancy | #8 | Allowed | Hardware fault-injection vulnerability — unauthorized error injection can degrade hardware function — controlled stress-induced misbehavior. Physical perturbation of the chip drives unintended state. Decision tree Q7 -> #8. |
 | CWE-1338 | Improper Protections Against Hardware Overheating | #8 | Allowed | Hardware overheating-protection flaw — controlled thermal stress causes physical damage or operational degradation. Decision tree Q7 -> #8. |
-| CWE-1342 | Information Exposure through Microarchitectural State after Transient Execution | #8 | Allowed | Hardware side-channel — information leak through microarchitectural state remaining after transient (speculative) execution — Spectre/Meltdown family. Information leaks via physical/microarchitectural observation. Decision tree Q7 -> #8. |
 | CWE-1351 | Improper Handling of Hardware Behavior in Exceptionally Cold Environments | #8 | Allowed | Hardware misbehaves under exceptional physical/environmental conditions (extreme temperature, voltage, EMI) — fault-injection vector. Decision tree Q7 -> #8. |
 | CWE-1384 | Improper Handling of Physical or Environmental Conditions | #8 | Allowed | Improper handling of physical/environmental conditions creates exploitable state under controlled physical input. Decision tree Q7 -> #8. |
-| CWE-1420 | Exposure of Sensitive Information during Transient Execution | #8 | Allowed | Microarchitectural side-channel — sensitive information exposed during transient (speculative) execution via cache-state, branch predictor, or other shared microarchitectural structures. Spectre-class. Decision tree Q7 -> #8. |
-| CWE-1421 | Exposure of Sensitive Information in Shared Microarchitectural Structures during Transient Execution | #8 | Allowed | Hardware side-channel — information leak through shared microarchitectural structures during transient execution. Information leaks via physical/microarchitectural observation. Decision tree Q7 -> #8. |
-| CWE-1422 | Exposure of Sensitive Information caused by Incorrect Data Forwarding during Transient Execution | #8 | Allowed | Hardware side-channel — information leak caused by incorrect data forwarding during transient execution. Information leaks via physical/microarchitectural observation. Decision tree Q7 -> #8. |
-| CWE-1423 | Exposure of Sensitive Information caused by Shared Microarchitectural Predictor State that Influences Transient Execution | #8 | Allowed | Hardware side-channel — information leak caused by shared microarchitectural predictor state influencing transient execution. Information leaks via physical/microarchitectural observation. Decision tree Q7 -> #8. |
 | CWE-1429 | Missing Security-Relevant Feedback for Unexecuted Operations in Hardware Interface | #8 | Allowed | Hardware/SoC design flaw — missing security-relevant feedback for unexecuted operations — caller cannot tell whether the operation actually completed. Decision tree Q7 (physical-layer / hardware weakness) -> #8. |
 | CWE-1431 | Driving Intermediate Cryptographic State/Results to Hardware Module Outputs | #8 | Allowed | Hardware/SoC design flaw — intermediate cryptographic state/results driven onto observable buses — side-channel leak of in-progress crypto. Decision tree Q7 (physical-layer / hardware weakness) -> #8. |
