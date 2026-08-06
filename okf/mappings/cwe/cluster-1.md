@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "CWE weaknesses → #1 Abuse of Functions"
-description: "164 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions."
+description: "166 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions."
 resource: "tlctc:mapping:cwe:cluster-1"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE CWE → TLCTC mapping (`mappings/mitre-cwe/`). AI-generated, human-reviewed; experimental.
 
-Mapped entries: **164**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md).
+Mapped entries: **166**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
@@ -107,6 +107,7 @@ Mapped entries: **164**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md
 | CWE-529 | Exposure of Access Control List Files to an Unauthorized Control Sphere | #1 | Allowed | Access-control list files (.htaccess, web.config) are themselves fetchable, revealing the access policy. Decision tree Q9 -> #1. |
 | CWE-530 | Exposure of Backup File to an Unauthorized Control Sphere | #1 | Allowed | Backup files (config.bak, .swp) under the web root are fetchable, exposing the backed-up content. Decision tree Q9 -> #1. |
 | CWE-548 | Exposure of Information Through Directory Listing | #1 | Allowed | Web server directory listing is enabled, revealing files and structure. Decision tree Q9 -> #1 (abuse of the listing feature). |
+| CWE-549 | Missing Password Field Masking | #1 | Allowed | Displaying a password in clear text is a deliberate interface design choice, and its abuse is observation of what the application chose to render. No physical-layer property is exploited (R-SUBSTRATE) and no code defect is present; the generic vulnerability is the trust and scope designed into the functionality (#1). Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause. |
 | CWE-551 | Incorrect Behavior Order: Authorization Before Parsing and Canonicalization | #1 | Allowed | Authorization runs before parsing/canonicalization, letting an attacker craft input that authorizes pre-canonicalization but executes a different operation post-canonicalization. Decision tree Q9 -> #1. |
 | CWE-552 | Files or Directories Accessible to External Parties | #1 | Allowed | Files or directories accessible to external parties (network share, world-readable mount, public S3 bucket). Decision tree Q9 -> #1 (abuse of the storage function's access policy). |
 | CWE-556 | ASP.NET Misconfiguration: Use of Identity Impersonation | #1 | Allowed | ASP.NET Identity Impersonation misconfiguration runs the request under an unintended identity. Decision tree Q9 -> #1. |
@@ -172,7 +173,8 @@ Mapped entries: **164**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md
 | CWE-1051 | Initialization with Hard-Coded Network Resource Configuration Data | #1 | Allowed | Hard-coded network endpoint (server URL, registry hostname) creates a fixed function the attacker can spoof or redirect by controlling the named resource (DNS hijack, BGP attack). Decision tree Q9 -> #1. |
 | CWE-1188 | Initialization of a Resource with an Insecure Default | #1 | Allowed | Resource initialized with an insecure default (public, weak permission, debug-on) that the deployer must remember to harden. Decision tree Q9 -> #1. |
 | CWE-1220 | Insufficient Granularity of Access Control | #1 | Allowed | Access control granularity is too coarse (one privilege covers many actions), letting holders abuse capabilities they did not need. Decision tree Q9 -> #1. |
-| CWE-1256 | Improper Restriction of Software Interfaces to Hardware Features | #1 \| #8 | Allowed | Software-exposed interfaces to hardware features (debug, JTAG, register access). Software-vector exploitation abuses the exposed function (#1); physical-vector exploitation requires hardware access (#8). Context determines which. |
+| CWE-1242 | Inclusion of Undocumented Features or Chicken Bits | #1 | Allowed | Undocumented features and chicken bits are functionality that exists by design but was never intended for use by the caller who invokes it. That is abuse of designed scope (#1), not a physical property (R-SUBSTRATE) and not an implementation defect. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause. |
+| CWE-1256 | Improper Restriction of Software Interfaces to Hardware Features | #1 \| #8 | Allowed-with-Review | Software-exposed interfaces to hardware features (debug, JTAG, register access, voltage/frequency scaling). Abuse of the exposed function from software is #1; where exploitation instead turns on physical contact with the interface, #8. The prior rationale justified the #8 branch as 'physical-vector exploitation requires hardware access', which is the access criterion that R-SUBSTRATE retires: MITRE's own entry for this CWE lists Rowhammer and describes the class as enabling fault injection and side-channel attacks WITHOUT physical access. The #8 branch is retained, but on the correct ground — where a physical-layer property is the exploited generic vulnerability — not on attacker proximity. Corrected in the 2026-08-07 R-SUBSTRATE re-audit. |
 | CWE-1269 | Product Released in Non-Release Configuration | #1 | Allowed | Product shipped in non-release configuration (debug enabled, test endpoints reachable, default credentials active). Decision tree Q9 -> #1. |
 | CWE-1275 | Sensitive Cookie with Improper SameSite Attribute | #1 | Allowed | SameSite attribute not set to Lax/Strict on a sensitive cookie, leaving the cookie attached to cross-site requests and enabling CSRF (#1). |
 | CWE-1293 | Missing Source Correlation of Multiple Independent Data | #1 | Allowed | Security decision relies on a single data source without correlating against independent sources; spoofing one source defeats the check. Decision tree Q9 -> #1. |
