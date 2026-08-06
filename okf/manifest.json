@@ -3,7 +3,7 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.4",
   "generator": "scripts/build-okf.js",
-  "document_count": 413,
+  "document_count": 414,
   "type_counts": {
     "attack-path": 51,
     "axiom": 10,
@@ -15,7 +15,7 @@
     "indicator-framework": 1,
     "intra-boundary-type": 4,
     "mapping-set": 30,
-    "rule": 17,
+    "rule": 18,
     "sphere": 9,
     "term": 247
   },
@@ -4361,6 +4361,18 @@
       "title": "R-ROLE",
       "description": "Classify by the role of the component containing the flaw relative to the attacker: server-role flaw = #2, client-role flaw = #3.",
       "resource": "tlctc:rule:R-ROLE",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-substrate.md",
+      "type": "rule",
+      "title": "R-SUBSTRATE",
+      "description": "Classify as #8 only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability.",
+      "resource": "tlctc:rule:R-SUBSTRATE",
       "tags": [
         "taxonomy",
         "rule",

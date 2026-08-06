@@ -106,9 +106,24 @@ Q6: Does this weakness enable FOREIGN CODE EXECUTION directly?
     │         If via legitimate tool/function → #1 → #7
     └── NO ↓
 
-Q7: Is this a PHYSICAL LAYER weakness?
-    (hardware debug interfaces, physical signal leakage, insufficient physical protection)
+Q7: Is a PHYSICAL-LAYER PROPERTY OF THE SUBSTRATE the exploited
+    generic vulnerability?
+    (charge, voltage, electromagnetic emission, temperature,
+     emission-borne timing, wear, material state)
+    │
+    │   GUARD (R-SUBSTRATE) — this question is NOT "is this CWE about hardware?"
+    │   Hardware is a location, not a cause. Apply the removal test:
+    │   if the physical property behaved ideally, is there still a flaw?
+    │     • "No, nothing remains"          → #8   (the property IS the vulnerability)
+    │     • "Yes, a defective design remains" → #2|#3 per R-ROLE
+    │                                          (the property is only the readout channel)
+    │   Attacker proximity is NOT the test. Rowhammer is mountable from
+    │   JavaScript and is still #8; Spectre needs no physical access either
+    │   and is #2. Logic defects that merely ship in silicon are #2|#3.
+    │
     ├── YES → #8 Physical Attack
+    │         If foreign code executes to induce the physical effect, record
+    │         the execution as its own step per R-EXEC (e.g. #7 → #8).
     └── NO ↓
 
 Q8: Is this a TRUST RELATIONSHIP weakness with third-party components?
@@ -197,6 +212,7 @@ Before finalizing a CWE mapping, verify:
 - [ ] **Concrete weakness** — Not a category, view, list, or deprecated entry (else Prohibited)
 - [ ] **Specific enough** — Can determine a single generic vulnerability (or explicit alternatives)
 - [ ] **Q2 guard applied** — Before classifying as a code flaw, confirm the defective logic is not itself a communication-path control (`#5`, R-CHANNEL) or a capacity/throttling control (`#6`, R-FLOOD). Q2 is the residual test
+- [ ] **Q7 guard applied** — `#8` requires that a physical-layer *property* be the exploited generic vulnerability (R-SUBSTRATE). "The flaw is in hardware" is not sufficient, and attacker proximity is not the test
 - [ ] **Role considered** — If code flaw, is it server or client? If unclear, mark `#2 | #3`
 - [ ] **R-EXEC respected** — If the weakness enables foreign code execution, `→ #7` is included (e.g., code injection, deserialization, template injection, RFI, dynamic class loading from untrusted source)
 - [ ] **R-CRED respected** — Authentication-logic bypass = `#1`; credential application (point-of-use) = `#4`; credential acquisition — including cleartext/weakly-hashed credential storage — takes the cluster of the access vector, not `#4` (v2.3.1)

@@ -271,6 +271,10 @@ The cluster spans direct contact with hardware, facilities, media, and interface
 **Boundary tests (normative):**
 
 - If the physical step leads to FEC execution → `#8 → #7`.
+- If a physical-layer property of the substrate is the exploited generic vulnerability → #8 (R-SUBSTRATE).
+- If the physical layer is only the readout channel for a defect in implemented logic → #2/#3 per R-ROLE. Spectre-class transient execution is #2 on this test; Rowhammer is #8.
+- Attacker proximity or possession is not required. Software-triggered exploitation of physical phenomena — Rowhammer, software-controlled voltage or clock glitching — remains #8.
+- Where foreign code executes in order to induce the physical effect, the execution is a separate #7 step per R-EXEC and Axiom VI → `#7 → #8`.
 
 ### #9 Social Engineering
 
@@ -388,6 +392,12 @@ The rules are presented in two groups: the six core rules, and the ten v2.1 exte
 **R-CHANNEL** (must). If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as #5, not as #2 or #3 under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it.
 
 R-CHANNEL is the #5 counterpart to R-FLOOD. Both resolve the same ambiguity — a weakness describable either as "a control failed" or as "the code was wrong" — in favour of the specific generic vulnerability rather than the residual code-flaw test. A missing or incorrect certificate check is not incidentally a code defect; it is the absence of control over the communication path. The distinction is constitutive versus incidental, not server versus client: memory corruption in a TLS parser remains #2/#3 per R-ROLE, because there the exploited generic vulnerability is the code flaw itself. R-CHANNEL classifies the weakness; R-MITM sequences the attack path and is unaffected.
+
+**R-SUBSTRATE** (must). Classify as #8 only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (#2 or #3 per R-ROLE). Attacker proximity or possession is not the test: #8 covers exploitation of physical phenomena whether or not the attacker has physical access.
+
+R-SUBSTRATE completes the family with R-FLOOD (#6) and R-CHANNEL (#5). Each resolves a weakness describable either as a specific generic vulnerability or as a generic code defect, in favour of the specific one, leaving R-ROLE as the residual test. The discriminating question is whether the attack is against the *implemented logic* or against the *physical representation* that logic runs on. Rowhammer is #8: charge migration between adjacent DRAM cells is the vulnerability, no logical control fails, and removing the physics removes the flaw — yet it can be mounted from JavaScript, which is precisely why proximity cannot serve as the test. Spectre is #2: speculation crosses an isolation boundary the design was meant to enforce, and cache timing is only the readout; remove the physics and a boundary-crossing design remains. Power side-channel analysis is #8, because the cryptography is correct and the emission itself is the vulnerability. The corollary is that the location of a flaw — hardware, firmware, silicon — never determines the cluster.
+
+R-SUBSTRATE and the established R-PHYSICAL are complementary. R-SUBSTRATE is the *admission* test: it decides whether a weakness qualifies as #8 at all. R-PHYSICAL is the *sequencing* rule: given a qualifying physical step, that step is #8 and subsequent technical steps are classified separately. R-SUBSTRATE additionally settles a latent ambiguity in R-PHYSICAL's phrasing — "the attacker's advantage comes from unauthorized physical interaction" can be misread as requiring attacker physical access, and it does not.
 
 **R-CRED** (must). Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method. These are separate attack steps.
 

@@ -389,6 +389,27 @@ Clusters that operate primarily **within the cyber domain's** technical attack s
 | Buffer overflow in certificate parsing routine | Incidental code defect | #2/#3 |
 | Protocol downgrade accepted during negotiation | Algorithm negotiation control | #5 |
 
+### R-SUBSTRATE — Physical Property vs Implemented Logic
+- If a **physical-layer property of the substrate** is the exploited generic vulnerability → **#8**
+- Qualifying properties: charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, material state
+- If the physical layer is only the **readout channel** for a defect in implemented logic → **#2/#3** per R-ROLE
+- **Attacker proximity is NOT the test.** #8 covers physical phenomena whether or not the attacker has physical access
+- **"Remove the physics" test:** Ask "if the physical property behaved ideally, is there still a flaw?"
+  - "No — nothing remains" → #8
+  - "Yes — a defective design remains" → #2/#3
+- Third member of the family with R-FLOOD (#6) and R-CHANNEL (#5); R-ROLE is the residual test in all three
+
+| Scenario | What is exploited | Cluster |
+|---|---|---|
+| Rowhammer — hammering flips bits in adjacent DRAM rows | Charge migration between cells | #8 |
+| Spectre — speculation crosses an isolation boundary | Implemented logic; timing is readout only | #2 |
+| Power analysis recovers a key from a correct implementation | The emission itself | #8 |
+| Software-controlled voltage/clock glitching (CLKSCREW-class) | Voltage/clock as physical property | #8 |
+| Register access-control flaw reachable from software | Implemented logic that ships in silicon | #2 |
+| Covert timing channel between two processes | Designed resource sharing | #1 |
+
+Note the path form: where foreign code executes to induce the physical effect, R-EXEC and Axiom VI require a separate step — Rowhammer is `#7 → #8`, not a single `#8`.
+
 ### R-FLOOD — Capacity Exhaustion vs Implementation Defect
 - If **primary mechanism** is volume/intensity exhausting finite resources → **#6**
 - If **primary mechanism** is implementation defect (crash, algorithmic complexity) → **#2/#3**
