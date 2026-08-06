@@ -1,6 +1,6 @@
 # glossary
 
-247 document(s).
+249 document(s).
 
 - [Abuse of Functions (#1)](/glossary/abuse-of-functions-1.md) — `term`
 - [Accessibility (Data Risk Event)](/glossary/accessibility-data-risk-event.md) — `term`
@@ -158,6 +158,7 @@
 - [Propagated PR](/glossary/propagated-pr.md) — `term`
 - [Protection Ring Architecture](/glossary/protection-ring-architecture.md) — `term`
 - [R-ABUSE (Function Misuse Determination)](/glossary/r-abuse-function-misuse-determination.md) — `term`
+- [R-CHANNEL (Channel Control vs Code Flaw)](/glossary/r-channel-channel-control-vs-code-flaw.md) — `term`
 - [R-CRED (Credential Lifecycle Non-Overlap)](/glossary/r-cred-credential-lifecycle-non-overlap.md) — `term`
 - [R-EXEC (Foreign Execution Recording Rule)](/glossary/r-exec-foreign-execution-recording-rule.md) — `term`
 - [R-FLOOD (Capacity Exhaustion vs Implementation Defect)](/glossary/r-flood-capacity-exhaustion-vs-implementation-defect.md) — `term`
@@ -167,6 +168,7 @@
 - [R-PHYSICAL (Physical Domain Isolation)](/glossary/r-physical-physical-domain-isolation.md) — `term`
 - [R-ROLE (Server vs Client Determination)](/glossary/r-role-server-vs-client-determination.md) — `term`
 - [R-* Rules Quick Reference](/glossary/r-rules-quick-reference.md) — `term`
+- [R-SUBSTRATE (Physical Property vs Implemented Logic)](/glossary/r-substrate-physical-property-vs-implemented-logic.md) — `term`
 - [R-SUPPLY (Trust Acceptance Event Placement)](/glossary/r-supply-trust-acceptance-event-placement.md) — `term`
 - [R-TRANSIT (Transit Boundary Rules)](/glossary/r-transit-transit-boundary-rules.md) — `term`
 - [Ransomware](/glossary/ransomware.md) — `term`

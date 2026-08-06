@@ -21,7 +21,7 @@ can index the bundle without walking links. It is deterministic (no build timest
 
 ## Contents
 
-Generated from TLCTC v2.4. 414 concept documents across
+Generated from TLCTC v2.4. 416 concept documents across
 9 sections (clusters, axioms, rules, spheres, contexts, glossary, attack-paths,
 controls, mappings).
 
