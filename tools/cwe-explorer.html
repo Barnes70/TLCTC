@@ -10015,20 +10015,20 @@
     "cwe_id": "CWE-1282",
     "cwe_name": "Assumed-Immutable Data is Stored in Writable Memory",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#2",
-    "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: storing assumed-immutable data in writable memory is a design decision. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
-    "Mapping_Notes": "Allowed",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": undefined,
+    "mapping_argument": "A component stores data it treats as immutable in memory that remains writable, then reads it back and acts on it. Where the flaw is characterised as the block consuming data a lower-privileged entity was able to modify, the block is in client-role (#3); where it is characterised as the write path being insufficiently protected, the block is in server-role (#2). Per R-SUBSTRATE this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SUBSTRATE re-audit.",
+    "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
   {
     "cwe_id": "CWE-1283",
     "cwe_name": "Mutable Attestation or Measurement Reporting Data",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#2",
-    "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: mutability of attestation data is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
-    "Mapping_Notes": "Allowed",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": undefined,
+    "mapping_argument": "Attestation or measurement reporting data is mutable after being recorded. The verifying entity consumes that data to reach a trust decision, which is client-role (#3); the path that allowed the data to be altered is server-role (#2). Which one the CVE is about determines the cluster. Per R-SUBSTRATE this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SUBSTRATE re-audit.",
+    "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
   {
@@ -10235,10 +10235,10 @@
     "cwe_id": "CWE-1304",
     "cwe_name": "Improperly Preserved Integrity of Hardware Configuration State During a Power Save/Restore Operation",
     "cwe_status": "Draft",
-    "tlctc_mapping": "#2",
-    "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: configuration state integrity across save/restore is state-management logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
-    "Mapping_Notes": "Allowed",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": undefined,
+    "mapping_argument": "Hardware configuration state is saved and restored across a power transition without integrity preservation. On restore the block consumes state that may have been altered while it was suspended, which is client-role (#3); the exposure that permitted the alteration is server-role (#2). Per R-SUBSTRATE this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SUBSTRATE re-audit.",
+    "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
   {
@@ -10415,10 +10415,10 @@
     "cwe_id": "CWE-1326",
     "cwe_name": "Missing Immutable Root of Trust in Hardware",
     "cwe_status": "Draft",
-    "tlctc_mapping": "#2",
-    "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: the absence of an immutable root of trust is a design omission. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
-    "Mapping_Notes": "Allowed",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": undefined,
+    "mapping_argument": "Without an immutable root of trust, the boot chain cannot anchor verification of the stages it loads, so the platform consumes code or data it cannot authenticate — client-role (#3). Where the instance turns instead on a mutable or writable trust anchor being reachable from software, that is server-role (#2). Per R-SUBSTRATE this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SUBSTRATE re-audit.",
+    "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
   {
