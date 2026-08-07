@@ -26,7 +26,7 @@ The paper serves three audiences, and is organized accordingly. **Part A (Classi
 
 ## 2. The Classification Procedure
 
-Classification operates on **attack steps**, not on incidents as a whole. An incident is decomposed into a sequence of steps, and each step is classified independently into exactly one cluster (Axiom VI). The procedure below consolidates the seven-step minimal procedure from the whitepaper (§4.2.8) into an actionable checklist. The classification rules referenced by ID (R-EXEC, R-ROLE, R-CRED, R-FLOOD, R-MITM, R-SUPPLY) are defined in full in the core paper §6; only a one-line reminder is given here.
+Classification operates on **attack steps**, not on incidents as a whole. An incident is decomposed into a sequence of steps, and each step is classified independently into exactly one cluster (Axiom VI). The procedure below consolidates the seven-step minimal procedure from the whitepaper (§4.2.8) into an actionable checklist. The classification rules referenced by ID (R-EXEC, R-ROLE, R-CRED, R-FLOOD, R-MITM, R-CHANNEL, R-SUBSTRATE, R-SUPPLY) are defined in full in the core paper §6; only a one-line reminder is given here.
 
 **Step 1 — Identify the attacker action and target.** State plainly what the attacker did in this step, which asset or component was targeted, and what the step was trying to achieve. A step without a concrete protected asset cannot be classified; abstract descriptions ("they moved laterally") must be resolved to a specific action against a specific target before proceeding.
 
@@ -37,6 +37,8 @@ Classification operates on **attack steps**, not on incidents as a whole. An inc
 - **R-CRED** — credentials involved? Acquisition maps to the enabling cluster; application (authenticating) is always #4. Separate steps.
 - **R-MITM** — communication-path position? Gaining position maps to the enabling cluster; interception/modification/relay is #5.
 - **R-FLOOD** — availability impact by volume/intensity exhausting finite capacity = #6; by an implementation defect (crash/hang) = #2 or #3 per R-ROLE.
+- **R-CHANNEL** — is the defective logic itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry/revocation, channel encryption, algorithm negotiation)? Then #5, not #2/#3. Incidental defects in the same code (e.g. memory corruption in a TLS parser) stay #2/#3.
+- **R-SUBSTRATE** — is a physical-layer property of the substrate (charge, voltage, emission, temperature, wear) the exploited vulnerability, or only the readout channel? Apply the removal test: if the property behaved ideally, would a flaw remain? Yes = #2/#3; no = #8. Attacker proximity is not the test.
 - **R-EXEC** — does Foreign Executable Content execute here? If yes, a #7 step **must** be recorded at the execution moment (in addition to the enabling cluster).
 - **R-SUPPLY** — third-party trust link? Place #10 at the Trust Acceptance Event — the moment the trust artifact becomes authoritative inside the target domain.
 
