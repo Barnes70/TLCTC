@@ -1246,6 +1246,39 @@ If the attacker's advantage in the step comes from **unauthorized physical inter
    - Physical access → tap network cable → `#8 → #5`
    - Physical access → steal device with data → `#8` + `[DRE: C]`
 3. `#8` is a bridge cluster. It crosses from the physical security domain to the software security domain.
+4. *(V2.4)* R-PHYSICAL governs **sequencing** — where a qualifying physical step sits and how subsequent steps are split. It does not decide **admission**. Whether a weakness qualifies as `#8` at all is decided by R-SUBSTRATE below. In particular, "unauthorized physical interaction" must not be read as requiring the attacker to be physically present: see R-SUBSTRATE.
+
+---
+
+##### R-CHANNEL — Channel Control vs Code Flaw *(V2.4)*
+
+**Rule (Normative):**
+If the defective logic is itself a **communication-path control** — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness **MUST** be classified as **`#5 Man in the Middle`**, not as `#2` or `#3` under R-ROLE.
+
+**Clarifications (Normative):**
+
+1. The test is **constitutive versus incidental**, not server versus client. R-ROLE governs only where the defect is incidental to the control — memory corruption in a TLS parser remains `#2`/`#3`, because there the exploited generic vulnerability is the code flaw and the control is merely its location.
+2. R-CHANNEL classifies the **weakness**; R-MITM sequences the **attack path** (position acquisition versus action). The two do not conflict.
+3. A missing or incorrect certificate check is not incidentally a code defect. It *is* the absence of control over the communication path — which is `#5`'s generic vulnerability, and which the `#5` Developer's View already names.
+
+---
+
+##### R-SUBSTRATE — Physical Property vs Implemented Logic *(V2.4)*
+
+**Rule (Normative):**
+A weakness **MUST** be classified as **`#8 Physical Attack`** only where a **physical-layer property of the substrate** — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the **readout channel** for a defect in implemented logic, the weakness **MUST** be classified by that defect (`#2` or `#3` per R-ROLE).
+
+**Clarifications (Normative):**
+
+1. **Attacker proximity or possession is NOT the test.** `#8` covers exploitation of physical phenomena whether or not the attacker has physical access. Rowhammer is mountable from JavaScript and is `#8`; Spectre requires no physical access either and is `#2`.
+2. The decision procedure is the **removal test**: if the physical property behaved ideally, would a flaw remain?
+
+   - No, nothing remains → `#8` (the property is the vulnerability)
+   - Yes, a defective design remains → `#2`/`#3` (the property is only the readout channel)
+3. Equivalently: is the attack against the **implemented logic**, or against the **physical representation** that logic runs on?
+4. The **location** of a flaw — hardware, firmware, silicon — never determines the cluster. A register access-control defect is `#2` however it is fabricated; a power side-channel is `#8` even where the cryptography is correct.
+5. Where foreign code executes in order to induce the physical effect, the execution is a separate step per R-EXEC and Axiom VI — Rowhammer is `#7 → #8`, not a single `#8`.
+6. R-SUBSTRATE completes the family with R-FLOOD (`#6`) and R-CHANNEL (`#5`): each prefers a specific generic vulnerability over the residual code-flaw test, leaving R-ROLE as the fallback in all three.
 
 ---
 
@@ -1579,6 +1612,8 @@ Check each R-\* rule for applicability:
 | **R-SUPPLY** | Is a third-party trust link involved? Is this the TAE? |
 | **R-HUMAN** | Is human psychological manipulation the mechanism? |
 | **R-PHYSICAL** | Is physical access/interference the mechanism? |
+| **R-CHANNEL** *(V2.4)* | Is the defective logic itself a communication-path control? If yes, `#5`, not `#2`/`#3`. |
+| **R-SUBSTRATE** *(V2.4)* | Is a physical property the vulnerability, or only the readout channel? Removal test decides. |
 | **R-ABUSE** | Is legitimate functionality being misused with no flaw required? |
 
 ##### Step 4: Apply Tie-Breakers If Needed
@@ -1707,6 +1742,8 @@ Record:
 | **R-SUPPLY** | TAE Placement | `#10` at Trust Acceptance Event where third-party trust is honored |
 | **R-HUMAN** | Human Manipulation | Psychological manipulation → `#9`; subsequent tech steps separate |
 | **R-PHYSICAL** | Physical Access | Physical interaction → `#8`; subsequent tech steps separate |
+| **R-CHANNEL** *(V2.4)* | Control vs Code Flaw | Defective channel control → `#5`; incidental defect → `#2/#3` |
+| **R-SUBSTRATE** *(V2.4)* | Property vs Logic | Physical property exploited → `#8`; physical layer as readout only → `#2/#3` |
 | **R-ABUSE** | Function Misuse | No flaw required, legitimate capability abused → `#1` |
 | **R-TRANSIT-1–8** *(V2.1)* | Transit Boundaries | Distinct parties, true intermediary topology, vendor code exclusion, cluster independence |
 | **R-INTRA-1–9** *(V2.1)* | Intra-System Boundaries | Single-system scope, cluster attachment, no cluster change, compressed form, anti-effect |
@@ -4850,12 +4887,12 @@ To support this, steps carry:
 
 #### 14.3.2 Example Content Package: `tlctc-framework.v2.3.json` (excerpt)
 
-The cluster entries below are reproduced verbatim from the canonical framework dictionary — `json-schemas/layer-1/tlctc-framework.v2.4.json`, validated against `json-schemas/layer-1/tlctc-framework.schema.json`. The `axioms` array is reproduced in full; the `rules` array is truncated to a single example entry, and the per-entry `notes` fields carried by Axiom II and R-ROLE in the dictionary are omitted here for brevity.
+The cluster entries below are reproduced verbatim from the canonical framework dictionary — `json-schemas/layer-1/tlctc-framework.v2.5.json`, validated against `json-schemas/layer-1/tlctc-framework.schema.json`. The `axioms` array is reproduced in full; the `rules` array is truncated to a single example entry, and the per-entry `notes` fields carried by Axiom II and R-ROLE in the dictionary are omitted here for brevity.
 
 ```
 {
   "metadata": {
-    "tlctc_version": "2.4",
+    "tlctc_version": "2.5",
     "release_date": "2026-07-28",
     "schema_id": "tlctc-framework",
     "schema_version": "2.0.0",
@@ -6491,6 +6528,14 @@ Each example is written as:
   - **R-ROLE — Clarification 4 added (Section 4.2.5):** server-role does not presuppose a network; roles are established by call direction at any interface, including intra-system privilege interfaces. A kernel handling a crafted syscall from a lower-privileged process is server-role (`#2`). Cross-references **R-INTRA-7** so the boundary crossing is not misread as a classification input. Two intra-system rows added to the R-ROLE examples table.
   - **No change** to cluster identity, IDs, definitions, attacker's view, generic vulnerability statements, topology, boundary tests, the axiom set (count or numbering), or any other rule. Existing classifications remain valid; the clarification resolves an ambiguity rather than altering a decision.
   - **Not promoted to core:** vertical stack analysis (Section 13.5) remains applied guidance. It introduces no generic vulnerability, axiom, or disambiguation rule, and is fully derivable from Axiom II + R-ROLE + R-INTRA-7 over the `intra-privilege` boundary context.
+
+- Changes from V2.4 to V2.5 *(normative — NOT classification-preserving)*
+  - **Dictionary artifact:** `json-schemas/layer-1/tlctc-framework.v2.5.json` (new file; `tlctc-framework.v2.4.json` retained unchanged for records classified under 2.4). Rule count **16 → 18**.
+  - **R-CHANNEL added (Section 4.2.5):** where the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness is `#5`, not `#2`/`#3`. R-ROLE governs only where the defect is *incidental* to the control (e.g. memory corruption in a TLS parser). R-CHANNEL classifies the weakness; R-MITM sequences the path.
+  - **R-SUBSTRATE added (Section 4.2.5):** `#8` requires that a **physical-layer property of the substrate** — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, material state — be the exploited generic vulnerability. Where the physical layer is only the **readout channel** for a defect in implemented logic, the weakness is `#2`/`#3` per R-ROLE. **Attacker proximity or possession is explicitly not the test:** Rowhammer is mountable from JavaScript and is `#8`; Spectre requires no physical access either and is `#2`. Decision procedure is the removal test — if the physical property behaved ideally, would a flaw remain?
+  - **R-PHYSICAL Clarification 4 added:** R-PHYSICAL governs *sequencing*, not *admission*. Whether a weakness qualifies as `#8` at all is decided by R-SUBSTRATE, and "unauthorized physical interaction" must not be read as requiring the attacker to be physically present.
+  - **Classification impact:** unlike V2.4, this release **alters decisions**. Records classified under 2.4 SHOULD be re-checked against both rules. The CWE mapping was re-adjudicated accordingly: the certificate/peer-authenticity family moved to `#5`, and the `#8` bucket was re-audited from 81 entries to 16, the remainder resolving to `#2`, `#2 | #3`, `#2 | #8` or `#1` on the property test.
+  - **No change** to cluster identity, IDs, definitions, attacker's view, generic vulnerability statements, topology, or the axiom set (count or numbering).
 
 ---
 

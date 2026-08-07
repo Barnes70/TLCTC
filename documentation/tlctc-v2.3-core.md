@@ -1,8 +1,8 @@
 # A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework
 
 **Author:** Bernhard Kreinz
-**Version:** 2.4
-**Date:** 2026-07-28
+**Version:** 2.5
+**Date:** 2026-08-07
 **License:** CC BY 4.0
 **DOI:** [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) (concept DOI — always resolves to the latest version)
 
@@ -115,7 +115,7 @@ Crucially, **outcomes are never threats.** A data risk event such as "data breac
 
 ## 4. The Ten Threat Clusters
 
-Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.4.json`) so that this paper and the schema cannot drift. The developer's view — the defensive design responsibility implied by each cluster — the normative **boundary tests**, and the supporting prose are drawn from the canonical cluster definitions (whitepaper §4.1); these are editorial/normative guidance and are not carried in the JSON dictionary.
+Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.5.json`) so that this paper and the schema cannot drift. The developer's view — the defensive design responsibility implied by each cluster — the normative **boundary tests**, and the supporting prose are drawn from the canonical cluster definitions (whitepaper §4.1); these are editorial/normative guidance and are not carried in the JSON dictionary.
 
 ### #1 Abuse of Functions
 
@@ -213,6 +213,8 @@ The cluster covers interception, observation, modification, injection, replay, o
 
 - Gaining the privileged position maps to another cluster; #5 begins once the position is controlled (R-MITM).
 - If the primary act is credential use after capture → #4 for the use step.
+- If the defective logic is itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry or revocation checking, channel encryption, algorithm negotiation) → #5, not #2/#3 (R-CHANNEL).
+- If the defect is incidental to that control rather than constitutive of it (e.g. memory corruption in a TLS parser) → #2/#3 per R-ROLE.
 
 ### #6 Flooding Attack
 
@@ -269,6 +271,10 @@ The cluster spans direct contact with hardware, facilities, media, and interface
 **Boundary tests (normative):**
 
 - If the physical step leads to FEC execution → `#8 → #7`.
+- If a physical-layer property of the substrate is the exploited generic vulnerability → #8 (R-SUBSTRATE).
+- If the physical layer is only the readout channel for a defect in implemented logic → #2/#3 per R-ROLE. Spectre-class transient execution is #2 on this test; Rowhammer is #8.
+- Attacker proximity or possession is not required. Software-triggered exploitation of physical phenomena — Rowhammer, software-controlled voltage or clock glitching — remains #8.
+- Where foreign code executes in order to induce the physical effect, the execution is a separate #7 step per R-EXEC and Axiom VI → `#7 → #8`.
 
 ### #9 Social Engineering
 
@@ -341,7 +347,7 @@ The `#2`/`#3` symmetry yields a complete 2×3 matrix (server/client × protocol/
 
 ## 5. The Ten Axioms
 
-The framework relies on non-negotiable axioms as constraints on interpretation. They prevent category errors and ensure that independent practitioners classify the same situation the same way, making analysis comparable, auditable, and operationally useful. Each axiom statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.4.json`), with one clarifying sentence drawn from the canonical axioms section.
+The framework relies on non-negotiable axioms as constraints on interpretation. They prevent category errors and ensure that independent practitioners classify the same situation the same way, making analysis comparable, auditable, and operationally useful. Each axiom statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.5.json`), with one clarifying sentence drawn from the canonical axioms section.
 
 The axioms fall into four groups: scope (I–II), separation (III–V), classification (VI–VIII), and sequence (IX–X).
 
@@ -367,7 +373,7 @@ The axioms fall into four groups: scope (I–II), separation (III–V), classifi
 
 ## 6. Classification Rules
 
-The classification rules operationalize the axioms, resolving recurring boundary questions so that assignment remains reproducible. Each rule statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.4.json`), together with its enforcement level. Most rules carry the enforcement level **must**; R-UNRES-7 is **should** and R-UNRES-6 is **may**. Two are machine-enforceable (R-EXEC, R-INTRA-9); the remainder are enforced through analyst judgment guided by the stated rule.
+The classification rules operationalize the axioms, resolving recurring boundary questions so that assignment remains reproducible. Each rule statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.5.json`), together with its enforcement level. Most rules carry the enforcement level **must**; R-UNRES-7 is **should** and R-UNRES-6 is **may**. Two are machine-enforceable (R-EXEC, R-INTRA-9); the remainder are enforced through analyst judgment guided by the stated rule.
 
 The rules are presented in two groups: the six core rules, and the ten v2.1 extension rules covering transit, intra-system boundaries, and unresolved steps.
 
@@ -382,6 +388,16 @@ The rules are presented in two groups: the six core rules, and the ten v2.1 exte
 **R-SUPPLY** (must). #10 Supply Chain Attack MUST be placed at the Trust Acceptance Event (TAE) — the moment the third-party trust link is honored and the trust artifact becomes authoritative inside the target domain.
 
 **R-MITM** (must). Position acquisition maps to the enabling cluster; once position is established, interception/modification/relay actions map to #5.
+
+**R-CHANNEL** (must). If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as #5, not as #2 or #3 under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it.
+
+R-CHANNEL is the #5 counterpart to R-FLOOD. Both resolve the same ambiguity — a weakness describable either as "a control failed" or as "the code was wrong" — in favour of the specific generic vulnerability rather than the residual code-flaw test. A missing or incorrect certificate check is not incidentally a code defect; it is the absence of control over the communication path. The distinction is constitutive versus incidental, not server versus client: memory corruption in a TLS parser remains #2/#3 per R-ROLE, because there the exploited generic vulnerability is the code flaw itself. R-CHANNEL classifies the weakness; R-MITM sequences the attack path and is unaffected.
+
+**R-SUBSTRATE** (must). Classify as #8 only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (#2 or #3 per R-ROLE). Attacker proximity or possession is not the test: #8 covers exploitation of physical phenomena whether or not the attacker has physical access.
+
+R-SUBSTRATE completes the family with R-FLOOD (#6) and R-CHANNEL (#5). Each resolves a weakness describable either as a specific generic vulnerability or as a generic code defect, in favour of the specific one, leaving R-ROLE as the residual test. The discriminating question is whether the attack is against the *implemented logic* or against the *physical representation* that logic runs on. Rowhammer is #8: charge migration between adjacent DRAM cells is the vulnerability, no logical control fails, and removing the physics removes the flaw — yet it can be mounted from JavaScript, which is precisely why proximity cannot serve as the test. Spectre is #2: speculation crosses an isolation boundary the design was meant to enforce, and cache timing is only the readout; remove the physics and a boundary-crossing design remains. Power side-channel analysis is #8, because the cryptography is correct and the emission itself is the vulnerability. The corollary is that the location of a flaw — hardware, firmware, silicon — never determines the cluster.
+
+R-SUBSTRATE and the established R-PHYSICAL are complementary. R-SUBSTRATE is the *admission* test: it decides whether a weakness qualifies as #8 at all. R-PHYSICAL is the *sequencing* rule: given a qualifying physical step, that step is #8 and subsequent technical steps are classified separately. R-SUBSTRATE additionally settles a latent ambiguity in R-PHYSICAL's phrasing — "the attacker's advantage comes from unauthorized physical interaction" can be misread as requiring attacker physical access, and it does not.
 
 **R-CRED** (must). Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method. These are separate attack steps.
 

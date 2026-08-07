@@ -25,6 +25,19 @@ Q1: Is this CWE too abstract to determine a single generic vulnerability?
 
 Q2: Is this a CODE IMPLEMENTATION FLAW?
     (buffer overflow, injection, type confusion, use-after-free, etc.)
+    │
+    │   GUARD (R-CHANNEL / R-FLOOD) — before answering YES, ask:
+    │   is the defective logic ITSELF a security control whose failure
+    │   constitutes another cluster's generic vulnerability?
+    │   If so, that cluster wins; Q2 is the residual test, not the first one.
+    │     • communication-path control (cert validation, chain of trust,
+    │       hostname match, expiry/revocation, channel encryption,
+    │       algorithm negotiation)              → #5   (R-CHANNEL, skip to Q4)
+    │     • capacity/throttling control          → #6   (R-FLOOD, skip to Q5)
+    │   The defect must be CONSTITUTIVE of the control, not incidental to it:
+    │   memory corruption in a TLS parser is still Q2 → #2|#3, because the
+    │   exploited generic vulnerability there is the code flaw, not the control.
+    │
     ├── YES → Does the flaw exist in server-side or client-side code?
     │         ├── Server → #2 Exploiting Server
     │         ├── Client → #3 Exploiting Client
@@ -64,6 +77,23 @@ Q4: Is this a COMMUNICATION PATH weakness?
     ├── YES → #5 Man in the Middle
     └── NO ↓
 
+    NOTE 3 — This question is reachable from the Q2 guard (R-CHANNEL).
+    Peer-authenticity controls are communication-path controls even though
+    the weakness reads as "the code failed to validate": per R-CHANNEL the
+    generic vulnerability is the lack of sufficient control over the
+    communication path (#5), not the code flaw (#2/#3). This covers
+    CWE-295/296/297/298/299/370 and the OpenSSL-specific CWE-593/599, and
+    aligns them with CWE-940/757/300/311/319, which were already #5.
+    Incidental defects in the same code path stay #2|#3 — e.g. a memory-safety
+    or parsing bug in a TLS implementation, where the exploited generic
+    vulnerability is the code flaw and the control is merely its location.
+
+    NOTE 4 — R-CHANNEL vs NOTE 1 (CWE-593). "Authentication bypass" in a
+    channel-security CWE means PEER authenticity (is the far end who it
+    claims to be), not identity authentication of a principal. NOTE 1's
+    #1 ruling governs the latter only. CWE-593 defeats certificate
+    verification by construction, so R-CHANNEL applies → #5.
+
 Q5: Is this a RESOURCE EXHAUSTION or CAPACITY weakness?
     (uncontrolled resource consumption, asymmetric resource usage, missing rate limiting)
     ├── YES → #6 Flooding Attack
@@ -76,9 +106,24 @@ Q6: Does this weakness enable FOREIGN CODE EXECUTION directly?
     │         If via legitimate tool/function → #1 → #7
     └── NO ↓
 
-Q7: Is this a PHYSICAL LAYER weakness?
-    (hardware debug interfaces, physical signal leakage, insufficient physical protection)
+Q7: Is a PHYSICAL-LAYER PROPERTY OF THE SUBSTRATE the exploited
+    generic vulnerability?
+    (charge, voltage, electromagnetic emission, temperature,
+     emission-borne timing, wear, material state)
+    │
+    │   GUARD (R-SUBSTRATE) — this question is NOT "is this CWE about hardware?"
+    │   Hardware is a location, not a cause. Apply the removal test:
+    │   if the physical property behaved ideally, is there still a flaw?
+    │     • "No, nothing remains"          → #8   (the property IS the vulnerability)
+    │     • "Yes, a defective design remains" → #2|#3 per R-ROLE
+    │                                          (the property is only the readout channel)
+    │   Attacker proximity is NOT the test. Rowhammer is mountable from
+    │   JavaScript and is still #8; Spectre needs no physical access either
+    │   and is #2. Logic defects that merely ship in silicon are #2|#3.
+    │
     ├── YES → #8 Physical Attack
+    │         If foreign code executes to induce the physical effect, record
+    │         the execution as its own step per R-EXEC (e.g. #7 → #8).
     └── NO ↓
 
 Q8: Is this a TRUST RELATIONSHIP weakness with third-party components?
@@ -166,6 +211,8 @@ Before finalizing a CWE mapping, verify:
 
 - [ ] **Concrete weakness** — Not a category, view, list, or deprecated entry (else Prohibited)
 - [ ] **Specific enough** — Can determine a single generic vulnerability (or explicit alternatives)
+- [ ] **Q2 guard applied** — Before classifying as a code flaw, confirm the defective logic is not itself a communication-path control (`#5`, R-CHANNEL) or a capacity/throttling control (`#6`, R-FLOOD). Q2 is the residual test
+- [ ] **Q7 guard applied** — `#8` requires that a physical-layer *property* be the exploited generic vulnerability (R-SUBSTRATE). "The flaw is in hardware" is not sufficient, and attacker proximity is not the test
 - [ ] **Role considered** — If code flaw, is it server or client? If unclear, mark `#2 | #3`
 - [ ] **R-EXEC respected** — If the weakness enables foreign code execution, `→ #7` is included (e.g., code injection, deserialization, template injection, RFI, dynamic class loading from untrusted source)
 - [ ] **R-CRED respected** — Authentication-logic bypass = `#1`; credential application (point-of-use) = `#4`; credential acquisition — including cleartext/weakly-hashed credential storage — takes the cluster of the access vector, not `#4` (v2.3.1)

@@ -196,6 +196,8 @@ TLCTC distinguishes two fundamentally different execution mechanisms:
 **Boundary Tests:**
 - **Gaining** the privileged position maps to another cluster; **#5 begins once the position is controlled** (R-MITM)
 - If the primary act is credential use after capture → **#4** for the use step
+- If the defective logic **is itself** a communication-path control (certificate validation, chain of trust, hostname matching, expiry/revocation, channel encryption, algorithm negotiation) → **#5**, not #2/#3 (R-CHANNEL)
+- If the defect is **incidental** to that control (e.g. memory corruption in a TLS parser) → **#2/#3** per R-ROLE
 
 **Position Acquisition Examples:**
 - Via **#1**: abusing network/protocol functions
@@ -367,6 +369,46 @@ Clusters that operate primarily **within the cyber domain's** technical attack s
 - **Gaining** MitM position → another cluster (depending on initial generic vulnerability)
 - **#5** begins **only once** the attacker controls the communication path position and performs MitM actions
 - Once position is established, MitM actions map to #5: eavesdropping, modifying packets, injecting responses, SSL stripping, replaying messages
+
+### R-CHANNEL — Channel Control vs Code Flaw
+- If the defective logic **is itself** a communication-path control → **#5**
+- Covered controls: certificate validation, chain of trust, hostname matching, expiry/revocation checking, channel encryption, algorithm negotiation
+- If the defect is **incidental** to that control (e.g. memory corruption in a TLS parser) → **#2/#3** per R-ROLE
+- **"Constitutive vs incidental" test:** Ask "Is the thing that failed the control, or merely the code the control lives in?"
+  - "The peer-authenticity check did not happen or did not bind" → #5
+  - "A memory/parsing bug happened to be located in TLS code" → #2/#3
+- This is the #5 counterpart to R-FLOOD: both prefer the specific generic vulnerability over the residual code-flaw test
+- Note: R-CHANNEL classifies the **weakness**; R-MITM sequences the **path** (position acquisition vs action). They do not conflict
+
+| Scenario | What Failed | Cluster |
+|---|---|---|
+| Client accepts any certificate (no validation) | The peer-authenticity control | #5 |
+| Hostname not matched against certificate CN/SAN | The peer-authenticity control | #5 |
+| Revocation never checked / not re-checked | The peer-authenticity control | #5 |
+| Verification result computed but never consulted | The peer-authenticity control | #5 |
+| Buffer overflow in certificate parsing routine | Incidental code defect | #2/#3 |
+| Protocol downgrade accepted during negotiation | Algorithm negotiation control | #5 |
+
+### R-SUBSTRATE — Physical Property vs Implemented Logic
+- If a **physical-layer property of the substrate** is the exploited generic vulnerability → **#8**
+- Qualifying properties: charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, material state
+- If the physical layer is only the **readout channel** for a defect in implemented logic → **#2/#3** per R-ROLE
+- **Attacker proximity is NOT the test.** #8 covers physical phenomena whether or not the attacker has physical access
+- **"Remove the physics" test:** Ask "if the physical property behaved ideally, is there still a flaw?"
+  - "No — nothing remains" → #8
+  - "Yes — a defective design remains" → #2/#3
+- Third member of the family with R-FLOOD (#6) and R-CHANNEL (#5); R-ROLE is the residual test in all three
+
+| Scenario | What is exploited | Cluster |
+|---|---|---|
+| Rowhammer — hammering flips bits in adjacent DRAM rows | Charge migration between cells | #8 |
+| Spectre — speculation crosses an isolation boundary | Implemented logic; timing is readout only | #2 |
+| Power analysis recovers a key from a correct implementation | The emission itself | #8 |
+| Software-controlled voltage/clock glitching (CLKSCREW-class) | Voltage/clock as physical property | #8 |
+| Register access-control flaw reachable from software | Implemented logic that ships in silicon | #2 |
+| Covert timing channel between two processes | Designed resource sharing | #1 |
+
+Note the path form: where foreign code executes to induce the physical effect, R-EXEC and Axiom VI require a separate step — Rowhammer is `#7 → #8`, not a single `#8`.
 
 ### R-FLOOD — Capacity Exhaustion vs Implementation Defect
 - If **primary mechanism** is volume/intensity exhausting finite resources → **#6**

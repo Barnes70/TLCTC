@@ -1326,6 +1326,24 @@ Global mapping rule: If the primary mechanism is volume or intensity exhausting 
 
 **Reference:** §4.2.5 (R-FLOOD)
 
+### R-CHANNEL (Channel Control vs Code Flaw)
+
+Global mapping rule (v2.4): If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as `#5 Man in the Middle`, not as `#2` or `#3` under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it (for example, memory corruption in a TLS parser).
+
+R-CHANNEL classifies the *weakness*; R-MITM sequences the *attack path* (position acquisition versus action). The two do not conflict.
+
+**Reference:** §6.1 (R-CHANNEL)
+
+### R-SUBSTRATE (Physical Property vs Implemented Logic)
+
+Global mapping rule (v2.4): Classify as `#8 Physical Attack` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (`#2` or `#3` per R-ROLE). Attacker proximity or possession is **not** the test.
+
+The discriminating question is whether the attack is against the *implemented logic* or against the *physical representation* that logic runs on. Rowhammer is `#8` (charge migration between adjacent DRAM cells is the vulnerability; nothing logical fails) even though it can be mounted from JavaScript. Spectre is `#2` (speculation crosses an isolation boundary the design was meant to enforce; cache timing is only the readout). Power side-channel analysis is `#8`, because the cryptography is correct and the emission itself is the vulnerability.
+
+R-SUBSTRATE is the *admission* test — whether a weakness qualifies as `#8` at all. R-PHYSICAL is the *sequencing* rule — a qualifying physical step is `#8` and subsequent technical steps are classified separately. They are complementary.
+
+**Reference:** §6.1 (R-SUBSTRATE)
+
 ### R-HUMAN (Human Manipulation Isolation)
 
 Global mapping rule: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as `#9 Social Engineering`, and any subsequent technical steps MUST be classified separately.
@@ -2100,6 +2118,8 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 | **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` |
 | **R-MITM** | Gaining vs Exploiting | Gaining position → enabling cluster; Exploiting position → `#5` |
 | **R-FLOOD** | Capacity vs Defect | Volume exhaustion → `#6`; Implementation defect → `#2/#3` |
+| **R-CHANNEL** | Control vs Code Flaw | Defective channel control → `#5`; Incidental defect → `#2/#3` |
+| **R-SUBSTRATE** | Property vs Logic | Physical property exploited → `#8`; Physical layer as readout only → `#2/#3` |
 | **R-EXEC** | FEC Execution | If FEC executes → `#7` MUST be recorded (plus enabling cluster) |
 | **R-SUPPLY** | TAE Placement | `#10` at Trust Acceptance Event where third-party trust is honored |
 | **R-HUMAN** | Human Manipulation | Psychological manipulation → `#9`; subsequent tech steps separate |
