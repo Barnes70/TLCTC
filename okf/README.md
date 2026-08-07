@@ -21,14 +21,14 @@ can index the bundle without walking links. It is deterministic (no build timest
 
 ## Contents
 
-Generated from TLCTC v2.4. 416 concept documents across
+Generated from TLCTC v2.5. 416 concept documents across
 9 sections (clusters, axioms, rules, spheres, contexts, glossary, attack-paths,
 controls, mappings).
 
 ## Provenance notes
 
 - Cluster bodies render the whitepaper §4.1 seven-field definitions (Definition, Generic
-  Vulnerability, and Attacker's View verbatim from `tlctc-framework.v2.4.json`; Scope,
+  Vulnerability, and Attacker's View verbatim from `tlctc-framework.v2.5.json`; Scope,
   Developer's View, and Boundary Tests canonical in the whitepaper).
 - Control docs combine NIST CSF objectives (normative) with ISO 27001:2022 Annex A *starter*
   controls (AI-assisted, from `tools/`) — guidance, not a certified control set.

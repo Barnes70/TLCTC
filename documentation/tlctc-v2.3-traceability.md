@@ -71,6 +71,28 @@ A single clarifying, backward-compatible change to the **interaction model**, to
 
 **Harmonization.** The v2.4 wording is applied consistently across `tlctc-framework.v2.4.json`, `tlctc-v2.3-core.md`, `tlctc-v2.0-whitepaper.md` (Axiom II, R-ROLE Clarification 4, two intra-system rows in the R-ROLE examples table), `tlctc-glossary.md`, `glossary/tlctc-glossary.json`, `README.md`, and the `tlctc-classify` skill. The generated `okf/` bundle is rebuilt from these sources.
 
+## Normative Change — v2.5: R-CHANNEL and R-SUBSTRATE (2026-08-07)
+
+**Normative, and NOT classification-preserving.** Unlike the v2.4 clarification, v2.5 alters decisions that were defensible under v2.4. Two disambiguation rules are added, bringing the rule count from 16 to 18.
+
+| Rule | Statement (abbreviated) |
+|---|---|
+| **R-CHANNEL** | Where the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness is `#5`, not `#2`/`#3` under R-ROLE. |
+| **R-SUBSTRATE** | Classify as `#8` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, material state — is itself the exploited generic vulnerability. Where the physical layer is only the readout channel for a defect in implemented logic, classify by that defect (`#2`/`#3` per R-ROLE). Attacker proximity or possession is not the test. |
+
+**Justification.** Both rules resolve the same structural ambiguity that **R-FLOOD** already resolved for `#6`: a weakness describable either as a specific generic vulnerability or as a generic code defect. In each case the specific reading wins and R-ROLE is the residual test. Two defects motivated the addition:
+
+1. **The `#5` case.** Certificate-validation weaknesses were being classified `#2`/`#3` because they read as "the code failed to validate," leaving CWE-295 and its children at `#3` while CWE-940/757/300/311/319 — the same generic vulnerability — sat at `#5`. The `#5` Developer's View already names "proper certificate/path validation," so the taxonomy was internally inconsistent.
+2. **The `#8` case.** `#8` was being assigned on the presence of *hardware*, which is a location rather than a cause. The obvious correction — gating on whether the attacker needs physical access — fails in the other direction, because Rowhammer requires no physical access yet unambiguously abuses a physical property. The discriminator is whether the attack is against the *implemented logic* or the *physical representation* that logic runs on.
+
+**Relationship to existing rules.** R-CHANNEL classifies the weakness; **R-MITM** sequences the attack path (position acquisition versus action) and is unaffected. R-SUBSTRATE is the *admission* test for `#8`; the legacy **R-PHYSICAL** is the *sequencing* rule, and R-PHYSICAL gains a clarification stating this, since its "unauthorized physical interaction" wording could be misread as requiring attacker presence.
+
+**Artifacts.** New dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`. The v2.4 dictionary is **retained unchanged** as the frozen record for classifications made under 2.4, as v2.3 was before it.
+
+**Classification impact.** The CWE mapping was re-adjudicated: the certificate/peer-authenticity family (CWE-295/296/297/298/299/370/593/599) moved to `#5`; CWE-923/941/614 moved to `#5` as the remainder of R-CHANNEL's scope; and the `#8` bucket was re-audited in full, from 81 entries to 16, with the remainder resolving to `#2` (52), `#2 | #3` (4), `#2 | #8` (7) and `#1` (2). Every decision is recorded per entry in `mappings/mitre-cwe/tlctc-cwe.json` under `metadata.audit_history`.
+
+**Harmonization.** Applied across `tlctc-framework.v2.5.json`, `tlctc-v2.3-core.md` (§6.1 and the `#5`/`#8` boundary tests), `tlctc-v2.0-whitepaper.md` (full rule sections, Step-3 decision table, rule summary table, R-PHYSICAL Clarification 4), `tlctc-v2.3-application.md` (Step-3 reminders), `tlctc-glossary.md`, `mappings/mitre-cwe/decision-tree.md` (Q2 and Q7 guards), the `tlctc-classify` skill, and `tools/cwe-explorer.html`. The generated `okf/` bundle is rebuilt from these sources.
+
 ## Editorial Alignment — Canonical-String Harmonization (2026-07-02)
 
 **No normative change.** A repository-wide consistency pass eliminating wording drift between the canonical framework dictionary (`tlctc-framework.v2.3.json`) and every document that restates cluster fields. The v2.3 core paper (§4) already declared that each cluster's **Definition**, **Attacker's View**, and **Generic Vulnerability** are reproduced verbatim from the JSON dictionary; this pass enforces that declaration everywhere else, so that human readers and AI classifiers see one — and only one — string per canonical field.

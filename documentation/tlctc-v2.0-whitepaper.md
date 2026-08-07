@@ -4887,12 +4887,12 @@ To support this, steps carry:
 
 #### 14.3.2 Example Content Package: `tlctc-framework.v2.3.json` (excerpt)
 
-The cluster entries below are reproduced verbatim from the canonical framework dictionary — `json-schemas/layer-1/tlctc-framework.v2.4.json`, validated against `json-schemas/layer-1/tlctc-framework.schema.json`. The `axioms` array is reproduced in full; the `rules` array is truncated to a single example entry, and the per-entry `notes` fields carried by Axiom II and R-ROLE in the dictionary are omitted here for brevity.
+The cluster entries below are reproduced verbatim from the canonical framework dictionary — `json-schemas/layer-1/tlctc-framework.v2.5.json`, validated against `json-schemas/layer-1/tlctc-framework.schema.json`. The `axioms` array is reproduced in full; the `rules` array is truncated to a single example entry, and the per-entry `notes` fields carried by Axiom II and R-ROLE in the dictionary are omitted here for brevity.
 
 ```
 {
   "metadata": {
-    "tlctc_version": "2.4",
+    "tlctc_version": "2.5",
     "release_date": "2026-07-28",
     "schema_id": "tlctc-framework",
     "schema_version": "2.0.0",
@@ -6528,6 +6528,14 @@ Each example is written as:
   - **R-ROLE — Clarification 4 added (Section 4.2.5):** server-role does not presuppose a network; roles are established by call direction at any interface, including intra-system privilege interfaces. A kernel handling a crafted syscall from a lower-privileged process is server-role (`#2`). Cross-references **R-INTRA-7** so the boundary crossing is not misread as a classification input. Two intra-system rows added to the R-ROLE examples table.
   - **No change** to cluster identity, IDs, definitions, attacker's view, generic vulnerability statements, topology, boundary tests, the axiom set (count or numbering), or any other rule. Existing classifications remain valid; the clarification resolves an ambiguity rather than altering a decision.
   - **Not promoted to core:** vertical stack analysis (Section 13.5) remains applied guidance. It introduces no generic vulnerability, axiom, or disambiguation rule, and is fully derivable from Axiom II + R-ROLE + R-INTRA-7 over the `intra-privilege` boundary context.
+
+- Changes from V2.4 to V2.5 *(normative — NOT classification-preserving)*
+  - **Dictionary artifact:** `json-schemas/layer-1/tlctc-framework.v2.5.json` (new file; `tlctc-framework.v2.4.json` retained unchanged for records classified under 2.4). Rule count **16 → 18**.
+  - **R-CHANNEL added (Section 4.2.5):** where the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness is `#5`, not `#2`/`#3`. R-ROLE governs only where the defect is *incidental* to the control (e.g. memory corruption in a TLS parser). R-CHANNEL classifies the weakness; R-MITM sequences the path.
+  - **R-SUBSTRATE added (Section 4.2.5):** `#8` requires that a **physical-layer property of the substrate** — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, material state — be the exploited generic vulnerability. Where the physical layer is only the **readout channel** for a defect in implemented logic, the weakness is `#2`/`#3` per R-ROLE. **Attacker proximity or possession is explicitly not the test:** Rowhammer is mountable from JavaScript and is `#8`; Spectre requires no physical access either and is `#2`. Decision procedure is the removal test — if the physical property behaved ideally, would a flaw remain?
+  - **R-PHYSICAL Clarification 4 added:** R-PHYSICAL governs *sequencing*, not *admission*. Whether a weakness qualifies as `#8` at all is decided by R-SUBSTRATE, and "unauthorized physical interaction" must not be read as requiring the attacker to be physically present.
+  - **Classification impact:** unlike V2.4, this release **alters decisions**. Records classified under 2.4 SHOULD be re-checked against both rules. The CWE mapping was re-adjudicated accordingly: the certificate/peer-authenticity family moved to `#5`, and the `#8` bucket was re-audited from 81 entries to 16, the remainder resolving to `#2`, `#2 | #3`, `#2 | #8` or `#1` on the property test.
+  - **No change** to cluster identity, IDs, definitions, attacker's view, generic vulnerability statements, topology, or the axiom set (count or numbering).
 
 ---
 

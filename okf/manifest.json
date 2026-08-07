@@ -1,7 +1,7 @@
 {
   "bundle": "tlctc-okf",
   "okf_spec_version": "0.1",
-  "tlctc_version": "2.4",
+  "tlctc_version": "2.5",
   "generator": "scripts/build-okf.js",
   "document_count": 416,
   "type_counts": {
