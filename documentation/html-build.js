@@ -1,8 +1,16 @@
 #!/usr/bin/env node
 // ─────────────────────────────────────────────────────────────
-// build.js — Convert TLCTC documents from Markdown to HTML + PDF
-// Usage:  node build.js           (HTML + PDF)
-//         node build.js --no-pdf  (HTML only, skip PDF)
+// html-build.js — Convert TLCTC documents from Markdown to HTML (+ PDF)
+// v2.5-ready: builds the v2.5 core paper, v2.5 application paper,
+// glossary (v2.5), and the v2.0-named whitepaper (v2.1 structure,
+// definitions current per the v2.5 dictionary).
+//
+// Usage:  node html-build.js           (HTML + PDF where enabled)
+//         node html-build.js --no-pdf  (HTML only, skip PDF)
+//
+// NOTE: the core and application papers have pdf:false here on purpose.
+// Their canonical, Google-Scholar-facing PDFs are built by
+// scripts/build-pdf.js and must not be overwritten by this styled build.
 // ─────────────────────────────────────────────────────────────
 
 const fs   = require('fs');
@@ -16,38 +24,54 @@ marked.setOptions({ gfm: true, breaks: false });
 // ─── Helper: parse frontmatter from markdown ────────────────
 
 function parseFrontmatter(raw) {
-  const lines = raw.split('\n');
+  const lines = raw.split(/\r?\n/); // tolerate CRLF sources
   let title = '', mainTitle = '', subtitle = '', author = '', initials = '', lastUpdated = '';
-  let abstractText = '', contentStart = 0;
+  let version = '', abstractText = '', contentStart = 0;
   let descriptionText = '';
+  const preambleLines = []; // header-block lines (License, DOI, Implements, declarations, intro prose) kept for rendering
 
   for (let i = 0; i < lines.length; i++) {
-    if (!title && lines[i].startsWith('# ')) {
-      title = lines[i].replace(/^# /, '').trim();
+    const line = lines[i];
+
+    if (!title && line.startsWith('# ')) {
+      title = line.replace(/^# /, '').trim();
       const parts = title.split(' — ');
       mainTitle = parts[0];
       subtitle  = parts.slice(1).join(' — ');
       continue;
     }
-    const am = lines[i].match(/^\*Author:\s*(.+?)\s*\|\s*Last Updated:\s*(.+?)\*$/);
+
+    // Glossary-style author line: *Author: X | Last Updated: Y*
+    const am = line.match(/^\*Author:\s*(.+?)\s*\|\s*Last Updated:\s*(.+?)\*$/);
     if (am) {
       author      = am[1].trim();
-      initials    = author.split(/\s+/).map(w => w[0]).join('').toUpperCase();
       lastUpdated = am[2].trim();
       continue;
     }
+
+    // Paper-style header fields: **Author:** X / **Version:** X / **Date:** X
+    const bm = line.match(/^\*\*(Author|Version|Date):\*\*\s*(.+)$/);
+    if (bm) {
+      const val = bm[2].trim();
+      if (bm[1] === 'Author')  author = val;
+      if (bm[1] === 'Version') version = val;
+      if (bm[1] === 'Date' && !lastUpdated) lastUpdated = val;
+      continue;
+    }
+
     // Description line: *Some italic text.* (not the author line)
-    const dm = lines[i].match(/^\*([^*]+)\*$/);
-    if (dm && !descriptionText && !lines[i].startsWith('*Author')) {
+    const dm = line.match(/^\*([^*]+)\*$/);
+    if (dm && !descriptionText && !line.startsWith('*Author')) {
       descriptionText = dm[1].trim();
       continue;
     }
-    // Abstract keyword (whitepaper)
-    if (lines[i].trim() === 'Abstract') {
+
+    // Abstract as bare keyword or as a heading (papers use "## Abstract")
+    if (line.trim() === 'Abstract' || line.trim() === '## Abstract') {
       let j = i + 1;
       while (j < lines.length && lines[j].trim() === '') j++;
       const buf = [];
-      while (j < lines.length && !lines[j].startsWith('## ')) {
+      while (j < lines.length && !/^#{1,6} /.test(lines[j])) {
         buf.push(lines[j]);
         j++;
       }
@@ -55,14 +79,24 @@ function parseFrontmatter(raw) {
       contentStart = j;
       break;
     }
-    // If we hit the first ## heading without finding Abstract, content starts here
-    if (lines[i].startsWith('## ')) {
+
+    // First ## heading without an Abstract: content starts here
+    if (line.startsWith('## ')) {
       contentStart = i;
       break;
     }
+
+    // Anything else in the header region (License/DOI/Companion/Implements
+    // lines, canonical-declaration blockquotes, glossary intro prose) is
+    // preserved and rendered ahead of the content instead of being dropped.
+    if (title && line.trim() !== '---' && line.trim() !== '&nbsp;') {
+      preambleLines.push(line);
+    }
   }
 
-  return { title, mainTitle, subtitle, author, initials, lastUpdated, abstractText, descriptionText, contentStart, lines };
+  if (author) initials = author.split(/\s+/).map(w => w[0]).join('').toUpperCase();
+
+  return { title, mainTitle, subtitle, author, initials, lastUpdated, version, abstractText, descriptionText, preambleLines, contentStart, lines };
 }
 
 // ─── Helper: post-process HTML ──────────────────────────────
@@ -124,22 +158,29 @@ function buildDocument(inputFile, outputFile, opts = {}) {
   const contentHTML = postProcessHTML(marked.parse(contentMd));
 
   const abstractHTML = fm.abstractText ? marked.parse(fm.abstractText) : '';
+  const preambleMd   = fm.preambleLines.join('\n').trim();
+  const preambleHTML = preambleMd ? marked.parse(preambleMd) : '';
   const descSnippet  = fm.abstractText || fm.descriptionText || '';
+
+  // Badge suffix follows the version declared in the document itself;
+  // opts.badgeSuffix only serves docs that carry no **Version:** field.
+  const badgeSuffix = fm.version ? `TLCTC v${fm.version}` : (opts.badgeSuffix || 'TLCTC v2.5');
 
   const html = renderPage({
     pageTitle:   fm.title,
     mainTitle:   fm.mainTitle,
     subtitle:    fm.subtitle,
-    author:      fm.author,
-    initials:    fm.initials,
-    lastUpdated: fm.lastUpdated,
+    author:      fm.author || opts.author || '',
+    initials:    (fm.author || opts.author || '').split(/\s+/).filter(Boolean).map(w => w[0]).join('').toUpperCase(),
+    lastUpdated: fm.lastUpdated || opts.lastUpdated || '',
     abstractHTML,
+    preambleHTML,
     contentHTML,
     descSnippet,
     badge:       opts.badge || 'White Paper',
-    badgeSuffix: opts.badgeSuffix || 'TLCTC v2.0',
+    badgeSuffix,
     extraNavHTML: opts.extraNavHTML || '',
-    extraNavLink: opts.extraNavLink || null,
+    extraNavLinks: opts.extraNavLinks || [],
   });
 
   fs.writeFileSync(outputFile, html, 'utf8');
@@ -177,35 +218,79 @@ async function buildPdf(htmlFile) {
 // ─── Build all documents ────────────────────────────────────
 
 async function main() {
-  const htmlFiles = [];
+  const navLink = (href, text) =>
+    `<a href="${href}" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">${text}</a>`;
 
-  for (const { input, output, opts } of [
+  const DOCS = [
+    {
+      input:  path.join(__dirname, 'tlctc-v2.5-core.md'),
+      output: path.join(__dirname, 'tlctc-v2.5-core.html'),
+      pdf:    false, // canonical Scholar PDF comes from scripts/build-pdf.js — do not overwrite
+      opts:   {
+        badge: 'Core Paper',
+        extraNavHTML: navLink('tlctc-v2.5-application.html', 'Application Paper') + '\n' + navLink('tlctc-glossary.html', 'Glossary'),
+        extraNavLinks: [
+          { href: 'tlctc-v2.5-application.html', text: 'Application Paper' },
+          { href: 'tlctc-glossary.html', text: 'Glossary' },
+        ],
+      },
+    },
+    {
+      input:  path.join(__dirname, 'tlctc-v2.5-application.md'),
+      output: path.join(__dirname, 'tlctc-v2.5-application.html'),
+      pdf:    false, // canonical Scholar PDF comes from scripts/build-pdf.js — do not overwrite
+      opts:   {
+        badge: 'Application Paper',
+        extraNavHTML: navLink('tlctc-v2.5-core.html', 'Core Paper') + '\n' + navLink('tlctc-glossary.html', 'Glossary'),
+        extraNavLinks: [
+          { href: 'tlctc-v2.5-core.html', text: 'Core Paper' },
+          { href: 'tlctc-glossary.html', text: 'Glossary' },
+        ],
+      },
+    },
     {
       input:  path.join(__dirname, 'tlctc-v2.0-whitepaper.md'),
       output: path.join(__dirname, 'tlctc-v2.0-whitepaper.html'),
+      pdf:    true,
       opts:   {
-        badge: 'White Paper', badgeSuffix: 'TLCTC v2.1',
-        extraNavHTML: '<a href="tlctc-glossary.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Glossary</a>',
-        extraNavLink: { href: 'tlctc-glossary.html', text: 'Glossary' },
+        // v2.1 paper structure; cluster definitions current per the v2.5 dictionary
+        badge: 'White Paper', badgeSuffix: 'TLCTC v2.5',
+        author: 'Bernhard Kreinz',
+        extraNavHTML: navLink('tlctc-v2.5-core.html', 'Core Paper') + '\n' + navLink('tlctc-glossary.html', 'Glossary'),
+        extraNavLinks: [
+          { href: 'tlctc-v2.5-core.html', text: 'Core Paper' },
+          { href: 'tlctc-glossary.html', text: 'Glossary' },
+        ],
       },
     },
     {
       input:  path.join(__dirname, 'tlctc-glossary.md'),
       output: path.join(__dirname, 'tlctc-glossary.html'),
+      pdf:    true,
       opts:   {
-        badge: 'Glossary', badgeSuffix: 'TLCTC v2.1',
-        extraNavHTML: '<a href="tlctc-v2.0-whitepaper.html" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">White Paper</a>',
-        extraNavLink: { href: 'tlctc-v2.0-whitepaper.html', text: 'White Paper' },
+        badge: 'Glossary', badgeSuffix: 'TLCTC v2.5',
+        extraNavHTML: navLink('tlctc-v2.5-core.html', 'Core Paper') + '\n' + navLink('tlctc-v2.0-whitepaper.html', 'White Paper'),
+        extraNavLinks: [
+          { href: 'tlctc-v2.5-core.html', text: 'Core Paper' },
+          { href: 'tlctc-v2.0-whitepaper.html', text: 'White Paper' },
+        ],
       },
     },
-  ]) {
+  ];
+
+  const pdfTargets = [];
+  for (const { input, output, pdf, opts } of DOCS) {
+    if (!fs.existsSync(input)) {
+      console.warn(`Skip  ${input} (not found)`);
+      continue;
+    }
     buildDocument(input, output, opts);
-    htmlFiles.push(output);
+    if (pdf) pdfTargets.push(output);
   }
 
   if (!skipPdf) {
     console.log('\nGenerating PDFs…');
-    for (const htmlFile of htmlFiles) {
+    for (const htmlFile of pdfTargets) {
       await buildPdf(htmlFile);
     }
   }
@@ -463,7 +548,7 @@ ${p.extraNavHTML || ''}
             <a href="index.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">Home</a>
             <a href="tlctc-10-definitions.html" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">The 10 Clusters</a>
             <a href="index.html#blog" onclick="toggleMenu()" class="text-primary font-semibold">White Paper</a>
-${p.extraNavLink ? `            <a href="${p.extraNavLink.href}" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">${p.extraNavLink.text}</a>` : ''}
+${(p.extraNavLinks || []).map(l => `            <a href="${l.href}" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground">${l.text}</a>`).join('\n')}
             <hr class="border-border">
             <a href="javascript:window.print()" class="text-primary font-semibold">Print</a>
         </nav>
@@ -495,6 +580,10 @@ ${p.extraNavLink ? `            <a href="${p.extraNavLink.href}" onclick="toggle
         <div class="container-custom grid lg:grid-cols-12 gap-12 relative">
             <article id="article-content" class="lg:col-span-8 prose-custom min-w-0">
 <div class="max-w-3xl mx-auto">
+
+${p.preambleHTML ? `<div class="rounded-xl border border-border/60 bg-muted/20 p-5 my-6 text-sm leading-6 text-muted-foreground [&_blockquote]:border-l-4 [&_blockquote]:border-primary/60 [&_blockquote]:pl-4 [&_blockquote]:not-italic">
+${p.preambleHTML}
+</div>` : ''}
 
 ${p.abstractHTML ? `<div class="callout callout-note">
   <div class="mt-0.5 text-primary flex-shrink-0"><i data-lucide="file-text" class="h-5 w-5"></i></div>
