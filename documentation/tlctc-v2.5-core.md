@@ -327,6 +327,10 @@ The **Operational (Security) Layer** uses the machine-readable form `TLCTC-XX.YY
 
 The two layers are linked by strict semantic equivalence (below), so a single cluster carries one consistent meaning from the boardroom to the SOC to the developer's backlog. Governance lives at the strategic layer; development and operations share the operational layer.
 
+![The TLCTC Dual-Layer Bow-Tie Model: the strategic layer reasons over threat clusters and generic vulnerabilities of asset types around the central risk event, while the operational layer beneath it carries concrete threats/TTPs and specific vulnerabilities of specific assets, joined to consequences, data risk events, and business impact on the consequence side](images/tlctc-dual-layer-bowtie-overview.svg)
+
+*Figure 3 — The dual-layer bow-tie. The same cause–event–consequence structure exists on both layers: the strategic layer reasons over threat clusters and generic vulnerabilities of asset types; the operational layer beneath it reasons over concrete threats/TTPs and specific vulnerabilities of specific assets. Semantic equivalence between the layers is what lets one classification travel intact between them.*
+
 **Equivalence and stability (normative):**
 
 - `#X` and `TLCTC-0X.00` (or `TLCTC-10.00`) refer to the same top-level cluster and MUST be treated as semantically equivalent.
