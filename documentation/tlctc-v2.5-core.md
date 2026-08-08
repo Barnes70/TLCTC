@@ -338,6 +338,10 @@ The two layers are linked by strict semantic equivalence (below), so a single cl
 - `TLCTC-XX.YY` with `YY ≠ 00` MAY express an operational sub-threat but MUST NOT change the top-level meaning of cluster `XX`.
 - Cluster identifiers `#1`–`#10` / `TLCTC-01`–`TLCTC-10` are immutable; their definitions MUST NOT change without axiom-level justification.
 
+![TLCTC strategic versus operational layer naming: each of the ten clusters carries the paired identifiers #X and TLCTC-XX; the strategic layer serves governance — board and executive reporting, attack paths, KCI/KPI — while the operational layer beneath it holds the implementations per cluster, CWE weaknesses, CVE instances, controls and tools, and incident feedback](images/tlctc-dual-layer-naming.svg)
+
+*Figure 4 — The two-layer naming convention. Each cluster carries the paired identifiers `#X` (strategic, human-first) and `TLCTC-XX` (operational, machine-readable). The strategic layer is where decisions are made — executive reporting, attack paths, key indicators; the operational layer is where implementation happens — per-cluster sub-threats, CWE weaknesses, CVE instances, controls and tooling, with incident feedback flowing back up.*
+
 The two-digit suffix `YY` is hierarchical: `TLCTC-XX.Y0` (tens digit) is a **sub-cluster** — a vector class within the cluster — and `TLCTC-XX.YZ` (ones digit ≠ 0) is a **refinement** within that sub-cluster, yielding up to 81 operational positions per cluster (strategic shorthand `#X.Y`, e.g. `#8.1` = `TLCTC-08.10`). Every sub-cluster must answer: *through which vector does the attacker reach the same generic vulnerability?* If the answer requires a different generic vulnerability, it belongs in a different cluster.
 
 Four clusters have reference sub-cluster decompositions; the remaining six are left open for community refinement:
