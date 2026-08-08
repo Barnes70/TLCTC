@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 // ─────────────────────────────────────────────────────────────
-// html-build.js — Convert TLCTC documents from Markdown to HTML (+ PDF)
-// v2.5-ready: builds the v2.5 core paper, v2.5 application paper,
-// glossary (v2.5), and the v2.0-named whitepaper (v2.1 structure,
-// definitions current per the v2.5 dictionary).
+// html-build.js — Generate the tlctc.net HTML pages from the Markdown sources
+//
+// Outputs (STABLE site filenames — no version numbers in URLs; the
+// version is declared inside each document):
+//   tlctc-whitepaper.html   <- tlctc-v2.5-core.md   (the leading publication,
+//                              with citation_* tags + ScholarlyArticle JSON-LD)
+//   tlctc-application.html  <- tlctc-v2.5-application.md
+//   tlctc-v2.0-whitepaper.html <- practitioner handbook (historical filename)
+//   tlctc-glossary.html     <- tlctc-glossary.md
 //
 // Usage:  node html-build.js           (HTML + PDF where enabled)
 //         node html-build.js --no-pdf  (HTML only, skip PDF)
@@ -11,6 +16,8 @@
 // NOTE: the core and application papers have pdf:false here on purpose.
 // Their canonical, Google-Scholar-facing PDFs are built by
 // scripts/build-pdf.js and must not be overwritten by this styled build.
+// Upload the core PDF to the site as tlctc-whitepaper.pdf (stable name)
+// to match citation_pdf_url.
 // ─────────────────────────────────────────────────────────────
 
 const fs   = require('fs');
@@ -96,7 +103,65 @@ function parseFrontmatter(raw) {
 
   if (author) initials = author.split(/\s+/).map(w => w[0]).join('').toUpperCase();
 
-  return { title, mainTitle, subtitle, author, initials, lastUpdated, version, abstractText, descriptionText, preambleLines, contentStart, lines };
+  // Keywords line anywhere in the document (papers carry "**Keywords:** a; b; c")
+  const km = raw.match(/\*\*Keywords:\*\*\s*(.+)/);
+  const keywords = km ? km[1].trim() : '';
+
+  return { title, mainTitle, subtitle, author, initials, lastUpdated, version, keywords, abstractText, descriptionText, preambleLines, contentStart, lines };
+}
+
+// ─── Helper: Scholar/citation head block for tlctc.net pages ─
+//
+// The leading publication keeps a STABLE, version-free filename on the
+// site (tlctc-whitepaper.html / tlctc-whitepaper.pdf) — the version
+// number lives inside the document, never in the URL. Google Scholar
+// indexing depends on these citation_* tags and on the URLs not churning.
+// citation_publication_date stays at the FIRST publication date
+// (2026/06/10); do not bump it on new versions.
+
+function buildScholarHead(fm, site) {
+  if (!site) return '';
+  const esc = s => String(s || '').replace(/"/g, '&quot;');
+  const kw  = fm.keywords || '';
+  const parts = [];
+
+  parts.push(`    <link rel="canonical" href="${site.canonical}" />`);
+  parts.push(`    <meta name="citation_title" content="${esc(fm.title)}">`);
+  parts.push(`    <meta name="citation_author" content="${esc(site.citationAuthor || fm.author)}">`);
+  if (site.publicationDate) parts.push(`    <meta name="citation_publication_date" content="${site.publicationDate}">`);
+  if (site.onlineDate)      parts.push(`    <meta name="citation_online_date" content="${site.onlineDate}">`);
+  if (site.pdfUrl)          parts.push(`    <meta name="citation_pdf_url" content="${site.pdfUrl}">`);
+  parts.push(`    <meta name="citation_abstract_html_url" content="${site.canonical}">`);
+  if (site.doi)             parts.push(`    <meta name="citation_doi" content="${site.doi}">`);
+  parts.push(`    <meta name="citation_language" content="en">`);
+  if (kw) parts.push(`    <meta name="citation_keywords" content="${esc(kw)}">`);
+
+  parts.push(`    <meta property="og:url" content="${site.canonical}">`);
+  parts.push(`    <meta property="og:site_name" content="TLCTC">`);
+  parts.push(`    <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">`);
+  parts.push(`    <meta property="og:image:alt" content="TLCTC — Top Level Cyber Threat Clusters">`);
+
+  const ld = {
+    '@context': 'https://schema.org',
+    '@type': 'ScholarlyArticle',
+    headline: fm.title,
+    author: { '@type': 'Person', name: fm.author || 'Bernhard Kreinz' },
+    datePublished: site.datePublished || '2026-06-10',
+    version: fm.version || undefined,
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+    identifier: site.doi ? `https://doi.org/${site.doi}` : undefined,
+    sameAs: site.doi ? `https://doi.org/${site.doi}` : undefined,
+    url: site.canonical,
+    encoding: site.pdfUrl ? { '@type': 'MediaObject', contentUrl: site.pdfUrl, encodingFormat: 'application/pdf' } : undefined,
+    keywords: kw ? kw.replace(/;\s*/g, ', ') : undefined,
+  };
+  Object.keys(ld).forEach(k => ld[k] === undefined && delete ld[k]);
+  parts.push('    <!-- Schema.org ScholarlyArticle -->');
+  parts.push('    <script type="application/ld+json">');
+  parts.push('    ' + JSON.stringify(ld, null, 2).replace(/\n/g, '\n    '));
+  parts.push('    </script>');
+
+  return parts.join('\n');
 }
 
 // ─── Helper: post-process HTML ──────────────────────────────
@@ -179,6 +244,7 @@ function buildDocument(inputFile, outputFile, opts = {}) {
     descSnippet,
     badge:       opts.badge || 'White Paper',
     badgeSuffix,
+    headExtraHTML: buildScholarHead(fm, opts.site),
     extraNavHTML: opts.extraNavHTML || '',
     extraNavLinks: opts.extraNavLinks || [],
   });
@@ -221,29 +287,49 @@ async function main() {
   const navLink = (href, text) =>
     `<a href="${href}" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">${text}</a>`;
 
+  // STABLE site filenames: the leading publication (the core paper) is
+  // always tlctc-whitepaper.html / tlctc-whitepaper.pdf on tlctc.net,
+  // regardless of framework version — the version number lives inside
+  // the document. Same principle for the application paper
+  // (tlctc-application.html). Never put a version number in these URLs.
   const DOCS = [
     {
       input:  path.join(__dirname, 'tlctc-v2.5-core.md'),
-      output: path.join(__dirname, 'tlctc-v2.5-core.html'),
+      output: path.join(__dirname, 'tlctc-whitepaper.html'),
       pdf:    false, // canonical Scholar PDF comes from scripts/build-pdf.js — do not overwrite
       opts:   {
         badge: 'Core Paper',
-        extraNavHTML: navLink('tlctc-v2.5-application.html', 'Application Paper') + '\n' + navLink('tlctc-glossary.html', 'Glossary'),
+        site: {
+          canonical: 'https://www.tlctc.net/tlctc-whitepaper.html',
+          pdfUrl:    'https://www.tlctc.net/tlctc-whitepaper.pdf',
+          doi:       '10.5281/zenodo.20633176', // concept DOI — always latest version
+          citationAuthor:  'Kreinz, Bernhard',
+          publicationDate: '2026/06/10', // first publication — never bump on new versions
+          onlineDate:      '2026/06/10',
+          datePublished:   '2026-06-10',
+        },
+        extraNavHTML: navLink('tlctc-application.html', 'Application Paper') + '\n' + navLink('tlctc-glossary.html', 'Glossary'),
         extraNavLinks: [
-          { href: 'tlctc-v2.5-application.html', text: 'Application Paper' },
+          { href: 'tlctc-application.html', text: 'Application Paper' },
           { href: 'tlctc-glossary.html', text: 'Glossary' },
         ],
       },
     },
     {
       input:  path.join(__dirname, 'tlctc-v2.5-application.md'),
-      output: path.join(__dirname, 'tlctc-v2.5-application.html'),
+      output: path.join(__dirname, 'tlctc-application.html'),
       pdf:    false, // canonical Scholar PDF comes from scripts/build-pdf.js — do not overwrite
       opts:   {
         badge: 'Application Paper',
-        extraNavHTML: navLink('tlctc-v2.5-core.html', 'Core Paper') + '\n' + navLink('tlctc-glossary.html', 'Glossary'),
+        site: {
+          canonical: 'https://www.tlctc.net/tlctc-application.html',
+          pdfUrl:    'https://www.tlctc.net/tlctc-application.pdf',
+          // doi: add when the application paper gets its Zenodo deposit
+          citationAuthor:  'Kreinz, Bernhard',
+        },
+        extraNavHTML: navLink('tlctc-whitepaper.html', 'Core Paper') + '\n' + navLink('tlctc-glossary.html', 'Glossary'),
         extraNavLinks: [
-          { href: 'tlctc-v2.5-core.html', text: 'Core Paper' },
+          { href: 'tlctc-whitepaper.html', text: 'Core Paper' },
           { href: 'tlctc-glossary.html', text: 'Glossary' },
         ],
       },
@@ -253,12 +339,14 @@ async function main() {
       output: path.join(__dirname, 'tlctc-v2.0-whitepaper.html'),
       pdf:    true,
       opts:   {
-        // v2.1 paper structure; cluster definitions current per the v2.5 dictionary
-        badge: 'White Paper', badgeSuffix: 'TLCTC v2.5',
+        // Practitioner handbook: v2.1 paper structure, cluster definitions
+        // current per the v2.5 dictionary. Keeps its historical filename —
+        // distinct from tlctc-whitepaper.html, which is the core paper.
+        badge: 'Handbook', badgeSuffix: 'TLCTC v2.5',
         author: 'Bernhard Kreinz',
-        extraNavHTML: navLink('tlctc-v2.5-core.html', 'Core Paper') + '\n' + navLink('tlctc-glossary.html', 'Glossary'),
+        extraNavHTML: navLink('tlctc-whitepaper.html', 'Core Paper') + '\n' + navLink('tlctc-glossary.html', 'Glossary'),
         extraNavLinks: [
-          { href: 'tlctc-v2.5-core.html', text: 'Core Paper' },
+          { href: 'tlctc-whitepaper.html', text: 'Core Paper' },
           { href: 'tlctc-glossary.html', text: 'Glossary' },
         ],
       },
@@ -269,10 +357,10 @@ async function main() {
       pdf:    true,
       opts:   {
         badge: 'Glossary', badgeSuffix: 'TLCTC v2.5',
-        extraNavHTML: navLink('tlctc-v2.5-core.html', 'Core Paper') + '\n' + navLink('tlctc-v2.0-whitepaper.html', 'White Paper'),
+        extraNavHTML: navLink('tlctc-whitepaper.html', 'Core Paper') + '\n' + navLink('tlctc-v2.0-whitepaper.html', 'Handbook'),
         extraNavLinks: [
-          { href: 'tlctc-v2.5-core.html', text: 'Core Paper' },
-          { href: 'tlctc-v2.0-whitepaper.html', text: 'White Paper' },
+          { href: 'tlctc-whitepaper.html', text: 'Core Paper' },
+          { href: 'tlctc-v2.0-whitepaper.html', text: 'Handbook' },
         ],
       },
     },
@@ -312,9 +400,16 @@ function renderPage(p) {
     <meta name="author" content="${p.author}">
     <meta property="og:title" content="${p.pageTitle}">
     <meta property="og:type" content="article">
+${p.headExtraHTML || ''}
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="theme-color" content="#0f172a">
 
     <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
     <script src="/vendor/lucide/0.469.0/lucide.min.js"></script>
+    <link href="/vendor/fonts/google-fonts.css" rel="stylesheet">
 
     <script>
         tailwind.config = {
