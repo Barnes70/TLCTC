@@ -1,7 +1,7 @@
 ---
 type: "cluster"
 title: "#3 Exploiting Client"
-description: "An attacker targets flaws within the source code implementation of any software acting in a client role."
+description: "An attacker targets implementation flaws within any component acting in a client role."
 resource: "tlctc:cluster:#3"
 tags:
   - "taxonomy"
@@ -14,7 +14,7 @@ topology: "internal"
 ---
 # #3 Exploiting Client
 
-**Definition:** An attacker targets flaws within the source code implementation of any software acting in a client role.
+**Definition:** An attacker targets implementation flaws within any component acting in a client role.
 
 **Scope:** Triggering an **implementation flaw** in **client-role** software through crafted content/responses/state (“exploit payload”), exploiting coding mistakes in parsing, rendering, state management, or response handling.
 
@@ -22,7 +22,7 @@ topology: "internal"
 
 **Generic Vulnerability:** Client-side implementation flaws enable unintended behavior.
 
-**Attacker’s View:** “I abuse a flaw in the source code of software acting as a client.”
+**Attacker’s View:** “I abuse an implementation flaw in a component acting in a client role.”
 
 **Developer’s View:** “I must apply secure coding principles for client-role code and never trust incoming data from servers, files, URLs, or APIs.”
 

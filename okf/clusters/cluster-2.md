@@ -1,7 +1,7 @@
 ---
 type: "cluster"
 title: "#2 Exploiting Server"
-description: "An attacker targets flaws within the server-side application's source code implementation."
+description: "An attacker targets implementation flaws within a component acting in a server role."
 resource: "tlctc:cluster:#2"
 tags:
   - "taxonomy"
@@ -14,7 +14,7 @@ topology: "internal"
 ---
 # #2 Exploiting Server
 
-**Definition:** An attacker targets flaws within the server-side application's source code implementation.
+**Definition:** An attacker targets implementation flaws within a component acting in a server role.
 
 **Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. This forces an UNINTENDED data→code transition.
 
@@ -24,7 +24,7 @@ topology: "internal"
 
 **Generic Vulnerability:** Server-side implementation flaws enable unintended behavior.
 
-**Attacker’s View:** “I abuse a flaw in the application’s source code on the server side.”
+**Attacker’s View:** “I abuse an implementation flaw in a component acting in a server role.”
 
 **Developer’s View:** “I must apply language-specific secure coding principles for all server-side code and implement appropriate safeguards for known pitfalls.”
 

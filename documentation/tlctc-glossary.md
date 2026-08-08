@@ -1,11 +1,13 @@
-# TLCTC Framework Glossary — Version 2.0 / 2.1
+# TLCTC Framework Glossary — Version 2.5
 
 *Comprehensive definitions and concepts for the Top Level Cyber Threat Clusters framework.*
-*Author: Bernhard Kreinz | Last Updated: 19 Apr 2026*
+*Author: Bernhard Kreinz | Last Updated: 8 Aug 2026*
 
 ---
 
-This glossary contains all defined terms from the TLCTC framework specification V2.0, organized alphabetically, including additive V2.1 boundary extensions and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Each entry includes cross-references to the section(s) where the term is normatively defined or substantively discussed in the whitepaper. V2.1 additions are marked with *(V2.1)*. Industry terms commonly used in the field are marked with *(Industry Term)*.
+**Implements:** TLCTC framework specification **v2.5**. The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`, reproduced and derived in the v2.5 core paper (`documentation/tlctc-v2.5-core.md`); where an entry here and the canon differ, the canon governs.
+
+This glossary contains all defined terms of the TLCTC framework, organized alphabetically, including the v2.1 boundary extensions, the v2.5 disambiguation rules (R-CHANNEL, R-SUBSTRATE), and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Entries carried over from the V2.0/V2.1 whitepaper keep their whitepaper section cross-references. V2.1 additions are marked with *(V2.1)*; v2.5 additions with *(v2.5)*. Industry terms commonly used in the field are marked with *(Industry Term)*. Rule IDs that are no longer part of the v2.5 normative registry are explicitly marked **(Deprecated alias)** — a retired ID keeps its original meaning and is never reused for a different proposition; the sole historical exception (the v2.1 draft R-INTRA numbering) is documented in the R-INTRA entry.
 
 ---
 
@@ -13,9 +15,9 @@ This glossary contains all defined terms from the TLCTC framework specification 
 
 ### Abuse of Functions (#1)
 
-A threat cluster where an attacker misuses the logic, scope, or configuration of existing, legitimate software functions for malicious purposes. This manipulation occurs through standard interfaces using expected input types (data, parameters, configurations, sequence of actions), but in a way that subverts the intended purpose or security controls. Crucially, inputs remain data; no foreign code is introduced or executed. The generic vulnerability is the scope, complexity, or inherent trust placed in legitimate software functions. Classification is governed by the R-ABUSE mapping rule: if the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as `#1 Abuse of Functions`.
+A threat cluster where an attacker misuses the logic, scope, or configuration of existing, legitimate software functions for malicious purposes. This manipulation occurs through standard interfaces using expected input types (data, parameters, configurations, sequence of actions), but in a way that subverts the intended purpose or security controls. Crucially, inputs remain data; no foreign code is introduced or executed. The generic vulnerability is the scope, complexity, or inherent trust placed in legitimate software functions. Classification is governed by the #1 boundary tests in the core paper: if the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as `#1 Abuse of Functions`. (This test was stated as mapping rule R-ABUSE in the v2.0 whitepaper; the ID is a deprecated alias in v2.5.)
 
-**Reference:** R-ABUSE (§4.2.5)
+**Reference:** Core paper §4 (#1 boundary tests); formerly R-ABUSE (whitepaper §4.2.5)
 
 **Related reading:** [AD → Domain Admin → Ransomware cascade](https://www.tlctc.net/ad-ransomware-tlctc-cascade.html), [CVE-2026-44578: Next.js WebSocket SSRF](https://www.tlctc.net/cve-2026-44578.html), [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [CrowdStrike 2025 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-analysis.html), [CrowdStrike 2025 Global Threat Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-report.html), [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html)
 
@@ -110,7 +112,7 @@ The specific path or method used by an attacker to gain unauthorized access to a
 
 ### Attack Velocity (Δt) *(V2.0)*
 
-The temporal dimension of cyber risk representing the **time interval** between two adjacent Attack Steps in an attack path. For an edge `#X → #Y`, the value `Δt(X→Y)` represents the elapsed time between step `#X` and step `#Y` in the described scenario. Δt is an edge property attached to the sequence operator, not to steps. Attack velocity is the single most accurate predictor of attacker sophistication and the only metric that truthfully measures control effectiveness. Categorized into four velocity classes: Latent/Slow (days to months), Medium (hours), Fast (minutes), and Realtime (seconds/milliseconds).
+The temporal dimension of cyber risk representing the **time interval** between two adjacent Attack Steps in an attack path. For an edge `#X → #Y`, the value `Δt(X→Y)` represents the elapsed time between step `#X` and step `#Y` in the described scenario. Δt is an edge property attached to the sequence operator, not to steps. Attack velocity matters defensively because it bounds the time a detection-and-response control has to act between adjacent steps (see Detection Coverage Score). Categorized into four velocity classes: Latent/Slow (days to months), Medium (hours), Fast (minutes), and Realtime (seconds/milliseconds).
 
 **Reference:** §12.0 (Definitions), §12.1 (Measurement Model), §12.2 (Notation)
 
@@ -537,12 +539,14 @@ The environment's **intended** capability to load, interpret, or execute program
 
 ### Detection Coverage Score (DCS) *(V2.0)*
 
-A strategic Key Performance Indicator (KPI) for measuring security effectiveness derived from Attack Velocity. Formula: `DCS = (Mean Time to Detect) / (Attack Velocity Δt)`.
+A strategic Key Performance Indicator (KPI) measuring **detection timing adequacy** relative to Attack Velocity. Formula: `DCS = (Mean Time to Detect) / (Attack Velocity Δt)`. It answers one question: is detection latency shorter than the attacker's progression window between two adjacent steps?
 
-- **Score < 1.0:** Organization is faster than the adversary (Winning)
-- **Score > 1.0:** Adversary completes the step before detection (Losing)
+- **Score < 1.0:** Detection is faster than the adversary's progression (the response window exists)
+- **Score > 1.0:** Adversary completes the step before detection (no response window)
 
 Example: If a ransomware group moves from #4 to #1 in 10 minutes and your SIEM alerts in 15 minutes, DCS = 15/10 = 1.5, indicating systematic blindness requiring automation rather than analyst intervention.
+
+*Scope note.* Despite the historical name, DCS measures timing adequacy, not coverage: it assumes the relevant activity is detectable at all. A detector with 10-second MTTD but low detection probability does not have good coverage merely because Δt is 60 seconds; detection probability and rule coverage must be assessed separately (see the application paper, Part B).
 
 **Related reading:** [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
 
@@ -687,13 +691,13 @@ Foreign code that targets specific vulnerabilities to modify software behavior, 
 
 ### Exploiting Client (#3)
 
-A threat cluster where an attacker targets and leverages flaws originating directly within the source code implementation of any software acting in a client role (requesting/processing data from a server or resource). These vulnerabilities allow manipulation of client behavior or unauthorized access using Exploit Code, often when the client interacts with malicious content. The generic vulnerability is the presence of exploitable flaws within client-side source code stemming from insecure coding practices.
+A threat cluster where an attacker targets and leverages implementation flaws within any component acting in a client role (requesting/processing data from a server or resource). These vulnerabilities allow manipulation of client behavior or unauthorized access using Exploit Code, often when the client interacts with malicious content. The generic vulnerability is that client-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per R-SUBSTRATE, the location of a flaw never determines the cluster, the role of the flawed component does.
 
 **Related reading:** [Kernel as Client: CVE-2025-21333 (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-21510: Windows Shell SmartScreen bypass](https://www.tlctc.net/cve-2026-21510.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
 
 ### Exploiting Server (#2)
 
-A threat cluster where an attacker targets and leverages flaws originating directly within the server-side application's source code implementation. These vulnerabilities allow manipulation of server behavior or unauthorized access using Exploit Code, forcing a data→code transition where exploit code executes as new, foreign code in the server context. The generic vulnerability is the presence of exploitable flaws within server-side source code implementation stemming from insecure coding practices.
+A threat cluster where an attacker targets and leverages implementation flaws within a component acting in a server role. These vulnerabilities allow manipulation of server behavior or unauthorized access using Exploit Code, forcing a data→code transition where exploit code executes as new, foreign code in the server context. The generic vulnerability is that server-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per R-SUBSTRATE, the location of a flaw never determines the cluster, the role of the flawed component does.
 
 **Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-31431 (Copy Fail): Linux kernel AF_ALG](https://www.tlctc.net/cve-2026-31431.html), [CVE-2026-35414: 15-year-old OpenSSH cert flaw](https://www.tlctc.net/cve-2026-35414.html), [CVE-2026-46300 (Fragnesia): Linux kernel XFRM](https://www.tlctc.net/cve-2026-46300.html), [Verizon DBIR 2025 — TLCTC](https://www.tlctc.net/tlctc-dbir-2025.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
 
@@ -823,7 +827,7 @@ A flaw in code logic, parsing, memory handling, or resource handling that causes
 
 ### Implementation Flaw
 
-A defect in source code implementation (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered. Implementation flaws are exploited by `#2 Exploiting Server` (server-role) or `#3 Exploiting Client` (client-role).
+A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate-neutral per R-SUBSTRATE). Implementation flaws are exploited by `#2 Exploiting Server` (server-role) or `#3 Exploiting Client` (client-role).
 
 **Reference:** §4.2.2 (Global Definitions), §4.1 (#2 and #3 Definitions)
 
@@ -857,7 +861,7 @@ Notation: `|[type][@from→@to]|`. Used to annotate boundary crossings **within 
 
 ### JSON Architecture *(V2.0)*
 
-The standardized data structure for threat intelligence sharing in TLCTC v2.3, consisting of four complementary JSON files:
+The standardized data structure for threat intelligence sharing in TLCTC (introduced in v2.3), consisting of four complementary JSON files:
 
 1. **tlctc-framework.json:** Core framework definitions (universal, rarely updated)
 2. **tlctc-responsibility-spheres.json:** Domain boundary definitions (customizable, occasionally updated)
@@ -878,7 +882,7 @@ A metric that measures the operational performance of security controls, verifyi
 
 ### KPI (Key Performance Indicator)
 
-A measurable value demonstrating the outcome and performance of security processes in reaching security objectives. KPIs must be time-based and reflect effectiveness over time. Example: "Average time to restore critical services to full operation within a 4-hour window." In TLCTC v2.3, the Detection Coverage Score (DCS) is introduced as a strategic KPI.
+A measurable value demonstrating the outcome and performance of security processes in reaching security objectives. KPIs must be time-based and reflect effectiveness over time. Example: "Average time to restore critical services to full operation within a 4-hour window." In TLCTC, the Detection Coverage Score (DCS) serves as a strategic detection-timing KPI (see its entry for scope caveats).
 
 ### KRI (Key Risk Indicator)
 
@@ -1016,7 +1020,7 @@ In the Bow-Tie model: barriers on the right (effect) side that detect, contain, 
 
 ### MITRE ATT&CK
 
-A globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. In the TLCTC framework, MITRE techniques are considered operational-level detail that map to the strategic-level threat clusters. TLCTC v2.3 proposes enhancement through adding cluster mappings and typical velocity attributes to techniques.
+A globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. In the TLCTC framework, MITRE techniques are considered operational-level detail that map to the strategic-level threat clusters. TLCTC proposes enhancement through adding cluster mappings and typical velocity attributes to techniques.
 
 **Related reading:** [MITRE ATT&CK & STIX integration with TLCTC](https://www.tlctc.net/mitre-tlctc.html), [TLCTC × MITRE ATT&CK — interactive explorer](https://www.tlctc.net/tlctc-mitre-mapping.html), [MITRE ATT&CK & TLCTC — detection meets risk](https://www.tlctc.net/tlctc-mitre-enterprise.html), [TLCTC × CWE — interactive explorer](https://www.tlctc.net/tlctc-mitre-cwe.html), [TLCTC × CWE — context is king](https://www.tlctc.net/tlctc-mitre-cwe-mapping.html), [MITRE ATLAS × TLCTC integration](https://www.tlctc.net/tlctc-mitre-ai.html), [MITRE ATT&CK for ML (AML) × TLCTC](https://www.tlctc.net/tlctc-mitre-aml-mapping.html), [NIST AI RMF + MITRE ATLAS × TLCTC](https://www.tlctc.net/tlctc-nist-ai-rmf-mitre-cti.html), [MITRE ATT&CK & STIX × TLCTC V2.0 — implementation guide](https://www.tlctc.net/stix-tlctc.html), [CKC + ATT&CK + TLCTC — Holy Trinity of Defense](https://www.tlctc.net/blog-ckc-attack-tlctc-synthesis.html), [D3FEND × TLCTC — the missing axis](https://www.tlctc.net/missing-axis-d3fend-tlctc.html), [Grok AI 4.1 — independent TLCTC validation](https://www.tlctc.net/tlctc-grok-ai-validation.html), [Cobalt Strike capabilities × TLCTC V2.0](https://www.tlctc.net/tlctc-cobaltstrike-mapping.html), [TLCTC v2.1 monster prompt — SOC & Detection](https://www.tlctc.net/tlctc-prompt-soc.html)
 
@@ -1292,11 +1296,13 @@ The layered privilege model in computing systems (Ring 0 through Ring 3) where e
 
 ## R
 
-### R-ABUSE (Function Misuse Determination)
+### R-ABUSE (Function Misuse Determination) **(Deprecated alias)**
 
-Global mapping rule: If the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as `#1 Abuse of Functions`.
+*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its substance is carried unchanged by the #1 cluster definition and boundary tests (core paper §4). The ID keeps this original meaning and is never reused.*
 
-**Reference:** §4.2.5 (R-ABUSE)
+Original statement: If the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as `#1 Abuse of Functions`.
+
+**Reference:** whitepaper §4.2.5 (R-ABUSE); superseded by core paper §4 (#1 boundary tests)
 
 ### R-CRED (Credential Lifecycle Non-Overlap)
 
@@ -1328,7 +1334,7 @@ Global mapping rule: If the primary mechanism is volume or intensity exhausting 
 
 ### R-CHANNEL (Channel Control vs Code Flaw)
 
-Global mapping rule (v2.4): If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as `#5 Man in the Middle`, not as `#2` or `#3` under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it (for example, memory corruption in a TLS parser).
+Global mapping rule (v2.5): If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as `#5 Man in the Middle`, not as `#2` or `#3` under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it (for example, memory corruption in a TLS parser).
 
 R-CHANNEL classifies the *weakness*; R-MITM sequences the *attack path* (position acquisition versus action). The two do not conflict.
 
@@ -1336,37 +1342,36 @@ R-CHANNEL classifies the *weakness*; R-MITM sequences the *attack path* (positio
 
 ### R-SUBSTRATE (Physical Property vs Implemented Logic)
 
-Global mapping rule (v2.4): Classify as `#8 Physical Attack` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (`#2` or `#3` per R-ROLE). Attacker proximity or possession is **not** the test.
+Global mapping rule (v2.5): Classify as `#8 Physical Attack` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (`#2` or `#3` per R-ROLE). Attacker proximity or possession is **not** the test.
 
 The discriminating question is whether the attack is against the *implemented logic* or against the *physical representation* that logic runs on. Rowhammer is `#8` (charge migration between adjacent DRAM cells is the vulnerability; nothing logical fails) even though it can be mounted from JavaScript. Spectre is `#2` (speculation crosses an isolation boundary the design was meant to enforce; cache timing is only the readout). Power side-channel analysis is `#8`, because the cryptography is correct and the emission itself is the vulnerability.
 
-R-SUBSTRATE is the *admission* test — whether a weakness qualifies as `#8` at all. R-PHYSICAL is the *sequencing* rule — a qualifying physical step is `#8` and subsequent technical steps are classified separately. They are complementary.
+R-SUBSTRATE is the *admission* test — whether a weakness qualifies as `#8` at all. The sequencing principle formerly stated as R-PHYSICAL (now a deprecated alias) still holds — a qualifying physical step is `#8` and subsequent technical steps are classified separately. They are complementary.
 
 **Reference:** §6.1 (R-SUBSTRATE)
 
-### R-HUMAN (Human Manipulation Isolation)
+### R-HUMAN (Human Manipulation Isolation) **(Deprecated alias)**
 
-Global mapping rule: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as `#9 Social Engineering`, and any subsequent technical steps MUST be classified separately.
+*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its substance is carried unchanged by the #9 cluster definition and boundary tests (core paper §4) together with Axiom VI. The ID keeps this original meaning and is never reused.*
 
-**Reference:** §4.2.5 (R-HUMAN)
+Original statement: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as `#9 Social Engineering`, and any subsequent technical steps MUST be classified separately.
+
+**Reference:** whitepaper §4.2.5 (R-HUMAN); superseded by core paper §4 (#9 boundary tests)
 
 ### R-INTRA (Intra-System Boundary Rules) *(V2.1)*
 
-The complete intra-system boundary rule set governing use of the intra-system operator (`|...|`):
+The v2.5 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
 
-| Rule | Name | Summary |
-|---|---|---|
-| **R-INTRA-1** | Single-System Scope | Operator MUST be used only for boundaries within a single system instance |
-| **R-INTRA-2** | Cluster Attachment | Operator MUST be attached to the cluster step that accomplishes the crossing |
-| **R-INTRA-3** | No Standalone Use | Operator MUST NOT appear without an associated cluster step |
-| **R-INTRA-4** | No Cluster Change | Operator MUST NOT change cluster classification |
-| **R-INTRA-5** | Optional Precision | Operator is OPTIONAL; mainly recommended for forensic or vendor-facing use |
-| **R-INTRA-6** | Multiple Crossings | Multiple annotations MAY follow one step when compressed form is justified |
-| **R-INTRA-7** | Distinct Vulnerabilities | If crossing requires a separately evidenced vulnerability, a new cluster step MUST be added |
-| **R-INTRA-8** | Compressed Form | If evidence does not distinguish separate exploit causes, compressed single-step form MAY be used |
-| **R-INTRA-9** | Anti-Effect Rule / Memory Deferral | Effects (privilege escalation, sandbox escape, etc.) are NOT independent threat categories; `memory` boundary type is deferred and MUST NOT be used |
+| Rule | Summary |
+|---|---|
+| **R-INTRA-7** | Intra-system boundary crossings never change cluster classification. They are observability annotations, not classification inputs. |
+| **R-INTRA-9** | The `memory` intra-system boundary type is deferred and MUST NOT be used. |
 
-**Reference:** §4.2.5 (R-INTRA), §11.3.6 (Intra-System Boundary Operator)
+The remaining usage guidance from the v2.1 drafting is non-normative and preserved as notation practice: the operator applies only to boundaries within a single system instance, attaches to the cluster step that accomplishes the crossing, never appears standalone, is optional (mainly for forensic or vendor-facing precision), and multiple annotations may follow one step. If a crossing requires a **separately evidenced vulnerability**, a new cluster step MUST be added — this follows directly from Axiom VI (see also SG-6) and is not an R-INTRA rule.
+
+> **Numbering erratum (do not cite the v2.1 draft numbers).** Early v2.1 drafts circulated a nine-rule series R-INTRA-1…9 in which "no cluster change" was numbered R-INTRA-4 and "distinct vulnerabilities" was numbered **R-INTRA-7**. In the canonical registry (v2.3 onward) R-INTRA-7 denotes the *no-cluster-change* rule. The draft series is therefore withdrawn: citing "R-INTRA-7" in its draft meaning contradicts the canon. Only the canonical meanings above are valid; this is the single known case in TLCTC history of a rule ID changing propositions between draft and canon, recorded here so it can never happen silently.
+
+**Reference:** core paper §6.2 (R-INTRA-7, R-INTRA-9), §11.3.6 (Intra-System Boundary Operator)
 
 ### R-MITM (Position vs Action)
 
@@ -1374,11 +1379,13 @@ Global mapping rule: The method of gaining a privileged communication-path posit
 
 **Reference:** §4.2.5 (R-MITM)
 
-### R-PHYSICAL (Physical Domain Isolation)
+### R-PHYSICAL (Physical Domain Isolation) **(Deprecated alias)**
 
-Global mapping rule: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately.
+*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its sequencing substance is carried by the #8 cluster definition and boundary tests (core paper §4); its admission question is now settled normatively by R-SUBSTRATE. The ID keeps this original meaning and is never reused.*
 
-**Reference:** §4.2.5 (R-PHYSICAL)
+Original statement: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately. Note that R-SUBSTRATE corrects a latent misreading of this phrasing: attacker physical access or proximity is NOT required for `#8`.
+
+**Reference:** whitepaper §4.2.5 (R-PHYSICAL); superseded by core paper §4 (#8 boundary tests) and R-SUBSTRATE (core §6.1)
 
 ### R-ROLE (Server vs Client Determination)
 
@@ -1403,16 +1410,11 @@ The complete transit boundary rule set governing use of the transit operator (`�
 
 | Rule | Name | Summary |
 |---|---|---|
-| **R-TRANSIT-1** | Distinct Parties | `@Transit` MUST be distinct from both `@Source` and `@Target` |
-| **R-TRANSIT-2** | True Intermediary Topology | Operator MUST be used only when the intermediary sits between source and target in the delivery path |
 | **R-TRANSIT-3** | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R-ROLE |
-| **R-TRANSIT-4** | Control Relevance | Operator SHOULD be used when the intermediary has meaningful control responsibility; MAY be omitted when analytically incidental |
-| **R-TRANSIT-5** | Pure Conduit Fallback | If the intermediary adds no useful control surface, the analyst MAY use the binary v2.0 boundary or omit the transit annotation |
-| **R-TRANSIT-6** | Compromise or Coercion Is Separate | If transit is enabled by compromise or coercion of the intermediary, that enabling condition MUST be modeled as a preceding cluster step |
-| **R-TRANSIT-7** | Cluster Independence | Transit annotation MUST NOT change cluster classification |
-| **R-TRANSIT-8** | Multiple Transit Parties | Chained transit MAY be used when each intermediary has independent analytical relevance |
 
-**Reference:** §4.2.4 (R-TRANSIT), §11.3.5 (Transit Boundary Operator)
+Only **R-TRANSIT-3** is part of the v2.5 normative registry. The remaining v2.1 drafting guidance is non-normative notation practice: a transit party must be distinct from source and target and actually sit between them in the delivery path; the annotation is optional (recommended where the intermediary has meaningful control responsibility, omittable for pure conduits); compromise or coercion of the intermediary must be modeled as its own preceding cluster step; transit annotations never change cluster classification (see SG-2); and chained transit may be used when each party has independent analytical relevance. The withdrawn draft IDs R-TRANSIT-1, -2, -4, -5, -6, -7, -8 are not to be cited.
+
+**Reference:** core paper §6.2 (R-TRANSIT-3), §11.3.5 (Transit Boundary Operator)
 
 ### Realtime Velocity Class *(V2.0)*
 
@@ -1776,7 +1778,7 @@ Specific methods, procedures, and tactics that attackers use to exploit vulnerab
 - T1566.001 (Spearphishing Attachment) → #9 Social Engineering → #3 or #7 (depending on payload)
 - T1078 (Valid Accounts) → #4 Identity Theft
 
-**Key distinction:** Techniques describe attacker actions and behaviors (operational detail), while TLCTC clusters categorize the fundamental vulnerabilities being exploited (strategic framework). TLCTC v2.3 proposes enhancing MITRE ATT&CK by adding cluster mappings and typical velocity attributes to each technique.
+**Key distinction:** Techniques describe attacker actions and behaviors (operational detail), while TLCTC clusters categorize the fundamental vulnerabilities being exploited (strategic framework). TLCTC proposes enhancing MITRE ATT&CK by adding cluster mappings and typical velocity attributes to each technique.
 
 See also: TTP, Sub-Threat, MITRE ATT&CK, Operational Layer, Weakness
 
@@ -1930,7 +1932,7 @@ A Δt value where no supported time statement can be made. Notation: `Δt=?`.
 
 ### Unresolved-Step Operators (`?`, `…`) *(V2.1)*
 
-Notation operators for partially-resolved attack paths where forensic evidence confirms that a step (or gap of steps) exists but the cluster cannot yet be determined. `?` represents exactly one unresolved step; `…` (or ASCII `...`) represents a gap of one or more steps. Governed by R-UNRES-1 through R-UNRES-9. Key constraints: unresolved steps MUST NOT carry DRE tags (R-UNRES-5); if any cluster can be defended even weakly, the step MUST be classified as `#X [conf=low]` rather than left unresolved (R-UNRES-4); every unresolved step MUST be accompanied by a prose annotation (R-UNRES-8).
+Notation operators for partially-resolved attack paths where forensic evidence confirms that a step (or gap of steps) exists but the cluster cannot yet be determined. `?` represents exactly one unresolved step; `…` (or ASCII `...`) represents a gap of one or more steps. Governed by the seven canonical R-UNRES rules (2, 3, 5, 6, 7, 8, 9 — the numbering is intentionally non-contiguous; draft rules 1 and 4 were consolidated into adjacent rules during v2.1 finalization). Key constraints: unresolved steps MUST NOT carry DRE tags (R-UNRES-5); if any cluster can be defended even weakly, the step MUST be classified as `#X [conf=low]` rather than left unresolved (R-UNRES-9); every unresolved step MUST be accompanied by a prose annotation (R-UNRES-8).
 
 **Reference:** §11.5.4 (Unresolved-Step Operators)
 
@@ -2112,42 +2114,48 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 
 ### R-* Rules Quick Reference
 
+The v2.5 normative registry contains exactly **18 rules**: eight core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.5.json`); summaries are condensed, the dictionary statement governs.
+
+**Core rules (8):**
+
 | Rule | Distinguishes | Key Decision |
 | --- | --- | --- |
-| **R-ROLE** | `#2` vs `#3` | Server-role (accepts inbound) → `#2`; Client-role (consumes external) → `#3` |
-| **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` |
-| **R-MITM** | Gaining vs Exploiting | Gaining position → enabling cluster; Exploiting position → `#5` |
-| **R-FLOOD** | Capacity vs Defect | Volume exhaustion → `#6`; Implementation defect → `#2/#3` |
-| **R-CHANNEL** | Control vs Code Flaw | Defective channel control → `#5`; Incidental defect → `#2/#3` |
-| **R-SUBSTRATE** | Property vs Logic | Physical property exploited → `#8`; Physical layer as readout only → `#2/#3` |
 | **R-EXEC** | FEC Execution | If FEC executes → `#7` MUST be recorded (plus enabling cluster) |
+| **R-ROLE** | `#2` vs `#3` | Server-role (accepts inbound) → `#2`; Client-role (consumes external) → `#3`; roles set by call direction at any interface, network not required |
+| **R-FLOOD** | Capacity vs Defect | Volume exhaustion → `#6`; Implementation defect → `#2/#3` per R-ROLE |
 | **R-SUPPLY** | TAE Placement | `#10` at Trust Acceptance Event where third-party trust is honored |
-| **R-HUMAN** | Human Manipulation | Psychological manipulation → `#9`; subsequent tech steps separate |
-| **R-PHYSICAL** | Physical Access | Physical interaction → `#8`; subsequent tech steps separate |
-| **R-ABUSE** | Function Misuse | No flaw required, legitimate capability abused → `#1` |
-| **R-TRANSIT-1** *(V2.1)* | Distinct Parties | `@Transit` MUST be distinct from `@Source` and `@Target` |
-| **R-TRANSIT-2** *(V2.1)* | True Intermediary Topology | Operator only when intermediary sits between source and target |
+| **R-MITM** | Position vs Action | Gaining position → enabling cluster; Interception/modification/relay → `#5` |
+| **R-CHANNEL** *(v2.5)* | Control vs Code Flaw | Defective logic constitutive of channel control → `#5`; Incidental defect → `#2/#3` |
+| **R-SUBSTRATE** *(v2.5)* | Property vs Logic | Physical property exploited → `#8`; Physical layer as readout only → `#2/#3` |
+| **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4`; separate steps |
+
+**v2.1 extension rules (10):**
+
+| Rule | Distinguishes | Key Decision |
+| --- | --- | --- |
 | **R-TRANSIT-3** *(V2.1)* | Transit vs Attack Surface | Vendor code on target device → classify by R-ROLE, not transit |
-| **R-TRANSIT-4** *(V2.1)* | Control Relevance | SHOULD annotate when intermediary has control responsibility |
-| **R-TRANSIT-5** *(V2.1)* | Pure Conduit Fallback | MAY omit transit if intermediary adds no useful control surface |
-| **R-TRANSIT-6** *(V2.1)* | Compromise Separation | Intermediary compromise → preceding cluster step; transit alone insufficient |
-| **R-TRANSIT-7** *(V2.1)* | Cluster Independence | Transit annotation MUST NOT change cluster classification |
-| **R-TRANSIT-8** *(V2.1)* | Multiple Transit Parties | Chained transit MAY be used when each party has independent relevance |
-| **R-INTRA-1** *(V2.1)* | Single-System Scope | Operator only for boundaries within a single system instance |
-| **R-INTRA-2** *(V2.1)* | Cluster Attachment | Operator MUST be attached to the cluster step |
-| **R-INTRA-3** *(V2.1)* | No Standalone Use | Operator MUST NOT appear without an associated cluster step |
-| **R-INTRA-4** *(V2.1)* | No Cluster Change | Operator MUST NOT change cluster classification |
-| **R-INTRA-5** *(V2.1)* | Optional Precision | Operator is OPTIONAL; recommended for forensic/vendor-facing use |
-| **R-INTRA-6** *(V2.1)* | Multiple Crossings | Multiple annotations MAY follow one step when compressed form justified |
-| **R-INTRA-7** *(V2.1)* | Distinct Vulnerabilities | Separately evidenced vulnerability → new cluster step required |
-| **R-INTRA-8** *(V2.1)* | Compressed Form | Compressed single-step MAY be used when evidence doesn't distinguish causes |
-| **R-INTRA-9** *(V2.1)* | Anti-Effect / Memory Deferral | Effects are not threats; `memory` boundary type deferred → MUST NOT use |
-| **R-UNRES-1** *(V2.1)* | Semantic Constraint | `?` and `…` represent real attack steps, not noise or speculation |
-| **R-UNRES-4** *(V2.1)* | Classification Threshold | If any cluster can be defended → use `#X [conf=low]`, not `?` |
+| **R-INTRA-7** *(V2.1)* | Annotation vs Classification | Intra-system crossings never change cluster classification |
+| **R-INTRA-9** *(V2.1)* | Memory Deferral | `memory` boundary type deferred → MUST NOT use |
+| **R-UNRES-2** *(V2.1)* | Annotation vs Cluster | `?`/`…` are epistemic annotations, not clusters (no `#11`/`#12`) |
+| **R-UNRES-3** *(V2.1)* | Statistics | `?`/`…` excluded from statistics |
 | **R-UNRES-5** *(V2.1)* | No DRE on Unresolved | DRE tags MUST NOT be appended to `?` or `…` |
+| **R-UNRES-6** *(V2.1)* | Boundary Compatibility | Boundary operators MAY appear adjacent to `?`/`…` |
 | **R-UNRES-7** *(V2.1)* | Resolution Obligation | Every `?`/`…` is an open analytical task → resolve when evidence arrives |
 | **R-UNRES-8** *(V2.1)* | Prose Required | Paths containing `?`/`…` MUST have prose annotation explaining gap |
-| **R-UNRES-9** *(V2.1)* | Binary Classification | No partial-confidence operators (`?#4`, `#4?`, `#{2\|7}`) |
+| **R-UNRES-9** *(V2.1)* | Classification Threshold | If any cluster can be defended → use `#X [conf=low]`, not `?` |
+
+**Deprecated / withdrawn rule IDs (do not cite as normative):**
+
+| ID | Status | Where the substance lives now |
+| --- | --- | --- |
+| **R-ABUSE** | Deprecated v2.0 alias | #1 cluster definition and boundary tests (core §4) |
+| **R-HUMAN** | Deprecated v2.0 alias | #9 cluster definition and boundary tests (core §4) |
+| **R-PHYSICAL** | Deprecated v2.0 alias | #8 boundary tests (core §4) + R-SUBSTRATE (admission) |
+| **R-TRANSIT-1/2/4/5/6/7/8** | Withdrawn v2.1 draft series | Non-normative transit notation practice (see R-TRANSIT entry); cluster independence is SG-2 |
+| **R-INTRA-1…6, -8** | Withdrawn v2.1 draft series | Non-normative intra-system notation practice (see R-INTRA entry) |
+| **R-UNRES-1, -4** | Consolidated during v2.1 finalization | R-UNRES-1 → R-UNRES-2; draft R-UNRES-4's threshold → canonical R-UNRES-9 |
+
+> **Caution:** the draft series numbered some propositions differently than the canon (draft R-INTRA-7 = "distinct vulnerabilities", canonical R-INTRA-7 = "no cluster change"; draft R-UNRES-4 = the conf=low threshold, canonical R-UNRES-9). Always cite the canonical registry above.
 
 ### Semantic Guardrails Quick Reference *(V2.1)*
 
