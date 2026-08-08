@@ -64,6 +64,10 @@ Through this thought experiment and a careful examination of the vulnerabilities
 
 TLCTC is a cause-oriented taxonomy. A threat cluster sits on the *cause* side of an attack: it names the generic vulnerability an attacker exploits, not the event that follows or the consequence that results. Conceptually, this corresponds to the cause side of a bow-tie model, where threats are the causes that converge on a central risk event, and losses of confidentiality, integrity, or availability are recorded separately as outcomes on the consequence side. (Section 3.4 develops this cause–event–consequence model; the *control* side of the bow-tie — control frameworks, indicators, and governance mapping — belongs to a separate application document and is out of scope here.)
 
+![The bow-tie anchor: threat clusters act on the cause side, converging on the central risk event (asset compromise), with consequences on the right side; preventive controls (PROTECT) affect the likelihood of the event occurring, while detective and reactive controls (DETECT, RESPOND, RECOVER) influence the consequences](images/tlctc-bowtie-anchor-diagram.svg)
+
+*Figure 1 — The bow-tie anchor. A risk event is a deviation from a strategic goal; threat clusters act exclusively on the cause side, consequences on the effect side. Preventive controls affect the likelihood of the event occurring; detective and reactive controls influence the consequences. TLCTC classifies the cause side — the control placement sketched here is developed in the application companion.*
+
 The practical consequence is that outcomes are never threats. Labels such as "data breach," "service outage," or "ransomware" describe effects, not the generic vulnerability that was exploited to produce them. They are recorded as data risk events on the consequence side, while the threat that caused them is classified by its cause. Keeping these layers apart is what allows two analysts to classify the same incident the same way and what makes mappings from threat to control reproducible.
 
 ### 3.2 Non-Overlap: One Generic Vulnerability, One Cluster
@@ -95,7 +99,7 @@ The SRE is positioned deliberately *before* outcomes. Compromise can exist witho
 
 ![The TLCTC Cyber Bow-Tie: the ten threat clusters on the cause side, the System Risk Event as central pivot, and Data/Business Risk Events on the consequence side](images/tlctc-cyber-bow-tie.svg)
 
-*Figure 1 — The Cyber Bow-Tie. The ten clusters act exclusively on the cause (left) side; the System Risk Event ("Loss of Control") is the single central pivot; Data Risk Events and cascading Business Risk Events sit on the consequence (right) side.*
+*Figure 2 — The Cyber Bow-Tie. The ten clusters act exclusively on the cause (left) side; the System Risk Event ("Loss of Control") is the single central pivot; Data Risk Events and cascading Business Risk Events sit on the consequence (right) side.*
 
 Consequences follow a structured, variable-length chain:
 
@@ -111,7 +115,7 @@ Business Risk Events may cascade (`SRE → DRE → BRE₁ → … → BREₙ`); 
 
 ![The consequence chain SRE → DRE → BRE*, with Δt detection windows at every transition and the risk-appetite boundary designating the terminal BRE as Business Impact](images/tlctc-consequence-chain.svg)
 
-*Figure 2 — The consequence chain. Every node is a risk event and every Δt a detection-and-intervention window; the organization's risk appetite designates the terminal BRE as its Business Impact.*
+*Figure 3 — The consequence chain. Every node is a risk event and every Δt a detection-and-intervention window; the organization's risk appetite designates the terminal BRE as its Business Impact.*
 
 Crucially, **outcomes are never threats.** A data risk event such as "data breach" or "ransomware impact" records *what happened*; it never changes the cluster classification of the step that caused it. This is the operational form of Axiom III, and it is what allows the same outcome to be traced back to different cause-side clusters.
 
@@ -329,7 +333,7 @@ The two layers are linked by strict semantic equivalence (below), so a single cl
 
 ![The TLCTC Dual-Layer Bow-Tie Model: the strategic layer reasons over threat clusters and generic vulnerabilities of asset types around the central risk event, while the operational layer beneath it carries concrete threats/TTPs and specific vulnerabilities of specific assets, joined to consequences, data risk events, and business impact on the consequence side](images/tlctc-dual-layer-bowtie-overview.svg)
 
-*Figure 3 — The dual-layer bow-tie. The same cause–event–consequence structure exists on both layers: the strategic layer reasons over threat clusters and generic vulnerabilities of asset types; the operational layer beneath it reasons over concrete threats/TTPs and specific vulnerabilities of specific assets. Semantic equivalence between the layers is what lets one classification travel intact between them.*
+*Figure 4 — The dual-layer bow-tie. The same cause–event–consequence structure exists on both layers: the strategic layer reasons over threat clusters and generic vulnerabilities of asset types; the operational layer beneath it reasons over concrete threats/TTPs and specific vulnerabilities of specific assets. Semantic equivalence between the layers is what lets one classification travel intact between them.*
 
 **Equivalence and stability (normative):**
 
@@ -340,7 +344,7 @@ The two layers are linked by strict semantic equivalence (below), so a single cl
 
 ![TLCTC strategic versus operational layer naming: each of the ten clusters carries the paired identifiers #X and TLCTC-XX; the strategic layer serves governance — board and executive reporting, attack paths, KCI/KPI — while the operational layer beneath it holds the implementations per cluster, CWE weaknesses, CVE instances, controls and tools, and incident feedback](images/tlctc-dual-layer-naming.svg)
 
-*Figure 4 — The two-layer naming convention. Each cluster carries the paired identifiers `#X` (strategic, human-first) and `TLCTC-XX` (operational, machine-readable). The strategic layer is where decisions are made — executive reporting, attack paths, key indicators; the operational layer is where implementation happens — per-cluster sub-threats, CWE weaknesses, CVE instances, controls and tooling, with incident feedback flowing back up.*
+*Figure 5 — The two-layer naming convention. Each cluster carries the paired identifiers `#X` (strategic, human-first) and `TLCTC-XX` (operational, machine-readable). The strategic layer is where decisions are made — executive reporting, attack paths, key indicators; the operational layer is where implementation happens — per-cluster sub-threats, CWE weaknesses, CVE instances, controls and tooling, with incident feedback flowing back up.*
 
 The two-digit suffix `YY` is hierarchical: `TLCTC-XX.Y0` (tens digit) is a **sub-cluster** — a vector class within the cluster — and `TLCTC-XX.YZ` (ones digit ≠ 0) is a **refinement** within that sub-cluster, yielding up to 81 operational positions per cluster (strategic shorthand `#X.Y`, e.g. `#8.1` = `TLCTC-08.10`). Every sub-cluster must answer: *through which vector does the attacker reach the same generic vulnerability?* If the answer requires a different generic vulnerability, it belongs in a different cluster.
 
