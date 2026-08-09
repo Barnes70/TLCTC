@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1100 620" xmlns="http://www.w3.org/2000/svg" style="font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">
+    <defs>
+        <filter id="cmShadow" x="-5%" y="-5%" width="110%" height="120%">
+            <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/>
+        </filter>
+        <!-- Standard cell: Local bar (top) + Umbrella bar (bottom) -->
+        <g id="cmCell">
+            <rect width="128" height="38" rx="6" fill="#1e3a5f" fill-opacity="0.10" stroke="#1e3a5f" stroke-opacity="0.18" stroke-width="0.5"/>
+            <rect x="6" y="5" width="116" height="12" rx="3" fill="#1e3a5f" fill-opacity="0.45"/>
+            <rect x="6" y="21" width="116" height="12" rx="3" fill="#1e3a5f" fill-opacity="0.80"/>
+        </g>
+        <!-- GOVERN-column cell: Umbrella bar highlighted (cross-cutting ERM integration) -->
+        <g id="cmCellGov">
+            <rect width="128" height="38" rx="6" fill="#1e3a5f" fill-opacity="0.10" stroke="#1e3a5f" stroke-opacity="0.18" stroke-width="0.5"/>
+            <rect x="6" y="5" width="116" height="12" rx="3" fill="#1e3a5f" fill-opacity="0.45"/>
+            <rect x="6" y="21" width="116" height="12" rx="3" fill="#f59e0b" fill-opacity="0.75"/>
+        </g>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1100" height="620" fill="#f8f9fa" rx="6"/>
+
+    <!-- Title -->
+    <text x="550" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">The TLCTC × NIST CSF Control Matrix: 10 Causes × 6 Functions = 60 Control Objectives</text>
+
+    <!-- Header annotation -->
+    <text x="775" y="50" text-anchor="middle" font-size="9" font-style="italic" fill="#6b7280">operational lifecycle (Identify → Recover)</text>
+
+    <!-- Column headers -->
+    <g font-size="12" font-weight="700" fill="#1e293b">
+        <text x="335" y="68" text-anchor="middle">GOVERN</text>
+        <text x="475" y="68" text-anchor="middle">IDENTIFY</text>
+        <text x="615" y="68" text-anchor="middle">PROTECT</text>
+        <text x="755" y="68" text-anchor="middle">DETECT</text>
+        <text x="895" y="68" text-anchor="middle">RESPOND</text>
+        <text x="1035" y="68" text-anchor="middle">RECOVER</text>
+    </g>
+    <g font-size="9" font-weight="600" fill="#6b7280">
+        <text x="335" y="82" text-anchor="middle">GV</text>
+        <text x="475" y="82" text-anchor="middle">ID</text>
+        <text x="615" y="82" text-anchor="middle">PR</text>
+        <text x="755" y="82" text-anchor="middle">DE</text>
+        <text x="895" y="82" text-anchor="middle">RS</text>
+        <text x="1035" y="82" text-anchor="middle">RC</text>
+    </g>
+
+    <!-- Header divider -->
+    <line x1="20" y1="92" x2="1080" y2="92" stroke="#d1d5db" stroke-width="1"/>
+
+    <!-- Row 1: #1 Abuse of Functions -->
+    <g transform="translate(20, 102)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#1 Abuse of Functions</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Row 2: #2 Exploiting Server -->
+    <g transform="translate(20, 144)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#2 Exploiting Server</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Row 3: #3 Exploiting Client -->
+    <g transform="translate(20, 186)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#3 Exploiting Client</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Row 4: #4 Identity Theft -->
+    <g transform="translate(20, 228)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#4 Identity Theft</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Row 5: #5 Man in the Middle -->
+    <g transform="translate(20, 270)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#5 Man in the Middle</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Row 6: #6 Flooding Attack -->
+    <g transform="translate(20, 312)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#6 Flooding Attack</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Row 7: #7 Malware -->
+    <g transform="translate(20, 354)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#7 Malware</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Row 8: #8 Physical Attack -->
+    <g transform="translate(20, 396)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#8 Physical Attack</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Row 9: #9 Social Engineering -->
+    <g transform="translate(20, 438)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#9 Social Engineering</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Row 10: #10 Supply Chain Attack -->
+    <g transform="translate(20, 480)">
+        <rect width="240" height="38" rx="8" fill="#1e3a5f" filter="url(#cmShadow)"/>
+        <text x="14" y="24" fill="#ffffff" font-size="12" font-weight="600">#10 Supply Chain Attack</text>
+        <use href="#cmCellGov" x="251"/><use href="#cmCell" x="391"/><use href="#cmCell" x="531"/><use href="#cmCell" x="671"/><use href="#cmCell" x="811"/><use href="#cmCell" x="951"/>
+    </g>
+
+    <!-- Cell anatomy legend -->
+    <g transform="translate(20, 542)">
+        <text x="0" y="13" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="1">CELL = 1 CONTROL OBJECTIVE</text>
+        <text x="0" y="28" font-size="10" font-weight="600" fill="#1e293b">= <tspan fill="#1e3a5f" font-weight="700">NIST verb</tspan> + <tspan fill="#1e3a5f" font-weight="700">TLCTC noun</tspan></text>
+        <text x="0" y="40" font-size="9" font-style="italic" fill="#6b7280">e.g., DETECT · #7 Malware</text>
+        <!-- Sample cell -->
+        <g transform="translate(220, 0)">
+            <rect width="80" height="38" rx="6" fill="#1e3a5f" fill-opacity="0.10" stroke="#1e3a5f" stroke-opacity="0.18" stroke-width="0.5"/>
+            <rect x="6" y="5" width="68" height="12" rx="3" fill="#1e3a5f" fill-opacity="0.45"/>
+            <rect x="6" y="21" width="68" height="12" rx="3" fill="#1e3a5f" fill-opacity="0.80"/>
+        </g>
+        <!-- Local legend -->
+        <g transform="translate(316, 0)">
+            <rect x="0" y="6" width="22" height="10" rx="3" fill="#1e3a5f" fill-opacity="0.45"/>
+            <text x="30" y="15" font-size="11" fill="#1e293b" font-weight="600">Local Control</text>
+            <text x="30" y="28" font-size="9.5" fill="#6b7280">asset / system specific</text>
+        </g>
+        <!-- Umbrella legend -->
+        <g transform="translate(486, 0)">
+            <rect x="0" y="6" width="22" height="10" rx="3" fill="#1e3a5f" fill-opacity="0.80"/>
+            <text x="30" y="15" font-size="11" fill="#1e293b" font-weight="600">Umbrella Control</text>
+            <text x="30" y="28" font-size="9.5" fill="#6b7280">enterprise-wide / shared</text>
+        </g>
+        <!-- GOV-Umbrella legend -->
+        <g transform="translate(660, 0)">
+            <rect x="0" y="6" width="22" height="10" rx="3" fill="#f59e0b" fill-opacity="0.75"/>
+            <text x="30" y="15" font-size="11" fill="#1e293b" font-weight="600">GOV-Umbrella</text>
+            <text x="30" y="28" font-size="9.5" fill="#b45309">cross-cutting · ERM integration</text>
+        </g>
+        <!-- Total -->
+        <g transform="translate(880, 0)">
+            <rect x="0" y="0" width="200" height="38" rx="8" fill="#1e3a5f" fill-opacity="0.08" stroke="#1e3a5f" stroke-opacity="0.30" stroke-width="1"/>
+            <text x="100" y="16" text-anchor="middle" font-size="10" font-weight="600" fill="#6b7280" letter-spacing="1">TOTAL</text>
+            <text x="100" y="31" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a5f">10 × 6 = 60 Objectives</text>
+        </g>
+    </g>
+
+    <!-- Footnote -->
+    <text x="20" y="604" font-size="10" font-style="italic" fill="#6b7280">Only the GOV-Umbrella controls are cross-cutting — they form the integration layer to Enterprise Risk Management (policies, ERM forums, risk appetite, assurance). All other Local &amp; Umbrella controls remain cluster-specific (Application Paper §8–§9).</text>
+</svg>
