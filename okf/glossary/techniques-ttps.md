@@ -16,6 +16,6 @@ Specific methods, procedures, and tactics that attackers use to exploit vulnerab
 - T1566.001 (Spearphishing Attachment) → #9 Social Engineering → #3 or #7 (depending on payload)
 - T1078 (Valid Accounts) → #4 Identity Theft
 
-**Key distinction:** Techniques describe attacker actions and behaviors (operational detail), while TLCTC clusters categorize the fundamental vulnerabilities being exploited (strategic framework). TLCTC v2.3 proposes enhancing MITRE ATT&CK by adding cluster mappings and typical velocity attributes to each technique.
+**Key distinction:** Techniques describe attacker actions and behaviors (operational detail), while TLCTC clusters categorize the fundamental vulnerabilities being exploited (strategic framework). TLCTC proposes enhancing MITRE ATT&CK by adding cluster mappings and typical velocity attributes to each technique.
 
 See also: TTP, Sub-Threat, MITRE ATT&CK, Operational Layer, Weakness

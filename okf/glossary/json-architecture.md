@@ -1,14 +1,14 @@
 ---
 type: "term"
 title: "JSON Architecture"
-description: "The standardized data structure for threat intelligence sharing in TLCTC v2.3, consisting of four complementary JSON files: 1."
+description: "The standardized data structure for threat intelligence sharing in TLCTC (introduced in v2.3), consisting of four complementary JSON files: 1."
 resource: "tlctc:term:json-architecture"
 tags:
   - "glossary"
 ---
 # JSON Architecture
 
-The standardized data structure for threat intelligence sharing in TLCTC v2.3, consisting of four complementary JSON files:
+The standardized data structure for threat intelligence sharing in TLCTC (introduced in v2.3), consisting of four complementary JSON files:
 
 1. **tlctc-framework.json:** Core framework definitions (universal, rarely updated)
 2. **tlctc-responsibility-spheres.json:** Domain boundary definitions (customizable, occasionally updated)

@@ -1,6 +1,6 @@
-# TLCTC v2.3 Core — Consolidation Traceability
+# TLCTC Core — Consolidation & Version Traceability
 
-**v2.3.0** introduced NO new normative content. Every element traces to finalized v2.1 source. **v2.3.1** and **v2.3.2** each add one deliberate, axiom-justified normative correction — see the Erratum sections below. **v2.4** adds one clarifying, backward-compatible change to the interaction model — see the Clarification section below.
+**v2.3.0** introduced NO new normative content. Every element traces to finalized v2.1 source. **v2.3.1** and **v2.3.2** each add one deliberate, axiom-justified normative correction — see the Erratum sections below. **v2.4** adds one clarifying, backward-compatible change to the interaction model — see the Clarification section below. **v2.5** adds two disambiguation rules (R-CHANNEL, R-SUBSTRATE) and, in a pre-publication consistency pass, retightens the #2/#3 definition strings and formalizes the rule registry — see the v2.5 sections below.
 
 | v2.3 element | Source |
 |---|---|
@@ -107,3 +107,37 @@ A single clarifying, backward-compatible change to the **interaction model**, to
 6. **Agentic-AI attack paths (E–I)** — step notes citing the pre-v2.3 #7 generic-vulnerability wording updated to the canonical string.
 
 **Rationale.** A classification skill inherits whatever ambiguity exists in its references. Divergent restatements of the same canonical field are precisely the edge cases where an LLM classifier diverges run-to-run; this pass freezes a single wording per field across the repository. Long-form operational text was preserved (relabeled as Scope), so no analytical content was lost.
+
+## v2.5 Consistency Pass (2026-08-08)
+
+A repository-wide pass establishing **v2.5 as the single consistent basis**, resolving the version and rule-registry drift accumulated across v2.3–v2.5. Triggered by an external specification review; one normative retightening, everything else is governance/consistency.
+
+**Normative change (documented in the dictionary notes):**
+
+- **#2/#3 substrate-neutral retightening.** `definition` and `attackers_view` for `#2`/`#3` changed from "source code implementation" wording to "implementation flaws within a component acting in a server/client role". This makes the substrate-neutrality already established by R-ROLE and R-SUBSTRATE explicit in the definitions themselves (software, firmware, microcode, and hardware logic all qualify; the role of the flawed component classifies, never the location of the flaw). It also ratifies, at the definition level, the CWE mapping's completed 2026-08-07 R-SUBSTRATE re-audit (full #8 bucket 81 → 16; the entries once parked on the hardware-substrate question were decided there on the property test) — no mapping changes result, and no open question remains on this family. `generic_vulnerability` fields were already substrate-neutral and are unchanged; cluster identity, IDs, and topology unchanged.
+
+**Version governance:**
+
+- Canonical declaration added to the core paper: framework specification = **v2.5**; normative authority = exactly one artifact, `json-schemas/layer-1/tlctc-framework.v2.5.json`; companions declare what they implement.
+- Files renamed to match their content: `tlctc-v2.3-core.md` → `tlctc-v2.5-core.md` (it already declared Version 2.5), `tlctc-v2.3-application.md` → `tlctc-v2.5-application.md` (ported 2.3 → 2.5, now carries an explicit **Implements: v2.5** line), PDFs renamed accordingly, this traceability file renamed version-neutral.
+- Glossary rebased to **v2.5** (was self-declaring 2.0/2.1 while containing v2.4-marked entries) with an explicit Implements line; `glossary/tlctc-glossary.json` sources updated to v2.5, version 0.2.0.
+- Whitepaper currency note updated to v2.5; its §4.1 JSON-owned strings and §14.3.2 dictionary excerpt (which claimed v2.5 but reproduced the v2.4 snapshot) re-synced verbatim.
+
+**Rule-registry formalization:**
+
+- Core paper §6 corrected from "six core rules" to **eight** (R-EXEC, R-ROLE, R-FLOOD, R-SUPPLY, R-MITM, R-CHANNEL, R-SUBSTRATE, R-CRED) and now states the complete 18-rule registry plus the retired-alias policy: a rule ID is never reused with a different proposition.
+- **Deprecated aliases enumerated:** R-ABUSE, R-HUMAN, R-PHYSICAL (v2.0 whitepaper) — substance carried by cluster definitions/boundary tests; marked as deprecated aliases in the glossary.
+- **Draft-series withdrawal:** the v2.1 draft numberings R-TRANSIT-1/2/4–8, R-INTRA-1–6/8, and R-UNRES-1/4 are withdrawn. The glossary's quick reference now mirrors the canonical 18-rule registry and carries a deprecated-IDs table.
+- **Numbering erratum recorded:** draft R-INTRA-7 ("distinct vulnerabilities") ≠ canonical R-INTRA-7 ("no cluster change"); draft R-UNRES-4 (conf=low threshold) ≠ canonical R-UNRES-9. The glossary previously restated the draft meanings under the canonical IDs — a silent semantic change of normative IDs, now corrected and documented in the glossary's R-INTRA entry so it cannot recur.
+
+**Claim hardening (per external review):**
+
+- "Non-overlapping / mutually exclusive **by construction**" reworded throughout the core: completeness is stated as a **falsifiable hypothesis** (no counterexample yet under the stated axioms and rules, with an explicit challenge protocol), and mutual exclusivity as a property **produced by** the definitions, boundary tests, and precedence rules — raw observable properties may overlap; the rules force uniqueness. §3.2 and §8 rewritten accordingly.
+- Glossary attack-velocity overclaim ("single most accurate predictor … only metric that truthfully measures control effectiveness") deleted; replaced with the defensible statement that Δt bounds the detection-and-response window.
+- DCS entry hardened: DCS measures **detection timing adequacy**, not coverage; a scope note now states that detection probability and rule coverage must be assessed separately.
+
+**Classification fix:**
+
+- Application paper §KRI example corrected: harvested-but-never-used phishing credentials are `#9 + [DRE: C]` with **no** `#4` step (per R-CRED, `#4` exists only at credential presentation); the averted `#4` is the near-miss the KRI counts. The previous text asserted a realized `#9 → #4`, contradicting R-CRED.
+
+**Harmonization.** Applied across `tlctc-framework.v2.5.json`, `tlctc-v2.5-core.md`, `tlctc-v2.5-application.md`, `tlctc-glossary.md`, `glossary/tlctc-glossary.json`, `tlctc-v2.0-whitepaper.md`, `README.md`, `CLAUDE.md`, the `tlctc-classify` skill, `tools/threat-modeling.html`, `tools/radar-tlctc-app.html`, `agentic-ai/attack-paths/path-F-runtime-exploit.json`, and `mappings/mitre-cwe/tlctc-cwe.json` (audit-history ruling entry). The generated `okf/` bundle is rebuilt from these sources.

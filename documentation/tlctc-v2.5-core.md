@@ -2,9 +2,11 @@
 
 **Author:** Bernhard Kreinz
 **Version:** 2.5
-**Date:** 2026-08-07
+**Date:** 2026-08-08
 **License:** CC BY 4.0
 **DOI:** [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) (concept DOI — always resolves to the latest version)
+
+> **Canonical version declaration.** The TLCTC framework specification is **v2.5**. The normative authority is exactly one artifact: the machine-readable framework dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`; this paper reproduces its cluster definitions, axioms, and rule statements verbatim and supplies the derivation, boundary tests, and notation around them. Companion documents (application paper, glossary, mappings, tools) declare which canonical version they implement. Retired rule aliases from earlier versions (R-ABUSE, R-HUMAN, R-PHYSICAL) are enumerated in Section 6 and are never reused with a different meaning.
 
 ## Abstract
 
@@ -28,7 +30,7 @@ TLCTC does not claim to be a finished paradigm. It is offered as a testable prop
 
 ## 2. The Thought Experiment: Deriving the Ten Clusters
 
-TLCTC is built deductively rather than by cataloguing observed attacks. An empirical catalogue grows with every new observation but never reaches closure; a purely heuristic grouping is convenient but cannot be shown to be wrong. An analytical approach instead derives the categories from the intrinsic structure of what is being protected — which is what lets the framework claim completeness and mutual exclusivity *by construction* rather than by enumeration. Two devices carry this method: the **thought experiment** that follows, which decomposes the IT landscape one attack surface at a time into the generic vulnerabilities an attacker can target, and the **axioms** (Section 5), which state explicitly the premises that constrain how the resulting clusters may be interpreted — the kind of foundation a shared language requires but that most threat vocabularies leave implicit.
+TLCTC is built deductively rather than by cataloguing observed attacks. An empirical catalogue grows with every new observation but never reaches closure; a purely heuristic grouping is convenient but cannot be shown to be wrong. An analytical approach instead derives the categories from the intrinsic structure of what is being protected — which is what lets the framework *argue* completeness and mutual exclusivity from the decomposition itself rather than from enumeration. Both properties are stated here as design claims whose epistemic status is made explicit in Section 8: completeness is a falsifiable hypothesis, and mutual exclusivity is produced by the generic-vulnerability definitions together with the boundary tests and normative precedence rules of Section 6. Two devices carry this method: the **thought experiment** that follows, which decomposes the IT landscape one attack surface at a time into the generic vulnerabilities an attacker can target, and the **axioms** (Section 5), which state explicitly the premises that constrain how the resulting clusters may be interpreted — the kind of foundation a shared language requires but that most threat vocabularies leave implicit.
 
 The approach is also testable in Popper's sense [13]: each cluster carries boundary tests (Section 4) specifying the conditions under which a classification would be *wrong*. The supply-chain test is the clearest case — remove the third-party trust relationship, and if the attack still succeeds the step was never #10. A taxonomy that states how it could be falsified can be argued about on evidence rather than preference.
 
@@ -62,11 +64,15 @@ Through this thought experiment and a careful examination of the vulnerabilities
 
 TLCTC is a cause-oriented taxonomy. A threat cluster sits on the *cause* side of an attack: it names the generic vulnerability an attacker exploits, not the event that follows or the consequence that results. Conceptually, this corresponds to the cause side of a bow-tie model, where threats are the causes that converge on a central risk event, and losses of confidentiality, integrity, or availability are recorded separately as outcomes on the consequence side. (Section 3.4 develops this cause–event–consequence model; the *control* side of the bow-tie — control frameworks, indicators, and governance mapping — belongs to a separate application document and is out of scope here.)
 
+![The bow-tie anchor: threat clusters act on the cause side, converging on the central risk event (asset compromise), with consequences on the right side; preventive controls (PROTECT) affect the likelihood of the event occurring, while detective and reactive controls (DETECT, RESPOND, RECOVER) influence the consequences](images/tlctc-bowtie-anchor-diagram.svg)
+
+*Figure 1 — The bow-tie anchor. A risk event is a deviation from a strategic goal; threat clusters act exclusively on the cause side, consequences on the effect side. Preventive controls affect the likelihood of the event occurring; detective and reactive controls influence the consequences. TLCTC classifies the cause side — the control placement sketched here is developed in the application companion.*
+
 The practical consequence is that outcomes are never threats. Labels such as "data breach," "service outage," or "ransomware" describe effects, not the generic vulnerability that was exploited to produce them. They are recorded as data risk events on the consequence side, while the threat that caused them is classified by its cause. Keeping these layers apart is what allows two analysts to classify the same incident the same way and what makes mappings from threat to control reproducible.
 
 ### 3.2 Non-Overlap: One Generic Vulnerability, One Cluster
 
-The taxonomy is built on a strict classification principle: every distinct attack step exploits exactly one generic vulnerability (root weakness), and each generic vulnerability belongs to exactly one of the ten clusters. The clusters are therefore non-overlapping by construction. A step that appears to belong to two clusters is, under this principle, two steps and must be split, each anchored in the single generic vulnerability it targets. Because each attack vector is defined by the generic vulnerability it *initially* targets, classification is anchored in the initial cause rather than in technique labels or downstream effects.
+The taxonomy is built on a strict classification principle: every distinct attack step exploits exactly one generic vulnerability (root weakness), and each generic vulnerability belongs to exactly one of the ten clusters. The taxonomy is designed to produce non-overlapping assignments: the generic-vulnerability definitions, the boundary tests (Section 4), and the normative precedence rules (Section 6) together force each step to a unique cluster. Raw observable properties of a weakness may genuinely overlap — a missing certificate check is describable both as a code defect and as insufficient communication-path control — and it is the precedence rules (here R-CHANNEL) that make the classification unique, not an intrinsic disjointness of the descriptions. A step that appears to belong to two clusters is, under this principle, two steps and must be split, each anchored in the single generic vulnerability it targets. Because each attack vector is defined by the generic vulnerability it *initially* targets, classification is anchored in the initial cause rather than in technique labels or downstream effects.
 
 To remain universally applicable, the framework deliberately avoids differentiating by system type. Whether the environment is enterprise IT, cloud, SaaS, OT/SCADA, IoT, endpoints, or network infrastructure, the same foundational attack surfaces recur — software functions and implementation flaws, identity artifacts, communication paths, capacity limits, executable-content handling, physical accessibility, human psychology, and third-party trust dependencies. Sector labels do not create new threat classes; they change only the specific vulnerabilities and controls at the operational level. This supports a separation between a stable Strategic Management Layer (clusters and generic vulnerabilities, used for governance and control mapping) and an Operational Security Layer (concrete vulnerabilities, techniques, and procedures, used in detection, response, and engineering).
 
@@ -93,7 +99,7 @@ The SRE is positioned deliberately *before* outcomes. Compromise can exist witho
 
 ![The TLCTC Cyber Bow-Tie: the ten threat clusters on the cause side, the System Risk Event as central pivot, and Data/Business Risk Events on the consequence side](images/tlctc-cyber-bow-tie.svg)
 
-*Figure 1 — The Cyber Bow-Tie. The ten clusters act exclusively on the cause (left) side; the System Risk Event ("Loss of Control") is the single central pivot; Data Risk Events and cascading Business Risk Events sit on the consequence (right) side.*
+*Figure 2 — The Cyber Bow-Tie. The ten clusters act exclusively on the cause (left) side; the System Risk Event ("Loss of Control") is the single central pivot; Data Risk Events and cascading Business Risk Events sit on the consequence (right) side.*
 
 Consequences follow a structured, variable-length chain:
 
@@ -109,7 +115,7 @@ Business Risk Events may cascade (`SRE → DRE → BRE₁ → … → BREₙ`); 
 
 ![The consequence chain SRE → DRE → BRE*, with Δt detection windows at every transition and the risk-appetite boundary designating the terminal BRE as Business Impact](images/tlctc-consequence-chain.svg)
 
-*Figure 2 — The consequence chain. Every node is a risk event and every Δt a detection-and-intervention window; the organization's risk appetite designates the terminal BRE as its Business Impact.*
+*Figure 3 — The consequence chain. Every node is a risk event and every Δt a detection-and-intervention window; the organization's risk appetite designates the terminal BRE as its Business Impact.*
 
 Crucially, **outcomes are never threats.** A data risk event such as "data breach" or "ransomware impact" records *what happened*; it never changes the cluster classification of the step that caused it. This is the operational form of Axiom III, and it is what allows the same outcome to be traced back to different cause-side clusters.
 
@@ -141,13 +147,13 @@ This cluster covers the manipulation of legitimate software capabilities — fea
 - **Strategic ID:** #2
 - **Operational root ID:** TLCTC-02.00
 - **Name:** Exploiting Server
-- **Definition:** An attacker targets flaws within the server-side application's source code implementation.
-- **Attacker's view:** "I abuse a flaw in the application's source code on the server side."
+- **Definition:** An attacker targets implementation flaws within a component acting in a server role.
+- **Attacker's view:** "I abuse an implementation flaw in a component acting in a server role."
 - **Developer's view:** "I must apply language-specific secure coding principles for all server-side code and implement appropriate safeguards for known pitfalls."
 - **Generic vulnerability:** Server-side implementation flaws enable unintended behavior.
 - **Topology:** Internal.
 
-The vulnerable component accepts and handles inbound requests or stimuli relative to the attacker. Crafted payloads (for example SQL injection strings, buffer overflows, or XXE payloads) trigger specific implementation bugs, forcing unintended behavior or enabling code execution.
+The vulnerable component accepts and handles inbound requests or stimuli relative to the attacker. Crafted payloads (for example SQL injection strings, buffer overflows, or XXE payloads) trigger specific implementation bugs, forcing unintended behavior or enabling code execution. "Implementation" is substrate-neutral: the flawed logic may be realized in application source code, firmware, microcode, or hardware description logic — per R-SUBSTRATE (Section 6), the location of a flaw never determines the cluster; the role of the flawed component does.
 
 **Boundary tests (normative):**
 
@@ -162,8 +168,8 @@ The vulnerable component accepts and handles inbound requests or stimuli relativ
 - **Strategic ID:** #3
 - **Operational root ID:** TLCTC-03.00
 - **Name:** Exploiting Client
-- **Definition:** An attacker targets flaws within the source code implementation of any software acting in a client role.
-- **Attacker's view:** "I abuse a flaw in the source code of software acting as a client."
+- **Definition:** An attacker targets implementation flaws within any component acting in a client role.
+- **Attacker's view:** "I abuse an implementation flaw in a component acting in a client role."
 - **Developer's view:** "I must apply secure coding principles for client-role code and never trust incoming data from servers, files, URLs, or APIs."
 - **Generic vulnerability:** Client-side implementation flaws enable unintended behavior.
 - **Topology:** Internal.
@@ -325,12 +331,20 @@ The **Operational (Security) Layer** uses the machine-readable form `TLCTC-XX.YY
 
 The two layers are linked by strict semantic equivalence (below), so a single cluster carries one consistent meaning from the boardroom to the SOC to the developer's backlog. Governance lives at the strategic layer; development and operations share the operational layer.
 
+![The TLCTC Dual-Layer Bow-Tie Model: the strategic layer reasons over threat clusters and generic vulnerabilities of asset types around the central risk event, while the operational layer beneath it carries concrete threats/TTPs and specific vulnerabilities of specific assets, joined to consequences, data risk events, and business impact on the consequence side](images/tlctc-dual-layer-bowtie-overview.svg)
+
+*Figure 4 — The dual-layer bow-tie. The same cause–event–consequence structure exists on both layers: the strategic layer reasons over threat clusters and generic vulnerabilities of asset types; the operational layer beneath it reasons over concrete threats/TTPs and specific vulnerabilities of specific assets. Semantic equivalence between the layers is what lets one classification travel intact between them.*
+
 **Equivalence and stability (normative):**
 
 - `#X` and `TLCTC-0X.00` (or `TLCTC-10.00`) refer to the same top-level cluster and MUST be treated as semantically equivalent.
 - `TLCTC-XX.00` is reserved for the top-level cluster; sub-cluster `00` MUST NOT carry any other meaning.
 - `TLCTC-XX.YY` with `YY ≠ 00` MAY express an operational sub-threat but MUST NOT change the top-level meaning of cluster `XX`.
 - Cluster identifiers `#1`–`#10` / `TLCTC-01`–`TLCTC-10` are immutable; their definitions MUST NOT change without axiom-level justification.
+
+![TLCTC strategic versus operational layer naming: each of the ten clusters carries the paired identifiers #X and TLCTC-XX; the strategic layer serves governance — board and executive reporting, attack paths, KCI/KPI — while the operational layer beneath it holds the implementations per cluster, CWE weaknesses, CVE instances, controls and tools, and incident feedback](images/tlctc-dual-layer-naming.svg)
+
+*Figure 5 — The two-layer naming convention. Each cluster carries the paired identifiers `#X` (strategic, human-first) and `TLCTC-XX` (operational, machine-readable). The strategic layer is where decisions are made — executive reporting, attack paths, key indicators; the operational layer is where implementation happens — per-cluster sub-threats, CWE weaknesses, CVE instances, controls and tooling, with incident feedback flowing back up.*
 
 The two-digit suffix `YY` is hierarchical: `TLCTC-XX.Y0` (tens digit) is a **sub-cluster** — a vector class within the cluster — and `TLCTC-XX.YZ` (ones digit ≠ 0) is a **refinement** within that sub-cluster, yielding up to 81 operational positions per cluster (strategic shorthand `#X.Y`, e.g. `#8.1` = `TLCTC-08.10`). Every sub-cluster must answer: *through which vector does the attacker reach the same generic vulnerability?* If the answer requires a different generic vulnerability, it belongs in a different cluster.
 
@@ -375,7 +389,7 @@ The axioms fall into four groups: scope (I–II), separation (III–V), classifi
 
 The classification rules operationalize the axioms, resolving recurring boundary questions so that assignment remains reproducible. Each rule statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.5.json`), together with its enforcement level. Most rules carry the enforcement level **must**; R-UNRES-7 is **should** and R-UNRES-6 is **may**. Two are machine-enforceable (R-EXEC, R-INTRA-9); the remainder are enforced through analyst judgment guided by the stated rule.
 
-The rules are presented in two groups: the six core rules, and the ten v2.1 extension rules covering transit, intra-system boundaries, and unresolved steps.
+The rules are presented in two groups: the eight core rules (R-EXEC, R-ROLE, R-FLOOD, R-SUPPLY, R-MITM, R-CHANNEL, R-SUBSTRATE, R-CRED), and the ten v2.1 extension rules covering transit, intra-system boundaries, and unresolved steps. Together these eighteen rules are the complete normative rule registry of v2.5; rule IDs used in earlier documents but absent here (R-ABUSE, R-HUMAN, R-PHYSICAL from the v2.0 whitepaper) are retired aliases whose content is carried by the cluster definitions and boundary tests of Section 4, and they retain their original meaning — a rule ID is never reused with a different proposition.
 
 ### 6.1 Core Rules
 
@@ -397,7 +411,7 @@ R-CHANNEL is the #5 counterpart to R-FLOOD. Both resolve the same ambiguity — 
 
 R-SUBSTRATE completes the family with R-FLOOD (#6) and R-CHANNEL (#5). Each resolves a weakness describable either as a specific generic vulnerability or as a generic code defect, in favour of the specific one, leaving R-ROLE as the residual test. The discriminating question is whether the attack is against the *implemented logic* or against the *physical representation* that logic runs on. Rowhammer is #8: charge migration between adjacent DRAM cells is the vulnerability, no logical control fails, and removing the physics removes the flaw — yet it can be mounted from JavaScript, which is precisely why proximity cannot serve as the test. Spectre is #2: speculation crosses an isolation boundary the design was meant to enforce, and cache timing is only the readout; remove the physics and a boundary-crossing design remains. Power side-channel analysis is #8, because the cryptography is correct and the emission itself is the vulnerability. The corollary is that the location of a flaw — hardware, firmware, silicon — never determines the cluster.
 
-R-SUBSTRATE and the established R-PHYSICAL are complementary. R-SUBSTRATE is the *admission* test: it decides whether a weakness qualifies as #8 at all. R-PHYSICAL is the *sequencing* rule: given a qualifying physical step, that step is #8 and subsequent technical steps are classified separately. R-SUBSTRATE additionally settles a latent ambiguity in R-PHYSICAL's phrasing — "the attacker's advantage comes from unauthorized physical interaction" can be misread as requiring attacker physical access, and it does not.
+R-SUBSTRATE and the legacy R-PHYSICAL sequencing rule (a retired v2.0 alias whose substance is preserved in the #8 boundary tests) are complementary. R-SUBSTRATE is the *admission* test: it decides whether a weakness qualifies as #8 at all. The sequencing principle formerly stated as R-PHYSICAL holds: given a qualifying physical step, that step is #8 and subsequent technical steps are classified separately. R-SUBSTRATE additionally settles a latent ambiguity in R-PHYSICAL's phrasing — "the attacker's advantage comes from unauthorized physical interaction" can be misread as requiring attacker physical access, and it does not.
 
 **R-CRED** (must). Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method. These are separate attack steps.
 
@@ -556,7 +570,7 @@ OAuth phishing — email and identity providers are topological intermediaries; 
 
 This paper presents a framework, not a validated result, and several limitations should be stated plainly.
 
-**The derivation is argued, not formally proven.** The decomposition in Section 2 yields ten clusters and is claimed to be complete and mutually exclusive by construction, but that claim rests on the analytical argument given here, not a formal proof. The number ten is a *consequence* of the decomposition, not a target — and it is offered with an explicit invitation: if ten is the wrong number, a better decomposition should say what the right number is, and why.
+**The derivation is argued, not formally proven.** The decomposition in Section 2 yields ten clusters, but its two headline properties have different epistemic standings, and neither is a theorem. *Completeness* is a falsifiable hypothesis: no adversarial attack step against an in-scope system has yet been encountered for which none of the ten generic vulnerabilities is causally sufficient, but that status rests on the analytical argument and the accumulated case work, not a proof. The proper challenge is explicit: produce a step that cannot be decomposed into existing clusters without redefining it, and the framework either gains an eleventh cluster or must show the decomposition. *Mutual exclusivity* is a property of the classification system, not of raw descriptions: overlapping surface descriptions are resolved to a unique cluster by the boundary tests and precedence rules (R-FLOOD, R-CHANNEL, R-SUBSTRATE, R-CRED), so exclusivity holds for classified assignments rather than being intrinsic to the categories before the rules are applied. The number ten is a *consequence* of the decomposition, not a target — and it is offered with an explicit invitation: if ten is the wrong number, a better decomposition should say what the right number is, and why.
 
 **The operational layer is only partially developed.** Reference sub-cluster decompositions are provided for four clusters (#2, #3, #8, #10); the remaining six are analytically feasible but left open for community refinement and empirical validation (Section 4). The two-layer model is therefore complete at the strategic layer and deliberately incomplete at the operational layer.
 
@@ -589,7 +603,7 @@ The following one-line definitions cover the terms used in this paper so that it
 - **SRE (System Risk Event)** — the central event of the Cyber Bow-Tie: Loss of Control / System Compromise. It is the pivot between the cause side (clusters) and the consequence side (data and business risk events).
 - **Sub-cluster / operational sub-threat** — an operational refinement of a top-level cluster, written `#X.Y` / `TLCTC-XX.Y0`, distinguishing the vector through which the attacker reaches the *same* generic vulnerability (e.g. `#2.1` protocol vs `#2.2` core-function). A different generic vulnerability is a different cluster, not a sub-cluster.
 - **TAE (Trust Acceptance Event)** — the moment a domain honors a third-party trust link and treats a trust artifact as authoritative (validate, accept, install, apply, execute, attach privileges). #10 Supply Chain Attack is placed at the TAE (R-SUPPLY).
-- **Threat cluster** — an organizational construct grouping the threats that exploit one common generic vulnerability. TLCTC defines exactly ten, mutually exclusive.
+- **Threat cluster** — an organizational construct grouping the threats that exploit one common generic vulnerability. TLCTC defines exactly ten; the classification rules force each attack step to exactly one of them.
 - **Threat topology** — a structural property of each cluster: *internal* (#1–#7), where the generic vulnerability is exploited within the software domain's control regime, or *bridge* (#8–#10), where it inherently enables crossing into the software domain from a different control regime (physical, human, third-party). Topology never changes classification.
 - **Transit** — a responsibility sphere that carries or relays an attack without being its source or target, marked with `⇒` inside a domain boundary operator. A transit party is a passive relay, not a trust acceptance — distinct from #10, which marks the Trust Acceptance Event.
 

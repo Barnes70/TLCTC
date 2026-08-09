@@ -40,3 +40,6 @@ package-lock.json
 dist/
 build/
 *.egg-info/
+
+# Generated HTML views of the documentation (html-build.js output)
+documentation/*.html

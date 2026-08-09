@@ -888,7 +888,7 @@
       "path": "/clusters/cluster-2.md",
       "type": "cluster",
       "title": "#2 Exploiting Server",
-      "description": "An attacker targets flaws within the server-side application's source code implementation.",
+      "description": "An attacker targets implementation flaws within a component acting in a server role.",
       "resource": "tlctc:cluster:#2",
       "tags": [
         "taxonomy",
@@ -900,7 +900,7 @@
       "path": "/clusters/cluster-3.md",
       "type": "cluster",
       "title": "#3 Exploiting Client",
-      "description": "An attacker targets flaws within the source code implementation of any software acting in a client role.",
+      "description": "An attacker targets implementation flaws within any component acting in a client role.",
       "resource": "tlctc:cluster:#3",
       "tags": [
         "taxonomy",
@@ -2105,7 +2105,7 @@
       "path": "/glossary/detection-coverage-score-dcs.md",
       "type": "term",
       "title": "Detection Coverage Score (DCS)",
-      "description": "A strategic Key Performance Indicator (KPI) for measuring security effectiveness derived from Attack Velocity.",
+      "description": "A strategic Key Performance Indicator (KPI) measuring detection timing adequacy relative to Attack Velocity.",
       "resource": "tlctc:term:detection-coverage-score-dcs",
       "tags": [
         "glossary"
@@ -2295,7 +2295,7 @@
       "path": "/glossary/exploiting-client-3.md",
       "type": "term",
       "title": "Exploiting Client (#3)",
-      "description": "A threat cluster where an attacker targets and leverages flaws originating directly within the source code implementation of any software acting in a client role (requesting/processing data from a server or resource).",
+      "description": "A threat cluster where an attacker targets and leverages implementation flaws within any component acting in a client role (requesting/processing data from a server or resource).",
       "resource": "tlctc:term:exploiting-client-3",
       "tags": [
         "glossary"
@@ -2305,7 +2305,7 @@
       "path": "/glossary/exploiting-server-2.md",
       "type": "term",
       "title": "Exploiting Server (#2)",
-      "description": "A threat cluster where an attacker targets and leverages flaws originating directly within the server side application's source code implementation.",
+      "description": "A threat cluster where an attacker targets and leverages implementation flaws within a component acting in a server role.",
       "resource": "tlctc:term:exploiting-server-2",
       "tags": [
         "glossary"
@@ -2425,7 +2425,7 @@
       "path": "/glossary/implementation-flaw.md",
       "type": "term",
       "title": "Implementation Flaw",
-      "description": "A defect in source code implementation (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered.",
+      "description": "A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate neutral per R SUBSTRATE).",
       "resource": "tlctc:term:implementation-flaw",
       "tags": [
         "glossary"
@@ -2475,7 +2475,7 @@
       "path": "/glossary/json-architecture.md",
       "type": "term",
       "title": "JSON Architecture",
-      "description": "The standardized data structure for threat intelligence sharing in TLCTC v2.3, consisting of four complementary JSON files: 1.",
+      "description": "The standardized data structure for threat intelligence sharing in TLCTC (introduced in v2.3), consisting of four complementary JSON files: 1.",
       "resource": "tlctc:term:json-architecture",
       "tags": [
         "glossary"
@@ -2994,8 +2994,8 @@
     {
       "path": "/glossary/r-abuse-function-misuse-determination.md",
       "type": "term",
-      "title": "R-ABUSE (Function Misuse Determination)",
-      "description": "Global mapping rule: If the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as 1 Abuse of Functions .",
+      "title": "R-ABUSE (Function Misuse Determination) **",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry.",
       "resource": "tlctc:term:r-abuse-function-misuse-determination",
       "tags": [
         "glossary"
@@ -3005,7 +3005,7 @@
       "path": "/glossary/r-channel-channel-control-vs-code-flaw.md",
       "type": "term",
       "title": "R-CHANNEL (Channel Control vs Code Flaw)",
-      "description": "Global mapping rule (v2.4): If the defective logic is itself a communication path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as 5 Man in the Middle , not as 2 or 3 under R ROLE.",
+      "description": "Global mapping rule (v2.5): If the defective logic is itself a communication path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as 5 Man in the Middle , not as 2 or 3 under R ROLE.",
       "resource": "tlctc:term:r-channel-channel-control-vs-code-flaw",
       "tags": [
         "glossary"
@@ -3044,8 +3044,8 @@
     {
       "path": "/glossary/r-human-human-manipulation-isolation.md",
       "type": "term",
-      "title": "R-HUMAN (Human Manipulation Isolation)",
-      "description": "Global mapping rule: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as 9 Social Engineering , and any subsequent technical steps MUST be classified separately.",
+      "title": "R-HUMAN (Human Manipulation Isolation) **",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry.",
       "resource": "tlctc:term:r-human-human-manipulation-isolation",
       "tags": [
         "glossary"
@@ -3055,7 +3055,7 @@
       "path": "/glossary/r-intra-intra-system-boundary-rules.md",
       "type": "term",
       "title": "R-INTRA (Intra-System Boundary Rules)",
-      "description": "The complete intra system boundary rule set governing use of the intra system operator ( |...| ): | Rule | Name | Summary | | | | | | R INTRA 1 | Single System Scope | Operator MUST be used only for boundaries within a single system instance | | R INTRA 2 | Cluster Attachment | Operator MUST be attached to the cluster step that accomplishes the crossing | | R INTRA 3 | No Standalone Use | Operator MUST NOT appear without an associated cluster step | | R INTRA 4 | No Cluster Change | Operator MUST NOT change cluster classification | | R INTRA 5 | Optional Precision | Operator is OPTIONAL; mainly recommended for forensic or vendor facing use | | R INTRA 6 | Multiple Crossings | Multiple annotations MAY follow one step when compressed form is justified | | R INTRA 7 | Distinct Vulnerabilities | If crossing requires a separately evidenced vulnerability, a new cluster step MUST be added | | R INTRA 8 | Compressed Form | If evidence does not distinguish separate exploit causes, compressed single step form MAY be used | | R INTRA 9 | Anti Effect Rule / Memory Deferral | Effects (privilege escalation, sandbox escape, etc.) are NOT independent threat categories; memory boundary type is deferred and MUST NOT be used | Reference: §4.2.5 (R INTRA), §11.3.6 (Intra System Boundary Operator)",
+      "description": "The v2.5 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification.",
       "resource": "tlctc:term:r-intra-intra-system-boundary-rules",
       "tags": [
         "glossary"
@@ -3074,8 +3074,8 @@
     {
       "path": "/glossary/r-physical-physical-domain-isolation.md",
       "type": "term",
-      "title": "R-PHYSICAL (Physical Domain Isolation)",
-      "description": "Global mapping rule: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as 8 Physical Attack , and subsequent technical steps MUST be classified separately.",
+      "title": "R-PHYSICAL (Physical Domain Isolation) **",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry.",
       "resource": "tlctc:term:r-physical-physical-domain-isolation",
       "tags": [
         "glossary"
@@ -3095,7 +3095,7 @@
       "path": "/glossary/r-rules-quick-reference.md",
       "type": "term",
       "title": "R-* Rules Quick Reference",
-      "description": "| Rule | Distinguishes | Key Decision | | | | | | R ROLE | 2 vs 3 | Server role (accepts inbound) → 2 ; Client role (consumes external) → 3 | | R CRED | Acquisition vs Use | Acquisition → enabling cluster; Use → always 4 | | R MITM | Gaining vs Exploiting | Gaining position → enabling cluster; Exploiting position → 5 | | R FLOOD | Capacity vs Defect | Volume exhaustion → 6 ; Implementation defect → 2/ 3 | | R CHANNEL | Control vs Code Flaw | Defective channel control → 5 ; Incidental defect → 2/ 3 | | R SUBSTRATE | Property vs Logic | Physical property exploited → 8 ; Physical layer as readout only → 2/ 3 | | R EXEC | FEC Execution | If FEC executes → 7 MUST be recorded (plus enabling cluster) | | R SUPPLY | TAE Placement | 10 at Trust Acceptance Event where third party trust is honored | | R HUMAN | Human Manipulation | Psychological manipulation → 9 ; subsequent tech steps separate | | R PHYSICAL | Physical Access | Physical interaction → 8 ; subsequent tech steps separate | | R ABUSE | Function Misuse | No flaw required, legitimate capability abused → 1 | | R TRANSIT 1 (V2.1) | Distinct Parties | @Transit MUST be distinct from @Source and @Target | | R TRANSIT 2 (V2.1) | True Intermediary Topology | Operator only when intermediary sits between source and target | | R TRANSIT 3 (V2.1) | Transit vs Attack Surface | Vendor code on target device → classify by R ROLE, not transit | | R TRANSIT 4 (V2.1) | Control Relevance | SHOULD annotate when intermediary has control responsibility | | R TRANSIT 5 (V2.1) | Pure Conduit Fallback | MAY omit transit if intermediary adds no useful control surface | | R TRANSIT 6 (V2.1) | Compromise Separation | Intermediary compromise → preceding cluster step; transit alone insufficient | | R TRANSIT 7 (V2.1) | Cluster Independence | Transit annotation MUST NOT change cluster classification | | R TRANSIT 8 (V2.1) | Multiple Transit Parties | Chained transit MAY be used when each party has independent relevance | | R INTRA 1 (V2.1) | Single System Scope | Operator only for boundaries within a single system instance | | R INTRA 2 (V2.1) | Cluster Attachment | Operator MUST be attached to the cluster step | | R INTRA 3 (V2.1) | No Standalone Use | Operator MUST NOT appear without an associated cluster step | | R INTRA 4 (V2.1) | No Cluster Change | Operator MUST NOT change cluster classification | | R INTRA 5 (V2.1) | Optional Precision | Operator is OPTIONAL; recommended for forensic/vendor facing use | | R INTRA 6 (V2.1) | Multiple Crossings | Multiple annotations MAY follow one step when compressed form justified | | R INTRA 7 (V2.1) | Distinct Vulnerabilities | Separately evidenced vulnerability → new cluster step required | | R INTRA 8 (V2.1) | Compressed Form | Compressed single step MAY be used when evidence doesn't distinguish causes | | R INTRA 9 (V2.1) | Anti Effect / Memory Deferral | Effects are not threats; memory boundary type deferred → MUST NOT use | | R UNRES 1 (V2.1) | Semantic Constraint | ?",
+      "description": "The v2.5 normative registry contains exactly 18 rules : eight core rules and ten v2.1 extension rules.",
       "resource": "tlctc:term:r-rules-quick-reference",
       "tags": [
         "glossary"
@@ -3105,7 +3105,7 @@
       "path": "/glossary/r-substrate-physical-property-vs-implemented-logic.md",
       "type": "term",
       "title": "R-SUBSTRATE (Physical Property vs Implemented Logic)",
-      "description": "Global mapping rule (v2.4): Classify as 8 Physical Attack only where a physical layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission borne timing, wear, or material state — is itself the exploited generic vulnerability.",
+      "description": "Global mapping rule (v2.5): Classify as 8 Physical Attack only where a physical layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission borne timing, wear, or material state — is itself the exploited generic vulnerability.",
       "resource": "tlctc:term:r-substrate-physical-property-vs-implemented-logic",
       "tags": [
         "glossary"
@@ -3125,7 +3125,7 @@
       "path": "/glossary/r-transit-transit-boundary-rules.md",
       "type": "term",
       "title": "R-TRANSIT (Transit Boundary Rules)",
-      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 1 | Distinct Parties | @Transit MUST be distinct from both @Source and @Target | | R TRANSIT 2 | True Intermediary Topology | Operator MUST be used only when the intermediary sits between source and target in the delivery path | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | | R TRANSIT 4 | Control Relevance | Operator SHOULD be used when the intermediary has meaningful control responsibility; MAY be omitted when analytically incidental | | R TRANSIT 5 | Pure Conduit Fallback | If the intermediary adds no useful control surface, the analyst MAY use the binary v2.0 boundary or omit the transit annotation | | R TRANSIT 6 | Compromise or Coercion Is Separate | If transit is enabled by compromise or coercion of the intermediary, that enabling condition MUST be modeled as a preceding cluster step | | R TRANSIT 7 | Cluster Independence | Transit annotation MUST NOT change cluster classification | | R TRANSIT 8 | Multiple Transit Parties | Chained transit MAY be used when each intermediary has independent analytical relevance | Reference: §4.2.4 (R TRANSIT), §11.3.5 (Transit Boundary Operator)",
+      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | Only R TRANSIT 3 is part of the v2.5 normative registry.",
       "resource": "tlctc:term:r-transit-transit-boundary-rules",
       "tags": [
         "glossary"

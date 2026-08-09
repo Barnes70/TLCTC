@@ -1,25 +1,22 @@
 ---
 type: "term"
 title: "R-INTRA (Intra-System Boundary Rules)"
-description: "The complete intra system boundary rule set governing use of the intra system operator ( |...| ): | Rule | Name | Summary | | | | | | R INTRA 1 | Single System Scope | Operator MUST be used only for boundaries within a single system instance | | R INTRA 2 | Cluster Attachment | Operator MUST be attached to the cluster step that accomplishes the crossing | | R INTRA 3 | No Standalone Use | Operator MUST NOT appear without an associated cluster step | | R INTRA 4 | No Cluster Change | Operator MUST NOT change cluster classification | | R INTRA 5 | Optional Precision | Operator is OPTIONAL; mainly recommended for forensic or vendor facing use | | R INTRA 6 | Multiple Crossings | Multiple annotations MAY follow one step when compressed form is justified | | R INTRA 7 | Distinct Vulnerabilities | If crossing requires a separately evidenced vulnerability, a new cluster step MUST be added | | R INTRA 8 | Compressed Form | If evidence does not distinguish separate exploit causes, compressed single step form MAY be used | | R INTRA 9 | Anti Effect Rule / Memory Deferral | Effects (privilege escalation, sandbox escape, etc.) are NOT independent threat categories; memory boundary type is deferred and MUST NOT be used | Reference: §4.2.5 (R INTRA), §11.3.6 (Intra System Boundary Operator)"
+description: "The v2.5 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification."
 resource: "tlctc:term:r-intra-intra-system-boundary-rules"
 tags:
   - "glossary"
 ---
 # R-INTRA (Intra-System Boundary Rules)
 
-The complete intra-system boundary rule set governing use of the intra-system operator (`|...|`):
+The v2.5 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
 
-| Rule | Name | Summary |
-|---|---|---|
-| **R-INTRA-1** | Single-System Scope | Operator MUST be used only for boundaries within a single system instance |
-| **R-INTRA-2** | Cluster Attachment | Operator MUST be attached to the cluster step that accomplishes the crossing |
-| **R-INTRA-3** | No Standalone Use | Operator MUST NOT appear without an associated cluster step |
-| **R-INTRA-4** | No Cluster Change | Operator MUST NOT change cluster classification |
-| **R-INTRA-5** | Optional Precision | Operator is OPTIONAL; mainly recommended for forensic or vendor-facing use |
-| **R-INTRA-6** | Multiple Crossings | Multiple annotations MAY follow one step when compressed form is justified |
-| **R-INTRA-7** | Distinct Vulnerabilities | If crossing requires a separately evidenced vulnerability, a new cluster step MUST be added |
-| **R-INTRA-8** | Compressed Form | If evidence does not distinguish separate exploit causes, compressed single-step form MAY be used |
-| **R-INTRA-9** | Anti-Effect Rule / Memory Deferral | Effects (privilege escalation, sandbox escape, etc.) are NOT independent threat categories; `memory` boundary type is deferred and MUST NOT be used |
+| Rule | Summary |
+|---|---|
+| **R-INTRA-7** | Intra-system boundary crossings never change cluster classification. They are observability annotations, not classification inputs. |
+| **R-INTRA-9** | The `memory` intra-system boundary type is deferred and MUST NOT be used. |
 
-**Reference:** §4.2.5 (R-INTRA), §11.3.6 (Intra-System Boundary Operator)
+The remaining usage guidance from the v2.1 drafting is non-normative and preserved as notation practice: the operator applies only to boundaries within a single system instance, attaches to the cluster step that accomplishes the crossing, never appears standalone, is optional (mainly for forensic or vendor-facing precision), and multiple annotations may follow one step. If a crossing requires a **separately evidenced vulnerability**, a new cluster step MUST be added — this follows directly from Axiom VI (see also SG-6) and is not an R-INTRA rule.
+
+> **Numbering erratum (do not cite the v2.1 draft numbers).** Early v2.1 drafts circulated a nine-rule series R-INTRA-1…9 in which "no cluster change" was numbered R-INTRA-4 and "distinct vulnerabilities" was numbered **R-INTRA-7**. In the canonical registry (v2.3 onward) R-INTRA-7 denotes the *no-cluster-change* rule. The draft series is therefore withdrawn: citing "R-INTRA-7" in its draft meaning contradicts the canon. Only the canonical meanings above are valid; this is the single known case in TLCTC history of a rule ID changing propositions between draft and canon, recorded here so it can never happen silently.
+
+**Reference:** core paper §6.2 (R-INTRA-7, R-INTRA-9), §11.3.6 (Intra-System Boundary Operator)

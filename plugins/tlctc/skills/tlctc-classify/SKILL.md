@@ -115,7 +115,7 @@ TLCTC distinguishes two fundamentally different execution mechanisms:
 ---
 
 ### #2 Exploiting Server
-**Definition:** An attacker targets flaws within the server-side application's source code implementation.
+**Definition:** An attacker targets implementation flaws within a component acting in a server role.
 
 **Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. This forces an **UNINTENDED data→code transition**.
 
@@ -125,7 +125,7 @@ TLCTC distinguishes two fundamentally different execution mechanisms:
 
 **Generic Vulnerability:** Server-side implementation flaws enable unintended behavior.
 
-**Attacker's View:** "I abuse a flaw in the application's source code on the server side."
+**Attacker's View:** "I abuse an implementation flaw in a component acting in a server role."
 **Developer's View:** "I must apply language-specific secure coding principles for all server-side code and implement appropriate safeguards for known pitfalls."
 
 **Boundary Tests:**
@@ -140,7 +140,7 @@ TLCTC distinguishes two fundamentally different execution mechanisms:
 ---
 
 ### #3 Exploiting Client
-**Definition:** An attacker targets flaws within the source code implementation of any software acting in a client role.
+**Definition:** An attacker targets implementation flaws within any component acting in a client role.
 
 **Scope:** Triggering an **implementation flaw** in **client-role** software through crafted content/responses/state ("exploit payload"), exploiting coding mistakes in parsing, rendering, state management, or response handling.
 
@@ -148,7 +148,7 @@ TLCTC distinguishes two fundamentally different execution mechanisms:
 
 **Generic Vulnerability:** Client-side implementation flaws enable unintended behavior.
 
-**Attacker's View:** "I abuse a flaw in the source code of software acting as a client."
+**Attacker's View:** "I abuse an implementation flaw in a component acting in a client role."
 **Developer's View:** "I must apply secure coding principles for client-role code and never trust incoming data from servers, files, URLs, or APIs."
 
 **Boundary Tests:**

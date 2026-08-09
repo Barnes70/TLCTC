@@ -12,16 +12,23 @@
 
 &nbsp;
 
-> **Cluster definitions current as of framework v2.4 (2026-07-28).** This
+> **Cluster definitions current as of framework v2.5 (2026-08-08).** This
 > paper's structure and argument remain those of Version 2.1. The ten generic
 > vulnerability statements are kept harmonized with the framework dictionary,
 > so errata issued after 2.1 — such as the v2.3.1 retightening of #4 and the
-> v2.3.2 retightening of #5 — are reflected here. v2.4 adds a single
-> clarification, carrying no change to cluster identity, IDs, or generic
-> vulnerability statements: Axiom II and R-ROLE now state explicitly that the
+> v2.3.2 retightening of #5 — are reflected here. v2.4 added a single
+> clarification: Axiom II and R-ROLE now state explicitly that the
 > client–server relation does not presuppose a network, so intra-system
 > privilege interfaces (syscall, hypercall, IPC) resolve to `#2`/`#3` by the
-> same role test. For the current citable
+> same role test. v2.5 added two disambiguation rules — R-CHANNEL (#5 vs
+> #2/#3 for defective communication-path controls) and R-SUBSTRATE (#8 vs
+> #2/#3 on the physical-property test) — and retightened the #2/#3
+> definition and attacker's-view strings to the substrate-neutral
+> "implementation flaws within a component acting in a server/client role".
+> Rule IDs stated in this paper's §4.2.4–§4.2.5 (R-ABUSE, R-HUMAN,
+> R-PHYSICAL, and the draft R-TRANSIT/R-INTRA series) are deprecated
+> aliases under v2.5; the normative rule registry is the 18-rule set of the
+> canonical dictionary (see the core paper §6 and the glossary). For the current citable
 > definition of the framework, see the core paper:
 > [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176).
 
@@ -245,7 +252,7 @@ Each cluster below uses the same structure:
 - **Boundary Tests**
 - **Topology**
 
-> **Canonical-source note (normative):** The **Definition**, **Generic Vulnerability**, and **Attacker’s View** strings below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.3.json`), so that this document and the schema cannot drift. The **Scope**, **Developer’s View**, and **Boundary Tests** fields are canonical in this document and are not carried in the JSON dictionary. Where a conflict is suspected, the JSON dictionary governs the three JSON-owned fields and this document governs the rest.
+> **Canonical-source note (normative):** The **Definition**, **Generic Vulnerability**, and **Attacker’s View** strings below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.5.json`), so that this document and the schema cannot drift. The **Scope**, **Developer’s View**, and **Boundary Tests** fields are canonical in this document and are not carried in the JSON dictionary. Where a conflict is suspected, the JSON dictionary governs the three JSON-owned fields and this document governs the rest.
 
 ---
 
@@ -273,7 +280,7 @@ Each cluster below uses the same structure:
 
 #### #2 Exploiting Server
 
-**Definition:** An attacker targets flaws within the server-side application's source code implementation.
+**Definition:** An attacker targets implementation flaws within a component acting in a server role.
 
 **Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. This forces an UNINTENDED data→code transition.
 
@@ -283,7 +290,7 @@ Each cluster below uses the same structure:
 
 **Generic Vulnerability:** Server-side implementation flaws enable unintended behavior.
 
-**Attacker’s View:** “I abuse a flaw in the application’s source code on the server side.”
+**Attacker’s View:** “I abuse an implementation flaw in a component acting in a server role.”
 
 **Developer’s View:** “I must apply language-specific secure coding principles for all server-side code and implement appropriate safeguards for known pitfalls.”
 
@@ -301,7 +308,7 @@ Each cluster below uses the same structure:
 
 #### #3 Exploiting Client
 
-**Definition:** An attacker targets flaws within the source code implementation of any software acting in a client role.
+**Definition:** An attacker targets implementation flaws within any component acting in a client role.
 
 **Scope:** Triggering an **implementation flaw** in **client-role** software through crafted content/responses/state (“exploit payload”), exploiting coding mistakes in parsing, rendering, state management, or response handling.
 
@@ -309,7 +316,7 @@ Each cluster below uses the same structure:
 
 **Generic Vulnerability:** Client-side implementation flaws enable unintended behavior.
 
-**Attacker’s View:** “I abuse a flaw in the source code of software acting as a client.”
+**Attacker’s View:** “I abuse an implementation flaw in a component acting in a client role.”
 
 **Developer’s View:** “I must apply secure coding principles for client-role code and never trust incoming data from servers, files, URLs, or APIs.”
 
@@ -4664,7 +4671,7 @@ Defines the immutable “dictionary” for a TLCTC release:
 **Artifact types**
 
 - `tlctc-framework.schema.json` (schema)
-- `tlctc-framework.v2.3.json` (content package)
+- `tlctc-framework.v2.5.json` (content package)
 
 #### Layer 2 — Reference Registry (Context)
 
@@ -4885,7 +4892,7 @@ To support this, steps carry:
 }
 ```
 
-#### 14.3.2 Example Content Package: `tlctc-framework.v2.3.json` (excerpt)
+#### 14.3.2 Example Content Package: `tlctc-framework.v2.5.json` (excerpt)
 
 The cluster entries below are reproduced verbatim from the canonical framework dictionary — `json-schemas/layer-1/tlctc-framework.v2.5.json`, validated against `json-schemas/layer-1/tlctc-framework.schema.json`. The `axioms` array is reproduced in full; the `rules` array is truncated to a single example entry, and the per-entry `notes` fields carried by Axiom II and R-ROLE in the dictionary are omitted here for brevity.
 
@@ -4893,12 +4900,12 @@ The cluster entries below are reproduced verbatim from the canonical framework d
 {
   "metadata": {
     "tlctc_version": "2.5",
-    "release_date": "2026-07-28",
+    "release_date": "2026-08-08",
     "schema_id": "tlctc-framework",
     "schema_version": "2.0.0",
     "publisher": "TLCTC Project",
     "license": "CC-BY-4.0",
-    "notes": "Framework dictionary for TLCTC v2.4."
+    "notes": "Framework dictionary for TLCTC v2.5."
   },
 
   "clusters": {
@@ -4915,8 +4922,8 @@ The cluster entries below are reproduced verbatim from the canonical framework d
       "strategic_id": "#2",
       "operational_root_id": "TLCTC-02.00",
       "name": "Exploiting Server",
-      "definition": "An attacker targets flaws within the server-side application's source code implementation.",
-      "attackers_view": "I abuse a flaw in the application's source code on the server side.",
+      "definition": "An attacker targets implementation flaws within a component acting in a server role.",
+      "attackers_view": "I abuse an implementation flaw in a component acting in a server role.",
       "generic_vulnerability": "Server-side implementation flaws enable unintended behavior.",
       "topology": "internal"
     },
@@ -4924,8 +4931,8 @@ The cluster entries below are reproduced verbatim from the canonical framework d
       "strategic_id": "#3",
       "operational_root_id": "TLCTC-03.00",
       "name": "Exploiting Client",
-      "definition": "An attacker targets flaws within the source code implementation of any software acting in a client role.",
-      "attackers_view": "I abuse a flaw in the source code of software acting as a client.",
+      "definition": "An attacker targets implementation flaws within any component acting in a client role.",
+      "attackers_view": "I abuse an implementation flaw in a component acting in a client role.",
       "generic_vulnerability": "Client-side implementation flaws enable unintended behavior.",
       "topology": "internal"
     },
@@ -5411,7 +5418,7 @@ The cluster entries below are reproduced verbatim from the canonical framework d
     "incident_id": "EXAMPLE-2025-001",
     "analyst_confidence": "medium",
     "tlctc_version": "2.0",
-    "framework_ref": "tlctc-framework.v2.3.json",
+    "framework_ref": "tlctc-framework.v2.5.json",
     "registry_ref": "@Org-registry.v1.0.0.json",
     "created_at": "2025-12-14T10:00:00Z",
     "notes": "Illustrative example only"
