@@ -3,7 +3,7 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.5",
   "generator": "scripts/build-okf.js",
-  "document_count": 416,
+  "document_count": 417,
   "type_counts": {
     "attack-path": 51,
     "axiom": 10,
@@ -17,7 +17,7 @@
     "mapping-set": 30,
     "rule": 18,
     "sphere": 9,
-    "term": 249
+    "term": 250
   },
   "documents": [
     {
@@ -3557,6 +3557,16 @@
       "title": "System Risk Event (SRE)",
       "description": "The central event in the TLCTC Cyber Bow Tie model: Loss of Control / System Compromise .",
       "resource": "tlctc:term:system-risk-event-sre",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/system-risk-layer.md",
+      "type": "term",
+      "title": "System-Risk Layer",
+      "description": "The layer of the Cyber Bow Tie at which cluster steps are prevented, detected, and contained before a compromise matures into data level and business level consequences — the control placement layer around the System Risk Event (SRE), between the cause side (threat clusters 1– 10) and the consequence chain (DRE → BRE\\ ).",
+      "resource": "tlctc:term:system-risk-layer",
       "tags": [
         "glossary"
       ]

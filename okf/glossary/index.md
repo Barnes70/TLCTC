@@ -1,6 +1,6 @@
 # glossary
 
-249 document(s).
+250 document(s).
 
 - [Abuse of Functions (#1)](/glossary/abuse-of-functions-1.md) — `term`
 - [Accessibility (Data Risk Event)](/glossary/accessibility-data-risk-event.md) — `term`
@@ -214,6 +214,7 @@
 - [SYN Flood](/glossary/syn-flood.md) — `term`
 - [System Compromise](/glossary/system-compromise.md) — `term`
 - [System Risk Event (SRE)](/glossary/system-risk-event-sre.md) — `term`
+- [System-Risk Layer](/glossary/system-risk-layer.md) — `term`
 - [Tailgating](/glossary/tailgating.md) — `term`
 - [Tech Enablers Overlay](/glossary/tech-enablers-overlay.md) — `term`
 - [Techniques (TTPs)](/glossary/techniques-ttps.md) — `term`

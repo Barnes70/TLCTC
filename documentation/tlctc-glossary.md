@@ -1630,6 +1630,16 @@ The central event in the TLCTC Cyber Bow-Tie model: **Loss of Control / System C
 
 See also: Loss of Control / System Compromise, Data Risk Event (DRE), Business Risk Event (BRE)
 
+### System-Risk Layer *(v2.5)*
+
+The layer of the Cyber Bow-Tie at which cluster steps are prevented, detected, and contained before a compromise matures into data-level and business-level consequences — the control-placement layer around the System Risk Event (SRE), between the cause side (threat clusters #1–#10) and the consequence chain (DRE → BRE\*). Its baseline concept is the **TLCTC × NIST CSF control matrix**: ten clusters crossed with six CSF functions yield **at minimum 60 distinct control objectives**; organization-specific refinements may subdivide cells but never merge them below the 10 × 6 grid. This fixed floor enables two strategic integrations. **Metrics:** every cell is a named objective to which Key Control Indicators attach — technical KCIs measure the cell's state and coverage, procedural KCIs (KPIs) its process performance — with targets derived from risk appetite. **Security architecture:** the umbrella-control column, read down all ten rows, defines the enterprise's shared security architecture and connects the matrix to secure development through the Programmer role, which sets the architectural frame and secure-coding standards under which the Coder implements.
+
+The system-risk layer is a control-placement concept, not a taxonomy layer: it is distinct from the Strategic/Operational two-layer naming model (Axiom VIII) and does not alter any cluster definition or classification rule.
+
+**Reference:** Application paper §8–§10, §15 (Part B/C)
+
+See also: System Risk Event (SRE), Control Objective, Umbrella Controls, Local Controls, KCI (Key Control Indicator), Programmer
+
 ### Social Engineering (#9)
 
 A threat cluster where an attacker psychologically manipulates individuals into performing actions counter to their or their organization's best interests, such as divulging confidential information, granting access, executing code, or bypassing security procedures. The generic vulnerability is human psychological factors: gullibility, trust, ignorance, fear, urgency, authority bias, curiosity, or general compromisability. Often serves as the initial vector enabling other threat clusters (e.g., #9→#4 for credential harvesting, #9→#7 for malware installation, #9→#1 for feature misconfiguration).
