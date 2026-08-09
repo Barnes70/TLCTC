@@ -12,7 +12,7 @@
 
 &nbsp;
 
-March 2026 · aligned to TLCTC v2.3
+March 2026 · revised August 2026 · aligned to TLCTC v2.5
 
 &nbsp;
 
@@ -26,11 +26,13 @@ This guide defines the **Threat Intelligence Extension Profile** for TLCTC Layer
 
 This is an **informative companion**, not a normative definition. The layered JSON architecture and the attack-path notation are defined normatively in the TLCTC White Paper; this guide only adds the sharing/enrichment convention layered on top.
 
+**Implements:** TLCTC framework specification **v2.5**. The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`, reproduced and derived in the v2.5 core paper (`documentation/tlctc-v2.5-core.md`); this profile introduces no normative content of its own.
+
 > **Where the normative definitions live:**
 >
 > - **Layered JSON architecture & schemas** → White Paper §14 (*The JSON Architecture*)
 > - **Attack-path notation & operators** → White Paper §11 (*Attack Path Notation*); core paper §7
-> - **Framework dictionary** → `json-schemas/layer-1/tlctc-framework.v2.3.json`
+> - **Framework dictionary** → `json-schemas/layer-1/tlctc-framework.v2.5.json`
 > - **Layer 1–3 schemas & canonical examples** → `json-schemas/layer-1…3/` (e.g. `layer-3/examples/solarwinds-2020.json`)
 >
 > Where any conflict exists, the White Paper and the schemas prevail.
@@ -43,7 +45,7 @@ This is an **informative companion**, not a normative definition. The layered JS
 
 TLCTC threat intelligence is organized in layers (full definitions: White Paper §14):
 
-- **Layer 1 — Framework (static):** the universal taxonomy — 10 clusters, axioms, rules. `tlctc-framework.v2.3.json`.
+- **Layer 1 — Framework (static):** the universal taxonomy — 10 clusters, axioms, rules. `tlctc-framework.v2.5.json`.
 - **Layer 2 — Reference (semi-static):** responsibility spheres (`@Org`, `@Vendor`, …) and boundary contexts, customizable per organization.
 - **Layer 3 — Attack-path instances (dynamic):** individual incidents as ordered cluster steps with velocity, boundaries, and outcomes — the objects shared as threat intelligence.
 - **Layer 4 — Risk quantification (optional extension, *proposed*):** a FAIR bridge for financial risk modeling. See `documentation/tlctc-fair-integration-proposal.md` and `json-schemas/layer-4/`.
@@ -298,8 +300,8 @@ Per **R-SUPPLY**, `#10` is placed at the **Trust Acceptance Event** — the mome
   "metadata": {
     "incident_id": "APT29-SOLARWINDS-2020",
     "analyst_confidence": "high",
-    "tlctc_version": "2.3",
-    "framework_ref": "tlctc-framework.v2.3.json",
+    "tlctc_version": "2.5",
+    "framework_ref": "tlctc-framework.v2.5.json",
     "registry_ref": "@Org-registry.v1.0.0.json",
     "created_at": "2020-12-15T00:00:00Z",
     "notes": "SolarWinds SUNBURST supply chain compromise. Originally documented by FireEye/Mandiant."
