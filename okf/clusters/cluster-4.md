@@ -26,7 +26,7 @@ topology: "internal"
 
 **Boundary Tests (normative):**
 
-- Credential acquisition/exposure/derivation/forgery maps to the enabling cluster; credential use/presentation always maps to **#4** (**R-CRED**).
+- Credential acquisition/exposure/derivation/forgery maps to the enabling cluster; credential use/presentation always maps to **#4** (**R-CRED**) — provided the identity claimed is not the presenter's own (a system-issued self-enrolled identity used as self is not #4; out-of-scope enrolment is #1).
 - If the step involves creating fraudulent credentials, certificates, or tokens, map **that creation/derivation** to the enabling mechanism (**#1/#2/#3/#7/#10** as appropriate), then map subsequent use to **#4**.
 - If the step is primarily persuading a human to reveal/approve → **#9** for that manipulation step.
 

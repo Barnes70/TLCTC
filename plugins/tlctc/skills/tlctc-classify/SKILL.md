@@ -173,7 +173,8 @@ TLCTC distinguishes two fundamentally different execution mechanisms:
 
 **Boundary Tests:**
 - Credential acquisition/exposure/derivation/forgery maps to the **enabling cluster**
-- Credential use/presentation **ALWAYS** maps to **#4** (R-CRED)
+- Credential use/presentation **ALWAYS** maps to **#4** (R-CRED) — **provided the identity claimed is not the presenter's own**
+- If the credential was issued to the presenter by the target system through a designed enrolment function, the presenter is the authentic holder → **not #4**; the enrolment step (if out-of-scope) is **#1**
 - If the step involves creating fraudulent credentials, map creation to the enabling mechanism, then map use to **#4**
 - If the step is primarily persuading a human to reveal/approve → **#9** for that manipulation step
 
@@ -351,7 +352,7 @@ Clusters that operate primarily **within the cyber domain's** technical attack s
 
 ### R-CRED — Credential Lifecycle Non-Overlap
 - **Acquisition** (capture, exposure, derivation, forgery) → enabling cluster
-- **Application** (use, presentation, replay) → **ALWAYS #4**
+- **Application** (use, presentation, replay) → **ALWAYS #4**, *provided the identity claimed is not the presenter's own*
 - If both occur: represent as **at least two steps**: `(enabling cluster) → #4`
 
 | Acquisition Method | Enabling Cluster |
@@ -364,6 +365,27 @@ Clusters that operate primarily **within the cyber domain's** technical attack s
 | Misconfigured API exposes tokens | #1 |
 | Weak signing allows token forgery | #2/#3 (per R-ROLE) |
 | Compromised vendor IdP provides tokens | #10 (acquisition at IdP); acceptance at SP is also #10 (TAE) |
+
+**Self-issued identity (R-CRED proviso).** Credential *use* is #4 only when the system is **deceived about who is authenticating** — the identity claim is false. A credential the target system issued to the presenter through a designed enrolment function makes the presenter its authentic holder: using it is authentication *as self*, not #4. Where the enrolment granted the identity or its permissions outside their intended population or scope, the **enrolment** step is **#1**. Attacker effort is not the test: a replayed session cookie is #4; elaborate fraudulent self-registration is #1.
+
+- Fictitious/pseudonymous self-registration → **#1** (no identity impersonated)
+- Enrolment completed **as an existing identity** (domain auto-affiliation, verification via the victim's mailbox) → **#1 → #4**
+- Analyst heuristic: *Is the system deceived about who is authenticating?* Deceived → #4; not deceived (it enrolled this principal) → usually #1 at enrolment.
+
+**Worked example — Kerberos LOTL lateral movement.** Living-off-the-land lateral movement in an Active Directory / Kerberos domain is a repeating **`#4 → #1`** pair per hop: `#4` = each distinct Kerberos authentication (presenting a TGT/service ticket — the claimed identity is not the presenter's own), `#1` = abuse of a built-in remote-exec function (WMI, WinRM, PsExec, scheduled tasks) *as designed* with valid credentials (no code flaw → not #2/#3). Written flat (never parenthesised — `( )` is parallel/order-independent; here order is the point), with the recurrence noted in prose, not a replication operator:
+
+```
+#7 →[Δt=VC-3] #4 ||[auth][@Host1→@Host2]|| →[Δt=VC-3] #1
+   →[Δt=VC-2] #4 ||[auth][@Host2→@Host3]|| →[Δt=VC-3] #1 → …
+```
+
+The `#4 → #1` pair repeats once per lateral hop (only the first two hops shown). Head `#7` = ticket/credential material harvested from LSASS — the *acquisition* step in its enabling cluster, separate from use (Axiom X / R-CRED). Variants: Kerberoasting head = `#1 → #4 → #1 → …` (the service-ticket request is a designed function `#1`; the offline crack is out-of-band; use is `#4`). Forged tickets (golden/silver): map **creation** to the enabling mechanism, never #4 at forgery; the forged-ticket **presentation** is `#4` (the identity claim is false).
+
+*Self-issued edge in Kerberos:* normal lateral movement authenticates as **someone else's** account → `impersonated` → stays #4. The proviso fires only on genuine self-enrolment — e.g. abusing `ms-DS-MachineAccountQuota` to join a new machine account (`#1`); first authentication *as that machine account* is not #4, but using it to reach **other** identities (RBCD → S4U2Self/S4U2Proxy impersonation of a privileged user) is #4 again:
+
+```
+#1 (machine-account enrolment) → #1 (RBCD configuration abuse) → #4 (S4U impersonation of privileged user) → #1 (remote exec on target)
+```
 
 ### R-MITM — Position vs Action
 - **Gaining** MitM position → another cluster (depending on initial generic vulnerability)

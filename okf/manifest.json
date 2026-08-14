@@ -1915,7 +1915,7 @@
       "path": "/glossary/credential-application.md",
       "type": "term",
       "title": "Credential Application",
-      "description": "The act of presenting, using, replaying, or leveraging a credential to authenticate and operate as an identity.",
+      "description": "The act of presenting, using, replaying, or leveraging a credential to authenticate and operate as an identity other than the presenter's own .",
       "resource": "tlctc:term:credential-application",
       "tags": [
         "glossary"
@@ -3015,7 +3015,7 @@
       "path": "/glossary/r-cred-credential-lifecycle-non-overlap.md",
       "type": "term",
       "title": "R-CRED (Credential Lifecycle Non-Overlap)",
-      "description": "Global mapping rule: Credential acquisition maps to the enabling cluster; credential application MUST always map to 4 Identity Theft .",
+      "description": "Global mapping rule: Credential acquisition maps to the enabling cluster; credential application MUST always map to 4 Identity Theft , provided the identity claimed is not the presenter's own .",
       "resource": "tlctc:term:r-cred-credential-lifecycle-non-overlap",
       "tags": [
         "glossary"

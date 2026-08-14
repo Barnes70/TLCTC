@@ -345,7 +345,7 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- Credential acquisition/exposure/derivation/forgery maps to the enabling cluster; credential use/presentation always maps to **#4** (**R-CRED**).
+- Credential acquisition/exposure/derivation/forgery maps to the enabling cluster; credential use/presentation always maps to **#4** (**R-CRED**) — provided the identity claimed is not the presenter's own (a system-issued self-enrolled identity used as self is not #4; out-of-scope enrolment is #1).
 - If the step involves creating fraudulent credentials, certificates, or tokens, map **that creation/derivation** to the enabling mechanism (**#1/#2/#3/#7/#10** as appropriate), then map subsequent use to **#4**.
 - If the step is primarily persuading a human to reveal/approve → **#9** for that manipulation step.
 
@@ -822,7 +822,7 @@ The act of obtaining, capturing, exposing, deriving, or forging a credential/ide
 The act of creating a credential without possessing the legitimate secret. If forgery succeeds due to an **implementation flaw** (e.g., weak signing algorithm, missing validation, predictable tokens), the forgery step maps to `#2` or `#3` per R-ROLE. The subsequent **use** of the forged credential maps to `#4`.
 
 **Credential Application**
-The act of presenting, using, replaying, or leveraging a credential to authenticate and operate as an identity. Credential application **MUST** always map to **`#4 Identity Theft`**.
+The act of presenting, using, replaying, or leveraging a credential to authenticate and operate as an identity **other than the presenter's own**. So scoped, credential application **MUST** always map to **`#4 Identity Theft`**. Authenticating as an identity the target system itself issued to the presenter through a designed enrolment function is authentication as self, not credential application in this sense (see the self-issued proviso under R-CRED).
 
 ##### Role Terms
 
@@ -990,7 +990,8 @@ These rules are **global**: they apply across all clusters and are **normative**
 **Rule (Normative):**
 
 - Credential **acquisition** (capture, exposure, derivation, forgery) maps to the **enabling cluster**—the generic vulnerability that made obtaining/creating the credential possible.
-- Credential **application**—use, presentation, replay, or leveraging an identity artifact to operate as an identity—**MUST** always map to **`#4 Identity Theft`**.
+- Credential **application**—use, presentation, replay, or leveraging an identity artifact to operate as an identity—**MUST** always map to **`#4 Identity Theft`**, **provided the identity claimed is not the presenter's own**.
+- **Self-issued identity (R-CRED proviso):** a credential issued to the presenter by the target system through a designed enrolment function makes the presenter its authentic holder; such use is authentication *as self* and **MUST NOT** be classified as `#4`. Where the enrolment function granted the identity or its permissions outside their intended population or scope, that **enrolment** step maps to **`#1`**. Fictitious/pseudonymous self-registration is `#1`; enrolment completed as an existing identity is `#1 → #4`. The higher-abstraction test: is the system *deceived about who is authenticating*?
 - If both acquisition and application occur in the same scenario, they **MUST** be represented as **at least two steps**: `(enabling cluster) → #4`
 
 **Interpretation Notes (Normative):**
@@ -1742,7 +1743,7 @@ Record:
 | Rule | Distinguishes | Key Decision |
 | --- | --- | --- |
 | **R-ROLE** | `#2` vs `#3` | Server-role (accepts inbound) → `#2`; Client-role (consumes external) → `#3` |
-| **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` |
+| **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` (unless authenticating as the presenter's own system-issued identity — self-issued enrolment is `#1`) |
 | **R-MITM** | Gaining vs Exploiting | Gaining position → enabling cluster; Exploiting position → `#5` |
 | **R-FLOOD** | Capacity vs Defect | Volume exhaustion → `#6`; Implementation defect → `#2/#3` |
 | **R-EXEC** | FEC Execution | If FEC executes → `#7` MUST be recorded (plus enabling cluster) |

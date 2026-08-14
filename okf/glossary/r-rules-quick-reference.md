@@ -21,7 +21,7 @@ The v2.5 normative registry contains exactly **18 rules**: eight core rules and 
 | **R-MITM** | Position vs Action | Gaining position → enabling cluster; Interception/modification/relay → `#5` |
 | **R-CHANNEL** *(v2.5)* | Control vs Code Flaw | Defective logic constitutive of channel control → `#5`; Incidental defect → `#2/#3` |
 | **R-SUBSTRATE** *(v2.5)* | Property vs Logic | Physical property exploited → `#8`; Physical layer as readout only → `#2/#3` |
-| **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4`; separate steps |
+| **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` (unless the identity is the presenter's own — self-issued enrolment is `#1`); separate steps |
 
 **v2.1 extension rules (10):**
 
