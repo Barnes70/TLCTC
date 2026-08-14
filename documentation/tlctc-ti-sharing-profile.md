@@ -168,6 +168,7 @@ Each `attack_step` may carry the following under `extensions.ti`:
 | `sphere` | string | Responsibility sphere for this step (e.g., `@Org`, `@Vendor`) |
 | `stage` | enum | `initial`, `intermediate`, or `final` |
 | `velocity_class` | enum | `VC-1`, `VC-2`, `VC-3`, or `VC-4` |
+| `identity_relation` | enum | Relation between the identity claimed by a presented credential and the presenter: `impersonated` (identity belongs to someone other than the presenter — the normal #4 case), `self-issued` (credential was issued to the presenter by the target system through a designed enrolment function; the presenter is its authentic holder), `unknown` (issuance provenance not yet established). Optional; add only where provenance was examined. Absence asserts nothing. |
 | `software[]` | array | Software components involved |
 | `software[].name` | string | Software name |
 | `software[].version` | string | Version number or range |
@@ -196,6 +197,8 @@ Each `attack_step` may carry the following under `extensions.ti`:
 | `evidence.iocs[].value` | string | The indicator value |
 | `evidence.artifacts[]` | array | Artifact descriptions |
 | `evidence.log_sources[]` | array | Log sources that recorded this step |
+
+**Consistency check (`identity_relation`).** The field records an assertion whose classification consequences follow from **R-CRED** (self-issued proviso), not from this profile. A step with `"cluster": "#4"` and `"identity_relation": "self-issued"` is mechanically contradictory: authentication as the credential's authentic holder exploits no #4 binding gap. Validators SHOULD flag this combination; resolution is either re-classifying the step (usually to `#1` at the enrolment step) or correcting the relation to `impersonated`/`unknown`. `unknown` marks an open analytical task (the step's classification stands, but provenance has not been checked) — useful when re-checking records against the v2.5.1 proviso. On an enrolment step (`#1`), `self-issued` marks the head of an expected `#1 → #4` (enrolment as an existing identity) or `#1`-only (fictitious registration) continuation.
 
 ### 3.2 Document-Level Extensions
 

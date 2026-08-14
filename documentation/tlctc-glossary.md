@@ -394,7 +394,7 @@ The act of obtaining, capturing, exposing, deriving, or forging a credential/ide
 
 ### Credential Application
 
-The act of presenting, using, replaying, or leveraging a credential to authenticate and operate as an identity. Credential application MUST always map to `#4 Identity Theft`.
+The act of presenting, using, replaying, or leveraging a credential to authenticate and operate as an identity **other than the presenter's own**. So scoped, credential application MUST always map to `#4 Identity Theft`. Authenticating as an identity the target system itself issued to the presenter through a designed enrolment function is authentication as self, not credential application in this sense — see the self-issued proviso under R-CRED.
 
 **Reference:** §4.2.2 (Global Definitions), R-CRED (§4.2.5), Axiom X (§2)
 
@@ -1306,7 +1306,9 @@ Original statement: If the attacker's success does not require any implementatio
 
 ### R-CRED (Credential Lifecycle Non-Overlap)
 
-Global mapping rule: Credential acquisition maps to the enabling cluster; credential application MUST always map to `#4 Identity Theft`. If both occur, they MUST be represented as at least two steps: `(enabling cluster) → #4`.
+Global mapping rule: Credential acquisition maps to the enabling cluster; credential application MUST always map to `#4 Identity Theft`, **provided the identity claimed is not the presenter's own**. If both occur, they MUST be represented as at least two steps: `(enabling cluster) → #4`.
+
+**Self-issued identity (v2.5.1 proviso).** A credential issued to the presenter by the target system through a designed enrolment function makes the presenter its authentic holder; using it is authentication as self and is NOT `#4`. Where the enrolment function granted the identity or its permissions outside their intended population or scope, that enrolment step maps to `#1`. Fictitious or pseudonymous self-registration is `#1` (no identity impersonated); enrolment completed AS an existing identity is `#1 → #4`. The higher-abstraction test: is the system *deceived about who is authenticating*? Deceived → `#4`; not deceived (it enrolled this principal itself) → the vulnerability is elsewhere, usually `#1`.
 
 **Reference:** §4.2.5 (R-CRED)
 
@@ -2137,7 +2139,7 @@ The v2.5 normative registry contains exactly **18 rules**: eight core rules and 
 | **R-MITM** | Position vs Action | Gaining position → enabling cluster; Interception/modification/relay → `#5` |
 | **R-CHANNEL** *(v2.5)* | Control vs Code Flaw | Defective logic constitutive of channel control → `#5`; Incidental defect → `#2/#3` |
 | **R-SUBSTRATE** *(v2.5)* | Property vs Logic | Physical property exploited → `#8`; Physical layer as readout only → `#2/#3` |
-| **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4`; separate steps |
+| **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` (unless the identity is the presenter's own — self-issued enrolment is `#1`); separate steps |
 
 **v2.1 extension rules (10):**
 

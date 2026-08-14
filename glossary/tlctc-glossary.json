@@ -192,7 +192,7 @@
     {
       "term_id": "r-cred",
       "term": "R-CRED",
-      "definition": "Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method. These are separate attack steps.",
+      "definition": "Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method, provided the identity claimed is not the presenter's own. A credential issued to the presenter by the target system through a designed enrolment function makes the presenter its authentic holder; such use is not #4, and out-of-scope enrolment maps to #1. These are separate attack steps.",
       "domain": "tlctc-classification",
       "source": "TLCTC v2.5",
       "see_also": ["axiom-x", "credential-acquisition", "credential-application", "cluster-4-identity-theft"]

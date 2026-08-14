@@ -6,7 +6,7 @@
 **License:** CC BY 4.0
 **DOI:** [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) (concept DOI — always resolves to the latest version)
 
-> **Canonical version declaration.** The TLCTC framework specification is **v2.5**. The normative authority is exactly one artifact: the machine-readable framework dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`; this paper reproduces its cluster definitions, axioms, and rule statements verbatim and supplies the derivation, boundary tests, and notation around them. Companion documents (application paper, glossary, mappings, tools) declare which canonical version they implement. Retired rule aliases from earlier versions (R-ABUSE, R-HUMAN, R-PHYSICAL) are enumerated in Section 6 and are never reused with a different meaning.
+> **Canonical version declaration.** The TLCTC framework specification is **v2.5** (dictionary revision **v2.5.1**). The normative authority for cluster definitions, axioms, and classification rules is exactly one artifact: the machine-readable framework dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`; this paper reproduces those verbatim and supplies the derivation, notation, and per-cluster boundary tests around them. The boundary tests are normative and are homed in this paper (Section 4) by design — the dictionary deliberately carries no boundary-test field. Companion documents (application paper, glossary, mappings, tools) declare which canonical version they implement. Retired rule aliases from earlier versions (R-ABUSE, R-HUMAN, R-PHYSICAL) are enumerated in Section 6 and are never reused with a different meaning.
 
 ## Abstract
 
@@ -141,6 +141,7 @@ This cluster covers the manipulation of legitimate software capabilities — fea
 - If an implementation flaw is required → #2 or #3.
 - If this step enables execution of FEC → record #1 for enablement and `→ #7` for execution (`#1 → #7`).
 - If the step is primarily credential use/presentation → #4.
+- If the step abuses a designed enrolment/registration function to obtain an identity or permissions outside its intended population or scope → #1; subsequent authentication as self is not a #4 step (R-CRED).
 
 ### #2 Exploiting Server
 
@@ -200,6 +201,7 @@ This cluster covers the presentation or use of credentials, tokens, keys, sessio
 
 - Credential acquisition/exposure/derivation/forgery maps to the enabling cluster; credential use/presentation always maps to #4 (R-CRED).
 - If the step creates fraudulent credentials, certificates, or tokens, map that creation/derivation to the enabling mechanism (#1/#2/#3/#7/#10 as appropriate), then map subsequent use to #4.
+- If the presented credential was issued to the presenter by the target system through a designed enrolment function, the presenter is the authentic holder → not #4; examine the enrolment step under #1 (R-CRED). If enrolment was completed AS an existing identity, the path is #1 → #4.
 - If the step is primarily persuading a human to reveal or approve → #9 for that manipulation step.
 
 ### #5 Man in the Middle
@@ -413,7 +415,9 @@ R-SUBSTRATE completes the family with R-FLOOD (#6) and R-CHANNEL (#5). Each reso
 
 R-SUBSTRATE and the legacy R-PHYSICAL sequencing rule (a retired v2.0 alias whose substance is preserved in the #8 boundary tests) are complementary. R-SUBSTRATE is the *admission* test: it decides whether a weakness qualifies as #8 at all. The sequencing principle formerly stated as R-PHYSICAL holds: given a qualifying physical step, that step is #8 and subsequent technical steps are classified separately. R-SUBSTRATE additionally settles a latent ambiguity in R-PHYSICAL's phrasing — "the attacker's advantage comes from unauthorized physical interaction" can be misread as requiring attacker physical access, and it does not.
 
-**R-CRED** (must). Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method. These are separate attack steps.
+**R-CRED** (must). Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method, PROVIDED the identity claimed is not the presenter's own. A credential issued to the presenter by the target system through a designed enrolment function makes the presenter its authentic holder; such use MUST NOT be classified as #4, and where the enrolment function granted the identity or its permissions outside their intended population or scope, the enrolment step maps to #1. These are separate attack steps.
+
+The higher-abstraction test is whether the system is *deceived about who is authenticating*: deceived — the presented credential's identity claim is false — is #4; not deceived, because the system itself enrolled this principal, places the exploited generic vulnerability elsewhere, usually #1 at enrolment. Self-issuance is the evidence that the claim is true, not a separate criterion; attacker effort or activity level is never the test (a replayed session cookie is #4; elaborate fraudulent self-registration is #1).
 
 ### 6.2 v2.1 Extension Rules
 
