@@ -130,7 +130,7 @@ Credentials have two distinct operational phases, and they **must** be classifie
 | Phase | Classification | Example |
 |---|---|---|
 | **Acquisition** | Maps to the enabling cluster (the generic vulnerability that exposed the credential) | #2 (SQLi dumps passwords), #5 (MitM intercepts token), #9 (phishing captures password) |
-| **Application** | **Always #4** — regardless of how the credential was obtained | Attacker logs in using stolen credentials → #4 |
+| **Application** | **#4** — regardless of how the credential was obtained, *provided the identity claimed is not the presenter's own* (a system-issued self-enrolled identity used as self is not #4; out-of-scope enrolment is #1, per R-CRED) | Attacker logs in using stolen credentials → #4 |
 
 ### Attack Velocity (Δt) and Velocity Classes
 
