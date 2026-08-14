@@ -366,7 +366,7 @@ Clusters that operate primarily **within the cyber domain's** technical attack s
 | Weak signing allows token forgery | #2/#3 (per R-ROLE) |
 | Compromised vendor IdP provides tokens | #10 (acquisition at IdP); acceptance at SP is also #10 (TAE) |
 
-**Self-issued identity (v2.5.1 proviso).** Credential *use* is #4 only when the system is **deceived about who is authenticating** — the identity claim is false. A credential the target system issued to the presenter through a designed enrolment function makes the presenter its authentic holder: using it is authentication *as self*, not #4. Where the enrolment granted the identity or its permissions outside their intended population or scope, the **enrolment** step is **#1**. Attacker effort is not the test: a replayed session cookie is #4; elaborate fraudulent self-registration is #1.
+**Self-issued identity (R-CRED proviso).** Credential *use* is #4 only when the system is **deceived about who is authenticating** — the identity claim is false. A credential the target system issued to the presenter through a designed enrolment function makes the presenter its authentic holder: using it is authentication *as self*, not #4. Where the enrolment granted the identity or its permissions outside their intended population or scope, the **enrolment** step is **#1**. Attacker effort is not the test: a replayed session cookie is #4; elaborate fraudulent self-registration is #1.
 
 - Fictitious/pseudonymous self-registration → **#1** (no identity impersonated)
 - Enrolment completed **as an existing identity** (domain auto-affiliation, verification via the victim's mailbox) → **#1 → #4**
