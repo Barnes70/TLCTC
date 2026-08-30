@@ -494,7 +494,7 @@ tlctc/
 │   ├── clusters/ axioms/ rules/              # Framework dictionary (one markdown doc per concept)
 │   ├── spheres/ contexts/                    # Layer-2 registry (responsibility spheres, boundary contexts)
 │   ├── glossary/                             # 247 term docs
-│   ├── attack-paths/                         # 51 incident path docs (notation + step tables)
+│   ├── attack-paths/                         # 59 incident path docs (notation + step tables)
 │   ├── controls/                             # NIST CSF × ISO 27001 matrix, effectiveness model, indicators
 │   └── mappings/                             # ATT&CK / CWE / Sigma grouped by cluster
 ├── documentation/
@@ -594,7 +594,7 @@ tlctc/
 │       ├── path-H-supply-chain-marketplace.json
 │       ├── path-I-apt-in-a-box.json
 │       └── path-J-llm-weaponization-supply-chain.json
-├── attack-paths/                             # Community-contributed incident analyses (50 incidents)
+├── attack-paths/                             # Community-contributed incident analyses (51 incidents, 58 path files)
 │   ├── CONTRIBUTING.md
 │   ├── # Canonical pattern reference
 │   ├── ad-domain-admin-cascade-2025.json     # Active Directory Domain-Admin → ransomware #1-cascade (composite pattern: Lynx, Storm-2603, Storm-0300/Akira)
@@ -651,7 +651,16 @@ tlctc/
 │   ├── # npm ecosystem sourced (3 incidents)
 │   ├── s1ngularity-nx-2025.json               # S1ngularity NX npm campaign
 │   ├── chalk-debug-phishing-2025.json         # chalk-debug npm phishing
-│   └── shai-hulud-worm-2025.json              # ShaiHulud self-propagating npm worm
+│   ├── shai-hulud-worm-2025.json              # ShaiHulud self-propagating npm worm
+│   ├── # OpenAI – Hugging Face incident, July 2026 (1 incident, 8 paths, TLCTC v2.5)
+│   ├── openai-hf-artifactory-2026.json         # AP-1 covert channel, first egress, Artifactory takeover (@OAI-Research)
+│   ├── openai-hf-precursor-spaces-2026.json    # Precursor branch, HF Spaces proxy (explicitly non-causal)
+│   ├── openai-hf-sandbox-escape-2026.json      # AP-2 re-establishment and eval sandbox escape
+│   ├── openai-hf-relay-estate-2026.json        # AP-3 third-party relay estate (@Modal-Cust, @Org1, screenshot service)
+│   ├── openai-hf-huggingface-2026.json         # AP-4 Hugging Face production compromise (29 steps)
+│   ├── openai-hf-package-plane-2026.json       # AP-5 image cache poisoning + RubyGems deserialisation (#10 twice)
+│   ├── openai-hf-cloud-escalation-2026.json    # AP-6 kernel exploit → cloud control plane (956 secrets)
+│   └── openai-hf-observability-2026.json       # AP-7 tool-call transcript spoofing (v2.6 [DRE: Im] test case)
 └── LICENSE                                   # CC BY 4.0
 ```
 

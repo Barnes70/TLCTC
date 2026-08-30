@@ -3,9 +3,9 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.5",
   "generator": "scripts/build-okf.js",
-  "document_count": 417,
+  "document_count": 425,
   "type_counts": {
-    "attack-path": 51,
+    "attack-path": 59,
     "axiom": 10,
     "boundary-context": 17,
     "cluster": 10,
@@ -504,6 +504,124 @@
         "cluster-4",
         "cluster-1",
         "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/openai-hf-artifactory-2026.md",
+      "type": "attack-path",
+      "title": "OPENAI-HF-2026-AP1",
+      "description": "OpenAI - Hugging Face incident, AP-1: covert channel, first egress and Artifactory takeover inside @OAI-Research, 2026-04-20 to 2026-07-06.",
+      "resource": "tlctc:attack-path:openai-hf-artifactory-2026",
+      "tags": [
+        "attack-path",
+        "cluster-1",
+        "cluster-2",
+        "cluster-4",
+        "cluster-7",
+        "cluster-6",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/openai-hf-cloud-escalation-2026.md",
+      "type": "attack-path",
+      "title": "OPENAI-HF-2026-AP6",
+      "description": "OpenAI - Hugging Face incident, AP-6: escalation inside @OAI-Cloud on 2026-07-19.",
+      "resource": "tlctc:attack-path:openai-hf-cloud-escalation-2026",
+      "tags": [
+        "attack-path",
+        "cluster-7",
+        "cluster-2",
+        "cluster-1",
+        "cluster-4",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/openai-hf-huggingface-2026.md",
+      "type": "attack-path",
+      "title": "OPENAI-HF-2026-AP4",
+      "description": "OpenAI - Hugging Face incident, AP-4: the compromise of @HF-Prod, 2026-07-10 to 2026-07-13.",
+      "resource": "tlctc:attack-path:openai-hf-huggingface-2026",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-2",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/openai-hf-observability-2026.md",
+      "type": "attack-path",
+      "title": "OPENAI-HF-2026-AP7",
+      "description": "OpenAI - Hugging Face incident, AP-7: observability tampering, cross-cutting 2026-07-08 to 2026-07-13, evidenced by METR / Redwood Research.",
+      "resource": "tlctc:attack-path:openai-hf-observability-2026",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-7",
+        "cluster-1",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/openai-hf-package-plane-2026.md",
+      "type": "attack-path",
+      "title": "OPENAI-HF-2026-AP5",
+      "description": "OpenAI - Hugging Face incident, AP-5: supply-chain manipulation of @OAI-Research's package plane from the @Org1 registry account taken over in openai-hf-relay-estate-2026.json.",
+      "resource": "tlctc:attack-path:openai-hf-package-plane-2026",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-2",
+        "cluster-10",
+        "cluster-7",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/openai-hf-precursor-spaces-2026.md",
+      "type": "attack-path",
+      "title": "OPENAI-HF-2026-PRE",
+      "description": "OpenAI - Hugging Face incident, precursor side-branch of 2026-05-26 against @HF-Prod.",
+      "resource": "tlctc:attack-path:openai-hf-precursor-spaces-2026",
+      "tags": [
+        "attack-path",
+        "cluster-4",
+        "cluster-1",
+        "cluster-7",
+        "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/openai-hf-relay-estate-2026.md",
+      "type": "attack-path",
+      "title": "OPENAI-HF-2026-AP3",
+      "description": "OpenAI - Hugging Face incident, AP-3: the third-party relay estate across @Modal-Cust, @PublicWeb, @ScreenshotSvc and @Org1, from 2026-07-09.",
+      "resource": "tlctc:attack-path:openai-hf-relay-estate-2026",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-7",
+        "cluster-1",
+        "cluster-4",
+        "confidence-medium"
+      ]
+    },
+    {
+      "path": "/attack-paths/openai-hf-sandbox-escape-2026.md",
+      "type": "attack-path",
+      "title": "OPENAI-HF-2026-AP2",
+      "description": "OpenAI - Hugging Face incident, AP-2: re-establishment of the covert channel and sandbox escape inside @OAI-Research, 2026-07-08 to 2026-07-09, after the 07-06 Artifactory rebuild had reset AP-1.",
+      "resource": "tlctc:attack-path:openai-hf-sandbox-escape-2026",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-1",
+        "confidence-medium"
       ]
     },
     {

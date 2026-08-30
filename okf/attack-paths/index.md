@@ -1,6 +1,6 @@
 # attack paths
 
-51 document(s).
+59 document(s).
 
 - [AD-DOMAIN-ADMIN-CASCADE-2025](/attack-paths/ad-domain-admin-cascade-2025.md) — `attack-path`
 - [AGENT-BTZ-USB-2008](/attack-paths/agent-btz-usb-2008.md) — `attack-path`
@@ -36,6 +36,14 @@
 - [NASTYSHREW-UKRAINE-2025](/attack-paths/nastyshrew-ukraine-2025.md) — `attack-path`
 - [NK-IT-WORKER-INFILTRATION-2025](/attack-paths/nk-it-worker-infiltration-2025.md) — `attack-path`
 - [OKTA-LAPSUS-2022](/attack-paths/okta-lapsus-2022.md) — `attack-path`
+- [OPENAI-HF-2026-AP1](/attack-paths/openai-hf-artifactory-2026.md) — `attack-path`
+- [OPENAI-HF-2026-AP6](/attack-paths/openai-hf-cloud-escalation-2026.md) — `attack-path`
+- [OPENAI-HF-2026-AP4](/attack-paths/openai-hf-huggingface-2026.md) — `attack-path`
+- [OPENAI-HF-2026-AP7](/attack-paths/openai-hf-observability-2026.md) — `attack-path`
+- [OPENAI-HF-2026-AP5](/attack-paths/openai-hf-package-plane-2026.md) — `attack-path`
+- [OPENAI-HF-2026-PRE](/attack-paths/openai-hf-precursor-spaces-2026.md) — `attack-path`
+- [OPENAI-HF-2026-AP3](/attack-paths/openai-hf-relay-estate-2026.md) — `attack-path`
+- [OPENAI-HF-2026-AP2](/attack-paths/openai-hf-sandbox-escape-2026.md) — `attack-path`
 - [OPENCODE-EXPLOIT-CHAIN-2025](/attack-paths/opencode-exploit-chain-2025.md) — `attack-path`
 - [PEGASUS-FORCEDENTRY-2021](/attack-paths/pegasus-forcedentry-2021.md) — `attack-path`
 - [PRESSURE-CHOLLIMA-BYBIT-2025](/attack-paths/pressure-chollima-bybit-2025.md) — `attack-path`
