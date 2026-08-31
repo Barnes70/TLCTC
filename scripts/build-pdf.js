@@ -68,7 +68,7 @@ const tmpHtmlPath = path.join(
     headerTemplate: "<span></span>",
     footerTemplate:
       '<div style="font-size:8px; width:100%; text-align:center; color:#888;">' +
-      "TLCTC v2.3 — A Cause-Oriented Cyber Threat Taxonomy &nbsp;·&nbsp; " +
+      "TLCTC — A Cause-Oriented Cyber Threat Taxonomy &nbsp;·&nbsp; " +
       '<span class="pageNumber"></span> / <span class="totalPages"></span></div>',
     margin: { top: "22mm", bottom: "16mm", left: "20mm", right: "20mm" },
   });

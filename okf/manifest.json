@@ -3464,7 +3464,7 @@
       "path": "/glossary/ssrf-server-side-request-forgery.md",
       "type": "term",
       "title": "SSRF (Server-Side Request Forgery)",
-      "description": "An implementation flaw where an attacker induces the server to make requests to unintended locations, potentially accessing internal resources or services.",
+      "description": "An industry label for an effect, not for a generic vulnerability: a server is induced to issue requests to destinations the attacker chooses, such as cloud metadata endpoints, internal services, or RFC 1918 hosts.",
       "resource": "tlctc:term:ssrf-server-side-request-forgery",
       "tags": [
         "glossary"
