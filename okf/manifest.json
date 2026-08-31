@@ -619,8 +619,8 @@
       "resource": "tlctc:attack-path:openai-hf-sandbox-escape-2026",
       "tags": [
         "attack-path",
-        "cluster-2",
         "cluster-1",
+        "cluster-2",
         "confidence-medium"
       ]
     },
