@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>TLCTC Threat Radar - Interactive Assessment Tool V4</title>
-    <meta name="description" content="Visualize and assess your cyber risk posture with the interactive TLCTC Threat Radar. Map threats to the 10 universal clusters and export reports.">
+    <title>TLCTC Threat Radar - Interactive Assessment Tool V5</title>
+    <meta name="description" content="Visualize and assess your cyber risk posture with the interactive TLCTC Threat Radar. Direct-manipulation editing, trend tracking, and slide-ready exports across the 10 universal clusters.">
     <meta name="keywords" content="TLCTC, Cyber Radar, Threat Assessment, Risk Management, Cyber Threat Clusters, Interactive Tool, CISO Dashboard, Threat Visualization, JSON Import">
     <meta name="author" content="TLCTC Framework">
     <meta property="og:title" content="TLCTC Threat Radar App">
@@ -160,7 +160,24 @@
             .sector-dragging { @apply opacity-50 border-2 border-dashed border-blue-400; }
             .sector-drop-indicator-top { @apply border-t-4 border-t-blue-500; }
             .sector-drop-indicator-bottom { @apply border-b-4 border-b-blue-500; }
+            .seg-group { @apply inline-flex items-center rounded-lg border border-border bg-muted/60 p-0.5; }
+            .seg-btn { @apply px-2.5 py-1 text-xs font-semibold rounded-md text-muted-foreground transition-colors; }
+            .seg-btn-active { @apply bg-card text-foreground shadow-sm; }
+            .sector-chip { @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-card pl-2 pr-1 py-1 text-xs font-medium cursor-pointer transition-all hover:shadow-md hover:border-blue-400/60 select-none; }
+            .sector-chip-hidden { @apply opacity-45 border-dashed; }
+            .chip-eye { @apply flex items-center justify-center h-5 w-5 rounded-full text-muted-foreground hover:bg-accent hover:text-foreground transition-colors; }
+            .bubble-popover { @apply fixed z-50 w-72 bg-card text-card-foreground rounded-xl border border-border shadow-2xl p-3; }
+            .pop-flag-btn { @apply flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg border border-border px-2 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-accent; }
+            .pop-flag-btn-on-report { @apply bg-yellow-400/15 border-yellow-400/60 text-yellow-600 dark:text-yellow-400; }
+            .pop-flag-btn-on-tol { @apply bg-red-500/15 border-red-500/60 text-red-600 dark:text-red-400; }
+            .radar-tooltip { @apply absolute z-30 pointer-events-none bg-card/95 backdrop-blur-sm text-card-foreground rounded-lg border border-border shadow-xl px-3 py-2 text-xs; }
+            .export-title-input { @apply w-full bg-transparent border-0 text-center focus:outline-none focus:ring-0 placeholder:text-gray-400/70; }
         }
+        .radar-toolbar-btn { white-space: nowrap; }
+        body.presenting header, body.presenting .ai-disclaimer, body.presenting #tlctc-storage-notice, body.presenting .no-print { display: none !important; }
+        body.presenting .radar-container-wrapper { width: 100% !important; max-width: 1050px; margin: 0 auto; }
+        .present-exit-btn { position: fixed; bottom: 20px; right: 20px; z-index: 60; opacity: 0.35; transition: opacity 0.2s; }
+        .present-exit-btn:hover { opacity: 1; }
         .ai-disclaimer { background: hsl(var(--muted) / 0.5); border-bottom: 1px solid hsl(var(--border)); color: hsl(var(--muted-foreground)); font-size: 11px; line-height: 1.4; padding: 6px 16px; text-align: center; flex-shrink: 0; }
         .ai-disclaimer button { background: none; border: none; cursor: pointer; color: hsl(var(--muted-foreground)); font-size: 14px; margin-left: 8px; opacity: 0.6; vertical-align: middle; }
         .ai-disclaimer button:hover { opacity: 1; }
@@ -329,6 +346,21 @@ const DEFAULT_ZONE_AREA_SPLITS = {
 
 const DEFAULT_OLD_BUBBLE_SIZE_MULTIPLIER = 0.8;
 
+// Subtle severity wash per zone band (drawn under sector fills; recessive by design).
+// Status hues match the ZoneLegend dots: high=red, medium=amber, low=blue, latent=green.
+const ZONE_TINT_COLORS = {
+    high: 'rgba(239, 68, 68, 0.055)',
+    medium: 'rgba(245, 158, 11, 0.05)',
+    low: 'rgba(59, 130, 246, 0.04)',
+    latent: 'rgba(16, 185, 129, 0.035)',
+};
+
+const ZONE_STATUS_HEX = { high: '#ef4444', medium: '#f59e0b', low: '#3b82f6', latent: '#10b981' };
+
+const DEFAULT_TREND_DISPLAY = 'changed'; // 'changed' | 'all' | 'off'
+const DEFAULT_INTERACTION_MODE = 'assess'; // 'assess' | 'arrange'
+const HISTORY_LIMIT = 50;
+
 const DEFAULT_SECTOR_NAME_TEXT_SIZE_PX = 13;
 const DEFAULT_ZONE_LABEL_TEXT_SIZE_PX = 10;
 const DEFAULT_BUBBLE_TEXT_SIZE_PX = 7.5;
@@ -370,6 +402,7 @@ function computeRectSize(text, baseFontSizePx, sizeMultiplier) {
             toBeReported: Object.fromEntries(threatClustersDefinition.map(c => [c.id, false])),
             riskToleranceCrashed: Object.fromEntries(threatClustersDefinition.map(c => [c.id, false])),
             bubbleOffsets: Object.fromEntries(threatClustersDefinition.map(c => [c.id, { dx: 0, dy: 0 }])),
+            visible: true,
             collapsed: false
         });
 
@@ -408,6 +441,37 @@ function computeRectSize(text, baseFontSizePx, sizeMultiplier) {
         function Tooltip({ children, text }) {
             if (!text) return children;
             return (<div className="tooltip">{children}<div className="tooltip-text">{text}</div></div>);
+        }
+
+        // Click-to-edit text: renders as a plain div (reliable in PNG exports, and the
+        // placeholder is excluded from exports via .export-ignore); becomes an input on click.
+        function EditableText({ value, onChange, placeholder, className, style }) {
+            const [editing, setEditing] = useState(false);
+            const inputRef = useRef(null);
+            useEffect(() => { if (editing && inputRef.current) { inputRef.current.focus(); inputRef.current.select(); } }, [editing]);
+            if (editing) {
+                return (
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        value={value}
+                        onChange={e => onChange(e.target.value)}
+                        onBlur={() => setEditing(false)}
+                        onKeyDown={e => { if (e.key === 'Enter' || e.key === 'Escape') setEditing(false); }}
+                        placeholder={placeholder}
+                        className={`export-title-input ${className || ''}`}
+                        style={style}
+                    />
+                );
+            }
+            return (
+                <div
+                    onClick={() => setEditing(true)}
+                    className={`cursor-text ${className || ''} ${!value ? 'export-ignore' : ''}`}
+                    style={{ ...style, opacity: value ? (style && style.opacity) : 0.4 }}
+                    title="Click to edit"
+                >{value || placeholder}</div>
+            );
         }
         
 function RadarBubble({
@@ -596,15 +660,232 @@ function RadarBubble({
             };
         }
 
-        function RadarVisualization({ 
-            sectors, radarBgColor, radarTextColor, radarShape, clusterDisplayMode, zoneSizeMultipliers, zoneLabelColor, zoneLineStyle, oldBubbleSizeMultiplier, threatClustersData, 
-            sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin, 
+        // === Value <-> radius mapping (V5 layout honesty) ===
+        // Radial position inside a zone band is linear in the value's position inside
+        // that zone's value range, so radius encodes the value exactly: 100 = center,
+        // thresholds sit on the ring lines, and the mapping is continuous across bands.
+        function zoneValueRange(zone, limits) {
+            const l = typeof limits === 'object' && limits !== null ? limits : defaultZoneLimits;
+            const latent = typeof l.latent === 'number' ? l.latent : 0;
+            const low = typeof l.low === 'number' ? l.low : 5;
+            const medium = typeof l.medium === 'number' ? l.medium : 35;
+            switch (zone) {
+                case 'latent': return [0, latent];
+                case 'low': return [latent, low];
+                case 'medium': return [low, medium];
+                default: return [medium, 100];
+            }
+        }
+
+        function valueToRadius(value, limits, zoneBounds) {
+            const zone = determineZone(value, limits);
+            const bounds = zoneBounds[zone];
+            const [minV, maxV] = zoneValueRange(zone, limits);
+            if (maxV <= minV) return (bounds.inner + bounds.outer) / 2;
+            const f = Math.min(1, Math.max(0, (value - minV) / (maxV - minV)));
+            return bounds.outer - f * (bounds.outer - bounds.inner);
+        }
+
+        function radiusToValue(radius, limits, zoneBounds) {
+            const order = ['high', 'medium', 'low', 'latent'];
+            let zone = 'latent';
+            for (const z of order) { if (radius <= zoneBounds[z].outer + 0.0001) { zone = z; break; } }
+            const bounds = zoneBounds[zone];
+            const [minV, maxV] = zoneValueRange(zone, limits);
+            const span = bounds.outer - bounds.inner;
+            if (span <= 0 || maxV <= minV) return maxV;
+            const f = Math.min(1, Math.max(0, (bounds.outer - radius) / span));
+            return Math.round(minV + f * (maxV - minV));
+        }
+
+        // Annulus path for zone tints (fillRule evenodd for the full-circle variant).
+        function annulusPath(cx, cy, rOuter, rInner, half) {
+            if (half) {
+                return `M ${cx - rOuter},${cy} A ${rOuter},${rOuter} 0 0 1 ${cx + rOuter},${cy} L ${cx + rInner},${cy} A ${rInner},${rInner} 0 0 0 ${cx - rInner},${cy} Z`;
+            }
+            const c = (r) => `M ${cx - r},${cy} a ${r},${r} 0 1,0 ${2 * r},0 a ${r},${r} 0 1,0 ${-2 * r},0 Z`;
+            return `${c(rOuter)} ${c(rInner)}`;
+        }
+
+        // Shared bubble layout — used by the visualization and by the declutter pass.
+        function computeBubbleLayout({ sectors, radarShape, clusterDisplayMode, zoneSizeMultipliers, threatClustersData, bubbleTextSizePx, zoneBounds, centerX, centerY, getAngleFn, outerRadius }) {
+            const allBubbles = [];
+            sectors.forEach((sector, sectorIndex) => {
+                const baseAngle = getAngleFn(sectorIndex, sectors.length);
+                const nextBaseAngle = getAngleFn(sectorIndex + 1, sectors.length);
+                let sectorAngleSpan = nextBaseAngle - baseAngle;
+                if (radarShape === 'full' && sectorAngleSpan <= 0) { sectorAngleSpan += 2 * Math.PI; }
+
+                const activeInSector = threatClustersData
+                    .filter(c_data => sector.activeThreats?.[c_data.id] && sector.zoneLimits?.[c_data.id]);
+
+                const activeByZone = { latent: [], low: [], medium: [], high: [] };
+                activeInSector.forEach(cluster => {
+                    const value = parseFloat(sector.values?.[cluster.id] ?? 0);
+                    activeByZone[determineZone(value, sector.zoneLimits[cluster.id])].push(cluster.id);
+                });
+
+                activeInSector.forEach((cluster, threatIdx) => {
+                    const value = parseFloat(sector.values?.[cluster.id] ?? 0);
+                    const limits = sector.zoneLimits[cluster.id];
+                    const zone = determineZone(value, limits);
+                    const bounds = zoneBounds[zone];
+                    const zoneCount = Math.max((activeByZone[zone] || []).length, 1);
+
+                    const paddingFactor = 0.15;
+                    const usableAngleSpan = sectorAngleSpan * (1 - 2 * paddingFactor);
+                    const angleOffsetInSector =
+                        paddingFactor * sectorAngleSpan +
+                        ((threatIdx + 0.5) / activeInSector.length) * usableAngleSpan;
+                    const idealAngle = baseAngle + angleOffsetInSector;
+
+                    const crowdingShrinkFactor = zone === 'high' && zoneCount > 3
+                        ? Math.max(0.78, 1 - ((zoneCount - 3) * 0.07))
+                        : 1;
+                    const sizeMultiplier = (zoneSizeMultipliers[zone] || 1.0) * crowdingShrinkFactor;
+                    const currentBubbleRadius = DEFAULT_BUBBLE_RADIUS * sizeMultiplier;
+
+                    let collisionWidth;
+                    let collisionHeight;
+                    if (clusterDisplayMode === 'name') {
+                        const rect = computeRectSize(cluster.shortName, bubbleTextSizePx, sizeMultiplier);
+                        collisionWidth = rect.width;
+                        collisionHeight = rect.height;
+                    } else {
+                        collisionWidth = currentBubbleRadius * 2;
+                        collisionHeight = currentBubbleRadius * 2;
+                    }
+                    const bubbleHalfSize = clusterDisplayMode === 'name'
+                        ? Math.max(collisionWidth, collisionHeight) / 2
+                        : currentBubbleRadius;
+
+                    // Radius encodes the value; clamp so bubbles stay drawable at the extremes.
+                    const minRadius = Math.min(bubbleHalfSize + 2, zoneBounds.high.outer * 0.5);
+                    const maxRadius = outerRadius - Math.min(bubbleHalfSize * 0.6, 12);
+                    const baseRadius = Math.min(maxRadius, Math.max(minRadius, valueToRadius(value, limits, zoneBounds)));
+
+                    const offset = sector.bubbleOffsets?.[cluster.id] || { dx: 0, dy: 0 };
+                    const baseX = centerX + Math.cos(idealAngle) * baseRadius;
+                    const baseY = centerY + Math.sin(idealAngle) * baseRadius;
+                    const oldValueNum = parseFloat(sector.oldValues?.[cluster.id]);
+
+                    allBubbles.push({
+                        id: `${sector.id}-${cluster.id}`,
+                        sectorId: sector.id,
+                        sectorName: sector.name,
+                        clusterId: cluster.id,
+                        clusterName: cluster.name,
+                        baseX, baseY,
+                        x: baseX + (offset.dx || 0),
+                        y: baseY + (offset.dy || 0),
+                        dx: offset.dx || 0,
+                        dy: offset.dy || 0,
+                        baseAngle: idealAngle,
+                        baseRadius,
+                        color: sector.color,
+                        labelTextColor: sector.labelTextColor || DEFAULT_LABEL_TEXT_COLOR,
+                        shortName: cluster.shortName,
+                        label: `#${cluster.id}`,
+                        toBeReported: sector.toBeReported?.[cluster.id] ?? false,
+                        riskToleranceCrashed: sector.riskToleranceCrashed?.[cluster.id] ?? false,
+                        currentValue: value,
+                        oldValue: oldValueNum,
+                        currentZone: zone,
+                        oldZone: !isNaN(oldValueNum) ? determineZone(oldValueNum, limits) : zone,
+                        limits,
+                        width: collisionWidth,
+                        height: collisionHeight,
+                        size: currentBubbleRadius,
+                        sizeMultiplier,
+                        zoneInnerRadius: bounds.inner,
+                        zoneOuterRadius: bounds.outer,
+                        bubbleHalfSize,
+                        sectorStartAngle: baseAngle,
+                        sectorEndAngle: baseAngle + sectorAngleSpan,
+                    });
+                });
+            });
+            return allBubbles;
+        }
+
+        // Declutter: collision relaxation that is primarily tangential (bubbles slide
+        // along their ring inside their sector's angular span). A small radial give
+        // (max ~10px, clamped inside the zone band) is allowed so dense rings can
+        // still resolve — a cosmetic offset of at most ~2 value points visually.
+        function computeDeclutterOffsets(bubbles, centerX, centerY) {
+            const RADIAL_GIVE = 10;
+            const items = bubbles.map(b => {
+                const bandInner = b.zoneInnerRadius + Math.min(b.height / 2, Math.max((b.zoneOuterRadius - b.zoneInnerRadius) / 2 - 1, 0));
+                const bandOuter = Math.max(b.zoneOuterRadius - Math.min(b.height / 2, (b.zoneOuterRadius - b.zoneInnerRadius) / 2 - 1), bandInner);
+                return {
+                    ...b,
+                    angle: b.baseAngle,
+                    radius: b.baseRadius,
+                    minAngle: b.sectorStartAngle,
+                    maxAngle: b.sectorEndAngle,
+                    minRadius: Math.max(bandInner, b.baseRadius - RADIAL_GIVE, 6),
+                    maxRadius: Math.max(Math.min(bandOuter, b.baseRadius + RADIAL_GIVE), Math.max(bandInner, b.baseRadius - RADIAL_GIVE, 6)),
+                };
+            });
+            const pos = (it) => ({ x: centerX + Math.cos(it.angle) * it.radius, y: centerY + Math.sin(it.angle) * it.radius });
+            const PAD = 3;
+            for (let iter = 0; iter < 120; iter++) {
+                let movedAny = false;
+                for (let i = 0; i < items.length; i++) {
+                    for (let j = i + 1; j < items.length; j++) {
+                        const a = items[i], b = items[j];
+                        const pa = pos(a), pb = pos(b);
+                        const ox = (a.width + b.width) / 2 + PAD - Math.abs(pa.x - pb.x);
+                        const oy = (a.height + b.height) / 2 + PAD - Math.abs(pa.y - pb.y);
+                        if (ox <= 0 || oy <= 0) continue;
+                        const overlap = Math.min(ox, oy);
+                        let angDiff = ((b.angle - a.angle + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
+                        if (Math.abs(angDiff) < 1e-6) angDiff = (j % 2 === 0) ? 1e-3 : -1e-3;
+                        const sign = angDiff >= 0 ? 1 : -1;
+                        const stepA = (overlap / 2 + 0.5) / Math.max(a.radius, 24);
+                        const stepB = (overlap / 2 + 0.5) / Math.max(b.radius, 24);
+                        a.angle -= sign * stepA * 0.55;
+                        b.angle += sign * stepB * 0.55;
+                        // Small radial separation for pairs the tangent can't resolve
+                        const radDiff = b.radius - a.radius;
+                        const radSign = radDiff !== 0 ? Math.sign(radDiff) : ((i + j) % 2 === 0 ? 1 : -1);
+                        a.radius -= radSign * overlap * 0.12;
+                        b.radius += radSign * overlap * 0.12;
+                        const clampIt = (it) => {
+                            const margin = Math.min((it.maxAngle - it.minAngle) * 0.06, it.width / (2 * Math.max(it.radius, 24)));
+                            it.angle = Math.max(it.minAngle + margin, Math.min(it.maxAngle - margin, it.angle));
+                            it.radius = Math.max(it.minRadius, Math.min(it.maxRadius, it.radius));
+                        };
+                        clampIt(a); clampIt(b);
+                        movedAny = true;
+                    }
+                }
+                if (!movedAny) break;
+            }
+            const offsets = {};
+            items.forEach(it => {
+                const p = pos(it);
+                if (!offsets[it.sectorId]) offsets[it.sectorId] = {};
+                offsets[it.sectorId][it.clusterId] = {
+                    dx: Math.round((p.x - it.baseX) * 10) / 10,
+                    dy: Math.round((p.y - it.baseY) * 10) / 10,
+                };
+            });
+            return offsets;
+        }
+
+        function RadarVisualization({
+            sectors, radarBgColor, radarTextColor, radarShape, clusterDisplayMode, zoneSizeMultipliers, zoneLabelColor, zoneLineStyle, oldBubbleSizeMultiplier, threatClustersData,
+            sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin,
             reportFlagSizePx, reportFlagColor, reportFlagTextColor,
             toleranceFlagSizePx, toleranceFlagColor, toleranceFlagTextColor,
-            onBubbleMove 
+            interactionMode, trendDisplay, zoneTintEnabled, spotlightSectorId,
+            onBubbleMove, onValueChange, onBubbleClick, onGestureStart, onGestureEnd
         }) {
             const svgContainerRef = useRef(null);
             const [dragging, setDragging] = useState(null);
+            const [hovered, setHovered] = useState(null);
+            const movedRef = useRef(false);
             const baseDimension = 800;
             const overallScaleFactor = 1;
             const currentDimension = baseDimension * overallScaleFactor;
@@ -628,145 +909,17 @@ function RadarBubble({
                 return (index / total) * 2 * Math.PI - Math.PI / 2;
             }, [radarShape]);
 
-const bubblePositions = useMemo(() => {
-    let allBubbles = [];
+            const bubblePositions = useMemo(() => computeBubbleLayout({
+                sectors, radarShape, clusterDisplayMode, zoneSizeMultipliers, threatClustersData,
+                bubbleTextSizePx, zoneBounds, centerX, centerY, getAngleFn: getAngle, outerRadius,
+            }), [
+                sectors, radarShape, clusterDisplayMode, getAngle, centerX, centerY,
+                zoneBounds, zoneSizeMultipliers, threatClustersData, bubbleTextSizePx, outerRadius,
+            ]);
 
-    sectors.forEach((sector, sectorIndex) => {
-        const baseAngle = getAngle(sectorIndex, sectors.length);
-        const nextBaseAngle = getAngle(sectorIndex + 1, sectors.length);
-
-        let sectorAngleSpan = nextBaseAngle - baseAngle;
-        if (radarShape === 'full' && sectorAngleSpan < 0) {
-            sectorAngleSpan += 2 * Math.PI;
-        }
-
-        const activeInSector = threatClustersData
-            .filter(c_data => sector.activeThreats?.[c_data.id] && sector.zoneLimits?.[c_data.id]);
-
-        const activeByZone = {
-            latent: [],
-            low: [],
-            medium: [],
-            high: [],
-        };
-
-        activeInSector.forEach(cluster => {
-            const value = parseFloat(sector.values?.[cluster.id] ?? 0);
-            const zone = determineZone(value, sector.zoneLimits[cluster.id]);
-            activeByZone[zone].push(cluster.id);
-        });
-
-        activeInSector.forEach((cluster, threatIdx) => {
-            const value = parseFloat(sector.values?.[cluster.id] ?? 0);
-            const zone = determineZone(value, sector.zoneLimits[cluster.id]);
-            const bounds = zoneBounds[zone];
-            const zoneClusterIds = activeByZone[zone] || [];
-            const zoneIndex = Math.max(zoneClusterIds.indexOf(cluster.id), 0);
-            const zoneCount = Math.max(zoneClusterIds.length, 1);
-
-            const paddingFactor = 0.15;
-            const usableAngleSpan = sectorAngleSpan * (1 - 2 * paddingFactor);
-            const angleOffsetInSector =
-                paddingFactor * sectorAngleSpan +
-                ((threatIdx + 0.5) / activeInSector.length) * usableAngleSpan;
-
-            const idealAngle = baseAngle + angleOffsetInSector;
-
-            const crowdingShrinkFactor = zone === 'high' && zoneCount > 3
-                ? Math.max(0.78, 1 - ((zoneCount - 3) * 0.07))
-                : 1;
-            const sizeMultiplier = (zoneSizeMultipliers[zone] || 1.0) * crowdingShrinkFactor;
-            const currentBubbleRadius = DEFAULT_BUBBLE_RADIUS * sizeMultiplier;
-
-            let collisionWidth;
-            let collisionHeight;
-
-            if (clusterDisplayMode === 'name') {
-                const text = cluster.shortName;
-                const rect = computeRectSize(text, bubbleTextSizePx, sizeMultiplier);
-                collisionWidth = rect.width;
-                collisionHeight = rect.height;
-            } else {
-                collisionWidth = currentBubbleRadius * 2;
-                collisionHeight = currentBubbleRadius * 2;
-            }
-
-            const bubbleHalfSize = clusterDisplayMode === 'name'
-                ? Math.max(collisionWidth, collisionHeight) / 2
-                : currentBubbleRadius;
-
-            const bandThickness = Math.max(bounds.outer - bounds.inner, 1);
-            const maxPadding = Math.max((bandThickness / 2) - 1, 0);
-            // Padding must be at least bubbleHalfSize so the bubble's full radial
-            // extent stays inside its zone band; capped at maxPadding for very
-            // narrow bands (e.g. latent) where the bubble can't physically fit.
-            const radialPadding = Math.min(
-                maxPadding,
-                Math.max(bubbleHalfSize, 6 * overallScaleFactor)
-            );
-            const usableBandThickness = Math.max(bandThickness - radialPadding * 2, 1);
-            const baseRadius = zoneCount > 1
-                ? bounds.inner + radialPadding + ((zoneIndex + 0.5) / zoneCount) * usableBandThickness
-                : (bounds.inner + bounds.outer) / 2;
-
-            // Get custom offset if exists
-            const offset = sector.bubbleOffsets?.[cluster.id] || { dx: 0, dy: 0 };
-            const baseX = centerX + Math.cos(idealAngle) * baseRadius;
-            const baseY = centerY + Math.sin(idealAngle) * baseRadius;
-
-            allBubbles.push({
-                id: `${sector.id}-${cluster.id}`,
-                sectorId: sector.id,
-                clusterId: cluster.id,
-                baseX: baseX,
-                baseY: baseY,
-                x: baseX + offset.dx,
-                y: baseY + offset.dy,
-                dx: offset.dx,
-                dy: offset.dy,
-                color: sector.color,
-                labelTextColor: sector.labelTextColor || DEFAULT_LABEL_TEXT_COLOR,
-                shortName: cluster.shortName,
-                label: `#${cluster.id}`,
-                toBeReported: sector.toBeReported?.[cluster.id] ?? false,
-                riskToleranceCrashed: sector.riskToleranceCrashed?.[cluster.id] ?? false,
-                currentValue: value,
-                oldValue: parseFloat(sector.oldValues?.[cluster.id]),
-                currentZone: zone,
-                oldZone: !isNaN(parseFloat(sector.oldValues?.[cluster.id]))
-                    ? determineZone(
-                        parseFloat(sector.oldValues?.[cluster.id]),
-                        sector.zoneLimits[cluster.id]
-                      )
-                    : zone,
-                width: collisionWidth,
-                height: collisionHeight,
-                size: currentBubbleRadius,
-                sizeMultiplier,
-                // Zone boundary info for drag constraints
-                zoneInnerRadius: bounds.inner,
-                zoneOuterRadius: bounds.outer,
-                bubbleHalfSize: bubbleHalfSize,
-                sectorStartAngle: baseAngle,
-                sectorEndAngle: nextBaseAngle,
-            });
-        });
-    });
-
-    return allBubbles;
-}, [
-    sectors,
-    radarShape,
-    clusterDisplayMode,
-    getAngle,
-    centerX,
-    centerY,
-    zoneBounds,
-    zoneSizeMultipliers,
-    threatClustersData,
-    bubbleTextSizePx,
-    overallScaleFactor,
-]);
+            const dimFor = useCallback((sectorId) => (
+                spotlightSectorId && sectorId !== spotlightSectorId ? 0.12 : 1
+            ), [spotlightSectorId]);
 
             // Convert screen coordinates to SVG coordinates
             const getSvgPoint = useCallback((clientX, clientY) => {
@@ -779,12 +932,15 @@ const bubblePositions = useMemo(() => {
                 return { x: svgP.x, y: svgP.y };
             }, []);
 
-            // Handle mouse down on bubble
+            // Handle mouse down on bubble — starts either an assess (value) or arrange (layout) gesture
             const handleBubbleMouseDown = useCallback((e, bubble) => {
                 e.preventDefault();
                 e.stopPropagation();
                 const svgPoint = getSvgPoint(e.clientX, e.clientY);
+                movedRef.current = false;
+                if (onGestureStart) onGestureStart();
                 setDragging({
+                    mode: interactionMode || 'assess',
                     sectorId: bubble.sectorId,
                     clusterId: bubble.clusterId,
                     startMouseX: svgPoint.x,
@@ -797,56 +953,65 @@ const bubblePositions = useMemo(() => {
                     zoneOuterRadius: bubble.zoneOuterRadius,
                     bubbleHalfSize: bubble.bubbleHalfSize,
                     bubbleId: bubble.id,
+                    limits: bubble.limits,
+                    liveValue: bubble.currentValue,
                 });
-            }, [getSvgPoint]);
+                setHovered(null);
+            }, [getSvgPoint, interactionMode, onGestureStart]);
 
-            // Handle mouse move - constrain to zone bandwidth
             const handleMouseMove = useCallback((e) => {
                 if (!dragging) return;
                 const svgPoint = getSvgPoint(e.clientX, e.clientY);
-                
-                // Calculate new offset
-                let newDx = dragging.startDx + (svgPoint.x - dragging.startMouseX);
-                let newDy = dragging.startDy + (svgPoint.y - dragging.startMouseY);
-                
-                // Calculate new absolute position
+                const rawDx = svgPoint.x - dragging.startMouseX;
+                const rawDy = svgPoint.y - dragging.startMouseY;
+                if (!movedRef.current && Math.hypot(rawDx, rawDy) < 4) return;
+                movedRef.current = true;
+
+                if (dragging.mode === 'assess') {
+                    // Radial drag sets the value: radius is mapped back to a 0-100 value
+                    // through this cluster's zone thresholds.
+                    const dist = Math.hypot(svgPoint.x - centerX, svgPoint.y - centerY);
+                    const clamped = Math.min(dist, outerRadius);
+                    const val = radiusToValue(clamped, dragging.limits, zoneBounds);
+                    if (onValueChange) onValueChange(dragging.sectorId, dragging.clusterId, val);
+                    setDragging(d => (d ? { ...d, liveValue: val } : d));
+                    return;
+                }
+
+                // Arrange mode: cosmetic offset, constrained to the zone band
+                let newDx = dragging.startDx + rawDx;
+                let newDy = dragging.startDy + rawDy;
                 let newX = dragging.baseX + newDx;
                 let newY = dragging.baseY + newDy;
-                
-                // Constrain to zone boundaries (radial constraint within band)
                 const distFromCenter = Math.sqrt(Math.pow(newX - centerX, 2) + Math.pow(newY - centerY, 2));
                 const angle = Math.atan2(newY - centerY, newX - centerX);
-                
-                // Add padding for bubble size so center stays within band
-                const padding = dragging.bubbleHalfSize + 5;
+                const padding = Math.min(dragging.bubbleHalfSize + 5, Math.max((dragging.zoneOuterRadius - dragging.zoneInnerRadius) / 2 - 1, 0));
                 const minRadius = dragging.zoneInnerRadius + padding;
-                const maxRadius = dragging.zoneOuterRadius - padding;
+                const maxRadius = Math.max(dragging.zoneOuterRadius - padding, minRadius);
                 const clampedRadius = Math.max(minRadius, Math.min(maxRadius, distFromCenter));
-                
-                // Recalculate position if clamped
                 if (distFromCenter !== clampedRadius) {
                     newX = centerX + Math.cos(angle) * clampedRadius;
                     newY = centerY + Math.sin(angle) * clampedRadius;
                     newDx = newX - dragging.baseX;
                     newDy = newY - dragging.baseY;
                 }
-                
-                // For half radar, also constrain to upper half
                 if (radarShape === 'half' && newY > centerY) {
                     newY = centerY;
                     newDy = newY - dragging.baseY;
                 }
-                
-                // Update position via callback
                 if (onBubbleMove) {
                     onBubbleMove(dragging.sectorId, dragging.clusterId, newDx, newDy);
                 }
-            }, [dragging, getSvgPoint, centerX, centerY, onBubbleMove, radarShape]);
+            }, [dragging, getSvgPoint, centerX, centerY, outerRadius, zoneBounds, onBubbleMove, onValueChange, radarShape]);
 
-            // Handle mouse up
-            const handleMouseUp = useCallback(() => {
+            const handleMouseUp = useCallback((e) => {
+                const gesture = dragging;
                 setDragging(null);
-            }, []);
+                if (onGestureEnd) onGestureEnd();
+                if (gesture && !movedRef.current && onBubbleClick) {
+                    onBubbleClick({ sectorId: gesture.sectorId, clusterId: gesture.clusterId }, e.clientX, e.clientY);
+                }
+            }, [dragging, onGestureEnd, onBubbleClick]);
 
             // Add/remove global mouse listeners when dragging
             useEffect(() => {
@@ -944,6 +1109,17 @@ const bubblePositions = useMemo(() => {
                     }
                 });
 
+                // Zone severity tints (drawn under sector fills; recessive wash)
+                const tintElements = zoneTintEnabled ? Object.entries(zoneBounds).map(([zoneName, bounds]) => (
+                    <path
+                        key={`tint-${zoneName}`}
+                        d={annulusPath(centerX, centerY, Math.max(bounds.outer, 0.1), Math.max(bounds.inner, 0), radarShape === 'half')}
+                        fill={ZONE_TINT_COLORS[zoneName]}
+                        fillRule="evenodd"
+                        stroke="none"
+                    />
+                )) : null;
+
                 const sectorBgPaths = sectors.map((sector, sectorIndex) => {
                     const startAngle = getAngle(sectorIndex, sectors.length);
                     const endAngle = getAngle(sectorIndex + 1, sectors.length);
@@ -951,7 +1127,7 @@ const bubblePositions = useMemo(() => {
                     const x2 = centerX + outerRadius * Math.cos(endAngle); const y2 = centerY + outerRadius * Math.sin(endAngle);
                     let pathData;
                     if (radarShape === 'half') { pathData = `M ${centerX},${centerY} L ${x1},${y1} A ${outerRadius},${outerRadius} 0 0 1 ${x2},${y2} Z`; } else { const largeArcFlag = (endAngle - startAngle) > Math.PI ? 1 : 0; pathData = `M ${centerX},${centerY} L ${x1},${y1} A ${outerRadius},${outerRadius} 0 ${largeArcFlag} 1 ${x2},${y2} Z`; }
-                    return <path key={`sector-bg-${sector.id}`} d={pathData} fill={sector.backgroundColor || 'transparent'} stroke="none" />;
+                    return <path key={`sector-bg-${sector.id}`} d={pathData} fill={sector.backgroundColor || 'transparent'} stroke="none" opacity={dimFor(sector.id)} />;
                 });
 
                 const sectorLineElements = sectors.length > 1 ? sectors.map((_, sectorIndex) => {
@@ -976,7 +1152,7 @@ const bubblePositions = useMemo(() => {
                     while (tangentialRotation > 180) tangentialRotation -= 360;
                     if (tangentialRotation > 90) { tangentialRotation -= 180; } else if (tangentialRotation < -90) { tangentialRotation += 180; }
                     const fontSize = sectorNameTextSizePx;
-                    return ( <text key={`s-name-${sector.id}`} x={x} y={y} transform={`rotate(${tangentialRotation} ${x} ${y})`} textAnchor="middle" dominantBaseline="central" fontSize={`${fontSize}px`} fontWeight="500" fontFamily="Inter, sans-serif" fill={radarTextColor} > {sector.name} </text> );
+                    return ( <text key={`s-name-${sector.id}`} x={x} y={y} transform={`rotate(${tangentialRotation} ${x} ${y})`} textAnchor="middle" dominantBaseline="central" fontSize={`${fontSize}px`} fontWeight="500" fontFamily="Inter, sans-serif" fill={radarTextColor} opacity={dimFor(sector.id)} > {sector.name} </text> );
                 });
 
                 // Outer boundary is now part of the latent zone, so we make it more prominent
@@ -987,69 +1163,158 @@ const bubblePositions = useMemo(() => {
                     </g>
                 ) : <circle cx={centerX} cy={centerY} r={outerRadius} fill="none" stroke={radarTextColor} strokeWidth="2" opacity="0.6" />;
 
-                return (<g>{outerBoundary}{sectorBgPaths}{zoneElements}{sectorLineElements}{zoneLabelElements}{sectorNameElements}</g>);
+                return (<g>{tintElements}{sectorBgPaths}{outerBoundary}{zoneElements}{sectorLineElements}{zoneLabelElements}{sectorNameElements}</g>);
             };
 
+            // Trend ghosts: which previous-period bubbles to show
+            const trendBubbles = trendDisplay === 'off' ? [] : bubblePositions.filter(b => {
+                if (isNaN(b.oldValue)) return false;
+                if (trendDisplay === 'all') return true;
+                const valueChanged = Math.abs(b.oldValue - b.currentValue) >= 1;
+                const zoneChanged = b.oldZone !== b.currentZone;
+                return zoneChanged || valueChanged;
+            });
+
+            const draggedBubble = dragging ? bubblePositions.find(b => b.id === dragging.bubbleId) : null;
+            const assessDragActive = dragging && dragging.mode === 'assess' && draggedBubble;
+            const assessZone = assessDragActive ? determineZone(dragging.liveValue, dragging.limits) : null;
+
             return (
-                <div className="radar-container" style={{ backgroundColor: radarBgColor, cursor: dragging ? 'grabbing' : 'default' }} ref={svgContainerRef}>
+                <div className="radar-container relative" style={{ backgroundColor: radarBgColor, cursor: dragging ? 'grabbing' : 'default' }} ref={svgContainerRef}>
                     <svg viewBox={`0 0 ${currentDimension} ${currentDimension}`} preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%' }} id="radar-svg-element">
                         <rect x="0" y="0" width={currentDimension} height={currentDimension} fill="transparent" />
                         {renderRadarStructure()}
+                        {/* Active zone highlight while assess-dragging */}
+                        {assessDragActive && (
+                            <path
+                                d={annulusPath(centerX, centerY, Math.max(zoneBounds[assessZone].outer, 0.1), Math.max(zoneBounds[assessZone].inner, 0), radarShape === 'half')}
+                                fill="rgba(59, 130, 246, 0.10)"
+                                fillRule="evenodd"
+                                stroke="#3b82f6"
+                                strokeWidth="1"
+                                strokeOpacity="0.35"
+                                style={{ pointerEvents: 'none' }}
+                            />
+                        )}
                         {/* Trend lines and old bubbles */}
-                        {bubblePositions.filter(b => {
-                            if (isNaN(b.oldValue)) return false;
-                            const valueChanged = Math.abs(b.oldValue - b.currentValue) >= 1;
-                            const zoneChanged = b.oldZone !== b.currentZone;
-                            return zoneChanged || valueChanged;
-                        }).map(bubble => {
-                             const oldBounds = zoneBounds[bubble.oldZone];
-                             const oldBubbleRadiusInZone = (oldBounds.inner + oldBounds.outer) / 2;
-                             const angleToNewBubble = Math.atan2(bubble.baseY - centerY, bubble.baseX - centerX);
-                             const oldX = centerX + Math.cos(angleToNewBubble) * oldBubbleRadiusInZone;
-                             const oldY = centerY + Math.sin(angleToNewBubble) * oldBubbleRadiusInZone;
+                        {trendBubbles.map(bubble => {
+                             const oldRadius = valueToRadius(bubble.oldValue, bubble.limits, zoneBounds);
+                             const angleToNewBubble = bubble.baseAngle;
+                             const oldX = centerX + Math.cos(angleToNewBubble) * oldRadius;
+                             const oldY = centerY + Math.sin(angleToNewBubble) * oldRadius;
                              const oldBubbleDisplaySize = DEFAULT_BUBBLE_RADIUS * oldBubbleSizeMultiplier;
                              const trendUp = bubble.currentValue > bubble.oldValue;
                              const trendColor = trendUp ? '#ef4444' : '#22c55e';
                             return (
-                                <React.Fragment key={`old-${bubble.id}`}>
+                                <g key={`old-${bubble.id}`} opacity={dimFor(bubble.sectorId)} style={{ pointerEvents: 'none' }}>
                                     <line x1={oldX} y1={oldY} x2={bubble.x} y2={bubble.y} stroke={trendColor} strokeWidth="2" strokeDasharray="4,2" opacity="0.7"/>
-                                    <RadarBubble 
-                                        x={oldX} y={oldY} size={oldBubbleDisplaySize} color="#a0aec0" 
+                                    <RadarBubble
+                                        x={oldX} y={oldY} size={oldBubbleDisplaySize} color="#a0aec0"
                                         labelTextColor={bubble.labelTextColor}
-                                        label={bubble.label} shortName={bubble.shortName} highlight={false} 
-                                        toBeReported={false} riskToleranceCrashed={false} displayMode={clusterDisplayMode} 
-                                        sizeMultiplier={oldBubbleSizeMultiplier} bubbleTextSizePx={bubbleTextSizePx} 
+                                        label={bubble.label} shortName={bubble.shortName} highlight={false}
+                                        toBeReported={false} riskToleranceCrashed={false} displayMode={clusterDisplayMode}
+                                        sizeMultiplier={oldBubbleSizeMultiplier} bubbleTextSizePx={bubbleTextSizePx}
                                         reportFlagSizePx={reportFlagSizePx} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor}
                                         toleranceFlagSizePx={toleranceFlagSizePx} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor}
-                                        isDragging={false} 
+                                        isDragging={false}
                                     />
-                                </React.Fragment>
+                                </g>
                             );
                         })}
-                        {/* Current bubbles - draggable within zone band */}
+                        {/* Current bubbles - drag radially to assess, drag freely to arrange, click to edit */}
                         {bubblePositions.map(bubble => (
-                            <g key={bubble.id} style={{ cursor: dragging?.bubbleId === bubble.id ? 'grabbing' : 'grab' }} onMouseDown={(e) => handleBubbleMouseDown(e, bubble)}>
-                                <RadarBubble 
-                                    x={bubble.x} 
-                                    y={bubble.y} 
-                                    size={bubble.size} 
-                                    color={bubble.color} 
+                            <g
+                                key={bubble.id}
+                                opacity={dimFor(bubble.sectorId)}
+                                style={{ cursor: dragging?.bubbleId === bubble.id ? 'grabbing' : 'grab' }}
+                                onMouseDown={(e) => handleBubbleMouseDown(e, bubble)}
+                                onMouseEnter={() => { if (!dragging) setHovered(bubble.id); }}
+                                onMouseLeave={() => setHovered(h => (h === bubble.id ? null : h))}
+                            >
+                                <RadarBubble
+                                    x={bubble.x}
+                                    y={bubble.y}
+                                    size={bubble.size}
+                                    color={bubble.color}
                                     labelTextColor={bubble.labelTextColor}
-                                    label={bubble.label} 
-                                    shortName={bubble.shortName} 
-                                    highlight={true} 
-                                    toBeReported={bubble.toBeReported} 
-                                    riskToleranceCrashed={bubble.riskToleranceCrashed} 
-                                    displayMode={clusterDisplayMode} 
-                                    sizeMultiplier={bubble.sizeMultiplier} 
-                                    bubbleTextSizePx={bubbleTextSizePx} 
+                                    label={bubble.label}
+                                    shortName={bubble.shortName}
+                                    highlight={true}
+                                    toBeReported={bubble.toBeReported}
+                                    riskToleranceCrashed={bubble.riskToleranceCrashed}
+                                    displayMode={clusterDisplayMode}
+                                    sizeMultiplier={bubble.sizeMultiplier}
+                                    bubbleTextSizePx={bubbleTextSizePx}
                                     reportFlagSizePx={reportFlagSizePx} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor}
                                     toleranceFlagSizePx={toleranceFlagSizePx} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor}
                                     isDragging={dragging?.bubbleId === bubble.id}
                                 />
                             </g>
                         ))}
+                        {/* Live value badge while assess-dragging */}
+                        {assessDragActive && (() => {
+                            const bx = draggedBubble.x;
+                            const by = draggedBubble.y - draggedBubble.bubbleHalfSize - 14;
+                            const zoneLabel = assessZone.charAt(0).toUpperCase() + assessZone.slice(1);
+                            const badgeText = `${dragging.liveValue} · ${zoneLabel}`;
+                            const w = badgeText.length * 7.2 + 16;
+                            return (
+                                <g style={{ pointerEvents: 'none' }}>
+                                    <rect x={bx - w / 2} y={by - 11} width={w} height={22} rx={11} fill="#111827" opacity="0.92" />
+                                    <text x={bx} y={by} textAnchor="middle" dominantBaseline="central" fontSize="12px" fontWeight="600" fontFamily="Inter, sans-serif" fill="#ffffff">{badgeText}</text>
+                                </g>
+                            );
+                        })()}
                     </svg>
+                    {/* Hover tooltip (HTML overlay, never during a drag) */}
+                    {hovered && !dragging && (() => {
+                        const b = bubblePositions.find(bb => bb.id === hovered);
+                        if (!b) return null;
+                        const leftPct = (b.x / currentDimension) * 100;
+                        const topPct = (b.y / currentDimension) * 100;
+                        const flip = topPct < 22;
+                        const hasOld = !isNaN(b.oldValue) && b.oldValue !== b.currentValue;
+                        const delta = hasOld ? b.currentValue - b.oldValue : 0;
+                        return (
+                            <div
+                                className="radar-tooltip no-print"
+                                style={{
+                                    left: `${Math.min(Math.max(leftPct, 12), 88)}%`,
+                                    top: `${topPct}%`,
+                                    transform: flip
+                                        ? 'translate(-50%, 18px)'
+                                        : `translate(-50%, calc(-100% - ${b.bubbleHalfSize / 5}px - 10px))`,
+                                }}
+                            >
+                                <div className="flex items-center gap-1.5 font-semibold">
+                                    <span className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: b.color }}></span>
+                                    <span>{b.sectorName}</span>
+                                </div>
+                                <div className="mt-1 font-medium">{b.label} {b.clusterName}</div>
+                                <div className="mt-1 flex items-center gap-2 text-muted-foreground">
+                                    <span className="font-semibold text-foreground text-sm">{b.currentValue}</span>
+                                    {hasOld && (
+                                        <span style={{ color: delta > 0 ? '#ef4444' : '#22c55e' }}>
+                                            {delta > 0 ? '▲' : '▼'} {Math.abs(delta)} (prev {b.oldValue})
+                                        </span>
+                                    )}
+                                    <span className="inline-flex items-center gap-1">
+                                        <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: ZONE_STATUS_HEX[b.currentZone] }}></span>
+                                        <span className="capitalize">{b.currentZone}</span>
+                                    </span>
+                                </div>
+                                {(b.toBeReported || b.riskToleranceCrashed) && (
+                                    <div className="mt-1 flex gap-2 text-[10px] text-muted-foreground">
+                                        {b.toBeReported && <span>! To be reported</span>}
+                                        {b.riskToleranceCrashed && <span>{'⚡'} Tolerance exceeded</span>}
+                                    </div>
+                                )}
+                                <div className="mt-1.5 text-[10px] text-muted-foreground/80">
+                                    {interactionMode === 'assess' ? 'Drag to change value · click to edit' : 'Drag to arrange · click to edit'}
+                                </div>
+                            </div>
+                        );
+                    })()}
                 </div>
             );
         }
@@ -1114,7 +1379,120 @@ const bubblePositions = useMemo(() => {
             );
         }
 
-        function SectorEditModal({ 
+        // V5: click-to-edit popover anchored at the clicked bubble
+        function BubblePopover({ popover, sectors, threatClustersData, onClose, updateThreatValue, toggleThreatFlag, updateZoneLimit, applyThresholdsToSector, toggleThreatActive }) {
+            const ref = useRef(null);
+            useEffect(() => {
+                if (!popover) return;
+                const onDown = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
+                const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+                document.addEventListener('mousedown', onDown);
+                document.addEventListener('keydown', onKey);
+                return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey); };
+            }, [popover, onClose]);
+            if (!popover) return null;
+            const sector = sectors.find(s => s.id === popover.sectorId);
+            const cluster = threatClustersData.find(c => c.id === popover.clusterId);
+            if (!sector || !cluster) return null;
+            const value = sector.values?.[cluster.id] ?? 0;
+            const oldValue = parseFloat(sector.oldValues?.[cluster.id]);
+            const limits = sector.zoneLimits?.[cluster.id] || defaultZoneLimits;
+            const zone = determineZone(value, limits);
+            const left = Math.min(Math.max(popover.x, 12), window.innerWidth - 306);
+            const top = Math.min(Math.max(popover.y + 14, 12), Math.max(window.innerHeight - 430, 12));
+            return (
+                <div ref={ref} className="bubble-popover no-print" style={{ left, top }}>
+                    <div className="flex items-center justify-between pb-2 border-b border-border">
+                        <div className="flex items-center gap-2 min-w-0">
+                            <span className="inline-block w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: sector.color }}></span>
+                            <div className="min-w-0">
+                                <div className="text-sm font-semibold truncate">#{cluster.id} {cluster.name}</div>
+                                <div className="text-[11px] text-muted-foreground truncate">{sector.name}</div>
+                            </div>
+                        </div>
+                        <button onClick={onClose} className="app-btn app-btn-outline app-btn-sm px-2 py-1 flex-shrink-0"><i className="fas fa-times"></i></button>
+                    </div>
+                    <div className="pt-2 space-y-3">
+                        <div>
+                            <div className="flex items-center justify-between mb-1">
+                                <label className="text-xs text-muted-foreground">Threat level</label>
+                                <span className="inline-flex items-center gap-1 text-[11px] font-medium">
+                                    <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: ZONE_STATUS_HEX[zone] }}></span>
+                                    <span className="capitalize">{zone}</span>
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <input type="range" min="0" max="100" value={value} onChange={e => updateThreatValue(sector.id, cluster.id, e.target.value)} className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" />
+                                <input type="number" min="0" max="100" value={value} onChange={e => updateThreatValue(sector.id, cluster.id, e.target.value)} className="input-control w-16 text-center text-sm p-1" />
+                            </div>
+                            {!isNaN(oldValue) && oldValue !== value && (
+                                <div className="text-[11px] mt-1 text-muted-foreground">Previous: <span className={value > oldValue ? 'text-red-400' : 'text-green-400'}>{oldValue}</span></div>
+                            )}
+                        </div>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => toggleThreatFlag(sector.id, cluster.id, 'toBeReported')}
+                                className={`pop-flag-btn ${sector.toBeReported?.[cluster.id] ? 'pop-flag-btn-on-report' : ''}`}
+                            ><i className="fas fa-exclamation-circle"></i> Report</button>
+                            <button
+                                onClick={() => toggleThreatFlag(sector.id, cluster.id, 'riskToleranceCrashed')}
+                                className={`pop-flag-btn ${sector.riskToleranceCrashed?.[cluster.id] ? 'pop-flag-btn-on-tol' : ''}`}
+                            ><i className="fas fa-bolt"></i> Tolerance</button>
+                        </div>
+                        <div>
+                            <label className="text-xs text-muted-foreground mb-1 block">Zone thresholds (≤)</label>
+                            <div className="grid grid-cols-3 gap-1.5">
+                                {['low', 'medium', 'high'].map(limitName => (
+                                    <div key={limitName} className="flex flex-col items-center">
+                                        <label className="capitalize text-[10px] text-muted-foreground">{limitName}</label>
+                                        <input type="number" min="0" max="100" value={limits[limitName] ?? 0} onChange={e => updateZoneLimit(sector.id, cluster.id, limitName, e.target.value)} className="input-control p-1 text-xs text-center w-full" />
+                                    </div>
+                                ))}
+                            </div>
+                            <button onClick={() => applyThresholdsToSector(sector.id, cluster.id)} className="app-btn app-btn-outline app-btn-sm w-full mt-1.5"><i className="fas fa-clone"></i> Apply thresholds to all clusters</button>
+                        </div>
+                        <button onClick={() => { toggleThreatActive(sector.id, cluster.id); onClose(); }} className="app-btn app-btn-outline app-btn-sm w-full text-muted-foreground"><i className="fas fa-eye-slash"></i> Hide this cluster in {sector.name}</button>
+                    </div>
+                </div>
+            );
+        }
+
+        // V5: sector chips — visibility toggles, hover spotlight, click to edit
+        function SectorChips({ sectors, onToggleVisible, onEdit, onSpotlight, onAddSector }) {
+            if (!sectors.length) return null;
+            return (
+                <div className="flex flex-wrap items-center justify-center gap-2 w-full no-print">
+                    {sectors.map(sector => {
+                        const hidden = sector.visible === false;
+                        const activeCount = Object.values(sector.activeThreats || {}).filter(Boolean).length;
+                        return (
+                            <div
+                                key={sector.id}
+                                className={`sector-chip ${hidden ? 'sector-chip-hidden' : ''}`}
+                                onMouseEnter={() => { if (!hidden) onSpotlight(sector.id); }}
+                                onMouseLeave={() => onSpotlight(null)}
+                                onClick={() => onEdit(sector.id)}
+                                title={`${sector.name} — click to edit, eye to ${hidden ? 'show' : 'hide'}`}
+                            >
+                                <span className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: sector.color }}></span>
+                                <span className="max-w-[140px] truncate">{sector.name}</span>
+                                <span className="text-[10px] text-muted-foreground">{activeCount}</span>
+                                <button
+                                    className="chip-eye"
+                                    onClick={(e) => { e.stopPropagation(); onToggleVisible(sector.id); }}
+                                    title={hidden ? 'Show sector' : 'Hide sector'}
+                                ><i className={`fas ${hidden ? 'fa-eye-slash' : 'fa-eye'} text-[10px]`}></i></button>
+                            </div>
+                        );
+                    })}
+                    <button className="sector-chip text-muted-foreground" onClick={onAddSector} title="Add sector">
+                        <i className="fas fa-plus text-[10px]"></i> Add
+                    </button>
+                </div>
+            );
+        }
+
+        function SectorEditModal({
             isOpen, 
             onClose, 
             sector, 
@@ -1252,7 +1630,23 @@ const bubblePositions = useMemo(() => {
             const [dropTargetInfo, setDropTargetInfo] = useState({ sectorId: null, position: null });
             const [isJsonImportModalOpen, setIsJsonImportModalOpen] = useState(false);
             const [editingSectorId, setEditingSectorId] = useState(null);
-            const LOCAL_STORAGE_KEY = 'threatRadarData_V4_7_1'; 
+
+            // === V5 state ===
+            const [interactionMode, setInteractionMode] = useState(DEFAULT_INTERACTION_MODE);
+            const [trendDisplay, setTrendDisplay] = useState(DEFAULT_TREND_DISPLAY);
+            const [zoneTintEnabled, setZoneTintEnabled] = useState(true);
+            const [radarTitle, setRadarTitle] = useState('');
+            const [radarSubtitle, setRadarSubtitle] = useState('');
+            const [spotlightSectorId, setSpotlightSectorId] = useState(null);
+            const [popover, setPopover] = useState(null); // { sectorId, clusterId, x, y }
+            const [presenting, setPresenting] = useState(false);
+            const historyRef = useRef({ past: [], future: [] });
+            const [historyVersion, setHistoryVersion] = useState(0);
+            const lastPushRef = useRef(0);
+            const gestureActiveRef = useRef(false);
+            const sectorsLiveRef = useRef([]);
+
+            const LOCAL_STORAGE_KEY = 'threatRadarData_V4_7_1';
 
             const applyImportedData = (imported) => {
                 const currentClusterDefs = imported.threatClustersData || ORIGINAL_THREAT_CLUSTERS;
@@ -1276,6 +1670,12 @@ const bubblePositions = useMemo(() => {
                 
                 if (imported.threatClustersData) { const mergedClusters = ORIGINAL_THREAT_CLUSTERS.map(origCluster => { const savedCluster = imported.threatClustersData.find(sc => sc.id === origCluster.id); return savedCluster ? { ...origCluster, shortName: savedCluster.shortName } : origCluster; }); setThreatClustersData(mergedClusters); } else { setThreatClustersData(JSON.parse(JSON.stringify(ORIGINAL_THREAT_CLUSTERS))); }
                 setShowGlobalSettings(imported.showGlobalSettings !== undefined ? imported.showGlobalSettings : true); setShowClusterEditor(imported.showClusterEditor !== undefined ? imported.showClusterEditor : false);
+                // V5 additive fields (all optional in imported JSON)
+                setTrendDisplay(imported.trendDisplay || DEFAULT_TREND_DISPLAY);
+                setZoneTintEnabled(imported.zoneTintEnabled !== undefined ? !!imported.zoneTintEnabled : true);
+                setRadarTitle(imported.radarTitle || '');
+                setRadarSubtitle(imported.radarSubtitle || '');
+                setPopover(null); setSpotlightSectorId(null);
                 showNotificationMessage('Configuration imported successfully.'); setError('');
             };
 
@@ -1295,46 +1695,130 @@ const bubblePositions = useMemo(() => {
 
             useEffect(() => {
                 try {
-                    const dataToSave = { 
-                        sectors, radarBgColor, radarTextColor, zoneLabelColor, zoneLineStyle, radarShape, clusterDisplayMode, zoneSizeMultipliers, oldBubbleSizeMultiplier, threatClustersData, 
-                        sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin, 
+                    const dataToSave = {
+                        sectors, radarBgColor, radarTextColor, zoneLabelColor, zoneLineStyle, radarShape, clusterDisplayMode, zoneSizeMultipliers, oldBubbleSizeMultiplier, threatClustersData,
+                        sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin,
                         reportFlagSizePx, reportFlagColor, reportFlagTextColor,
                         toleranceFlagSizePx, toleranceFlagColor, toleranceFlagTextColor,
-                        showGlobalSettings, showClusterEditor 
+                        showGlobalSettings, showClusterEditor,
+                        trendDisplay, zoneTintEnabled, radarTitle, radarSubtitle
                     };
                     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
                 } catch (e) { console.error("Failed to save data to localStorage", e); }
             }, [
-                sectors, radarBgColor, radarTextColor, zoneLabelColor, zoneLineStyle, radarShape, clusterDisplayMode, zoneSizeMultipliers, oldBubbleSizeMultiplier, threatClustersData, 
-                sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin, 
+                sectors, radarBgColor, radarTextColor, zoneLabelColor, zoneLineStyle, radarShape, clusterDisplayMode, zoneSizeMultipliers, oldBubbleSizeMultiplier, threatClustersData,
+                sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin,
                 reportFlagSizePx, reportFlagColor, reportFlagTextColor,
                 toleranceFlagSizePx, toleranceFlagColor, toleranceFlagTextColor,
-                showGlobalSettings, showClusterEditor
+                showGlobalSettings, showClusterEditor,
+                trendDisplay, zoneTintEnabled, radarTitle, radarSubtitle
             ]);
 
             const handleClusterDataChange = (clusterId, field, value) => { setThreatClustersData(prevClusters => prevClusters.map(c => c.id === clusterId ? { ...c, [field]: value } : c)); };
             const handleZoneSizeChange = (zoneName, value) => { setZoneSizeMultipliers(prev => ({ ...prev, [zoneName]: parseFloat(value) })); };
             const showNotificationMessage = (message, type = 'success', duration = 3000) => { setNotification({ message, type }); setTimeout(() => setNotification(null), duration); };
 
-            const addSector = () => { const name = newSectorName.trim() || `Sector ${sectors.length + 1}`; setSectors([...sectors, { ...createDefaultSector(threatClustersData), name }]); setNewSectorName(''); showNotificationMessage(`Sector "${name}" added.`); };
-            const deleteSector = (id) => { setSectors(sectors.filter(s => s.id !== id)); showNotificationMessage('Sector deleted.', 'info'); };
-            const updateSectorProperty = (sectorId, property, value) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, [property]: value } : s)); };
-            const toggleThreatActive = (sectorId, clusterId) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, activeThreats: { ...s.activeThreats, [clusterId]: !s.activeThreats[clusterId] } } : s)); };
-            const updateThreatValue = (sectorId, clusterId, value) => { const numVal = Math.min(100, Math.max(0, parseInt(value, 10) || 0)); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, values: { ...s.values, [clusterId]: numVal } } : s)); };
-            const updateZoneLimit = (sectorId, clusterId, limitName, value) => { const numVal = Math.min(100, Math.max(0, parseInt(value, 10) || 0)); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, zoneLimits: { ...s.zoneLimits, [clusterId]: { ...s.zoneLimits[clusterId], [limitName]: numVal } } } : s)); };
-            const toggleThreatFlag = (sectorId, clusterId, flagName) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, [flagName]: { ...s[flagName], [clusterId]: !s[flagName][clusterId] } } : s)); };
+            // === V5 undo/redo history over the sectors array ===
+            sectorsLiveRef.current = sectors;
+            const pushHistory = useCallback((force = false) => {
+                const now = Date.now();
+                if (gestureActiveRef.current && !force) return; // one entry per drag gesture
+                if (!force && now - lastPushRef.current < 800) return; // collapse rapid slider/typing bursts
+                lastPushRef.current = now;
+                const h = historyRef.current;
+                h.past.push(JSON.parse(JSON.stringify(sectorsLiveRef.current)));
+                if (h.past.length > HISTORY_LIMIT) h.past.shift();
+                h.future = [];
+                setHistoryVersion(v => v + 1);
+            }, []);
+            const undo = useCallback(() => {
+                const h = historyRef.current;
+                if (!h.past.length) return;
+                h.future.push(JSON.parse(JSON.stringify(sectorsLiveRef.current)));
+                setSectors(h.past.pop());
+                setPopover(null);
+                setHistoryVersion(v => v + 1);
+            }, []);
+            const redo = useCallback(() => {
+                const h = historyRef.current;
+                if (!h.future.length) return;
+                h.past.push(JSON.parse(JSON.stringify(sectorsLiveRef.current)));
+                setSectors(h.future.pop());
+                setPopover(null);
+                setHistoryVersion(v => v + 1);
+            }, []);
+            const handleGestureStart = useCallback(() => { pushHistory(true); gestureActiveRef.current = true; }, [pushHistory]);
+            const handleGestureEnd = useCallback(() => { gestureActiveRef.current = false; }, []);
+
+            const addSector = () => { pushHistory(true); const name = newSectorName.trim() || `Sector ${sectors.length + 1}`; setSectors([...sectors, { ...createDefaultSector(threatClustersData), name }]); setNewSectorName(''); showNotificationMessage(`Sector "${name}" added.`); };
+            const deleteSector = (id) => { pushHistory(true); setSectors(sectors.filter(s => s.id !== id)); showNotificationMessage('Sector deleted.', 'info'); };
+            const updateSectorProperty = (sectorId, property, value) => { pushHistory(); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, [property]: value } : s)); };
+            const toggleThreatActive = (sectorId, clusterId) => { pushHistory(true); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, activeThreats: { ...s.activeThreats, [clusterId]: !s.activeThreats[clusterId] } } : s)); };
+            const updateThreatValue = (sectorId, clusterId, value) => { pushHistory(); const numVal = Math.min(100, Math.max(0, parseInt(value, 10) || 0)); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, values: { ...s.values, [clusterId]: numVal } } : s)); };
+            const updateZoneLimit = (sectorId, clusterId, limitName, value) => { pushHistory(); const numVal = Math.min(100, Math.max(0, parseInt(value, 10) || 0)); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, zoneLimits: { ...s.zoneLimits, [clusterId]: { ...s.zoneLimits[clusterId], [limitName]: numVal } } } : s)); };
+            const toggleThreatFlag = (sectorId, clusterId, flagName) => { pushHistory(true); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, [flagName]: { ...s[flagName], [clusterId]: !s[flagName][clusterId] } } : s)); };
             const toggleSectorCollapse = (sectorId) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, collapsed: !s.collapsed } : s)); };
+            const toggleSectorVisible = (sectorId) => { pushHistory(true); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, visible: s.visible === false ? true : false } : s)); setSpotlightSectorId(null); };
+
+            const applyThresholdsToSector = (sectorId, sourceClusterId) => {
+                pushHistory(true);
+                setSectors(prev => prev.map(s => {
+                    if (s.id !== sectorId) return s;
+                    const src = s.zoneLimits?.[sourceClusterId];
+                    if (!src) return s;
+                    const newLimits = Object.fromEntries(Object.keys(s.zoneLimits).map(cid => [cid, { ...src }]));
+                    return { ...s, zoneLimits: newLimits };
+                }));
+                showNotificationMessage('Thresholds applied to all clusters in sector.');
+            };
 
             const handleBubbleMove = (sectorId, clusterId, dx, dy) => {
-                setSectors(prev => prev.map(s => 
-                    s.id === sectorId 
-                        ? { ...s, bubbleOffsets: { ...s.bubbleOffsets, [clusterId]: { dx, dy } } } 
+                setSectors(prev => prev.map(s =>
+                    s.id === sectorId
+                        ? { ...s, bubbleOffsets: { ...s.bubbleOffsets, [clusterId]: { dx, dy } } }
                         : s
                 ));
             };
 
+            // Assess-mode drag: set the value and recenter the bubble on its bearing
+            const handleValueChange = (sectorId, clusterId, value) => {
+                const numVal = Math.min(100, Math.max(0, Math.round(value) || 0));
+                setSectors(prev => prev.map(s =>
+                    s.id === sectorId
+                        ? { ...s, values: { ...s.values, [clusterId]: numVal }, bubbleOffsets: { ...s.bubbleOffsets, [clusterId]: { dx: 0, dy: 0 } } }
+                        : s
+                ));
+            };
+
+            const handleBubbleClick = ({ sectorId, clusterId }, clientX, clientY) => {
+                setPopover({ sectorId, clusterId, x: clientX, y: clientY });
+            };
+
+            const visibleSectors = useMemo(() => sectors.filter(s => s.visible !== false), [sectors]);
+
+            // One-click declutter: tangential relaxation, radius (= value) preserved
+            const declutterBubbles = () => {
+                if (!visibleSectors.length) return;
+                pushHistory(true);
+                const zoneBounds = getZoneBoundaries(1);
+                const getAngleFn = (index, total) => radarShape === 'half'
+                    ? Math.PI + (index / total) * Math.PI
+                    : (index / total) * 2 * Math.PI - Math.PI / 2;
+                const bubbles = computeBubbleLayout({
+                    sectors: visibleSectors, radarShape, clusterDisplayMode, zoneSizeMultipliers,
+                    threatClustersData, bubbleTextSizePx, zoneBounds, centerX: 400, centerY: 400,
+                    getAngleFn, outerRadius: 320,
+                });
+                const offsets = computeDeclutterOffsets(bubbles, 400, 400);
+                setSectors(prev => prev.map(s => offsets[s.id]
+                    ? { ...s, bubbleOffsets: { ...s.bubbleOffsets, ...offsets[s.id] } }
+                    : s
+                ));
+                showNotificationMessage('Labels decluttered (radius = value preserved).');
+            };
+
             const handleJsonImport = (jsonText) => {
-                try { const imported = JSON.parse(jsonText); applyImportedData(imported); setIsJsonImportModalOpen(false); } 
+                try { const imported = JSON.parse(jsonText); pushHistory(true); applyImportedData(imported); setIsJsonImportModalOpen(false); }
                 catch (e) { alert("Invalid JSON format. Please check your input."); console.error("JSON Import Error:", e); }
             };
 
@@ -1349,6 +1833,7 @@ const bubblePositions = useMemo(() => {
                 reader.onload = (e) => {
                     try {
                         const imported = JSON.parse(e.target.result);
+                        pushHistory(true);
                         applyImportedData(imported);
                         showNotificationMessage('Configuration imported from file.');
                     } catch (err) {
@@ -1361,33 +1846,123 @@ const bubblePositions = useMemo(() => {
             };
 
             const exportConfig = () => {
-                const dataToExport = { 
-                    sectors, radarBgColor, radarTextColor, zoneLabelColor, zoneLineStyle, radarShape, clusterDisplayMode, zoneSizeMultipliers, oldBubbleSizeMultiplier, threatClustersData, 
-                    sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin, 
+                const dataToExport = {
+                    sectors, radarBgColor, radarTextColor, zoneLabelColor, zoneLineStyle, radarShape, clusterDisplayMode, zoneSizeMultipliers, oldBubbleSizeMultiplier, threatClustersData,
+                    sectorNameTextSizePx, zoneLabelTextSizePx, bubbleTextSizePx, baselineLabelMargin,
                     reportFlagSizePx, reportFlagColor, reportFlagTextColor,
-                    toleranceFlagSizePx, toleranceFlagColor, toleranceFlagTextColor 
+                    toleranceFlagSizePx, toleranceFlagColor, toleranceFlagTextColor,
+                    trendDisplay, zoneTintEnabled, radarTitle, radarSubtitle
                 };
                 const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'threat-radar-config.json'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-                showNotificationMessage('Configuration exported.'); 
+                showNotificationMessage('Configuration exported.');
+            };
+
+            const renderRadarToCanvas = async () => {
+                return html2canvas(radarWrapperRef.current, {
+                    backgroundColor: radarBgColor, scale: 2, useCORS: true,
+                    ignoreElements: (el) => (
+                        (el.classList && el.classList.contains('export-ignore')) ||
+                        (el.tagName === 'INPUT' && el.dataset && el.dataset.exportOptional !== undefined && !el.value)
+                    ),
+                });
             };
 
             const exportRadarAsPNG = async () => {
                 const radarElement = document.getElementById('radar-svg-element');
                 if (!radarElement) { alert('Radar not found.'); return; }
                 try {
-                    const canvas = await html2canvas(radarWrapperRef.current, { backgroundColor: radarBgColor, scale: 2, useCORS: true });
+                    const canvas = await renderRadarToCanvas();
                     const link = document.createElement('a'); link.download = 'threat-radar.png'; link.href = canvas.toDataURL('image/png'); link.click();
                     showNotificationMessage('Radar exported as PNG.');
                 } catch(e) { alert('Error exporting radar.'); console.error(e); }
             };
 
-            const takeSnapshot = (sectorId) => { setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, oldValues: { ...s.values } } : s)); showNotificationMessage('Snapshot taken. Trends will now appear.'); };
+            const copyRadarToClipboard = async () => {
+                const radarElement = document.getElementById('radar-svg-element');
+                if (!radarElement) { alert('Radar not found.'); return; }
+                try {
+                    const canvas = await renderRadarToCanvas();
+                    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+                    if (!blob || !navigator.clipboard || !window.ClipboardItem) throw new Error('Clipboard API unavailable');
+                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                    showNotificationMessage('Radar copied to clipboard — paste it into your slides.');
+                } catch (e) {
+                    console.error(e);
+                    showNotificationMessage('Clipboard copy failed — use Export PNG instead.', 'error');
+                }
+            };
+
+            const exportRadarAsSVG = () => {
+                const svg = document.getElementById('radar-svg-element');
+                if (!svg) { alert('Radar not found.'); return; }
+                try {
+                    const clone = svg.cloneNode(true);
+                    clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    const hasTitle = !!(radarTitle || radarSubtitle);
+                    const topPad = hasTitle ? 96 : 0;
+                    clone.setAttribute('viewBox', `0 ${-topPad} 800 ${800 + topPad}`);
+                    clone.setAttribute('width', '1600');
+                    clone.setAttribute('height', String(2 * (800 + topPad)));
+                    const ns = 'http://www.w3.org/2000/svg';
+                    const bg = document.createElementNS(ns, 'rect');
+                    bg.setAttribute('x', '0'); bg.setAttribute('y', String(-topPad));
+                    bg.setAttribute('width', '800'); bg.setAttribute('height', String(800 + topPad));
+                    bg.setAttribute('fill', radarBgColor || '#FFFFFF');
+                    clone.insertBefore(bg, clone.firstChild);
+                    if (hasTitle) {
+                        const mkText = (str, y, size, weight) => {
+                            const t = document.createElementNS(ns, 'text');
+                            t.setAttribute('x', '400'); t.setAttribute('y', String(y));
+                            t.setAttribute('text-anchor', 'middle');
+                            t.setAttribute('font-family', 'Inter, sans-serif');
+                            t.setAttribute('font-size', String(size));
+                            t.setAttribute('font-weight', weight);
+                            t.setAttribute('fill', radarTextColor || '#111827');
+                            t.textContent = str;
+                            return t;
+                        };
+                        if (radarTitle) clone.appendChild(mkText(radarTitle, -56, 26, '700'));
+                        if (radarSubtitle) clone.appendChild(mkText(radarSubtitle, -26, 15, '400'));
+                    }
+                    const source = new XMLSerializer().serializeToString(clone);
+                    const blob = new Blob(['<?xml version="1.0" encoding="UTF-8"?>\n' + source], { type: 'image/svg+xml' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a'); a.href = url; a.download = 'threat-radar.svg';
+                    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+                    showNotificationMessage('Radar exported as SVG.');
+                } catch (e) { alert('Error exporting SVG.'); console.error(e); }
+            };
+
+            const takeSnapshot = (sectorId) => { pushHistory(true); setSectors(prev => prev.map(s => s.id === sectorId ? { ...s, oldValues: { ...s.values } } : s)); showNotificationMessage('Snapshot taken. Trends will now appear.'); };
+
+            // Keyboard: undo/redo, close popover / exit presentation on Escape
+            useEffect(() => {
+                const onKey = (e) => {
+                    if (e.key === 'Escape') { setPresenting(false); return; }
+                    const inField = e.target && e.target.closest && e.target.closest('input, textarea, select, [contenteditable]');
+                    if (inField) return;
+                    if ((e.ctrlKey || e.metaKey) && !e.altKey && e.key.toLowerCase() === 'z') {
+                        e.preventDefault();
+                        if (e.shiftKey) { redo(); } else { undo(); }
+                    } else if ((e.ctrlKey || e.metaKey) && !e.altKey && e.key.toLowerCase() === 'y') {
+                        e.preventDefault(); redo();
+                    }
+                };
+                window.addEventListener('keydown', onKey);
+                return () => window.removeEventListener('keydown', onKey);
+            }, [undo, redo]);
+
+            // Presentation mode: strip chrome via a body class
+            useEffect(() => {
+                document.body.classList.toggle('presenting', presenting);
+                return () => document.body.classList.remove('presenting');
+            }, [presenting]);
 
             const handleDragStart = (e, sectorId) => { e.dataTransfer.effectAllowed = 'move'; setDraggedSectorId(sectorId); };
             const handleDragOver = (e, targetSectorId) => { e.preventDefault(); if (draggedSectorId && draggedSectorId !== targetSectorId) { const rect = e.currentTarget.getBoundingClientRect(); const y = e.clientY - rect.top; const position = y < rect.height / 2 ? 'before' : 'after'; setDropTargetInfo({ sectorId: targetSectorId, position }); } };
             const handleDragLeave = () => { setDropTargetInfo({ sectorId: null, position: null }); };
-            const handleDrop = (e, targetSectorId) => { e.preventDefault(); if (!draggedSectorId || draggedSectorId === targetSectorId) { setDropTargetInfo({ sectorId: null, position: null }); return; } setSectors(prev => { const draggedIndex = prev.findIndex(s => s.id === draggedSectorId); const targetIndex = prev.findIndex(s => s.id === targetSectorId); if (draggedIndex === -1 || targetIndex === -1) return prev; const newSectors = [...prev]; const [draggedItem] = newSectors.splice(draggedIndex, 1); let insertIndex = targetIndex; if (dropTargetInfo.position === 'after') { insertIndex = draggedIndex < targetIndex ? targetIndex : targetIndex + 1; } else { insertIndex = draggedIndex < targetIndex ? targetIndex - 1 : targetIndex; } newSectors.splice(insertIndex, 0, draggedItem); return newSectors; }); setDropTargetInfo({ sectorId: null, position: null }); };
+            const handleDrop = (e, targetSectorId) => { e.preventDefault(); if (!draggedSectorId || draggedSectorId === targetSectorId) { setDropTargetInfo({ sectorId: null, position: null }); return; } pushHistory(true); setSectors(prev => { const draggedIndex = prev.findIndex(s => s.id === draggedSectorId); const targetIndex = prev.findIndex(s => s.id === targetSectorId); if (draggedIndex === -1 || targetIndex === -1) return prev; const newSectors = [...prev]; const [draggedItem] = newSectors.splice(draggedIndex, 1); let insertIndex = targetIndex; if (dropTargetInfo.position === 'after') { insertIndex = draggedIndex < targetIndex ? targetIndex : targetIndex + 1; } else { insertIndex = draggedIndex < targetIndex ? targetIndex - 1 : targetIndex; } newSectors.splice(insertIndex, 0, draggedItem); return newSectors; }); setDropTargetInfo({ sectorId: null, position: null }); };
             const handleDragEnd = () => { setDraggedSectorId(null); setDropTargetInfo({ sectorId: null, position: null }); };
 
             return (
@@ -1408,6 +1983,22 @@ const bubblePositions = useMemo(() => {
                         deleteSector={deleteSector}
                         defaultZoneLimits={defaultZoneLimits}
                     />
+                    <BubblePopover
+                        popover={popover}
+                        sectors={sectors}
+                        threatClustersData={threatClustersData}
+                        onClose={() => setPopover(null)}
+                        updateThreatValue={updateThreatValue}
+                        toggleThreatFlag={toggleThreatFlag}
+                        updateZoneLimit={updateZoneLimit}
+                        applyThresholdsToSector={applyThresholdsToSector}
+                        toggleThreatActive={toggleThreatActive}
+                    />
+                    {presenting && (
+                        <button onClick={() => setPresenting(false)} className="present-exit-btn app-btn app-btn-secondary app-btn-sm" title="Exit presentation (Esc)">
+                            <i className="fas fa-compress"></i> Exit
+                        </button>
+                    )}
 
                     {/* Data Actions Toolbar */}
                     <div className="card p-3 mb-6 no-print">
@@ -1426,7 +2017,7 @@ const bubblePositions = useMemo(() => {
                                     if (!e.target.value) return;
                                     fetch(e.target.value)
                                         .then(r => r.json())
-                                        .then(data => { applyImportedData(data); showNotificationMessage('Example loaded.'); })
+                                        .then(data => { pushHistory(true); applyImportedData(data); showNotificationMessage('Example loaded.'); })
                                         .catch(err => { alert('Failed to load example.'); console.error(err); });
                                     e.target.value = '';
                                 }}
@@ -1559,22 +2150,79 @@ const bubblePositions = useMemo(() => {
                                 </div>
                             )}
                         </div>
-                        <div className="w-full md:w-3/5 lg:w-2/3 flex flex-col items-center space-y-4 radar-container-wrapper">
-                            <div className="card p-4 w-full max-w-md self-center no-print flex gap-2"> 
-                                <button onClick={exportRadarAsPNG} className="app-btn app-btn-primary flex-grow"><i className="fas fa-camera-retro"></i>Export PNG</button>
-                                <button onClick={() => { setSectors(prev => prev.map(s => ({ ...s, bubbleOffsets: Object.fromEntries(threatClustersData.map(c => [c.id, { dx: 0, dy: 0 }])) }))); showNotificationMessage('Bubble positions reset.'); }} className="app-btn app-btn-outline" title="Reset all bubbles to default positions"><i className="fas fa-undo"></i>Reset Positions</button>
-                            </div>
-                            {sectors.length > 0 ? (
-                                <div ref={radarWrapperRef} className="w-full" style={{backgroundColor: radarBgColor}}>
-                                    <RadarVisualization
-                                        sectors={sectors} radarBgColor={radarBgColor} radarTextColor={radarTextColor} zoneLabelColor={zoneLabelColor} zoneLineStyle={zoneLineStyle} radarShape={radarShape} clusterDisplayMode={clusterDisplayMode} zoneSizeMultipliers={zoneSizeMultipliers} oldBubbleSizeMultiplier={oldBubbleSizeMultiplier} threatClustersData={threatClustersData}
-                                        sectorNameTextSizePx={sectorNameTextSizePx} zoneLabelTextSizePx={zoneLabelTextSizePx} bubbleTextSizePx={bubbleTextSizePx} baselineLabelMargin={baselineLabelMargin}
-                                        reportFlagSizePx={reportFlagSizePx} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor}
-                                        toleranceFlagSizePx={toleranceFlagSizePx} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor}
-                                        onBubbleMove={handleBubbleMove}
-                                    />
-                                    {showLegend && (<><RadarLegend threatClustersData={threatClustersData} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor} radarTextColor={radarTextColor} /><ZoneLegend radarTextColor={radarTextColor} /></>)}
+                        <div className="w-full md:w-3/5 lg:w-2/3 flex flex-col items-center space-y-3 radar-container-wrapper">
+                            {/* Radar toolbar */}
+                            <div className="card px-3 py-2 w-full no-print flex flex-wrap items-center justify-center gap-2">
+                                <div className="seg-group" title="Assess: drag a bubble radially to change its value. Arrange: drag to fine-tune label placement.">
+                                    <button onClick={() => setInteractionMode('assess')} className={`seg-btn radar-toolbar-btn ${interactionMode === 'assess' ? 'seg-btn-active' : ''}`}><i className="fas fa-crosshairs mr-1"></i>Assess</button>
+                                    <button onClick={() => setInteractionMode('arrange')} className={`seg-btn radar-toolbar-btn ${interactionMode === 'arrange' ? 'seg-btn-active' : ''}`}><i className="fas fa-arrows-alt mr-1"></i>Arrange</button>
                                 </div>
+                                <button onClick={declutterBubbles} className="app-btn app-btn-outline app-btn-sm radar-toolbar-btn" title="Automatically slide overlapping labels apart along their rings (value positions are preserved)"><i className="fas fa-magic"></i>Declutter</button>
+                                <button onClick={() => { pushHistory(true); setSectors(prev => prev.map(s => ({ ...s, bubbleOffsets: Object.fromEntries(threatClustersData.map(c => [c.id, { dx: 0, dy: 0 }])) }))); showNotificationMessage('Bubble positions reset.'); }} className="app-btn app-btn-outline app-btn-sm radar-toolbar-btn" title="Reset all bubbles to default positions"><i className="fas fa-undo"></i>Reset</button>
+                                <div className="h-6 w-px bg-border"></div>
+                                <label className="flex items-center gap-1.5 text-xs text-muted-foreground" title="Show previous-period bubbles and trend lines">
+                                    Trends
+                                    <select value={trendDisplay} onChange={e => setTrendDisplay(e.target.value)} className="input-control text-xs h-7 py-0">
+                                        <option value="changed">Changed</option>
+                                        <option value="all">All</option>
+                                        <option value="off">Off</option>
+                                    </select>
+                                </label>
+                                <button onClick={() => setZoneTintEnabled(v => !v)} className={`app-btn app-btn-sm radar-toolbar-btn ${zoneTintEnabled ? 'app-btn-secondary' : 'app-btn-outline'}`} title="Toggle the severity tint of the zone rings"><i className="fas fa-fill-drip"></i>Tint</button>
+                                <div className="h-6 w-px bg-border"></div>
+                                <button onClick={undo} disabled={!historyRef.current.past.length} className="app-btn app-btn-outline app-btn-sm radar-toolbar-btn disabled:opacity-40 disabled:cursor-not-allowed" title="Undo (Ctrl+Z)"><i className="fas fa-rotate-left"></i></button>
+                                <button onClick={redo} disabled={!historyRef.current.future.length} className="app-btn app-btn-outline app-btn-sm radar-toolbar-btn disabled:opacity-40 disabled:cursor-not-allowed" title="Redo (Ctrl+Y)"><i className="fas fa-rotate-right"></i></button>
+                                <div className="h-6 w-px bg-border"></div>
+                                <button onClick={exportRadarAsPNG} className="app-btn app-btn-primary app-btn-sm radar-toolbar-btn"><i className="fas fa-camera-retro"></i>PNG</button>
+                                <button onClick={exportRadarAsSVG} className="app-btn app-btn-secondary app-btn-sm radar-toolbar-btn" title="Export as scalable vector graphic"><i className="fas fa-bezier-curve"></i>SVG</button>
+                                <button onClick={copyRadarToClipboard} className="app-btn app-btn-secondary app-btn-sm radar-toolbar-btn" title="Copy a PNG of the radar to the clipboard"><i className="fas fa-copy"></i>Copy</button>
+                                <button onClick={() => setPresenting(true)} className="app-btn app-btn-outline app-btn-sm radar-toolbar-btn" title="Presentation mode — hides all controls (Esc to exit)"><i className="fas fa-expand"></i>Present</button>
+                            </div>
+                            {/* Sector chips: hover to spotlight, eye to hide, click to edit */}
+                            <SectorChips
+                                sectors={sectors}
+                                onToggleVisible={toggleSectorVisible}
+                                onEdit={(id) => setEditingSectorId(id)}
+                                onSpotlight={setSpotlightSectorId}
+                                onAddSector={addSector}
+                            />
+                            {sectors.length > 0 ? (
+                                visibleSectors.length > 0 ? (
+                                    <div ref={radarWrapperRef} className="w-full" style={{backgroundColor: radarBgColor}}>
+                                        {/* Report title block (included in exports) */}
+                                        <div className="pt-5 pb-3 px-6 text-center space-y-1.5">
+                                            <EditableText
+                                                value={radarTitle}
+                                                onChange={setRadarTitle}
+                                                placeholder="Click to add report title"
+                                                className="text-2xl font-bold font-display text-center w-full"
+                                                style={{ color: radarTextColor }}
+                                            />
+                                            <EditableText
+                                                value={radarSubtitle}
+                                                onChange={setRadarSubtitle}
+                                                placeholder="Add subtitle / reporting period"
+                                                className="text-sm text-center w-full"
+                                                style={{ color: radarTextColor, opacity: 0.75 }}
+                                            />
+                                        </div>
+                                        <RadarVisualization
+                                            sectors={visibleSectors} radarBgColor={radarBgColor} radarTextColor={radarTextColor} zoneLabelColor={zoneLabelColor} zoneLineStyle={zoneLineStyle} radarShape={radarShape} clusterDisplayMode={clusterDisplayMode} zoneSizeMultipliers={zoneSizeMultipliers} oldBubbleSizeMultiplier={oldBubbleSizeMultiplier} threatClustersData={threatClustersData}
+                                            sectorNameTextSizePx={sectorNameTextSizePx} zoneLabelTextSizePx={zoneLabelTextSizePx} bubbleTextSizePx={bubbleTextSizePx} baselineLabelMargin={baselineLabelMargin}
+                                            reportFlagSizePx={reportFlagSizePx} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor}
+                                            toleranceFlagSizePx={toleranceFlagSizePx} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor}
+                                            interactionMode={interactionMode} trendDisplay={trendDisplay} zoneTintEnabled={zoneTintEnabled} spotlightSectorId={spotlightSectorId}
+                                            onBubbleMove={handleBubbleMove}
+                                            onValueChange={handleValueChange}
+                                            onBubbleClick={handleBubbleClick}
+                                            onGestureStart={handleGestureStart}
+                                            onGestureEnd={handleGestureEnd}
+                                        />
+                                        {showLegend && (<><RadarLegend threatClustersData={threatClustersData} reportFlagColor={reportFlagColor} reportFlagTextColor={reportFlagTextColor} toleranceFlagColor={toleranceFlagColor} toleranceFlagTextColor={toleranceFlagTextColor} radarTextColor={radarTextColor} /><ZoneLegend radarTextColor={radarTextColor} /></>)}
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-10 card w-full max-w-lg flex-grow flex flex-col justify-center items-center no-print"> <i className="fas fa-eye-slash text-4xl text-muted-foreground mb-3"></i> <h3 className="text-xl text-muted-foreground">All sectors hidden</h3> <p className="text-muted-foreground">Use the eye icons on the sector chips above to show sectors.</p> </div>
+                                )
                             ) : ( <div className="text-center py-10 card w-full max-w-lg flex-grow flex flex-col justify-center items-center no-print"> <i className="fas fa-exclamation-triangle text-4xl text-yellow-400 mb-3"></i> <h3 className="text-xl text-muted-foreground">No Data to Visualize</h3> <p className="text-muted-foreground">Add and configure sectors in the Editor panel.</p> </div> )}
                         </div>
                     </div>

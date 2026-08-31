@@ -9,7 +9,7 @@ Standalone, self-contained HTML applications that implement the TLCTC framework.
 | **Threat Modeling** | [`threat-modeling.html`](threat-modeling.html) | Design threat models by placing components on a canvas, define interfaces, auto-assign threat clusters, generate threat registers and attack chain analysis |
 | **Attack Path Architect** | [`attack-path-architect.html`](attack-path-architect.html) | Document cyber incidents as TLCTC attack paths with velocity analysis, MITRE/CVE references, DRE outcomes, and compliant JSON export for CTI exchange |
 | **Actor Profile Designer** | [`actor-profile-designer.html`](actor-profile-designer.html) | Build threat actor capability profiles scored across all 10 TLCTC clusters, link observed incidents, compare actors side-by-side, and export for CTI sharing. Includes 59 expert-scored profiles (Google/Mandiant, CrowdStrike) and 514 heuristic-scored profiles from ETDA ThaiCERT Threat Group Cards |
-| **Threat Radar** | [`radar-tlctc-app.html`](radar-tlctc-app.html) | Interactive threat radar visualization with configurable sectors, zone thresholds, trend tracking (old vs current values), report/tolerance flags, and PNG export with optional legend |
+| **Threat Radar** | [`radar-tlctc-app.html`](radar-tlctc-app.html) | Direct-manipulation threat radar for CISO reporting: radius encodes the threat value (thresholds sit on the ring lines), drag a bubble radially to assess, click it to edit in place, hover for details. Sector chips with visibility toggles and spotlight, one-click label declutter, trend tracking (old vs current values), report/tolerance flags, undo/redo, report title block, presentation mode, and PNG / SVG / clipboard export with optional legend |
 | **Control Matrix** | [`control-matrix.html`](control-matrix.html) | NIST CSF 2.0 × TLCTC control matrix for mapping controls across all 10 clusters and 6 CSF functions, with maturity scoring, three-layer control effectiveness model (CDE_max, CDE_fitness, COE → ECR), cell-level aggregation (essential floor + complementary ceiling raise), DCS integration for DETECT cells, residual ceiling gap tracking, multi-environment support, shared controls library, and reporting |
 | **CBP** | [`cbp-app.html`](cbp-app.html) | Capability-Based Planning — map organizational capabilities across 10 TLCTC clusters × 6 CSF functions, with maturity at capability and component level, three dimensions (Controls, Workforce, Data Level), control effectiveness model (role, CDE_max, CDE_fitness, COE metrics → ECR), cell-level aggregation with DCS for DETECT cells, shared controls library, gap analysis, and multi-environment support |
 
@@ -273,9 +273,14 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
     },
     "toBeReported": { "1": false, /* ... */ }, // report flag (!) per cluster
     "riskToleranceCrashed": { "1": false },    // tolerance flag (⚡) per cluster
+    "visible": true,                           // sector shown on the radar (V5, optional)
     "collapsed": false                         // editor panel state
   }],
   // Optional global settings (included on export):
+  "radarTitle": "",                            // report title block (V5, optional)
+  "radarSubtitle": "",                         // report subtitle (V5, optional)
+  "trendDisplay": "changed",                   // changed | all | off (V5, optional)
+  "zoneTintEnabled": true,                     // zone severity tint (V5, optional)
   "radarBgColor": "#FFFFFF",                   // radar canvas background
   "radarTextColor": "#111827",                 // sector name / line color
   "zoneLabelColor": "#374151",                 // zone name label color
@@ -294,6 +299,7 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
 - Each **sector** is an independent ring on the radar (e.g., "Financial Services", "Government", or "Confidentiality Impact").
 - **values** vs **oldValues** enable trend visualization — current bubbles are filled, old bubbles are outlined.
 - **zoneLimits** define the thresholds that place bubbles into latent/low/medium/high zones per cluster.
+- **Radius encodes the value** (V5): a bubble's radial position is linear in its value within the zone's value range, so threshold values sit exactly on the ring lines and 100 is the center. Dragging a bubble radially (Assess mode) changes its value; Arrange mode nudges label placement cosmetically.
 - **Flags** mark clusters for special attention: `toBeReported` (!) and `riskToleranceCrashed` (⚡).
 - Multiple analytical perspectives from one report (by sector, by actor, by CIA, by asset type) are modeled as separate JSON files with different sector configurations.
 
