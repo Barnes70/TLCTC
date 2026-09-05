@@ -50,6 +50,21 @@
       "minItems": 1,
       "items": { "$ref": "#/definitions/rule_def" }
     },
+    "data_risk_events": {
+      "type": "object",
+      "description": "Data Risk Event (DRE) type codes as a refinement tree (v2.5): three parent properties, two admitted refinements, and the stopping rule that admits them. Outcome annotations only — never clusters, never classification inputs (Axiom III).",
+      "additionalProperties": false,
+      "required": ["description", "stopping_rule", "codes"],
+      "properties": {
+        "description": { "type": "string" },
+        "stopping_rule": { "type": "string" },
+        "codes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/dre_def" }
+        }
+      }
+    },
     "extensions": {
       "type": "object",
       "description": "Forward-compatible container for non-standard fields."
@@ -124,6 +139,20 @@
         "statement": { "type": "string" },
         "enforcement_level": { "type": "string", "enum": ["must", "should", "may"] },
         "machine_enforceable": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    },
+    "dre_def": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "name", "property", "definition"],
+      "properties": {
+        "code": { "type": "string", "pattern": "^[A-Z][a-z]?$" },
+        "name": { "type": "string" },
+        "property": { "type": "string", "description": "What fails on the record when this DRE occurs." },
+        "definition": { "type": "string" },
+        "parent": { "type": "string", "pattern": "^[A-Z]$", "description": "Refinement codes only: the parent code that stays legal whenever the refinement is unknown or irrelevant." },
+        "refinements": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z][a-z]$" } },
         "notes": { "type": "string" }
       }
     }

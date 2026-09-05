@@ -40,7 +40,7 @@ These are non-negotiable. Submissions that violate them will be rejected.
 - **Domain boundary operators** (`topology_boundary`) — Required for bridge cluster steps (#8, #9, #10). Include context and sphere identifiers.
 - **Transit boundaries** (`transit_spheres`) — If the attack relays through an intermediate carrier (e.g., SMS provider, CDN), record transit spheres in the boundary. Note: vendor code running on the target device is NOT transit (R-TRANSIT-3).
 - **Intra-system boundaries** (`intra_system_boundaries`) — If a step involves within-host boundary crossings (sandbox escape, privilege escalation, process injection, VM escape), annotate with the appropriate type, from, and to fields.
-- **Outcome tags** (`outcomes`) — Annotate Data Risk Events (C, I, A) where they occur.
+- **Outcome tags** (`outcomes`) — Annotate Data Risk Events where they occur. Codes form a refinement tree: `C`; `I` with `Ii` (incorrect state) and `If` (misattributed state); `A` with `Av` (unavailable) and `Ac` (inaccessible). Use the parent code (`I`, `A`) when you cannot evidence the refinement; refinements are read off the record, never off the actor.
 - **Source attribution** — Cite your sources in `metadata.notes` (vendor advisories, CISA alerts, academic papers, threat intel reports).
 
 ### Handling Forensic Uncertainty (V2.1)

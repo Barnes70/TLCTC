@@ -1,6 +1,6 @@
 # glossary
 
-250 document(s).
+252 document(s).
 
 - [Abuse of Functions (#1)](/glossary/abuse-of-functions-1.md) — `term`
 - [Accessibility (Data Risk Event)](/glossary/accessibility-data-risk-event.md) — `term`
@@ -120,7 +120,9 @@
 - [Loss of Availability (LoA)](/glossary/loss-of-availability-loa.md) — `term`
 - [Loss of Confidentiality (LoC)](/glossary/loss-of-confidentiality-loc.md) — `term`
 - [Loss of Control / System Compromise](/glossary/loss-of-control-system-compromise.md) — `term`
+- [Loss of Integrity — Incorrect State (LoIi)](/glossary/loss-of-integrity-incorrect-state-loii.md) — `term`
 - [Loss of Integrity (LoI)](/glossary/loss-of-integrity-loi.md) — `term`
+- [Loss of Integrity — Misattributed State (LoIf)](/glossary/loss-of-integrity-misattributed-state-loif.md) — `term`
 - [Malicious Code](/glossary/malicious-code.md) — `term`
 - [Malvertising](/glossary/malvertising.md) — `term`
 - [Malware (#7)](/glossary/malware-7.md) — `term`

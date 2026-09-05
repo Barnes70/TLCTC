@@ -108,7 +108,7 @@ Consequences follow a structured, variable-length chain:
 | Event | Definition | Examples |
 | --- | --- | --- |
 | **SRE** | Loss of Control / System Compromise — the central event | RCE achieved; persistent access established |
-| **DRE** | Loss of Confidentiality, Integrity, or Availability/Accessibility | data exfiltrated `[DRE: C]`; records altered `[DRE: I]`; files encrypted by ransomware `[DRE: Ac]` |
+| **DRE** | Loss of Confidentiality, Integrity, or Availability/Accessibility — type codes form a refinement tree (§7.6): `C`; `I` → `Ii`/`If`; `A` → `Av`/`Ac` | data exfiltrated `[DRE: C]`; records altered `[DRE: I]`; log entry forged under another identity `[DRE: If]`; files encrypted by ransomware `[DRE: Ac]` |
 | **BRE** | A discrete business-level event triggered by a DRE or a preceding BRE | regulatory notification; outage declared; fine imposed |
 
 Business Risk Events may cascade (`SRE → DRE → BRE₁ → … → BREₙ`); chain length is organization-dependent. An organization's risk appetite determines at which BRE the chain reaches its terminal **Business Impact** — a role a BRE can hold, not a separate event type. Every transition carries its own Δt detection-and-intervention window, and the chain can break at any point: not every SRE leads to a DRE, and not every DRE leads to a BRE.
@@ -528,11 +528,22 @@ The **intra-system operator** `|[type][@from→@to]|` (single pipes) marks a bou
 
 ### 7.6 Data Risk Event Tags
 
-A DRE tag records an **outcome** — never a step — appended with `+ [DRE: …]`, using C (Confidentiality), I (Integrity), and A (Availability/Accessibility). When the distinction is operationally relevant, use `Av` (data gone or unreachable) versus `Ac` (data present but unusable, e.g. ransomware encryption):
+A DRE tag records an **outcome** — never a step — appended with `+ [DRE: …]`. The type codes form a refinement tree, not a flat list: three parent properties, C (Confidentiality), I (Integrity) and A (Availability/Accessibility), two of which carry refinements for use when the distinction is operationally relevant and evidenced:
+
+| Parent | Refinement | State | What fails on the record |
+| --- | --- | --- | --- |
+| `C` | — | disclosed | disclosure (no split: disclosed data is disclosed, however it leaked) |
+| `I` | `Ii` | incorrect state | correspondence, completeness — the content is wrong or incomplete |
+| `I` | `If` | misattributed state | provenance, attribution — the record claims an origin or authority it does not have; its content may be perfectly accurate |
+| `A` | `Av` | unavailable state | operational presence — data gone or unreachable |
+| `A` | `Ac` | inaccessible state | retrievability — data present but unusable (e.g. ransomware encryption) |
+
+A parent code stays legal whenever the refinement is unknown or irrelevant: `[DRE: I]` and `[DRE: A]` remain valid, and no analyst is forced to pick a refinement they cannot evidence. The tree is closed by a **stopping rule**: split a property only where the resulting states are distinguishable by inspecting the record itself, never by the story of how it got there. The rule admits exactly the two splits above, refuses every split of C (accidental versus deliberate disclosure is provenance; one party versus public is extent, which is severity and not a state), and refuses any split by cause — outcomes never inherit the classification of the step that produced them (Axiom III). `Ii` and `If` are therefore read off the record, not off the actor: an insider keying a wrong value on purpose produces `Ii`; a colleague posting under someone else's open session produces `If`; a forged record can be perfectly accurate. The split is load-bearing because each refinement answers to a different control set — validation, reconciliation and four-eyes for `Ii`; segregation of duties, provenance logging and behavioural monitoring for `If`. The dictionary carries the tree and the stopping rule in its `data_risk_events` section.
 
 ```
 #6 + [DRE: Av]            availability loss after a flood — service unreachable
 #2 → #7 + [DRE: Ac]       execution leading to ransomware encryption
+#1 + [DRE: Ii, If]        transcript shows a command that never ran (incorrect), written by code standing in for the harness (misattributed)
 ```
 
 ### 7.7 Epistemic States and Unresolved Steps
@@ -598,7 +609,7 @@ The following one-line definitions cover the terms used in this paper so that it
 - **Δt / attack velocity** — the time interval between two adjacent steps, attached to the sequence operator (an edge property, not a step property). The set of Δt values expresses a path's velocity; transitions are grouped into classes VC-1 through VC-4.
 - **Domain** — a set of assets governed by a coherent control regime (policies, monitoring, enforcement, accountability); may be technical, organizational, or socio-technical (e.g. cyber/IT, physical security, human decision, vendor development).
 - **Domain boundary** — a point where responsibility spheres or control regimes change; crossing it moves the attack from one set of applicable controls to another, annotated with the `||...||` operator.
-- **DRE (Data Risk Event)** — an outcome event recording Loss of Confidentiality (C), Integrity (I), or Availability/Accessibility (A). DREs are recorded separately from cluster steps and never change a step's classification; `Av`/`Ac` refine the general `A` code.
+- **DRE (Data Risk Event)** — an outcome event recording Loss of Confidentiality (C), Integrity (I), or Availability/Accessibility (A). DREs are recorded separately from cluster steps and never change a step's classification. The type codes form a refinement tree (§7.6): `Ii` (incorrect state) and `If` (misattributed state) refine `I`; `Av` (unavailable) and `Ac` (inaccessible) refine `A`; a parent code stays legal whenever the refinement is unknown.
 - **Epistemic state** — the knowledge status of a step in a path: classified (`#X`), low-confidence (`#X [conf=low]`), inferred (`#X [inferred]`), or unresolved (`?` / `…`); these are distinct from the step's ontological cluster classification.
 - **FEC (Foreign Executable Content)** — program content that the environment loads, interprets, or executes through its intended execution capability; its execution is the generic vulnerability of #7 Malware (R-EXEC).
 - **Generic vulnerability** — the single root-level attack surface that defines a cluster; the stable, technology-independent weakness a cluster targets. Every generic vulnerability maps to exactly one cluster (Axiom VI), and every specific vulnerability (e.g. a CVE) is an instance of one.

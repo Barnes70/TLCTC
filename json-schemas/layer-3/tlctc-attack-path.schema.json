@@ -108,8 +108,8 @@
         },
         "outcomes": {
           "type": "array",
-          "description": "Data Risk Events (DRE) tags resulting from this step (effects; do not change classification). C=Confidentiality, I=Integrity, A=Availability, Ac=Accessibility",
-          "items": { "type": "string", "enum": ["C", "I", "A", "Ac"] },
+          "description": "Data Risk Events (DRE) tags resulting from this step (effects; do not change classification). Refinement tree per framework data_risk_events: C=Confidentiality; I=Integrity with Ii=incorrect state (correspondence/completeness fails) and If=misattributed state (provenance/attribution fails); A=Availability/Accessibility with Av=unavailable (data gone/unreachable) and Ac=inaccessible (data present but unusable). A parent code (I, A) stays legal when the refinement is unknown.",
+          "items": { "type": "string", "enum": ["C", "I", "Ii", "If", "A", "Av", "Ac"] },
           "uniqueItems": true
         },
         "delta_t_to_next": { "$ref": "#/definitions/delta_t" },
@@ -156,7 +156,7 @@
         "fec_recorded_in_step_id": { "$ref": "#/definitions/step_id" },
         "outcomes": {
           "type": "array",
-          "items": { "type": "string", "enum": ["C", "I", "A", "Ac"] },
+          "items": { "type": "string", "enum": ["C", "I", "Ii", "If", "A", "Av", "Ac"] },
           "uniqueItems": true
         },
         "evidence_refs": { "type": "array", "items": { "type": "string" } },

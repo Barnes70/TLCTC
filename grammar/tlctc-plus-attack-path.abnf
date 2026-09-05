@@ -181,7 +181,8 @@ SRE_TAG         = "+" SP* "[SRE]"
 ; prefer "Av" or "Ac".
 DRE_TAG         = "+" SP* "[DRE:" SP* DRE_LIST "]"
 DRE_LIST        = DRE_LET *(SP* "," SP* DRE_LET)
-DRE_LET         = "Av" / "Ac" / "C" / "I" / "A"
+DRE_LET         = "Av" / "Ac" / "Ii" / "If" / "C" / "I" / "A"
+                ; refinement tree (core §7.6): Ii/If refine I, Av/Ac refine A
 
 ; -- BRE: Business Risk Event -----------------------------------------
 ; Structured codes only (R-V01-MIGRATION). BRE_EXPR supports sequential

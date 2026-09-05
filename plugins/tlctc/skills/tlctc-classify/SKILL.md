@@ -569,7 +569,7 @@ When a step appears to fit multiple clusters, apply in order:
 9. Is LEGITIMATE FUNCTIONALITY being misused (no flaw required)?
    └─ Yes → #1 Abuse of Functions
 10. RECORD OUTCOMES SEPARATELY
-    └─ Data impact? → [DRE: C], [DRE: I], [DRE: A], or combinations
+    └─ Data impact? → [DRE: C], [DRE: I] (or Ii/If), [DRE: A] (or Av/Ac), or combinations
     └─ Outcomes do NOT change cluster classification
 ```
 
@@ -752,7 +752,9 @@ DRE tags record outcomes. They do NOT change cluster classification and MUST NOT
 | Impact | Notation |
 |--------|----------|
 | Loss of Confidentiality | `[DRE: C]` |
-| Loss of Integrity | `[DRE: I]` |
+| Loss of Integrity (general) | `[DRE: I]` |
+| Loss of Integrity — incorrect state (correspondence/completeness fails; content is wrong) | `[DRE: Ii]` |
+| Loss of Integrity — misattributed state (provenance/attribution fails; content may be accurate) | `[DRE: If]` |
 | Loss of Availability / Accessibility (general) | `[DRE: A]` |
 | Loss of Availability — data gone/unreachable | `[DRE: Av]` |
 | Loss of Accessibility — data present but unusable | `[DRE: Ac]` |

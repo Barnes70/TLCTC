@@ -32,7 +32,7 @@ The grammar accepts any syntactically well-formed attack path string, including:
 - Intra-system boundaries `|[sandbox][@renderer→@os]|`
 - Unresolved-step operators `?` and `…`
 - Step annotations (`[conf=low]`, `[inferred]`, `[evidence=...]`)
-- Data risk events (`+ [DRE: C, I, A, Av, Ac]`)
+- Data risk events (`+ [DRE: C, I, Ii, If, A, Av, Ac]`) — a refinement tree: `Ii`/`If` refine `I`, `Av`/`Ac` refine `A` (core §7.6)
 - Business risk events (`+ [BRE: <label>]`) — TLCTC+ additive consequence-side annotation; see [`documentation/tlctc-plus-ncsc-proposal.md`](../documentation/tlctc-plus-ncsc-proposal.md)
 
 ## What It Does Not Cover
