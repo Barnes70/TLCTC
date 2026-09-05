@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" aria-labelledby="bowtieTitle bowtieDesc" role="img">
   <title id="bowtieTitle">TLCTC Dual-Layer Bow-Tie Model</title>
-  <desc id="bowtieDesc">A bow-tie diagram mapping Cyber Threat Clusters (Cause) to Business Consequences, split between Strategic and Operational layers.</desc>
+  <desc id="bowtieDesc">A bow-tie diagram mapping Cyber Threat Clusters (Cause) to the System Risk Event and the SRE to DRE to BRE consequence chain, split between Strategic and Operational layers.</desc>
 
   <defs>
     <linearGradient id="wingGradientLeft" x1="0%" x2="100%" y1="0%" y2="0%">
@@ -22,7 +22,7 @@
 
   <!-- Section headers -->
   <text class="label" x="190" y="30" fill="#6b7280" text-anchor="middle" font-size="12" font-weight="bold" letter-spacing="2">CAUSE</text>
-  <text class="label" x="375" y="30" fill="#e74c3c" text-anchor="middle" font-size="12" font-weight="bold" letter-spacing="2">EVENT</text>
+  <text class="label" x="400" y="30" fill="#e74c3c" text-anchor="middle" font-size="12" font-weight="bold" letter-spacing="2">EVENT</text>
   <text class="label" x="610" y="30" fill="#6b7280" text-anchor="middle" font-size="12" font-weight="bold" letter-spacing="2">CONSEQUENCES</text>
 
   <!-- Left wing (Cause) -->
@@ -33,36 +33,37 @@
 
   <!-- Strategic / Operational divider -->
   <line x1="20" x2="780" y1="150" y2="150" stroke="#18181b" stroke-dasharray="6 4" stroke-width="1" opacity="0.3"/>
-  <text class="label" x="480" y="145" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">STRATEGIC</text>
-  <text class="label" x="480" y="160" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">OPERATIONAL</text>
+  <text class="label" x="580" y="145" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">STRATEGIC</text>
+  <text class="label" x="580" y="160" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">OPERATIONAL</text>
   <text class="label" x="250" y="145" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">STRATEGIC</text>
   <text class="label" x="250" y="160" fill="#18181b" text-anchor="end" font-size="10" font-weight="bold" opacity="0.6">OPERATIONAL</text>
 
-  <!-- Central Risk Event circle -->
+  <!-- Central System Risk Event circle -->
   <circle cx="400" cy="150" r="65" fill="#ffffff" stroke="#e74c3c" stroke-width="3"/>
-  <text class="label" x="400" y="142" fill="#0a0a0b" text-anchor="middle" font-size="14" font-weight="bold">Risk Event</text>
-  <text class="label" x="400" y="160" fill="#e74c3c" text-anchor="middle" font-size="11" font-weight="500" text-transform="uppercase" letter-spacing="1">CYBER INCIDENT</text>
-  <text class="label" x="400" y="176" fill="#6b7280" text-anchor="middle" font-size="9">(System Compromise)</text>
+  <text class="label" x="400" y="132" fill="#0a0a0b" text-anchor="middle" font-size="12.5" font-weight="bold">System Risk Event</text>
+  <text class="label" x="400" y="149" fill="#e74c3c" text-anchor="middle" font-size="12" font-weight="bold" letter-spacing="1.5">SRE</text>
+  <text class="label" x="400" y="167" fill="#6b7280" text-anchor="middle" font-size="9.5">Loss of Control</text>
+  <text class="label" x="400" y="180" fill="#6b7280" text-anchor="middle" font-size="9.5">System Compromise</text>
 
   <!-- Left wing labels: Strategic (top) -->
-  <text class="label" x="120" y="120" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Threat Clusters</text>
+  <text class="label" x="120" y="120" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Threat Clusters #1&#8211;#10</text>
   <text class="label" x="120" y="134" fill="#6b7280" text-anchor="middle" font-size="9">Generic vulnerabilities of</text>
   <text class="label" x="120" y="146" fill="#6b7280" text-anchor="middle" font-size="9">asset-types</text>
 
   <!-- Left wing labels: Operational (bottom) -->
-  <text class="label" x="120" y="168" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Threats / TTPs</text>
+  <text class="label" x="120" y="168" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Sub-threats / TTPs</text>
   <text class="label" x="120" y="182" fill="#6b7280" text-anchor="middle" font-size="9">Specific vulnerability of</text>
   <text class="label" x="120" y="194" fill="#6b7280" text-anchor="middle" font-size="9">specific assets</text>
 
   <!-- Right wing labels: Strategic (top) -->
   <text class="label" x="680" y="120" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Appetite &amp; Tolerance</text>
-  <text class="label" x="680" y="134" fill="#6b7280" text-anchor="middle" font-size="9">Business Impact Analysis</text>
-  <text class="label" x="680" y="146" fill="#6b7280" text-anchor="middle" font-size="9">(BIA)</text>
+  <text class="label" x="680" y="134" fill="#6b7280" text-anchor="middle" font-size="9">Risk appetite designates the</text>
+  <text class="label" x="680" y="146" fill="#6b7280" text-anchor="middle" font-size="9">terminal BRE as Business Impact</text>
 
   <!-- Right wing labels: Operational (bottom) -->
-  <text class="label" x="680" y="168" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Consequences</text>
-  <text class="label" x="680" y="182" fill="#6b7280" text-anchor="middle" font-size="9">Data Risk Events</text>
-  <text class="label" x="680" y="194" fill="#6b7280" text-anchor="middle" font-size="9">(C-I-A Impact) → Business Risk Event</text>
+  <text class="label" x="680" y="168" fill="#18181b" text-anchor="middle" font-size="11" font-weight="bold">Consequence Chain</text>
+  <text class="label" x="680" y="182" fill="#6b7280" text-anchor="middle" font-size="9">Data Risk Events (C / I / A)</text>
+  <text class="label" x="680" y="194" fill="#6b7280" text-anchor="middle" font-size="9">&#8594; Business Risk Events (BRE*)</text>
 
   <!-- Arrows from wings to center -->
   <path d="M 300,100 Q 350,100 360,130" fill="none" stroke="#e5e7eb" stroke-width="1" marker-end="url(#arrowhead)"/>
