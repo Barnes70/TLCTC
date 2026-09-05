@@ -93,7 +93,9 @@ Topology is a structural property and does not change cluster classification, wh
 
 TLCTC anchors its cause/outcome separation (Axiom III) in a bow-tie risk structure with a single central event. The ten clusters sit on the cause (left) side; outcomes sit on the consequence (right) side; the two are joined by one pivot event:
 
-> **System Risk Event (SRE) — Loss of Control / System Compromise:** the point at which the attacker achieves unauthorized control over the system's behavior, privileges, data, or trust relationships, sufficient to pursue attack objectives.
+> **System Risk Event (SRE):** any risk event at the system altitude — the point at which a system's behavior, privileges, data, or trust relationships depart from what its owner controls. It has two types at one altitude. **System Compromise — Loss of Control:** an actor holds capability over the system sufficient to pursue objectives; it is reached only through cluster steps and is the pivot of the Cyber Bow-Tie. **System Failure — Loss of Function:** the system ceases to perform and no actor holds anything (software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, an unintended act that breaks the system); operational risk, no cluster, same altitude, same gate into the data layer.
+
+The ten clusters converge on the Compromise type only. Failure is named so that the failure branch drawn at the same altitude in the framework's figures is inside the model rather than implicit; Section 3.5 states which cause-side rows can reach which type.
 
 The SRE is positioned deliberately *before* outcomes. Compromise can exist without immediate observable impact — an attacker may hold persistent control for weeks before exfiltration — so the central event opens a detection window between initial compromise and any data loss. Other threats cause an outcome effectively at the moment of compromise (a successful SQL injection reading data, a flood exhausting capacity). The model accommodates both: the SRE is the pivot, whether consequences are delayed or simultaneous.
 
@@ -107,7 +109,7 @@ Consequences follow a structured, variable-length chain:
 
 | Event | Definition | Examples |
 | --- | --- | --- |
-| **SRE** | Loss of Control / System Compromise — the central event | RCE achieved; persistent access established |
+| **SRE** | System-altitude risk event, two types: Compromise (loss of control, an actor holds capability — the cyber pivot) or Failure (loss of function, no actor) | RCE achieved; persistent access established; storage controller fails |
 | **DRE** | Loss of Confidentiality, Integrity, or Availability/Accessibility — type codes form a refinement tree (§7.6): `C`; `I` → `Ii`/`If`; `A` → `Av`/`Ac` | data exfiltrated `[DRE: C]`; records altered `[DRE: I]`; log entry forged under another identity `[DRE: If]`; files encrypted by ransomware `[DRE: Ac]` |
 | **BRE** | A discrete business-level event triggered by a DRE or a preceding BRE | regulatory notification; outage declared; fine imposed |
 
@@ -118,6 +120,52 @@ Business Risk Events may cascade (`SRE → DRE → BRE₁ → … → BREₙ`); 
 *Figure 3 — The consequence chain. Every node is a risk event and every Δt a detection-and-intervention window; the organization's risk appetite designates the terminal BRE as its Business Impact.*
 
 Crucially, **outcomes are never threats.** A data risk event such as "data breach" or "ransomware impact" records *what happened*; it never changes the cluster classification of the step that caused it. This is the operational form of Axiom III, and it is what allows the same outcome to be traced back to different cause-side clusters.
+
+### 3.5 The Cause-Side Partition and the Scope Boundary
+
+The ten clusters classify attacks. They do not classify everything that can go wrong with a system, and the framework has always said so: cyber risk is a subset of operational risk and addresses unauthorized or unknown entities. This section makes the boundary operational. The cause side of any risk event is partitioned by three questions, asked strictly in this order:
+
+> Is there an actor? Did they intend it? Were they entitled?
+
+| Actor | Intent | Entitlement | Row | Register | Clusters |
+| --- | --- | --- | --- | --- | --- |
+| No | — | — | Failure (software, hardware) or external event | Operational risk | none |
+| Yes | No | — | Error in Use | Operational risk | none |
+| Yes | Yes | Yes | Abuse of Rights | Operational risk | none — no SRE; the chain starts at the DRE |
+| Yes | Yes | No | Attack | Cyber | the ten TLCTC clusters; SRE (Compromise) recorded |
+
+Two features of the grid are load-bearing. First, entitlement is asked only once intent is present: an unentitled actor who did not intend the outcome is Error in Use, not an attack — a visitor who trips a breaker is not #8. Second, *entitled* means entitled, not permitted. Permission is what the access-control system happens to return; entitlement is what an accountable grantor actually conferred — an access right, a role, a mandate — held genuinely and bounded by purpose and scope. The two are supposed to coincide and frequently do not, and that gap is where most of the interesting cases live.
+
+**This is not an actor test.** Axiom IV refuses to structure the taxonomy by actor identity, and the entitlement test respects it: it never asks who someone is, where they sit on an org chart, or what they were trying to achieve. It asks one relational question about the action — did it fall inside the envelope some accountable grantor conferred for it? An outsider with no entitlement and an insider acting outside the envelope they were granted land in the identical place: the Attack row, the same cluster. No actor test produces that result. "Insider threat" is not a category in TLCTC and never was; it is a mixture of two rows that answer to two different control regimes. The framework already makes this move for authentication: R-CRED asks whether the system was deceived about who is authenticating, not who the claimant is. The entitlement test is the same instrument pointed at authorization.
+
+**Why Abuse of Rights is not cluster #11.** Rights are functions — every authorization check is designed, shipped functionality — which is why the two abuses look alike. But rights are the particular subset of functions whose job is to partition the invocation of all the other functions, and the taxonomy turns on which side of that partition the action fell. Axiom VI requires every cluster to be defined by exactly one generic vulnerability, and Abuse of Rights has none: "the fact that entitlements are granted" is not a weakness of an asset but the precondition of its being useful. The asymmetry decides everything. #1's generic vulnerability is *reducible by design* — narrow an API, remove a configuration surface, tighten a function's scope, and the exposure shrinks. A granted entitlement is *irreducible by design* — a trader must be able to book trades, a database administrator must be able to read the database; remove the entitlement and you have removed the business, not secured the system. Two exposures, two levers, two owners, two registers.
+
+| | #1 Abuse of Functions | Abuse of Rights |
+| --- | --- | --- |
+| Property of | the object — the designed scope of functionality | the subject — an entitlement genuinely held |
+| Envelope | crossed, using designed features, no code flaw | honoured — the actor stays inside it |
+| Generic vulnerability | the inherent trust, scope, and complexity designed into functionality | none — the system behaved as designed and as authorized |
+| Central event | SRE — System Compromise | none; the chain begins at the DRE |
+| Register / owner | cyber / CISO | operational risk / CRO, business line, HR |
+| Controls | least privilege, function-level authorization, scope reduction, anomaly detection | segregation of duties, four-eyes, mandate limits, supervision, vetting, purpose auditing |
+
+**The decision procedure** (normative as R-SCOPE, Section 6.1):
+
+```
+1. Is there an actor?                        No  → Failure / external event. OpRisk. No cluster.
+2. Did the actor intend the outcome?         No  → Error in Use. OpRisk. No cluster.
+3. Did an accountable grantor confer an
+   entitlement covering THIS action?         Yes → Abuse of Rights. OpRisk. No SRE; chain starts at the DRE.
+4. Was an implementation flaw required?      Yes → #2 / #3 per R-ROLE.   No → #1 Abuse of Functions. Cyber; SRE recorded.
+```
+
+Step 3 is the one routinely skipped, and skipping it is what produces a cyber register full of events no security control could ever have prevented. Entitlement is asked before the code-flaw test because an entitled actor exploiting a code flaw is a different and rarer case than the third row — and it is an attack: exploiting a bug is never inside anyone's grant. Steps after the first are classified by the cluster rules as usual; R-SCOPE governs admission to the Attack row, not the sequence that follows.
+
+**Worked cases.** A support agent opens a celebrity's customer record out of curiosity: the entitlement to open customer records is the job, purpose corrupted, envelope honoured — Abuse of Rights, no cluster, no SRE, a confidentiality DRE that arrived without any compromise. The same agent edits a region parameter in the URL to reach a record outside their assigned territory: same verb, same endpoint, one changed integer, and the entitlement covered their region only — #1, an SRE is recorded. The two events are almost indistinguishable in the access log; the discriminator is not in the log but in the entitlement register. A database administrator runs a bulk export: if the grant reads "administer the database" and the export falls within it, third row; if it reads "administer schema and performance, no bulk extraction", the same command is #1. The classification of a technical act can therefore depend on a governance document — that is the framework refusing to pretend a question about authorization can be answered without consulting the authority. Self-enrolment through a designed registration function into a population it was not meant for is #1 at enrolment and not #4 afterwards (R-CRED), and not Abuse of Rights either: nobody with authority conferred anything; the grant was manufactured by the function. Stolen credentials used only for actions the account was entitled to perform are still not the third row, and this is the sharpest statement of the principle: *the entitlement attaches to the person, not to the token.* The attacker holds the artifact but was never a grantee, so no action they take is inside any envelope — `#9 →[Δt=hours] #4 →[Δt=5m] #1 + [DRE: C]`. A stolen entitlement is never Abuse of Rights; it is an attack wearing one. Kweku Adoboli booked fictitious hedges with his own credentials, valid inputs, and a back-office rule that behaved as specified: the cause side is empty, there is no SRE, the system was obeyed rather than compromised; what exists is an integrity DRE in the trading records and a cascade of business risk events after it.
+
+**What changes downstream.** Abuse of Rights enters the consequence chain at the DRE with no SRE above it, which removes not just a node but the Δt window that sat above it — the interval compromise-detection exists to exploit. A detection strategy built on catching the compromise has nothing to catch, which is why insider-misuse programmes built from endpoint and network telemetry underperform. The two rows procure different control sets; filing an event in the wrong register procures the wrong controls. Accepting internal misconduct into the cyber register makes the CISO responsible for human honesty, a risk they hold no lever over. And incident-notification duties that hang off compromise and data-protection duties that hang off the data event can start different clocks: a register that cannot tell the rows apart cannot tell which clock started.
+
+Third party is a modifier over all four rows, not a fifth row: any of them may occur in another responsibility sphere and be honoured across a trust boundary, which the notation already carries as the domain-boundary operator (Section 7.3). #10 is only the Attack-row instance of it at the system altitude; a supplier's outage honoured across the boundary is third-party failure, not #10.
 
 ## 4. The Ten Threat Clusters
 
@@ -391,7 +439,7 @@ The axioms fall into four groups: scope (I–II), separation (III–V), classifi
 
 The classification rules operationalize the axioms, resolving recurring boundary questions so that assignment remains reproducible. Each rule statement below is reproduced verbatim from the canonical framework dictionary (`tlctc-framework.v2.5.json`), together with its enforcement level. Most rules carry the enforcement level **must**; R-UNRES-7 is **should** and R-UNRES-6 is **may**. Two are machine-enforceable (R-EXEC, R-INTRA-9); the remainder are enforced through analyst judgment guided by the stated rule.
 
-The rules are presented in two groups: the eight core rules (R-EXEC, R-ROLE, R-FLOOD, R-SUPPLY, R-MITM, R-CHANNEL, R-SUBSTRATE, R-CRED), and the ten v2.1 extension rules covering transit, intra-system boundaries, and unresolved steps. Together these eighteen rules are the complete normative rule registry of v2.5; rule IDs used in earlier documents but absent here (R-ABUSE, R-HUMAN, R-PHYSICAL from the v2.0 whitepaper) are retired aliases whose content is carried by the cluster definitions and boundary tests of Section 4, and they retain their original meaning — a rule ID is never reused with a different proposition.
+The rules are presented in two groups: the nine core rules (R-EXEC, R-ROLE, R-FLOOD, R-SUPPLY, R-MITM, R-CHANNEL, R-SUBSTRATE, R-CRED, R-SCOPE), and the ten v2.1 extension rules covering transit, intra-system boundaries, and unresolved steps. Together these eighteen rules are the complete normative rule registry of v2.5; rule IDs used in earlier documents but absent here (R-ABUSE, R-HUMAN, R-PHYSICAL from the v2.0 whitepaper) are retired aliases whose content is carried by the cluster definitions and boundary tests of Section 4, and they retain their original meaning — a rule ID is never reused with a different proposition.
 
 ### 6.1 Core Rules
 
@@ -418,6 +466,10 @@ R-SUBSTRATE and the legacy R-PHYSICAL sequencing rule (a retired v2.0 alias whos
 **R-CRED** (must). Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method, PROVIDED the identity claimed is not the presenter's own. A credential issued to the presenter by the target system through a designed enrolment function makes the presenter its authentic holder; such use MUST NOT be classified as #4, and where the enrolment function granted the identity or its permissions outside their intended population or scope, the enrolment step maps to #1. These are separate attack steps.
 
 The higher-abstraction test is whether the system is *deceived about who is authenticating*: deceived — the presented credential's identity claim is false — is #4; not deceived, because the system itself enrolled this principal, places the exploited generic vulnerability elsewhere, usually #1 at enrolment. Self-issuance is the evidence that the claim is true, not a separate criterion; attacker effort or activity level is never the test (a replayed session cookie is #4; elaborate fraudulent self-registration is #1).
+
+**R-SCOPE** (must). A step is classified under a cluster only where the action fell outside the entitlement envelope an accountable grantor actually conferred for it. Cause-side classification asks three questions in strict order — is there an actor; did they intend the outcome; did an accountable grantor confer an entitlement covering *this* action — and only an intended, unentitled action enters the Attack row where the clusters apply (implementation flaw required → #2/#3 per R-ROLE; otherwise #1). No actor is failure or external event; an unintended outcome is Error in Use; an intended in-grant action is Abuse of Rights — operational risk, no cluster, no System Risk Event, the consequence chain starting at the DRE. Entitlement means entitled, not permitted, and attaches to the person, not the token: credential use by anyone other than the grantee is never inside an envelope (#4 per R-CRED, subsequent function use #1), and exploiting an implementation flaw is never inside any grant.
+
+R-SCOPE is the admission rule for the whole registry: every other rule presupposes that the step under classification is an attack. It is not an actor test (Axiom IV) — the question is a relation between the action and the conferred envelope, and an outsider with no grant and an insider outside their grant land in the same row and the same cluster. Section 3.5 gives the partition, the asymmetry that keeps Abuse of Rights out of the cluster set, and the worked cases. Entitlement is tested after intent and before the implementation-flaw test, because an entitled actor exploiting a code flaw is an attack.
 
 ### 6.2 v2.1 Extension Rules
 
@@ -595,28 +647,35 @@ This paper presents a framework, not a validated result, and several limitations
 
 **Classification still requires judgment.** Most rules are enforced by analyst judgment rather than mechanically (Section 6); boundary cases — particularly the #1/#2/#3 distinction and the #4 credential boundary — depend on correctly identifying the generic vulnerability, and reasonable analysts may disagree before the boundary tests are applied.
 
+**The scope boundary depends on governance evidence.** R-SCOPE makes the classification of a technical act depend on what an accountable grantor actually conferred, and the discriminator is in the entitlement register, not in the log. Where no grant is documented, or permission and entitlement have drifted apart, the analyst must reconstruct the envelope before the row can be assigned; the framework treats that as a property of the organization's governance, not a defect of the taxonomy, but it is a real limit on reproducibility until entitlement registers are as routinely available as access logs.
+
 Stating these limits is itself part of the method. A framework that specifies where it is unproven, and how it could fail, is one that can be improved by evidence rather than defended by assertion.
 
 ## 9. Glossary
 
 The following one-line definitions cover the terms used in this paper so that it is self-contained. They are condensed from the canonical glossary; see `tlctc-glossary.md` for the exhaustive, authoritative version.
 
+- **Abuse of Rights** — an intended action inside an entitlement an accountable grantor genuinely conferred, used against its purpose; operational risk, no generic vulnerability, no cluster, no SRE — the consequence chain starts at the DRE (Section 3.5, R-SCOPE). Not an eleventh cluster: a granted entitlement is irreducible by design.
 - **Attack path** — an ordered sequence of attack steps describing a complete attack scenario, written in the attack-path notation (Section 7), where each step maps to exactly one cluster.
 - **Attack vector** — a distinct initiating method, defined by the generic vulnerability it *initially* targets (Axiom VII); the label is based on cause, not outcome.
 - **BRE (Business Risk Event)** — a business-level consequence event (e.g. regulatory notification, outage declaration, fine) triggered by a DRE or a preceding BRE; BREs may chain.
 - **Business Impact (BI)** — the role assigned to the terminal BRE in a consequence chain, set by an organization's risk appetite; not a separate event type and context-dependent (one organization's terminal BI may be another's mid-chain BRE).
+- **Cause-side partition** — the four rows of the cause side of any risk event, produced by three questions asked in order (actor? intent? entitlement?): failure or external event, Error in Use, Abuse of Rights, Attack. Only the Attack row is in TLCTC scope; the ten clusters classify its steps (Section 3.5).
 - **DCS (Detection Coverage Score)** — a time ratio comparing the defender's mean time to detect at an edge to the attacker's velocity across it (`DCS = MTTD / Δt`); below 1.0 the defender detects before the step completes, above 1.0 the attacker is ahead. Used operationally as a control-effectiveness KCI (developed in the application doc).
 - **Δt / attack velocity** — the time interval between two adjacent steps, attached to the sequence operator (an edge property, not a step property). The set of Δt values expresses a path's velocity; transitions are grouped into classes VC-1 through VC-4.
 - **Domain** — a set of assets governed by a coherent control regime (policies, monitoring, enforcement, accountability); may be technical, organizational, or socio-technical (e.g. cyber/IT, physical security, human decision, vendor development).
 - **Domain boundary** — a point where responsibility spheres or control regimes change; crossing it moves the attack from one set of applicable controls to another, annotated with the `||...||` operator.
 - **DRE (Data Risk Event)** — an outcome event recording Loss of Confidentiality (C), Integrity (I), or Availability/Accessibility (A). DREs are recorded separately from cluster steps and never change a step's classification. The type codes form a refinement tree (§7.6): `Ii` (incorrect state) and `If` (misattributed state) refine `I`; `Av` (unavailable) and `Ac` (inaccessible) refine `A`; a parent code stays legal whenever the refinement is unknown.
+- **Entitlement** — what an accountable grantor actually conferred on a person for an action (an access right, a role, a mandate), bounded by purpose and scope. Entitled is not permitted: permission is what the access-control system returns, entitlement is what was conferred. It attaches to the person, never to the token.
 - **Epistemic state** — the knowledge status of a step in a path: classified (`#X`), low-confidence (`#X [conf=low]`), inferred (`#X [inferred]`), or unresolved (`?` / `…`); these are distinct from the step's ontological cluster classification.
+- **Error in Use** — an actor, any actor, producing an outcome they did not intend; operational risk, no cluster, entitlement not asked. Can enter any altitude directly and produce any DRE type.
 - **FEC (Foreign Executable Content)** — program content that the environment loads, interprets, or executes through its intended execution capability; its execution is the generic vulnerability of #7 Malware (R-EXEC).
 - **Generic vulnerability** — the single root-level attack surface that defines a cluster; the stable, technology-independent weakness a cluster targets. Every generic vulnerability maps to exactly one cluster (Axiom VI), and every specific vulnerability (e.g. a CVE) is an instance of one.
 - **Intra-system boundary** — a boundary crossing within a single host (sandbox, privilege, process, hypervisor), annotated with `|...|`; an observability annotation that never changes classification (R-INTRA-7).
 - **Responsibility sphere** — the organizational owner of a domain, denoted `@Entity` (e.g. `@Org`, `@Vendor`, `@Facilities`); spheres have distinct policies, teams, and legal boundaries.
-- **SRE (System Risk Event)** — the central event of the Cyber Bow-Tie: Loss of Control / System Compromise. It is the pivot between the cause side (clusters) and the consequence side (data and business risk events).
+- **SRE (System Risk Event)** — any risk event at the system altitude and the central event of the Cyber Bow-Tie, with two types at one altitude: System Compromise (loss of control — an actor holds capability; reached only through cluster steps; the pivot between the cause side and the consequence side) and System Failure (loss of function — no actor holds anything; operational risk, no cluster). Abuse of Rights produces neither; its chain begins at the DRE.
 - **Sub-cluster / operational sub-threat** — an operational refinement of a top-level cluster, written `#X.Y` / `TLCTC-XX.Y0`, distinguishing the vector through which the attacker reaches the *same* generic vulnerability (e.g. `#2.1` protocol vs `#2.2` core-function). A different generic vulnerability is a different cluster, not a sub-cluster.
+- **System Failure** — the Failure type of the SRE: loss of function with no actor holding capability (software or hardware failure, misconfiguration, capacity exhaustion without an attacker, external event, or an unintended act that breaks the system). Same altitude and same data-layer gate as Compromise; operational risk, no cluster.
 - **TAE (Trust Acceptance Event)** — the moment a domain honors a third-party trust link and treats a trust artifact as authoritative (validate, accept, install, apply, execute, attach privileges). #10 Supply Chain Attack is placed at the TAE (R-SUPPLY).
 - **Threat cluster** — an organizational construct grouping the threats that exploit one common generic vulnerability. TLCTC defines exactly ten; the classification rules force each attack step to exactly one of them.
 - **Threat topology** — a structural property of each cluster: *internal* (#1–#7), where the generic vulnerability is exploited within the software domain's control regime, or *bridge* (#8–#10), where it inherently enables crossing into the software domain from a different control regime (physical, human, third-party). Topology never changes classification.

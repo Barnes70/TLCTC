@@ -1,8 +1,9 @@
 # glossary
 
-252 document(s).
+259 document(s).
 
 - [Abuse of Functions (#1)](/glossary/abuse-of-functions-1.md) — `term`
+- [Abuse of Rights](/glossary/abuse-of-rights.md) — `term`
 - [Accessibility (Data Risk Event)](/glossary/accessibility-data-risk-event.md) — `term`
 - [Actor Archetype](/glossary/actor-archetype.md) — `term`
 - [Actor Group](/glossary/actor-group.md) — `term`
@@ -36,6 +37,7 @@
 - [Call-Level Mapping Rule](/glossary/call-level-mapping-rule.md) — `term`
 - [Capacity Exhaustion](/glossary/capacity-exhaustion.md) — `term`
 - [CAPEC (Common Attack Pattern Enumeration and Classification)](/glossary/capec-common-attack-pattern-enumeration-and-classification.md) — `term`
+- [Cause-Side Partition](/glossary/cause-side-partition.md) — `term`
 - [Central Event](/glossary/central-event.md) — `term`
 - [Client-Role Component](/glossary/client-role-component.md) — `term`
 - [Client-Server Relationship](/glossary/client-server-relationship.md) — `term`
@@ -82,6 +84,8 @@
 - [Eₙ Event Notation (Regulatory)](/glossary/e-event-notation-regulatory.md) — `term`
 - [Edge (in attack path)](/glossary/edge-in-attack-path.md) — `term`
 - [EDR (Endpoint Detection and Response)](/glossary/edr-endpoint-detection-and-response.md) — `term`
+- [Entitlement](/glossary/entitlement.md) — `term`
+- [Error in Use](/glossary/error-in-use.md) — `term`
 - [Estimated Δt](/glossary/estimated-t.md) — `term`
 - [Event Chain Length](/glossary/event-chain-length.md) — `term`
 - [Event Chain](/glossary/event-chain.md) — `term`
@@ -102,6 +106,7 @@
 - [Implementation Defect (Availability Context)](/glossary/implementation-defect-availability-context.md) — `term`
 - [Implementation Flaw](/glossary/implementation-flaw.md) — `term`
 - [Insecure Deserialization](/glossary/insecure-deserialization.md) — `term`
+- [Insider Threat](/glossary/insider-threat.md) — `term`
 - [Intelligence Layer](/glossary/intelligence-layer.md) — `term`
 - [Internal Cluster](/glossary/internal-cluster.md) — `term`
 - [Intra-System Boundary Operator (|...|)](/glossary/intra-system-boundary-operator.md) — `term`
@@ -170,6 +175,7 @@
 - [R-PHYSICAL (Physical Domain Isolation) **](/glossary/r-physical-physical-domain-isolation.md) — `term`
 - [R-ROLE (Server vs Client Determination)](/glossary/r-role-server-vs-client-determination.md) — `term`
 - [R-* Rules Quick Reference](/glossary/r-rules-quick-reference.md) — `term`
+- [R-SCOPE (Entitlement Scope Boundary)](/glossary/r-scope-entitlement-scope-boundary.md) — `term`
 - [R-SUBSTRATE (Physical Property vs Implemented Logic)](/glossary/r-substrate-physical-property-vs-implemented-logic.md) — `term`
 - [R-SUPPLY (Trust Acceptance Event Placement)](/glossary/r-supply-trust-acceptance-event-placement.md) — `term`
 - [R-TRANSIT (Transit Boundary Rules)](/glossary/r-transit-transit-boundary-rules.md) — `term`
@@ -215,6 +221,7 @@
 - [Supply Chain Attack (#10)](/glossary/supply-chain-attack-10.md) — `term`
 - [SYN Flood](/glossary/syn-flood.md) — `term`
 - [System Compromise](/glossary/system-compromise.md) — `term`
+- [System Failure](/glossary/system-failure.md) — `term`
 - [System Risk Event (SRE)](/glossary/system-risk-event-sre.md) — `term`
 - [System-Risk Layer](/glossary/system-risk-layer.md) — `term`
 - [Tailgating](/glossary/tailgating.md) — `term`

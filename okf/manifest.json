@@ -3,7 +3,7 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.5",
   "generator": "scripts/build-okf.js",
-  "document_count": 427,
+  "document_count": 438,
   "type_counts": {
     "attack-path": 59,
     "axiom": 10,
@@ -11,13 +11,16 @@
     "cluster": 10,
     "control-objective-set": 10,
     "csf-function": 6,
+    "dre-tree": 1,
     "effectiveness-model": 1,
     "indicator-framework": 1,
     "intra-boundary-type": 4,
     "mapping-set": 30,
-    "rule": 18,
+    "partition": 1,
+    "rule": 19,
     "sphere": 9,
-    "term": 252
+    "sre": 1,
+    "term": 259
   },
   "documents": [
     {
@@ -1559,11 +1562,59 @@
       ]
     },
     {
+      "path": "/framework/cause-side-partition.md",
+      "type": "partition",
+      "title": "Cause-side partition (actor / intent / entitlement)",
+      "description": "The partition of the cause side of any risk event into four rows by three questions asked in strict order.",
+      "resource": "tlctc:framework:cause-side-partition",
+      "tags": [
+        "taxonomy",
+        "scope",
+        "cause-side",
+        "abuse-of-rights"
+      ]
+    },
+    {
+      "path": "/framework/data-risk-events.md",
+      "type": "dre-tree",
+      "title": "Data Risk Event type codes (refinement tree)",
+      "description": "Data Risk Event (DRE) type codes used in '+ [DRE: ...]' tags.",
+      "resource": "tlctc:framework:data-risk-events",
+      "tags": [
+        "taxonomy",
+        "dre",
+        "consequence-side"
+      ]
+    },
+    {
+      "path": "/framework/system-risk-event.md",
+      "type": "sre",
+      "title": "System Risk Event (two types, one altitude)",
+      "description": "Any risk event at the system altitude: the point at which a system's behaviour, privileges, data, or trust relationships depart from what its owner controls.",
+      "resource": "tlctc:framework:system-risk-event",
+      "tags": [
+        "taxonomy",
+        "sre",
+        "bow-tie",
+        "central-event"
+      ]
+    },
+    {
       "path": "/glossary/abuse-of-functions-1.md",
       "type": "term",
       "title": "Abuse of Functions (#1)",
       "description": "A threat cluster where an attacker misuses the logic, scope, or configuration of existing, legitimate software functions for malicious purposes.",
       "resource": "tlctc:term:abuse-of-functions-1",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/abuse-of-rights.md",
+      "type": "term",
+      "title": "Abuse of Rights",
+      "description": "An intended action inside an entitlement — an access right, a role, a mandate — genuinely conferred by an accountable grantor, but used against its purpose.",
+      "resource": "tlctc:term:abuse-of-rights",
       "tags": [
         "glossary"
       ]
@@ -1899,10 +1950,20 @@
       ]
     },
     {
+      "path": "/glossary/cause-side-partition.md",
+      "type": "term",
+      "title": "Cause-Side Partition",
+      "description": "The partition of the cause side of any risk event into four rows by three questions asked in strict order: Is there an actor?",
+      "resource": "tlctc:term:cause-side-partition",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
       "path": "/glossary/central-event.md",
       "type": "term",
       "title": "Central Event",
-      "description": "In the TLCTC Bow Tie model: Loss of Control / System Compromise — the point at which the attacker achieves unauthorized control over the system's behavior, privileges, data, or trust relationships—sufficient to pursue attack objectives.",
+      "description": "In the TLCTC Bow Tie model: the System Risk Event (SRE) , which since v2.5 has two types at one altitude — System Compromise / Loss of Control (the point at which an actor achieves unauthorized control over the system's behavior, privileges, data, or trust relationships, sufficient to pursue attack objectives; the only type the ten clusters reach) and System Failure / Loss of Function (no actor holds anything).",
       "resource": "tlctc:term:central-event",
       "tags": [
         "glossary"
@@ -2359,6 +2420,26 @@
       ]
     },
     {
+      "path": "/glossary/entitlement.md",
+      "type": "term",
+      "title": "Entitlement",
+      "description": "What an accountable grantor actually conferred on a person for an action: an access right, a role, or a mandate, held genuinely and bounded by its purpose and scope.",
+      "resource": "tlctc:term:entitlement",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/error-in-use.md",
+      "type": "term",
+      "title": "Error in Use",
+      "description": "The second row of the cause side partition: an actor — any actor — producing an outcome they did not intend.",
+      "resource": "tlctc:term:error-in-use",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
       "path": "/glossary/estimated-t.md",
       "type": "term",
       "title": "Estimated Δt",
@@ -2559,6 +2640,16 @@
       ]
     },
     {
+      "path": "/glossary/insider-threat.md",
+      "type": "term",
+      "title": "Insider Threat",
+      "description": "Not a TLCTC category.",
+      "resource": "tlctc:term:insider-threat",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
       "path": "/glossary/intelligence-layer.md",
       "type": "term",
       "title": "Intelligence Layer",
@@ -2732,7 +2823,7 @@
       "path": "/glossary/loss-of-control-system-compromise.md",
       "type": "term",
       "title": "Loss of Control / System Compromise",
-      "description": "The central event in the Cyber Bow Tie model, abbreviated SRE (System Risk Event), representing the point at which the attacker achieves unauthorized control over a system's behavior, privileges, data, or trust relationships.",
+      "description": "The Compromise type of the System Risk Event (SRE) — the central event in the Cyber Bow Tie model — representing the point at which an actor achieves unauthorized control over a system's behavior, privileges, data, or trust relationships.",
       "resource": "tlctc:term:loss-of-control-system-compromise",
       "tags": [
         "glossary"
@@ -3232,8 +3323,18 @@
       "path": "/glossary/r-rules-quick-reference.md",
       "type": "term",
       "title": "R-* Rules Quick Reference",
-      "description": "The v2.5 normative registry contains exactly 18 rules : eight core rules and ten v2.1 extension rules.",
+      "description": "The v2.5 normative registry contains exactly 19 rules : nine core rules and ten v2.1 extension rules.",
       "resource": "tlctc:term:r-rules-quick-reference",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/r-scope-entitlement-scope-boundary.md",
+      "type": "term",
+      "title": "R-SCOPE (Entitlement Scope Boundary)",
+      "description": "Admission rule for the whole registry: a step is classified under a cluster only where the action fell outside the entitlement envelope an accountable grantor actually conferred for it.",
+      "resource": "tlctc:term:r-scope-entitlement-scope-boundary",
       "tags": [
         "glossary"
       ]
@@ -3689,10 +3790,20 @@
       ]
     },
     {
+      "path": "/glossary/system-failure.md",
+      "type": "term",
+      "title": "System Failure",
+      "description": "The Failure type of the System Risk Event: loss of function with no actor holding capability — software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, or an unintended act (Error in Use) that breaks the system.",
+      "resource": "tlctc:term:system-failure",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
       "path": "/glossary/system-risk-event-sre.md",
       "type": "term",
       "title": "System Risk Event (SRE)",
-      "description": "The central event in the TLCTC Cyber Bow Tie model: Loss of Control / System Compromise .",
+      "description": "Any risk event at the system altitude — the point at which a system's behavior, privileges, data, or trust relationships depart from what its owner controls — and the central event in the TLCTC Cyber Bow Tie model.",
       "resource": "tlctc:term:system-risk-event-sre",
       "tags": [
         "glossary"
@@ -4528,6 +4639,18 @@
       "title": "R-ROLE",
       "description": "Classify by the role of the component containing the flaw relative to the attacker: server-role flaw = #2, client-role flaw = #3.",
       "resource": "tlctc:rule:R-ROLE",
+      "tags": [
+        "taxonomy",
+        "rule",
+        "must"
+      ]
+    },
+    {
+      "path": "/rules/r-scope.md",
+      "type": "rule",
+      "title": "R-SCOPE",
+      "description": "A step is classified under a cluster only where the action fell outside the entitlement envelope an accountable grantor actually conferred for it.",
+      "resource": "tlctc:rule:R-SCOPE",
       "tags": [
         "taxonomy",
         "rule",
