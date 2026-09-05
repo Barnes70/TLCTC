@@ -423,6 +423,10 @@ The axioms fall into four groups: scope (I–II), separation (III–V), classifi
 
 **Axiom IV — Threats Are Not Threat Actors.** Threat clusters are separate from threat actors. Actor identity (attribution, motivation, capability) is not a structuring element for threat categorization; TLCTC classifies actions and exploited generic vulnerabilities, not "who."
 
+![The asset in context: a seven-layer context stack (region, state or nation, sector, asset owner organization, asset topology, asset type, asset product) narrows to the asset that is compromised in the central risk event; actors on the left apply threats to the cause side; cause side, risk event, and consequences form one line with the CSF functions Protect, Detect, Respond, and Recover beneath it](images/tlctc-asset-context-stack.svg)
+
+*Figure 6 — The asset in context. The context stack — region, state, sector, owner organization, topology, type, product — defines the asset that is compromised, and actors apply the threats; neither is a classification input. The stack changes the specific vulnerabilities and controls at the operational level, never the clusters (Axiom I), and the actor never determines the cluster (Axiom IV). The cause–event–consequence line and the control placement are the same for every asset in every context.*
+
 **Axiom V — Control Failure Is Not a Threat.** Control failures are not threats. Control failure is control-risk; risk remains structured as Threat → Event/Incident → Consequences, and controls influence likelihood and impact but do not define the threat cluster.
 
 **Axiom VI — One Step, One Generic Vulnerability, One Cluster.** For every generic vulnerability, there is one threat cluster (non-overlap). Every distinct attack step exploits exactly one generic vulnerability in the attack surface, and each generic vulnerability maps to exactly one cluster.

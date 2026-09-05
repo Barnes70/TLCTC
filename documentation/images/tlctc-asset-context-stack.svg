@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1000 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="acsTitle acsDesc" style="font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">
+  <title id="acsTitle">The asset in context: context stack, actors, and the cause–event–consequence line</title>
+  <desc id="acsDesc">A seven-layer context stack (region, state or nation, sector, asset owner organization, asset topology, asset type, asset product) narrows down to the asset that is compromised in the central risk event. Actors on the left apply threats to the cause side. The cause side, the risk event, and the consequences form one horizontal line, with the CSF functions Protect, Detect, Respond, and Recover placed beneath it as diamonds. Neither the context stack nor the actor is a classification input.</desc>
+
+  <defs>
+    <marker id="acsArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+    <marker id="acsArrowLight" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9ca3af"/>
+    </marker>
+    <filter id="acsShadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="640" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="500" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">The Asset in Context</text>
+  <text x="500" y="46" text-anchor="middle" font-size="11" fill="#6b7280">The context stack defines the asset; actors apply threats; the cause–event–consequence line stays the same</text>
+
+  <!-- ======================== -->
+  <!-- CONTEXT STACK            -->
+  <!-- ======================== -->
+  <text x="262" y="78" text-anchor="end" font-size="10" font-weight="700" letter-spacing="2" fill="#6b7280">CONTEXT STACK</text>
+  <text x="262" y="92" text-anchor="end" font-size="9" fill="#9ca3af">outside in</text>
+
+  <g filter="url(#acsShadow)">
+    <rect x="280" y="62"  width="560" height="30" rx="15" fill="#1e3a5f" fill-opacity="1"/>
+    <rect x="300" y="96"  width="520" height="30" rx="15" fill="#1e3a5f" fill-opacity="0.85"/>
+    <rect x="320" y="130" width="480" height="30" rx="15" fill="#1e3a5f" fill-opacity="0.70"/>
+    <rect x="340" y="164" width="440" height="30" rx="15" fill="#1e3a5f" fill-opacity="0.55"/>
+    <rect x="360" y="198" width="400" height="30" rx="15" fill="#1e3a5f" fill-opacity="0.40"/>
+    <rect x="380" y="232" width="360" height="30" rx="15" fill="#1e3a5f" fill-opacity="0.26"/>
+    <rect x="400" y="266" width="320" height="30" rx="15" fill="#1e3a5f" fill-opacity="0.14" stroke="#1e3a5f" stroke-opacity="0.35" stroke-width="1"/>
+  </g>
+
+  <g text-anchor="middle" font-size="11">
+    <text x="560" y="81"  fill="#ffffff"><tspan font-weight="700">Region</tspan><tspan fill="#ffffff" fill-opacity="0.8"> — e.g. EU, US, APAC</tspan></text>
+    <text x="560" y="115" fill="#ffffff"><tspan font-weight="700">State / Nation</tspan></text>
+    <text x="560" y="149" fill="#ffffff"><tspan font-weight="700">Sector</tspan><tspan fill="#ffffff" fill-opacity="0.85"> — to which the organization belongs</tspan></text>
+    <text x="560" y="183" fill="#ffffff"><tspan font-weight="700">Asset Owner Organization</tspan></text>
+    <text x="560" y="217" fill="#1e3a5f"><tspan font-weight="700">Asset Topology</tspan><tspan fill="#4b5563"> — cloud / on-prem</tspan></text>
+    <text x="560" y="251" fill="#1e3a5f"><tspan font-weight="700">Asset Type</tspan><tspan fill="#4b5563"> — OT / IT, network, application</tspan></text>
+    <text x="560" y="285" fill="#1e3a5f"><tspan font-weight="700">Asset Product</tspan><tspan fill="#4b5563"> — e.g. SharePoint</tspan></text>
+  </g>
+
+  <!-- Stack → risk event -->
+  <line x1="560" y1="300" x2="560" y2="352" stroke="#9ca3af" stroke-width="1.8" marker-end="url(#acsArrowLight)"/>
+  <text x="572" y="330" font-size="9" fill="#9ca3af">the asset that is compromised</text>
+
+  <!-- ======================== -->
+  <!-- ACTORS                   -->
+  <!-- ======================== -->
+  <g transform="translate(30, 326)">
+    <rect x="0" y="0" width="200" height="214" rx="8" fill="#ffffff" stroke="#1e3a5f" stroke-width="2" filter="url(#acsShadow)"/>
+    <text x="100" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a5f">ACTORS</text>
+    <text x="100" y="39" text-anchor="middle" font-size="9" fill="#6b7280">apply threats — never classify them</text>
+    <line x1="16" y1="48" x2="184" y2="48" stroke="#e5e7eb" stroke-width="1"/>
+    <g font-size="10.5" fill="#4b5563">
+      <text x="16" y="68">Nation-state / state-sponsored</text>
+      <text x="16" y="86">Cybercriminal groups</text>
+      <text x="16" y="104">Insiders acting outside their grant</text>
+      <text x="16" y="122">Hacktivists / extremists</text>
+      <text x="16" y="140">Competitors</text>
+      <text x="16" y="158">Opportunistic individuals</text>
+      <text x="16" y="176">Third-party / supply-chain parties</text>
+      <text x="16" y="194">AI agents</text>
+    </g>
+  </g>
+
+  <!-- Actors → cause side -->
+  <line x1="230" y1="400" x2="272" y2="400" stroke="#6b7280" stroke-width="1.8" stroke-dasharray="4 3" marker-end="url(#acsArrow)"/>
+
+  <!-- ======================== -->
+  <!-- CAUSE → EVENT → CONSEQ.  -->
+  <!-- ======================== -->
+  <g transform="translate(280, 365)">
+    <rect x="0" y="0" width="180" height="70" rx="35" fill="#18181b" fill-opacity="0.06" stroke="#e5e7eb" stroke-width="2"/>
+    <text x="90" y="31" text-anchor="middle" font-size="14" font-weight="700" fill="#18181b">CAUSE SIDE</text>
+    <text x="90" y="50" text-anchor="middle" font-size="11" fill="#6b7280">Threat Clusters #1–#10</text>
+  </g>
+
+  <line x1="460" y1="400" x2="482" y2="400" stroke="#6b7280" stroke-width="2" marker-end="url(#acsArrow)"/>
+
+  <g transform="translate(470, 365)">
+    <rect x="0" y="0" width="180" height="70" rx="35" fill="#ef4444" fill-opacity="0.07" stroke="#ef4444" stroke-width="2" filter="url(#acsShadow)"/>
+    <text x="90" y="31" text-anchor="middle" font-size="14" font-weight="700" fill="#ef4444">RISK EVENT</text>
+    <text x="90" y="50" text-anchor="middle" font-size="11" fill="#18181b">Asset Compromise (SRE)</text>
+  </g>
+
+  <line x1="650" y1="400" x2="682" y2="400" stroke="#6b7280" stroke-width="2" marker-end="url(#acsArrow)"/>
+
+  <g transform="translate(690, 365)">
+    <rect x="0" y="0" width="200" height="70" rx="35" fill="#18181b" fill-opacity="0.06" stroke="#e5e7eb" stroke-width="2"/>
+    <text x="100" y="31" text-anchor="middle" font-size="14" font-weight="700" fill="#18181b">CONSEQUENCES</text>
+    <text x="100" y="50" text-anchor="middle" font-size="11" fill="#6b7280">DRE → BRE* (impact, follow-up events)</text>
+  </g>
+
+  <!-- ======================== -->
+  <!-- CSF FUNCTIONS            -->
+  <!-- ======================== -->
+  <g transform="translate(400, 505)">
+    <line x1="0" y1="-25" x2="0" y2="-62" stroke="#e5e7eb" stroke-dasharray="4 4" stroke-width="1.5" marker-end="url(#acsArrow)"/>
+    <rect x="-22" y="-22" width="44" height="44" transform="rotate(45)" fill="#ffffff" stroke="#18181b" stroke-width="2"/>
+    <text x="0" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="#18181b">PROTECT</text>
+    <text x="0" y="58" text-anchor="middle" font-size="9.5" fill="#6b7280">IDENTIFY (indirectly)</text>
+  </g>
+
+  <g transform="translate(560, 505)">
+    <line x1="0" y1="-25" x2="0" y2="-60" stroke="#e5e7eb" stroke-dasharray="4 4" stroke-width="1.5" marker-end="url(#acsArrow)"/>
+    <rect x="-22" y="-22" width="44" height="44" transform="rotate(45)" fill="#ffffff" stroke="#18181b" stroke-width="2"/>
+    <text x="0" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="#18181b">DETECT</text>
+  </g>
+
+  <g transform="translate(730, 505)">
+    <line x1="0" y1="-25" x2="0" y2="-60" stroke="#e5e7eb" stroke-dasharray="4 4" stroke-width="1.5" marker-end="url(#acsArrow)"/>
+    <rect x="-22" y="-22" width="44" height="44" transform="rotate(45)" fill="#ffffff" stroke="#18181b" stroke-width="2"/>
+    <text x="0" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="#18181b">RESPOND</text>
+  </g>
+
+  <g transform="translate(850, 505)">
+    <line x1="0" y1="-25" x2="0" y2="-60" stroke="#e5e7eb" stroke-dasharray="4 4" stroke-width="1.5" marker-end="url(#acsArrow)"/>
+    <rect x="-22" y="-22" width="44" height="44" transform="rotate(45)" fill="#ffffff" stroke="#18181b" stroke-width="2"/>
+    <text x="0" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="#18181b">RECOVER</text>
+  </g>
+
+  <!-- ======================== -->
+  <!-- Caption                  -->
+  <!-- ======================== -->
+  <text x="500" y="600" text-anchor="middle" font-size="11" fill="#6b7280">A clear line from context to compromise to consequence.</text>
+  <text x="500" y="618" text-anchor="middle" font-size="11" font-style="italic" fill="#18181b" opacity="0.8">The stack changes the specific vulnerabilities and controls, never the clusters (Axiom I). Actors apply threats; they never classify them (Axiom IV).</text>
+</svg>
