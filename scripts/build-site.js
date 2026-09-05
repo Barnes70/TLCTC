@@ -60,7 +60,7 @@ function copyIfChanged(src, dst, label) {
   return true;
 }
 function run(cmd, cmdArgs, cwd, env) {
-  const r = spawnSync(cmd, cmdArgs, { cwd, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, PYTHONIOENCODING: 'utf-8', ...env }, shell: process.platform === 'win32' && cmd === 'npm' });
+  const r = spawnSync(cmd, cmdArgs, { cwd, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, PYTHONIOENCODING: 'utf-8', ...env } });
   if (r.status !== 0) { console.error(`  ! ${cmd} ${cmdArgs.join(' ')} failed:\n${r.stderr || r.stdout}`); process.exit(1); }
   return (r.stdout || '').toString();
 }

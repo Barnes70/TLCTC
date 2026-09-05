@@ -38,7 +38,9 @@ const GO = flag('--go');
 const fw = JSON.parse(fs.readFileSync(path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.5.json'), 'utf8'));
 const TAG = opt('--tag', `v${fw.metadata.tlctc_version}.0`);
 const sh = (cmd, opts = {}) => execSync(cmd, { cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'], ...opts }).toString().trim();
-const run = (cmd, cmdArgs) => { const r = spawnSync(cmd, cmdArgs, { cwd: ROOT, stdio: 'inherit', shell: process.platform === 'win32' && (cmd === 'npm' || cmd === 'gh') }); if (r.status !== 0) { console.error(`! ${cmd} ${cmdArgs.join(' ')} failed`); process.exit(1); } };
+// No shell anywhere: node/git/gh are real executables; npm is bypassed by calling the scripts directly.
+const run = (cmd, cmdArgs) => { const r = spawnSync(cmd, cmdArgs, { cwd: ROOT, stdio: 'inherit' }); if (r.status !== 0) { console.error(`! ${cmd} ${cmdArgs.join(' ')} failed`); process.exit(1); } };
+const node = (script, ...a) => run(process.execPath, [path.join(ROOT, 'scripts', script), ...a]);
 const dirty = () => sh('git status --porcelain').split('\n').filter((l) => l && !l.includes(' okf/')).join('\n');
 
 const PDFS = {
@@ -56,12 +58,16 @@ if (d0) { console.error('! working tree is dirty; commit first:\n' + d0); if (GO
 
 // 2. validate
 console.log('\n== validate');
-run('npm', ['run', '-s', 'validate']);
+node('validate-framework.js', 'json-schemas/layer-1/tlctc-framework.schema.json', 'json-schemas/layer-1/tlctc-framework.v2.5.json');
+node('validate-attack-paths.js');
+node('validate-consistency.js');
+node('build-okf.js');
+node('validate-okf.js', 'okf');
 
 // 3. PDFs (opt-in: output is not byte-deterministic)
 if (flag('--build')) {
   console.log('\n== build PDFs');
-  run('npm', ['run', '-s', 'build-pdfs']);
+  for (const rel of Object.values(PDFS)) node('build-pdf.js', rel.replace(/\.pdf$/, '.md'), rel);
   const d1 = dirty();
   if (d1 && GO) {
     run('git', ['add', ...Object.values(PDFS)]);
@@ -87,7 +93,7 @@ for (const [k, rel] of Object.entries(PDFS)) {
   console.log(`${k.padEnd(12)} ${info[k].size.toLocaleString('en-US').padStart(10)} B  ${info[k].pages} pp  md5 ${info[k].md5}\n${' '.repeat(13)}sha256 ${info[k].sha256}`);
 }
 const head = sh('git rev-parse --short HEAD');
-const tagAt = (() => { try { return sh(`git rev-parse --short ${TAG}^{commit}`); } catch { return '(none)'; } })();
+const tagAt = (() => { try { return sh(`git rev-list -n 1 --abbrev-commit ${TAG}`, { stdio: ['ignore', 'pipe', 'ignore'] }); } catch { return '(none)'; } })();
 console.log(`\nHEAD ${head}   tag ${TAG} currently at ${tagAt}`);
 
 if (!GO) { console.log('\nDry run complete. Re-run with --go to retarget the tag, refresh assets, and patch the checklist.'); process.exit(0); }
@@ -102,7 +108,7 @@ if (!flag('--no-tag')) {
 // 5. assets
 if (!flag('--no-assets')) {
   console.log(`\n== GitHub release assets for ${TAG}`);
-  const exists = spawnSync('gh', ['release', 'view', TAG], { cwd: ROOT, stdio: 'ignore', shell: true }).status === 0;
+  const exists = spawnSync('gh', ['release', 'view', TAG], { cwd: ROOT, stdio: 'ignore' }).status === 0;
   if (!exists) run('gh', ['release', 'create', TAG, '--title', `TLCTC ${TAG}`, '--notes', `TLCTC ${fw.metadata.tlctc_version} — see documentation/tlctc-v2.5-core.md`, '--verify-tag']);
   run('gh', ['release', 'upload', TAG, ...ASSETS, '--clobber']);
 }
