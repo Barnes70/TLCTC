@@ -4,9 +4,15 @@
   "description": "TLCTC (Top Level Cyber Threat Clusters) — a cause-oriented, axiomatic cyber threat taxonomy framework. See https://www.tlctc.net",
   "scripts": {
     "validate-framework": "node scripts/validate-framework.js json-schemas/layer-1/tlctc-framework.schema.json json-schemas/layer-1/tlctc-framework.v2.5.json",
+    "validate-attack-paths": "node scripts/validate-attack-paths.js",
+    "validate-consistency": "node scripts/validate-consistency.js",
     "build-okf": "node scripts/build-okf.js",
     "validate-okf": "node scripts/validate-okf.js okf",
-    "validate": "npm run validate-framework && npm run build-okf && npm run validate-okf",
+    "validate": "npm run validate-framework && npm run validate-attack-paths && npm run validate-consistency && npm run build-okf && npm run validate-okf",
+    "build-pdfs": "node scripts/build-pdf.js documentation/tlctc-v2.5-core.md documentation/tlctc-v2.5-core.pdf && node scripts/build-pdf.js documentation/tlctc-v2.5-application.md documentation/tlctc-v2.5-application.pdf && node scripts/build-pdf.js documentation/tlctc-glossary.md documentation/tlctc-glossary.pdf",
+    "site": "node scripts/build-site.js",
+    "site:deploy": "node scripts/build-site.js --deploy",
+    "release": "node scripts/release.js",
     "test": "npm run validate"
   },
   "repository": {

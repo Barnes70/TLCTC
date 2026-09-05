@@ -54,8 +54,8 @@
     },
     "delta_t": {
       "type": "string",
-      "pattern": "^(instant|\\?|~?\\d+(ms|s|m|h|d|w|mo|y)|[<>]=?\\d+(ms|s|m|h|d|w|mo|y))$",
-      "description": "Time to next item (Attack Velocity Δt). Supports unknown '?', estimated '~15m', and bounded '<=5m' forms."
+      "pattern": "^(instant|\\?|~?\\d+(ms|s|m|h|d|w|mo|y)|[<>]=?\\d+(ms|s|m|h|d|w|mo|y)|~(seconds|minutes|hours|days|weeks|months|years))$",
+      "description": "Time to next item (Attack Velocity Δt). Supports unknown '?', estimated '~15m', bounded '<=5m', and coarse order-of-magnitude estimates '~hours' … '~months' (use when the evidence supports the scale but not a number)."
     },
     "boundary": {
       "type": "object",
