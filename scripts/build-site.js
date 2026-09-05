@@ -60,7 +60,7 @@ function copyIfChanged(src, dst, label) {
   return true;
 }
 function run(cmd, cmdArgs, cwd, env) {
-  const r = spawnSync(cmd, cmdArgs, { cwd, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, PYTHONIOENCODING: 'utf-8', ...env }, shell: process.platform === 'win32' && !/\.(exe|js)$/i.test(cmd) && cmd !== 'node' });
+  const r = spawnSync(cmd, cmdArgs, { cwd, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, PYTHONIOENCODING: 'utf-8', ...env }, shell: process.platform === 'win32' && cmd === 'npm' });
   if (r.status !== 0) { console.error(`  ! ${cmd} ${cmdArgs.join(' ')} failed:\n${r.stderr || r.stdout}`); process.exit(1); }
   return (r.stdout || '').toString();
 }
@@ -76,14 +76,27 @@ const mdChanged = {};
 for (const p of PAPERS) mdChanged[p.md] = copyIfChanged(path.join(ROOT, p.md), path.join(SITE, path.basename(p.md)), 'mirror');
 
 // ───────────────────────── 2. PDFs ───────────────────────────────────────────
+// PDF output is not byte-deterministic (creation date, document id), so a PDF is
+// rebuilt only when its markdown source CHANGED since the last build (hash in state),
+// never on mtime alone — otherwise every build would churn the repo's committed PDFs
+// and the Zenodo checksum with them.
+// --rebuild-pdf core|application|glossary|all forces a rebuild (e.g. after a figure changed).
 log('2. pdfs' + (NO_PDF ? ' (skipped: --no-pdf)' : ''));
+const mdHashes = state.mdHashes || {};
+const firstRun = !state.mdHashes;
+const force = opt('--rebuild-pdf', '');
 if (!NO_PDF) {
   for (const p of PAPERS) {
     const md = path.join(ROOT, p.md), pdf = path.join(ROOT, p.pdf);
-    const stale = !fs.existsSync(pdf) || fs.statSync(md).mtimeMs > fs.statSync(pdf).mtimeMs || mdChanged[p.md];
+    const key = path.basename(p.md).replace(/^tlctc-(v2\.5-)?/, '').replace(/\.md$/, ''); // core | application | glossary
+    const h = fileHash(md);
+    const forced = force === 'all' || force === key;
+    if (firstRun && fs.existsSync(pdf) && !forced) { mdHashes[p.md] = h; continue; } // seed: trust the committed PDF
+    const stale = forced || !fs.existsSync(pdf) || mdHashes[p.md] !== h;
     if (!stale) continue;
-    log(`  build ${p.pdf}`);
+    log(`  build ${p.pdf} (${forced ? '--rebuild-pdf' : 'source changed'})`);
     run('node', [path.join(ROOT, 'scripts/build-pdf.js'), md, pdf], ROOT);
+    mdHashes[p.md] = h;
   }
 }
 
@@ -219,7 +232,7 @@ const hashes = {};
 const collect = (dir, base) => { for (const n of fs.readdirSync(dir)) { const p = path.join(dir, n); if (fs.statSync(p).isDirectory()) { if (!['.git', 'node_modules', '__pycache__'].includes(n)) collect(p, base); } else hashes[rel(p)] = fileHash(p); } };
 for (const top of ['okf', 'images']) if (fs.existsSync(path.join(SITE, top))) collect(path.join(SITE, top), SITE);
 for (const f of fs.readdirSync(SITE)) { const p = path.join(SITE, f); if (fs.statSync(p).isFile() && /\.(html|pdf|xml|json)$/.test(f) && !f.startsWith('.')) hashes[f] = fileHash(p); }
-fs.writeFileSync(STATE_FILE, JSON.stringify({ built_at: new Date().toISOString(), hashes }, null, 1));
+fs.writeFileSync(STATE_FILE, JSON.stringify({ built_at: new Date().toISOString(), hashes, mdHashes }, null, 1));
 log(`\nBuild done. ${changed.size} site file(s) changed:`);
 for (const f of [...changed].sort()) log('  ' + f);
 

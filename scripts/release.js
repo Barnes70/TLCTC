@@ -2,19 +2,21 @@
 /*
  * release.js — Everything a Zenodo deposit needs, in one command.
  *
- *   npm run release                       dry run: validate, (re)build PDFs, print checksums
- *   npm run release -- --go               also: retarget the tag, push it, refresh GitHub
+ *   npm run release                       dry run: validate, print checksums of the COMMITTED PDFs
+ *   npm run release -- --build            also rebuild the three PDFs first (they are then
+ *                                         uncommitted; with --go they are committed for you)
+ *   npm run release -- --go               act: retarget the tag, push it, refresh GitHub
  *                                         release assets, patch the Zenodo checklist
  *   options: --tag v2.5.0 (default: v<version> from the dictionary's tlctc_version + ".0")
- *            --no-build   skip PDF rebuild (use the committed PDFs)
+ *            --build      rebuild PDFs (PDF output is not byte-deterministic, so this
+ *                         always changes the checksums — only do it when sources changed)
  *            --no-assets  skip GitHub release asset upload
  *            --no-tag     skip tag retarget/push
  *
  * What --go does, in order:
  *   1. refuses on a dirty working tree (commit first — the tag must point at a commit)
  *   2. npm run validate
- *   3. builds core + application + glossary PDFs (unless --no-build) and requires
- *      the tree to still be clean afterwards (i.e. PDFs are committed)
+ *   3. with --build: rebuilds the PDFs and commits them ("docs: rebuild PDFs for <tag>")
  *   4. git tag -f <tag> HEAD && git push -f origin <tag>
  *   5. gh release upload <tag> tlctc-v2.5-core.pdf tlctc-framework.v2.5.json tlctc-cwe.json --clobber
  *   6. rewrites the checksum/size/tag lines in input4new/zenodo-v2.5-core-metadata.md
@@ -36,7 +38,7 @@ const GO = flag('--go');
 const fw = JSON.parse(fs.readFileSync(path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.5.json'), 'utf8'));
 const TAG = opt('--tag', `v${fw.metadata.tlctc_version}.0`);
 const sh = (cmd, opts = {}) => execSync(cmd, { cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'], ...opts }).toString().trim();
-const run = (cmd, cmdArgs) => { const r = spawnSync(cmd, cmdArgs, { cwd: ROOT, stdio: 'inherit', shell: process.platform === 'win32' }); if (r.status !== 0) { console.error(`! ${cmd} ${cmdArgs.join(' ')} failed`); process.exit(1); } };
+const run = (cmd, cmdArgs) => { const r = spawnSync(cmd, cmdArgs, { cwd: ROOT, stdio: 'inherit', shell: process.platform === 'win32' && (cmd === 'npm' || cmd === 'gh') }); if (r.status !== 0) { console.error(`! ${cmd} ${cmdArgs.join(' ')} failed`); process.exit(1); } };
 const dirty = () => sh('git status --porcelain').split('\n').filter((l) => l && !l.includes(' okf/')).join('\n');
 
 const PDFS = {
@@ -56,14 +58,18 @@ if (d0) { console.error('! working tree is dirty; commit first:\n' + d0); if (GO
 console.log('\n== validate');
 run('npm', ['run', '-s', 'validate']);
 
-// 3. PDFs
-if (!flag('--no-build')) {
+// 3. PDFs (opt-in: output is not byte-deterministic)
+if (flag('--build')) {
   console.log('\n== build PDFs');
   run('npm', ['run', '-s', 'build-pdfs']);
   const d1 = dirty();
-  if (d1) {
-    console.log('! PDFs changed; commit them so the tag covers them:\n' + d1);
-    if (GO) process.exit(1);
+  if (d1 && GO) {
+    run('git', ['add', ...Object.values(PDFS)]);
+    run('git', ['commit', '-q', '-m', `docs: rebuild PDFs for ${TAG}\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`]);
+    run('git', ['push', 'origin', 'HEAD']);
+    console.log('  PDFs committed and pushed');
+  } else if (d1) {
+    console.log('! PDFs rebuilt but not committed (dry run):\n' + d1);
   }
 }
 
@@ -113,7 +119,7 @@ if (fs.existsSync(ck)) {
     [/\| NOT this → `documentation\/tlctc-v2\.5-application\.pdf` \| `[0-9a-f]{32}` \| [\d,]+ B \(\d+ KB\) \| \d+ \|/, `| NOT this → \`documentation/tlctc-v2.5-application.pdf\` | \`${a.md5}\` | ${fmt(a.size)} B (${Math.round(a.size / 1024)} KB) | ${a.pages} |`],
     [/compare the md5 Zenodo shows against `[0-9a-f]{32}`/, `compare the md5 Zenodo shows against \`${c.md5}\``],
     [/`[0-9a-f]{64}`\.\)/, `\`${c.sha256}\`.)`],
-    [/currently points at `[0-9a-f]{7,}`; \*\*retarget to `[0-9a-f]{7,}` before depositing\*\*/, `points at \`${head}\` (retargeted by scripts/release.js); **nothing to do**`],
+    ...(flag('--no-tag') ? [] : [[/currently points at `[0-9a-f]{7,}`; \*\*retarget to `[0-9a-f]{7,}` before depositing\*\*/, `points at \`${head}\` (retargeted by scripts/release.js); **nothing to do**`]]),
   ];
   let n = 0; for (const [re, rep] of subs) if (re.test(t)) { t = t.replace(re, rep); n++; }
   fs.writeFileSync(ck, t);
