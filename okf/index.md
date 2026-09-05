@@ -8,6 +8,7 @@ generated from the canonical JSON schemas and documentation. See [README.md](/RE
 - [clusters](/clusters/index.md) — The ten cause-oriented threat clusters.
 - [contexts](/contexts/index.md) — Boundary contexts and intra-system boundary types (Layer 2).
 - [controls](/controls/index.md) — NIST CSF × TLCTC control matrix, ISO 27001 starter, effectiveness model, indicators.
+- [framework](/framework/index.md) — Framework-level definitions: DRE refinement tree, cause-side partition and scope boundary, System Risk Event types.
 - [glossary](/glossary/index.md) — Glossary of TLCTC terms.
 - [mappings](/mappings/index.md) — Mappings to MITRE ATT&CK, MITRE CWE, and SigmaHQ.
 - [rules](/rules/index.md) — Classification rules (R-*).

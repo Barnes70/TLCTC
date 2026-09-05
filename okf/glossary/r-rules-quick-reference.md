@@ -1,16 +1,16 @@
 ---
 type: "term"
 title: "R-* Rules Quick Reference"
-description: "The v2.5 normative registry contains exactly 18 rules : eight core rules and ten v2.1 extension rules."
+description: "The v2.5 normative registry contains exactly 19 rules : nine core rules and ten v2.1 extension rules."
 resource: "tlctc:term:r-rules-quick-reference"
 tags:
   - "glossary"
 ---
 # R-* Rules Quick Reference
 
-The v2.5 normative registry contains exactly **18 rules**: eight core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.5.json`); summaries are condensed, the dictionary statement governs.
+The v2.5 normative registry contains exactly **19 rules**: nine core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.5.json`); summaries are condensed, the dictionary statement governs.
 
-**Core rules (8):**
+**Core rules (9):**
 
 | Rule | Distinguishes | Key Decision |
 | --- | --- | --- |
@@ -22,6 +22,7 @@ The v2.5 normative registry contains exactly **18 rules**: eight core rules and 
 | **R-CHANNEL** *(v2.5)* | Control vs Code Flaw | Defective logic constitutive of channel control → `#5`; Incidental defect → `#2/#3` |
 | **R-SUBSTRATE** *(v2.5)* | Property vs Logic | Physical property exploited → `#8`; Physical layer as readout only → `#2/#3` |
 | **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` (unless the identity is the presenter's own — self-issued enrolment is `#1`); separate steps |
+| **R-SCOPE** *(v2.5)* | Attack vs Abuse of Rights | Actor? Intent? Entitlement covering this action? → in-grant intended action = Abuse of Rights (OpRisk, no cluster, no SRE); unentitled → Attack row, clusters apply |
 
 **v2.1 extension rules (10):**
 

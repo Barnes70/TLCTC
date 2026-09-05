@@ -229,6 +229,88 @@ function buildRules() {
   }
 }
 
+// ═════════════════════════ FRAMEWORK-LEVEL DEFINITIONS ═══════════════════════
+// Dictionary sections beyond clusters/axioms/rules (v2.5): DRE refinement tree,
+// cause-side partition + scope boundary, System Risk Event types. Each is guarded
+// so the builder still runs against older dictionaries that lack the section.
+function buildFramework() {
+  const dre = framework.data_risk_events;
+  if (dre) {
+    const body = [
+      '# Data Risk Event type codes', '',
+      dre.description, '',
+      '## Stopping rule', '', dre.stopping_rule, '',
+      '## Codes', '',
+      '| Code | Parent | Name | What fails | Definition |', '|---|---|---|---|---|',
+      ...dre.codes.map((c) => `| \`${c.code}\` | ${c.parent ? `\`${c.parent}\`` : '—'} | ${c.name} | ${c.property} | ${c.definition} |`),
+      '',
+      '# Schema', '',
+      `- **Parents:** ${dre.codes.filter((c) => !c.parent).map((c) => `\`${c.code}\``).join(', ')}`,
+      `- **Refinements:** ${dre.codes.filter((c) => c.parent).map((c) => `\`${c.code}\` → \`${c.parent}\``).join(', ')}`,
+      '- **Notation:** `+ [DRE: C, Ii, If, Av, Ac]` (any subset; a parent stays legal when the refinement is unknown)',
+    ].join('\n');
+    writeDoc('framework/data-risk-events.md', {
+      type: 'dre-tree',
+      title: 'Data Risk Event type codes (refinement tree)',
+      description: firstSentence(dre.description),
+      resource: 'tlctc:framework:data-risk-events',
+      tags: ['taxonomy', 'dre', 'consequence-side'],
+    }, body);
+  }
+
+  const part = framework.cause_side_partition;
+  if (part) {
+    const yn = (v) => (v === null || v === undefined ? '—' : v ? 'Yes' : 'No');
+    const body = [
+      '# Cause-side partition and scope boundary', '',
+      part.description, '',
+      '## The three questions (asked in order)', '',
+      ...part.questions.map((q, i) => `${i + 1}. ${q}`), '',
+      '## The four rows', '',
+      '| Row | Actor | Intent | Entitled | Register | Clusters apply | Definition |', '|---|---|---|---|---|---|---|',
+      ...part.rows.map((r) => `| **${r.name}** (\`${r.row_id}\`) | ${yn(r.actor)} | ${yn(r.intended)} | ${yn(r.entitled)} | ${r.register} | ${r.cluster_applies ? 'yes — #1–#10' : 'no'} | ${r.definition} |`),
+      '',
+      ...(part.entitlement ? ['## Entitlement', '', ...Object.entries(part.entitlement).map(([k, v]) => `- **${k.replace(/_/g, ' ')}:** ${v}`), ''] : []),
+      ...(part.third_party_modifier ? ['## Third-party modifier', '', part.third_party_modifier, ''] : []),
+      '## Decision procedure', '',
+      ...part.decision_procedure.map((s) => `- ${s}`), '',
+      '# Schema', '',
+      '- **Governing rule:** [R-SCOPE](/rules/r-scope.md)',
+      '- **In-scope row:** `attack` only; the other three rows carry no cluster.',
+    ].join('\n');
+    writeDoc('framework/cause-side-partition.md', {
+      type: 'partition',
+      title: 'Cause-side partition (actor / intent / entitlement)',
+      description: firstSentence(part.description),
+      resource: 'tlctc:framework:cause-side-partition',
+      tags: ['taxonomy', 'scope', 'cause-side', 'abuse-of-rights'],
+    }, body);
+  }
+
+  const sre = framework.system_risk_event;
+  if (sre) {
+    const body = [
+      '# System Risk Event (SRE)', '',
+      sre.definition, '',
+      '## Types', '',
+      '| Type | Name | Clusters reach it | Definition |', '|---|---|---|---|',
+      ...sre.types.map((t) => `| \`${t.type_id}\` | ${t.name} | ${t.cluster_applies ? 'yes' : 'no'} | ${t.definition} |`),
+      '',
+      ...(sre.notes ? [`> ${sre.notes}`, ''] : []),
+      '# Schema', '',
+      '- **Consequence chain:** SRE → DRE → BRE* (see [DRE codes](/framework/data-risk-events.md))',
+      '- **Cause side:** see [cause-side partition](/framework/cause-side-partition.md)',
+    ].join('\n');
+    writeDoc('framework/system-risk-event.md', {
+      type: 'sre',
+      title: 'System Risk Event (two types, one altitude)',
+      description: firstSentence(sre.definition),
+      resource: 'tlctc:framework:system-risk-event',
+      tags: ['taxonomy', 'sre', 'bow-tie', 'central-event'],
+    }, body);
+  }
+}
+
 // ═════════════════════════ LAYER-2 REGISTRY ══════════════════════════════════
 function buildRegistry() {
   for (const s of registry.spheres) {
@@ -690,6 +772,7 @@ function writeRoot() {
     clusters: 'The ten cause-oriented threat clusters.',
     axioms: 'The ten framework axioms.',
     rules: 'Classification rules (R-*).',
+    framework: 'Framework-level definitions: DRE refinement tree, cause-side partition and scope boundary, System Risk Event types.',
     spheres: 'Responsibility spheres (Layer 2).',
     contexts: 'Boundary contexts and intra-system boundary types (Layer 2).',
     glossary: 'Glossary of TLCTC terms.',
@@ -768,6 +851,7 @@ function main() {
   buildClusters();
   buildAxioms();
   buildRules();
+  buildFramework();
   buildRegistry();
   buildGlossary();
   buildAttackPaths();

@@ -65,6 +65,32 @@
         }
       }
     },
+    "cause_side_partition": {
+      "type": "object",
+      "description": "The four-row partition of the cause side (failure, error in use, abuse of rights, attack) by three ordered questions; only the attack row is in TLCTC scope (R-SCOPE).",
+      "additionalProperties": false,
+      "required": ["description", "questions", "rows", "decision_procedure"],
+      "properties": {
+        "description": { "type": "string" },
+        "questions": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "string" } },
+        "rows": { "type": "array", "minItems": 4, "maxItems": 4, "items": { "$ref": "#/definitions/partition_row_def" } },
+        "entitlement": { "type": "object", "additionalProperties": { "type": "string" } },
+        "third_party_modifier": { "type": "string" },
+        "decision_procedure": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "system_risk_event": {
+      "type": "object",
+      "description": "The System Risk Event and its two types at one altitude: compromise (loss of control, cluster-reachable) and failure (loss of function, no actor).",
+      "additionalProperties": false,
+      "required": ["definition", "types"],
+      "properties": {
+        "definition": { "type": "string" },
+        "types": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/definitions/sre_type_def" } },
+        "notes": { "type": "string" }
+      }
+    },
     "extensions": {
       "type": "object",
       "description": "Forward-compatible container for non-standard fields."
@@ -153,6 +179,34 @@
         "definition": { "type": "string" },
         "parent": { "type": "string", "pattern": "^[A-Z]$", "description": "Refinement codes only: the parent code that stays legal whenever the refinement is unknown or irrelevant." },
         "refinements": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z][a-z]$" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "partition_row_def": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["row_id", "name", "actor", "register", "cluster_applies", "definition"],
+      "properties": {
+        "row_id": { "type": "string", "enum": ["failure", "error_in_use", "abuse_of_rights", "attack"] },
+        "name": { "type": "string" },
+        "actor": { "type": "boolean" },
+        "intended": { "type": ["boolean", "null"], "description": "null = not asked for this row" },
+        "entitled": { "type": ["boolean", "null"], "description": "null = not asked for this row" },
+        "register": { "type": "string", "enum": ["operational-risk", "cyber"] },
+        "cluster_applies": { "type": "boolean" },
+        "definition": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "sre_type_def": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type_id", "name", "cluster_applies", "definition"],
+      "properties": {
+        "type_id": { "type": "string", "enum": ["compromise", "failure"] },
+        "name": { "type": "string" },
+        "cluster_applies": { "type": "boolean" },
+        "definition": { "type": "string" },
         "notes": { "type": "string" }
       }
     }

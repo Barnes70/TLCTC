@@ -16,7 +16,7 @@ TLCTC v2.5 is the current citable baseline: the v2.3 consolidation freeze of the
 
 | Document | Role |
 |---|---|
-| [**Core Paper**](documentation/tlctc-v2.5-core.md) ([PDF](documentation/tlctc-v2.5-core.pdf)) | **The canonical, citable definition** of the framework: derivation, 10 clusters, 10 axioms, 18 classification rules, attack-path notation, glossary, references. Cite this. |
+| [**Core Paper**](documentation/tlctc-v2.5-core.md) ([PDF](documentation/tlctc-v2.5-core.pdf)) | **The canonical, citable definition** of the framework: derivation, 10 clusters, 10 axioms, 19 classification rules, attack-path notation, glossary, references. Cite this. |
 | [**Application Paper**](documentation/tlctc-v2.5-application.md) ([PDF](documentation/tlctc-v2.5-application.pdf)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. |
 | [**White Paper**](documentation/tlctc-v2.0-whitepaper.md) ([web](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)) | The extended practitioner handbook: full notation grammar (§11), boundary catalogs, decision procedures, anti-patterns, and worked detail beyond the core. Conforms to the core; filename kept for link stability. |
 | [**Operational Enumeration**](documentation/tlctc-operational-enumeration.md) ([JSON](json-schemas/operational/tlctc-operational-enumeration.json)) | The *evolving* `TLCTC-XX.YY` sub-cluster catalogue. The strategic layer (10 clusters) is frozen; the operational layer grows by contribution. |
@@ -462,7 +462,7 @@ tlctc/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
 │   │   ├── tlctc-framework.v2.3.json         # V2.3 frozen record (retained for 2.3.x classifications)
-│   │   └── tlctc-framework.v2.5.json         # V2.5 citable baseline: clusters, axioms, 18 rules
+│   │   └── tlctc-framework.v2.5.json         # V2.5 citable baseline: clusters, axioms, 19 rules, DRE tree, cause-side partition, SRE types
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
 │   │   └── example-registry.json             # Example org-specific registry

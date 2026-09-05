@@ -1,7 +1,7 @@
 # TLCTC Framework Glossary — Version 2.5
 
 *Comprehensive definitions and concepts for the Top Level Cyber Threat Clusters framework.*
-*Author: Bernhard Kreinz | Last Updated: 8 Aug 2026*
+*Author: Bernhard Kreinz | Last Updated: 5 Sep 2026*
 
 ---
 
@@ -23,6 +23,20 @@ A threat cluster where an attacker misuses the logic, scope, or configuration of
 
 
 
+
+### Abuse of Rights *(v2.5)*
+
+An intended action inside an **entitlement** — an access right, a role, a mandate — genuinely conferred by an accountable grantor, but used against its purpose. The envelope is honoured: the system behaved as designed and as authorised, so there is **no generic vulnerability, no cluster, and no System Risk Event**; the consequence chain begins at the Data Risk Event. Register: operational risk, owned by the CRO, the business line and HR, not the CISO. Examples: a badge holder propping open a door, an administrator using genuine root to exfiltrate, a clerk posting a false entry inside their role, an officer approving a payment inside their mandate, a support agent opening a celebrity's record out of curiosity. Controls: segregation of duties, four-eyes, mandate limits, supervision, vetting, purpose auditing.
+
+**Why it is not cluster #11.** Rights are functions — every authorization check is designed functionality — which is why Abuse of Rights and `#1 Abuse of Functions` look alike. But rights are the subset of functions that partitions the invocation of all the others, and the taxonomy turns on which side of that partition the action fell. `#1` reaches *past* the entitlement using functions the designer left open, and its generic vulnerability is reducible by design (narrow the API, tighten the scope). A granted entitlement is irreducible by design — remove it and you have removed the business. Two exposures, two levers, two owners, two registers.
+
+**Boundaries.** An insider reaching *outside* their grant is the Attack row and a cluster (the same support agent editing a region parameter to reach a record outside their territory is `#1`). A **stolen entitlement is never Abuse of Rights**: the grant attaches to the person, not the token, so credential use by a non-grantee is `#4` (R-CRED) and the functions reached with it are `#1` — an attack wearing an entitlement. Self-enrolment into a population a registration function was not meant for is `#1`, not Abuse of Rights: nobody with authority conferred anything. The row is a property of the action, not the actor (Axiom IV). The name is **Abuse of Rights**; "Abuse of Access Rights" is deprecated because an access right is only one kind of entitlement.
+
+**Reference:** Core paper §3.5 (cause-side partition), §6.1 (R-SCOPE); dictionary `cause_side_partition`
+
+**Related reading:** [Functions and Rights — why one is a threat cluster and the other is not](https://www.tlctc.net/tlctc-functions-vs-rights.html), [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html)
+
+See also: Cause-Side Partition, Entitlement, Error in Use, R-SCOPE, Abuse of Functions (#1), Operational Risk (OpRisk)
 
 ### Accessibility (Data Risk Event)
 
@@ -319,9 +333,26 @@ Degradation or denial of service caused **primarily** by volume or intensity exc
 
 **Reference:** §4.2.2 (Global Definitions), R-FLOOD (§4.2.5)
 
+### Cause-Side Partition *(v2.5)*
+
+The partition of the cause side of any risk event into four rows by three questions asked in strict order: **Is there an actor? Did they intend it? Were they entitled?**
+
+| Actor | Intent | Entitlement | Row | Register | Clusters |
+| --- | --- | --- | --- | --- | --- |
+| No | — | — | Failure / external event | OpRisk | none |
+| Yes | No | — | Error in Use | OpRisk | none |
+| Yes | Yes | Yes | Abuse of Rights | OpRisk | none — no SRE; chain starts at the DRE |
+| Yes | Yes | No | Attack | Cyber | the ten TLCTC clusters; SRE recorded |
+
+Entitlement is asked only once intent is present (an unentitled actor who did not intend the outcome is Error in Use, not an attack), and *entitled* means entitled, not permitted. The partition is a property of the action, not of the actor (Axiom IV): an outsider with no grant and an insider outside their grant land in the same Attack row. Only the Attack row is in TLCTC scope; the ten clusters classify its steps and only its steps (R-SCOPE). Third party is a modifier over all four rows, carried by the domain-boundary operator, not a fifth row. Decision procedure: (1) actor? no → failure; (2) intended? no → Error in Use; (3) entitlement covering *this* action? yes → Abuse of Rights; (4) implementation flaw required? yes → `#2/#3` per R-ROLE, no → `#1`.
+
+**Reference:** Core paper §3.5; dictionary `cause_side_partition`
+
+See also: Abuse of Rights, Error in Use, Entitlement, R-SCOPE, System Risk Event (SRE), Operational Risk (OpRisk)
+
 ### Central Event
 
-In the TLCTC Bow-Tie model: **Loss of Control / System Compromise** — the point at which the attacker achieves unauthorized control over the system's behavior, privileges, data, or trust relationships—sufficient to pursue attack objectives. This central event is positioned before outcomes.
+In the TLCTC Bow-Tie model: the **System Risk Event (SRE)**, which since v2.5 has two types at one altitude — **System Compromise / Loss of Control** (the point at which an actor achieves unauthorized control over the system's behavior, privileges, data, or trust relationships, sufficient to pursue attack objectives; the only type the ten clusters reach) and **System Failure / Loss of Function** (no actor holds anything). The central event is positioned before outcomes.
 
 **Reference:** §6.3 (Central Event)
 
@@ -665,6 +696,22 @@ A transition between two adjacent Attack Steps, represented by the sequence oper
 
 **Reference:** §11.1 (Sequence Operator), §12.0.2
 
+### Entitlement *(v2.5)*
+
+What an accountable grantor actually conferred on a person for an action: an access right, a role, or a mandate, held genuinely and bounded by its purpose and scope. **Entitled is not permitted.** Permission is what the access-control system happens to return; entitlement is what a grantor conferred. The two are supposed to coincide and frequently do not, and that gap is where the classification of a technical act can depend on a governance document — the framework refuses to pretend a question about authorization can be answered without consulting the authority. **An entitlement attaches to the person, never to the token:** an attacker holding a credential was never a grantee, so no action they take is inside any envelope (`#4` per R-CRED, then `#1`). The entitlement test is the authorization-side counterpart of R-CRED's authentication-side test (is the system deceived about who is authenticating?): both ask about the truth of a relation, never about the identity of the claimant.
+
+**Reference:** Core paper §3.5; dictionary `cause_side_partition.entitlement`
+
+See also: Abuse of Rights, Cause-Side Partition, R-SCOPE, R-CRED
+
+### Error in Use *(v2.5)*
+
+The second row of the cause-side partition: an actor — any actor — producing an outcome they did not intend. Entitlement is not asked: a visitor who trips a breaker is Error in Use, not `#8`; an administrator who mistypes a command and drops a table is Error in Use, not `#1`. Operational risk, no cluster, no attacker's view. Error in Use can enter any altitude directly and can produce any Data Risk Event type — a misdirected email is `C`, an accidental purge is `Av`, a value keyed wrongly is `Ii` — and, where it breaks a system, it produces a System Failure, not a System Compromise.
+
+**Reference:** Core paper §3.5; dictionary `cause_side_partition`
+
+See also: Cause-Side Partition, Abuse of Rights, System Failure, Operational Risk (OpRisk)
+
 ### Estimated Δt
 
 An approximate Δt value derived from partial evidence when precise timestamps are unavailable. Notation: `Δt~15m`.
@@ -831,6 +878,12 @@ A defect in implemented logic (logic, parsing, memory handling, resource handlin
 
 **Reference:** §4.2.2 (Global Definitions), §4.1 (#2 and #3 Definitions)
 
+### Insider Threat *(Industry Term)*
+
+Not a TLCTC category. The industry label mixes two rows of the cause-side partition that answer to different control regimes: an insider acting **inside** their entitlement against its purpose is **Abuse of Rights** (operational risk, no cluster, no SRE), while an insider reaching **outside** their entitlement is the **Attack** row and classifies to a cluster exactly as an outsider would (Axiom IV: the row is a property of the action, not the actor). A programme built around "insider threat" therefore procures endpoint and network telemetry for events that never pass through a compromise, and segregation-of-duties controls for events that do. TLCTC splits the label at the entitlement envelope (R-SCOPE).
+
+See also: Abuse of Rights, Cause-Side Partition, Entitlement, R-SCOPE
+
 ### Intelligence Layer *(V2.0)*
 
 The dynamic component of the TLCTC JSON architecture containing specific attack instances, software versions & CVEs, timeline & actor TTPs, domain boundaries, and impact assessments. Changes constantly as new incidents occur. Each incident is documented in its own JSON file following the attack sequence schema format: `[incident-id]-attack-path.json`. Enables worldwide threat intelligence sharing while maintaining consistency through reference to the static Framework Layer.
@@ -962,7 +1015,7 @@ A Data Risk Event outcome where an attacker gains unauthorized access to data. F
 
 ### Loss of Control / System Compromise
 
-The central event in the Cyber Bow-Tie model, abbreviated **SRE** (System Risk Event), representing the point at which the attacker achieves unauthorized control over a system's behavior, privileges, data, or trust relationships. This serves as the pivot point between threat realization (cause) and potential consequences (effect). The SRE is the first event in the consequence chain: **SRE → DRE → BRE\***. Some attacks may have delayed data risk events (creating a detection window), while others lead to immediate data risk events. Examples: A server exploit (#2) enabling remote code execution leading to malware (#7) represents loss of control before any data breach occurs. In contrast, successful SQL injection (#2) can immediately result in Loss of Confidentiality.
+The **Compromise type** of the System Risk Event (SRE) — the central event in the Cyber Bow-Tie model — representing the point at which an actor achieves unauthorized control over a system's behavior, privileges, data, or trust relationships. Since v2.5 the SRE has two types at one altitude: Compromise (this entry; the only type the ten clusters reach) and System Failure (loss of function, no actor). This serves as the pivot point between threat realization (cause) and potential consequences (effect). The SRE is the first event in the consequence chain: **SRE → DRE → BRE\***. Some attacks may have delayed data risk events (creating a detection window), while others lead to immediate data risk events. Examples: A server exploit (#2) enabling remote code execution leading to malware (#7) represents loss of control before any data breach occurs. In contrast, successful SQL injection (#2) can immediately result in Loss of Confidentiality.
 
 **Reference:** §6.3 (Central Event), §6.3.1 (The Consequence Chain)
 
@@ -1109,7 +1162,7 @@ The detailed implementation level where security controls are implemented, monit
 
 ### Operational Risk (OpRisk) *(Industry Term)*
 
-The broader category of risks arising from inadequate or failed internal processes, people, and systems, or from external events. In TLCTC: cyber risks are explicitly defined as a **subset** of operational risks. While cyber risk management focuses on threats from unauthorized or unknown entities (covered by the 10 TLCTC clusters), comprehensive risk management must also consider traditional IT risks (e.g., "software failure", "error in use", "abuse of rights" by authorized actors), compliance risks, and third-party risks. Actions of authorized actors should be managed under separate OpRisk categories unless they attempt to breach authorization boundaries, which then falls within cyber risk scope.
+The broader category of risks arising from inadequate or failed internal processes, people, and systems, or from external events. In TLCTC: cyber risks are explicitly defined as a **subset** of operational risks. While cyber risk management focuses on threats from unauthorized or unknown entities (covered by the 10 TLCTC clusters), comprehensive risk management must also consider traditional IT risks (e.g., "software failure", "error in use", "abuse of rights" by authorized actors), compliance risks, and third-party risks. Since v2.5 the boundary is stated as the **cause-side partition** and enforced by **R-SCOPE**: failure or external event, Error in Use, and Abuse of Rights are operational-risk rows with no cluster; only the Attack row — an intended action outside any conferred entitlement — is cyber risk and receives a cluster. Actions of entitled actors inside their grant are Abuse of Rights; the same actors reaching past their grant are attacks and classify like anyone else.
 
 **Reference:** V1.9.1 §Introduction
 
@@ -1349,6 +1402,14 @@ Global mapping rule (v2.5): If the defective logic is itself a communication-pat
 R-CHANNEL classifies the *weakness*; R-MITM sequences the *attack path* (position acquisition versus action). The two do not conflict.
 
 **Reference:** §6.1 (R-CHANNEL)
+
+### R-SCOPE (Entitlement Scope Boundary) *(v2.5)*
+
+Admission rule for the whole registry: a step is classified under a cluster only where the action fell **outside the entitlement envelope** an accountable grantor actually conferred for it. Cause-side classification asks three questions in strict order — is there an actor; did they intend the outcome; did an accountable grantor confer an entitlement covering *this* action — and only an intended, unentitled action enters the Attack row where the clusters apply (implementation flaw required → `#2/#3` per R-ROLE; otherwise `#1`). No actor is failure or external event; an unintended outcome is Error in Use; an intended in-grant action is **Abuse of Rights** — operational risk, no cluster, no System Risk Event, the consequence chain starting at the DRE. Entitlement means entitled, not permitted, and attaches to the person, not the token: credential use by anyone other than the grantee is never inside an envelope (`#4` per R-CRED, subsequent function use `#1`), and exploiting an implementation flaw is never inside any grant. Not an actor test (Axiom IV). Entitlement is tested after intent and before the code-flaw test because an entitled actor exploiting a code flaw is an attack.
+
+**Reference:** Core paper §3.5, §6.1; dictionary `rules[R-SCOPE]`, `cause_side_partition`
+
+See also: Cause-Side Partition, Abuse of Rights, Entitlement, Error in Use, R-CRED
 
 ### R-SUBSTRATE (Physical Property vs Implemented Logic)
 
@@ -1630,9 +1691,17 @@ A category of security tools that enable automated incident response through pre
 
 See also: Fast Velocity Class, EDR, SIEM
 
+### System Failure *(v2.5)*
+
+The **Failure type** of the System Risk Event: loss of function with no actor holding capability — software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, or an unintended act (Error in Use) that breaks the system. It sits at the same altitude as System Compromise and passes through the same conditional gate ("only if data is affected") into the data layer, so it shares the consequence chain **SRE → DRE → BRE\*** while having no cause-side classification: operational risk, no cluster, no attacker's view. Named in v2.5 so that the failure branch drawn at the same altitude in the framework's figures is inside the model rather than implicit.
+
+**Reference:** Core paper §3.4; dictionary `system_risk_event.types[failure]`
+
+See also: System Risk Event (SRE), Loss of Control / System Compromise, Error in Use, Cause-Side Partition
+
 ### System Risk Event (SRE)
 
-The central event in the TLCTC Cyber Bow-Tie model: **Loss of Control / System Compromise**. The SRE is the pivot point between the cause side (threat clusters exploiting generic vulnerabilities) and the consequence side (data and business risk events). It is the first event in the consequence chain **SRE → DRE → BRE\***, where each transition has its own Δt representing a detection and intervention window. Not every SRE leads to a DRE — detection and containment at the central event can break the chain before data-level consequences materialize.
+Any risk event at the **system altitude** — the point at which a system's behavior, privileges, data, or trust relationships depart from what its owner controls — and the central event in the TLCTC Cyber Bow-Tie model. Since v2.5 the SRE has **two types at one altitude**: **System Compromise / Loss of Control** (an actor holds capability over the system sufficient to pursue objectives; reached only through cluster steps; the pivot of the bow-tie) and **System Failure / Loss of Function** (no actor holds anything; operational risk, no cluster). Abuse of Rights produces neither type — the system was obeyed, not compromised, and did not fail — so its chain begins at the DRE. The SRE is the pivot point between the cause side (threat clusters exploiting generic vulnerabilities) and the consequence side (data and business risk events). It is the first event in the consequence chain **SRE → DRE → BRE\***, where each transition has its own Δt representing a detection and intervention window. Not every SRE leads to a DRE — detection and containment at the central event can break the chain before data-level consequences materialize.
 
 > **Disambiguation:** "Loss of Control" is always abbreviated **SRE**, never "LoC". The abbreviation **LoC** is reserved exclusively for Loss of Confidentiality, a *consequence*-side Data Risk Event. See **Loss of Confidentiality (LoC)**.
 
@@ -2138,9 +2207,9 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 
 ### R-* Rules Quick Reference
 
-The v2.5 normative registry contains exactly **18 rules**: eight core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.5.json`); summaries are condensed, the dictionary statement governs.
+The v2.5 normative registry contains exactly **19 rules**: nine core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.5.json`); summaries are condensed, the dictionary statement governs.
 
-**Core rules (8):**
+**Core rules (9):**
 
 | Rule | Distinguishes | Key Decision |
 | --- | --- | --- |
@@ -2152,6 +2221,7 @@ The v2.5 normative registry contains exactly **18 rules**: eight core rules and 
 | **R-CHANNEL** *(v2.5)* | Control vs Code Flaw | Defective logic constitutive of channel control → `#5`; Incidental defect → `#2/#3` |
 | **R-SUBSTRATE** *(v2.5)* | Property vs Logic | Physical property exploited → `#8`; Physical layer as readout only → `#2/#3` |
 | **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` (unless the identity is the presenter's own — self-issued enrolment is `#1`); separate steps |
+| **R-SCOPE** *(v2.5)* | Attack vs Abuse of Rights | Actor? Intent? Entitlement covering this action? → in-grant intended action = Abuse of Rights (OpRisk, no cluster, no SRE); unentitled → Attack row, clusters apply |
 
 **v2.1 extension rules (10):**
 

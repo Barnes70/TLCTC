@@ -411,6 +411,22 @@ The `#4 → #1` pair repeats once per lateral hop (only the first two hops shown
 | Buffer overflow in certificate parsing routine | Incidental code defect | #2/#3 |
 | Protocol downgrade accepted during negotiation | Algorithm negotiation control | #5 |
 
+### R-SCOPE — Entitlement Scope Boundary (v2.5)
+
+Admission rule for the registry: a step gets a cluster **only** where the action fell outside the entitlement envelope an accountable grantor actually conferred for it. Three questions in strict order — actor? intent? entitlement covering *this* action? — and only an intended, unentitled action enters the Attack row. No actor = failure/external event; unintended = Error in Use; intended and in-grant = **Abuse of Rights** (OpRisk, no cluster, no SRE, chain starts at the DRE). Entitled means entitled, not permitted; the entitlement attaches to the person, not the token (credential use by a non-grantee is `#4` per R-CRED, then `#1`); exploiting an implementation flaw is never inside a grant. Not an actor test (Axiom IV): an insider outside their grant and an outsider land in the same cluster. Abuse of Rights is not cluster #11 — it has no generic vulnerability (a granted entitlement is irreducible by design).
+
+**Worked contrasts:**
+
+| Case | Row | Classification |
+|---|---|---|
+| Support agent opens a celebrity record out of curiosity (entitled to open records) | Abuse of Rights | no cluster; `[DRE: C]` with no SRE |
+| Same agent edits a region parameter to reach a record outside their territory | Attack | `#1` |
+| DBA bulk-exports the customer table, grant = "administer the database" | Abuse of Rights | no cluster |
+| Same export, grant = "schema and performance, no bulk extraction" | Attack | `#1` |
+| Phished employee credentials used only within the account's permissions | Attack | `#9 → #4 → #1 + [DRE: C]` |
+| Self-registration into a population the function was not meant for | Attack | `#1` (not `#4`, not Abuse of Rights) |
+| Adoboli: own credentials, valid inputs, rule behaved as specified | Abuse of Rights | no cluster, no SRE; `[DRE: I]` then BREs |
+
 ### R-SUBSTRATE — Physical Property vs Implemented Logic
 - If a **physical-layer property of the substrate** is the exploited generic vulnerability → **#8**
 - Qualifying properties: charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, material state
@@ -542,6 +558,15 @@ When a step appears to fit multiple clusters, apply in order:
 ## Classification Decision Tree
 
 ```
+0. SCOPE GATE (R-SCOPE) — ask in order, before any cluster question:
+   a. Is there an actor?                         No  → Failure / external event. OpRisk. No cluster. STOP.
+   b. Did the actor intend the outcome?          No  → Error in Use. OpRisk. No cluster. STOP.
+   c. Did an accountable grantor confer an
+      entitlement covering THIS action?          Yes → Abuse of Rights. OpRisk. No cluster, no SRE;
+                                                       the chain starts at the DRE. STOP.
+   (Entitled ≠ permitted. Entitlement attaches to the person, not the token: stolen
+    credentials are never in-grant → #4 then #1. Exploiting a code flaw is never in-grant.)
+   Otherwise → Attack row: continue.
 1. Is the mechanism HUMAN PSYCHOLOGICAL MANIPULATION?
    └─ Yes → #9 Social Engineering (then classify subsequent steps)
 2. Is the mechanism PHYSICAL ACCESS/INTERFERENCE?

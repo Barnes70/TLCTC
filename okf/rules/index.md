@@ -1,6 +1,6 @@
 # rules
 
-18 document(s).
+19 document(s).
 
 - [R-CHANNEL](/rules/r-channel.md) — `rule`
 - [R-CRED](/rules/r-cred.md) — `rule`
@@ -10,6 +10,7 @@
 - [R-INTRA-9](/rules/r-intra-9.md) — `rule`
 - [R-MITM](/rules/r-mitm.md) — `rule`
 - [R-ROLE](/rules/r-role.md) — `rule`
+- [R-SCOPE](/rules/r-scope.md) — `rule`
 - [R-SUBSTRATE](/rules/r-substrate.md) — `rule`
 - [R-SUPPLY](/rules/r-supply.md) — `rule`
 - [R-TRANSIT-3](/rules/r-transit-3.md) — `rule`
