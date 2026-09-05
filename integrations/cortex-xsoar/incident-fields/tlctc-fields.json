@@ -75,7 +75,7 @@
       "description": "Data Risk Events resulting from this incident. C=Confidentiality, I=Integrity, A=Availability, Ac=Accessibility (data present but unusable, e.g. ransomware).",
       "associatedToAll": false,
       "associatedTypes": ["TLCTC Threat"],
-      "selectValues": ["C", "I", "A", "Ac"],
+      "selectValues": ["C", "I", "Ii", "If", "A", "Av", "Ac"],
       "required": false,
       "system": false,
       "group": 0

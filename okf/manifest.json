@@ -3,7 +3,7 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.5",
   "generator": "scripts/build-okf.js",
-  "document_count": 425,
+  "document_count": 427,
   "type_counts": {
     "attack-path": 59,
     "axiom": 10,
@@ -17,7 +17,7 @@
     "mapping-set": 30,
     "rule": 18,
     "sphere": 9,
-    "term": 250
+    "term": 252
   },
   "documents": [
     {
@@ -2739,11 +2739,31 @@
       ]
     },
     {
+      "path": "/glossary/loss-of-integrity-incorrect-state-loii.md",
+      "type": "term",
+      "title": "Loss of Integrity — Incorrect State (LoIi)",
+      "description": "A refinement of Loss of Integrity where correspondence or completeness fails: the record no longer corresponds to what it represents, or is no longer complete.",
+      "resource": "tlctc:term:loss-of-integrity-incorrect-state-loii",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
       "path": "/glossary/loss-of-integrity-loi.md",
       "type": "term",
       "title": "Loss of Integrity (LoI)",
-      "description": "A Data Risk Event outcome where an attacker successfully makes unauthorized changes to data.",
+      "description": "A Data Risk Event outcome where the standing of a record as a faithful and attributable representation has changed other than through its intended, authorised process — typically an attacker's unauthorized modification.",
       "resource": "tlctc:term:loss-of-integrity-loi",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/loss-of-integrity-misattributed-state-loif.md",
+      "type": "term",
+      "title": "Loss of Integrity — Misattributed State (LoIf)",
+      "description": "A refinement of Loss of Integrity where provenance or attribution fails: the record claims an origin, author or authority it does not have, while its content may be perfectly accurate.",
+      "resource": "tlctc:term:loss-of-integrity-misattributed-state-loif",
       "tags": [
         "glossary"
       ]

@@ -160,7 +160,7 @@ Complex attacks are not single events — they are **sequences**. TLCTC provides
 | Transit boundary | `\|\|[context][@Source⇒@Carrier→@Target]\|\|` | Marks intermediate carrier/relay spheres (⇒ = transit) |
 | Intra-system boundary | `\|[type][@from→@to]\|` | Within-host boundary crossing (sandbox, privilege, process, hypervisor) |
 | Unresolved step | `?` / `…` | Forensic uncertainty — step exists but cluster cannot yet be determined |
-| Data Risk Event | `+ [DRE: C, I, A]` | Annotates consequences (never a step itself) |
+| Data Risk Event | `+ [DRE: C, I, A]` | Annotates consequences (never a step itself); refinements `Ii`/`If` (incorrect / misattributed) for `I`, `Av`/`Ac` (unavailable / inaccessible) for `A` |
 
 ### Boundary Operators
 
@@ -660,7 +660,7 @@ tlctc/
 │   ├── openai-hf-huggingface-2026.json         # AP-4 Hugging Face production compromise (29 steps)
 │   ├── openai-hf-package-plane-2026.json       # AP-5 image cache poisoning + RubyGems deserialisation (#10 twice)
 │   ├── openai-hf-cloud-escalation-2026.json    # AP-6 kernel exploit → cloud control plane (956 secrets)
-│   └── openai-hf-observability-2026.json       # AP-7 tool-call transcript spoofing (v2.6 [DRE: Im] test case)
+│   └── openai-hf-observability-2026.json       # AP-7 tool-call transcript spoofing ([DRE: Ii, If] worked example)
 └── LICENSE                                   # CC BY 4.0
 ```
 

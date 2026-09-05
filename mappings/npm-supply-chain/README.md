@@ -56,7 +56,7 @@ These patterns are abstract templates. Concrete incident analyses (Layer 3 insta
 | `#X → #Y` | Sequential: X enables Y |
 | `||[ctx][@A→@B]||` | Inter-organizational domain boundary |
 | `||[ctx][@A⇒@T→@B]||` | Transit boundary: T is carrier infrastructure |
-| `+ [DRE: X]` | Data Risk Event (C/I/A/Ac) |
+| `+ [DRE: X]` | Data Risk Event (C; I or Ii/If; A or Av/Ac) |
 | `[RECURSIVE]` | Cyclic propagation — path loops back |
 
 ## License

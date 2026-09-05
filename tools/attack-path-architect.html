@@ -640,7 +640,7 @@
                 
                 <div class="rounded-lg border-l-4 border-red-500 bg-red-50/50 dark:bg-red-900/10 p-4 mb-3">
                     <label class="block text-xs font-bold text-red-600 dark:text-red-400 mb-2">Data Risk Event (DRE)</label>
-                    <div class="flex gap-4 mb-2">
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 mb-1">
                         <label class="flex items-center gap-1.5 cursor-pointer">
                             <input type="checkbox" id="sDreC" class="rounded border-red-300">
                             <span class="text-xs font-medium">C (Confidentiality)</span>
@@ -649,11 +649,28 @@
                             <input type="checkbox" id="sDreI" class="rounded border-red-300">
                             <span class="text-xs font-medium">I (Integrity)</span>
                         </label>
+                        <label class="flex items-center gap-1.5 cursor-pointer" title="Incorrect state — correspondence/completeness fails; the content is wrong">
+                            <input type="checkbox" id="sDreIi" class="rounded border-red-300">
+                            <span class="text-xs font-medium">Ii (incorrect)</span>
+                        </label>
+                        <label class="flex items-center gap-1.5 cursor-pointer" title="Misattributed state — provenance/attribution fails; the content may be accurate">
+                            <input type="checkbox" id="sDreIf" class="rounded border-red-300">
+                            <span class="text-xs font-medium">If (misattributed)</span>
+                        </label>
                         <label class="flex items-center gap-1.5 cursor-pointer">
                             <input type="checkbox" id="sDreA" class="rounded border-red-300">
-                            <span class="text-xs font-medium">A (Availability)</span>
+                            <span class="text-xs font-medium">A (Availability/Accessibility)</span>
+                        </label>
+                        <label class="flex items-center gap-1.5 cursor-pointer" title="Unavailable state — data gone or unreachable">
+                            <input type="checkbox" id="sDreAv" class="rounded border-red-300">
+                            <span class="text-xs font-medium">Av (unavailable)</span>
+                        </label>
+                        <label class="flex items-center gap-1.5 cursor-pointer" title="Inaccessible state — data present but unusable, e.g. ransomware encryption">
+                            <input type="checkbox" id="sDreAc" class="rounded border-red-300">
+                            <span class="text-xs font-medium">Ac (inaccessible)</span>
                         </label>
                     </div>
+                    <p class="text-[10px] text-muted-foreground mb-2 italic">Refinements (Ii/If, Av/Ac) are read off the record, never off the actor; use the parent code (I, A) when the refinement is unknown — core §7.6.</p>
                     <input type="text" id="sDataRiskTitle" placeholder="Brief title (e.g., Credentials Exfiltrated)" class="input-std mb-2">
                     <textarea id="sDataRiskDesc" placeholder="Technical details of the data impact..." class="input-std h-16 resize-none"></textarea>
                 </div>
@@ -751,6 +768,8 @@
 
 const STORAGE_KEY = 'tlctc_v6_data';
 const FRAMEWORK_VERSION = '2.1';
+// DRE type codes — v2.5 refinement tree (core §7.6): Ii/If refine I, Av/Ac refine A. Checkbox ids are 'sDre' + code.
+const DRE_CODES = ['C', 'I', 'Ii', 'If', 'A', 'Av', 'Ac'];
 
 const CLUSTERS = {
     1:  { name: "Abuse of Functions", type: "Internal", help: "Misuse of legitimate features/configuration without exploiting flaws" },
@@ -1867,9 +1886,7 @@ function openStepModal(id = null) {
             }
 
             if (s.dre) {
-                if (s.dre.types?.includes('C')) document.getElementById('sDreC').checked = true;
-                if (s.dre.types?.includes('I')) document.getElementById('sDreI').checked = true;
-                if (s.dre.types?.includes('A')) document.getElementById('sDreA').checked = true;
+                DRE_CODES.forEach(c => { document.getElementById('sDre' + c).checked = !!s.dre.types?.includes(c); });
                 document.getElementById('sDataRiskTitle').value = s.dre.title || '';
                 document.getElementById('sDataRiskDesc').value = s.dre.desc || '';
             }
@@ -1924,7 +1941,7 @@ function updateStepType() {
         boundarySection.classList.add('hidden');
         transitSection.classList.add('hidden');
         // Clear DRE fields so they never leak into an unresolved step object
-        ['sDreC','sDreI','sDreA'].forEach(id => { document.getElementById(id).checked = false; });
+        DRE_CODES.forEach(c => { document.getElementById('sDre' + c).checked = false; });
         document.getElementById('sDataRiskTitle').value = '';
         document.getElementById('sDataRiskDesc').value = '';
         document.getElementById('sBizRiskTitle').value = '';
@@ -1967,7 +1984,7 @@ function updateClusterHelp() {
         }
         
         // R-CRED: Disable DRE for #4 Identity Theft
-        const dreCheckboxes = [document.getElementById('sDreC'), document.getElementById('sDreI'), document.getElementById('sDreA')];
+        const dreCheckboxes = DRE_CODES.map(c => document.getElementById('sDre' + c));
         if (cl === '4') {
             dreWarning.classList.remove('hidden');
             dreCheckboxes.forEach(cb => { cb.disabled = true; cb.checked = false; });
@@ -2041,9 +2058,7 @@ function commitStep() {
     // Gather DRE types (classified steps only — unresolved steps cannot carry DRE per R-UNRES-5)
     const dreTypes = [];
     if (!isUnresolved) {
-        if (document.getElementById('sDreC').checked) dreTypes.push('C');
-        if (document.getElementById('sDreI').checked) dreTypes.push('I');
-        if (document.getElementById('sDreA').checked) dreTypes.push('A');
+        DRE_CODES.forEach(c => { if (document.getElementById('sDre' + c).checked) dreTypes.push(c); });
     }
 
     // R-CRED Enforcement: #4 Identity Theft must not carry DRE

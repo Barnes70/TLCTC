@@ -37,7 +37,7 @@ TLCTC+ adds a controlled reporting grammar around the TLCTC path:
 ```text
 TLCTC cause path
 + [SRE]
-+ [DRE: C|I|Ac|Av]
++ [DRE: C|I|Ii|If|A|Av|Ac]
 [Pattern: ...]
 + [BRE: ...]
 + [Impact: ...]
@@ -312,7 +312,7 @@ TLCTC+ uses six tracks. They are tracks, not layers, to avoid collision with TLC
 ```text
 Cause Track       TLCTC path or #9 anchor; Pattern attaches here
 SRE Track         System Risk Event / Loss of Control / System Compromise
-DRE Track         Confidentiality, Integrity, Accessibility, Availability events
+DRE Track         Confidentiality, Integrity (incorrect / misattributed), Availability, Accessibility events
 BRE Track         Business, citizen, regulatory, service, legal, or organizational events
 Impact Track      Quantified or qualified harm measurement
 Report Track      Reporting artefacts, workflow stages, authority filings

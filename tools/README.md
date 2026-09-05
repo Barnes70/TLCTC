@@ -100,7 +100,7 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
         { "type": "sandbox | privilege | process | hypervisor", "from": "x", "to": "y" }
       ],
       "dre": {                               // Data Risk Event, optional
-        "types": ["C", "I", "A", "Ac"],
+        "types": ["C", "I", "Ii", "If", "A", "Av", "Ac"],
         "title": "Short title",
         "desc": "Description"
       },

@@ -72,7 +72,9 @@ DT_VAL          = 1*(VCHAR)     ; e.g., 2h, 5m, instant, fast, ?, ~15m
 
 DRE_TAG         = "+" SP* "[DRE:" SP* DRE_LIST "]"
 DRE_LIST        = DRE_LET *(SP* "," SP* DRE_LET)
-DRE_LET         = "C" / "I" / "A" / "Av" / "Ac"
+DRE_LET         = "C" / "Ii" / "If" / "I" / "Av" / "Ac" / "A"
+                ; refinement tree (core §7.6): Ii/If refine I, Av/Ac refine A;
+                ; two-letter codes listed before their parent for greedy matching.
 
 ; TLCTC+ BRE (Business Risk Event) annotation — see tlctc-plus-ncsc-proposal.md §9.
 ; One BRE_LABEL per tag; multiple BRE_TAGs MAY co-occur on the same trailer

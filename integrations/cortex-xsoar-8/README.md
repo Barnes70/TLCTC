@@ -71,7 +71,7 @@ integrations/cortex-xsoar-8/
 | Δt (Attack Velocity) | `IncidentFields/incidentfield-tlctcdeltat.json` + `Playbooks/playbook-sub-velocity-router.yml` |
 | Velocity Class (VC-1…VC-4) | `IncidentFields/incidentfield-tlctcvelocityclass.json` |
 | Boundary `||[ctx][@Src→@Tgt]||` | `IncidentFields/incidentfield-tlctcboundary.json` |
-| DRE (C/I/A/Ac) | `IncidentFields/incidentfield-tlctcdre.json` |
+| DRE (C / I, Ii, If / A, Av, Ac) | `IncidentFields/incidentfield-tlctcdre.json` |
 | RS Container (Direct + Propagated PR) | `Playbooks/playbook-sub-rs-container.yml` |
 | Layer 3 Attack Path | `IncidentFields/incidentfield-tlctcattackpath.json` (emitted by `Scripts/script-TLCTCEmitLayer3`) |
 
