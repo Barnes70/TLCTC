@@ -1,0 +1,617 @@
+{
+  "Event": {
+    "uuid": "5df729bd-db9c-5ce2-9154-095f12c0a6d3",
+    "info": "TLCTC SOLARWINDS-SUNBURST-2020: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 + [DRE: C] →[Δt=~2h] #1 + [DRE: C]",
+    "date": "2026-02-23",
+    "timestamp": "1771804800",
+    "published": false,
+    "analysis": "2",
+    "threat_level_id": "4",
+    "distribution": "0",
+    "Tag": [
+      {
+        "name": "tlctc:cluster=\"10-supply-chain-attack\"",
+        "colour": "#f59e0b"
+      },
+      {
+        "name": "tlctc:cluster=\"07-malware\"",
+        "colour": "#ec4899"
+      },
+      {
+        "name": "tlctc:cluster=\"04-identity-theft\"",
+        "colour": "#8b5cf6"
+      },
+      {
+        "name": "tlctc:cluster=\"01-abuse-of-functions\"",
+        "colour": "#3b82f6"
+      },
+      {
+        "name": "tlctc:entry-cluster=\"10-supply-chain-attack\"",
+        "colour": "#f59e0b"
+      }
+    ],
+    "Attribute": [],
+    "Object": [
+      {
+        "name": "tlctc-attack-path",
+        "meta-category": "misc",
+        "description": "A TLCTC (Top Level Cyber Threat Clusters) attack path: the ordered sequence of cause clusters observed in one incident, with attack velocity, boundary crossings and Data Risk Events. References each tlctc-attack-step object with \"includes\". TLCTC v2.5, https://www.tlctc.net",
+        "template_uuid": "7bda2ebc-9447-4273-a491-b7bd7a0715db",
+        "template_version": "1",
+        "uuid": "a2ece4b3-2fc9-5bde-9641-183d11f49428",
+        "timestamp": "1771804800",
+        "distribution": "5",
+        "sharing_group_id": "0",
+        "comment": "",
+        "deleted": false,
+        "Attribute": [
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "notation",
+            "value": "#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 + [DRE: C] →[Δt=~2h] #1 + [DRE: C]",
+            "uuid": "99f1457a-cb2c-530d-a566-f26788a37606",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "incident-id",
+            "value": "SOLARWINDS-SUNBURST-2020",
+            "uuid": "15b52f70-a43c-54dd-afab-d2ea172fbacc",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": false,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "tlctc-version",
+            "value": "2.3",
+            "uuid": "b0c50fc7-ee35-5cb0-97f9-9b605d0964d7",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "framework-ref",
+            "value": "tlctc-framework.v2.3.json",
+            "uuid": "6bfac107-2cb1-5fef-ab6c-6d9bc417d87f",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "entry-cluster",
+            "value": "#10",
+            "uuid": "6cedce8d-5536-5968-a8f2-da5284afeae1",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "analyst-confidence",
+            "value": "high",
+            "uuid": "1ca6fc2f-407c-5574-8fb4-a0f4236f8d46",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "data-risk-event",
+            "value": "C",
+            "uuid": "bbbc6401-66ab-5715-8f0c-0100ef9d6c59",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "notes",
+            "value": "SolarWinds SUNBURST supply chain compromise (December 2020). Attack path: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]. APT29/Cozy Bear attributed (Axiom IV: actor identity does not change cluster classification). Sources: CISA Alert AA20-352A, Microsoft MSRC, FireEye/Mandiant UNC2452 report.",
+            "uuid": "b8efe336-9aa9-5da8-97f7-dbc07d92b3c3",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "attachment",
+            "category": "External analysis",
+            "object_relation": "layer3-json",
+            "value": "SOLARWINDS-SUNBURST-2020.json",
+            "uuid": "c4f68f69-7f8f-57d2-a20f-8eced382b25b",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": "",
+            "data": "ew0KICAibWV0YWRhdGEiOiB7DQogICAgImluY2lkZW50X2lkIjogIlNPTEFSV0lORFMtU1VOQlVSU1QtMjAyMCIsDQogICAgImFuYWx5c3RfY29uZmlkZW5jZSI6ICJoaWdoIiwNCiAgICAidGxjdGNfdmVyc2lvbiI6ICIyLjMiLA0KICAgICJmcmFtZXdvcmtfcmVmIjogInRsY3RjLWZyYW1ld29yay52Mi4zLmpzb24iLA0KICAgICJyZWdpc3RyeV9yZWYiOiAiZXhhbXBsZS1yZWdpc3RyeS5qc29uIiwNCiAgICAiY3JlYXRlZF9hdCI6ICIyMDI2LTAyLTIzVDAwOjAwOjAwWiIsDQogICAgIm5vdGVzIjogIlNvbGFyV2luZHMgU1VOQlVSU1Qgc3VwcGx5IGNoYWluIGNvbXByb21pc2UgKERlY2VtYmVyIDIwMjApLiBBdHRhY2sgcGF0aDogIzEwIHx8W3VwZGF0ZV1bQFZlbmRvcuKGkkBPcmddfHwg4oaSW86UdD1pbnN0YW50XSAjNyDihpJbzpR0PX4xNGRdICM0IOKGklvOlHQ9fjJoXSAjMSArIFtEUkU6IENdLiBBUFQyOS9Db3p5IEJlYXIgYXR0cmlidXRlZCAoQXhpb20gSVY6IGFjdG9yIGlkZW50aXR5IGRvZXMgbm90IGNoYW5nZSBjbHVzdGVyIGNsYXNzaWZpY2F0aW9uKS4gU291cmNlczogQ0lTQSBBbGVydCBBQTIwLTM1MkEsIE1pY3Jvc29mdCBNU1JDLCBGaXJlRXllL01hbmRpYW50IFVOQzI0NTIgcmVwb3J0LiINCiAgfSwNCiAgInBhdGhfc2VxdWVuY2UiOiBbDQogICAgew0KICAgICAgInN0ZXBfaWQiOiAiczEtc3VwcGx5LWNoYWluIiwNCiAgICAgICJjbHVzdGVyIjogIiMxMCIsDQogICAgICAidG9wb2xvZ3lfYm91bmRhcnkiOiB7DQogICAgICAgICJjb250ZXh0IjogInVwZGF0ZSIsDQogICAgICAgICJzb3VyY2Vfc3BoZXJlIjogIkBWZW5kb3IiLA0KICAgICAgICAidGFyZ2V0X3NwaGVyZSI6ICJAT3JnIg0KICAgICAgfSwNCiAgICAgICJkZWx0YV90X3RvX25leHQiOiAiaW5zdGFudCIsDQogICAgICAibm90ZXMiOiAiVHJ1c3QgQWNjZXB0YW5jZSBFdmVudDogU29sYXJXaW5kcyBPcmlvbiB1cGRhdGUgdjIwMTkuNC0yMDIwLjIuMSBjb250YWluaW5nIFNVTkJVUlNUIGJhY2tkb29yIGFjY2VwdGVkIGFuZCBpbnN0YWxsZWQgYnkgdGFyZ2V0IG9yZ2FuaXphdGlvbiB2aWEgbGVnaXRpbWF0ZSB1cGRhdGUgY2hhbm5lbC4gVGhlIGNvbXByb21pc2VkIERMTCAoU29sYXJXaW5kcy5Pcmlvbi5Db3JlLkJ1c2luZXNzTGF5ZXIuZGxsKSB3YXMgZGlnaXRhbGx5IHNpZ25lZCBieSBTb2xhcldpbmRzLCBwYXNzaW5nIGFsbCB0cnVzdCB2ZXJpZmljYXRpb24uIEZhbHNpZmlhYmlsaXR5IHRlc3Q6IHJlbW92aW5nIHRoZSB0aGlyZC1wYXJ0eSB0cnVzdCBsaW5rIChub3QgYWNjZXB0aW5nIHRoZSB1cGRhdGUpIHdvdWxkIGhhdmUgcHJldmVudGVkIHRoaXMgc3RlcC4iDQogICAgfSwNCiAgICB7DQogICAgICAic3RlcF9pZCI6ICJzMi1zdW5idXJzdC1leGVjdXRpb24iLA0KICAgICAgImNsdXN0ZXIiOiAiIzciLA0KICAgICAgImZlY19leGVjdXRlZCI6IHRydWUsDQogICAgICAiZGVsdGFfdF90b19uZXh0IjogIn4xNGQiLA0KICAgICAgIm5vdGVzIjogIkZFQyBleGVjdXRpb24gdmlhIGRlc2lnbmVkIGNhcGFiaWxpdHk6IFNVTkJVUlNUIGJhY2tkb29yIERMTCBsb2FkZWQgYW5kIGV4ZWN1dGVkIGJ5IHRoZSBsZWdpdGltYXRlIFNvbGFyV2luZHMgT3Jpb24gc2VydmljZSAoc29sYXJ3aW5kcy5idXNpbmVzc2xheWVyaG9zdC5leGUpLiBUaGUgZXhlY3V0aW9uIHVzZWQgdGhlIGVudmlyb25tZW50J3MgaW50ZW5kZWQgRExMIGxvYWRpbmcgbWVjaGFuaXNtIOKAlCBhbiBpbnRlbmRlZCBkYXRh4oaSY29kZSB0cmFuc2l0aW9uLCBub3QgYW4gZXhwbG9pdC4gU1VOQlVSU1QgcmVtYWluZWQgZG9ybWFudCBmb3IgYXBwcm94aW1hdGVseSAxMi0xNCBkYXlzIGJlZm9yZSBhY3RpdmF0aW5nIEMyIGNvbW11bmljYXRpb24gdmlhIEROUyAoYXZzdm1jbG91ZC5jb20pLiBSLUVYRUMgc2F0aXNmaWVkOiBGRUMgZXhlY3V0aW9uIHJlY29yZGVkIGFzICM3LiINCiAgICB9LA0KICAgIHsNCiAgICAgICJzdGVwX2lkIjogInMzLWNyZWRlbnRpYWwtZm9yZ2VyeSIsDQogICAgICAiY2x1c3RlciI6ICIjNCIsDQogICAgICAib3V0Y29tZXMiOiBbIkMiXSwNCiAgICAgICJkZWx0YV90X3RvX25leHQiOiAifjJoIiwNCiAgICAgICJub3RlcyI6ICJDcmVkZW50aWFsIGFwcGxpY2F0aW9uOiBhdHRhY2tlciBmb3JnZWQgU0FNTCB0b2tlbnMgdXNpbmcgc3RvbGVuIHNpZ25pbmcgY2VydGlmaWNhdGVzIHRvIGltcGVyc29uYXRlIGxlZ2l0aW1hdGUgdXNlcnMgYW5kIGFjY2VzcyBjbG91ZCByZXNvdXJjZXMgKEF6dXJlIEFELCBPZmZpY2UgMzY1KS4gUGVyIEF4aW9tIFg6IHRoZSBhY3F1aXNpdGlvbiBvZiB0aGUgc2lnbmluZyBrZXkgb2NjdXJyZWQgZHVyaW5nIHRoZSAjNyBzdGVwIChhIGNvbnNlcXVlbmNlIG9mIHRoZSBtYWx3YXJlJ3MgYWNjZXNzLCByZWNvcmRlZCBhcyBEUkU6Qyk7IHRoZSBVU0Ugb2YgZm9yZ2VkIGNyZWRlbnRpYWxzIHRvIGF1dGhlbnRpY2F0ZSBpcyBhbHdheXMgIzQgcmVnYXJkbGVzcyBvZiBhY3F1aXNpdGlvbiBtZXRob2QuIg0KICAgIH0sDQogICAgew0KICAgICAgInN0ZXBfaWQiOiAiczQtY2xvdWQtYWJ1c2UiLA0KICAgICAgImNsdXN0ZXIiOiAiIzEiLA0KICAgICAgIm91dGNvbWVzIjogWyJDIl0sDQogICAgICAibm90ZXMiOiAiQWJ1c2Ugb2YgbGVnaXRpbWF0ZSBjbG91ZCBmdW5jdGlvbnM6IGF0dGFja2VyIHVzZWQgdmFsaWQgKGZvcmdlZCkgY3JlZGVudGlhbHMgdG8gYWJ1c2UgQXp1cmUgQUQgQVBJcywgT2ZmaWNlIDM2NSBtYWlsIHJlYWRpbmcgQVBJcywgYW5kIGZlZGVyYXRlZCB0cnVzdCBjb25maWd1cmF0aW9ucyBmb3IgZGF0YSBleGZpbHRyYXRpb24uIE5vIGNvZGUgZmxhdyBleHBsb2l0ZWQg4oCUIHRoZSBhdHRhY2tlciBvcGVyYXRlZCB3aXRoaW4gdGhlIGRlc2lnbmVkIGZ1bmN0aW9uYWxpdHkgb2YgdGhlIGNsb3VkIHBsYXRmb3JtIHVzaW5nIHN0b2xlbiBpZGVudGl0eS4gRGF0YSBzdGF5ZWQgZGF0YTsgbm8gZm9yZWlnbiBjb2RlIHdhcyBpbnRyb2R1Y2VkIGF0IHRoaXMgc3RhZ2UuIg0KICAgIH0NCiAgXQ0KfQ0K"
+          }
+        ],
+        "ObjectReference": [
+          {
+            "uuid": "4e0d30b4-72b3-5919-aa2c-0686bf15bc6d",
+            "timestamp": "1771804800",
+            "object_uuid": "a2ece4b3-2fc9-5bde-9641-183d11f49428",
+            "referenced_uuid": "a593b4c3-b574-5ce2-b587-7eb9595e3baa",
+            "relationship_type": "includes",
+            "comment": "",
+            "deleted": false
+          },
+          {
+            "uuid": "b803b41a-6896-5560-b4fc-d05e45d04957",
+            "timestamp": "1771804800",
+            "object_uuid": "a2ece4b3-2fc9-5bde-9641-183d11f49428",
+            "referenced_uuid": "49fc3bed-1447-59f8-a526-ee7d4157ff7e",
+            "relationship_type": "includes",
+            "comment": "",
+            "deleted": false
+          },
+          {
+            "uuid": "920509d6-0c87-5b72-8fe2-ec09f6af12d0",
+            "timestamp": "1771804800",
+            "object_uuid": "a2ece4b3-2fc9-5bde-9641-183d11f49428",
+            "referenced_uuid": "bf9808b6-90c4-5241-b30e-ff812c98e72e",
+            "relationship_type": "includes",
+            "comment": "",
+            "deleted": false
+          },
+          {
+            "uuid": "0cc305af-d127-5e33-b495-5f1115ece5a6",
+            "timestamp": "1771804800",
+            "object_uuid": "a2ece4b3-2fc9-5bde-9641-183d11f49428",
+            "referenced_uuid": "703ffdc0-cbee-555e-99bc-2c190dd80a82",
+            "relationship_type": "includes",
+            "comment": "",
+            "deleted": false
+          }
+        ]
+      },
+      {
+        "name": "tlctc-attack-step",
+        "meta-category": "misc",
+        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+        "template_uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
+        "template_version": "1",
+        "uuid": "a593b4c3-b574-5ce2-b587-7eb9595e3baa",
+        "timestamp": "1771804800",
+        "distribution": "5",
+        "sharing_group_id": "0",
+        "comment": "",
+        "deleted": false,
+        "Attribute": [
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "step-id",
+            "value": "s1-supply-chain",
+            "uuid": "af725d50-7494-589f-b8c9-80e7549dce33",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "status",
+            "value": "classified",
+            "uuid": "d01910cd-568d-5447-b012-3c1416403167",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "cluster",
+            "value": "#10",
+            "uuid": "85c794d1-bc90-5d9e-9dcf-fa98a3e1c7ac",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": "",
+            "Tag": [
+              {
+                "name": "tlctc:cluster=\"10-supply-chain-attack\"",
+                "colour": "#f59e0b"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "delta-t-to-next",
+            "value": "instant",
+            "uuid": "8d87e9d3-0d73-5524-a05f-142761adce71",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "boundary-context",
+            "value": "update",
+            "uuid": "3aad7da9-fdf7-530a-af5a-d608615cf2ec",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "boundary-source",
+            "value": "@Vendor",
+            "uuid": "7008e355-f79b-56fc-80d2-f58ac25831ab",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "boundary-target",
+            "value": "@Org",
+            "uuid": "7a5a3f6f-e7ce-5da0-8d33-bb33362e99c1",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "notes",
+            "value": "Trust Acceptance Event: SolarWinds Orion update v2019.4-2020.2.1 containing SUNBURST backdoor accepted and installed by target organization via legitimate update channel. The compromised DLL (SolarWinds.Orion.Core.BusinessLayer.dll) was digitally signed by SolarWinds, passing all trust verification. Falsifiability test: removing the third-party trust link (not accepting the update) would have prevented this step.",
+            "uuid": "038690f2-c840-5e6d-84f1-7c932019b825",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          }
+        ],
+        "ObjectReference": [
+          {
+            "uuid": "641a3280-aca7-5b26-8a43-31d483f7c812",
+            "timestamp": "1771804800",
+            "object_uuid": "a593b4c3-b574-5ce2-b587-7eb9595e3baa",
+            "referenced_uuid": "49fc3bed-1447-59f8-a526-ee7d4157ff7e",
+            "relationship_type": "followed-by",
+            "comment": "Δt=instant",
+            "deleted": false
+          }
+        ]
+      },
+      {
+        "name": "tlctc-attack-step",
+        "meta-category": "misc",
+        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+        "template_uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
+        "template_version": "1",
+        "uuid": "49fc3bed-1447-59f8-a526-ee7d4157ff7e",
+        "timestamp": "1771804800",
+        "distribution": "5",
+        "sharing_group_id": "0",
+        "comment": "",
+        "deleted": false,
+        "Attribute": [
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "step-id",
+            "value": "s2-sunburst-execution",
+            "uuid": "538a36ee-b33a-5bd6-95ca-1a6f9a43526d",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "status",
+            "value": "classified",
+            "uuid": "75bbda4b-1591-552d-aa66-dcc3d94801e1",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "cluster",
+            "value": "#7",
+            "uuid": "65a5d41d-42a3-58c1-b380-f3d9eb5d68e7",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": "",
+            "Tag": [
+              {
+                "name": "tlctc:cluster=\"07-malware\"",
+                "colour": "#ec4899"
+              }
+            ]
+          },
+          {
+            "type": "boolean",
+            "category": "Other",
+            "object_relation": "fec-executed",
+            "value": "1",
+            "uuid": "73b73f84-9f37-550b-ad61-cc9c5a10b320",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "delta-t-to-next",
+            "value": "~14d",
+            "uuid": "38517728-5fca-5dcc-a67b-9aeeb2848863",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "notes",
+            "value": "FEC execution via designed capability: SUNBURST backdoor DLL loaded and executed by the legitimate SolarWinds Orion service (solarwinds.businesslayerhost.exe). The execution used the environment's intended DLL loading mechanism — an intended data→code transition, not an exploit. SUNBURST remained dormant for approximately 12-14 days before activating C2 communication via DNS (avsvmcloud.com). R-EXEC satisfied: FEC execution recorded as #7.",
+            "uuid": "25408dd3-b725-5aaf-8fea-48f0224a0373",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          }
+        ],
+        "ObjectReference": [
+          {
+            "uuid": "b852a488-81e9-590e-8822-66f748e88e55",
+            "timestamp": "1771804800",
+            "object_uuid": "49fc3bed-1447-59f8-a526-ee7d4157ff7e",
+            "referenced_uuid": "bf9808b6-90c4-5241-b30e-ff812c98e72e",
+            "relationship_type": "followed-by",
+            "comment": "Δt=~14d",
+            "deleted": false
+          }
+        ]
+      },
+      {
+        "name": "tlctc-attack-step",
+        "meta-category": "misc",
+        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+        "template_uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
+        "template_version": "1",
+        "uuid": "bf9808b6-90c4-5241-b30e-ff812c98e72e",
+        "timestamp": "1771804800",
+        "distribution": "5",
+        "sharing_group_id": "0",
+        "comment": "",
+        "deleted": false,
+        "Attribute": [
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "step-id",
+            "value": "s3-credential-forgery",
+            "uuid": "4c588380-182f-53da-9577-d7a84fc4bcbe",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "status",
+            "value": "classified",
+            "uuid": "b48779e2-72e0-56b4-8b42-cbdfef78d644",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "cluster",
+            "value": "#4",
+            "uuid": "cf8603df-aa72-5cf5-84f4-538b2bace4a7",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": "",
+            "Tag": [
+              {
+                "name": "tlctc:cluster=\"04-identity-theft\"",
+                "colour": "#8b5cf6"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "delta-t-to-next",
+            "value": "~2h",
+            "uuid": "4c45779c-ee1d-50d2-8bc1-c5ae10e42530",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "data-risk-event",
+            "value": "C",
+            "uuid": "54bad8ce-afba-5619-b6b5-25818720c865",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "notes",
+            "value": "Credential application: attacker forged SAML tokens using stolen signing certificates to impersonate legitimate users and access cloud resources (Azure AD, Office 365). Per Axiom X: the acquisition of the signing key occurred during the #7 step (a consequence of the malware's access, recorded as DRE:C); the USE of forged credentials to authenticate is always #4 regardless of acquisition method.",
+            "uuid": "d3fd63be-8680-5116-9edc-9a0e33857da3",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          }
+        ],
+        "ObjectReference": [
+          {
+            "uuid": "581d4eef-3ede-5530-a4cc-d385c5241ce1",
+            "timestamp": "1771804800",
+            "object_uuid": "bf9808b6-90c4-5241-b30e-ff812c98e72e",
+            "referenced_uuid": "703ffdc0-cbee-555e-99bc-2c190dd80a82",
+            "relationship_type": "followed-by",
+            "comment": "Δt=~2h",
+            "deleted": false
+          }
+        ]
+      },
+      {
+        "name": "tlctc-attack-step",
+        "meta-category": "misc",
+        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+        "template_uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
+        "template_version": "1",
+        "uuid": "703ffdc0-cbee-555e-99bc-2c190dd80a82",
+        "timestamp": "1771804800",
+        "distribution": "5",
+        "sharing_group_id": "0",
+        "comment": "",
+        "deleted": false,
+        "Attribute": [
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "step-id",
+            "value": "s4-cloud-abuse",
+            "uuid": "0ba4436c-6c8e-5d6f-a4b1-130e12e04cb2",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "status",
+            "value": "classified",
+            "uuid": "0fc2050c-2556-535f-a07a-c47374c91566",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "cluster",
+            "value": "#1",
+            "uuid": "71d75b2a-95fd-5c56-8c0b-112cfca62516",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": "",
+            "Tag": [
+              {
+                "name": "tlctc:cluster=\"01-abuse-of-functions\"",
+                "colour": "#3b82f6"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "data-risk-event",
+            "value": "C",
+            "uuid": "540866ad-e798-5495-8a53-ff5ba4878634",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
+            "object_relation": "notes",
+            "value": "Abuse of legitimate cloud functions: attacker used valid (forged) credentials to abuse Azure AD APIs, Office 365 mail reading APIs, and federated trust configurations for data exfiltration. No code flaw exploited — the attacker operated within the designed functionality of the cloud platform using stolen identity. Data stayed data; no foreign code was introduced at this stage.",
+            "uuid": "1f56d4ba-3e2f-5bd8-a4d7-34d6bf12fe04",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          }
+        ],
+        "ObjectReference": []
+      }
+    ]
+  }
+}

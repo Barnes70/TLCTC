@@ -9,6 +9,8 @@
  *  4. Every predicate and entry carries a uuid.
  *  5. Both object templates validate against the pinned misp-objects schema, are in
  *     `jq -S -j .` format, and their values_lists match the dictionary and Layer 3 enums.
+ *  6. examples/solarwinds-2020.misp.json parses, its template_uuid/version match the
+ *     templates, its relations exist, and its tags exist in the taxonomy.
  *
  * Exit: 0 = valid, 1 = at least one failure (all failures printed).
  * Deps: ajv (already in package.json), Node builtins.
@@ -106,17 +108,38 @@ function checkTemplates(dict) {
   if (new Set(uuids).size !== uuids.length) fail('object templates share a uuid');
 }
 
+function checkExample() {
+  const p = path.join(MISP, 'examples/solarwinds-2020.misp.json');
+  if (!fs.existsSync(p)) { fail(`${rel(p)}: missing`); return; }
+  let ev;
+  try { ev = readJSON(p).Event; } catch (e) { fail(`${rel(p)}: unparseable — ${e.message}`); return; }
+  if (!ev || !Array.isArray(ev.Object)) { fail(`${rel(p)}: no Event.Object array`); return; }
+  const byName = Object.fromEntries(TEMPLATES.filter(fs.existsSync).map((t) => { const o = readJSON(t); return [o.name, o]; }));
+  for (const o of ev.Object) {
+    const t = byName[o.name];
+    if (!t) { fail(`${rel(p)}: object ${o.name} has no template`); continue; }
+    if (o.template_uuid !== t.uuid) fail(`${rel(p)}: object ${o.name} template_uuid ${o.template_uuid} != ${t.uuid}`);
+    if (String(o.template_version) !== String(t.version)) fail(`${rel(p)}: object ${o.name} template_version ${o.template_version} != ${t.version}`);
+    for (const a of o.Attribute || []) if (!t.attributes[a.object_relation]) fail(`${rel(p)}: ${o.name} has unknown relation ${a.object_relation}`);
+  }
+  const taxonomy = readJSON(tax.OUT);
+  const known = new Set(taxonomy.values.flatMap((v) => v.entry.map((e) => `tlctc:${v.predicate}="${e.value}"`)));
+  for (const t of ev.Tag || []) if (!known.has(t.name)) fail(`${rel(p)}: event tag ${t.name} is not in the taxonomy`);
+  if (ev.Object.filter((o) => o.name === 'tlctc-attack-path').length !== 1) fail(`${rel(p)}: expected exactly one tlctc-attack-path object`);
+}
+
 function main() {
   const dict = readJSON(tax.DICT);
   checkTaxonomy(dict);
   checkTemplates(dict);
+  checkExample();
   if (failures.length) {
     console.log(`INVALID — ${failures.length} problem(s):`);
     for (const f of failures) console.log('  ' + f);
     process.exit(1);
   }
-  console.log('VALID — MISP taxonomy and object templates conform (schema, dictionary text, uuids, format).');
+  console.log('VALID — MISP taxonomy, object templates and example conform.');
 }
 
-module.exports = { compileMispSchema, sortKeys, failures, checkTaxonomy, checkTemplates };
+module.exports = { compileMispSchema, sortKeys, failures, checkTaxonomy, checkTemplates, checkExample };
 if (require.main === module) main();

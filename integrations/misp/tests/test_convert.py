@@ -211,5 +211,14 @@ class TestHelpers(unittest.TestCase):
         self.assertTrue(any("step-id" in e and "required" in e for e in errs))
 
 
+class TestCheckedInExample(unittest.TestCase):
+    EXAMPLE = ROOT / "integrations" / "misp" / "examples" / "solarwinds-2020.misp.json"
+
+    def test_example_matches_fresh_conversion(self):
+        fresh = dumps(conv(EXAMPLES / "solarwinds-2020.json"))
+        self.assertEqual(self.EXAMPLE.read_text(encoding="utf-8"), fresh,
+                         "examples/solarwinds-2020.misp.json is stale — regenerate with: python -m cli convert ../../json-schemas/layer-3/examples/solarwinds-2020.json -o examples/solarwinds-2020.misp.json")
+
+
 if __name__ == "__main__":
     unittest.main()
