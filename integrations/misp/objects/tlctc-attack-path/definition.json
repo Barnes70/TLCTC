@@ -1,0 +1,98 @@
+{
+  "attributes": {
+    "analyst-confidence": {
+      "description": "Analyst confidence in the classification of the whole path (metadata.analyst_confidence).",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0,
+      "values_list": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "data-risk-event": {
+      "description": "Union of the Data Risk Events of all steps. C=Confidentiality; I=Integrity with Ii=incorrect state, If=misattributed state; A=Availability/Accessibility with Av=unavailable, Ac=inaccessible (data present but unusable, e.g. ransomware). Outcomes, never causes.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "multiple": true,
+      "ui-priority": 0,
+      "values_list": [
+        "C",
+        "I",
+        "Ii",
+        "If",
+        "A",
+        "Av",
+        "Ac"
+      ]
+    },
+    "entry-cluster": {
+      "description": "Cluster of the first step of the attack path. Absent when the first step is unresolved.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 1,
+      "values_list": [
+        "#1",
+        "#2",
+        "#3",
+        "#4",
+        "#5",
+        "#6",
+        "#7",
+        "#8",
+        "#9",
+        "#10"
+      ]
+    },
+    "framework-ref": {
+      "description": "Framework dictionary file the classification refers to (metadata.framework_ref).",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0
+    },
+    "incident-id": {
+      "description": "Incident identifier from the Layer 3 attack path file (metadata.incident_id).",
+      "misp-attribute": "text",
+      "ui-priority": 1
+    },
+    "layer3-json": {
+      "description": "The source TLCTC Layer 3 attack path JSON file (json-schemas/layer-3/tlctc-attack-path.schema.json).",
+      "disable_correlation": true,
+      "misp-attribute": "attachment",
+      "ui-priority": 0
+    },
+    "notation": {
+      "description": "Full TLCTC attack path notation, e.g. #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 1
+    },
+    "notes": {
+      "description": "Analyst notes for the whole path (metadata.notes).",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0
+    },
+    "reference": {
+      "description": "Source URL (advisory, report, blog) the analysis is based on.",
+      "misp-attribute": "link",
+      "multiple": true,
+      "ui-priority": 0
+    },
+    "tlctc-version": {
+      "description": "TLCTC framework version the path was classified against (metadata.tlctc_version), e.g. 2.5.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0
+    }
+  },
+  "description": "A TLCTC (Top Level Cyber Threat Clusters) attack path: the ordered sequence of cause clusters observed in one incident, with attack velocity, boundary crossings and Data Risk Events. References each tlctc-attack-step object with \"includes\". TLCTC v2.5, https://www.tlctc.net",
+  "meta-category": "misc",
+  "name": "tlctc-attack-path",
+  "required": [
+    "notation"
+  ],
+  "uuid": "7bda2ebc-9447-4273-a491-b7bd7a0715db",
+  "version": 1
+}

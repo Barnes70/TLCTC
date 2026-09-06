@@ -1,0 +1,139 @@
+{
+  "attributes": {
+    "boundary-context": {
+      "description": "Boundary context of the crossing ||[context][@Source→@Target]||, e.g. human, physical, update, auth.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0
+    },
+    "boundary-source": {
+      "description": "Responsibility sphere the step originates from (topology_boundary.source_sphere), e.g. @External.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0
+    },
+    "boundary-target": {
+      "description": "Responsibility sphere the step reaches (topology_boundary.target_sphere), e.g. @Org.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0
+    },
+    "boundary-transit": {
+      "description": "Carrier sphere that relays the step without being source or target (⇒ transit operator), in relay order.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "multiple": true,
+      "ui-priority": 0
+    },
+    "candidates": {
+      "description": "Candidate clusters under consideration for an unresolved step. Informational only, not a classification (R-UNRES-9).",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "multiple": true,
+      "ui-priority": 0
+    },
+    "cluster": {
+      "description": "TLCTC cluster whose generic vulnerability was exploited at this step. Absent on unresolved steps.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 1,
+      "values_list": [
+        "#1",
+        "#2",
+        "#3",
+        "#4",
+        "#5",
+        "#6",
+        "#7",
+        "#8",
+        "#9",
+        "#10"
+      ]
+    },
+    "data-risk-event": {
+      "description": "Data Risk Event caused by this step. C=Confidentiality; I=Integrity with Ii=incorrect state, If=misattributed state; A=Availability/Accessibility with Av=unavailable, Ac=inaccessible. Never on unresolved steps (R-UNRES-5).",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "multiple": true,
+      "ui-priority": 0,
+      "values_list": [
+        "C",
+        "I",
+        "Ii",
+        "If",
+        "A",
+        "Av",
+        "Ac"
+      ]
+    },
+    "delta-t-to-next": {
+      "description": "Attack velocity: time from this step to the next (Δt), e.g. instant, ~14d, <10m, ~hours, ?.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 1
+    },
+    "evidence": {
+      "description": "Evidence reference (ticket, log source, intel report, indicator ID) supporting this step.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "multiple": true,
+      "ui-priority": 0
+    },
+    "fec-executed": {
+      "description": "Foreign Executable Content executed at this step (R-EXEC). Recorded as a #7 step at the execution moment.",
+      "disable_correlation": true,
+      "misp-attribute": "boolean",
+      "ui-priority": 0
+    },
+    "intra-system-boundary": {
+      "description": "Intra-system boundary crossing |[type][@from→@to]| rendered as type:@from→@to; type is sandbox, privilege, process or hypervisor. Observability annotation, never a classification input (R-INTRA-7).",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "multiple": true,
+      "ui-priority": 0
+    },
+    "notes": {
+      "description": "Analyst notes for this step. Required prose for unresolved steps (R-UNRES-8).",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0
+    },
+    "status": {
+      "description": "classified: a cluster is assigned. unresolved: a step is known to exist but no cluster can be defended (R-UNRES-9); such steps carry no cluster and no DRE.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "sane_default": [
+        "classified"
+      ],
+      "ui-priority": 1,
+      "values_list": [
+        "classified",
+        "unresolved"
+      ]
+    },
+    "step-id": {
+      "description": "Step identifier, unique within the attack path (step_id).",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 1
+    },
+    "unresolved-type": {
+      "description": "single: exactly one unresolved step (? operator). gap: one or more unresolved steps (… operator). Unresolved steps only.",
+      "disable_correlation": true,
+      "misp-attribute": "text",
+      "ui-priority": 0,
+      "values_list": [
+        "single",
+        "gap"
+      ]
+    }
+  },
+  "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+  "meta-category": "misc",
+  "name": "tlctc-attack-step",
+  "required": [
+    "step-id"
+  ],
+  "uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
+  "version": 1
+}
