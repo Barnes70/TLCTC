@@ -1,3 +1,4 @@
+import io
 import json
 import tempfile
 import unittest
@@ -69,6 +70,16 @@ class TestCli(unittest.TestCase):
             code, out, _ = run(["validate", str(broken)])
             self.assertEqual(code, 1)
             self.assertIn("template_uuid", out)
+
+    def test_stdout_survives_cp1252_console(self):
+        # Windows consoles default to cp1252, which cannot encode → ⇒ Δ; main() must reconfigure.
+        raw = io.BytesIO()
+        console = io.TextIOWrapper(raw, encoding="cp1252", write_through=True)
+        with patch("sys.stdout", new=console), patch("sys.stderr", new=io.TextIOWrapper(io.BytesIO(), encoding="cp1252")):
+            code = main(["convert", str(SOLARWINDS)])
+        self.assertEqual(code, 0)
+        text = raw.getvalue().decode("utf-8")
+        self.assertIn("→[Δt=instant]", json.loads(text)["Event"]["info"])
 
     def test_distribution_range_enforced(self):
         with self.assertRaises(SystemExit):

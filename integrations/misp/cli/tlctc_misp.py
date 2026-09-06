@@ -73,7 +73,16 @@ def _ranged(lo, hi):
     return parse
 
 
+def _utf8_console() -> None:
+    """Emit UTF-8 regardless of the console code page (Windows defaults to cp1252,
+    which cannot encode → ⇒ Δ …). StringIO stand-ins in tests lack reconfigure()."""
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
+
+
 def main(argv=None) -> int:
+    _utf8_console()
     p = argparse.ArgumentParser(prog="tlctc-misp", description="Convert TLCTC Layer 3 attack paths to MISP events.")
     p.add_argument("--version", action="version", version=f"tlctc-misp {__version__}")
     sub = p.add_subparsers(dest="command", required=True)
