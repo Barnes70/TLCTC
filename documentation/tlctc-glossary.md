@@ -740,7 +740,7 @@ Foreign code that targets specific vulnerabilities to modify software behavior, 
 
 A threat cluster where an attacker targets and leverages implementation flaws within any component acting in a client role (requesting/processing data from a server or resource). These vulnerabilities allow manipulation of client behavior or unauthorized access using Exploit Code, often when the client interacts with malicious content. The generic vulnerability is that client-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per R-SUBSTRATE, the location of a flaw never determines the cluster, the role of the flawed component does.
 
-**Related reading:** [Kernel as Client: CVE-2025-21333 (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-21510: Windows Shell SmartScreen bypass](https://www.tlctc.net/cve-2026-21510.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
+**Related reading:** [CVE-2025-21333 revisited: #2 after all (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-21510: Windows Shell SmartScreen bypass](https://www.tlctc.net/cve-2026-21510.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
 
 ### Exploiting Server (#2)
 
@@ -1464,7 +1464,7 @@ Global mapping rule: If the vulnerable component accepts and handles inbound req
 
 **Reference:** §4.2.5 (R-ROLE)
 
-**Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [Kernel as Client: CVE-2025-21333 (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html)
+**Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [CVE-2025-21333 revisited: #2 after all (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html)
 
 
 
@@ -1553,7 +1553,7 @@ This decomposition is essential because it identifies two distinct generic vulne
 
 
 
-**Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [Kernel as Client: CVE-2025-21333 (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html)
+**Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [CVE-2025-21333 revisited: #2 after all (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html)
 
 See also: Exploiting Server (#2), Exploiting Client (#3), Malware (#7)
 

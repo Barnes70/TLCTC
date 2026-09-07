@@ -4575,15 +4575,20 @@ Classification: #3 Exploiting Client
 
 **Rationale:** The driver is acting as a client receiving and processing data. The vulnerability is in the client-side handling code.
 
-Case Study 3: Hyper-V VSP Vulnerability (Real-World)
+Case Study 3: Hyper-V VSP Vulnerability (Real-World, corrected 2026-09-07)
+> Erratum 2026-09-07: §13.5.7 Case Study 3 (Hyper-V VSP, CVE-2025-21333) is
+> corrected from `#3` to `#2`; the case study now records the verified
+> mechanism and the original misreading.
 
-A vulnerability exists within the Hyper-V VSP (Virtual Service Provider) component where it acts as a client making calls to the NT Kernel. The vulnerability involves the VSP component mismanaging a response from the Kernel, leading to a buffer overflow on the client side.
+CVE-2025-21333 is a heap-based buffer overflow (CWE-122) in `vkrnlintvsp.sys`, the Hyper-V NT Kernel Integration VSP used by Windows Sandbox and Application Guard. A low-privileged user-mode process invokes the `NtCreateCrossVmEvent` system call with a crafted security descriptor; the driver's callback (`VkiRootAdjustSecurityDescriptorForVmwp`) copies the caller-supplied DACL with `memmove(..., Dacl->AclSize)` without validating the size, overflowing a paged-pool allocation. Public exploits then use WNF state data and I/O ring buffer entries as heap-grooming and read/write primitives to obtain a SYSTEM token.
 
-Classification: #3 Exploiting Client
+Classification: #2 Exploiting Server
 
-**Despite:** The final impact involving privilege elevation and kernel code execution.
+**Despite:** The component being a "service provider" for a virtual machine, and earlier editions of this handbook describing it as a client mishandling a kernel response.
 
-**Rationale:** The initial vulnerability is exploited within the client-side code (VSP mishandling the kernel's response). The outcome (privilege escalation) does not determine classification—the root cause does.
+**Rationale:** The failing operation is the kernel-side handling of an inbound system-call argument. Per R-ROLE that is server role, exactly as in Case Study 1. No foreign executable content is executed by the overflow itself, so no #7 is recorded (R-EXEC); the elevation is an intra-system boundary annotation, `|[privilege][@local_user→@SYSTEM]|`, and does not change the cluster (R-INTRA-7).
+
+**Erratum (2026-09-07):** Editions before this date classified this case as #3 on the premise that the VSP issued requests to the NT Kernel through an I/O ring and mishandled the responses. That description of the mechanism was incorrect: the I/O ring is the exploit's post-overflow primitive, not the vulnerable interface. Misconception 2 below stands; this CVE is not its example. A kernel genuinely acting as client is, for instance, an in-kernel SMB/NFS client parsing a hostile server's response, or USB descriptor parsing during device enumeration.
 
 #### 13.5.8 Common Misconceptions
 
