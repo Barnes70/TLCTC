@@ -10,4 +10,4 @@ tags:
 
 A perspective included in each TLCTC threat cluster definition that provides guidance on secure development practices specific to preventing that cluster. Encompasses both Programmer (architectural) and Coder (implementation) responsibilities.
 
-**Related reading:** [Programmer vs Coder in TLCTC (Secure-Dev pt 1)](https://www.tlctc.net/tlctc-sdlc-prog-coder.html), [SSDLC phase-by-phase reference — TLCTC v2.1](https://www.tlctc.net/tlctc-ssdlc-integration.html), [Adding the Developer's View to TLCTC](https://www.tlctc.net/tlctc-definitions-sdlc-prog-coder.html), [TLCTC v2.1 monster prompt — DevSecOps](https://www.tlctc.net/tlctc-prompt-devsecops.html)
+**Related reading:** [Programmer vs Coder in TLCTC (Secure-Dev pt 1)](https://www.tlctc.net/tlctc-sdlc-prog-coder.html), [SSDLC phase-by-phase reference — TLCTC v2.1](https://www.tlctc.net/tlctc-ssdlc-integration.html), [Adding the Developer's View to TLCTC](https://www.tlctc.net/tlctc-definitions-sdlc-prog-coder.html), [TLCTC v2.5 monster prompt — DevSecOps](https://www.tlctc.net/tlctc-prompt-devsecops.html)

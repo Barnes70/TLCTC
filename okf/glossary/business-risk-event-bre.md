@@ -15,6 +15,6 @@ A discrete, observable business-level event on the consequence side of the Bow-T
 
 
 
-**Related reading:** [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html), [blog-cyber-bow-tie-business-risk-event-chain.html](https://www.tlctc.net/blog-cyber-bow-tie-business-risk-event-chain.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [TLCTC v2.1 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html), [TLCTC+ for NCSCs & CERTs — national reporting](https://www.tlctc.net/tlctc-plus-ncsc-proposal.html)
+**Related reading:** [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html), [blog-cyber-bow-tie-business-risk-event-chain.html](https://www.tlctc.net/blog-cyber-bow-tie-business-risk-event-chain.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [TLCTC v2.5 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html), [TLCTC+ for NCSCs & CERTs — national reporting](https://www.tlctc.net/tlctc-plus-ncsc-proposal.html)
 
 See also: System Risk Event (SRE), Data Risk Event (DRE), Business Impact (BI), Event Chain, Consequences
