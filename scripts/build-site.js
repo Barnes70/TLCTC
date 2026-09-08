@@ -4,13 +4,17 @@
  *
  *   npm run site              build only (idempotent; prints what changed)
  *   npm run site:deploy       build, then upload changed files via deploy-changed.ps1
+ *                             (the deploy script uploads atomically and verifies each file)
  *   node scripts/build-site.js --no-pdf --no-okf --site <dir>
  *
  * Pipeline (order matters; each step is skipped when nothing changed):
- *   1. mirror   documentation/{core,application,glossary}.md → site tree (read-only mirrors)
+ *   1. mirror   documentation/{core,application,glossary,v2.0-whitepaper}.md → site tree (read-only mirrors)
  *   2. pdfs     scripts/build-pdf.js for any paper whose .md is newer than its .pdf
  *   3. stable   copy PDFs under the site's stable names (tlctc-whitepaper.pdf, …)
- *   4. html     node html-build.js --no-pdf in the site tree (core, application, handbook)
+ *   4. html     node html-build.js --no-pdf in the site tree (core, application, handbook);
+ *               when the handbook .md changed, html-build.js runs again WITH its styled PDF
+ *               (puppeteer from this repo's node_modules) and the PDF is copied back to
+ *               documentation/tlctc-v2.0-whitepaper.pdf
  *   5. glossary python build_glossary_page.py + build_glossary_index.py; "Last updated"
  *               in the glossary page shell follows the .md header
  *   6. views    copy generated html back into documentation/ (gitignored local views)
@@ -19,7 +23,8 @@
  *   9. figures  re-inline <svg> blocks in index.html from their source files
  *               (markers: <!-- INLINE-SVG src="…" … --> … <!-- /INLINE-SVG -->)
  *  10. sitemap  bump <lastmod> for every deployable file whose content changed
- *               since the last build; add okf entries for new files, drop removed ones
+ *               since the last build; add okf entries for any okf file not yet listed,
+ *               drop removed ones
  *  11. dates    warn when a paper .md changed but its **Date:** header is stale
  *
  * State: <site>/.site-build-state.json (hashes of outputs after the last build).
@@ -74,6 +79,12 @@ const PAPERS = [
 ];
 const mdChanged = {};
 for (const p of PAPERS) mdChanged[p.md] = copyIfChanged(path.join(ROOT, p.md), path.join(SITE, path.basename(p.md)), 'mirror');
+// The practitioner handbook keeps its historical filename; html-build.js renders it from the site copy.
+const HANDBOOK_MD = 'documentation/tlctc-v2.0-whitepaper.md';
+const HANDBOOK_PDF = 'tlctc-v2.0-whitepaper.pdf';
+mdChanged[HANDBOOK_MD] = fs.existsSync(path.join(ROOT, HANDBOOK_MD))
+  ? copyIfChanged(path.join(ROOT, HANDBOOK_MD), path.join(SITE, path.basename(HANDBOOK_MD)), 'mirror')
+  : false;
 
 // ───────────────────────── 2. PDFs ───────────────────────────────────────────
 // PDF output is not byte-deterministic (creation date, document id), so a PDF is
@@ -112,6 +123,18 @@ log('4. html (html-build.js --no-pdf)');
   const out = run('node', [path.join(SITE, 'html-build.js'), '--no-pdf'], SITE);
   for (const f of Object.keys(before)) if (fileHash(path.join(SITE, f)) !== before[f]) { changed.add(f); log(`  built ${f}`); }
   if (!/Done/.test(out)) log('  (html-build printed no "Done" line — check its output)');
+  // Handbook PDF: styled build via html-build.js (pdf:true only for the handbook). puppeteer lives in
+  // this repo's node_modules, so expose it through NODE_PATH. Rebuilt only when the handbook .md changed
+  // (or the PDF is missing) — the PDF is not byte-deterministic, so an unconditional rebuild would deploy
+  // 3.5 MB on every run.
+  const sitePdf = path.join(SITE, HANDBOOK_PDF), repoPdf = path.join(ROOT, 'documentation', HANDBOOK_PDF);
+  if (!NO_PDF && (mdChanged[HANDBOOK_MD] || !fs.existsSync(sitePdf))) {
+    log('  handbook PDF (html-build.js with puppeteer)');
+    const beforePdf = fileHash(sitePdf);
+    run('node', [path.join(SITE, 'html-build.js')], SITE, { NODE_PATH: path.join(ROOT, 'node_modules') });
+    if (fileHash(sitePdf) !== beforePdf) { changed.add(HANDBOOK_PDF); log(`  built ${HANDBOOK_PDF}`); }
+    if (fs.existsSync(sitePdf)) fs.copyFileSync(sitePdf, repoPdf);
+  }
 }
 
 // ───────────────────────── 5. glossary ───────────────────────────────────────
@@ -208,6 +231,18 @@ log('10. sitemap');
       sm = sm.slice(0, e) + `  <url>${NL}    <loc>https://www.tlctc.net/${f}</loc>${NL}    <lastmod>${TODAY}</lastmod>${NL}  </url>${NL}` + sm.slice(e); added++;
     }
   }
+  // okf files present in the site tree but absent from the sitemap (e.g. added by an earlier build that
+  // bumped nothing, or copied by hand) → append them too
+  if (!NO_OKF && fs.existsSync(path.join(SITE, 'okf'))) {
+    const walkOkf = (d, acc) => { for (const n of fs.readdirSync(d)) { const p = path.join(d, n); if (fs.statSync(p).isDirectory()) walkOkf(p, acc); else acc.push(rel(p)); } return acc; };
+    for (const f of walkOkf(path.join(SITE, 'okf'), [])) {
+      if (!/\.(md|json)$/.test(f) || sm.includes(`<loc>https://www.tlctc.net/${f}</loc>`)) continue;
+      const anchor = '<loc>https://www.tlctc.net/okf/manifest.json</loc>';
+      const a = sm.indexOf(anchor); if (a === -1) break;
+      const e = sm.indexOf('</url>', a) + 6 + NL.length;
+      sm = sm.slice(0, e) + `  <url>${NL}    <loc>https://www.tlctc.net/${f}</loc>${NL}    <lastmod>${TODAY}</lastmod>${NL}  </url>${NL}` + sm.slice(e); added++;
+    }
+  }
   for (const f of removedOkf) {
     const loc = `<loc>https://www.tlctc.net/${f}</loc>`; const i = sm.indexOf(loc); if (i === -1) continue;
     const s = sm.lastIndexOf('<url>', i), e = sm.indexOf('</url>', i) + 6;
@@ -231,7 +266,7 @@ for (const p of PAPERS.slice(0, 2)) {
 const hashes = {};
 const collect = (dir, base) => { for (const n of fs.readdirSync(dir)) { const p = path.join(dir, n); if (fs.statSync(p).isDirectory()) { if (!['.git', 'node_modules', '__pycache__'].includes(n)) collect(p, base); } else hashes[rel(p)] = fileHash(p); } };
 for (const top of ['okf', 'images']) if (fs.existsSync(path.join(SITE, top))) collect(path.join(SITE, top), SITE);
-for (const f of fs.readdirSync(SITE)) { const p = path.join(SITE, f); if (fs.statSync(p).isFile() && /\.(html|pdf|xml|json)$/.test(f) && !f.startsWith('.')) hashes[f] = fileHash(p); }
+for (const f of fs.readdirSync(SITE)) { const p = path.join(SITE, f); if (fs.statSync(p).isFile() && /\.(html|pdf|xml|json|md|txt)$/.test(f) && !f.startsWith('.')) hashes[f] = fileHash(p); }
 fs.writeFileSync(STATE_FILE, JSON.stringify({ built_at: new Date().toISOString(), hashes, mdHashes }, null, 1));
 log(`\nBuild done. ${changed.size} site file(s) changed:`);
 for (const f of [...changed].sort()) log('  ' + f);
