@@ -3,7 +3,8 @@
  * validate-attack-paths.js — Validate every Layer-3 attack path instance against
  * the Layer-3 schema. Part of `npm run validate`.
  *
- * Checks: attack-paths/*.json and json-schemas/layer-3/examples/*.json.
+ * Checks: attack-paths/*.json, agentic-ai/attack-paths/*.json and
+ *         json-schemas/layer-3/examples/*.json.
  * Exit: 0 = all valid, 1 = at least one invalid (each error is printed).
  *
  * Deps: ajv, ajv-formats (already in package.json).
@@ -16,7 +17,7 @@ const addFormats = require('ajv-formats');
 
 const ROOT = path.resolve(__dirname, '..');
 const SCHEMA = path.join(ROOT, 'json-schemas/layer-3/tlctc-attack-path.schema.json');
-const DIRS = ['attack-paths', 'json-schemas/layer-3/examples'];
+const DIRS = ['attack-paths', 'agentic-ai/attack-paths', 'json-schemas/layer-3/examples'];
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv);
