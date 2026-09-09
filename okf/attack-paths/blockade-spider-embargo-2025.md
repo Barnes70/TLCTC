@@ -11,7 +11,7 @@ tags:
   - "cluster-7"
   - "confidence-medium"
 timestamp: "2026-04-16T00:00:00Z"
-tlctc_version: "2.3"
+tlctc_version: "2.5"
 ---
 # BLOCKADE-SPIDER-EMBARGO-2025
 

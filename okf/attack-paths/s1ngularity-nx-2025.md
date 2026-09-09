@@ -11,7 +11,7 @@ tags:
   - "cluster-10"
   - "confidence-high"
 timestamp: "2026-03-19T00:00:00Z"
-tlctc_version: "2.3"
+tlctc_version: "2.5"
 ---
 # S1NGULARITY-NX-2025
 
