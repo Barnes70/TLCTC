@@ -74,7 +74,6 @@
       "resource": "tlctc:attack-path:authorized-insider-extortion-2025",
       "tags": [
         "attack-path",
-        "cluster-1",
         "cluster-9",
         "confidence-high"
       ]
@@ -836,7 +835,6 @@
       "tags": [
         "attack-path",
         "cluster-9",
-        "cluster-1",
         "confidence-high"
       ]
     },

@@ -2,16 +2,16 @@
   "metadata": {
     "incident_id": "agentic-path-B",
     "analyst_confidence": "high",
-    "tlctc_version": "2.3",
-    "framework_ref": "tlctc-framework.v2.3.json",
-    "notes": "Path B — Indirect Prompt Injection via Data Sources. Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Malicious instructions embedded in documents, emails, or web content the agent is designed to ingest. Agent's data-reading function (first #1) encounters injected instructions, triggering abuse of action capabilities (second #1), leading to unauthorised operations (third #1). Notation: #1→[instant]#1→[instant]#1 + [DRE: C]. Velocity: VC-4 — all three steps execute within the same processing cycle. The critical distinction from Layer 1 attacks: no implementation flaw is involved at any step. Boundary test: if the same file triggered a buffer overflow in the parser → #3 (Exploiting Client). But if the file is parsed correctly and the text contains instructions the agent obeys → #1 (Abuse of Functions). Same file, different generic vulnerability. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
+    "tlctc_version": "2.5",
+    "framework_ref": "tlctc-framework.v2.5.json",
+    "notes": "Path B — Indirect Prompt Injection via Data Sources. Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Malicious instructions embedded in documents, emails, or web content the agent is designed to ingest. Agent's data-reading function (first #1) encounters injected instructions, triggering abuse of action capabilities (second #1), leading to unauthorised operations (third #1). Notation: #1→[instant]#1→[instant]#1 + [DRE: C]. Velocity: VC-4 — all three steps execute within the same processing cycle. The critical distinction from Layer 1 attacks: no implementation flaw is involved at any step. Boundary test: if the same file triggered a buffer overflow in the parser → #3 (Exploiting Client). But if the file is parsed correctly and the text contains instructions the agent obeys → #1 (Abuse of Functions). Same file, different generic vulnerability. V2.5 R-SCOPE reframing (2026-09-09): step s1 previously read \"Agent reads external data source...\". That describes the agent performing an action squarely inside its grant, which is not an Attack-row action and cannot carry a cluster. The cluster was never wrong; the actor was. The attacker's action at that moment is the placement of instructions into a source the agent is designed to ingest, and that is the abuse of the ingestion function. The note has been rewritten to say so. Path A does not need this correction, because there the attacker supplies the input directly. For any downstream use as an answer key, the scoreable moment is s2, where the injected instructions first gain influence over the agent's action selection; safely reading and rejecting an injection is not a compromise. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
   },
   "path_sequence": [
     {
       "step_id": "s1-data-ingestion",
       "cluster": "#1",
       "delta_t_to_next": "instant",
-      "notes": "Agent reads external data source (document, email, web page, API response) containing embedded instructions. Generic vulnerability: designed data ingestion capability — parser works correctly, extracted text contains injected instructions."
+      "notes": "Attacker places crafted instructions into an external data source (document, email, web page, API response) that the agent is designed to ingest. Generic vulnerability: the scope and inherent trust of the designed data-ingestion capability — the parser works correctly and the extracted text carries the injected instructions. Classified from the attacker's action, not the agent's read: the agent ingesting a source it is entitled to ingest is an in-grant action and carries no cluster under R-SCOPE."
     },
     {
       "step_id": "s2-instruction-following",
