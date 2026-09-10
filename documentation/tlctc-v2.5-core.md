@@ -1,8 +1,8 @@
 # A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework
 
 **Author:** Bernhard Kreinz
-**Version:** 2.5
-**Date:** 2026-09-05
+**Version:** 2.5.1
+**Date:** 2026-09-10
 **License:** CC BY 4.0
 **DOI:** [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) (concept DOI — always resolves to the latest version)
 
