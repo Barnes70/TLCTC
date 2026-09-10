@@ -6,6 +6,7 @@
     "validate-framework": "node scripts/validate-framework.js json-schemas/layer-1/tlctc-framework.schema.json json-schemas/layer-1/tlctc-framework.v2.5.json",
     "validate-attack-paths": "node scripts/validate-attack-paths.js",
     "validate-consistency": "node scripts/validate-consistency.js",
+    "validate-notation": "node scripts/validate-path-notation.js",
     "build-okf": "node scripts/build-okf.js",
     "validate-okf": "node scripts/validate-okf.js okf",
     "build-misp": "node scripts/build-misp-taxonomy.js",
