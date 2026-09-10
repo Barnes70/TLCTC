@@ -10,4 +10,4 @@ tags:
 
 In the Bow-Tie model: barriers on the left (cause) side that reduce likelihood of threats reaching the central event. Corresponds to NIST CSF functions: IDENTIFY, PROTECT.
 
-**Reference:** §6.1 (Bow-Tie Structure)
+**Reference:** Handbook §6.1 (Bow-Tie Structure); Core paper §3.4

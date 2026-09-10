@@ -10,4 +10,4 @@ tags:
 
 Degradation or denial of service caused **primarily** by volume or intensity exceeding finite resources. Resources include: bandwidth, CPU cycles, memory, storage, database connections, API quotas, thread/process pools, file handles. Maps to `#6 Flooding Attack`.
 
-**Reference:** §4.2.2 (Global Definitions), R-FLOOD (§4.2.5)
+**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1

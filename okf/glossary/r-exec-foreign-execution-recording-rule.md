@@ -10,6 +10,6 @@ tags:
 
 Global mapping rule: Whenever Foreign Executable Content (FEC) is interpreted, loaded, or executed, a `#7 Malware` step MUST be recorded at the moment of execution, independent of how execution was enabled. `#7` is additive (does not replace the enabling cluster).
 
-**Reference:** §4.2.5 (R-EXEC)
+**Reference:** Handbook §4.2.5 (R-EXEC); Core paper §6.1
 
 **Related reading:** [Cobalt Strike capabilities × TLCTC V2.0](https://www.tlctc.net/tlctc-cobaltstrike-mapping.html), [The File Type Fallacy — extension blocklists](https://www.tlctc.net/tlctc-file-type-fallacy.html), [GovCERT-CH blocked filetypes × TLCTC](https://www.tlctc.net/tlctc-govcert-blocked-filetypes.html)

@@ -10,4 +10,4 @@ tags:
 
 A single attacker action or event that exploits exactly **one generic vulnerability** in a specific context. Each Attack Step MUST map to exactly one TLCTC cluster (per Axiom VI).
 
-**Reference:** §4.2.2 (Global Definitions), §4.2.8 (Minimal Classification Procedure)
+**Reference:** Handbook §4.2.2 (Global Definitions), §4.2.8 (Minimal Classification Procedure); Core paper §9, §3.5

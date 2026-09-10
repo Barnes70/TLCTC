@@ -1078,7 +1078,7 @@
       "path": "/clusters/cluster-8.md",
       "type": "cluster",
       "title": "#8 Physical Attack",
-      "description": "Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.",
+      "description": "Unauthorized physical interaction with or interference to hardware, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.",
       "resource": "tlctc:cluster:#8",
       "tags": [
         "taxonomy",
@@ -1587,7 +1587,7 @@
     {
       "path": "/framework/system-risk-event.md",
       "type": "sre",
-      "title": "System Risk Event (two types, one altitude)",
+      "title": "System Risk Event (System Compromise, the cyber pivot)",
       "description": "Any risk event at the system altitude: the point at which a system's behaviour, privileges, data, or trust relationships depart from what its owner controls.",
       "resource": "tlctc:framework:system-risk-event",
       "tags": [
@@ -1781,7 +1781,7 @@
       "path": "/glossary/axiom-quick-reference.md",
       "type": "term",
       "title": "Axiom Quick Reference",
-      "description": "| | Name | Group | Core Statement | | | | | | | I | No System Type Differentiation | Scope | Generic IT assets; sector labels don't create threat classes | | II | Client–Server Model | Scope | Universal interaction abstraction | | III | Causes, Not Outcomes | Separation | Threats ≠ data risk events | | IV | Not Threat Actors | Separation | Threats ≠ actor identity | | V | Not Control Failure | Separation | Control risk ≠ threat category | | VI | Single Cluster Rule | Classification | One step = one vulnerability = one cluster | | VII | Initial Vulnerability Rule | Classification | Vector defined by initial generic vulnerability | | VIII | Strategic–Operational Layering | Classification | Clusters → sub threats | | IX | Sequence + Velocity | Sequences | Clusters chain; Δt measures velocity | | X | Credential Duality | Sequences | Acquisition vs application | Reference: §2 (Axioms and Assumptions)",
+      "description": "| | Name | Group | Core Statement | | | | | | | I | No System Type Differentiation | Scope | Generic IT assets; sector labels don't create threat classes | | II | Client–Server Model | Scope | Universal interaction abstraction | | III | Causes, Not Outcomes | Separation | Threats ≠ data risk events | | IV | Not Threat Actors | Separation | Threats ≠ actor identity | | V | Not Control Failure | Separation | Control risk ≠ threat category | | VI | Single Cluster Rule | Classification | One step = one vulnerability = one cluster | | VII | Initial Vulnerability Rule | Classification | Vector defined by initial generic vulnerability | | VIII | Strategic–Operational Layering | Classification | Clusters → sub threats | | IX | Sequence + Velocity | Sequences | Clusters chain; Δt measures velocity | | X | Credential Duality | Sequences | Acquisition vs application | Reference: Handbook §2 (Axioms and Assumptions); Core paper §5",
       "resource": "tlctc:term:axiom-quick-reference",
       "tags": [
         "glossary"
@@ -1961,7 +1961,7 @@
       "path": "/glossary/central-event.md",
       "type": "term",
       "title": "Central Event",
-      "description": "In the TLCTC Bow Tie model: the System Risk Event (SRE) , which since v2.5 has two types at one altitude — System Compromise / Loss of Control (the point at which an actor achieves unauthorized control over the system's behavior, privileges, data, or trust relationships, sufficient to pursue attack objectives; the only type the ten clusters reach) and System Failure / Loss of Function (no actor holds anything).",
+      "description": "In the TLCTC Bow Tie model: the System Risk Event (SRE) — and the SRE the framework defines is System Compromise / Loss of Control , the point at which an actor achieves unauthorized control over the system's behavior, privileges, data, or trust relationships, sufficient to pursue attack objectives; it is the only event the ten clusters reach, and one is recorded per cluster step.",
       "resource": "tlctc:term:central-event",
       "tags": [
         "glossary"
@@ -1991,7 +1991,7 @@
       "path": "/glossary/cluster-quick-reference.md",
       "type": "term",
       "title": "Cluster Quick Reference",
-      "description": "| | Name | Generic Vulnerability | Topology | | | | | | | 1 | Abuse of Functions | Functional scope/trust (designed capabilities abused) | Internal | | 2 | Exploiting Server | Server side code implementation flaws | Internal | | 3 | Exploiting Client | Client side code implementation flaws | Internal | | 4 | Identity Theft | Insufficient identity artifact binding at the point of authentication | Internal | | 5 | Man in the Middle | Lack of end to end communication protection | Internal | | 6 | Flooding Attack | Finite capacity limitations | Internal | | 7 | Malware | Designed execution capability for untrusted content | Internal | | 8 | Physical Attack | Physical accessibility/interference | Bridge | | 9 | Social Engineering | Human psychological factors | Bridge | | 10 | Supply Chain Attack | Third party trust dependencies | Bridge | Reference: §4.1 (Cluster Definitions), §5.2 (Topology Classification) Related reading: [Mandiant M Trends 2025 — TLCTC](https://www.tlctc.net/tlctc mtrends 2025.html), [ENISA Threat Landscape 2025 — TLCTC](https://www.tlctc.net/tlctc enisa 2025 threat report.html), [Same Attack, Four Stories — vendor report comparison](https://www.tlctc.net/tlctc threat report chaos.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc threat modeling manifesto.html), [End of Semantic Diffusion — Kuhn & TLCTC](https://www.tlctc.net/tlctc semantic diffusion.html), [TLCTC classification decision tree V2.0/V2.1](https://www.tlctc.net/tlctc decision tree.html), [Logical foundations of TLCTC](https://www.tlctc.net/tlctc logical foundation.html), [Why exactly ten?",
+      "description": "| | Name | Generic Vulnerability | Topology | | | | | | | 1 | Abuse of Functions | Functional scope/trust (designed capabilities abused) | Internal | | 2 | Exploiting Server | Server side code implementation flaws | Internal | | 3 | Exploiting Client | Client side code implementation flaws | Internal | | 4 | Identity Theft | Insufficient identity artifact binding at the point of authentication | Internal | | 5 | Man in the Middle | Lack of end to end communication protection | Internal | | 6 | Flooding Attack | Finite capacity limitations | Internal | | 7 | Malware | Designed execution capability for untrusted content | Internal | | 8 | Physical Attack | Physical accessibility/interference | Bridge | | 9 | Social Engineering | Human psychological factors | Bridge | | 10 | Supply Chain Attack | Third party trust dependencies | Bridge | Reference: Handbook §4.1 (Cluster Definitions), §5.2 (Topology Classification); Core paper §4, §3.3 Related reading: [Mandiant M Trends 2025 — TLCTC](https://www.tlctc.net/tlctc mtrends 2025.html), [ENISA Threat Landscape 2025 — TLCTC](https://www.tlctc.net/tlctc enisa 2025 threat report.html), [Same Attack, Four Stories — vendor report comparison](https://www.tlctc.net/tlctc threat report chaos.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc threat modeling manifesto.html), [End of Semantic Diffusion — Kuhn & TLCTC](https://www.tlctc.net/tlctc semantic diffusion.html), [TLCTC classification decision tree V2.0/V2.1](https://www.tlctc.net/tlctc decision tree.html), [Logical foundations of TLCTC](https://www.tlctc.net/tlctc logical foundation.html), [Why exactly ten?",
       "resource": "tlctc:term:cluster-quick-reference",
       "tags": [
         "glossary"
@@ -2821,7 +2821,7 @@
       "path": "/glossary/loss-of-control-system-compromise.md",
       "type": "term",
       "title": "Loss of Control / System Compromise",
-      "description": "The Compromise type of the System Risk Event (SRE) — the central event in the Cyber Bow Tie model — representing the point at which an actor achieves unauthorized control over a system's behavior, privileges, data, or trust relationships.",
+      "description": "The System Risk Event (SRE) the framework defines — the central event in the Cyber Bow Tie model — representing the point at which an actor achieves unauthorized control over a system's behavior, privileges, data, or trust relationships.",
       "resource": "tlctc:term:loss-of-control-system-compromise",
       "tags": [
         "glossary"
@@ -3111,7 +3111,7 @@
       "path": "/glossary/physical-attack-8.md",
       "type": "term",
       "title": "Physical Attack (#8)",
-      "description": "A threat cluster where an attacker gains unauthorized physical interaction with or causes physical interference to hardware, devices, facilities, or data transmission media (including wireless signals).",
+      "description": "A threat cluster where an attacker gains unauthorized physical interaction with or causes physical interference to hardware, devices, or data transmission media (including wireless signals).",
       "resource": "tlctc:term:physical-attack-8",
       "tags": [
         "glossary"
@@ -3791,7 +3791,7 @@
       "path": "/glossary/system-failure.md",
       "type": "term",
       "title": "System Failure",
-      "description": "The Failure type of the System Risk Event: loss of function with no actor holding capability — software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, or an unintended act (Error in Use) that breaks the system.",
+      "description": "The standing example of a system altitude event outside the ten clusters : loss of function with no actor holding capability — software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, or an unintended act (Error in Use) that breaks the system.",
       "resource": "tlctc:term:system-failure",
       "tags": [
         "glossary"

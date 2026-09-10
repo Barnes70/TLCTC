@@ -10,4 +10,4 @@ tags:
 
 A Δt value where no supported time statement can be made. Notation: `Δt=?`.
 
-**Reference:** §12.0.3, §12.2.3
+**Reference:** Handbook §12.0.3, §12.2.3; Core paper §7.2

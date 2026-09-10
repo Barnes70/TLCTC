@@ -10,4 +10,4 @@ tags:
 
 In the Bow-Tie model: what results after the central event, including technical and business impact (event chains). Consequences are on the right (effect) side of the Bow-Tie and are recorded as Data Risk Events. Consequences are NOT threat categories.
 
-**Reference:** §6.1 (Bow-Tie Structure), §6.4 (What TLCTC Does NOT Classify)
+**Reference:** Handbook §6.1 (Bow-Tie Structure), §6.4 (What TLCTC Does NOT Classify); Core paper §3.4, §3.5

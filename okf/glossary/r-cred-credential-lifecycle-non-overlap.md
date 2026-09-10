@@ -12,6 +12,6 @@ Global mapping rule: Credential acquisition maps to the enabling cluster; creden
 
 **Self-issued identity (R-CRED proviso).** A credential issued to the presenter by the target system through a designed enrolment function makes the presenter its authentic holder; using it is authentication as self and is NOT `#4`. Where the enrolment function granted the identity or its permissions outside their intended population or scope, that enrolment step maps to `#1`. Fictitious or pseudonymous self-registration is `#1` (no identity impersonated); enrolment completed AS an existing identity is `#1 → #4`. The higher-abstraction test: is the system *deceived about who is authenticating*? Deceived → `#4`; not deceived (it enrolled this principal itself) → the vulnerability is elsewhere, usually `#1`.
 
-**Reference:** §4.2.5 (R-CRED)
+**Reference:** Handbook §4.2.5 (R-CRED); Core paper §6.1
 
 **Related reading:** [Cobalt Strike capabilities × TLCTC V2.0](https://www.tlctc.net/tlctc-cobaltstrike-mapping.html)

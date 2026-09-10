@@ -22,7 +22,7 @@ A standard visualization methodology for communicating threat posture, change ov
 
 **Normative rules (R-RADAR-1…5):** spoke assignment MUST use the Section 4 grammar; multi-cluster attack paths MUST be rendered as multiple bubbles or a single bubble plus a separate Layer 3 path; zone placement SHOULD follow a disclosed scoring method; snapshots SHOULD be dated and use the same method for movement indicators to be meaningful; aggregated sector / national radars MUST use identical spoke definitions and SHOULD disclose the combination rule (max / average / weighted).
 
-**Reference:** §17.1–17.2
+**Reference:** Handbook §17.1–17.2
 
 
 

@@ -10,4 +10,4 @@ tags:
 
 A Δt value computed from two concrete time observations.
 
-**Reference:** §12.0.3
+**Reference:** Handbook §12.0.3; Core paper §7.2

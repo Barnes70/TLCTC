@@ -12,4 +12,4 @@ tags:
 
 Original statement: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as `#9 Social Engineering`, and any subsequent technical steps MUST be classified separately.
 
-**Reference:** whitepaper §4.2.5 (R-HUMAN); superseded by core paper §4 (#9 boundary tests)
+**Reference:** Handbook §4.2.5 (R-HUMAN); superseded by core paper §4 (#9 boundary tests)

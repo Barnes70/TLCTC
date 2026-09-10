@@ -10,4 +10,4 @@ tags:
 
 Any secret, token, key, or session artifact that enables authentication or authorization decisions. Examples include: passwords, PINs, passphrases, API keys, bearer tokens, OAuth/OIDC tokens, SAML assertions, session cookies, session identifiers, private keys, client certificate keys, Kerberos tickets, SSH keys, hardware token seeds/OTPs, biometric templates (when used as authenticators).
 
-**Reference:** §4.2.2 (Global Definitions), Axiom X (§2)
+**Reference:** Handbook §4.2.2 (Global Definitions), Axiom X (§2); Core paper §9, §5

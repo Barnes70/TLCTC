@@ -15,4 +15,4 @@ Categorical labels for Δt ranges that describe the defender's feasible response
 - **VC-3: Operational / Fast** (minutes): Automation (SOAR/EDR), rapid containment, prebuilt playbooks
 - **VC-4: Real-Time** (seconds → milliseconds): Architecture & circuit breakers, rate-limits, hardening, automatic isolation
 
-**Reference:** §12.4 (Operational Velocity Classes)
+**Reference:** Handbook §12.4 (Operational Velocity Classes); Core paper §7.2

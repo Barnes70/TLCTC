@@ -10,4 +10,4 @@ tags:
 
 Global mapping rule: The method of gaining a privileged communication-path position maps to another cluster. `#5 Man in the Middle` begins only once the attacker controls a point on the communication path and performs MitM actions.
 
-**Reference:** §4.2.5 (R-MITM)
+**Reference:** Handbook §4.2.5 (R-MITM); Core paper §6.1

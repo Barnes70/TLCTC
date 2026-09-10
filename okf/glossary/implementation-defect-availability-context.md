@@ -10,4 +10,4 @@ tags:
 
 A flaw in code logic, parsing, memory handling, or resource handling that causes crash, hang, or degradation when triggered—**without** requiring volume/intensity to exceed normal capacity. Includes algorithmic complexity weaknesses (e.g., ReDoS). Maps to `#2` or `#3` per R-ROLE, not `#6`.
 
-**Reference:** §4.2.2 (Global Definitions), R-FLOOD (§4.2.5)
+**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1

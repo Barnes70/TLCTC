@@ -10,6 +10,6 @@ tags:
 
 A controlled point on a communication path that enables interception, observation, modification, injection, replay, or protocol downgrade/stripping. The attacker has achieved the ability to influence communication between two endpoints.
 
-**Reference:** §4.2.2 (Global Definitions), R-MITM (§4.2.5)
+**Reference:** Handbook §4.2.2 (Global Definitions), R-MITM (§4.2.5); Core paper §9, §6.1
 
 ---

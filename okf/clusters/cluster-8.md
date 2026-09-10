@@ -1,7 +1,7 @@
 ---
 type: "cluster"
 title: "#8 Physical Attack"
-description: "Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations."
+description: "Unauthorized physical interaction with or interference to hardware, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations."
 resource: "tlctc:cluster:#8"
 tags:
   - "taxonomy"

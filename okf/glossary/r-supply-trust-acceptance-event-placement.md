@@ -10,4 +10,4 @@ tags:
 
 Global mapping rule: `#10 Supply Chain Attack` MUST be placed at the Trust Acceptance Event (TAE)—the moment where the third-party trust link is honored and the trust artifact becomes authoritative inside the organization's domain.
 
-**Reference:** §4.2.5 (R-SUPPLY)
+**Reference:** Handbook §4.2.5 (R-SUPPLY); Core paper §6.1

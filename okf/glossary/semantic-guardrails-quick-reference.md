@@ -18,4 +18,4 @@ tags:
 | **SG-6** | Distinct Exploit Rule | Separately evidenced exploit → new cluster step required |
 | **SG-7** | Backward Recoverability | Stripping V2.1 annotations MUST leave a valid cluster sequence |
 
-**Reference:** §4.2.4 (Semantic Guardrails), §4.2.5 (Global Mapping Rules)
+**Reference:** Handbook §4.2.4 (Semantic Guardrails), §4.2.5 (Global Mapping Rules); Core paper §5, §6.1

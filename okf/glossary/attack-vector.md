@@ -10,6 +10,6 @@ tags:
 
 The specific path or method used by an attacker to gain unauthorized access to a target system. In the TLCTC framework, each distinct attack vector is a distinct initiating method defined by the **initial generic vulnerability targeted** (per Axiom VII). The vector label MUST be based on cause, not outcome.
 
-**Reference:** §4.2.2 (Global Definitions), Axiom VII (§2)
+**Reference:** Handbook §4.2.2 (Global Definitions), Axiom VII (§2); Core paper §9, §5
 
 **Related reading:** [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html)

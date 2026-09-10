@@ -10,4 +10,4 @@ tags:
 
 A transition between two adjacent Attack Steps, represented by the sequence operator `→`. Δt (Attack Velocity) is an edge property.
 
-**Reference:** §11.1 (Sequence Operator), §12.0.2
+**Reference:** Handbook §11.1 (Sequence Operator), §12.0.2; Core paper §7.1, §7.2

@@ -12,4 +12,4 @@ tags:
 
 Original statement: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately. Note that R-SUBSTRATE corrects a latent misreading of this phrasing: attacker physical access or proximity is NOT required for `#8`.
 
-**Reference:** whitepaper §4.2.5 (R-PHYSICAL); superseded by core paper §4 (#8 boundary tests) and R-SUBSTRATE (core §6.1)
+**Reference:** Handbook §4.2.5 (R-PHYSICAL); superseded by core paper §4 (#8 boundary tests) and R-SUBSTRATE (core §6.1)

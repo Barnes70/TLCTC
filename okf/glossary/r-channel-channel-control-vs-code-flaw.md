@@ -12,4 +12,4 @@ Global mapping rule (v2.5): If the defective logic is itself a communication-pat
 
 R-CHANNEL classifies the *weakness*; R-MITM sequences the *attack path* (position acquisition versus action). The two do not conflict.
 
-**Reference:** §6.1 (R-CHANNEL)
+**Reference:** Handbook §6.1 (R-CHANNEL); Core paper §3.4

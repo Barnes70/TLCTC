@@ -10,4 +10,4 @@ tags:
 
 The moment your domain **honors** the Third-Party Trust Link and treats a Trust Artifact/Decision as authoritative. Actions at TAE include: validate, accept, install, apply, execute, attach privileges. `#10 Supply Chain Attack` is placed at the TAE.
 
-**Reference:** §4.2.2 (Global Definitions), R-SUPPLY (§4.2.5), §4.1 (#10 Definition)
+**Reference:** Handbook §4.2.2 (Global Definitions), R-SUPPLY (§4.2.5), §4.1 (#10 Definition); Core paper §9, §6.1, §4

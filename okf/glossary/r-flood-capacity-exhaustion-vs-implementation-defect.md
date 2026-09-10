@@ -10,4 +10,4 @@ tags:
 
 Global mapping rule: If the primary mechanism is volume or intensity exhausting finite resources, classify as `#6 Flooding Attack`. If the primary mechanism is an implementation defect that causes crash/hang/degradation (including algorithmic complexity), classify as `#2` or `#3` per R-ROLE.
 
-**Reference:** §4.2.5 (R-FLOOD)
+**Reference:** Handbook §4.2.5 (R-FLOOD); Core paper §6.1

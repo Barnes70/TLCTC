@@ -10,4 +10,4 @@ tags:
 
 A TLCTC cluster that operates primarily **within the software domain's** attack surfaces, without inherently crossing to a different responsibility sphere. Internal clusters are: `#1` through `#7`.
 
-**Reference:** §4.2.2 (Global Definitions), §5.1.5, §5.2 (Topology Classification)
+**Reference:** Handbook §4.2.2 (Global Definitions), §5.1.5, §5.2 (Topology Classification); Core paper §9, §3.3

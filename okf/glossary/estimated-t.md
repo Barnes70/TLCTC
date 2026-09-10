@@ -10,4 +10,4 @@ tags:
 
 An approximate Δt value derived from partial evidence when precise timestamps are unavailable. Notation: `Δt~15m`.
 
-**Reference:** §12.0.3, §12.2.3
+**Reference:** Handbook §12.0.3, §12.2.3; Core paper §7.2

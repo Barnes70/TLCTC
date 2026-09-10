@@ -296,6 +296,13 @@ function buildFramework() {
       '| Type | Name | Clusters reach it | Definition |', '|---|---|---|---|',
       ...sre.types.map((t) => `| \`${t.type_id}\` | ${t.name} | ${t.cluster_applies ? 'yes' : 'no'} | ${t.definition} |`),
       '',
+      ...(sre.other_system_altitude_events ? [
+        '## Other system-altitude events (outside the clusters)', '',
+        sre.other_system_altitude_events.description, '',
+        '| Example | Name | Clusters reach it | Definition |', '|---|---|---|---|',
+        ...sre.other_system_altitude_events.examples.map((t) => `| \`${t.type_id}\` | ${t.name} | ${t.cluster_applies ? 'yes' : 'no'} | ${t.definition} |`),
+        '',
+      ] : []),
       ...(sre.notes ? [`> ${sre.notes}`, ''] : []),
       '# Schema', '',
       '- **Consequence chain:** SRE → DRE → BRE* (see [DRE codes](/framework/data-risk-events.md))',
@@ -303,7 +310,7 @@ function buildFramework() {
     ].join('\n');
     writeDoc('framework/system-risk-event.md', {
       type: 'sre',
-      title: 'System Risk Event (two types, one altitude)',
+      title: 'System Risk Event (System Compromise, the cyber pivot)',
       description: firstSentence(sre.definition),
       resource: 'tlctc:framework:system-risk-event',
       tags: ['taxonomy', 'sre', 'bow-tie', 'central-event'],

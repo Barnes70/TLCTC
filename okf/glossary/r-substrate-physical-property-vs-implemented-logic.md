@@ -14,4 +14,4 @@ The discriminating question is whether the attack is against the *implemented lo
 
 R-SUBSTRATE is the *admission* test — whether a weakness qualifies as `#8` at all. The sequencing principle formerly stated as R-PHYSICAL (now a deprecated alias) still holds — a qualifying physical step is `#8` and subsequent technical steps are classified separately. They are complementary.
 
-**Reference:** §6.1 (R-SUBSTRATE)
+**Reference:** Handbook §6.1 (R-SUBSTRATE); Core paper §3.4

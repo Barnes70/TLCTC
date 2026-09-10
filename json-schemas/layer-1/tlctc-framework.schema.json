@@ -82,12 +82,13 @@
     },
     "system_risk_event": {
       "type": "object",
-      "description": "The System Risk Event and its two types at one altitude: compromise (loss of control, cluster-reachable) and failure (loss of function, no actor).",
+      "description": "The System Risk Event. The framework defines one type, System Compromise (loss of control, reached only through cluster steps, the cyber pivot); other events at the same altitude with no actor holding capability (System Failure foremost) are operational risk and are named only to place the boundary.",
       "additionalProperties": false,
       "required": ["definition", "types"],
       "properties": {
         "definition": { "type": "string" },
-        "types": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/definitions/sre_type_def" } },
+        "types": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "$ref": "#/definitions/sre_type_def" } },
+        "other_system_altitude_events": { "type": "object", "additionalProperties": false, "required": ["description", "examples"], "properties": { "description": { "type": "string" }, "examples": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/sre_type_def" } } } },
         "notes": { "type": "string" }
       }
     },

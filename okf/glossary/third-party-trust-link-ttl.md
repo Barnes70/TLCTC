@@ -10,4 +10,4 @@ tags:
 
 Any reliance relationship where a third party can influence your domain. Examples: software components/libraries/dependencies, update/distribution channels, federation relationships (IdP/SP), managed control planes, SaaS admin consoles, signing/attestation/provenance chains, firmware/hardware supply chains, CI/CD pipeline integrations.
 
-**Reference:** §4.2.2 (Global Definitions), §4.1 (#10 Definition)
+**Reference:** Handbook §4.2.2 (Global Definitions), §4.1 (#10 Definition); Core paper §9, §4

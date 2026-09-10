@@ -10,4 +10,4 @@ tags:
 
 The operator meaning: the right-hand step occurs after the left-hand step, and the left-hand step enables or makes possible the right-hand step in the described scenario. ASCII alternative: `->`.
 
-**Reference:** §11.1 (Sequence Operator)
+**Reference:** Handbook §11.1 (Sequence Operator); Core paper §7.1

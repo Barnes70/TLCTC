@@ -10,4 +10,4 @@ tags:
 
 In the Bow-Tie model: barriers on the right (effect) side that detect, contain, reduce impact, or enable recovery after the central event occurs. Corresponds to NIST CSF functions: RESPOND, RECOVER.
 
-**Reference:** §6.1 (Bow-Tie Structure)
+**Reference:** Handbook §6.1 (Bow-Tie Structure); Core paper §3.4
