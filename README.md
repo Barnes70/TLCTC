@@ -704,7 +704,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 
 ## How to Cite
 
-> Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.5) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.20633176
+> Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.5.1) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.20633176
 
 ```bibtex
 @misc{kreinz2026tlctc,
@@ -712,7 +712,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
   title     = {A Cause-Oriented Cyber Threat Taxonomy: The Top Level
                Cyber Threat Clusters Framework},
   year      = {2026},
-  version   = {2.5},
+  version   = {2.5.1},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.20633176},
   url       = {https://doi.org/10.5281/zenodo.20633176}
