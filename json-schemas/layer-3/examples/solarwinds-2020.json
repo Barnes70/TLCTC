@@ -24,15 +24,15 @@
       "step_id": "s2-sunburst-execution",
       "cluster": "#7",
       "fec_executed": true,
+      "outcomes": ["C"],
       "delta_t_to_next": "~14d",
-      "notes": "FEC execution via designed capability: SUNBURST backdoor DLL loaded and executed by the legitimate SolarWinds Orion service (solarwinds.businesslayerhost.exe). The execution used the environment's intended DLL loading mechanism — an intended data→code transition, not an exploit. SUNBURST remained dormant for approximately 12-14 days before activating C2 communication via DNS (avsvmcloud.com). R-EXEC satisfied: FEC execution recorded as #7."
+      "notes": "FEC execution via designed capability: SUNBURST backdoor DLL loaded and executed by the legitimate SolarWinds Orion service (solarwinds.businesslayerhost.exe). The execution used the environment's intended DLL loading mechanism — an intended data→code transition, not an exploit. SUNBURST remained dormant for approximately 12-14 days before activating C2 communication via DNS (avsvmcloud.com). R-EXEC satisfied: FEC execution recorded as #7. [DRE: C] is recorded here: host and domain profiling was sent to the C2 channel, and the SAML token-signing certificate was obtained during this step. Per Axiom X the acquisition of credential material maps to the enabling cluster, which is this #7 step, so the confidentiality event belongs here and not on the #4 step that later presents the forged token."
     },
     {
       "step_id": "s3-credential-forgery",
       "cluster": "#4",
-      "outcomes": ["C"],
       "delta_t_to_next": "~2h",
-      "notes": "Credential application: attacker forged SAML tokens using stolen signing certificates to impersonate legitimate users and access cloud resources (Azure AD, Office 365). Per Axiom X: the acquisition of the signing key occurred during the #7 step (a consequence of the malware's access, recorded as DRE:C); the USE of forged credentials to authenticate is always #4 regardless of acquisition method."
+      "notes": "Credential application: attacker forged SAML tokens using stolen signing certificates to impersonate legitimate users and access cloud resources (Azure AD, Office 365). Per Axiom X and R-CRED, the acquisition of the signing key occurred during the #7 step and its confidentiality event is recorded there; the USE of forged credentials to authenticate is always #4 regardless of acquisition method. This step carries no DRE of its own: authenticating discloses nothing, alters nothing and denies nothing. The disclosure it enables is recorded where it occurs, on the #1 step that reads mail through the designed cloud APIs — attaching [DRE: C] here as well would count the same exfiltration twice and would judge the step by what the attacker later obtained rather than by what this step did."
     },
     {
       "step_id": "s4-cloud-abuse",
