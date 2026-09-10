@@ -91,17 +91,21 @@ Topology is a structural property and does not change cluster classification, wh
 
 ### 3.4 The Cause–Event–Consequence Model
 
-TLCTC anchors its cause/outcome separation (Axiom III) in a bow-tie risk structure with a single central event. The ten clusters sit on the cause (left) side; outcomes sit on the consequence (right) side; the two are joined by one pivot event:
+TLCTC anchors its cause/outcome separation (Axiom III) in a bow-tie risk structure. The ten clusters sit on the cause (left) side; outcomes sit on the consequence (right) side; the two are joined by a pivot event:
 
 > **System Risk Event (SRE):** any risk event at the system altitude — the point at which a system's behavior, privileges, data, or trust relationships depart from what its owner controls. It has two types at one altitude. **System Compromise — Loss of Control:** an actor holds capability over the system sufficient to pursue objectives; it is reached only through cluster steps and is the pivot of the Cyber Bow-Tie. **System Failure — Loss of Function:** the system ceases to perform and no actor holds anything (software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, an unintended act that breaks the system); operational risk, no cluster, same altitude, same gate into the data layer.
 
 The ten clusters converge on the Compromise type only. Failure is named so that the failure branch drawn at the same altitude in the framework's figures is inside the model rather than implicit; Section 3.5 states which cause-side rows can reach which type.
 
+**Every cluster step records an SRE.** The thought experiment (Section 2) derives each cluster as a distinct generic vulnerability by which a system's behavior, code, identities, communications, capacity, execution, physical access, people, or trust passes out of its owner's control. Identifying a cluster is therefore asserting that this departure occurred: a step the framework classifies is a successful compromise of the system it acts on, and records its own System Risk Event. A path of *n* cluster steps records *n* of them, and each admits a Data Risk Event, a further cluster step (a chained SRE, against the same system or another), or both. The bow-tie is a structure applied *at* an SRE, not a claim that an incident holds only one; a multi-step path is a chain of pivots, each opening its own Δt window.
+
+Compromise is not confined to code execution or persistence. An actor holds capability over "behavior, privileges, data, or trust relationships", and any one of the four suffices: an arbitrary file read through a server-role flaw confers capability over data and is as much a Compromise as an interactive shell. Reading this narrowly is the most common error in applying the model, because it silently withdraws SRE status from the read-only and disclosure-grade steps that the clusters plainly classify.
+
 The SRE is positioned deliberately *before* outcomes. Compromise can exist without immediate observable impact — an attacker may hold persistent control for weeks before exfiltration — so the central event opens a detection window between initial compromise and any data loss. Other threats cause an outcome effectively at the moment of compromise (a successful SQL injection reading data, a flood exhausting capacity). The model accommodates both: the SRE is the pivot, whether consequences are delayed or simultaneous.
 
 ![The TLCTC Cyber Bow-Tie: the ten threat clusters on the cause side, the System Risk Event as central pivot, and Data/Business Risk Events on the consequence side](images/tlctc-cyber-bow-tie.svg)
 
-*Figure 2 — The Cyber Bow-Tie. The ten clusters act exclusively on the cause (left) side; the System Risk Event ("Loss of Control") is the single central pivot; Data Risk Events and cascading Business Risk Events sit on the consequence (right) side.*
+*Figure 2 — The Cyber Bow-Tie. The ten clusters act exclusively on the cause (left) side; the System Risk Event ("Loss of Control") is the central pivot; Data Risk Events and cascading Business Risk Events sit on the consequence (right) side.*
 
 Consequences follow a structured, variable-length chain:
 
@@ -109,7 +113,7 @@ Consequences follow a structured, variable-length chain:
 
 | Event | Definition | Examples |
 | --- | --- | --- |
-| **SRE** | System-altitude risk event, two types: Compromise (loss of control, an actor holds capability — the cyber pivot) or Failure (loss of function, no actor) | RCE achieved; persistent access established; storage controller fails |
+| **SRE** | System-altitude risk event, two types: Compromise (loss of control, an actor holds capability — the cyber pivot) or Failure (loss of function, no actor) | RCE achieved; persistent access established; arbitrary file read via a server-role flaw; storage controller fails |
 | **DRE** | Loss of Confidentiality, Integrity, or Availability/Accessibility — type codes form a refinement tree (§7.6): `C`; `I` → `Ii`/`If`; `A` → `Av`/`Ac` | data exfiltrated `[DRE: C]`; records altered `[DRE: I]`; log entry forged under another identity `[DRE: If]`; files encrypted by ransomware `[DRE: Ac]` |
 | **BRE** | A discrete business-level event triggered by a DRE or a preceding BRE | regulatory notification; outage declared; fine imposed |
 
@@ -677,7 +681,7 @@ The following one-line definitions cover the terms used in this paper so that it
 - **Generic vulnerability** — the single root-level attack surface that defines a cluster; the stable, technology-independent weakness a cluster targets. Every generic vulnerability maps to exactly one cluster (Axiom VI), and every specific vulnerability (e.g. a CVE) is an instance of one.
 - **Intra-system boundary** — a boundary crossing within a single host (sandbox, privilege, process, hypervisor), annotated with `|...|`; an observability annotation that never changes classification (R-INTRA-7).
 - **Responsibility sphere** — the organizational owner of a domain, denoted `@Entity` (e.g. `@Org`, `@Vendor`, `@Facilities`); spheres have distinct policies, teams, and legal boundaries.
-- **SRE (System Risk Event)** — any risk event at the system altitude and the central event of the Cyber Bow-Tie, with two types at one altitude: System Compromise (loss of control — an actor holds capability; reached only through cluster steps; the pivot between the cause side and the consequence side) and System Failure (loss of function — no actor holds anything; operational risk, no cluster). Abuse of Rights produces neither; its chain begins at the DRE.
+- **SRE (System Risk Event)** — any risk event at the system altitude and the central event of the Cyber Bow-Tie, with two types at one altitude: System Compromise (loss of control — an actor holds capability; reached only through cluster steps; the pivot between the cause side and the consequence side) and System Failure (loss of function — no actor holds anything; operational risk, no cluster). One SRE is recorded per cluster step, so a multi-step path chains them, each opening its own detection window (Section 3.4). Abuse of Rights produces neither; its chain begins at the DRE.
 - **Sub-cluster / operational sub-threat** — an operational refinement of a top-level cluster, written `#X.Y` / `TLCTC-XX.Y0`, distinguishing the vector through which the attacker reaches the *same* generic vulnerability (e.g. `#2.1` protocol vs `#2.2` core-function). A different generic vulnerability is a different cluster, not a sub-cluster.
 - **System Failure** — the Failure type of the SRE: loss of function with no actor holding capability (software or hardware failure, misconfiguration, capacity exhaustion without an attacker, external event, or an unintended act that breaks the system). Same altitude and same data-layer gate as Compromise; operational risk, no cluster.
 - **TAE (Trust Acceptance Event)** — the moment a domain honors a third-party trust link and treats a trust artifact as authoritative (validate, accept, install, apply, execute, attach privileges). #10 Supply Chain Attack is placed at the TAE (R-SUPPLY).
