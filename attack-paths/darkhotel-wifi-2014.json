@@ -46,15 +46,15 @@
       "step_id": "s3-fake-update-execution",
       "cluster": "#7",
       "fec_executed": true,
+      "outcomes": ["C"],
       "delta_t_to_next": "~1h",
-      "notes": "Victim accepts the fake software update prompt; a digitally signed trojan (keylogger + backdoor) downloads and executes. The malware was signed with stolen or fraudulent code-signing certificates to appear legitimate. R-EXEC: foreign executable content executed — recorded as #7 with fec_executed: true. The victim believed they were installing a legitimate software update due to the MitM-injected prompt."
+      "notes": "Victim accepts the fake software update prompt; a digitally signed trojan (keylogger + backdoor) downloads and executes. The malware was signed with stolen or fraudulent code-signing certificates to appear legitimate. R-EXEC: foreign executable content executed — recorded as #7 with fec_executed: true. The victim believed they were installing a legitimate software update due to the MitM-injected prompt. [DRE: C] is recorded here: the keylogger component captures the executive's credentials for corporate email, VPN and other services. Per Axiom X the acquisition of credential material maps to the enabling cluster, which is this #7 step, so the confidentiality event belongs here and not on the #4 step that later presents those credentials."
     },
     {
       "step_id": "s4-credential-capture",
       "cluster": "#4",
-      "outcomes": ["C"],
       "delta_t_to_next": "~2h",
-      "notes": "Keylogger component captures credentials for corporate email, VPN, and other services as the executive works from the hotel. The attacker then uses these captured credentials to authenticate to corporate resources. R-CRED: credential use (authentication with captured credentials) = always #4. Axiom X: the credentials were acquired via the malware's keylogger function (enabling cluster = #7), but their application to authenticate is a separate #4 step. DRE: C — credential confidentiality compromised."
+      "notes": "The attacker uses the captured credentials to authenticate to corporate resources. R-CRED: credential use (authentication with captured credentials) = always #4. Axiom X: the credentials were acquired via the malware's keylogger function during s3 (enabling cluster #7), where their confidentiality event is recorded; their application to authenticate is this separate #4 step and carries no DRE of its own. The corporate data disclosure that this access enables is recorded on s5, where the data is actually taken."
     },
     {
       "step_id": "s5-corporate-data-exfiltration",

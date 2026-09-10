@@ -11,9 +11,8 @@
     {
       "step_id": "s1-aws-credential-use",
       "cluster": "#4",
-      "outcomes": ["C"],
       "delta_t_to_next": "instant",
-      "notes": "Attackers obtained AWS access keys that were hardcoded in source code within a private GitHub repository accessible to them. They used these AWS credentials to authenticate to Uber's AWS account. R-CRED: credential application (using AWS access keys to authenticate to the AWS API) is always #4, regardless of acquisition method. Axiom X: the credential was acquired by reading source code (a prior access step not fully documented in public reports); the application of the credential to authenticate is this #4 step. DRE: C — the AWS credentials themselves represent a confidentiality loss. This incident demonstrates the risk of secrets embedded in code repositories."
+      "notes": "Attackers obtained AWS access keys that were hardcoded in source code within a private GitHub repository accessible to them. They used these AWS credentials to authenticate to Uber's AWS account. R-CRED: credential application (using AWS access keys to authenticate to the AWS API) is always #4, regardless of acquisition method. Axiom X: the credential was acquired by reading source code (a prior access step not fully documented in public reports); the application of the credential to authenticate is this #4 step. This step carries no DRE. The disclosure of the credentials themselves was the acquisition, which belongs to that undocumented prior step and not to this one; the S3 data disclosure is recorded on s2, where it occurs. This incident demonstrates the risk of secrets embedded in code repositories."
     },
     {
       "step_id": "s2-s3-data-exfiltration",
