@@ -91,7 +91,7 @@ Two ordering consequences are worth noting. First, because Q1 precedes Q7, the L
 
 ## 4. Recording Outcomes in Practice
 
-The cause–event–consequence model (core §3.4) places the ten clusters on the cause side and outcomes on the consequence side, joined by one pivot — the **System Risk Event (SRE)**, the loss of control / system compromise. Consequences then follow a variable-length chain: **SRE → DRE → BRE\***. This section is about the *practice* of recording the consequence side alongside a classified step — when and how to tag — not about redefining the model, for which the core is authoritative.
+The cause–event–consequence model (core §3.4) places the ten clusters on the cause side and outcomes on the consequence side, joined by a pivot — the **System Risk Event (SRE)**, the loss of control / system compromise, one recorded per cluster step. Consequences then follow a variable-length chain: **SRE → DRE → BRE\***. This section is about the *practice* of recording the consequence side alongside a classified step — when and how to tag — not about redefining the model, for which the core is authoritative.
 
 **The hard boundary.** Outcomes are never clusters. A "data breach," a "ransomware impact," an "outage" record *what happened*; none of them is a generic vulnerability and none changes the cluster of the step that caused it. This is the operational form of Axiom III. In practice it means the analyst classifies the step first (§2), and only then asks whether that step also produced a data-level effect worth recording.
 
@@ -178,7 +178,7 @@ The full 987-entry mapping, with verdicts, rationale, and CVE references, is at 
 
 ## 7. The Bow-Tie in Governance
 
-The core paper anchors TLCTC's cause/outcome separation in a bow-tie risk structure (core §3.4): the ten clusters sit on the cause side, outcomes sit on the consequence side, and the two are joined by a single pivot, the **System Risk Event (SRE)** — Loss of Control / System Compromise. This section does not re-derive that model; it operationalizes it as the organizing frame for control placement. A complete bow-tie has five elements, and each element answers a distinct governance question.
+The core paper anchors TLCTC's cause/outcome separation in a bow-tie risk structure (core §3.4): the ten clusters sit on the cause side, outcomes sit on the consequence side, and the two are joined by a pivot, the **System Risk Event (SRE)** — Loss of Control / System Compromise, one of which is recorded per cluster step, so a multi-step path is a chain of bow-ties. This section does not re-derive that model; it operationalizes it as the organizing frame for control placement. A complete bow-tie has five elements, and each element answers a distinct governance question.
 
 | Element | Position | Governance role |
 |---|---|---|
