@@ -173,11 +173,17 @@
     {
       "step_id": "s4-21-forged-cas-jwt",
       "cluster": "#4",
+      "delta_t_to_next": "instant",
+      "notes": "07-12 09:50. A CAS-read JWT is forged with STOLEN HUGGING FACE PRODUCTION SIGNING MATERIAL and presented to the internal Xet storage service, which accepts it. The forgery required NO implementation flaw - the signing key was legitimately valid - so there is no separate #2 here. Contrast openai-hf-artifactory-2026.json s1-5/s1-6, where an invalid signature was accepted through a defect and the acquisition step WAS #2. This step carries no DRE: presenting the forged token authenticates and discloses nothing. The dataset disclosure is recorded on s4-21b, matching how every other credential application in this record is paired with the #1 step that acts on it."
+    },
+    {
+      "step_id": "s4-21b-dataset-scan",
+      "cluster": "#1",
       "outcomes": [
         "C"
       ],
       "delta_t_to_next": "?",
-      "notes": "07-12 09:50. A CAS-read JWT is forged with STOLEN HUGGING FACE PRODUCTION SIGNING MATERIAL and accepted by the internal Xet storage service; a full dataset scan is launched. The forgery required NO implementation flaw - the signing key was legitimately valid - so there is no separate #2 here. Contrast openai-hf-artifactory-2026.json s1-5/s1-6, where an invalid signature was accepted through a defect and the acquisition step WAS #2. [DRE: C] on the scanned datasets."
+      "notes": "07-12 09:50 onward. With the forged CAS-read JWT accepted, a full dataset scan is launched against the Xet storage service. The read path operated as designed for a caller holding a valid token, so this is #1 Abuse of Functions reached through the forged identity (R-SCOPE: use by a non-grantee is never in-grant, #4 then #1). [DRE: C] on the scanned datasets is recorded here, at the step that actually reads them."
     },
     {
       "step_id": "s4-22-vpn-auth-key-applied",

@@ -5,7 +5,7 @@
     "tlctc_version": "2.5",
     "framework_ref": "tlctc-framework.v2.5.json",
     "created_at": "2026-03-20T00:00:00Z",
-    "notes": "Tesla Kubernetes cryptojacking incident, February 2018 (discovered by RedLock). Attackers found an unauthenticated Kubernetes dashboard exposed to the internet for one of Tesla's AWS environments. Through the dashboard, they deployed a cryptomining container (Stratum protocol, behind CloudFlare to evade IP-based detection), then discovered AWS credentials in Kubernetes secrets, which provided access to additional Tesla data. Attack path: #1 →[Δt=~5m] #7 →[Δt=~20m] #1 →[Δt=~5m] #4 + [DRE: C]. Sources: RedLock CSI Team report (February 2018), The Register reporting, Tesla acknowledgment."
+    "notes": "Tesla Kubernetes cryptojacking incident, February 2018 (discovered by RedLock). Attackers found an unauthenticated Kubernetes dashboard exposed to the internet for one of Tesla's AWS environments. Through the dashboard, they deployed a cryptomining container (Stratum protocol, behind CloudFlare to evade IP-based detection), then discovered AWS credentials in Kubernetes secrets, which provided access to additional Tesla data. Attack path: #1 →[Δt=~5m] #7 →[Δt=~20m] #1 + [DRE: C] →[Δt=~5m] #4. Sources: RedLock CSI Team report (February 2018), The Register reporting, Tesla acknowledgment."
   },
   "path_sequence": [
     {
@@ -24,14 +24,14 @@
     {
       "step_id": "s3-k8s-secrets-access",
       "cluster": "#1",
+      "outcomes": ["C"],
       "delta_t_to_next": "~5m",
-      "notes": "Attacker used Kubernetes dashboard and kubectl access to enumerate and read Kubernetes Secrets, which contained AWS credentials (access keys and secret keys). The Kubernetes Secrets API functioned as designed — Secrets were accessible to users with dashboard-level access. #1 Abuse of Functions: the K8s Secrets API is a designed capability; the attacker used it within its intended parameters. The credentials stored in Secrets represent a DRE:C but are classified at the next step when applied."
+      "notes": "Attacker used Kubernetes dashboard and kubectl access to enumerate and read Kubernetes Secrets, which contained AWS credentials (access keys and secret keys). The Kubernetes Secrets API functioned as designed — Secrets were accessible to users with dashboard-level access. #1 Abuse of Functions: the K8s Secrets API is a designed capability; the attacker used it within its intended parameters. [DRE: C] is recorded here: the credentials held in Secrets were disclosed at the moment they were read. Per Axiom X the acquisition of credential material maps to the enabling cluster, which is this #1 step; it is not deferred to the #4 step that later applies them."
     },
     {
       "step_id": "s4-aws-credential-use",
       "cluster": "#4",
-      "outcomes": ["C"],
-      "notes": "Attacker used AWS credentials discovered in Kubernetes Secrets to authenticate to Tesla's broader AWS environment, gaining access to additional Tesla data including telemetry and potentially sensitive operational information. R-CRED: credential application (using AWS access keys to authenticate) = always #4, regardless of acquisition method (K8s Secrets access in this case). Axiom X: credential acquisition via #1 (K8s Secrets); credential use = #4. DRE: C — Tesla operational data and potentially customer telemetry exposed."
+      "notes": "Attacker used AWS credentials discovered in Kubernetes Secrets to authenticate to Tesla's broader AWS environment. R-CRED: credential application (using AWS access keys to authenticate) = always #4, regardless of acquisition method (K8s Secrets access in this case). Axiom X: credential acquisition via #1 (K8s Secrets, where its DRE is recorded); credential use = #4. This step carries no DRE. Authenticating discloses nothing of itself, and the disclosure it would enable is not established: RedLock reported that the S3 buckets reachable with these credentials held telemetry data, but no public source establishes that Tesla data was read or exfiltrated, and the observed attacker objective was cryptomining. A [DRE: C] is therefore not asserted for the AWS environment. If evidence of actual data access emerges, it belongs on a further #1 step for the read, not on this authentication step."
     }
   ]
 }
