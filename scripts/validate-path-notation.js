@@ -23,10 +23,20 @@ const VERBOSE = process.argv.includes('--verbose');
 
 // ---------------------------------------------------------------- notation side
 
-// Where a record introduces its notation. Records use several phrasings, and a
-// bare "path:" can also occur mid-prose, so every candidate is tried in turn and
-// the first one that actually yields notation tokens wins.
-const LEAD_IN = /(?:attack path|compact notation|compact path|textual equivalent|notation|path)\s*:\s*/gi;
+// Where a record introduces its notation, in order of authority. A record may also
+// quote a VARIANT path in passing ("Collateral infections follow a pure supply
+// chain path: …"), which a bare "path:" would match, so the tiers are tried
+// strongest-first and only one tier is ever used.
+//
+// A lead-in may carry a qualifier — "Attack path (direct):", "Attack path (Phase
+// 2):" — and a record that splits its path into phases states each separately.
+// Within the winning tier every match is concatenated in document order, which is
+// what makes the phase-split records line up with their step sequence.
+const LEAD_IN_TIERS = [
+  /attack path(?:\s*\([^)]*\))?\s*:\s*/gi,
+  /(?:compact notation|compact path|textual equivalent)(?:\s*\([^)]*\))?\s*:\s*/gi,
+  /(?:notation|path)(?:\s*\([^)]*\))?\s*:\s*/gi,
+];
 
 // The notation alphabet. Anything outside it means prose has resumed.
 const TOKENS = [
@@ -49,10 +59,18 @@ const ABBREVIATION = /\[RECURSIVE\]|\[\.\.\.\]|…\s*\.?\s*$/;
 
 function extractNotation(notes) {
   if (!notes) return null;
-  LEAD_IN.lastIndex = 0;
-  for (let m = LEAD_IN.exec(notes); m; m = LEAD_IN.exec(notes)) {
-    const seq = parseFrom(notes.slice(m.index + m[0].length));
-    if (seq) return seq;
+  for (const tier of LEAD_IN_TIERS) {
+    tier.lastIndex = 0;
+    const parts = [];
+    for (let m = tier.exec(notes); m; m = tier.exec(notes)) {
+      const seq = parseFrom(notes.slice(m.index + m[0].length));
+      if (seq) parts.push(seq);
+    }
+    if (!parts.length) continue;
+    const joined = [].concat(...parts);
+    joined.abbreviated = parts.some((p) => p.abbreviated);
+    joined.segments = parts.length;
+    return joined;
   }
   return null;
 }

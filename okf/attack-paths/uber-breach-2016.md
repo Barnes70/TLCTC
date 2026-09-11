@@ -16,19 +16,19 @@ tlctc_version: "2.5"
 ## Attack path
 
 ```
-#4 + [DRE: C] →[Δt=instant] #1 + [DRE: C]
+#4 →[Δt=instant] #1 + [DRE: C]
 ```
 
 # Schema
 
 | Step | Cluster | Boundary | Δt→next | DRE |
 |---|---|---|---|---|
-| s1-aws-credential-use | [#4](/clusters/cluster-4.md) |  | instant | C |
+| s1-aws-credential-use | [#4](/clusters/cluster-4.md) |  | instant |  |
 | s2-s3-data-exfiltration | [#1](/clusters/cluster-1.md) |  |  | C |
 
 ## Step notes
 
-- **s1-aws-credential-use:** Attackers obtained AWS access keys that were hardcoded in source code within a private GitHub repository accessible to them. They used these AWS credentials to authenticate to Uber's AWS account. R-CRED: credential application (using AWS access keys to authenticate to the AWS API) is always #4, regardless of acquisition method. Axiom X: the credential was acquired by reading source code (a prior access step not fully documented in public reports); the application of the credential to authenticate is this #4 step. DRE: C — the AWS credentials themselves represent a confidentiality loss. This incident demonstrates the risk of secrets embedded in code repositories.
+- **s1-aws-credential-use:** Attackers obtained AWS access keys that were hardcoded in source code within a private GitHub repository accessible to them. They used these AWS credentials to authenticate to Uber's AWS account. R-CRED: credential application (using AWS access keys to authenticate to the AWS API) is always #4, regardless of acquisition method. Axiom X: the credential was acquired by reading source code (a prior access step not fully documented in public reports); the application of the credential to authenticate is this #4 step. This step carries no DRE. The disclosure of the credentials themselves was the acquisition, which belongs to that undocumented prior step and not to this one; the S3 data disclosure is recorded on s2, where it occurs. This incident demonstrates the risk of secrets embedded in code repositories.
 - **s2-s3-data-exfiltration:** Attacker used the authenticated AWS session to list and download data from Uber's S3 buckets. The buckets contained names, email addresses, and phone numbers of 57 million riders worldwide, plus driver license numbers of 600,000 US drivers. The AWS S3 API functioned as designed — the valid credentials granted legitimate access to the storage resources. #1 Abuse of Functions: the S3 API, ListBucket, and GetObject operations all worked as intended; the attacker operated within the designed functionality using stolen but technically valid credentials. DRE: C — massive PII dataset exfiltrated.
 
 # Citations

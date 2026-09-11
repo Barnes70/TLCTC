@@ -12,7 +12,7 @@
     "build-misp": "node scripts/build-misp-taxonomy.js",
     "validate-misp": "node scripts/validate-misp.js",
     "test-misp": "cd integrations/misp && python -m unittest discover tests",
-    "validate": "npm run validate-framework && npm run validate-attack-paths && npm run validate-consistency && npm run build-okf && npm run validate-okf && npm run build-misp && npm run validate-misp",
+    "validate": "npm run validate-framework && npm run validate-attack-paths && npm run validate-notation && npm run validate-consistency && npm run build-okf && npm run validate-okf && npm run build-misp && npm run validate-misp",
     "build-pdfs": "node scripts/build-pdf.js documentation/tlctc-v2.5-core.md documentation/tlctc-v2.5-core.pdf && node scripts/build-pdf.js documentation/tlctc-v2.5-application.md documentation/tlctc-v2.5-application.pdf && node scripts/build-pdf.js documentation/tlctc-glossary.md documentation/tlctc-glossary.pdf",
     "site": "node scripts/build-site.js",
     "site:deploy": "node scripts/build-site.js --deploy",
