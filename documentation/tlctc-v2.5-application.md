@@ -79,7 +79,7 @@ Q6  Overwhelming finite resources by volume or intensity? (a code bug that
     crashes is #2/#3, not #6)                         → #6 Flooding Attack
 Q7  Is FOREIGN CODE executing? (if launched via a legitimate tool, #1 → #7)
                                                       → #7 Malware
-Q8  Requires physical interaction with hardware/facilities?
+Q8  Requires physical interaction with hardware/signals?
                                                       → #8 Physical Attack
 Q9  Psychologically manipulating a human?             → #9 Social Engineering
 Q10 Exploiting trust in a third-party component/service/update (placed at the
