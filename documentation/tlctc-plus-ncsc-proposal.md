@@ -135,7 +135,7 @@ The result is predictable:
 - weak routing between cyber, fraud, consumer protection, law enforcement, and regulatory workflows;
 - poor alignment between cause-side controls and consequence-side reporting.
 
-Some cases are classical cyber incidents. Some are manipulation-driven digital harms with no system compromise. Others combine both. A national reporting model must handle all three without collapsing them into a vague “cybercrime” bucket.
+Some cases are classical cyber incidents. Some are manipulation-driven digital harms with no direct system compromise. Others combine both. A national reporting model must handle all three without collapsing them into a vague “cybercrime” bucket.
 
 ---
 
@@ -199,7 +199,7 @@ TLCTC+ uses six tracks.
 
 ```text
 Cause Track       TLCTC path or #9 anchor; Pattern attaches here
-SRE Track         Loss of Control / System Compromise
+SRE Track         System Risk Events — one per cluster step (direct or induced); the first direct SRE is marked
 DRE Track         Confidentiality, Integrity, Accessibility, Availability
 BRE Track         Business, citizen, legal, regulatory, service, organizational events
 Impact Track      Quantified or qualified measurements
@@ -210,7 +210,7 @@ The tracks are independent dimensions of one case record. They must not be colla
 
 ### 6.1 Compromise Record
 
-A TLCTC path leads to Loss of Control / System Compromise. An SRE is present. This single record class covers two reporting flavors that are structurally identical.
+The TLCTC path contains at least one cluster step other than #9, hence at least one direct SRE; the first is marked `+ [SRE]`. This single record class covers two reporting flavors that are structurally identical.
 
 **Cyber-side dominance** (formerly "core cyber incident") — reporting interest is technical compromise, service impact, or regulatory notification; dominant BRE families are BRE-SVC.*, BRE-DATA.*, BRE-REG.*, BRE-ORG.*.
 
@@ -241,7 +241,7 @@ No IT system is compromised by the attacker directly. The case is digitally medi
 + [Impact: IMPACT-FIN.12 Direct Fraud Loss = CHF 4,500]
 ```
 
-A DRE may appear in a `pure_9_record` only when the manipulation itself directly causes data disclosure or resource impact without system compromise:
+A DRE may appear in a `pure_9_record` only when the manipulation itself directly causes data disclosure or resource impact without direct system compromise (the DRE hangs off the #9 step's own SRE):
 
 ```text
 #9 ||[email][@External→@Citizen]|| [Pattern: PATTERN-ID.11 Phishing for Credentials]
@@ -782,7 +782,7 @@ Conformance reminders:
 
 ## Appendix B — Sample Cases
 
-### B.1 CEO Fraud, No System Compromise
+### B.1 CEO Fraud, No Direct System Compromise
 
 ```text
 #9 ||[email][@External→@Org]|| [Pattern: PATTERN-FIN.25 CEO / Executive Impersonation]
