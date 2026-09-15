@@ -1,51 +1,90 @@
 ; TLCTC+ Attack Path / Record Notation — Formal Grammar
-; Version: TLCTC+ v0.6 (base framework: TLCTC v2.1)
+; Version: TLCTC+ v0.8 (base framework: TLCTC v2.5.1, dictionary
+;          tlctc-framework.v2.5.json)
 ; Format:  ABNF (RFC 5234), UTF-8 source encoding required.
-; Canonical prose specification: documentation/tlctc-plus-specification.md §8
+; Canonical prose specification: documentation/tlctc-plus-specification.md
+;          §8 (notation) and §10 (minimal grammar, constraints V-1…V-6)
 ; License: CC BY 4.0
 ;
 ; Companion files:
-;   grammar/tlctc-attack-path.abnf — core TLCTC v2.1 grammar (with the
-;     v0.1 free-text BRE extension). Use that grammar for plain v2.1
-;     attack paths and v0.1-style records.
+;   grammar/tlctc-attack-path.abnf — core TLCTC attack-path grammar
+;     (core §7 notation: sequence, parallel, velocity, domain boundary,
+;     transit, intra-system boundary, unresolved steps) with the v0.1
+;     free-text BRE extension. Use that grammar for plain core attack
+;     paths and v0.1-style records.
 ;   This file (tlctc-plus-attack-path.abnf) is a self-contained mirror
-;     of TLCTC+ v0.6 §8. Use it to validate TLCTC+ records:
-;       - record_type = compromise_record   (TLCTC path + SRE present)
-;       - record_type = pure_9_record       (#9 anchor, no SRE)
-;     v0.6 collapsed the v0.3-v0.5 three-class enumeration
-;     (core_cyber_incident, hybrid_cyber_enabled_harm, pure_9_digital_harm)
-;     into the two structural record types above, split on SRE presence.
+;     of TLCTC+ v0.8 §10. Use it to validate TLCTC+ records:
+;       - record_type = compromise_record   (path with at least one
+;                                            cluster step other than #9,
+;                                            i.e. at least one direct SRE)
+;       - record_type = pure_9_record       (a single #9 step; its SRE is
+;                                            induced, no marker rendered)
+;     Under core v2.5.1 every cluster step records its own System Risk
+;     Event (core §3.4), so the two record types are split on PATH
+;     COMPOSITION, not on SRE presence. "+ [SRE]" is the first-direct-SRE
+;     marker: a step annotation written once, on the first non-#9
+;     cluster step in path order (R-SRE, V-2). The compromise a record
+;     foregrounds for reporting is the data-model field
+;     reporting_pivot_step, not a notation token.
 ;     Structured PATTERN/BRE/IMPACT/REPORT codes are required;
 ;     free-text BRE labels (v0.1) are NOT accepted by this grammar.
 ;
+; Structure (mirrors §10)
+;   <compromise-record> ::= <annotated-path> <record-annotation>*
+;   <pure-9-record>     ::= <annotated-9-step> <record-annotation>*
+;   <annotated-step>    ::= <step> <step-annotation>*
+;   step annotations   : + [SRE], + [DRE: ...], [Pattern: ...]
+;   record annotations : + [BRE: ...], + [Impact: ...], + [Report: ...]
+;   SRE, DRE and Pattern attach to the step they follow; BRE, Impact and
+;   Report follow the whole path. <step> and the path operators are the
+;   core §7 grammar and are replicated here only for self-containment.
+;
 ; Coverage
 ;   - Six TLCTC+ tracks: Cause / SRE / DRE / BRE / Impact / Report
-;   - Cause-side step annotations: Pattern (bracket-only), conf, inferred
-;   - Consequence-side annotations: + [SRE], + [DRE: ...], + [BRE: ...],
-;       + [Impact: ...], + [Report: ...]
-;   - R-9-BOUNDARY at grammar level: bridge clusters #8/#9/#10 MUST
-;       carry a boundary annotation in TLCTC+ records.
+;   - Core epistemic annotations on a step: [conf=low], [inferred],
+;       generic [key=value]; unresolved steps "?" and "…"
+;   - R-BOUNDARY at grammar level: bridge clusters #8/#9/#10 MUST carry
+;       a domain boundary annotation in TLCTC+ records.
 ;   - R-PATTERN-POSITION at grammar level: Pattern is bracket-only
 ;       (no leading "+"); SRE/DRE/BRE/Impact/Report are additive only.
 ;   - R-V01-MIGRATION at grammar level: BRE codes are structured
 ;       (BRE-XXX.YY); free-text BRE labels do not parse.
-;   - Pure-#9 record skeleton: boundary required, SRE forbidden,
-;       DRE optional (direct-disclosure cases per §3.4 / §5.4).
+;   - V-3 at grammar level: the pure-#9 skeleton admits no SRE marker
+;       (boundary required, Pattern optional, DRE optional).
+;   - V-4 at grammar level (stronger than §10 requires): an unresolved
+;       step admits no step annotation at all — no DRE (R-UNRES-5), no
+;       SRE marker, no Pattern.
+;   - DRE codes are the core v2.5 refinement tree (C, I/Ii/If, A/Av/Ac)
+;       with "," as the in-bracket separator.
 ;
 ; What this grammar does NOT enforce (validator territory)
-;   - R-EXEC, R-CRED, R-SUPPLY, R-ROLE, Axiom IV (single-cluster rule)
-;   - R-DRE-PLACEMENT (link DRE to the correct step)
-;   - R-BRE-OP-SCOPE beyond bracket fencing
-;   - R-RECOVERABILITY (parsers cannot strip tags and re-validate)
-;   - DRE legality on pure-9 records (only direct-disclosure cases are
-;       semantically valid; grammar accepts any DRE letter combination).
-;   - Conformance items 3, 4(b), 12 from §19.
+;   - V-1: a compromise record contains at least one cluster step other
+;       than #9 (the grammar also parses "#9 ||…|| + [SRE]").
+;   - V-2: exactly one SRE marker, on the first non-#9 cluster step in
+;       path order (R-SRE). The grammar admits zero or several markers
+;       and does not fix their position.
+;   - V-5: a pure-#9 record carries at least one BRE annotation.
+;   - V-6: reporting_pivot_step names a cluster step present in the path
+;       (a data-model field; it has no notation).
+;   - R-SCOPE (Attack-row admission), R-EXEC, R-CRED, R-SUPPLY, R-ROLE,
+;       Axiom VI (single-cluster rule), Axiom IV.
+;   - R-DRE-PLACEMENT beyond adjacency (a DRE binds to the step it
+;       follows; structured records may link explicitly).
+;   - R-BRE-OP-SCOPE beyond bracket fencing.
+;   - R-RECOVERABILITY (parsers cannot strip tags and re-validate).
+;   - DRE legality on pure-#9 records (only direct-disclosure cases are
+;       semantically valid; the grammar accepts any DRE code set).
+;   - R-UNRES-8: a path containing "?" or "…" needs a prose note.
+;   - Conformance items 1, 3, 15, 16, 17, 18 from §21.
+;
+; Whitespace: SP is a single space. Records rendered over several lines
+; (as in §19) MUST have line breaks normalised to SP before parsing.
 ;
 ; Unicode literals used directly in the grammar:
 ;   →  U+2192 RIGHTWARDS ARROW
-;   ⇒  U+21D2 RIGHTWARDS DOUBLE ARROW   (V2.1 transit operator)
-;   …  U+2026 HORIZONTAL ELLIPSIS       (V2.1 unresolved gap)
-;   Δ  U+0394 GREEK CAPITAL LETTER DELTA (Δt — temporal gap annotation)
+;   ⇒  U+21D2 RIGHTWARDS DOUBLE ARROW   (transit operator, core §7.4)
+;   …  U+2026 HORIZONTAL ELLIPSIS       (unresolved gap, core §7.7)
+;   Δ  U+0394 GREEK CAPITAL LETTER DELTA (Δt — velocity annotation)
 ;
 ; Parsers that do not natively consume UTF-8 literals should preprocess
 ; the input or replace the literal characters with hex UTF-8 byte
@@ -59,69 +98,87 @@
 TLCTC_PLUS_RECORD = COMPROMISE_RECORD / PURE_9_RECORD
 
 ; -- Compromise record ------------------------------------------------
-; A compromise_record (TLCTC path with SRE present). v0.6 collapses the
-; v0.5 "core_cyber_incident" and "hybrid_cyber_enabled_harm" classes
-; into this single structural type; the cyber-side-dominant vs
-; consequence-side-dominant flavor is observable via the BRE family
-; selection, not via record_type.
-; SRE annotation is permitted at most once per record. The grammar
-; accepts zero SRE_TAGs (pre-compromise hypothesis records, sre.status
-; = "hypothesized"); R-SRE makes SRE_TAG REQUIRED once Loss of Control
-; / System Compromise has occurred — that is a validator-level rule.
-COMPROMISE_RECORD = TLCTC_PATH
-                    [SP+ SRE_TAG]
-                    *(SP+ DRE_TAG)
-                    *(SP+ BRE_TAG)
-                    *(SP+ IMPACT_TAG)
-                    *(SP+ REPORT_TAG)
+; A path containing at least one cluster step other than #9 (V-1),
+; followed by record-level annotations in any order. The cyber-side-
+; dominant vs consequence-side-dominant flavor is observable via the BRE
+; family selection, not via record_type.
+; The SRE marker is a STEP annotation (see STEP_ANN below); it never
+; appears at record level. V-2 (exactly one marker, on the first non-#9
+; cluster step) is a validator rule.
+COMPROMISE_RECORD = ANNOTATED_PATH *(SP* RECORD_ANN)
 
 ; -- Pure-#9 record ---------------------------------------------------
-; SRE forbidden by definition (no IT system was compromised).
-; DRE optional and limited to direct-disclosure semantics (§3.4 / §5.4).
-; BRE required (at least one).
-; Boundary on the #9 anchor REQUIRED (R-9-BOUNDARY).
-PURE_9_RECORD   = "#9" SP* BOUNDARY
-                  [SP+ PATTERN_TAG]
-                  [SP+ DRE_TAG]
-                  1*(SP+ BRE_TAG)
-                  *(SP+ IMPACT_TAG)
-                  *(SP+ REPORT_TAG)
+; Exactly one classified #9 step, boundary REQUIRED (R-BOUNDARY),
+; Pattern optional, DRE optional (direct-disclosure cases, §4.2).
+; No SRE marker (V-3 / R-SRE-9): the #9 step's SRE is induced and
+; implicit in the classified step. No epistemic or unresolved operators
+; (§8.1). At least one BRE annotation is required by V-5 (validator).
+PURE_9_RECORD   = ANNOTATED_9_STEP *(SP* RECORD_ANN)
+
+ANNOTATED_9_STEP = "#9" SP* BOUNDARY
+                   [SP* PATTERN_TAG]
+                   [SP* DRE_TAG]
 
 ; =====================================================================
-; TLCTC path (cause-side)
+; Annotated path (cause-side path with step annotations)
 ; =====================================================================
 
-TLCTC_PATH      = PHASE *(SP* EDGE SP* PHASE)
+ANNOTATED_PATH  = PHASE *(SP* EDGE SP* PHASE)
 
 EDGE            = (ARROW / ARROW_ASCII) [SP* DT_ANN]
 ARROW           = "→"
 ARROW_ASCII     = "->"
 
-PHASE           = STEP / PAR_GROUP
+PHASE           = ANNOTATED_STEP / PAR_GROUP
 
-; A PAR_GROUP MAY carry trailing annotations and a DRE_TAG / BRE_TAG
-; applied to the group as a whole (e.g., "(#1 + #7) + [DRE: Ac]").
-PAR_GROUP       = "(" SP* STEP *(SP* "+" SP* STEP) SP* ")" STEP_TRAILER
+; A PAR_GROUP (core §7.1) MAY carry step annotations applied to the
+; group as a whole (e.g., "(#1 + #7) + [DRE: Ac]"). Members are bare
+; core steps; the "+" between members is the core parallel operator and
+; is distinguished from an additive tag by what follows it ("#" / "?" /
+; "…" / "TLCTC-" versus "[").
+PAR_GROUP       = "(" SP* STEP *(SP* "+" SP* STEP) SP* ")" *(SP* STEP_ANN)
+
+; <annotated-step> ::= <step> <step-annotation>*
+; V-4 at grammar level: only a CLASSIFIED step takes step annotations;
+; an unresolved step carries none (R-UNRES-5).
+ANNOTATED_STEP  = CLASSIFIED_STEP *(SP* STEP_ANN)
+                / UNRESOLVED_STEP
+
+; Step annotations (TLCTC+ §10 <step-annotation>): the first-direct-SRE
+; marker, a DRE tag, or a cause-side Pattern tag, in any order.
+STEP_ANN        = SRE_TAG / DRE_TAG / PATTERN_TAG
+
+; Record annotations (TLCTC+ §10 <record-annotation>), any order.
+RECORD_ANN      = BRE_TAG / IMPACT_TAG / REPORT_TAG
+
+; =====================================================================
+; Core step (core §7, replicated for self-containment)
+; =====================================================================
 
 STEP            = CLASSIFIED_STEP / UNRESOLVED_STEP
 CLASSIFIED_STEP = BRIDGE_STEP / INTERNAL_STEP
 
-; R-9-BOUNDARY: bridge clusters #8/#9/#10 MUST carry a boundary in
-; TLCTC+ records. This is a profile strengthening over the v2.1 SHOULD.
-BRIDGE_STEP     = BRIDGE_CLUSTER SP* BOUNDARY [SP* INTRA_BOUNDARY] STEP_TRAILER
+; R-BOUNDARY: bridge clusters #8/#9/#10 MUST carry a domain boundary in
+; TLCTC+ records. This is a profile strengthening over the core SHOULD.
+BRIDGE_STEP     = BRIDGE_CLUSTER SP* BOUNDARY [SP* INTRA_BOUNDARY] *(SP* CORE_ANN)
 
-; Internal clusters #1-#7 may carry an inter-organizational boundary
-; (rare but valid in v2.1) and/or an intra-system boundary.
-INTERNAL_STEP   = INTERNAL_CLUSTER [SP* BOUNDARY] [SP* INTRA_BOUNDARY] STEP_TRAILER
+; Internal clusters #1-#7 may carry a domain boundary (rare but valid)
+; and/or an intra-system boundary.
+INTERNAL_STEP   = INTERNAL_CLUSTER [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* CORE_ANN)
 
-; STEP_TRAILER carries cause-side step annotations (Pattern, conf,
-; inferred) followed by consequence-side DRE/BRE tags. SRE / Impact /
-; Report attach at the record level, not the step level.
-STEP_TRAILER    = *(SP* STEP_ANN) [SP* DRE_TAG] *(SP* BRE_TAG)
-
-; v2.1 unresolved-step operators
-UNRESOLVED_STEP  = UNRESOLVED_TOKEN [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* STEP_ANN)
+; Unresolved-step operators (core §7.7). Boundaries MAY appear adjacent
+; (R-UNRES-6); core epistemic annotations MAY follow.
+UNRESOLVED_STEP  = UNRESOLVED_TOKEN [SP* BOUNDARY] [SP* INTRA_BOUNDARY] *(SP* CORE_ANN)
 UNRESOLVED_TOKEN = "?" / "…" / "..."
+
+; Core epistemic annotations on a step (core §7.7): [conf=low],
+; [inferred], and generic [key=value]. These belong to the core path and
+; survive R-RECOVERABILITY stripping.
+CORE_ANN        = "[inferred]"
+                / "[" ANN_KEY "=" ANN_VAL "]"
+
+ANN_KEY         = 1*(ALPHA / DIGIT / "_" / "-")
+ANN_VAL         = 1*VCHAR_NO_RBR
 
 ; -- Clusters ---------------------------------------------------------
 
@@ -132,26 +189,17 @@ STRATEGIC_INTERNAL = "#1" / "#2" / "#3" / "#4" / "#5" / "#6" / "#7"
 OPERATIONAL_REF  = "TLCTC-" 2DIG "." 2DIG    ; e.g., TLCTC-09.03
 
 ; =====================================================================
-; Cause-side step annotations
+; Cause-side Pattern annotation (bracket-only, R-PATTERN-POSITION)
 ; =====================================================================
-; Pattern is bracket-only per R-PATTERN-POSITION (no leading "+").
-; conf / inferred / generic [key=value] follow v2.1.
-
-STEP_ANN        = PATTERN_TAG
-                / "[inferred]"
-                / "[" ANN_KEY "=" ANN_VAL "]"
-
-ANN_KEY         = 1*(ALPHA / DIGIT / "_" / "-")
-ANN_VAL         = 1*VCHAR_NO_RBR
 
 PATTERN_TAG     = "[Pattern:" SP* PATTERN_EXPR "]"
 PATTERN_EXPR    = PATTERN_TERM *(SP* "+" SP* PATTERN_TERM)
 PATTERN_TERM    = PATTERN_NODE / "(" SP* PATTERN_EXPR SP* ")"
 PATTERN_NODE    = PATTERN_CODE [SP+ LABEL]
-PATTERN_CODE    = "PATTERN-" 1*ALPHA "." 2DIG
+PATTERN_CODE    = "PATTERN-" CODE_FAMILY "." 2DIG
 
 ; =====================================================================
-; Edge / boundary primitives (v2.1, replicated for self-containment)
+; Edge / boundary primitives (core §7.2–7.5, replicated)
 ; =====================================================================
 
 DT_ANN          = "[" "Δt" "=" DT_VAL "]"
@@ -168,17 +216,20 @@ INTRA_BOUNDARY  = "|" "[" INTRA_TYPE "]" "[" SPHERE BOUNDARY_ARROW SPHERE "]" "|
 INTRA_TYPE      = "sandbox" / "privilege" / "process" / "hypervisor"
 
 ; =====================================================================
-; Consequence-side tags (additive; "+" prefix)
+; Additive tags ("+" prefix)
 ; =====================================================================
 
-; -- SRE: Loss of Control / System Compromise -------------------------
-; SRE has no payload — it is a Bow-Tie centre marker.
+; -- SRE: first-direct-SRE marker --------------------------------------
+; No payload. States where the system first left its owner's control;
+; carries no reporting judgement (that is reporting_pivot_step). Every
+; classified step records an SRE whether or not the marker is rendered.
 SRE_TAG         = "+" SP* "[SRE]"
 
 ; -- DRE: Data Risk Event ---------------------------------------------
-; v2.1 DRE letter set; "A" is a deprecated legacy alias retained for
-; backward compatibility (CLAUDE.md / v2.0 corpus). New records SHOULD
-; prefer "Av" or "Ac".
+; Core v2.5 refinement tree (core §7.6; dictionary data_risk_events):
+; C; I with refinements Ii/If; A with refinements Av/Ac. A parent code
+; stays legal when the refinement is unknown. "," is the only separator
+; inside [DRE: ...]; "+" and "→" are not used there (R-BRE-OP-SCOPE).
 DRE_TAG         = "+" SP* "[DRE:" SP* DRE_LIST "]"
 DRE_LIST        = DRE_LET *(SP* "," SP* DRE_LET)
 DRE_LET         = "Av" / "Ac" / "Ii" / "If" / "C" / "I" / "A"
@@ -194,7 +245,7 @@ BRE_EXPR        = BRE_TERM *(SP* BRE_OP SP* BRE_TERM)
 BRE_TERM        = BRE_NODE / "(" SP* BRE_EXPR SP* ")"
 BRE_OP          = ARROW / ARROW_ASCII / "+"
 BRE_NODE        = BRE_CODE [SP+ LABEL]
-BRE_CODE        = "BRE-" 1*ALPHA "." 2DIG
+BRE_CODE        = "BRE-" CODE_FAMILY "." 2DIG
 
 ; -- Impact: quantified or qualified measurement ----------------------
 ; IMPACT_NODE optionally carries a label and a "= <value>" tail
@@ -203,15 +254,15 @@ IMPACT_TAG      = "+" SP* "[Impact:" SP* IMPACT_EXPR "]"
 IMPACT_EXPR     = IMPACT_TERM *(SP* "+" SP* IMPACT_TERM)
 IMPACT_TERM     = IMPACT_NODE / "(" SP* IMPACT_EXPR SP* ")"
 IMPACT_NODE     = IMPACT_CODE [SP+ LABEL] [SP+ "=" SP+ IMPACT_VALUE]
-IMPACT_CODE     = "IMPACT-" 1*ALPHA "." 2DIG
-IMPACT_VALUE    = 1*VCHAR_NO_RBR
+IMPACT_CODE     = "IMPACT-" CODE_FAMILY "." 2DIG
+IMPACT_VALUE    = VCHAR_NO_RBR *(VCHAR_NO_RBR / SP)   ; e.g., "CHF 4,500", "4 hours"
 
 ; -- Report: procedural artefact / workflow state ---------------------
 REPORT_TAG      = "+" SP* "[Report:" SP* REPORT_EXPR "]"
 REPORT_EXPR     = REPORT_TERM *(SP* "+" SP* REPORT_TERM)
 REPORT_TERM     = REPORT_NODE / "(" SP* REPORT_EXPR SP* ")"
 REPORT_NODE     = REPORT_CODE [SP+ LABEL]
-REPORT_CODE     = "REPORT-" 1*ALPHA "." 2DIG
+REPORT_CODE     = "REPORT-" CODE_FAMILY "." 2DIG   ; e.g., REPORT-NIS2.11
 
 ; =====================================================================
 ; Shared terminals
@@ -220,11 +271,18 @@ REPORT_CODE     = "REPORT-" 1*ALPHA "." 2DIG
 ; LABEL: free-text human-readable suffix on PATTERN/BRE/IMPACT/REPORT
 ; nodes. Kept restrictive on purpose — operator characters ("+", "→",
 ; "=") and bracket characters are excluded so the parser can find tag
-; boundaries unambiguously. Trailing whitespace is the parser's
-; responsibility to trim.
-LABEL           = LABEL_CHAR *(LABEL_CHAR / SP)
-LABEL_CHAR      = ALPHA / DIGIT / "-" / "_" / "/" / "(" / ")"
+; boundaries unambiguously. A label never ends in SP, so the space
+; before an operator or "=" is left for the enclosing rule (greedy
+; parsers would otherwise swallow it). Parentheses are excluded too:
+; they delimit sub-expressions inside [BRE: ...], [Impact: ...] and
+; [Report: ...] (R-BRE-CHAIN) and no catalogue label uses them.
+LABEL           = LABEL_CHAR *(SP* LABEL_CHAR)
+LABEL_CHAR      = ALPHA / DIGIT / "-" / "_" / "/"
                 / "&" / "." / "'" / "," / ":" / ";" / "?"
+
+; CODE_FAMILY: the family segment of a PATTERN/BRE/IMPACT/REPORT code
+; (FIN, ENT, OPS, NIS2, NCSC, ...). Alphanumeric, starting with a letter.
+CODE_FAMILY     = ALPHA *(ALPHA / DIGIT)
 
 2DIG            = DIGIT DIGIT
 SP              = %x20

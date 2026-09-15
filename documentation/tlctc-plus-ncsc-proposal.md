@@ -1,17 +1,17 @@
-# TLCTC+ for NCSCs and CERTs: A National Reporting Extension Proposal v0.6
+# TLCTC+ for NCSCs and CERTs: A National Reporting Extension Proposal v0.8
 
-## Policy proposal aligned with TLCTC+ Specification v0.6
+## Policy proposal aligned with TLCTC+ Specification v0.8
 
 **Author:** Bernhard Kreinz  
-**Framework version:** TLCTC v2.1  
-**Document version:** v0.6 proposal, aligned with TLCTC+ Specification v0.6  
+**Framework version:** TLCTC v2.5.1  
+**Document version:** v0.8 proposal, aligned with TLCTC+ Specification v0.8  
 **Status:** Draft for peer review  
 **License:** CC BY 4.0  
 **Core thesis:** Keep TLCTC pure. Extend the reporting layer.
 
 > **Companion document:** This proposal explains why NCSCs, CERTs, CSIRTs, regulators, financial institutions, fraud teams, and adjacent peer groups should adopt TLCTC+. The implementation details — grammar, conformance, catalogues, JSON records, and decision procedure — are defined in `tlctc-plus-specification.md`.
 >
-> **Notation policy:** This proposal follows TLCTC+ v0.6. Scam, fraud, extortion, and manipulation labels are recorded as `[Pattern: PATTERN-XXX.YY ...]` on the cause-side step. Consequence-side events are recorded as structured BRE codes: `+ [BRE: BRE-XXX.YY ...]`. System compromise is recorded as `+ [SRE]`. Data/resource impact is recorded as `+ [DRE: C|I|Ac|Av]`. Measurements are recorded as `+ [Impact: ...]`. Procedural filings and workflow states are recorded as `+ [Report: ...]`. Free-text BRE labels are not conformant.
+> **Notation policy:** This proposal follows TLCTC+ v0.8. Scam, fraud, extortion, and manipulation labels are recorded as `[Pattern: PATTERN-XXX.YY ...]` on the cause-side step. Consequence-side events are recorded as structured BRE codes: `+ [BRE: BRE-XXX.YY ...]`. The first direct System Risk Event is marked `+ [SRE]` (every cluster step records its own SRE; a pure #9 record renders no marker). Data/resource impact is recorded as `+ [DRE: C|I|Ii|If|A|Av|Ac]`. Measurements are recorded as `+ [Impact: ...]`. Procedural filings and workflow states are recorded as `+ [Report: ...]`. Free-text BRE labels are not conformant.
 
 ---
 
@@ -23,10 +23,10 @@
 
 ## 1. Executive Summary
 
-National Cyber Security Centres (NCSCs), CERTs, and CSIRTs increasingly handle two structurally distinct reporting realities, split on whether an IT system was compromised:
+National Cyber Security Centres (NCSCs), CERTs, and CSIRTs increasingly handle two structurally distinct reporting realities, split on the composition of the TLCTC path:
 
-1. **Compromise records** — a TLCTC attack path leads to Loss of Control / System Compromise (SRE present). Within this single class, two reporting flavors are common: cyber-side dominance (the historic "core cyber incident" — technical compromise, service outage, regulatory notification) and consequence-side dominance (the historic "hybrid cyber-enabled harm" — fraud, citizen harm, identity harm, financial loss). The structural reality is the same; the distinction is which BRE family dominates downstream.
-2. **Pure #9-anchored digital-harm records** — the case is digitally mediated and manipulation-driven, but no IT system is compromised. No SRE.
+1. **Compromise records** — a TLCTC attack path contains at least one cluster step other than #9, i.e. at least one direct System Risk Event. Within this single class, two reporting flavors are common: cyber-side dominance (the historic "core cyber incident" — technical compromise, service outage, regulatory notification) and consequence-side dominance (the historic "hybrid cyber-enabled harm" — fraud, citizen harm, identity harm, financial loss). The structural reality is the same; the distinction is which BRE family dominates downstream.
+2. **Pure #9-anchored digital-harm records** — the case is digitally mediated and manipulation-driven, and no IT system is compromised by the attacker directly. The path is a single #9 step; its SRE is induced (exercised through the manipulated person's own action) and no `+ [SRE]` marker is rendered.
 
 Core TLCTC already solves the cause-side problem. It classifies cyber threats by the generic vulnerability initially exploited and keeps threats, actors, control failures, data risk events, and business consequences separate.
 
@@ -37,7 +37,7 @@ TLCTC+ solves this by keeping the TLCTC cause path intact and adding a reporting
 ```text
 TLCTC cause path
 + [SRE]
-+ [DRE: C|I|Ac|Av]
++ [DRE: C|I|Ii|If|A|Av|Ac]
 [Pattern: ...]
 + [BRE: ...]
 + [Impact: ...]
@@ -233,7 +233,7 @@ Both flavors are `record_type = compromise_record`. The dominant BRE family is t
 
 ### 6.2 Pure #9-Anchored Digital-Harm Record
 
-No IT system is compromised. The case is digitally mediated and manipulation-driven. SRE is absent.
+No IT system is compromised by the attacker directly. The case is digitally mediated and manipulation-driven. The #9 step's SRE is induced; no `+ [SRE]` marker is rendered.
 
 ```text
 #9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-FIN.11 Romance / Relationship Scam]
@@ -274,7 +274,7 @@ Many nationally relevant digital-harm reports begin with manipulation:
 
 Sometimes that manipulation leads to system compromise. Sometimes it does not. The cause-side anchor is still `#9`.
 
-The structural gap is therefore not the classification of the cause. The gap is the reporting of the consequence when there is no SRE, or when the reporting interest sits downstream of the SRE.
+The structural gap is therefore not the classification of the cause. The gap is the reporting of the consequence when there is no direct SRE, or when the reporting interest sits downstream of the marked SRE.
 
 TLCTC+ fills that gap by attaching Pattern metadata to the cause-side step and adding BRE / Impact / Report structures on the consequence side.
 
@@ -346,11 +346,11 @@ A national portal or analyst workflow can use the following decision flow.
 2. **If not, is there a pure #9 digital-harm anchor?**  
    If a human was psychologically manipulated through a digital or digitally mediated channel, record `#9` with the required bridge boundary.
 
-3. **Did Loss of Control / System Compromise occur?**  
-   If yes, attach `+ [SRE]`. If no and the case is pure #9 digital harm, omit SRE.
+3. **Determine the record type from path composition.**  
+   At least one step other than #9 → `compromise_record`; mark the first non-#9 cluster step with `+ [SRE]`. Exactly one step, #9 → `pure_9_record`; render no `+ [SRE]`.
 
 4. **Did a DRE occur?**  
-   Attach `+ [DRE: C|I|Ac|Av]` to the step or segment that caused it.
+   Attach `+ [DRE: C|I|Ii|If|A|Av|Ac]` to the step or segment that caused it.
 
 5. **Is there a scam, fraud, extortion, or manipulation label?**  
    Attach `[Pattern: PATTERN-XXX.YY ...]` to the cause-side step.
@@ -444,14 +444,14 @@ Therefore, TLCTC+ must not reduce external fraud to `#9`. The TLCTC path records
 
 ## 12. Minimal Data Model
 
-A conformant TLCTC+ v0.6 record uses one of two record types:
+A conformant TLCTC+ v0.8 record uses one of two record types:
 
 ```text
 compromise_record
 pure_9_record
 ```
 
-`compromise_record` covers cases where a TLCTC path reaches Loss of Control / System Compromise — regardless of whether the dominant downstream BRE family is cyber-side (BRE-SVC.*, BRE-DATA.*, BRE-REG.*) or consequence-side (BRE-FIN.*, BRE-ENT.*, BRE-CUS.*). The historical "core cyber incident" and "hybrid cyber-enabled harm" labels remain useful descriptive prose but are not separate record types in v0.6.
+`compromise_record` covers cases whose TLCTC path contains at least one cluster step other than #9 (a direct System Risk Event) — regardless of whether the dominant downstream BRE family is cyber-side (BRE-SVC.*, BRE-DATA.*, BRE-REG.*) or consequence-side (BRE-FIN.*, BRE-ENT.*, BRE-CUS.*). The historical "core cyber incident" and "hybrid cyber-enabled harm" labels remain useful descriptive prose but have not been separate record types since v0.6.
 
 Minimum metadata:
 
@@ -490,8 +490,8 @@ Report:     code, label, regime, stage, due/filed timestamp, authority, status
 {
   "case_id": "case-002",
   "record_type": "pure_9_record",
-  "framework_version": "TLCTC v2.1",
-  "tlctc_plus_version": "0.6",
+  "framework_version": "2.5.1",
+  "tlctc_plus_version": "0.8",
   "tlctc_anchor": "#9 ||[messaging][@External→@Citizen]||",
   "patterns": [
     {
@@ -501,7 +501,10 @@ Report:     code, label, regime, stage, due/filed timestamp, authority, status
     }
   ],
   "sre": {
-    "present": false
+    "kind": "induced",
+    "status": "confirmed",
+    "linked_to_step": "step-1",
+    "description": "Victim induced to initiate a payment through their own e-banking; no IT system compromised by the attacker"
   },
   "dre": [],
   "bre_chain": {
@@ -536,8 +539,8 @@ Report:     code, label, regime, stage, due/filed timestamp, authority, status
 {
   "case_id": "case-003",
   "record_type": "compromise_record",
-  "framework_version": "TLCTC v2.1",
-  "tlctc_plus_version": "0.6",
+  "framework_version": "2.5.1",
+  "tlctc_plus_version": "0.8",
   "tlctc_path": "#9 ||[email][@External→@Org]|| [Pattern: PATTERN-ID.11 Phishing for Credentials] + [DRE: C] → #4 + [SRE]",
   "patterns": [
     {
@@ -547,9 +550,11 @@ Report:     code, label, regime, stage, due/filed timestamp, authority, status
     }
   ],
   "sre": {
-    "present": true,
+    "kind": "direct",
     "status": "confirmed",
+    "epistemic": "classified",
     "linked_to_step": "step-2",
+    "reporting_pivot_step": "step-2",
     "description": "Mailbox accessed using captured credentials"
   },
   "dre": [
@@ -601,10 +606,11 @@ The TLCTC+ profile is versioned separately from core TLCTC. It defines the repor
 
 PATTERN, BRE, IMPACT, and REPORT catalogues are versioned independently from the document.
 
-Current v0.6 status:
+Current v0.8 status:
 
 ```text
-Specification document version:   TLCTC+ v0.6
+Specification document version:   TLCTC+ v0.8
+Base framework:                   TLCTC v2.5.1 (dictionary tlctc_version 2.5)
 PATTERN catalogue version:        v0.2
 BRE catalogue version:            v0.3
 IMPACT catalogue version:         v0.2
@@ -694,7 +700,7 @@ TLSFC  ─┘
 
 Use TLCTC as the stable cause-oriented taxonomy for cyber threats against IT systems.
 
-### Phase 2 — Adopt TLCTC+ v0.6 as a Reporting Profile
+### Phase 2 — Adopt TLCTC+ v0.8 as a Reporting Profile
 
 Publish TLCTC+ as a national reporting extension for TLCTC-anchored digital harms.
 
@@ -726,7 +732,7 @@ Review catalogues and national aliases annually. Do not reopen the ten clusters 
 
 ## 18. Formal Recommendation
 
-NCSCs, CERTs, CSIRTs, regulators, and financial-sector reporting bodies should adopt TLCTC as the stable cause-oriented taxonomy for cyber threats and TLCTC+ v0.6 as the controlled reporting extension for TLCTC-anchored digital harms.
+NCSCs, CERTs, CSIRTs, regulators, and financial-sector reporting bodies should adopt TLCTC as the stable cause-oriented taxonomy for cyber threats and TLCTC+ v0.8 as the controlled reporting extension for TLCTC-anchored digital harms.
 
 TLCTC+ should begin with the Pattern + BRE model anchored at `#9 Social Engineering` for manipulation-driven digital harm (`pure_9_record`), while supporting the full six-track form for compromise records — both cyber-side-dominant and consequence-side-dominant flavors:
 
@@ -757,8 +763,8 @@ Cause side:
 Consequence side:
 
 ```text
-+ [SRE]                        Loss of Control / System Compromise
-+ [DRE: C|I|Ac|Av]             Data/resource risk event
++ [SRE]                        first direct System Risk Event (marker)
++ [DRE: C|I|Ii|If|A|Av|Ac]     Data/resource risk event
 + [BRE: BRE-XXX.YY]            Business/citizen/service/regulatory event
 + [Impact: IMPACT-XXX.YY]      measurement
 + [Report: REPORT-XXX.YY]      procedural artefact or workflow state
