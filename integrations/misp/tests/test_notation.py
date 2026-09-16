@@ -10,9 +10,9 @@ AGENT_BTZ = ROOT / "attack-paths" / "agent-btz-usb-2008.json"
 UNRESOLVED = ROOT / "json-schemas" / "layer-3" / "examples" / "unresolved-step-example-2026.json"
 
 # Copied verbatim from metadata.notes of the SolarWinds example (spec §7.8).
-SOLARWINDS_NOTES_NOTATION = "#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]"
-# JSON-faithful rendering: s3 and s4 both carry outcomes ["C"].
-SOLARWINDS_EXPECTED = "#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 + [DRE: C] →[Δt=~2h] #1 + [DRE: C]"
+SOLARWINDS_NOTES_NOTATION = "#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 + [DRE: C] →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]"
+# JSON-faithful rendering: s2 and s4 both carry outcomes ["C"] (since 96def7e the notes and the rendering coincide).
+SOLARWINDS_EXPECTED = "#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 + [DRE: C] →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]"
 
 
 def seq(path):

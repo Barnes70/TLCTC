@@ -1,7 +1,7 @@
 {
   "Event": {
     "uuid": "5df729bd-db9c-5ce2-9154-095f12c0a6d3",
-    "info": "TLCTC SOLARWINDS-SUNBURST-2020: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 + [DRE: C] →[Δt=~2h] #1 + [DRE: C]",
+    "info": "TLCTC SOLARWINDS-SUNBURST-2020: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 + [DRE: C] →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]",
     "date": "2026-02-23",
     "timestamp": "1771804800",
     "published": false,
@@ -49,7 +49,7 @@
             "type": "text",
             "category": "Other",
             "object_relation": "notation",
-            "value": "#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 + [DRE: C] →[Δt=~2h] #1 + [DRE: C]",
+            "value": "#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 + [DRE: C] →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]",
             "uuid": "99f1457a-cb2c-530d-a566-f26788a37606",
             "timestamp": "1771804800",
             "to_ids": false,
@@ -133,7 +133,7 @@
             "type": "text",
             "category": "Other",
             "object_relation": "notes",
-            "value": "SolarWinds SUNBURST supply chain compromise (December 2020). Attack path: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]. APT29/Cozy Bear attributed (Axiom IV: actor identity does not change cluster classification). Sources: CISA Alert AA20-352A, Microsoft MSRC, FireEye/Mandiant UNC2452 report.",
+            "value": "SolarWinds SUNBURST supply chain compromise (December 2020). Attack path: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 + [DRE: C] →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]. APT29/Cozy Bear attributed (Axiom IV: actor identity does not change cluster classification). Sources: CISA Alert AA20-352A, Microsoft MSRC, FireEye/Mandiant UNC2452 report.",
             "uuid": "b8efe336-9aa9-5da8-97f7-dbc07d92b3c3",
             "timestamp": "1771804800",
             "to_ids": false,
@@ -152,7 +152,7 @@
             "disable_correlation": true,
             "distribution": "5",
             "comment": "",
-            "data": "ew0KICAibWV0YWRhdGEiOiB7DQogICAgImluY2lkZW50X2lkIjogIlNPTEFSV0lORFMtU1VOQlVSU1QtMjAyMCIsDQogICAgImFuYWx5c3RfY29uZmlkZW5jZSI6ICJoaWdoIiwNCiAgICAidGxjdGNfdmVyc2lvbiI6ICIyLjMiLA0KICAgICJmcmFtZXdvcmtfcmVmIjogInRsY3RjLWZyYW1ld29yay52Mi4zLmpzb24iLA0KICAgICJyZWdpc3RyeV9yZWYiOiAiZXhhbXBsZS1yZWdpc3RyeS5qc29uIiwNCiAgICAiY3JlYXRlZF9hdCI6ICIyMDI2LTAyLTIzVDAwOjAwOjAwWiIsDQogICAgIm5vdGVzIjogIlNvbGFyV2luZHMgU1VOQlVSU1Qgc3VwcGx5IGNoYWluIGNvbXByb21pc2UgKERlY2VtYmVyIDIwMjApLiBBdHRhY2sgcGF0aDogIzEwIHx8W3VwZGF0ZV1bQFZlbmRvcuKGkkBPcmddfHwg4oaSW86UdD1pbnN0YW50XSAjNyDihpJbzpR0PX4xNGRdICM0IOKGklvOlHQ9fjJoXSAjMSArIFtEUkU6IENdLiBBUFQyOS9Db3p5IEJlYXIgYXR0cmlidXRlZCAoQXhpb20gSVY6IGFjdG9yIGlkZW50aXR5IGRvZXMgbm90IGNoYW5nZSBjbHVzdGVyIGNsYXNzaWZpY2F0aW9uKS4gU291cmNlczogQ0lTQSBBbGVydCBBQTIwLTM1MkEsIE1pY3Jvc29mdCBNU1JDLCBGaXJlRXllL01hbmRpYW50IFVOQzI0NTIgcmVwb3J0LiINCiAgfSwNCiAgInBhdGhfc2VxdWVuY2UiOiBbDQogICAgew0KICAgICAgInN0ZXBfaWQiOiAiczEtc3VwcGx5LWNoYWluIiwNCiAgICAgICJjbHVzdGVyIjogIiMxMCIsDQogICAgICAidG9wb2xvZ3lfYm91bmRhcnkiOiB7DQogICAgICAgICJjb250ZXh0IjogInVwZGF0ZSIsDQogICAgICAgICJzb3VyY2Vfc3BoZXJlIjogIkBWZW5kb3IiLA0KICAgICAgICAidGFyZ2V0X3NwaGVyZSI6ICJAT3JnIg0KICAgICAgfSwNCiAgICAgICJkZWx0YV90X3RvX25leHQiOiAiaW5zdGFudCIsDQogICAgICAibm90ZXMiOiAiVHJ1c3QgQWNjZXB0YW5jZSBFdmVudDogU29sYXJXaW5kcyBPcmlvbiB1cGRhdGUgdjIwMTkuNC0yMDIwLjIuMSBjb250YWluaW5nIFNVTkJVUlNUIGJhY2tkb29yIGFjY2VwdGVkIGFuZCBpbnN0YWxsZWQgYnkgdGFyZ2V0IG9yZ2FuaXphdGlvbiB2aWEgbGVnaXRpbWF0ZSB1cGRhdGUgY2hhbm5lbC4gVGhlIGNvbXByb21pc2VkIERMTCAoU29sYXJXaW5kcy5Pcmlvbi5Db3JlLkJ1c2luZXNzTGF5ZXIuZGxsKSB3YXMgZGlnaXRhbGx5IHNpZ25lZCBieSBTb2xhcldpbmRzLCBwYXNzaW5nIGFsbCB0cnVzdCB2ZXJpZmljYXRpb24uIEZhbHNpZmlhYmlsaXR5IHRlc3Q6IHJlbW92aW5nIHRoZSB0aGlyZC1wYXJ0eSB0cnVzdCBsaW5rIChub3QgYWNjZXB0aW5nIHRoZSB1cGRhdGUpIHdvdWxkIGhhdmUgcHJldmVudGVkIHRoaXMgc3RlcC4iDQogICAgfSwNCiAgICB7DQogICAgICAic3RlcF9pZCI6ICJzMi1zdW5idXJzdC1leGVjdXRpb24iLA0KICAgICAgImNsdXN0ZXIiOiAiIzciLA0KICAgICAgImZlY19leGVjdXRlZCI6IHRydWUsDQogICAgICAiZGVsdGFfdF90b19uZXh0IjogIn4xNGQiLA0KICAgICAgIm5vdGVzIjogIkZFQyBleGVjdXRpb24gdmlhIGRlc2lnbmVkIGNhcGFiaWxpdHk6IFNVTkJVUlNUIGJhY2tkb29yIERMTCBsb2FkZWQgYW5kIGV4ZWN1dGVkIGJ5IHRoZSBsZWdpdGltYXRlIFNvbGFyV2luZHMgT3Jpb24gc2VydmljZSAoc29sYXJ3aW5kcy5idXNpbmVzc2xheWVyaG9zdC5leGUpLiBUaGUgZXhlY3V0aW9uIHVzZWQgdGhlIGVudmlyb25tZW50J3MgaW50ZW5kZWQgRExMIGxvYWRpbmcgbWVjaGFuaXNtIOKAlCBhbiBpbnRlbmRlZCBkYXRh4oaSY29kZSB0cmFuc2l0aW9uLCBub3QgYW4gZXhwbG9pdC4gU1VOQlVSU1QgcmVtYWluZWQgZG9ybWFudCBmb3IgYXBwcm94aW1hdGVseSAxMi0xNCBkYXlzIGJlZm9yZSBhY3RpdmF0aW5nIEMyIGNvbW11bmljYXRpb24gdmlhIEROUyAoYXZzdm1jbG91ZC5jb20pLiBSLUVYRUMgc2F0aXNmaWVkOiBGRUMgZXhlY3V0aW9uIHJlY29yZGVkIGFzICM3LiINCiAgICB9LA0KICAgIHsNCiAgICAgICJzdGVwX2lkIjogInMzLWNyZWRlbnRpYWwtZm9yZ2VyeSIsDQogICAgICAiY2x1c3RlciI6ICIjNCIsDQogICAgICAib3V0Y29tZXMiOiBbIkMiXSwNCiAgICAgICJkZWx0YV90X3RvX25leHQiOiAifjJoIiwNCiAgICAgICJub3RlcyI6ICJDcmVkZW50aWFsIGFwcGxpY2F0aW9uOiBhdHRhY2tlciBmb3JnZWQgU0FNTCB0b2tlbnMgdXNpbmcgc3RvbGVuIHNpZ25pbmcgY2VydGlmaWNhdGVzIHRvIGltcGVyc29uYXRlIGxlZ2l0aW1hdGUgdXNlcnMgYW5kIGFjY2VzcyBjbG91ZCByZXNvdXJjZXMgKEF6dXJlIEFELCBPZmZpY2UgMzY1KS4gUGVyIEF4aW9tIFg6IHRoZSBhY3F1aXNpdGlvbiBvZiB0aGUgc2lnbmluZyBrZXkgb2NjdXJyZWQgZHVyaW5nIHRoZSAjNyBzdGVwIChhIGNvbnNlcXVlbmNlIG9mIHRoZSBtYWx3YXJlJ3MgYWNjZXNzLCByZWNvcmRlZCBhcyBEUkU6Qyk7IHRoZSBVU0Ugb2YgZm9yZ2VkIGNyZWRlbnRpYWxzIHRvIGF1dGhlbnRpY2F0ZSBpcyBhbHdheXMgIzQgcmVnYXJkbGVzcyBvZiBhY3F1aXNpdGlvbiBtZXRob2QuIg0KICAgIH0sDQogICAgew0KICAgICAgInN0ZXBfaWQiOiAiczQtY2xvdWQtYWJ1c2UiLA0KICAgICAgImNsdXN0ZXIiOiAiIzEiLA0KICAgICAgIm91dGNvbWVzIjogWyJDIl0sDQogICAgICAibm90ZXMiOiAiQWJ1c2Ugb2YgbGVnaXRpbWF0ZSBjbG91ZCBmdW5jdGlvbnM6IGF0dGFja2VyIHVzZWQgdmFsaWQgKGZvcmdlZCkgY3JlZGVudGlhbHMgdG8gYWJ1c2UgQXp1cmUgQUQgQVBJcywgT2ZmaWNlIDM2NSBtYWlsIHJlYWRpbmcgQVBJcywgYW5kIGZlZGVyYXRlZCB0cnVzdCBjb25maWd1cmF0aW9ucyBmb3IgZGF0YSBleGZpbHRyYXRpb24uIE5vIGNvZGUgZmxhdyBleHBsb2l0ZWQg4oCUIHRoZSBhdHRhY2tlciBvcGVyYXRlZCB3aXRoaW4gdGhlIGRlc2lnbmVkIGZ1bmN0aW9uYWxpdHkgb2YgdGhlIGNsb3VkIHBsYXRmb3JtIHVzaW5nIHN0b2xlbiBpZGVudGl0eS4gRGF0YSBzdGF5ZWQgZGF0YTsgbm8gZm9yZWlnbiBjb2RlIHdhcyBpbnRyb2R1Y2VkIGF0IHRoaXMgc3RhZ2UuIg0KICAgIH0NCiAgXQ0KfQ0K"
+            "data": "ew0KICAibWV0YWRhdGEiOiB7DQogICAgImluY2lkZW50X2lkIjogIlNPTEFSV0lORFMtU1VOQlVSU1QtMjAyMCIsDQogICAgImFuYWx5c3RfY29uZmlkZW5jZSI6ICJoaWdoIiwNCiAgICAidGxjdGNfdmVyc2lvbiI6ICIyLjMiLA0KICAgICJmcmFtZXdvcmtfcmVmIjogInRsY3RjLWZyYW1ld29yay52Mi4zLmpzb24iLA0KICAgICJyZWdpc3RyeV9yZWYiOiAiZXhhbXBsZS1yZWdpc3RyeS5qc29uIiwNCiAgICAiY3JlYXRlZF9hdCI6ICIyMDI2LTAyLTIzVDAwOjAwOjAwWiIsDQogICAgIm5vdGVzIjogIlNvbGFyV2luZHMgU1VOQlVSU1Qgc3VwcGx5IGNoYWluIGNvbXByb21pc2UgKERlY2VtYmVyIDIwMjApLiBBdHRhY2sgcGF0aDogIzEwIHx8W3VwZGF0ZV1bQFZlbmRvcuKGkkBPcmddfHwg4oaSW86UdD1pbnN0YW50XSAjNyArIFtEUkU6IENdIOKGklvOlHQ9fjE0ZF0gIzQg4oaSW86UdD1+MmhdICMxICsgW0RSRTogQ10uIEFQVDI5L0NvenkgQmVhciBhdHRyaWJ1dGVkIChBeGlvbSBJVjogYWN0b3IgaWRlbnRpdHkgZG9lcyBub3QgY2hhbmdlIGNsdXN0ZXIgY2xhc3NpZmljYXRpb24pLiBTb3VyY2VzOiBDSVNBIEFsZXJ0IEFBMjAtMzUyQSwgTWljcm9zb2Z0IE1TUkMsIEZpcmVFeWUvTWFuZGlhbnQgVU5DMjQ1MiByZXBvcnQuIg0KICB9LA0KICAicGF0aF9zZXF1ZW5jZSI6IFsNCiAgICB7DQogICAgICAic3RlcF9pZCI6ICJzMS1zdXBwbHktY2hhaW4iLA0KICAgICAgImNsdXN0ZXIiOiAiIzEwIiwNCiAgICAgICJ0b3BvbG9neV9ib3VuZGFyeSI6IHsNCiAgICAgICAgImNvbnRleHQiOiAidXBkYXRlIiwNCiAgICAgICAgInNvdXJjZV9zcGhlcmUiOiAiQFZlbmRvciIsDQogICAgICAgICJ0YXJnZXRfc3BoZXJlIjogIkBPcmciDQogICAgICB9LA0KICAgICAgImRlbHRhX3RfdG9fbmV4dCI6ICJpbnN0YW50IiwNCiAgICAgICJub3RlcyI6ICJUcnVzdCBBY2NlcHRhbmNlIEV2ZW50OiBTb2xhcldpbmRzIE9yaW9uIHVwZGF0ZSB2MjAxOS40LTIwMjAuMi4xIGNvbnRhaW5pbmcgU1VOQlVSU1QgYmFja2Rvb3IgYWNjZXB0ZWQgYW5kIGluc3RhbGxlZCBieSB0YXJnZXQgb3JnYW5pemF0aW9uIHZpYSBsZWdpdGltYXRlIHVwZGF0ZSBjaGFubmVsLiBUaGUgY29tcHJvbWlzZWQgRExMIChTb2xhcldpbmRzLk9yaW9uLkNvcmUuQnVzaW5lc3NMYXllci5kbGwpIHdhcyBkaWdpdGFsbHkgc2lnbmVkIGJ5IFNvbGFyV2luZHMsIHBhc3NpbmcgYWxsIHRydXN0IHZlcmlmaWNhdGlvbi4gRmFsc2lmaWFiaWxpdHkgdGVzdDogcmVtb3ZpbmcgdGhlIHRoaXJkLXBhcnR5IHRydXN0IGxpbmsgKG5vdCBhY2NlcHRpbmcgdGhlIHVwZGF0ZSkgd291bGQgaGF2ZSBwcmV2ZW50ZWQgdGhpcyBzdGVwLiINCiAgICB9LA0KICAgIHsNCiAgICAgICJzdGVwX2lkIjogInMyLXN1bmJ1cnN0LWV4ZWN1dGlvbiIsDQogICAgICAiY2x1c3RlciI6ICIjNyIsDQogICAgICAiZmVjX2V4ZWN1dGVkIjogdHJ1ZSwNCiAgICAgICJvdXRjb21lcyI6IFsiQyJdLA0KICAgICAgImRlbHRhX3RfdG9fbmV4dCI6ICJ+MTRkIiwNCiAgICAgICJub3RlcyI6ICJGRUMgZXhlY3V0aW9uIHZpYSBkZXNpZ25lZCBjYXBhYmlsaXR5OiBTVU5CVVJTVCBiYWNrZG9vciBETEwgbG9hZGVkIGFuZCBleGVjdXRlZCBieSB0aGUgbGVnaXRpbWF0ZSBTb2xhcldpbmRzIE9yaW9uIHNlcnZpY2UgKHNvbGFyd2luZHMuYnVzaW5lc3NsYXllcmhvc3QuZXhlKS4gVGhlIGV4ZWN1dGlvbiB1c2VkIHRoZSBlbnZpcm9ubWVudCdzIGludGVuZGVkIERMTCBsb2FkaW5nIG1lY2hhbmlzbSDigJQgYW4gaW50ZW5kZWQgZGF0YeKGkmNvZGUgdHJhbnNpdGlvbiwgbm90IGFuIGV4cGxvaXQuIFNVTkJVUlNUIHJlbWFpbmVkIGRvcm1hbnQgZm9yIGFwcHJveGltYXRlbHkgMTItMTQgZGF5cyBiZWZvcmUgYWN0aXZhdGluZyBDMiBjb21tdW5pY2F0aW9uIHZpYSBETlMgKGF2c3ZtY2xvdWQuY29tKS4gUi1FWEVDIHNhdGlzZmllZDogRkVDIGV4ZWN1dGlvbiByZWNvcmRlZCBhcyAjNy4gW0RSRTogQ10gaXMgcmVjb3JkZWQgaGVyZTogaG9zdCBhbmQgZG9tYWluIHByb2ZpbGluZyB3YXMgc2VudCB0byB0aGUgQzIgY2hhbm5lbCwgYW5kIHRoZSBTQU1MIHRva2VuLXNpZ25pbmcgY2VydGlmaWNhdGUgd2FzIG9idGFpbmVkIGR1cmluZyB0aGlzIHN0ZXAuIFBlciBBeGlvbSBYIHRoZSBhY3F1aXNpdGlvbiBvZiBjcmVkZW50aWFsIG1hdGVyaWFsIG1hcHMgdG8gdGhlIGVuYWJsaW5nIGNsdXN0ZXIsIHdoaWNoIGlzIHRoaXMgIzcgc3RlcCwgc28gdGhlIGNvbmZpZGVudGlhbGl0eSBldmVudCBiZWxvbmdzIGhlcmUgYW5kIG5vdCBvbiB0aGUgIzQgc3RlcCB0aGF0IGxhdGVyIHByZXNlbnRzIHRoZSBmb3JnZWQgdG9rZW4uIg0KICAgIH0sDQogICAgew0KICAgICAgInN0ZXBfaWQiOiAiczMtY3JlZGVudGlhbC1mb3JnZXJ5IiwNCiAgICAgICJjbHVzdGVyIjogIiM0IiwNCiAgICAgICJkZWx0YV90X3RvX25leHQiOiAifjJoIiwNCiAgICAgICJub3RlcyI6ICJDcmVkZW50aWFsIGFwcGxpY2F0aW9uOiBhdHRhY2tlciBmb3JnZWQgU0FNTCB0b2tlbnMgdXNpbmcgc3RvbGVuIHNpZ25pbmcgY2VydGlmaWNhdGVzIHRvIGltcGVyc29uYXRlIGxlZ2l0aW1hdGUgdXNlcnMgYW5kIGFjY2VzcyBjbG91ZCByZXNvdXJjZXMgKEF6dXJlIEFELCBPZmZpY2UgMzY1KS4gUGVyIEF4aW9tIFggYW5kIFItQ1JFRCwgdGhlIGFjcXVpc2l0aW9uIG9mIHRoZSBzaWduaW5nIGtleSBvY2N1cnJlZCBkdXJpbmcgdGhlICM3IHN0ZXAgYW5kIGl0cyBjb25maWRlbnRpYWxpdHkgZXZlbnQgaXMgcmVjb3JkZWQgdGhlcmU7IHRoZSBVU0Ugb2YgZm9yZ2VkIGNyZWRlbnRpYWxzIHRvIGF1dGhlbnRpY2F0ZSBpcyBhbHdheXMgIzQgcmVnYXJkbGVzcyBvZiBhY3F1aXNpdGlvbiBtZXRob2QuIFRoaXMgc3RlcCBjYXJyaWVzIG5vIERSRSBvZiBpdHMgb3duOiBhdXRoZW50aWNhdGluZyBkaXNjbG9zZXMgbm90aGluZywgYWx0ZXJzIG5vdGhpbmcgYW5kIGRlbmllcyBub3RoaW5nLiBUaGUgZGlzY2xvc3VyZSBpdCBlbmFibGVzIGlzIHJlY29yZGVkIHdoZXJlIGl0IG9jY3Vycywgb24gdGhlICMxIHN0ZXAgdGhhdCByZWFkcyBtYWlsIHRocm91Z2ggdGhlIGRlc2lnbmVkIGNsb3VkIEFQSXMg4oCUIGF0dGFjaGluZyBbRFJFOiBDXSBoZXJlIGFzIHdlbGwgd291bGQgY291bnQgdGhlIHNhbWUgZXhmaWx0cmF0aW9uIHR3aWNlIGFuZCB3b3VsZCBqdWRnZSB0aGUgc3RlcCBieSB3aGF0IHRoZSBhdHRhY2tlciBsYXRlciBvYnRhaW5lZCByYXRoZXIgdGhhbiBieSB3aGF0IHRoaXMgc3RlcCBkaWQuIg0KICAgIH0sDQogICAgew0KICAgICAgInN0ZXBfaWQiOiAiczQtY2xvdWQtYWJ1c2UiLA0KICAgICAgImNsdXN0ZXIiOiAiIzEiLA0KICAgICAgIm91dGNvbWVzIjogWyJDIl0sDQogICAgICAibm90ZXMiOiAiQWJ1c2Ugb2YgbGVnaXRpbWF0ZSBjbG91ZCBmdW5jdGlvbnM6IGF0dGFja2VyIHVzZWQgdmFsaWQgKGZvcmdlZCkgY3JlZGVudGlhbHMgdG8gYWJ1c2UgQXp1cmUgQUQgQVBJcywgT2ZmaWNlIDM2NSBtYWlsIHJlYWRpbmcgQVBJcywgYW5kIGZlZGVyYXRlZCB0cnVzdCBjb25maWd1cmF0aW9ucyBmb3IgZGF0YSBleGZpbHRyYXRpb24uIE5vIGNvZGUgZmxhdyBleHBsb2l0ZWQg4oCUIHRoZSBhdHRhY2tlciBvcGVyYXRlZCB3aXRoaW4gdGhlIGRlc2lnbmVkIGZ1bmN0aW9uYWxpdHkgb2YgdGhlIGNsb3VkIHBsYXRmb3JtIHVzaW5nIHN0b2xlbiBpZGVudGl0eS4gRGF0YSBzdGF5ZWQgZGF0YTsgbm8gZm9yZWlnbiBjb2RlIHdhcyBpbnRyb2R1Y2VkIGF0IHRoaXMgc3RhZ2UuIg0KICAgIH0NCiAgXQ0KfQ0K"
           }
         ],
         "ObjectReference": [
@@ -404,8 +404,20 @@
           {
             "type": "text",
             "category": "Other",
+            "object_relation": "data-risk-event",
+            "value": "C",
+            "uuid": "42cb6cd9-7762-5374-a934-d10da2c731c7",
+            "timestamp": "1771804800",
+            "to_ids": false,
+            "disable_correlation": true,
+            "distribution": "5",
+            "comment": ""
+          },
+          {
+            "type": "text",
+            "category": "Other",
             "object_relation": "notes",
-            "value": "FEC execution via designed capability: SUNBURST backdoor DLL loaded and executed by the legitimate SolarWinds Orion service (solarwinds.businesslayerhost.exe). The execution used the environment's intended DLL loading mechanism — an intended data→code transition, not an exploit. SUNBURST remained dormant for approximately 12-14 days before activating C2 communication via DNS (avsvmcloud.com). R-EXEC satisfied: FEC execution recorded as #7.",
+            "value": "FEC execution via designed capability: SUNBURST backdoor DLL loaded and executed by the legitimate SolarWinds Orion service (solarwinds.businesslayerhost.exe). The execution used the environment's intended DLL loading mechanism — an intended data→code transition, not an exploit. SUNBURST remained dormant for approximately 12-14 days before activating C2 communication via DNS (avsvmcloud.com). R-EXEC satisfied: FEC execution recorded as #7. [DRE: C] is recorded here: host and domain profiling was sent to the C2 channel, and the SAML token-signing certificate was obtained during this step. Per Axiom X the acquisition of credential material maps to the enabling cluster, which is this #7 step, so the confidentiality event belongs here and not on the #4 step that later presents the forged token.",
             "uuid": "25408dd3-b725-5aaf-8fea-48f0224a0373",
             "timestamp": "1771804800",
             "to_ids": false,
@@ -496,20 +508,8 @@
           {
             "type": "text",
             "category": "Other",
-            "object_relation": "data-risk-event",
-            "value": "C",
-            "uuid": "54bad8ce-afba-5619-b6b5-25818720c865",
-            "timestamp": "1771804800",
-            "to_ids": false,
-            "disable_correlation": true,
-            "distribution": "5",
-            "comment": ""
-          },
-          {
-            "type": "text",
-            "category": "Other",
             "object_relation": "notes",
-            "value": "Credential application: attacker forged SAML tokens using stolen signing certificates to impersonate legitimate users and access cloud resources (Azure AD, Office 365). Per Axiom X: the acquisition of the signing key occurred during the #7 step (a consequence of the malware's access, recorded as DRE:C); the USE of forged credentials to authenticate is always #4 regardless of acquisition method.",
+            "value": "Credential application: attacker forged SAML tokens using stolen signing certificates to impersonate legitimate users and access cloud resources (Azure AD, Office 365). Per Axiom X and R-CRED, the acquisition of the signing key occurred during the #7 step and its confidentiality event is recorded there; the USE of forged credentials to authenticate is always #4 regardless of acquisition method. This step carries no DRE of its own: authenticating discloses nothing, alters nothing and denies nothing. The disclosure it enables is recorded where it occurs, on the #1 step that reads mail through the designed cloud APIs — attaching [DRE: C] here as well would count the same exfiltration twice and would judge the step by what the attacker later obtained rather than by what this step did.",
             "uuid": "d3fd63be-8680-5116-9edc-9a0e33857da3",
             "timestamp": "1771804800",
             "to_ids": false,

@@ -118,7 +118,7 @@ tlctc:entry-cluster="10-supply-chain-attack"
 Path object `notation`:
 
 ```
-#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 →[Δt=~14d] #4 + [DRE: C] →[Δt=~2h] #1 + [DRE: C]
+#10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 + [DRE: C] →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]
 ```
 
 Objects and references:

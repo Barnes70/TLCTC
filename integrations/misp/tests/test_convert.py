@@ -122,7 +122,8 @@ class TestSolarWinds(unittest.TestCase):
         self.assertEqual((attr(s1, "boundary-context"), attr(s1, "boundary-source"), attr(s1, "boundary-target")), ("update", "@Vendor", "@Org"))
         self.assertEqual(attr(steps["s2-sunburst-execution"], "fec-executed"), "1")
         self.assertIsNone(attr(s1, "fec-executed"))
-        self.assertEqual([a["value"] for a in attrs(steps["s3-credential-forgery"], "data-risk-event")], ["C"])
+        self.assertEqual([a["value"] for a in attrs(steps["s2-sunburst-execution"], "data-risk-event")], ["C"])
+        self.assertEqual(attrs(steps["s3-credential-forgery"], "data-risk-event"), [])
 
     def test_orgc_and_no_attachment(self):
         ev = conv(self.path, orgc="TLCTC Project", attachment=False, distribution=3)["Event"]
