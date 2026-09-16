@@ -69,6 +69,30 @@ BODY
 )
 ```
 
+## Running the upstream checks on Windows (Git Bash)
+
+The two `validate_all.sh` scripts assume a Linux box. What made them run here
+(set up 2026-09-16; the shims live in `~/bin`, which Git Bash puts on PATH):
+
+- `jq` installed via `winget install jqlang.jq`; the `~/bin/jq` shim adds `-b`
+  (binary) because the native jq.exe otherwise writes CRLF.
+- `~/bin/sponge`, `~/bin/uuidparse`, `~/bin/jsonschema`, `~/bin/pytaxonomies`:
+  small bash shims standing in for moreutils, util-linux and the two Python CLIs
+  (`pip install jsonschema pytaxonomies`).
+- Run every Python helper with `PYTHONUTF8=1` exported. Without it Python opens
+  the taxonomy files as cp1252 and `validate_all.py`, `gen_uuid.py` and
+  `unique_uuid.py` crash (and `gen_uuid.py` half-rewrites the tree before it does).
+- `gen_uuid.py` also rewrites ~30 upstream taxonomies whose uuids do not follow
+  its scheme. That is upstream drift, not ours: check that `tlctc/machinetag.json`
+  is byte-identical afterwards, then `git checkout -- .` the rest.
+- `tools/gen_manifest.py` sorts paths case-insensitively on Windows and writes
+  CRLF. Regenerate MANIFEST.json with a byte-order sort
+  (`sorted(..., key=lambda p: p.parent.name)`) and pipe it through
+  `jq . | sponge` so the diff is only the new entry and the version date.
+  After `validate_all.sh` the tree is dirty on Windows for the same two reasons;
+  `git diff --ignore-cr-at-eol --stat` plus an order check is the real signal.
+- misp-taxonomies CI additionally runs `pytaxonomies -l MANIFEST.json -a`.
+
 ## After merge
 
 - Note the upstream merge commits in this file.
