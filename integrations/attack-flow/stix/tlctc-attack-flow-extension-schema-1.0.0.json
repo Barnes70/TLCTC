@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/Barnes70/TLCTC/main/integrations/attack-flow/stix/tlctc-attack-flow-extension-schema-1.0.0.json",
+  "title": "TLCTC for Attack Flow — property extension 1.0.0",
+  "description": "Properties that the extension-definition--69b4eaba-45a8-4101-b935-3a7ae2cb3a1a adds to Attack Flow objects. On attack-action: the TLCTC v2.5 cause cluster of the step, its operational sub-cluster, attack velocity to the next step, responsibility-sphere and intra-system boundaries, Data Risk Events, foreign-code execution, and the unresolved state (R-UNRES). On attack-flow: the path-level metadata. On attack-operator: parallel-group metadata. Every value follows json-schemas/layer-3/tlctc-attack-path.schema.json and the dictionary json-schemas/layer-1/tlctc-framework.v2.5.json.",
+  "definitions": {
+    "cluster": { "type": "string", "pattern": "^#(10|[1-9])$" },
+    "sub_cluster": { "type": "string", "pattern": "^TLCTC-(0[1-9]|10)\\.[0-9]{2}$" },
+    "dre": { "type": "string", "enum": ["C", "I", "Ii", "If", "A", "Av", "Ac"] },
+    "sphere": { "type": "string", "pattern": "^@[A-Za-z0-9_-]+$" },
+    "delta_t": { "type": "string", "minLength": 1 },
+    "boundary": {
+      "type": "object",
+      "required": ["context", "source_sphere", "target_sphere"],
+      "properties": {
+        "context": { "type": "string", "minLength": 1 },
+        "source_sphere": { "$ref": "#/definitions/sphere" },
+        "target_sphere": { "$ref": "#/definitions/sphere" },
+        "transit_spheres": { "type": "array", "items": { "$ref": "#/definitions/sphere" } }
+      },
+      "additionalProperties": false
+    },
+    "intra_system_boundary": {
+      "type": "object",
+      "required": ["type", "from", "to"],
+      "properties": {
+        "type": { "type": "string", "enum": ["sandbox", "privilege", "process", "hypervisor"] },
+        "from": { "$ref": "#/definitions/sphere" },
+        "to": { "$ref": "#/definitions/sphere" }
+      },
+      "additionalProperties": false
+    },
+    "action_extension": {
+      "type": "object",
+      "required": ["extension_type", "tlctc_status"],
+      "properties": {
+        "extension_type": { "const": "property-extension" },
+        "tlctc_step_id": { "type": "string", "minLength": 1 },
+        "tlctc_status": { "type": "string", "enum": ["classified", "unresolved"] },
+        "tlctc_cluster": { "$ref": "#/definitions/cluster" },
+        "tlctc_sub_cluster": { "$ref": "#/definitions/sub_cluster" },
+        "tlctc_unresolved_type": { "type": "string", "enum": ["single", "gap"] },
+        "tlctc_estimated_count": { "type": "integer", "minimum": 1 },
+        "tlctc_candidates": { "type": "array", "items": { "$ref": "#/definitions/cluster" } },
+        "tlctc_fec_executed": { "type": "boolean" },
+        "tlctc_fec_recorded_in_step_id": { "type": "string" },
+        "tlctc_delta_t_to_next": { "$ref": "#/definitions/delta_t" },
+        "tlctc_boundary": { "$ref": "#/definitions/boundary" },
+        "tlctc_intra_system_boundaries": { "type": "array", "items": { "$ref": "#/definitions/intra_system_boundary" } },
+        "tlctc_dre": { "type": "array", "items": { "$ref": "#/definitions/dre" }, "uniqueItems": true },
+        "tlctc_evidence_refs": { "type": "array", "items": { "type": "string" } },
+        "tlctc_notes": { "type": "string" }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": { "properties": { "tlctc_status": { "const": "classified" } } },
+          "then": { "required": ["tlctc_cluster"], "not": { "anyOf": [ { "required": ["tlctc_unresolved_type"] }, { "required": ["tlctc_candidates"] }, { "required": ["tlctc_estimated_count"] } ] } }
+        },
+        {
+          "if": { "properties": { "tlctc_status": { "const": "unresolved" } } },
+          "then": { "required": ["tlctc_unresolved_type", "tlctc_notes"], "not": { "anyOf": [ { "required": ["tlctc_cluster"] }, { "required": ["tlctc_sub_cluster"] }, { "required": ["tlctc_dre"] }, { "required": ["tlctc_fec_executed"] } ] } }
+        }
+      ]
+    },
+    "flow_extension": {
+      "type": "object",
+      "required": ["extension_type", "tlctc_version"],
+      "properties": {
+        "extension_type": { "const": "property-extension" },
+        "tlctc_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$" },
+        "tlctc_incident_id": { "type": "string" },
+        "tlctc_notation": { "type": "string" },
+        "tlctc_framework_ref": { "type": "string" },
+        "tlctc_framework_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "tlctc_analyst_confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+        "tlctc_source": { "type": "string", "description": "Where the classification came from: layer3-export | attack-flow-classify" }
+      },
+      "additionalProperties": false
+    },
+    "operator_extension": {
+      "type": "object",
+      "required": ["extension_type"],
+      "properties": {
+        "extension_type": { "const": "property-extension" },
+        "tlctc_group_id": { "type": "string" },
+        "tlctc_mode": { "type": "string" },
+        "tlctc_delta_t_to_next": { "$ref": "#/definitions/delta_t" },
+        "tlctc_notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/definitions/action_extension" },
+    { "$ref": "#/definitions/flow_extension" },
+    { "$ref": "#/definitions/operator_extension" }
+  ]
+}
