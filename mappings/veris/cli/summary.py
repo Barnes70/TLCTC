@@ -152,6 +152,18 @@ def summarize(results: list[dict]) -> dict:
         "unmapped_values": cell(sum(1 for r in results if r["unmapped"]), total),
     }
 
+    # 7. signatures: the most frequent exact sets of action varieties (reveals template coding)
+    sig = Counter()
+    for r in results:
+        key = tuple(sorted(i[len("action."):] for i in r["items"] if i.startswith("action.") and ".variety." in i))
+        if key:
+            sig[key] += 1
+    signatures = {
+        "records_with_any_variety": cell(sum(sig.values()), total),
+        "distinct_signatures": len(sig),
+        "top": [{"signature": " + ".join(k), "n": n, "denominator": total} for k, n in sig.most_common(10)],
+    }
+
     return {
         "records": total,
         "purity": purity,
@@ -160,6 +172,7 @@ def summarize(results: list[dict]) -> dict:
         "cooccurrence": cooccurrence,
         "availability": availability,
         "unknown": unknown,
+        "signatures": signatures,
     }
 
 
@@ -196,6 +209,9 @@ def render_md(summary: dict, title: str = "Summary") -> str:
     out += ["", "| Category | records | variety Unknown | variety Other |", "|---|---|---|---|"]
     for cat, v in s["unknown"]["per_category"].items():
         out.append(f"| {cat} | {_pct(v['records'])} | {_pct(v['variety_unknown'])} | {_pct(v['variety_other'])} |")
+    out += ["", f"Distinct action-variety signatures: {s['signatures']['distinct_signatures']} over {_pct(s['signatures']['records_with_any_variety'])} records with at least one variety", "", "| Most frequent exact variety set | n (% of records) |", "|---|---|"]
+    for t in s["signatures"]["top"]:
+        out.append(f"| {t['signature']} | {_pct(t)} |")
     if "attack_agreement" in s:
         out += ["", "| ATT&CK-transitive agreement | n (% of records) |", "|---|---|"]
         for k, v in s["attack_agreement"]["classes"].items():

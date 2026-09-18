@@ -1,6 +1,6 @@
 # VCDB study results
 
-Generated 2026-09-18T15:53:59Z from VCDB commit `230cf22b56a481dd1a994b21e4d94c59e2bccea9` (10047 records, sha256 `e4be5dd432ccfad16520a6b60dd83e9d47c63b0f3352c26c4d43a5dd774c32c0`), mapping updated 2026-09-18.
+Generated 2026-09-18T15:56:29Z from VCDB commit `230cf22b56a481dd1a994b21e4d94c59e2bccea9` (10047 records, sha256 `e4be5dd432ccfad16520a6b60dd83e9d47c63b0f3352c26c4d43a5dd774c32c0`), mapping updated 2026-09-18.
 
 Every cell is n (percentage of the row's denominator). Strata follow the VCDB README's warning that `phidbr` and `priority` records are not randomly selected.
 
@@ -102,6 +102,21 @@ Records with two or more certain clusters: 541 (5.4%)
 | physical | 1626 (16.2%) | 6 (0.1%) | 2 (0.0%) |
 | error | 2681 (26.7%) | 50 (0.5%) | 76 (0.8%) |
 | environmental | 10 (0.1%) | 4 (0.0%) | 0 (0.0%) |
+
+Distinct action-variety signatures: 534 over 9815 (97.7%) records with at least one variety
+
+| Most frequent exact variety set | n (% of records) |
+|---|---|
+| hacking.variety.Unknown | 1369 (13.6%) |
+| misuse.variety.Privilege abuse | 964 (9.6%) |
+| error.variety.Misdelivery | 952 (9.5%) |
+| physical.variety.Theft | 927 (9.2%) |
+| hacking.variety.Backdoor + hacking.variety.Exploit vuln + malware.variety.Backdoor + malware.variety.Backdoor or C2 + malware.variety.Ransomware | 747 (7.4%) |
+| error.variety.Loss | 382 (3.8%) |
+| error.variety.Publishing error | 369 (3.7%) |
+| error.variety.Disposal error | 307 (3.1%) |
+| error.variety.Misconfiguration | 301 (3.0%) |
+| malware.variety.Ransomware | 209 (2.1%) |
 
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
@@ -221,6 +236,21 @@ Records with two or more certain clusters: 335 (5.9%)
 | error | 1631 (28.7%) | 24 (0.4%) | 39 (0.7%) |
 | environmental | 8 (0.1%) | 4 (0.1%) | 0 (0.0%) |
 
+Distinct action-variety signatures: 323 over 5495 (96.7%) records with at least one variety
+
+| Most frequent exact variety set | n (% of records) |
+|---|---|
+| hacking.variety.Unknown | 906 (15.9%) |
+| misuse.variety.Privilege abuse | 708 (12.5%) |
+| physical.variety.Theft | 702 (12.4%) |
+| error.variety.Misdelivery | 685 (12.1%) |
+| error.variety.Loss | 298 (5.2%) |
+| error.variety.Disposal error | 216 (3.8%) |
+| error.variety.Publishing error | 210 (3.7%) |
+| physical.variety.Disabled controls + physical.variety.Theft | 126 (2.2%) |
+| hacking.variety.DoS | 117 (2.1%) |
+| hacking.variety.Brute force + hacking.variety.Use of stolen creds + malware.variety.Backdoor + malware.variety.Backdoor or C2 + malware.variety.Brute force + malware.variety.C2 + malware.variety.Capture stored data + malware.variety.Downloader + malware.variety.Exploit vuln + malware.variety.Export data + malware.variety.Scan network + malware.variety.Spyware/Keylogger + social.variety.Phishing | 88 (1.5%) |
+
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
 | agree | 481 (8.5%) |
@@ -338,6 +368,21 @@ Records with two or more certain clusters: 173 (5.7%)
 | error | 904 (29.7%) | 26 (0.9%) | 36 (1.2%) |
 | environmental | 2 (0.1%) | 0 (0.0%) | 0 (0.0%) |
 
+Distinct action-variety signatures: 325 over 3009 (98.8%) records with at least one variety
+
+| Most frequent exact variety set | n (% of records) |
+|---|---|
+| hacking.variety.Unknown | 367 (12.0%) |
+| error.variety.Misdelivery | 253 (8.3%) |
+| misuse.variety.Privilege abuse | 250 (8.2%) |
+| physical.variety.Theft | 218 (7.2%) |
+| error.variety.Misconfiguration | 160 (5.3%) |
+| physical.variety.Skimmer | 149 (4.9%) |
+| error.variety.Publishing error | 141 (4.6%) |
+| malware.variety.Ransomware | 130 (4.3%) |
+| error.variety.Disposal error | 90 (3.0%) |
+| error.variety.Loss | 80 (2.6%) |
+
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
 | agree | 612 (20.1%) |
@@ -448,6 +493,21 @@ Records with two or more certain clusters: 33 (2.5%)
 | error | 146 (11.1%) | 0 (0.0%) | 1 (0.1%) |
 | environmental | 0 (0.0%) | 0 (0.0%) | 0 (0.0%) |
 
+Distinct action-variety signatures: 66 over 1311 (99.5%) records with at least one variety
+
+| Most frequent exact variety set | n (% of records) |
+|---|---|
+| hacking.variety.Backdoor + hacking.variety.Exploit vuln + malware.variety.Backdoor + malware.variety.Backdoor or C2 + malware.variety.Ransomware | 747 (56.7%) |
+| hacking.variety.Unknown | 96 (7.3%) |
+| error.variety.Misconfiguration | 95 (7.2%) |
+| hacking.variety.Use of stolen creds | 94 (7.1%) |
+| malware.variety.Ransomware | 77 (5.8%) |
+| hacking.variety.Unknown + malware.variety.Ransomware | 28 (2.1%) |
+| hacking.variety.Exploit vuln | 20 (1.5%) |
+| error.variety.Publishing error | 18 (1.4%) |
+| error.variety.Misdelivery | 14 (1.1%) |
+| hacking.variety.Use of stolen creds + social.variety.Pretexting | 11 (0.8%) |
+
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
 | agree | 1027 (78.0%) |
@@ -557,6 +617,21 @@ Records with two or more certain clusters: 442 (5.5%)
 | physical | 1439 (17.7%) | 5 (0.1%) | 2 (0.0%) |
 | error | 2036 (25.1%) | 36 (0.4%) | 45 (0.6%) |
 | environmental | 9 (0.1%) | 4 (0.0%) | 0 (0.0%) |
+
+Distinct action-variety signatures: 441 over 7906 (97.5%) records with at least one variety
+
+| Most frequent exact variety set | n (% of records) |
+|---|---|
+| hacking.variety.Unknown | 1076 (13.3%) |
+| error.variety.Misdelivery | 818 (10.1%) |
+| physical.variety.Theft | 776 (9.6%) |
+| misuse.variety.Privilege abuse | 753 (9.3%) |
+| hacking.variety.Backdoor + hacking.variety.Exploit vuln + malware.variety.Backdoor + malware.variety.Backdoor or C2 + malware.variety.Ransomware | 747 (9.2%) |
+| error.variety.Loss | 327 (4.0%) |
+| error.variety.Publishing error | 285 (3.5%) |
+| error.variety.Disposal error | 245 (3.0%) |
+| physical.variety.Skimmer | 178 (2.2%) |
+| hacking.variety.Use of stolen creds | 146 (1.8%) |
 
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
@@ -674,6 +749,21 @@ Records with two or more certain clusters: 71 (5.4%)
 | error | 424 (32.4%) | 13 (1.0%) | 22 (1.7%) |
 | environmental | 1 (0.1%) | 0 (0.0%) | 0 (0.0%) |
 
+Distinct action-variety signatures: 151 over 1300 (99.2%) records with at least one variety
+
+| Most frequent exact variety set | n (% of records) |
+|---|---|
+| misuse.variety.Privilege abuse | 191 (14.6%) |
+| physical.variety.Theft | 136 (10.4%) |
+| error.variety.Misdelivery | 122 (9.3%) |
+| hacking.variety.Unknown | 113 (8.6%) |
+| malware.variety.Ransomware | 96 (7.3%) |
+| error.variety.Disposal error | 58 (4.4%) |
+| error.variety.Publishing error | 58 (4.4%) |
+| error.variety.Loss | 49 (3.7%) |
+| error.variety.Misconfiguration | 45 (3.4%) |
+| misuse.variety.Data mishandling | 44 (3.4%) |
+
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
 | agree | 242 (18.5%) |
@@ -786,6 +876,21 @@ Records with two or more certain clusters: 26 (4.3%)
 | error | 209 (34.7%) | 1 (0.2%) | 9 (1.5%) |
 | environmental | 0 (0.0%) | 0 (0.0%) | 0 (0.0%) |
 
+Distinct action-variety signatures: 91 over 584 (97.0%) records with at least one variety
+
+| Most frequent exact variety set | n (% of records) |
+|---|---|
+| hacking.variety.Unknown | 178 (29.6%) |
+| error.variety.Misconfiguration | 141 (23.4%) |
+| error.variety.Publishing error | 22 (3.7%) |
+| misuse.variety.Privilege abuse | 19 (3.2%) |
+| malware.variety.Ransomware | 14 (2.3%) |
+| hacking.variety.Use of stolen creds | 14 (2.3%) |
+| physical.variety.Theft | 13 (2.2%) |
+| hacking.variety.Exploit vuln + hacking.variety.SQLi | 13 (2.2%) |
+| error.variety.Other | 9 (1.5%) |
+| error.variety.Misdelivery | 9 (1.5%) |
+
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
 | agree | 139 (23.1%) |
@@ -891,6 +996,21 @@ Records with two or more certain clusters: 2 (8.0%)
 | physical | 2 (8.0%) | 0 (0.0%) | 0 (0.0%) |
 | error | 12 (48.0%) | 0 (0.0%) | 0 (0.0%) |
 | environmental | 0 (0.0%) | 0 (0.0%) | 0 (0.0%) |
+
+Distinct action-variety signatures: 11 over 25 (100.0%) records with at least one variety
+
+| Most frequent exact variety set | n (% of records) |
+|---|---|
+| error.variety.Publishing error | 4 (16.0%) |
+| error.variety.Misconfiguration | 4 (16.0%) |
+| malware.variety.Ransomware | 4 (16.0%) |
+| error.variety.Misdelivery | 3 (12.0%) |
+| physical.variety.Theft | 2 (8.0%) |
+| hacking.variety.Unknown | 2 (8.0%) |
+| malware.variety.Ransomware + social.variety.Phishing | 2 (8.0%) |
+| misuse.variety.Privilege abuse | 1 (4.0%) |
+| error.variety.Classification error | 1 (4.0%) |
+| hacking.variety.Unknown + malware.variety.Ransomware | 1 (4.0%) |
 
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|

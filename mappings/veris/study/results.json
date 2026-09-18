@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T15:53:59Z",
+  "generated": "2026-09-18T15:56:29Z",
   "vcdb": {
     "commit": "230cf22b56a481dd1a994b21e4d94c59e2bccea9",
     "url": "https://raw.githubusercontent.com/vz-risk/VCDB/230cf22b56a481dd1a994b21e4d94c59e2bccea9/data/joined/vcdb.json.zip",
@@ -576,6 +576,65 @@
           "n": 0,
           "denominator": 10047
         }
+      },
+      "signatures": {
+        "records_with_any_variety": {
+          "n": 9815,
+          "denominator": 10047
+        },
+        "distinct_signatures": 534,
+        "top": [
+          {
+            "signature": "hacking.variety.Unknown",
+            "n": 1369,
+            "denominator": 10047
+          },
+          {
+            "signature": "misuse.variety.Privilege abuse",
+            "n": 964,
+            "denominator": 10047
+          },
+          {
+            "signature": "error.variety.Misdelivery",
+            "n": 952,
+            "denominator": 10047
+          },
+          {
+            "signature": "physical.variety.Theft",
+            "n": 927,
+            "denominator": 10047
+          },
+          {
+            "signature": "hacking.variety.Backdoor + hacking.variety.Exploit vuln + malware.variety.Backdoor + malware.variety.Backdoor or C2 + malware.variety.Ransomware",
+            "n": 747,
+            "denominator": 10047
+          },
+          {
+            "signature": "error.variety.Loss",
+            "n": 382,
+            "denominator": 10047
+          },
+          {
+            "signature": "error.variety.Publishing error",
+            "n": 369,
+            "denominator": 10047
+          },
+          {
+            "signature": "error.variety.Disposal error",
+            "n": 307,
+            "denominator": 10047
+          },
+          {
+            "signature": "error.variety.Misconfiguration",
+            "n": 301,
+            "denominator": 10047
+          },
+          {
+            "signature": "malware.variety.Ransomware",
+            "n": 209,
+            "denominator": 10047
+          }
+        ]
       },
       "attack_agreement": {
         "classes": {
@@ -1179,6 +1238,65 @@
           "denominator": 5684
         }
       },
+      "signatures": {
+        "records_with_any_variety": {
+          "n": 5495,
+          "denominator": 5684
+        },
+        "distinct_signatures": 323,
+        "top": [
+          {
+            "signature": "hacking.variety.Unknown",
+            "n": 906,
+            "denominator": 5684
+          },
+          {
+            "signature": "misuse.variety.Privilege abuse",
+            "n": 708,
+            "denominator": 5684
+          },
+          {
+            "signature": "physical.variety.Theft",
+            "n": 702,
+            "denominator": 5684
+          },
+          {
+            "signature": "error.variety.Misdelivery",
+            "n": 685,
+            "denominator": 5684
+          },
+          {
+            "signature": "error.variety.Loss",
+            "n": 298,
+            "denominator": 5684
+          },
+          {
+            "signature": "error.variety.Disposal error",
+            "n": 216,
+            "denominator": 5684
+          },
+          {
+            "signature": "error.variety.Publishing error",
+            "n": 210,
+            "denominator": 5684
+          },
+          {
+            "signature": "physical.variety.Disabled controls + physical.variety.Theft",
+            "n": 126,
+            "denominator": 5684
+          },
+          {
+            "signature": "hacking.variety.DoS",
+            "n": 117,
+            "denominator": 5684
+          },
+          {
+            "signature": "hacking.variety.Brute force + hacking.variety.Use of stolen creds + malware.variety.Backdoor + malware.variety.Backdoor or C2 + malware.variety.Brute force + malware.variety.C2 + malware.variety.Capture stored data + malware.variety.Downloader + malware.variety.Exploit vuln + malware.variety.Export data + malware.variety.Scan network + malware.variety.Spyware/Keylogger + social.variety.Phishing",
+            "n": 88,
+            "denominator": 5684
+          }
+        ]
+      },
       "attack_agreement": {
         "classes": {
           "agree": {
@@ -1775,6 +1893,65 @@
           "denominator": 3046
         }
       },
+      "signatures": {
+        "records_with_any_variety": {
+          "n": 3009,
+          "denominator": 3046
+        },
+        "distinct_signatures": 325,
+        "top": [
+          {
+            "signature": "hacking.variety.Unknown",
+            "n": 367,
+            "denominator": 3046
+          },
+          {
+            "signature": "error.variety.Misdelivery",
+            "n": 253,
+            "denominator": 3046
+          },
+          {
+            "signature": "misuse.variety.Privilege abuse",
+            "n": 250,
+            "denominator": 3046
+          },
+          {
+            "signature": "physical.variety.Theft",
+            "n": 218,
+            "denominator": 3046
+          },
+          {
+            "signature": "error.variety.Misconfiguration",
+            "n": 160,
+            "denominator": 3046
+          },
+          {
+            "signature": "physical.variety.Skimmer",
+            "n": 149,
+            "denominator": 3046
+          },
+          {
+            "signature": "error.variety.Publishing error",
+            "n": 141,
+            "denominator": 3046
+          },
+          {
+            "signature": "malware.variety.Ransomware",
+            "n": 130,
+            "denominator": 3046
+          },
+          {
+            "signature": "error.variety.Disposal error",
+            "n": 90,
+            "denominator": 3046
+          },
+          {
+            "signature": "error.variety.Loss",
+            "n": 80,
+            "denominator": 3046
+          }
+        ]
+      },
       "attack_agreement": {
         "classes": {
           "agree": {
@@ -2334,6 +2511,65 @@
           "denominator": 1317
         }
       },
+      "signatures": {
+        "records_with_any_variety": {
+          "n": 1311,
+          "denominator": 1317
+        },
+        "distinct_signatures": 66,
+        "top": [
+          {
+            "signature": "hacking.variety.Backdoor + hacking.variety.Exploit vuln + malware.variety.Backdoor + malware.variety.Backdoor or C2 + malware.variety.Ransomware",
+            "n": 747,
+            "denominator": 1317
+          },
+          {
+            "signature": "hacking.variety.Unknown",
+            "n": 96,
+            "denominator": 1317
+          },
+          {
+            "signature": "error.variety.Misconfiguration",
+            "n": 95,
+            "denominator": 1317
+          },
+          {
+            "signature": "hacking.variety.Use of stolen creds",
+            "n": 94,
+            "denominator": 1317
+          },
+          {
+            "signature": "malware.variety.Ransomware",
+            "n": 77,
+            "denominator": 1317
+          },
+          {
+            "signature": "hacking.variety.Unknown + malware.variety.Ransomware",
+            "n": 28,
+            "denominator": 1317
+          },
+          {
+            "signature": "hacking.variety.Exploit vuln",
+            "n": 20,
+            "denominator": 1317
+          },
+          {
+            "signature": "error.variety.Publishing error",
+            "n": 18,
+            "denominator": 1317
+          },
+          {
+            "signature": "error.variety.Misdelivery",
+            "n": 14,
+            "denominator": 1317
+          },
+          {
+            "signature": "hacking.variety.Use of stolen creds + social.variety.Pretexting",
+            "n": 11,
+            "denominator": 1317
+          }
+        ]
+      },
       "attack_agreement": {
         "classes": {
           "agree": {
@@ -2887,6 +3123,65 @@
           "n": 0,
           "denominator": 8110
         }
+      },
+      "signatures": {
+        "records_with_any_variety": {
+          "n": 7906,
+          "denominator": 8110
+        },
+        "distinct_signatures": 441,
+        "top": [
+          {
+            "signature": "hacking.variety.Unknown",
+            "n": 1076,
+            "denominator": 8110
+          },
+          {
+            "signature": "error.variety.Misdelivery",
+            "n": 818,
+            "denominator": 8110
+          },
+          {
+            "signature": "physical.variety.Theft",
+            "n": 776,
+            "denominator": 8110
+          },
+          {
+            "signature": "misuse.variety.Privilege abuse",
+            "n": 753,
+            "denominator": 8110
+          },
+          {
+            "signature": "hacking.variety.Backdoor + hacking.variety.Exploit vuln + malware.variety.Backdoor + malware.variety.Backdoor or C2 + malware.variety.Ransomware",
+            "n": 747,
+            "denominator": 8110
+          },
+          {
+            "signature": "error.variety.Loss",
+            "n": 327,
+            "denominator": 8110
+          },
+          {
+            "signature": "error.variety.Publishing error",
+            "n": 285,
+            "denominator": 8110
+          },
+          {
+            "signature": "error.variety.Disposal error",
+            "n": 245,
+            "denominator": 8110
+          },
+          {
+            "signature": "physical.variety.Skimmer",
+            "n": 178,
+            "denominator": 8110
+          },
+          {
+            "signature": "hacking.variety.Use of stolen creds",
+            "n": 146,
+            "denominator": 8110
+          }
+        ]
       },
       "attack_agreement": {
         "classes": {
@@ -3479,6 +3774,65 @@
           "denominator": 1310
         }
       },
+      "signatures": {
+        "records_with_any_variety": {
+          "n": 1300,
+          "denominator": 1310
+        },
+        "distinct_signatures": 151,
+        "top": [
+          {
+            "signature": "misuse.variety.Privilege abuse",
+            "n": 191,
+            "denominator": 1310
+          },
+          {
+            "signature": "physical.variety.Theft",
+            "n": 136,
+            "denominator": 1310
+          },
+          {
+            "signature": "error.variety.Misdelivery",
+            "n": 122,
+            "denominator": 1310
+          },
+          {
+            "signature": "hacking.variety.Unknown",
+            "n": 113,
+            "denominator": 1310
+          },
+          {
+            "signature": "malware.variety.Ransomware",
+            "n": 96,
+            "denominator": 1310
+          },
+          {
+            "signature": "error.variety.Disposal error",
+            "n": 58,
+            "denominator": 1310
+          },
+          {
+            "signature": "error.variety.Publishing error",
+            "n": 58,
+            "denominator": 1310
+          },
+          {
+            "signature": "error.variety.Loss",
+            "n": 49,
+            "denominator": 1310
+          },
+          {
+            "signature": "error.variety.Misconfiguration",
+            "n": 45,
+            "denominator": 1310
+          },
+          {
+            "signature": "misuse.variety.Data mishandling",
+            "n": 44,
+            "denominator": 1310
+          }
+        ]
+      },
       "attack_agreement": {
         "classes": {
           "agree": {
@@ -4045,6 +4399,65 @@
           "denominator": 602
         }
       },
+      "signatures": {
+        "records_with_any_variety": {
+          "n": 584,
+          "denominator": 602
+        },
+        "distinct_signatures": 91,
+        "top": [
+          {
+            "signature": "hacking.variety.Unknown",
+            "n": 178,
+            "denominator": 602
+          },
+          {
+            "signature": "error.variety.Misconfiguration",
+            "n": 141,
+            "denominator": 602
+          },
+          {
+            "signature": "error.variety.Publishing error",
+            "n": 22,
+            "denominator": 602
+          },
+          {
+            "signature": "misuse.variety.Privilege abuse",
+            "n": 19,
+            "denominator": 602
+          },
+          {
+            "signature": "malware.variety.Ransomware",
+            "n": 14,
+            "denominator": 602
+          },
+          {
+            "signature": "hacking.variety.Use of stolen creds",
+            "n": 14,
+            "denominator": 602
+          },
+          {
+            "signature": "physical.variety.Theft",
+            "n": 13,
+            "denominator": 602
+          },
+          {
+            "signature": "hacking.variety.Exploit vuln + hacking.variety.SQLi",
+            "n": 13,
+            "denominator": 602
+          },
+          {
+            "signature": "error.variety.Other",
+            "n": 9,
+            "denominator": 602
+          },
+          {
+            "signature": "error.variety.Misdelivery",
+            "n": 9,
+            "denominator": 602
+          }
+        ]
+      },
       "attack_agreement": {
         "classes": {
           "agree": {
@@ -4583,6 +4996,65 @@
           "n": 0,
           "denominator": 25
         }
+      },
+      "signatures": {
+        "records_with_any_variety": {
+          "n": 25,
+          "denominator": 25
+        },
+        "distinct_signatures": 11,
+        "top": [
+          {
+            "signature": "error.variety.Publishing error",
+            "n": 4,
+            "denominator": 25
+          },
+          {
+            "signature": "error.variety.Misconfiguration",
+            "n": 4,
+            "denominator": 25
+          },
+          {
+            "signature": "malware.variety.Ransomware",
+            "n": 4,
+            "denominator": 25
+          },
+          {
+            "signature": "error.variety.Misdelivery",
+            "n": 3,
+            "denominator": 25
+          },
+          {
+            "signature": "physical.variety.Theft",
+            "n": 2,
+            "denominator": 25
+          },
+          {
+            "signature": "hacking.variety.Unknown",
+            "n": 2,
+            "denominator": 25
+          },
+          {
+            "signature": "malware.variety.Ransomware + social.variety.Phishing",
+            "n": 2,
+            "denominator": 25
+          },
+          {
+            "signature": "misuse.variety.Privilege abuse",
+            "n": 1,
+            "denominator": 25
+          },
+          {
+            "signature": "error.variety.Classification error",
+            "n": 1,
+            "denominator": 25
+          },
+          {
+            "signature": "hacking.variety.Unknown + malware.variety.Ransomware",
+            "n": 1,
+            "denominator": 25
+          }
+        ]
       },
       "attack_agreement": {
         "classes": {
