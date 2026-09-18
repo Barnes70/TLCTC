@@ -2547,7 +2547,7 @@
       "context": {
         "note": "contributing condition of an error"
       },
-      "rationale": "Contributing condition of an error ('Carelessness'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+      "rationale": "An honest mistake through inattention contributed to the error; errors carry no cluster, so the vector is recorded for the operational-risk register, not for classification."
     },
     {
       "veris_id": "action.error.vector.Inadequate personnel",
@@ -2556,7 +2556,7 @@
       "context": {
         "note": "contributing condition of an error"
       },
-      "rationale": "Contributing condition of an error ('Inadequate personnel'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+      "rationale": "Insufficient staffing contributed to the error; errors carry no cluster, so the vector is recorded for the operational-risk register, not for classification."
     },
     {
       "veris_id": "action.error.vector.Inadequate processes",
@@ -2565,7 +2565,7 @@
       "context": {
         "note": "contributing condition of an error"
       },
-      "rationale": "Contributing condition of an error ('Inadequate processes'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+      "rationale": "Insufficient or missing procedures contributed to the error; errors carry no cluster, so the vector is recorded for the operational-risk register, not for classification."
     },
     {
       "veris_id": "action.error.vector.Inadequate technology",
@@ -2574,7 +2574,7 @@
       "context": {
         "note": "contributing condition of an error"
       },
-      "rationale": "Contributing condition of an error ('Inadequate technology'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+      "rationale": "Insufficient technical resources contributed to the error; errors carry no cluster, so the vector is recorded for the operational-risk register, not for classification."
     },
     {
       "veris_id": "action.error.vector.Other",
@@ -2583,7 +2583,7 @@
       "context": {
         "note": "contributing condition of an error"
       },
-      "rationale": "Contributing condition of an error ('Other'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+      "rationale": "A contributing condition outside the listed ones; errors carry no cluster, so the vector is recorded for the operational-risk register, not for classification."
     },
     {
       "veris_id": "action.error.vector.Random error",
@@ -2592,7 +2592,7 @@
       "context": {
         "note": "contributing condition of an error"
       },
-      "rationale": "Contributing condition of an error ('Random error'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+      "rationale": "No identifiable contributing condition; errors carry no cluster, so the vector is recorded for the operational-risk register, not for classification."
     },
     {
       "veris_id": "action.error.vector.Web application",
@@ -2601,7 +2601,7 @@
       "context": {
         "note": "contributing condition of an error"
       },
-      "rationale": "Contributing condition of an error ('Web application'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+      "rationale": "The error was made through a web application; errors carry no cluster, so the vector is recorded for the operational-risk register, not for classification."
     },
     {
       "veris_id": "action.error.vector.Unknown",
@@ -2610,7 +2610,7 @@
       "context": {
         "note": "contributing condition of an error"
       },
-      "rationale": "Contributing condition of an error ('Unknown'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+      "rationale": "The contributing condition was not recorded; errors carry no cluster, so the vector is recorded for the operational-risk register, not for classification."
     },
     {
       "veris_id": "action.environmental.variety.Deterioration",
