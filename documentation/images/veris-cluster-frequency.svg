@@ -1,43 +1,43 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="410" viewBox="0 0 800 410" font-family="Helvetica, Arial, sans-serif" font-size="12">
 <text x="150" y="22" font-size="14" font-weight="bold">Records touching each cluster (n = 10047); dark = certain, light = upper bound with rule-dependent alternatives</text>
 <text x="142" y="56" text-anchor="end">#1</text>
-<rect x="150" y="40" width="530.0" height="22" fill="#9ecae1"/>
-<rect x="150" y="40" width="371.0" height="22" fill="#08519c"/>
-<text x="686.0" y="56">1748 / 2497</text>
+<rect x="150" y="40" width="273.5" height="22" fill="#9ecae1"/>
+<rect x="150" y="40" width="23.6" height="22" fill="#08519c"/>
+<text x="429.5" y="56">71 / 822</text>
 <text x="142" y="90" text-anchor="end">#2</text>
-<rect x="150" y="74" width="273.6" height="22" fill="#9ecae1"/>
-<rect x="150" y="74" width="30.8" height="22" fill="#08519c"/>
-<text x="429.6" y="90">145 / 1289</text>
+<rect x="150" y="74" width="428.9" height="22" fill="#9ecae1"/>
+<rect x="150" y="74" width="41.6" height="22" fill="#08519c"/>
+<text x="584.9" y="90">125 / 1289</text>
 <text x="142" y="124" text-anchor="end">#3</text>
-<rect x="150" y="108" width="274.0" height="22" fill="#9ecae1"/>
-<rect x="150" y="108" width="3.0" height="22" fill="#08519c"/>
-<text x="430.0" y="124">14 / 1291</text>
+<rect x="150" y="108" width="429.5" height="22" fill="#9ecae1"/>
+<rect x="150" y="108" width="0.0" height="22" fill="#08519c"/>
+<text x="585.5" y="124">0 / 1291</text>
 <text x="142" y="158" text-anchor="end">#4</text>
-<rect x="150" y="142" width="107.2" height="22" fill="#9ecae1"/>
-<rect x="150" y="142" width="107.2" height="22" fill="#08519c"/>
-<text x="263.2" y="158">505 / 505</text>
+<rect x="150" y="142" width="168.3" height="22" fill="#9ecae1"/>
+<rect x="150" y="142" width="168.3" height="22" fill="#08519c"/>
+<text x="324.3" y="158">506 / 506</text>
 <text x="142" y="192" text-anchor="end">#5</text>
-<rect x="150" y="176" width="2.3" height="22" fill="#9ecae1"/>
-<rect x="150" y="176" width="2.3" height="22" fill="#08519c"/>
-<text x="158.3" y="192">11 / 11</text>
+<rect x="150" y="176" width="3.7" height="22" fill="#9ecae1"/>
+<rect x="150" y="176" width="3.7" height="22" fill="#08519c"/>
+<text x="159.7" y="192">11 / 11</text>
 <text x="142" y="226" text-anchor="end">#6</text>
-<rect x="150" y="210" width="35.2" height="22" fill="#9ecae1"/>
+<rect x="150" y="210" width="55.2" height="22" fill="#9ecae1"/>
 <rect x="150" y="210" width="0.0" height="22" fill="#08519c"/>
-<text x="191.2" y="226">0 / 166</text>
+<text x="211.2" y="226">0 / 166</text>
 <text x="142" y="260" text-anchor="end">#7</text>
-<rect x="150" y="244" width="314.8" height="22" fill="#9ecae1"/>
-<rect x="150" y="244" width="314.6" height="22" fill="#08519c"/>
-<text x="470.8" y="260">1482 / 1483</text>
+<rect x="150" y="244" width="494.4" height="22" fill="#9ecae1"/>
+<rect x="150" y="244" width="493.1" height="22" fill="#08519c"/>
+<text x="650.4" y="260">1482 / 1486</text>
 <text x="142" y="294" text-anchor="end">#8</text>
-<rect x="150" y="278" width="338.1" height="22" fill="#9ecae1"/>
-<rect x="150" y="278" width="338.1" height="22" fill="#08519c"/>
-<text x="494.1" y="294">1593 / 1593</text>
+<rect x="150" y="278" width="530.0" height="22" fill="#9ecae1"/>
+<rect x="150" y="278" width="530.0" height="22" fill="#08519c"/>
+<text x="686.0" y="294">1593 / 1593</text>
 <text x="142" y="328" text-anchor="end">#9</text>
-<rect x="150" y="312" width="124.6" height="22" fill="#9ecae1"/>
-<rect x="150" y="312" width="121.6" height="22" fill="#08519c"/>
-<text x="280.6" y="328">573 / 587</text>
+<rect x="150" y="312" width="195.3" height="22" fill="#9ecae1"/>
+<rect x="150" y="312" width="190.6" height="22" fill="#08519c"/>
+<text x="351.3" y="328">573 / 587</text>
 <text x="142" y="362" text-anchor="end">#10</text>
-<rect x="150" y="346" width="3.8" height="22" fill="#9ecae1"/>
+<rect x="150" y="346" width="6.0" height="22" fill="#9ecae1"/>
 <rect x="150" y="346" width="0.0" height="22" fill="#08519c"/>
-<text x="159.8" y="362">0 / 18</text>
+<text x="162.0" y="362">0 / 18</text>
 </svg>

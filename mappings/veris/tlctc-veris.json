@@ -108,12 +108,10 @@
       "mapping_type": "direct",
       "targets": [
         {
-          "tlctc": "#2",
-          "rule": "R-ROLE",
-          "role_hint": "server"
+          "tlctc": "#1"
         }
       ],
-      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+      "rationale": "Poisoning a cache places attacker data where the cache's designed function will serve it as authoritative (#1, consistent with the CWE-349 mapping); no code flaw is exploited. For a resolver cache the poisoning gains position and an interception step (#5) may follow."
     },
     {
       "veris_id": "action.hacking.variety.Cryptanalysis",
@@ -125,7 +123,7 @@
           "rule": "R-CHANNEL"
         }
       ],
-      "rationale": "Breaking the channel's cryptography is a defect in a communication-path control; the generic vulnerability is insufficient control over the communication path (R-CHANNEL)."
+      "rationale": "Breaking the cryptography that protects a channel is a defect in a communication-path control: the generic vulnerability is insufficient control over the communication path, #5 (R-CHANNEL). Where the broken cryptography protects stored data, the step is the one that obtained the ciphertext and the cryptanalysis is attacker-side preparation."
     },
     {
       "veris_id": "action.hacking.variety.CSRF",
@@ -133,12 +131,10 @@
       "mapping_type": "direct",
       "targets": [
         {
-          "tlctc": "#3",
-          "rule": "R-ROLE",
-          "role_hint": "client"
+          "tlctc": "#1"
         }
       ],
-      "rationale": "The forged request exploits the browser's trust handling on the client side; the flawed component is in a client role relative to the attacker (R-ROLE)."
+      "rationale": "A forged request makes the victim's browser invoke a legitimate function with the victim's own session; no code flaw is exploited, the designed function is abused (#1), consistent with the CWE-352 mapping."
     },
     {
       "veris_id": "action.hacking.variety.Disable controls",
@@ -215,12 +211,10 @@
       "mapping_type": "direct",
       "targets": [
         {
-          "tlctc": "#2",
-          "rule": "R-ROLE",
-          "role_hint": "server"
+          "tlctc": "#1"
         }
       ],
-      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+      "rationale": "Requesting a resource directly bypasses controls the interface merely implied; the server serves what it was designed to serve without checking authorisation, which is function abuse (#1, consistent with the CWE-425 mapping) rather than a code flaw, although VERIS files it under Exploit vuln."
     },
     {
       "veris_id": "action.hacking.variety.Format string attack",
@@ -251,13 +245,17 @@
     {
       "veris_id": "action.hacking.variety.Hijack",
       "veris_description": "To assume control over and steal functionality for an illicit purpose (e.g. Hijacking phone number intercept SMS verification codes)",
-      "mapping_type": "direct",
+      "mapping_type": "chain",
       "targets": [
         {
           "tlctc": "#1"
         }
       ],
-      "rationale": "Taking over a function such as a phone number or a session uses the provider's designed processes; where the takeover then presents another party's identity, a separate #4 step follows (R-CRED)."
+      "companion": {
+        "after": "#5 (interception of the diverted channel, R-MITM) or #4 (authentication with intercepted codes, R-CRED)",
+        "notation": "#1 → #5 | #1 → #4"
+      },
+      "rationale": "Taking over a function such as a phone number, a domain or a route uses the provider's designed processes: #1, with no code flaw. The takeover is position acquisition; what follows is a separate step: #5 for interception from the diverted channel (R-MITM) or #4 where intercepted codes are presented as another identity (R-CRED)."
     },
     {
       "veris_id": "action.hacking.variety.HTTP request smuggling",
@@ -314,7 +312,7 @@
     {
       "veris_id": "action.hacking.variety.Insecure deserialization",
       "veris_description": "iterating over sequential or obvious values. https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization. Child of 'Exploit vuln'.",
-      "mapping_type": "direct",
+      "mapping_type": "chain",
       "targets": [
         {
           "tlctc": "#2",
@@ -322,7 +320,11 @@
           "role_hint": "server"
         }
       ],
-      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+      "companion": {
+        "after": "#7 (the gadget chain executes attacker-controlled code, R-EXEC)",
+        "notation": "#2 → #7"
+      },
+      "rationale": "Deserialising attacker-controlled bytes in a server-role component is a code flaw (#2, R-ROLE); the gadget chain it triggers executes attacker-controlled code, a #7 step at execution (R-EXEC), as in the CWE-502 mapping."
     },
     {
       "veris_id": "action.hacking.variety.Integer overflows",
@@ -483,7 +485,7 @@
     {
       "veris_id": "action.hacking.variety.RFI",
       "veris_description": "Remote file inclusion. Child of 'Exploit vuln'.",
-      "mapping_type": "direct",
+      "mapping_type": "chain",
       "targets": [
         {
           "tlctc": "#2",
@@ -491,7 +493,11 @@
           "role_hint": "server"
         }
       ],
-      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+      "companion": {
+        "after": "#7 (the included remote file executes, R-EXEC)",
+        "notation": "#2 → #7"
+      },
+      "rationale": "A server-role component passes an attacker-controlled path to an include function (#2, R-ROLE); the remote file it loads is foreign executable content, so a #7 step follows at execution (R-EXEC), as in the CWE-98 mapping."
     },
     {
       "veris_id": "action.hacking.variety.Routing detour",
@@ -499,15 +505,16 @@
       "mapping_type": "chain",
       "targets": [
         {
-          "tlctc": "#5",
-          "rule": "R-MITM"
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
         }
       ],
       "companion": {
-        "before": "#1 (abuse of routing or resolution functions to gain position)",
-        "notation": "#1 → #5"
+        "after": "#5 (interception of the detoured messages, R-MITM)",
+        "notation": "#2 → #5"
       },
-      "rationale": "Redirecting traffic gains an on-path position through designed routing functions; the interception that follows is #5 (R-MITM)."
+      "rationale": "VERIS lists routing detour under Exploit vuln: a flaw in how a server-role component handles routing or addressing headers lets the attacker redirect messages (#2, R-ROLE). The redirection gains position; the interception that follows is a separate #5 step (R-MITM)."
     },
     {
       "veris_id": "action.hacking.variety.Scan network",
@@ -526,12 +533,11 @@
       "mapping_type": "direct",
       "targets": [
         {
-          "tlctc": "#2",
-          "rule": "R-ROLE",
-          "role_hint": "server"
+          "tlctc": "#4",
+          "rule": "R-CRED"
         }
       ],
-      "rationale": "A flaw in the service's session management lets the attacker choose the victim's session identifier; the flawed component is in a server role (R-ROLE)."
+      "rationale": "The attacker fixes the victim's session identifier and then presents it as the victim's authenticated session: the system is deceived about who is authenticating, #4 (R-CRED, consistent with the CWE-384 mapping). The weak session management is the enabling condition, not a separate step."
     },
     {
       "veris_id": "action.hacking.variety.Session prediction",
@@ -539,12 +545,11 @@
       "mapping_type": "direct",
       "targets": [
         {
-          "tlctc": "#2",
-          "rule": "R-ROLE",
-          "role_hint": "server"
+          "tlctc": "#4",
+          "rule": "R-CRED"
         }
       ],
-      "rationale": "Guessable session identifiers are a flaw in the service's session generation; the flawed component is in a server role (R-ROLE)."
+      "rationale": "A predicted credential or session identifier is presented as another identity's proof of authentication: #4 (R-CRED). Guessing the identifier is preparation; the recorded step is its use."
     },
     {
       "veris_id": "action.hacking.variety.Session replay",
@@ -620,12 +625,10 @@
       "mapping_type": "direct",
       "targets": [
         {
-          "tlctc": "#3",
-          "rule": "R-ROLE",
-          "role_hint": "client"
+          "tlctc": "#1"
         }
       ],
-      "rationale": "An open redirect is abused to deliver the victim's browser to attacker content; the component that acts on the attacker-supplied target is in a client role (R-ROLE)."
+      "rationale": "An open redirect is a designed function that accepts an untrusted destination; abusing it is #1 (consistent with the CWE-601 mapping). It typically enables a #9 lure or a #3 step that follows."
     },
     {
       "veris_id": "action.hacking.variety.Use of stolen creds",
@@ -675,12 +678,11 @@
       "mapping_type": "direct",
       "targets": [
         {
-          "tlctc": "#2",
-          "rule": "R-ROLE",
-          "role_hint": "server"
+          "tlctc": "#6",
+          "rule": "R-FLOOD"
         }
       ],
-      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+      "rationale": "A document crafted to make attribute parsing quadratic exhausts finite processing capacity: #6 (R-FLOOD), the same shape as entity expansion."
     },
     {
       "veris_id": "action.hacking.variety.XML entity expansion",
@@ -688,12 +690,11 @@
       "mapping_type": "direct",
       "targets": [
         {
-          "tlctc": "#2",
-          "rule": "R-ROLE",
-          "role_hint": "server"
+          "tlctc": "#6",
+          "rule": "R-FLOOD"
         }
       ],
-      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+      "rationale": "Recursive entity references make a small document expand into a resource-exhausting one: intensity exhausting finite capacity, #6 (R-FLOOD, consistent with the CWE-776 mapping)."
     },
     {
       "veris_id": "action.hacking.variety.XML external entities",
@@ -750,15 +751,22 @@
     {
       "veris_id": "action.hacking.variety.XSS",
       "veris_description": "Cross-site scripting. Child of 'Exploit vuln'.",
-      "mapping_type": "direct",
+      "mapping_type": "conditional",
       "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "condition": "stored or reflected: the server-role application fails to encode attacker input into its output (the script then executes in a client, #7 per R-EXEC)",
+          "role_hint": "server"
+        },
         {
           "tlctc": "#3",
           "rule": "R-ROLE",
+          "condition": "DOM-based: the flaw is in the client-side code that handles attacker-controlled input",
           "role_hint": "client"
         }
       ],
-      "rationale": "The injected script executes in the victim's browser; the flawed component relative to the attacker is the client that renders the content (R-ROLE)."
+      "rationale": "Cross-site scripting is classified by where the encoding flaw sits (R-ROLE), as in the CWE-79 mapping: stored and reflected XSS are a server-role flaw (#2) whose injected script executes in the victim's browser as a #7 follow-on; DOM-based XSS is a client-role flaw (#3). VERIS does not record which."
     },
     {
       "veris_id": "action.hacking.variety.Other",
@@ -1061,15 +1069,21 @@
     {
       "veris_id": "action.malware.variety.Client-side attack",
       "veris_description": "Client-side or browser attack (e.g., redirection, XSS, AitB)",
-      "mapping_type": "direct",
+      "mapping_type": "conditional",
       "targets": [
         {
           "tlctc": "#3",
           "rule": "R-ROLE",
+          "condition": "a client-role component is exploited through crafted content (redirection, cross-site scripting)",
           "role_hint": "client"
+        },
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC",
+          "condition": "foreign code runs inside the browser or client (adversary-in-the-browser)"
         }
       ],
-      "rationale": "Browser or client attacks (redirection, cross-site scripting, adversary-in-the-browser) exploit a client-role component (R-ROLE); where foreign code then executes, #7 follows (R-EXEC)."
+      "rationale": "VERIS groups browser redirection and cross-site scripting (a client-role flaw exploited by content, #3 per R-ROLE) with adversary-in-the-browser malware (foreign code executing, #7 per R-EXEC); the record does not say which."
     },
     {
       "veris_id": "action.malware.variety.Cryptocurrency mining",
@@ -1204,13 +1218,17 @@
     {
       "veris_id": "action.malware.variety.Exploit misconfig",
       "veris_description": "Exploit a misconfiguration (vs vuln or weakness)",
-      "mapping_type": "direct",
+      "mapping_type": "chain",
       "targets": [
         {
           "tlctc": "#1"
         }
       ],
-      "rationale": "Malware that uses a permissive configuration exercises a designed function (#1); the payload's own execution is the #7 step it enables (R-EXEC)."
+      "companion": {
+        "after": "#7 (the payload that executes once the misconfiguration is used, R-EXEC)",
+        "notation": "#1 → #7"
+      },
+      "rationale": "Malware that uses a permissive configuration exercises a designed function in a permissive state: #1, no code flaw. The payload's own execution is the #7 step that follows (R-EXEC)."
     },
     {
       "veris_id": "action.malware.variety.Evade Defenses",
@@ -1961,13 +1979,10 @@
     {
       "veris_id": "action.misuse.variety.Data mishandling",
       "veris_description": "Handling of data in an unapproved manner",
-      "mapping_type": "direct",
-      "targets": [
-        {
-          "tlctc": "#1"
-        }
-      ],
-      "rationale": "Handling data outside the purpose it was entrusted for exceeds the grant even though the access function was available; the action is on the Attack row and uses designed functions (#1, R-SCOPE)."
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "basis": "R-SCOPE",
+      "rationale": "Handling data one is entitled to handle in an unapproved manner is Abuse of Rights: the envelope is honoured, the purpose is not. VERIS defines misuse as entrusted resources or privileges used contrary to their intended purpose: an actor inside an entitlement an accountable grantor conferred, acting against its purpose. That is Abuse of Rights on the cause-side partition (R-SCOPE): operational risk, no generic vulnerability, no cluster, no System Risk Event; the consequence chain starts at the Data Risk Event. Only where the evidence shows the action reached past the conferred envelope (a scope the grant never covered) does it enter the Attack row as #1."
     },
     {
       "veris_id": "action.misuse.variety.Email misuse",
@@ -1994,13 +2009,10 @@
     {
       "veris_id": "action.misuse.variety.Knowledge abuse",
       "veris_description": "Abuse of private or entrusted knowledge",
-      "mapping_type": "direct",
-      "targets": [
-        {
-          "tlctc": "#1"
-        }
-      ],
-      "rationale": "Using entrusted knowledge for an unauthorised purpose exceeds the grant; where it is applied to a system it is function abuse (#1). Where no IT-system step occurs the event stays outside the core clusters."
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "basis": "R-SCOPE",
+      "rationale": "Using entrusted knowledge against the purpose it was entrusted for is Abuse of Rights; no system function or flaw is exploited. VERIS defines misuse as entrusted resources or privileges used contrary to their intended purpose: an actor inside an entitlement an accountable grantor conferred, acting against its purpose. That is Abuse of Rights on the cause-side partition (R-SCOPE): operational risk, no generic vulnerability, no cluster, no System Risk Event; the consequence chain starts at the Data Risk Event. Only where the evidence shows the action reached past the conferred envelope (a scope the grant never covered) does it enter the Attack row as #1."
     },
     {
       "veris_id": "action.misuse.variety.Net misuse",
@@ -2029,35 +2041,26 @@
     {
       "veris_id": "action.misuse.variety.Possession abuse",
       "veris_description": "Abuse of physical access to asset",
-      "mapping_type": "direct",
-      "targets": [
-        {
-          "tlctc": "#1"
-        }
-      ],
-      "rationale": "Abusing physical access one is entitled to, for a purpose outside the grant, is function abuse at the console (#1); it is #8 only where hardware itself is manipulated."
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "basis": "R-SCOPE",
+      "rationale": "Abusing physical access one is entitled to (a badge holder propping open a door is the dictionary's example) is Abuse of Rights. VERIS defines misuse as entrusted resources or privileges used contrary to their intended purpose: an actor inside an entitlement an accountable grantor conferred, acting against its purpose. That is Abuse of Rights on the cause-side partition (R-SCOPE): operational risk, no generic vulnerability, no cluster, no System Risk Event; the consequence chain starts at the Data Risk Event. Only where the evidence shows the action reached past the conferred envelope (a scope the grant never covered) does it enter the Attack row as #1."
     },
     {
       "veris_id": "action.misuse.variety.Privilege abuse",
       "veris_description": "Abuse of system access privileges",
-      "mapping_type": "direct",
-      "targets": [
-        {
-          "tlctc": "#1"
-        }
-      ],
-      "rationale": "Using system privileges for a purpose outside the grant is the definition of Abuse of Functions (#1): the access was designed, the use was not. 'Functioned as designed' does not make the action in-grant (R-SCOPE)."
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "basis": "R-SCOPE",
+      "rationale": "Using system privileges one genuinely holds for a purpose the grantor did not intend is the dictionary's own example of Abuse of Rights (an administrator using genuine root to exfiltrate). VERIS defines misuse as entrusted resources or privileges used contrary to their intended purpose: an actor inside an entitlement an accountable grantor conferred, acting against its purpose. That is Abuse of Rights on the cause-side partition (R-SCOPE): operational risk, no generic vulnerability, no cluster, no System Risk Event; the consequence chain starts at the Data Risk Event. Only where the evidence shows the action reached past the conferred envelope (a scope the grant never covered) does it enter the Attack row as #1."
     },
     {
       "veris_id": "action.misuse.variety.Snap picture",
       "veris_description": "Actor photographs the confidentiality data variety.",
-      "mapping_type": "direct",
-      "targets": [
-        {
-          "tlctc": "#1"
-        }
-      ],
-      "rationale": "Photographing displayed data exceeds the purpose for which the display function was granted; the display is the abused function (#1), and the Data Risk Event C follows."
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "basis": "R-SCOPE",
+      "rationale": "Photographing data one is entitled to view uses the entitlement against its purpose: Abuse of Rights, and the Data Risk Event C follows without any compromise. VERIS defines misuse as entrusted resources or privileges used contrary to their intended purpose: an actor inside an entitlement an accountable grantor conferred, acting against its purpose. That is Abuse of Rights on the cause-side partition (R-SCOPE): operational risk, no generic vulnerability, no cluster, no System Risk Event; the consequence chain starts at the Data Risk Event. Only where the evidence shows the action reached past the conferred envelope (a scope the grant never covered) does it enter the Attack row as #1."
     },
     {
       "veris_id": "action.misuse.variety.Unapproved hardware",
@@ -2086,14 +2089,18 @@
     {
       "veris_id": "action.misuse.variety.Other",
       "veris_description": " Other",
-      "mapping_type": "unresolved",
-      "rationale": "The record says an insider misuse occurred without naming it; the partition row (Attack versus Abuse of Rights) cannot be decided from the value alone (R-SCOPE)."
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "basis": "R-SCOPE",
+      "rationale": "An insider misuse of unrecorded kind: VERIS's misuse category itself asserts entrusted resources used contrary to purpose, so the row (Abuse of Rights) is known even though the variety is not. VERIS defines misuse as entrusted resources or privileges used contrary to their intended purpose: an actor inside an entitlement an accountable grantor conferred, acting against its purpose. That is Abuse of Rights on the cause-side partition (R-SCOPE): operational risk, no generic vulnerability, no cluster, no System Risk Event; the consequence chain starts at the Data Risk Event. Only where the evidence shows the action reached past the conferred envelope (a scope the grant never covered) does it enter the Attack row as #1."
     },
     {
       "veris_id": "action.misuse.variety.Unknown",
       "veris_description": "Unknown",
-      "mapping_type": "unresolved",
-      "rationale": "The record says an insider misuse occurred without naming it; the partition row cannot be decided from the value alone (R-SCOPE)."
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "basis": "R-SCOPE",
+      "rationale": "An insider misuse of unrecorded kind: VERIS's misuse category itself asserts entrusted resources used contrary to purpose, so the row (Abuse of Rights) is known even though the variety is not. VERIS defines misuse as entrusted resources or privileges used contrary to their intended purpose: an actor inside an entitlement an accountable grantor conferred, acting against its purpose. That is Abuse of Rights on the cause-side partition (R-SCOPE): operational risk, no generic vulnerability, no cluster, no System Risk Event; the consequence chain starts at the Data Risk Event. Only where the evidence shows the action reached past the conferred envelope (a scope the grant never covered) does it enter the Attack row as #1."
     },
     {
       "veris_id": "action.misuse.vector.LAN access",
@@ -2239,10 +2246,10 @@
         {
           "tlctc": "#8",
           "rule": "R-SUBSTRATE",
-          "sub_cluster_hint": "8.2"
+          "sub_cluster_hint": "8.1"
         }
       ],
-      "rationale": "Sneaking about to observe or reach systems exploits the physical layer's lack of control over who is present (#8, signal vector: observation). Observation of people with no system involved is outside core."
+      "rationale": "Sneaking about to reach systems or information exploits the physical layer's lack of control over who is present (#8, mechanical vector: presence and movement). Observation of people with no system involved is outside core."
     },
     {
       "veris_id": "action.physical.variety.Surveillance",
@@ -3200,8 +3207,7 @@
       "veris_id": "attribute.integrity.variety.Hardware tampering",
       "veris_description": "Hardware tampering or physical alteration",
       "mapping_type": "outcome",
-      "rationale": "The physical state of the asset no longer corresponds to its intended state: Ii.",
-      "dre": "Ii"
+      "rationale": "Physical alteration of a device is a system-altitude event (the compromise recorded with the #8 step), not a change in a data record's state; no Data Risk Event code."
     },
     {
       "veris_id": "attribute.integrity.variety.Log tampering",
@@ -3256,8 +3262,7 @@
       "veris_id": "attribute.integrity.variety.Repurpose",
       "veris_description": "Repurposed asset for unauthorized function",
       "mapping_type": "outcome",
-      "rationale": "The asset's configured function no longer corresponds to its intended state: Ii.",
-      "dre": "Ii"
+      "rationale": "An asset used for an unauthorised function is a system-altitude event (the compromise the step recorded), not a change in a data record's state; no Data Risk Event code."
     },
     {
       "veris_id": "attribute.integrity.variety.Software installation",

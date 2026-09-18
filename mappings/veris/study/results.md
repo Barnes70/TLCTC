@@ -1,6 +1,6 @@
 # VCDB study results
 
-Generated 2026-09-18T15:56:29Z from VCDB commit `230cf22b56a481dd1a994b21e4d94c59e2bccea9` (10047 records, sha256 `e4be5dd432ccfad16520a6b60dd83e9d47c63b0f3352c26c4d43a5dd774c32c0`), mapping updated 2026-09-18.
+Generated 2026-09-18T17:23:17Z from VCDB commit `230cf22b56a481dd1a994b21e4d94c59e2bccea9` (10047 records, sha256 `e4be5dd432ccfad16520a6b60dd83e9d47c63b0f3352c26c4d43a5dd774c32c0`), mapping updated 2026-09-18.
 
 Every cell is n (percentage of the row's denominator). Strata follow the VCDB README's warning that `phidbr` and `priority` records are not randomly selected.
 
@@ -11,59 +11,59 @@ Records: 10047
 | Threat-axis purity | n (% of records) |
 |---|---|
 | records | 10047 (100.0%) |
-| threat_bearing | 5632 (56.1%) |
-| threat_only | 5464 (54.4%) |
-| mixed_threat_and_operational | 168 (1.7%) |
-| operational_only | 2615 (26.0%) |
+| threat_bearing | 4070 (40.5%) |
+| threat_only | 3884 (38.7%) |
+| mixed_threat_and_operational | 186 (1.9%) |
+| operational_only | 4020 (40.0%) |
 | operational_only.error_or_failure | 2578 (25.7%) |
-| operational_only.abuse_of_rights | 33 (0.3%) |
-| operational_only.other_mix | 2 (0.0%) |
+| operational_only.abuse_of_rights | 1413 (14.1%) |
+| operational_only.other_mix | 27 (0.3%) |
 | out_of_scope_only | 2 (0.0%) |
-| unknown_only | 1800 (17.9%) |
+| unknown_only | 1957 (19.5%) |
 | empty | 0 (0.0%) |
 
 | Cause recoverability (threat-bearing records) | n (% of threat-bearing) |
 |---|---|
-| threat_bearing | 5632 (100.0%) |
-| resolved | 3546 (63.0%) |
-| rule_dependent | 1310 (23.3%) |
-| cause_lost | 776 (13.8%) |
-| cause_lost.malware_without_enabler | 422 (7.5%) |
-| cause_lost.credential_use_without_acquisition | 206 (3.7%) |
-| cause_lost.social_without_follow_on | 148 (2.6%) |
+| threat_bearing | 4070 (100.0%) |
+| resolved | 1911 (47.0%) |
+| rule_dependent | 1311 (32.2%) |
+| cause_lost | 848 (20.8%) |
+| cause_lost.malware_without_enabler | 425 (10.4%) |
+| cause_lost.credential_use_without_acquisition | 212 (5.2%) |
+| cause_lost.social_without_follow_on | 211 (5.2%) |
 | cause_lost.interception_without_position | 0 (0.0%) |
-| single_cluster_records | 3912 (69.5%) |
-| multi_cluster_records | 1720 (30.5%) |
-| mean_clusters_lower_bound | 1.078 |
-| mean_clusters_upper_bound | 1.676 |
+| single_cluster_records | 2468 (60.6%) |
+| multi_cluster_records | 1602 (39.4%) |
+| mean_clusters_lower_bound | 1.071 |
+| mean_clusters_upper_bound | 1.909 |
 
 | Cluster | certain | upper bound |
 |---|---|---|
-| #1 | 1748 (17.4%) | 2497 (24.9%) |
-| #2 | 145 (1.4%) | 1289 (12.8%) |
-| #3 | 14 (0.1%) | 1291 (12.8%) |
-| #4 | 505 (5.0%) | 505 (5.0%) |
+| #1 | 71 (0.7%) | 822 (8.2%) |
+| #2 | 125 (1.2%) | 1289 (12.8%) |
+| #3 | 0 (0.0%) | 1291 (12.8%) |
+| #4 | 506 (5.0%) | 506 (5.0%) |
 | #5 | 11 (0.1%) | 11 (0.1%) |
 | #6 | 0 (0.0%) | 166 (1.7%) |
-| #7 | 1482 (14.8%) | 1483 (14.8%) |
+| #7 | 1482 (14.8%) | 1486 (14.8%) |
 | #8 | 1593 (15.9%) | 1593 (15.9%) |
 | #9 | 573 (5.7%) | 587 (5.8%) |
 | #10 | 0 (0.0%) | 18 (0.2%) |
 
-Records with two or more certain clusters: 541 (5.4%)
+Records with two or more certain clusters: 415 (4.1%)
 
 | Pair | n | ordering hypothesis |
 |---|---|---|
 | #7 + #9 | 251 | #9 → #7 |
 | #4 + #9 | 201 | #9 → #4 |
 | #4 + #7 | 136 | #4 → #7 | #7 → #4 |
-| #1 + #9 | 67 | #9 → #1 |
-| #1 + #8 | 54 | order unknown |
-| #1 + #4 | 17 | #1 → #4 |
 | #8 + #9 | 13 | #9 → #8 |
-| #1 + #7 | 10 | #1 → #7 |
 | #4 + #8 | 10 | #8 → #4 |
-| #2 + #7 | 9 | #2 → #7 |
+| #2 + #7 | 7 | #2 → #7 |
+| #5 + #7 | 7 | #5 → #7 |
+| #5 + #9 | 7 | #9 → #5 |
+| #1 + #7 | 6 | #1 → #7 |
+| #1 + #4 | 5 | #1 → #4 |
 
 | attribute.availability.variety | n | DRE |
 |---|---|---|
@@ -89,8 +89,8 @@ Records with two or more certain clusters: 541 (5.4%)
 | Unknown collapse | n (% of records) |
 |---|---|
 | action_unknown | 287 (2.9%) |
-| any_unresolved_item | 3255 (32.4%) |
-| unknown_only | 1800 (17.9%) |
+| any_unresolved_item | 3250 (32.3%) |
+| unknown_only | 1957 (19.5%) |
 | unmapped_values | 0 (0.0%) |
 
 | Category | records | variety Unknown | variety Other |
@@ -120,8 +120,8 @@ Distinct action-variety signatures: 534 over 9815 (97.7%) records with at least 
 
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
-| agree | 2120 (21.1%) |
-| subset | 288 (2.9%) |
+| agree | 2122 (21.1%) |
+| subset | 286 (2.8%) |
 | disjoint | 9 (0.1%) |
 | no-attack-edge | 7630 (75.9%) |
 
@@ -129,12 +129,10 @@ Distinct action-variety signatures: 534 over 9815 (97.7%) records with at least 
 |---|---|---|---|
 | action.malware.variety.Capture stored data | 187 | #7 | #1, #4, #5 |
 | action.malware.variety.Scan network | 106 | #7 | #1 |
-| action.hacking.variety.Forced browsing | 19 | #2 | #1, #7 |
 | action.malware.variety.Packet sniffer | 7 | #7 | #1 |
 | action.hacking.variety.Buffer overflow | 5 | #2 | #3, #7 |
 | action.hacking.variety.OS commanding | 4 | #2 | #1, #4, #7 |
 | action.hacking.variety.Cryptanalysis | 3 | #5 | #1, #7 |
-| action.hacking.variety.Session prediction | 1 | #2 | #1, #4 |
 | action.malware.variety.DoS | 1 | #7 | #1, #2, #6 |
 
 ### Stratum `year:<=2014` — timeline.incident.year <= 2014
@@ -144,59 +142,59 @@ Records: 5684
 | Threat-axis purity | n (% of records) |
 |---|---|
 | records | 5684 (100.0%) |
-| threat_bearing | 2869 (50.5%) |
-| threat_only | 2779 (48.9%) |
-| mixed_threat_and_operational | 90 (1.6%) |
-| operational_only | 1612 (28.4%) |
+| threat_bearing | 1828 (32.2%) |
+| threat_only | 1728 (30.4%) |
+| mixed_threat_and_operational | 100 (1.8%) |
+| operational_only | 2541 (44.7%) |
 | operational_only.error_or_failure | 1591 (28.0%) |
-| operational_only.abuse_of_rights | 17 (0.3%) |
-| operational_only.other_mix | 2 (0.0%) |
+| operational_only.abuse_of_rights | 936 (16.5%) |
+| operational_only.other_mix | 12 (0.2%) |
 | out_of_scope_only | 2 (0.0%) |
-| unknown_only | 1203 (21.2%) |
+| unknown_only | 1315 (23.1%) |
 | empty | 0 (0.0%) |
 
 | Cause recoverability (threat-bearing records) | n (% of threat-bearing) |
 |---|---|
-| threat_bearing | 2869 (100.0%) |
-| resolved | 2315 (80.7%) |
-| rule_dependent | 380 (13.2%) |
-| cause_lost | 174 (6.1%) |
-| cause_lost.malware_without_enabler | 88 (3.1%) |
-| cause_lost.credential_use_without_acquisition | 55 (1.9%) |
-| cause_lost.social_without_follow_on | 31 (1.1%) |
+| threat_bearing | 1828 (100.0%) |
+| resolved | 1227 (67.1%) |
+| rule_dependent | 381 (20.8%) |
+| cause_lost | 220 (12.0%) |
+| cause_lost.malware_without_enabler | 91 (5.0%) |
+| cause_lost.credential_use_without_acquisition | 61 (3.3%) |
+| cause_lost.social_without_follow_on | 68 (3.7%) |
 | cause_lost.interception_without_position | 0 (0.0%) |
-| single_cluster_records | 2270 (79.1%) |
-| multi_cluster_records | 599 (20.9%) |
-| mean_clusters_lower_bound | 1.108 |
-| mean_clusters_upper_bound | 1.382 |
+| single_cluster_records | 1296 (70.9%) |
+| multi_cluster_records | 532 (29.1%) |
+| mean_clusters_lower_bound | 1.123 |
+| mean_clusters_upper_bound | 1.563 |
 
 | Cluster | certain | upper bound |
 |---|---|---|
-| #1 | 1140 (20.1%) | 1140 (20.1%) |
-| #2 | 93 (1.6%) | 368 (6.5%) |
-| #3 | 8 (0.1%) | 370 (6.5%) |
-| #4 | 231 (4.1%) | 231 (4.1%) |
+| #1 | 30 (0.5%) | 30 (0.5%) |
+| #2 | 83 (1.5%) | 368 (6.5%) |
+| #3 | 0 (0.0%) | 370 (6.5%) |
+| #4 | 232 (4.1%) | 232 (4.1%) |
 | #5 | 11 (0.2%) | 11 (0.2%) |
 | #6 | 0 (0.0%) | 127 (2.2%) |
-| #7 | 324 (5.7%) | 324 (5.7%) |
+| #7 | 324 (5.7%) | 327 (5.8%) |
 | #8 | 1065 (18.7%) | 1065 (18.7%) |
 | #9 | 307 (5.4%) | 316 (5.6%) |
 | #10 | 0 (0.0%) | 12 (0.2%) |
 
-Records with two or more certain clusters: 335 (5.9%)
+Records with two or more certain clusters: 262 (4.6%)
 
 | Pair | n | ordering hypothesis |
 |---|---|---|
 | #7 + #9 | 209 | #9 → #7 |
 | #4 + #9 | 121 | #9 → #4 |
 | #4 + #7 | 114 | #4 → #7 | #7 → #4 |
-| #1 + #9 | 40 | #9 → #1 |
-| #1 + #8 | 25 | order unknown |
-| #1 + #4 | 10 | #1 → #4 |
 | #8 + #9 | 9 | #9 → #8 |
-| #1 + #7 | 7 | #1 → #7 |
 | #5 + #7 | 7 | #5 → #7 |
 | #5 + #9 | 7 | #9 → #5 |
+| #4 + #8 | 6 | #8 → #4 |
+| #1 + #7 | 4 | #1 → #7 |
+| #2 + #7 | 4 | #2 → #7 |
+| #2 + #4 | 3 | #2 → #4 |
 
 | attribute.availability.variety | n | DRE |
 |---|---|---|
@@ -222,8 +220,8 @@ Records with two or more certain clusters: 335 (5.9%)
 | Unknown collapse | n (% of records) |
 |---|---|
 | action_unknown | 199 (3.5%) |
-| any_unresolved_item | 2067 (36.4%) |
-| unknown_only | 1203 (21.2%) |
+| any_unresolved_item | 2063 (36.3%) |
+| unknown_only | 1315 (23.1%) |
 | unmapped_values | 0 (0.0%) |
 
 | Category | records | variety Unknown | variety Other |
@@ -253,8 +251,8 @@ Distinct action-variety signatures: 323 over 5495 (96.7%) records with at least 
 
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
-| agree | 481 (8.5%) |
-| subset | 243 (4.3%) |
+| agree | 482 (8.5%) |
+| subset | 242 (4.3%) |
 | disjoint | 6 (0.1%) |
 | no-attack-edge | 4954 (87.2%) |
 
@@ -262,11 +260,9 @@ Distinct action-variety signatures: 323 over 5495 (96.7%) records with at least 
 |---|---|---|---|
 | action.malware.variety.Capture stored data | 174 | #7 | #1, #4, #5 |
 | action.malware.variety.Scan network | 105 | #7 | #1 |
-| action.hacking.variety.Forced browsing | 8 | #2 | #1, #7 |
 | action.malware.variety.Packet sniffer | 6 | #7 | #1 |
 | action.hacking.variety.Buffer overflow | 3 | #2 | #3, #7 |
 | action.hacking.variety.Cryptanalysis | 3 | #5 | #1, #7 |
-| action.hacking.variety.Session prediction | 1 | #2 | #1, #4 |
 | action.malware.variety.DoS | 1 | #7 | #1, #2, #6 |
 
 ### Stratum `year:2015-2019` — timeline.incident.year in 2015..2019
@@ -276,37 +272,37 @@ Records: 3046
 | Threat-axis purity | n (% of records) |
 |---|---|
 | records | 3046 (100.0%) |
-| threat_bearing | 1701 (55.8%) |
-| threat_only | 1625 (53.3%) |
-| mixed_threat_and_operational | 76 (2.5%) |
-| operational_only | 855 (28.1%) |
+| threat_bearing | 1199 (39.4%) |
+| threat_only | 1114 (36.6%) |
+| mixed_threat_and_operational | 85 (2.8%) |
+| operational_only | 1312 (43.1%) |
 | operational_only.error_or_failure | 841 (27.6%) |
-| operational_only.abuse_of_rights | 14 (0.5%) |
-| operational_only.other_mix | 0 (0.0%) |
+| operational_only.abuse_of_rights | 456 (15.0%) |
+| operational_only.other_mix | 15 (0.5%) |
 | out_of_scope_only | 0 (0.0%) |
-| unknown_only | 490 (16.1%) |
+| unknown_only | 535 (17.6%) |
 | empty | 0 (0.0%) |
 
 | Cause recoverability (threat-bearing records) | n (% of threat-bearing) |
 |---|---|
-| threat_bearing | 1701 (100.0%) |
-| resolved | 1162 (68.3%) |
-| rule_dependent | 145 (8.5%) |
-| cause_lost | 394 (23.2%) |
-| cause_lost.malware_without_enabler | 223 (13.1%) |
-| cause_lost.credential_use_without_acquisition | 55 (3.2%) |
-| cause_lost.social_without_follow_on | 116 (6.8%) |
+| threat_bearing | 1199 (100.0%) |
+| resolved | 634 (52.9%) |
+| rule_dependent | 145 (12.1%) |
+| cause_lost | 420 (35.0%) |
+| cause_lost.malware_without_enabler | 223 (18.6%) |
+| cause_lost.credential_use_without_acquisition | 55 (4.6%) |
+| cause_lost.social_without_follow_on | 142 (11.8%) |
 | cause_lost.interception_without_position | 0 (0.0%) |
-| single_cluster_records | 1397 (82.1%) |
-| multi_cluster_records | 304 (17.9%) |
-| mean_clusters_lower_bound | 1.069 |
-| mean_clusters_upper_bound | 1.228 |
+| single_cluster_records | 945 (78.8%) |
+| multi_cluster_records | 254 (21.2%) |
+| mean_clusters_lower_bound | 1.048 |
+| mean_clusters_upper_bound | 1.288 |
 
 | Cluster | certain | upper bound |
 |---|---|---|
-| #1 | 581 (19.1%) | 583 (19.1%) |
-| #2 | 48 (1.6%) | 136 (4.5%) |
-| #3 | 5 (0.2%) | 136 (4.5%) |
+| #1 | 34 (1.1%) | 38 (1.2%) |
+| #2 | 38 (1.2%) | 136 (4.5%) |
+| #3 | 0 (0.0%) | 136 (4.5%) |
 | #4 | 153 (5.0%) | 153 (5.0%) |
 | #5 | 0 (0.0%) | 0 (0.0%) |
 | #6 | 0 (0.0%) | 37 (1.2%) |
@@ -315,20 +311,20 @@ Records: 3046
 | #9 | 237 (7.8%) | 242 (7.9%) |
 | #10 | 0 (0.0%) | 6 (0.2%) |
 
-Records with two or more certain clusters: 173 (5.7%)
+Records with two or more certain clusters: 121 (4.0%)
 
 | Pair | n | ordering hypothesis |
 |---|---|---|
 | #4 + #9 | 61 | #9 → #4 |
 | #7 + #9 | 31 | #9 → #7 |
-| #1 + #8 | 28 | order unknown |
-| #1 + #9 | 27 | #9 → #1 |
 | #4 + #7 | 17 | #4 → #7 | #7 → #4 |
-| #1 + #4 | 6 | #1 → #4 |
 | #4 + #8 | 4 | #8 → #4 |
 | #8 + #9 | 4 | #9 → #8 |
-| #1 + #7 | 3 | #1 → #7 |
 | #2 + #7 | 3 | #2 → #7 |
+| #1 + #4 | 2 | #1 → #4 |
+| #1 + #7 | 2 | #1 → #7 |
+| #1 + #2 | 1 | order unknown |
+| #2 + #4 | 1 | #2 → #4 |
 
 | attribute.availability.variety | n | DRE |
 |---|---|---|
@@ -354,8 +350,8 @@ Records with two or more certain clusters: 173 (5.7%)
 | Unknown collapse | n (% of records) |
 |---|---|
 | action_unknown | 69 (2.3%) |
-| any_unresolved_item | 969 (31.8%) |
-| unknown_only | 490 (16.1%) |
+| any_unresolved_item | 968 (31.8%) |
+| unknown_only | 535 (17.6%) |
 | unmapped_values | 0 (0.0%) |
 
 | Category | records | variety Unknown | variety Other |
@@ -385,15 +381,14 @@ Distinct action-variety signatures: 325 over 3009 (98.8%) records with at least 
 
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
-| agree | 612 (20.1%) |
-| subset | 42 (1.4%) |
+| agree | 613 (20.1%) |
+| subset | 41 (1.3%) |
 | disjoint | 3 (0.1%) |
 | no-attack-edge | 2389 (78.4%) |
 
 | VERIS value | disagreeing records | direct | transitive |
 |---|---|---|---|
 | action.malware.variety.Capture stored data | 12 | #7 | #1, #4, #5 |
-| action.hacking.variety.Forced browsing | 11 | #2 | #1, #7 |
 | action.hacking.variety.OS commanding | 4 | #2 | #1, #4, #7 |
 | action.hacking.variety.Buffer overflow | 2 | #2 | #3, #7 |
 | action.malware.variety.Packet sniffer | 1 | #7 | #1 |
@@ -406,12 +401,12 @@ Records: 1317
 | Threat-axis purity | n (% of records) |
 |---|---|
 | records | 1317 (100.0%) |
-| threat_bearing | 1062 (80.6%) |
-| threat_only | 1060 (80.5%) |
-| mixed_threat_and_operational | 2 (0.2%) |
-| operational_only | 148 (11.2%) |
+| threat_bearing | 1043 (79.2%) |
+| threat_only | 1042 (79.1%) |
+| mixed_threat_and_operational | 1 (0.1%) |
+| operational_only | 167 (12.7%) |
 | operational_only.error_or_failure | 146 (11.1%) |
-| operational_only.abuse_of_rights | 2 (0.2%) |
+| operational_only.abuse_of_rights | 21 (1.6%) |
 | operational_only.other_mix | 0 (0.0%) |
 | out_of_scope_only | 0 (0.0%) |
 | unknown_only | 107 (8.1%) |
@@ -419,24 +414,24 @@ Records: 1317
 
 | Cause recoverability (threat-bearing records) | n (% of threat-bearing) |
 |---|---|
-| threat_bearing | 1062 (100.0%) |
-| resolved | 69 (6.5%) |
-| rule_dependent | 785 (73.9%) |
-| cause_lost | 208 (19.6%) |
-| cause_lost.malware_without_enabler | 111 (10.5%) |
-| cause_lost.credential_use_without_acquisition | 96 (9.0%) |
+| threat_bearing | 1043 (100.0%) |
+| resolved | 50 (4.8%) |
+| rule_dependent | 785 (75.3%) |
+| cause_lost | 208 (19.9%) |
+| cause_lost.malware_without_enabler | 111 (10.6%) |
+| cause_lost.credential_use_without_acquisition | 96 (9.2%) |
 | cause_lost.social_without_follow_on | 1 (0.1%) |
 | cause_lost.interception_without_position | 0 (0.0%) |
-| single_cluster_records | 245 (23.1%) |
-| multi_cluster_records | 817 (76.9%) |
-| mean_clusters_lower_bound | 1.01 |
-| mean_clusters_upper_bound | 3.189 |
+| single_cluster_records | 227 (21.8%) |
+| multi_cluster_records | 816 (78.2%) |
+| mean_clusters_lower_bound | 1.009 |
+| mean_clusters_upper_bound | 3.228 |
 
 | Cluster | certain | upper bound |
 |---|---|---|
-| #1 | 27 (2.1%) | 774 (58.8%) |
+| #1 | 7 (0.5%) | 754 (57.3%) |
 | #2 | 4 (0.3%) | 785 (59.6%) |
-| #3 | 1 (0.1%) | 785 (59.6%) |
+| #3 | 0 (0.0%) | 785 (59.6%) |
 | #4 | 121 (9.2%) | 121 (9.2%) |
 | #5 | 0 (0.0%) | 0 (0.0%) |
 | #6 | 0 (0.0%) | 2 (0.2%) |
@@ -445,7 +440,7 @@ Records: 1317
 | #9 | 29 (2.2%) | 29 (2.2%) |
 | #10 | 0 (0.0%) | 0 (0.0%) |
 
-Records with two or more certain clusters: 33 (2.5%)
+Records with two or more certain clusters: 32 (2.4%)
 
 | Pair | n | ordering hypothesis |
 |---|---|---|
@@ -453,7 +448,6 @@ Records with two or more certain clusters: 33 (2.5%)
 | #7 + #9 | 11 | #9 → #7 |
 | #4 + #7 | 5 | #4 → #7 | #7 → #4 |
 | #1 + #4 | 1 | #1 → #4 |
-| #1 + #8 | 1 | order unknown |
 
 | attribute.availability.variety | n | DRE |
 |---|---|---|
@@ -526,59 +520,59 @@ Records: 8110
 | Threat-axis purity | n (% of records) |
 |---|---|
 | records | 8110 (100.0%) |
-| threat_bearing | 4679 (57.7%) |
-| threat_only | 4549 (56.1%) |
-| mixed_threat_and_operational | 130 (1.6%) |
-| operational_only | 1993 (24.6%) |
+| threat_bearing | 3490 (43.0%) |
+| threat_only | 3339 (41.2%) |
+| mixed_threat_and_operational | 151 (1.9%) |
+| operational_only | 3063 (37.8%) |
 | operational_only.error_or_failure | 1967 (24.3%) |
-| operational_only.abuse_of_rights | 22 (0.3%) |
-| operational_only.other_mix | 2 (0.0%) |
+| operational_only.abuse_of_rights | 1074 (13.2%) |
+| operational_only.other_mix | 20 (0.2%) |
 | out_of_scope_only | 2 (0.0%) |
-| unknown_only | 1438 (17.7%) |
+| unknown_only | 1557 (19.2%) |
 | empty | 0 (0.0%) |
 
 | Cause recoverability (threat-bearing records) | n (% of threat-bearing) |
 |---|---|
-| threat_bearing | 4679 (100.0%) |
-| resolved | 2911 (62.2%) |
-| rule_dependent | 1246 (26.6%) |
-| cause_lost | 522 (11.2%) |
-| cause_lost.malware_without_enabler | 258 (5.5%) |
-| cause_lost.credential_use_without_acquisition | 162 (3.5%) |
-| cause_lost.social_without_follow_on | 102 (2.2%) |
+| threat_bearing | 3490 (100.0%) |
+| resolved | 1659 (47.5%) |
+| rule_dependent | 1247 (35.7%) |
+| cause_lost | 584 (16.7%) |
+| cause_lost.malware_without_enabler | 261 (7.5%) |
+| cause_lost.credential_use_without_acquisition | 167 (4.8%) |
+| cause_lost.social_without_follow_on | 156 (4.5%) |
 | cause_lost.interception_without_position | 0 (0.0%) |
-| single_cluster_records | 3113 (66.5%) |
-| multi_cluster_records | 1566 (33.5%) |
-| mean_clusters_lower_bound | 1.076 |
-| mean_clusters_upper_bound | 1.774 |
+| single_cluster_records | 2024 (58.0%) |
+| multi_cluster_records | 1466 (42.0%) |
+| mean_clusters_lower_bound | 1.066 |
+| mean_clusters_upper_bound | 2.011 |
 
 | Cluster | certain | upper bound |
 |---|---|---|
-| #1 | 1340 (16.5%) | 2089 (25.8%) |
-| #2 | 120 (1.5%) | 1231 (15.2%) |
-| #3 | 12 (0.1%) | 1233 (15.2%) |
-| #4 | 397 (4.9%) | 397 (4.9%) |
+| #1 | 54 (0.7%) | 805 (9.9%) |
+| #2 | 104 (1.3%) | 1231 (15.2%) |
+| #3 | 0 (0.0%) | 1233 (15.2%) |
+| #4 | 398 (4.9%) | 398 (4.9%) |
 | #5 | 11 (0.1%) | 11 (0.1%) |
 | #6 | 0 (0.0%) | 164 (2.0%) |
-| #7 | 1281 (15.8%) | 1282 (15.8%) |
+| #7 | 1281 (15.8%) | 1285 (15.8%) |
 | #8 | 1419 (17.5%) | 1419 (17.5%) |
 | #9 | 454 (5.6%) | 462 (5.7%) |
 | #10 | 0 (0.0%) | 12 (0.1%) |
 
-Records with two or more certain clusters: 442 (5.5%)
+Records with two or more certain clusters: 336 (4.1%)
 
 | Pair | n | ordering hypothesis |
 |---|---|---|
 | #7 + #9 | 231 | #9 → #7 |
 | #4 + #9 | 159 | #9 → #4 |
 | #4 + #7 | 124 | #4 → #7 | #7 → #4 |
-| #1 + #9 | 58 | #9 → #1 |
-| #1 + #8 | 44 | order unknown |
-| #1 + #4 | 14 | #1 → #4 |
 | #8 + #9 | 12 | #9 → #8 |
-| #1 + #7 | 10 | #1 → #7 |
 | #4 + #8 | 9 | #8 → #4 |
-| #2 + #7 | 7 | #2 → #7 |
+| #5 + #7 | 7 | #5 → #7 |
+| #5 + #9 | 7 | #9 → #5 |
+| #1 + #7 | 6 | #1 → #7 |
+| #2 + #7 | 5 | #2 → #7 |
+| #1 + #4 | 3 | #1 → #4 |
 
 | attribute.availability.variety | n | DRE |
 |---|---|---|
@@ -604,8 +598,8 @@ Records with two or more certain clusters: 442 (5.5%)
 | Unknown collapse | n (% of records) |
 |---|---|
 | action_unknown | 242 (3.0%) |
-| any_unresolved_item | 2615 (32.2%) |
-| unknown_only | 1438 (17.7%) |
+| any_unresolved_item | 2610 (32.2%) |
+| unknown_only | 1557 (19.2%) |
 | unmapped_values | 0 (0.0%) |
 
 | Category | records | variety Unknown | variety Other |
@@ -635,8 +629,8 @@ Distinct action-variety signatures: 441 over 7906 (97.5%) records with at least 
 
 | ATT&CK-transitive agreement | n (% of records) |
 |---|---|
-| agree | 1732 (21.4%) |
-| subset | 284 (3.5%) |
+| agree | 1734 (21.4%) |
+| subset | 282 (3.5%) |
 | disjoint | 8 (0.1%) |
 | no-attack-edge | 6086 (75.0%) |
 
@@ -644,7 +638,6 @@ Distinct action-variety signatures: 441 over 7906 (97.5%) records with at least 
 |---|---|---|---|
 | action.malware.variety.Capture stored data | 182 | #7 | #1, #4, #5 |
 | action.malware.variety.Scan network | 105 | #7 | #1 |
-| action.hacking.variety.Forced browsing | 15 | #2 | #1, #7 |
 | action.malware.variety.Packet sniffer | 6 | #7 | #1 |
 | action.hacking.variety.Buffer overflow | 4 | #2 | #3, #7 |
 | action.hacking.variety.Cryptanalysis | 3 | #5 | #1, #7 |
@@ -658,36 +651,36 @@ Records: 1310
 | Threat-axis purity | n (% of records) |
 |---|---|
 | records | 1310 (100.0%) |
-| threat_bearing | 757 (57.8%) |
-| threat_only | 725 (55.3%) |
-| mixed_threat_and_operational | 32 (2.4%) |
-| operational_only | 403 (30.8%) |
+| threat_bearing | 412 (31.5%) |
+| threat_only | 381 (29.1%) |
+| mixed_threat_and_operational | 31 (2.4%) |
+| operational_only | 715 (54.6%) |
 | operational_only.error_or_failure | 393 (30.0%) |
-| operational_only.abuse_of_rights | 10 (0.8%) |
-| operational_only.other_mix | 0 (0.0%) |
+| operational_only.abuse_of_rights | 315 (24.0%) |
+| operational_only.other_mix | 7 (0.5%) |
 | out_of_scope_only | 0 (0.0%) |
-| unknown_only | 150 (11.5%) |
+| unknown_only | 183 (14.0%) |
 | empty | 0 (0.0%) |
 
 | Cause recoverability (threat-bearing records) | n (% of threat-bearing) |
 |---|---|
-| threat_bearing | 757 (100.0%) |
-| resolved | 559 (73.8%) |
-| rule_dependent | 15 (2.0%) |
-| cause_lost | 183 (24.2%) |
-| cause_lost.malware_without_enabler | 119 (15.7%) |
-| cause_lost.credential_use_without_acquisition | 24 (3.2%) |
-| cause_lost.social_without_follow_on | 40 (5.3%) |
+| threat_bearing | 412 (100.0%) |
+| resolved | 205 (49.8%) |
+| rule_dependent | 15 (3.6%) |
+| cause_lost | 192 (46.6%) |
+| cause_lost.malware_without_enabler | 119 (28.9%) |
+| cause_lost.credential_use_without_acquisition | 24 (5.8%) |
+| cause_lost.social_without_follow_on | 49 (11.9%) |
 | cause_lost.interception_without_position | 0 (0.0%) |
-| single_cluster_records | 673 (88.9%) |
-| multi_cluster_records | 84 (11.1%) |
-| mean_clusters_lower_bound | 1.09 |
-| mean_clusters_upper_bound | 1.124 |
+| single_cluster_records | 345 (83.7%) |
+| multi_cluster_records | 67 (16.3%) |
+| mean_clusters_lower_bound | 1.114 |
+| mean_clusters_upper_bound | 1.182 |
 
 | Cluster | certain | upper bound |
 |---|---|---|
-| #1 | 367 (28.0%) | 367 (28.0%) |
-| #2 | 5 (0.4%) | 9 (0.7%) |
+| #1 | 3 (0.2%) | 3 (0.2%) |
+| #2 | 3 (0.2%) | 9 (0.7%) |
 | #3 | 0 (0.0%) | 9 (0.7%) |
 | #4 | 64 (4.9%) | 64 (4.9%) |
 | #5 | 0 (0.0%) | 0 (0.0%) |
@@ -697,16 +690,13 @@ Records: 1310
 | #9 | 95 (7.3%) | 101 (7.7%) |
 | #10 | 0 (0.0%) | 6 (0.5%) |
 
-Records with two or more certain clusters: 71 (5.4%)
+Records with two or more certain clusters: 53 (4.0%)
 
 | Pair | n | ordering hypothesis |
 |---|---|---|
 | #4 + #9 | 32 | #9 → #4 |
 | #7 + #9 | 12 | #9 → #7 |
-| #1 + #8 | 10 | order unknown |
-| #1 + #9 | 9 | #9 → #1 |
 | #4 + #7 | 6 | #4 → #7 | #7 → #4 |
-| #1 + #4 | 1 | #1 → #4 |
 | #2 + #7 | 1 | #2 → #7 |
 | #4 + #8 | 1 | #8 → #4 |
 | #8 + #9 | 1 | #9 → #8 |
@@ -736,7 +726,7 @@ Records with two or more certain clusters: 71 (5.4%)
 |---|---|
 | action_unknown | 19 (1.5%) |
 | any_unresolved_item | 343 (26.2%) |
-| unknown_only | 150 (11.5%) |
+| unknown_only | 183 (14.0%) |
 | unmapped_values | 0 (0.0%) |
 
 | Category | records | variety Unknown | variety Other |
@@ -774,7 +764,6 @@ Distinct action-variety signatures: 151 over 1300 (99.2%) records with at least 
 | VERIS value | disagreeing records | direct | transitive |
 |---|---|---|---|
 | action.malware.variety.Capture stored data | 3 | #7 | #1, #4, #5 |
-| action.hacking.variety.Forced browsing | 2 | #2 | #1, #7 |
 | action.hacking.variety.Buffer overflow | 1 | #2 | #3, #7 |
 
 ### Stratum `sub_source:priority` — plus.sub_source = priority (selected on purpose)
@@ -784,37 +773,37 @@ Records: 602
 | Threat-axis purity | n (% of records) |
 |---|---|
 | records | 602 (100.0%) |
-| threat_bearing | 185 (30.7%) |
-| threat_only | 180 (29.9%) |
-| mixed_threat_and_operational | 5 (0.8%) |
-| operational_only | 207 (34.4%) |
+| threat_bearing | 159 (26.4%) |
+| threat_only | 155 (25.7%) |
+| mixed_threat_and_operational | 4 (0.7%) |
+| operational_only | 228 (37.9%) |
 | operational_only.error_or_failure | 206 (34.2%) |
-| operational_only.abuse_of_rights | 1 (0.2%) |
+| operational_only.abuse_of_rights | 22 (3.7%) |
 | operational_only.other_mix | 0 (0.0%) |
 | out_of_scope_only | 0 (0.0%) |
-| unknown_only | 210 (34.9%) |
+| unknown_only | 215 (35.7%) |
 | empty | 0 (0.0%) |
 
 | Cause recoverability (threat-bearing records) | n (% of threat-bearing) |
 |---|---|
-| threat_bearing | 185 (100.0%) |
-| resolved | 70 (37.8%) |
-| rule_dependent | 49 (26.5%) |
-| cause_lost | 66 (35.7%) |
-| cause_lost.malware_without_enabler | 40 (21.6%) |
-| cause_lost.credential_use_without_acquisition | 20 (10.8%) |
-| cause_lost.social_without_follow_on | 6 (3.2%) |
+| threat_bearing | 159 (100.0%) |
+| resolved | 43 (27.0%) |
+| rule_dependent | 49 (30.8%) |
+| cause_lost | 67 (42.1%) |
+| cause_lost.malware_without_enabler | 40 (25.2%) |
+| cause_lost.credential_use_without_acquisition | 21 (13.2%) |
+| cause_lost.social_without_follow_on | 6 (3.8%) |
 | cause_lost.interception_without_position | 0 (0.0%) |
-| single_cluster_records | 117 (63.2%) |
-| multi_cluster_records | 68 (36.8%) |
-| mean_clusters_lower_bound | 1.076 |
-| mean_clusters_upper_bound | 1.492 |
+| single_cluster_records | 92 (57.9%) |
+| multi_cluster_records | 67 (42.1%) |
+| mean_clusters_lower_bound | 1.069 |
+| mean_clusters_upper_bound | 1.579 |
 
 | Cluster | certain | upper bound |
 |---|---|---|
-| #1 | 39 (6.5%) | 39 (6.5%) |
-| #2 | 20 (3.3%) | 49 (8.1%) |
-| #3 | 2 (0.3%) | 49 (8.1%) |
+| #1 | 14 (2.3%) | 14 (2.3%) |
+| #2 | 18 (3.0%) | 49 (8.1%) |
+| #3 | 0 (0.0%) | 49 (8.1%) |
 | #4 | 44 (7.3%) | 44 (7.3%) |
 | #5 | 0 (0.0%) | 0 (0.0%) |
 | #6 | 0 (0.0%) | 1 (0.2%) |
@@ -823,7 +812,7 @@ Records: 602
 | #9 | 22 (3.7%) | 22 (3.7%) |
 | #10 | 0 (0.0%) | 0 (0.0%) |
 
-Records with two or more certain clusters: 26 (4.3%)
+Records with two or more certain clusters: 24 (4.0%)
 
 | Pair | n | ordering hypothesis |
 |---|---|---|
@@ -831,12 +820,10 @@ Records with two or more certain clusters: 26 (4.3%)
 | #4 + #7 | 6 | #4 → #7 | #7 → #4 |
 | #7 + #9 | 6 | #9 → #7 |
 | #1 + #4 | 2 | #1 → #4 |
-| #2 + #4 | 2 | #2 → #4 |
+| #1 + #2 | 1 | order unknown |
+| #2 + #4 | 1 | #2 → #4 |
 | #2 + #7 | 1 | #2 → #7 |
 | #2 + #9 | 1 | #9 → #2 |
-| #3 + #4 | 1 | #3 → #4 |
-| #3 + #7 | 1 | #3 → #7 |
-| #3 + #9 | 1 | #9 → #3 |
 
 | attribute.availability.variety | n | DRE |
 |---|---|---|
@@ -863,7 +850,7 @@ Records with two or more certain clusters: 26 (4.3%)
 |---|---|
 | action_unknown | 26 (4.3%) |
 | any_unresolved_item | 290 (48.2%) |
-| unknown_only | 210 (34.9%) |
+| unknown_only | 215 (35.7%) |
 | unmapped_values | 0 (0.0%) |
 
 | Category | records | variety Unknown | variety Other |
@@ -900,10 +887,8 @@ Distinct action-variety signatures: 91 over 584 (97.0%) records with at least on
 
 | VERIS value | disagreeing records | direct | transitive |
 |---|---|---|---|
-| action.hacking.variety.Forced browsing | 2 | #2 | #1, #7 |
 | action.hacking.variety.OS commanding | 2 | #2 | #1, #4, #7 |
 | action.malware.variety.Capture stored data | 2 | #7 | #1, #4, #5 |
-| action.hacking.variety.Session prediction | 1 | #2 | #1, #4 |
 | action.malware.variety.Packet sniffer | 1 | #7 | #1 |
 | action.malware.variety.Scan network | 1 | #7 | #1 |
 
@@ -914,12 +899,12 @@ Records: 25
 | Threat-axis purity | n (% of records) |
 |---|---|
 | records | 25 (100.0%) |
-| threat_bearing | 11 (44.0%) |
-| threat_only | 10 (40.0%) |
-| mixed_threat_and_operational | 1 (4.0%) |
-| operational_only | 12 (48.0%) |
+| threat_bearing | 9 (36.0%) |
+| threat_only | 9 (36.0%) |
+| mixed_threat_and_operational | 0 (0.0%) |
+| operational_only | 14 (56.0%) |
 | operational_only.error_or_failure | 12 (48.0%) |
-| operational_only.abuse_of_rights | 0 (0.0%) |
+| operational_only.abuse_of_rights | 2 (8.0%) |
 | operational_only.other_mix | 0 (0.0%) |
 | out_of_scope_only | 0 (0.0%) |
 | unknown_only | 2 (8.0%) |
@@ -927,22 +912,22 @@ Records: 25
 
 | Cause recoverability (threat-bearing records) | n (% of threat-bearing) |
 |---|---|
-| threat_bearing | 11 (100.0%) |
-| resolved | 6 (54.5%) |
+| threat_bearing | 9 (100.0%) |
+| resolved | 4 (44.4%) |
 | rule_dependent | 0 (0.0%) |
-| cause_lost | 5 (45.5%) |
-| cause_lost.malware_without_enabler | 5 (45.5%) |
+| cause_lost | 5 (55.6%) |
+| cause_lost.malware_without_enabler | 5 (55.6%) |
 | cause_lost.credential_use_without_acquisition | 0 (0.0%) |
 | cause_lost.social_without_follow_on | 0 (0.0%) |
 | cause_lost.interception_without_position | 0 (0.0%) |
-| single_cluster_records | 9 (81.8%) |
-| multi_cluster_records | 2 (18.2%) |
-| mean_clusters_lower_bound | 1.182 |
-| mean_clusters_upper_bound | 1.182 |
+| single_cluster_records | 7 (77.8%) |
+| multi_cluster_records | 2 (22.2%) |
+| mean_clusters_lower_bound | 1.222 |
+| mean_clusters_upper_bound | 1.222 |
 
 | Cluster | certain | upper bound |
 |---|---|---|
-| #1 | 2 (8.0%) | 2 (8.0%) |
+| #1 | 0 (0.0%) | 0 (0.0%) |
 | #2 | 0 (0.0%) | 0 (0.0%) |
 | #3 | 0 (0.0%) | 0 (0.0%) |
 | #4 | 0 (0.0%) | 0 (0.0%) |

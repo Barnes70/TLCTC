@@ -72,7 +72,10 @@ class MappingTests(unittest.TestCase):
         self.assertEqual(self.m.get("attribute.availability.variety.Loss")["dre"], "Av")
         self.assertEqual(self.m.get("action.error.variety.Misdelivery")["partition_row"], "error_in_use")
         self.assertEqual(self.m.get("action.misuse.variety.Unapproved software")["partition_row"], "abuse_of_rights")
-        self.assertEqual(self.m.get("action.misuse.variety.Privilege abuse")["targets"][0]["tlctc"], "#1")
+        self.assertEqual(self.m.get("action.misuse.variety.Privilege abuse")["partition_row"], "abuse_of_rights")
+        self.assertEqual(self.m.get("action.misuse.variety.Password or Session Sharing")["targets"][0]["tlctc"], "#4")
+        self.assertEqual(self.m.get("action.hacking.variety.CSRF")["targets"][0]["tlctc"], "#1")
+        self.assertEqual(self.m.get("action.hacking.variety.XSS")["mapping_type"], "conditional")
         self.assertEqual(self.m.get("action.hacking.vector.Partner")["context"]["boundary"], "@Vendor→@Org")
         self.assertEqual(self.m.get("action.unknown")["mapping_type"], "unresolved")
 

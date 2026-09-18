@@ -1,8 +1,8 @@
 """The twenty real VCDB records (CC BY-SA 4.0, see fixtures/vcdb/LICENSE.md) classify without
 error and match the golden results in fixtures/vcdb/expected.json.
 
-Regenerate the golden file on purpose only:
-    python -m cli classify tests/fixtures/vcdb -o tests/fixtures/vcdb/expected.json
+Regenerate the golden file on purpose only (delete it first, or the classifier reads it as input):
+    rm tests/fixtures/vcdb/expected.json && python -m cli classify tests/fixtures/vcdb -o tests/fixtures/vcdb/expected.json
 """
 import json
 import unittest

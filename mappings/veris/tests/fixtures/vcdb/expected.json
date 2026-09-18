@@ -8,25 +8,17 @@
       "attribute.integrity.variety.Fraudulent transaction"
     ],
     "clusters": {
-      "certain": [
-        "#1"
-      ],
+      "certain": [],
       "one_of": [],
-      "basis": {
-        "#1": [
-          "action.misuse.variety.Privilege abuse"
-        ]
-      }
+      "basis": {}
     },
-    "clusters_upper": [
-      "#1"
-    ],
+    "clusters_upper": [],
     "chains": [],
     "partition_rows": [
-      "attack"
+      "abuse_of_rights"
     ],
-    "off_axis_only": false,
-    "threat_bearing": true,
+    "off_axis_only": true,
+    "threat_bearing": false,
     "mixed": false,
     "dre": [
       "If"

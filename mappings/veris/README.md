@@ -27,13 +27,13 @@ between the mapping, the dictionary and the pinned VERIS files.
 
 | `mapping_type` | Entries | Example |
 |---|---|---|
-| `direct` — one generic vulnerability, one cluster | 60 | `action.hacking.variety.SQLi` → #2 (R-ROLE, server role) |
-| `conditional` — several clusters, a named rule decides | 6 | `action.hacking.variety.Exploit vuln` → #2 \| #3 (R-ROLE); `DoS` → #6 \| #2 \| #3 (R-FLOOD) |
-| `chain` — one cluster plus a companion step VERIS does not record | 47 | `Use of stolen creds` → `<acquisition> → #4` (R-CRED); every malware variety → `<enabler> → #7` (R-EXEC); every social variety → `#9 → <follow-on>` |
+| `direct` — one generic vulnerability, one cluster | 49 | `action.hacking.variety.SQLi` → #2 (R-ROLE, server role) |
+| `conditional` — several clusters, a named rule decides | 8 | `action.hacking.variety.Exploit vuln` → #2 \| #3 (R-ROLE); `DoS` → #6 \| #2 \| #3 (R-FLOOD); `Backdoor` → #1 \| #7 (R-EXEC) |
+| `chain` — one cluster plus a companion step VERIS does not record | 51 | `Use of stolen creds` → `<acquisition> → #4` (R-CRED); every malware variety → `<enabler> → #7` (R-EXEC); every social variety → `#9 → <follow-on>`; `RFI` → `#2 → #7` |
 | `context` — vectors: no cluster, an annotation | 65 | `action.malware.vector.Software update` → `[update]` context, R-SUPPLY; `Partner` → `@Vendor→@Org` crossing |
-| `no-cluster` — off the threat axis, partition row named | 51 | `action.error.variety.Misdelivery` → error_in_use (Axiom V); `Unapproved software` → abuse_of_rights (R-SCOPE); `Extortion` → no IT-system step |
+| `no-cluster` — off the threat axis, partition row named | 58 | `action.error.variety.Misdelivery` → error_in_use (Axiom V); `Privilege abuse` → abuse_of_rights (R-SCOPE); `Extortion` → no IT-system step |
 | `outcome` — not a cause (Axiom III) | 87 | `attribute.availability.variety.Obscuration` → DRE `Ac`; `Loss` → `Av`; action results → nothing |
-| `unresolved` — `Other` / `Unknown` | 21 | `action.hacking.variety.Unknown` → `?` in notation, excluded from statistics (R-UNRES-3) |
+| `unresolved` — `Other` / `Unknown` in a threat-bearing category | 19 | `action.hacking.variety.Unknown` → `?` in notation, excluded from statistics (R-UNRES-3) |
 
 The rules that follow from the framework and shape the table:
 
@@ -45,11 +45,17 @@ The rules that follow from the framework and shape the table:
   is #4 on its own: guessing is application.
 - **Exploit vuln needs R-ROLE.** VERIS does not record whether the flawed component served the
   attacker or consumed attacker content, so the parent value is conditional; the named children
-  are attacks on the victim's service (#2) except XSS, CSRF and open-redirect abuse (#3).
+  are attacks on the victim's service (#2), aligned with the repository's CWE mapping: XSS is
+  #2 | #3 by where the encoding flaw sits, CSRF, open-redirect abuse, forced browsing and cache
+  poisoning abuse designed functions (#1), session fixation and prediction are #4, entity
+  expansion is #6, and RFI and insecure deserialisation are #2 followed by #7.
 - **Errors and environmental events carry no cluster.** They sit on the Error in Use or Failure
-  row of the cause-side partition (Axiom V, Axiom II). In-grant misuse (`Unapproved software`,
-  `Net misuse`, …) sits on the Abuse of Rights row (R-SCOPE); `Privilege abuse` and the other
-  out-of-grant insider varieties are #1.
+  row of the cause-side partition (Axiom V, Axiom II).
+- **Misuse is Abuse of Rights.** VERIS defines misuse as entrusted resources used contrary to
+  their purpose: an entitled actor acting against the grant, which is the dictionary's own
+  Abuse of Rights example. Every misuse variety sits on that row with no cluster and no SRE
+  (R-SCOPE), except `Password or Session Sharing`, where the borrower authenticates as someone
+  else (#4). An insider reaching past the envelope is #1, but VERIS would code that as hacking.
 - **Vectors are not clusters.** `Partner` marks a sphere crossing that is #10 only at a Trust
   Acceptance Event (R-SUPPLY), otherwise transit; the mail and phone vectors mark the `[human]`
   context of a #9 step.
@@ -70,7 +76,7 @@ score_value,related_score,references,comments,organization,creation_date,last_up
 
 One row per (VERIS value, target): a conditional value has one row per alternative with the
 condition in `comments`; a chain value carries its companion in `comments`; values with no
-cluster have `tlctc_object_id = none` and the reason in `tlctc_object_name`. 344 rows, LF, no BOM.
+cluster have `tlctc_object_id = none` and the reason in `tlctc_object_name`. 346 rows, LF, no BOM.
 
 ## Classifier
 

@@ -46,7 +46,7 @@ This adds `mappings/veris-1.4.1_tlctc-2.5.csv`: a crosswalk from VERIS 1.4.1 to 
 
 TLCTC is a cause-oriented cyber threat taxonomy: ten non-overlapping clusters, each defined by the generic vulnerability an attack step exploits, with outcomes recorded separately as Data Risk Events and incidents expressed as ordered sequences of cluster steps. Its rules make the companion steps explicit that VERIS records implicitly: malware needs a delivering step before it, credential use needs an acquisition step, social engineering needs a technical follow-on.
 
-What the file contains (344 rows, 337 VERIS values, total coverage of `action.*.variety`, `action.*.vector`, `action.*.result`, `attribute.confidentiality.data_disclosure`, `attribute.integrity.variety`, `attribute.availability.variety`):
+What the file contains (346 rows, 337 VERIS values, total coverage of `action.*.variety`, `action.*.vector`, `action.*.result`, `attribute.confidentiality.data_disclosure`, `attribute.integrity.variety`, `attribute.availability.variety`):
 - `mapping_type` says what the VERIS value can establish: `direct` (one cluster), `conditional` (one row per alternative with the deciding rule and condition in `comments`, e.g. `Exploit vuln` → #2 | #3 by component role), `chain` (one cluster plus the companion step the rules require), `context` (vectors: boundary context, no cluster), `no-cluster` (errors, environmental events and in-grant misuse: operational risk, off the threat axis), `outcome` (attribute values → Data Risk Event codes C, Ii/If, Av/Ac; results → nothing), `unresolved` (Other/Unknown).
 - `comments` carries the rule applied and a one-sentence rationale for every row; `references` links the framework.
 

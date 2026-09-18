@@ -20,43 +20,38 @@
 <text x="82" y="506" text-anchor="end">#9</text>
 <text x="584" y="52" text-anchor="middle">#10</text>
 <text x="82" y="558" text-anchor="end">#10</text>
-<rect x="142" y="60" width="50" height="50" fill="rgb(253,253,254)" stroke="#ddd"/>
-<text x="167" y="90" text-anchor="middle" fill="#111">2</text>
+<rect x="142" y="60" width="50" height="50" fill="rgb(254,254,254)" stroke="#ddd"/>
+<text x="167" y="90" text-anchor="middle" fill="#111">1</text>
 <rect x="194" y="60" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
-<rect x="246" y="60" width="50" height="50" fill="rgb(241,244,250)" stroke="#ddd"/>
-<text x="271" y="90" text-anchor="middle" fill="#111">17</text>
+<rect x="246" y="60" width="50" height="50" fill="rgb(251,252,253)" stroke="#ddd"/>
+<text x="271" y="90" text-anchor="middle" fill="#111">5</text>
 <rect x="298" y="60" width="50" height="50" fill="rgb(254,254,254)" stroke="#ddd"/>
 <text x="323" y="90" text-anchor="middle" fill="#111">1</text>
 <rect x="350" y="60" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
-<rect x="402" y="60" width="50" height="50" fill="rgb(247,249,252)" stroke="#ddd"/>
-<text x="427" y="90" text-anchor="middle" fill="#111">10</text>
-<rect x="454" y="60" width="50" height="50" fill="rgb(211,222,242)" stroke="#ddd"/>
-<text x="479" y="90" text-anchor="middle" fill="#111">54</text>
-<rect x="506" y="60" width="50" height="50" fill="rgb(201,214,238)" stroke="#ddd"/>
-<text x="531" y="90" text-anchor="middle" fill="#111">67</text>
+<rect x="402" y="60" width="50" height="50" fill="rgb(250,251,253)" stroke="#ddd"/>
+<text x="427" y="90" text-anchor="middle" fill="#111">6</text>
+<rect x="454" y="60" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="60" width="50" height="50" fill="rgb(254,254,254)" stroke="#ddd"/>
+<text x="531" y="90" text-anchor="middle" fill="#111">1</text>
 <rect x="558" y="60" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
-<rect x="194" y="112" width="50" height="50" fill="rgb(254,254,254)" stroke="#ddd"/>
-<text x="219" y="142" text-anchor="middle" fill="#111">1</text>
-<rect x="246" y="112" width="50" height="50" fill="rgb(251,252,253)" stroke="#ddd"/>
-<text x="271" y="142" text-anchor="middle" fill="#111">5</text>
+<rect x="194" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="246" y="112" width="50" height="50" fill="rgb(251,252,254)" stroke="#ddd"/>
+<text x="271" y="142" text-anchor="middle" fill="#111">4</text>
 <rect x="298" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
 <rect x="350" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
-<rect x="402" y="112" width="50" height="50" fill="rgb(247,249,252)" stroke="#ddd"/>
-<text x="427" y="142" text-anchor="middle" fill="#111">9</text>
+<rect x="402" y="112" width="50" height="50" fill="rgb(249,250,253)" stroke="#ddd"/>
+<text x="427" y="142" text-anchor="middle" fill="#111">7</text>
 <rect x="454" y="112" width="50" height="50" fill="rgb(254,254,254)" stroke="#ddd"/>
 <text x="479" y="142" text-anchor="middle" fill="#111">1</text>
 <rect x="506" y="112" width="50" height="50" fill="rgb(253,253,254)" stroke="#ddd"/>
 <text x="531" y="142" text-anchor="middle" fill="#111">2</text>
 <rect x="558" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
-<rect x="246" y="164" width="50" height="50" fill="rgb(253,253,254)" stroke="#ddd"/>
-<text x="271" y="194" text-anchor="middle" fill="#111">2</text>
+<rect x="246" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
 <rect x="298" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
 <rect x="350" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
-<rect x="402" y="164" width="50" height="50" fill="rgb(253,253,254)" stroke="#ddd"/>
-<text x="427" y="194" text-anchor="middle" fill="#111">2</text>
+<rect x="402" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
 <rect x="454" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
-<rect x="506" y="164" width="50" height="50" fill="rgb(254,254,254)" stroke="#ddd"/>
-<text x="531" y="194" text-anchor="middle" fill="#111">1</text>
+<rect x="506" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
 <rect x="558" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
 <rect x="298" y="216" width="50" height="50" fill="rgb(252,253,254)" stroke="#ddd"/>
 <text x="323" y="246" text-anchor="middle" fill="#111">3</text>
