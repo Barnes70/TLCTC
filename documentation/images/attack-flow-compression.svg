@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="720" viewBox="0 0 900 720" font-family="Helvetica, Arial, sans-serif" font-size="10">
+<text x="260" y="22" font-size="14" font-weight="bold">Actions per flow (light) and derived TLCTC steps after compression (dark)</text>
+<text x="254" y="54" text-anchor="end">Turla - Carbon Emulation Plan</text>
+<rect x="260" y="44" width="520.0" height="12" fill="#dadaeb"/>
+<rect x="260" y="44" width="468.6" height="12" fill="#6a51a3"/>
+<text x="784.0" y="54">81 → 73 (15 ?)</text>
+<text x="254" y="70" text-anchor="end">Turla - Snake Emulation Plan</text>
+<rect x="260" y="60" width="475.1" height="12" fill="#dadaeb"/>
+<rect x="260" y="60" width="462.2" height="12" fill="#6a51a3"/>
+<text x="739.1" y="70">74 → 72 (9 ?)</text>
+<text x="254" y="86" text-anchor="end">Example Attack Tree</text>
+<rect x="260" y="76" width="404.4" height="12" fill="#dadaeb"/>
+<rect x="260" y="76" width="6.4" height="12" fill="#6a51a3"/>
+<text x="668.4" y="86">63 → 1 (1 ?)</text>
+<text x="254" y="102" text-anchor="end">FIN13 Case 1</text>
+<rect x="260" y="92" width="256.8" height="12" fill="#dadaeb"/>
+<rect x="260" y="92" width="269.6" height="12" fill="#6a51a3"/>
+<text x="520.8" y="102">40 → 42 (7 ?)</text>
+<text x="254" y="118" text-anchor="end">Black Basta Ransomware</text>
+<rect x="260" y="108" width="244.0" height="12" fill="#dadaeb"/>
+<rect x="260" y="108" width="211.9" height="12" fill="#6a51a3"/>
+<text x="508.0" y="118">38 → 33 (5 ?)</text>
+<text x="254" y="134" text-anchor="end">Gootloader</text>
+<rect x="260" y="124" width="231.1" height="12" fill="#dadaeb"/>
+<rect x="260" y="124" width="282.5" height="12" fill="#6a51a3"/>
+<text x="495.1" y="134">36 → 44 (2 ?)</text>
+<text x="254" y="150" text-anchor="end">MITRE NERVE</text>
+<rect x="260" y="140" width="211.9" height="12" fill="#dadaeb"/>
+<rect x="260" y="140" width="192.6" height="12" fill="#6a51a3"/>
+<text x="475.9" y="150">33 → 30 (7 ?)</text>
+<text x="254" y="166" text-anchor="end">SolarWinds</text>
+<rect x="260" y="156" width="211.9" height="12" fill="#dadaeb"/>
+<rect x="260" y="156" width="160.5" height="12" fill="#6a51a3"/>
+<text x="475.9" y="166">33 → 25 (7 ?)</text>
+<text x="254" y="182" text-anchor="end">Muddy Water</text>
+<rect x="260" y="172" width="179.8" height="12" fill="#dadaeb"/>
+<rect x="260" y="172" width="224.7" height="12" fill="#6a51a3"/>
+<text x="443.8" y="182">28 → 35 (6 ?)</text>
+<text x="254" y="198" text-anchor="end">Cobalt Kitty Campaign</text>
+<rect x="260" y="188" width="173.3" height="12" fill="#dadaeb"/>
+<rect x="260" y="188" width="186.2" height="12" fill="#6a51a3"/>
+<text x="437.3" y="198">27 → 29 (2 ?)</text>
+<text x="254" y="214" text-anchor="end">REvil</text>
+<rect x="260" y="204" width="160.5" height="12" fill="#dadaeb"/>
+<rect x="260" y="204" width="147.7" height="12" fill="#6a51a3"/>
+<text x="424.5" y="214">25 → 23 (3 ?)</text>
+<text x="254" y="230" text-anchor="end">CISA Iranian APT</text>
+<rect x="260" y="220" width="147.7" height="12" fill="#dadaeb"/>
+<rect x="260" y="220" width="128.4" height="12" fill="#6a51a3"/>
+<text x="411.7" y="230">23 → 20 (3 ?)</text>
+<text x="254" y="246" text-anchor="end">Hancitor DLL</text>
+<rect x="260" y="236" width="147.7" height="12" fill="#dadaeb"/>
+<rect x="260" y="236" width="166.9" height="12" fill="#6a51a3"/>
+<text x="411.7" y="246">23 → 26 (4 ?)</text>
+<text x="254" y="262" text-anchor="end">Ivanti Vulnerabilities</text>
+<rect x="260" y="252" width="147.7" height="12" fill="#dadaeb"/>
+<rect x="260" y="252" width="166.9" height="12" fill="#6a51a3"/>
+<text x="411.7" y="262">23 → 26 (9 ?)</text>
+<text x="254" y="278" text-anchor="end">NotPetya</text>
+<rect x="260" y="268" width="147.7" height="12" fill="#dadaeb"/>
+<rect x="260" y="268" width="166.9" height="12" fill="#6a51a3"/>
+<text x="411.7" y="278">23 → 26 (6 ?)</text>
+<text x="254" y="294" text-anchor="end">OceanLotus</text>
+<rect x="260" y="284" width="147.7" height="12" fill="#dadaeb"/>
+<rect x="260" y="284" width="141.2" height="12" fill="#6a51a3"/>
+<text x="411.7" y="294">23 → 22 (4 ?)</text>
+<text x="254" y="310" text-anchor="end">Shamoon</text>
+<rect x="260" y="300" width="147.7" height="12" fill="#dadaeb"/>
+<rect x="260" y="300" width="141.2" height="12" fill="#6a51a3"/>
+<text x="411.7" y="310">23 → 22 (1 ?)</text>
+<text x="254" y="326" text-anchor="end">Conti Ransomware</text>
+<rect x="260" y="316" width="122.0" height="12" fill="#dadaeb"/>
+<rect x="260" y="316" width="109.1" height="12" fill="#6a51a3"/>
+<text x="386.0" y="326">19 → 17 (1 ?)</text>
+<text x="254" y="342" text-anchor="end">DFIR - BumbleBee Round 2</text>
+<rect x="260" y="332" width="122.0" height="12" fill="#dadaeb"/>
+<rect x="260" y="332" width="128.4" height="12" fill="#6a51a3"/>
+<text x="386.0" y="342">19 → 20 (3 ?)</text>
+<text x="254" y="358" text-anchor="end">FIN13 Case 2</text>
+<rect x="260" y="348" width="122.0" height="12" fill="#dadaeb"/>
+<rect x="260" y="348" width="134.8" height="12" fill="#6a51a3"/>
+<text x="386.0" y="358">19 → 21 (6 ?)</text>
+<text x="254" y="374" text-anchor="end">Ragnar Locker</text>
+<rect x="260" y="364" width="122.0" height="12" fill="#dadaeb"/>
+<rect x="260" y="364" width="102.7" height="12" fill="#6a51a3"/>
+<text x="386.0" y="374">19 → 16 (3 ?)</text>
+<text x="254" y="390" text-anchor="end">WhisperGate</text>
+<rect x="260" y="380" width="122.0" height="12" fill="#dadaeb"/>
+<rect x="260" y="380" width="134.8" height="12" fill="#6a51a3"/>
+<text x="386.0" y="390">19 → 21 (3 ?)</text>
+<text x="254" y="406" text-anchor="end">Conti CISA Alert</text>
+<rect x="260" y="396" width="115.6" height="12" fill="#dadaeb"/>
+<rect x="260" y="396" width="102.7" height="12" fill="#6a51a3"/>
+<text x="379.6" y="406">18 → 16 (5 ?)</text>
+<text x="254" y="422" text-anchor="end">Maastricht University Ransomware</text>
+<rect x="260" y="412" width="115.6" height="12" fill="#dadaeb"/>
+<rect x="260" y="412" width="109.1" height="12" fill="#6a51a3"/>
+<text x="379.6" y="422">18 → 17 (3 ?)</text>
+<text x="254" y="438" text-anchor="end">OpenClaw Command &amp; Control via Prompt </text>
+<rect x="260" y="428" width="115.6" height="12" fill="#dadaeb"/>
+<rect x="260" y="428" width="6.4" height="12" fill="#6a51a3"/>
+<text x="379.6" y="438">18 → 1 (1 ?)</text>
+<text x="254" y="454" text-anchor="end">OpenClaw Command &amp; Control via Prompt </text>
+<rect x="260" y="444" width="115.6" height="12" fill="#dadaeb"/>
+<rect x="260" y="444" width="6.4" height="12" fill="#6a51a3"/>
+<text x="379.6" y="454">18 → 1 (1 ?)</text>
+<text x="254" y="470" text-anchor="end">Sony Malware</text>
+<rect x="260" y="460" width="115.6" height="12" fill="#dadaeb"/>
+<rect x="260" y="460" width="128.4" height="12" fill="#6a51a3"/>
+<text x="379.6" y="470">18 → 20 (6 ?)</text>
+<text x="254" y="486" text-anchor="end">Target Breach</text>
+<rect x="260" y="476" width="109.1" height="12" fill="#dadaeb"/>
+<rect x="260" y="476" width="109.1" height="12" fill="#6a51a3"/>
+<text x="373.1" y="486">17 → 17 (3 ?)</text>
+<text x="254" y="502" text-anchor="end">ToolShell Vulnerability in Sharepoint</text>
+<rect x="260" y="492" width="96.3" height="12" fill="#dadaeb"/>
+<rect x="260" y="492" width="115.6" height="12" fill="#6a51a3"/>
+<text x="360.3" y="502">15 → 18 (4 ?)</text>
+<text x="254" y="518" text-anchor="end">Equifax Breach (with Mitigations/Detec</text>
+<rect x="260" y="508" width="77.0" height="12" fill="#dadaeb"/>
+<rect x="260" y="508" width="57.8" height="12" fill="#6a51a3"/>
+<text x="341.0" y="518">12 → 9 (2 ?)</text>
+<text x="254" y="534" text-anchor="end">JP Morgan Breach</text>
+<rect x="260" y="524" width="77.0" height="12" fill="#dadaeb"/>
+<rect x="260" y="524" width="64.2" height="12" fill="#6a51a3"/>
+<text x="341.0" y="534">12 → 10 (5 ?)</text>
+<text x="254" y="550" text-anchor="end">CISA AA22-138B VMWare Workspace (Alt)</text>
+<rect x="260" y="540" width="70.6" height="12" fill="#dadaeb"/>
+<rect x="260" y="540" width="57.8" height="12" fill="#6a51a3"/>
+<text x="334.6" y="550">11 → 9 (3 ?)</text>
+<text x="254" y="566" text-anchor="end">CISA AA22-138B VMWare Workspace (TA2)</text>
+<rect x="260" y="556" width="70.6" height="12" fill="#dadaeb"/>
+<rect x="260" y="556" width="57.8" height="12" fill="#6a51a3"/>
+<text x="334.6" y="566">11 → 9 (3 ?)</text>
+<text x="254" y="582" text-anchor="end">SearchAwesome Adware</text>
+<rect x="260" y="572" width="70.6" height="12" fill="#dadaeb"/>
+<rect x="260" y="572" width="83.5" height="12" fill="#6a51a3"/>
+<text x="334.6" y="582">11 → 13 (3 ?)</text>
+<text x="254" y="598" text-anchor="end">SWIFT Heist</text>
+<rect x="260" y="588" width="70.6" height="12" fill="#dadaeb"/>
+<rect x="260" y="588" width="57.8" height="12" fill="#6a51a3"/>
+<text x="334.6" y="598">11 → 9 (3 ?)</text>
+<text x="254" y="614" text-anchor="end">CISA AA22-138B VMWare Workspace (TA1)</text>
+<rect x="260" y="604" width="64.2" height="12" fill="#dadaeb"/>
+<rect x="260" y="604" width="51.4" height="12" fill="#6a51a3"/>
+<text x="328.2" y="614">10 → 8 (2 ?)</text>
+<text x="254" y="630" text-anchor="end">Mac Malware Steals Crypto</text>
+<rect x="260" y="620" width="57.8" height="12" fill="#dadaeb"/>
+<rect x="260" y="620" width="70.6" height="12" fill="#6a51a3"/>
+<text x="321.8" y="630">9 → 11 (4 ?)</text>
+<text x="254" y="646" text-anchor="end">Tesla Kubernetes Breach</text>
+<rect x="260" y="636" width="57.8" height="12" fill="#dadaeb"/>
+<rect x="260" y="636" width="57.8" height="12" fill="#6a51a3"/>
+<text x="321.8" y="646">9 → 9 (2 ?)</text>
+<text x="254" y="662" text-anchor="end">Marriott Breach</text>
+<rect x="260" y="652" width="51.4" height="12" fill="#dadaeb"/>
+<rect x="260" y="652" width="38.5" height="12" fill="#6a51a3"/>
+<text x="315.4" y="662">8 → 6 (3 ?)</text>
+<text x="254" y="678" text-anchor="end">Uber Breach</text>
+<rect x="260" y="668" width="51.4" height="12" fill="#dadaeb"/>
+<rect x="260" y="668" width="51.4" height="12" fill="#6a51a3"/>
+<text x="315.4" y="678">8 → 8 (2 ?)</text>
+<text x="254" y="694" text-anchor="end">Conti PWC</text>
+<rect x="260" y="684" width="44.9" height="12" fill="#dadaeb"/>
+<rect x="260" y="684" width="51.4" height="12" fill="#6a51a3"/>
+<text x="308.9" y="694">7 → 8 (2 ?)</text>
+</svg>

@@ -122,23 +122,24 @@ class AttackMapping:
     def lookup(self, technique_id: str | None) -> dict:
         """{status: resolved|rule_dependent|preparation|unmapped|no_technique, alternatives, technique_used, raw}"""
         if not technique_id:
-            return {"status": "no_technique", "alternatives": [], "technique_used": None, "raw": None}
+            return {"status": "no_technique", "alternatives": [], "technique_used": None, "raw": None, "framework": None}
         tid = technique_id.strip().upper()
+        framework = "atlas" if tid.startswith("AML.") else "attack" if tid.startswith("T") else "other"
         used = tid
         m = self.by_id.get(tid)
         if m is None and "." in tid:
             used = tid.split(".")[0]
             m = self.by_id.get(used)
         if m is None:
-            return {"status": "unmapped", "alternatives": [], "technique_used": None, "raw": None}
+            return {"status": "unmapped", "alternatives": [], "technique_used": None, "raw": None, "framework": framework}
         raw = m.get("tlctcMapping", "")
         try:
             alts = parse_mapping(raw)
         except ParseError:
-            return {"status": "unmapped", "alternatives": [], "technique_used": used, "raw": raw}
+            return {"status": "unmapped", "alternatives": [], "technique_used": used, "raw": raw, "framework": framework}
         if not alts:
-            return {"status": "preparation", "alternatives": [], "technique_used": used, "raw": raw}
-        return {"status": "resolved" if len(alts) == 1 else "rule_dependent", "alternatives": alts, "technique_used": used, "raw": raw}
+            return {"status": "preparation", "alternatives": [], "technique_used": used, "raw": raw, "framework": framework}
+        return {"status": "resolved" if len(alts) == 1 else "rule_dependent", "alternatives": alts, "technique_used": used, "raw": raw, "framework": framework}
 
 
 def load_attack_mapping(path: str | Path | None = None) -> AttackMapping:

@@ -159,7 +159,8 @@ if (fs.existsSync(EXAMPLES)) {
 
 // ---------------------------------------------------------------- 4. study results
 let studyNote = 'no study results';
-if (fs.existsSync(RESULTS)) {
+if (!fs.existsSync(RESULTS)) fail(`${rel(RESULTS)} missing — run python integrations/attack-flow/study/run-study.py`);
+else {
   const r = readJSON(RESULTS);
   const pinnedMd = fs.readFileSync(path.join(DIR, 'PINNED.md'), 'utf8');
   const hashes = readJSON(CORPUS_HASHES);

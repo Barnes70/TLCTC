@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="404" viewBox="0 0 800 404" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<text x="150" y="22" font-size="14" font-weight="bold">Corpus flows touching each cluster (n = 41 flows, 952 actions); dark = certain, light = with rule-dependent alternatives</text>
+<text x="142" y="60" text-anchor="end">#1</text>
+<rect x="150" y="44" width="510.0" height="22" fill="#c7e9c0"/>
+<rect x="150" y="44" width="510.0" height="22" fill="#238b45"/>
+<text x="666.0" y="60">38 / 38 flows · 491 actions</text>
+<text x="142" y="94" text-anchor="end">#2</text>
+<rect x="150" y="78" width="201.3" height="22" fill="#c7e9c0"/>
+<rect x="150" y="78" width="134.2" height="22" fill="#238b45"/>
+<text x="357.3" y="94">10 / 15 flows · 13 actions</text>
+<text x="142" y="128" text-anchor="end">#3</text>
+<rect x="150" y="112" width="187.9" height="22" fill="#c7e9c0"/>
+<rect x="150" y="112" width="120.8" height="22" fill="#238b45"/>
+<text x="343.9" y="128">9 / 14 flows · 9 actions</text>
+<text x="142" y="162" text-anchor="end">#4</text>
+<rect x="150" y="146" width="375.8" height="22" fill="#c7e9c0"/>
+<rect x="150" y="146" width="362.4" height="22" fill="#238b45"/>
+<text x="531.8" y="162">27 / 28 flows · 92 actions</text>
+<text x="142" y="196" text-anchor="end">#5</text>
+<rect x="150" y="180" width="67.1" height="22" fill="#c7e9c0"/>
+<rect x="150" y="180" width="53.7" height="22" fill="#238b45"/>
+<text x="223.1" y="196">4 / 5 flows · 4 actions</text>
+<text x="142" y="230" text-anchor="end">#6</text>
+<rect x="150" y="214" width="0.0" height="22" fill="#c7e9c0"/>
+<rect x="150" y="214" width="0.0" height="22" fill="#238b45"/>
+<text x="156.0" y="230">0 / 0 flows · 0 actions</text>
+<text x="142" y="264" text-anchor="end">#7</text>
+<rect x="150" y="248" width="510.0" height="22" fill="#c7e9c0"/>
+<rect x="150" y="248" width="469.7" height="22" fill="#238b45"/>
+<text x="666.0" y="264">35 / 38 flows · 259 actions</text>
+<text x="142" y="298" text-anchor="end">#8</text>
+<rect x="150" y="282" width="0.0" height="22" fill="#c7e9c0"/>
+<rect x="150" y="282" width="0.0" height="22" fill="#238b45"/>
+<text x="156.0" y="298">0 / 0 flows · 0 actions</text>
+<text x="142" y="332" text-anchor="end">#9</text>
+<rect x="150" y="316" width="255.0" height="22" fill="#c7e9c0"/>
+<rect x="150" y="316" width="255.0" height="22" fill="#238b45"/>
+<text x="411.0" y="332">19 / 19 flows · 31 actions</text>
+<text x="142" y="366" text-anchor="end">#10</text>
+<rect x="150" y="350" width="67.1" height="22" fill="#c7e9c0"/>
+<rect x="150" y="350" width="40.3" height="22" fill="#238b45"/>
+<text x="223.1" y="366">3 / 5 flows · 5 actions</text>
+</svg>

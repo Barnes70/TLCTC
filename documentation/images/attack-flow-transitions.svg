@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="620" viewBox="0 0 650 620" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<text x="90" y="24" font-size="14" font-weight="bold">Cluster transitions along corpus flows (row = from, column = to; classified steps only)</text>
+<text x="116" y="52" text-anchor="middle">#1</text>
+<text x="82" y="90" text-anchor="end">#1</text>
+<text x="168" y="52" text-anchor="middle">#2</text>
+<text x="82" y="142" text-anchor="end">#2</text>
+<text x="220" y="52" text-anchor="middle">#3</text>
+<text x="82" y="194" text-anchor="end">#3</text>
+<text x="272" y="52" text-anchor="middle">#4</text>
+<text x="82" y="246" text-anchor="end">#4</text>
+<text x="324" y="52" text-anchor="middle">#5</text>
+<text x="82" y="298" text-anchor="end">#5</text>
+<text x="376" y="52" text-anchor="middle">#6</text>
+<text x="82" y="350" text-anchor="end">#6</text>
+<text x="428" y="52" text-anchor="middle">#7</text>
+<text x="82" y="402" text-anchor="end">#7</text>
+<text x="480" y="52" text-anchor="middle">#8</text>
+<text x="82" y="454" text-anchor="end">#8</text>
+<text x="532" y="52" text-anchor="middle">#9</text>
+<text x="82" y="506" text-anchor="end">#9</text>
+<text x="584" y="52" text-anchor="middle">#10</text>
+<text x="82" y="558" text-anchor="end">#10</text>
+<rect x="90" y="60" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="142" y="60" width="50" height="50" fill="rgb(250,252,250)" stroke="#ddd"/>
+<text x="167" y="90" text-anchor="middle" fill="#111">4</text>
+<rect x="194" y="60" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="246" y="60" width="50" height="50" fill="rgb(201,225,206)" stroke="#ddd"/>
+<text x="271" y="90" text-anchor="middle" fill="#111">43</text>
+<rect x="298" y="60" width="50" height="50" fill="rgb(251,252,251)" stroke="#ddd"/>
+<text x="323" y="90" text-anchor="middle" fill="#111">3</text>
+<rect x="350" y="60" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="60" width="50" height="50" fill="rgb(35,135,55)" stroke="#ddd"/>
+<text x="427" y="90" text-anchor="middle" fill="#fff">177</text>
+<rect x="454" y="60" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="60" width="50" height="50" fill="rgb(253,254,253)" stroke="#ddd"/>
+<text x="531" y="90" text-anchor="middle" fill="#111">1</text>
+<rect x="558" y="60" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="90" y="112" width="50" height="50" fill="rgb(247,250,248)" stroke="#ddd"/>
+<text x="115" y="142" text-anchor="middle" fill="#111">6</text>
+<rect x="142" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="194" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="246" y="112" width="50" height="50" fill="rgb(253,254,253)" stroke="#ddd"/>
+<text x="271" y="142" text-anchor="middle" fill="#111">1</text>
+<rect x="298" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="350" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="454" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="558" y="112" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="90" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="142" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="194" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="246" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="298" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="350" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="164" width="50" height="50" fill="rgb(243,248,244)" stroke="#ddd"/>
+<text x="427" y="194" text-anchor="middle" fill="#111">9</text>
+<rect x="454" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="558" y="164" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="90" y="216" width="50" height="50" fill="rgb(169,208,177)" stroke="#ddd"/>
+<text x="115" y="246" text-anchor="middle" fill="#111">69</text>
+<rect x="142" y="216" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="194" y="216" width="50" height="50" fill="rgb(253,254,253)" stroke="#ddd"/>
+<text x="219" y="246" text-anchor="middle" fill="#111">1</text>
+<rect x="246" y="216" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="298" y="216" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="350" y="216" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="216" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="454" y="216" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="216" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="558" y="216" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="90" y="268" width="50" height="50" fill="rgb(253,254,253)" stroke="#ddd"/>
+<text x="115" y="298" text-anchor="middle" fill="#111">1</text>
+<rect x="142" y="268" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="194" y="268" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="246" y="268" width="50" height="50" fill="rgb(253,254,253)" stroke="#ddd"/>
+<text x="271" y="298" text-anchor="middle" fill="#111">1</text>
+<rect x="298" y="268" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="350" y="268" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="268" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="454" y="268" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="268" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="558" y="268" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="90" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="142" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="194" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="246" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="298" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="350" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="454" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="558" y="320" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="90" y="372" width="50" height="50" fill="rgb(78,158,94)" stroke="#ddd"/>
+<text x="115" y="402" text-anchor="middle" fill="#fff">142</text>
+<rect x="142" y="372" width="50" height="50" fill="rgb(252,253,252)" stroke="#ddd"/>
+<text x="167" y="402" text-anchor="middle" fill="#111">2</text>
+<rect x="194" y="372" width="50" height="50" fill="rgb(252,253,252)" stroke="#ddd"/>
+<text x="219" y="402" text-anchor="middle" fill="#111">2</text>
+<rect x="246" y="372" width="50" height="50" fill="rgb(240,246,241)" stroke="#ddd"/>
+<text x="271" y="402" text-anchor="middle" fill="#111">12</text>
+<rect x="298" y="372" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="350" y="372" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="372" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="454" y="372" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="372" width="50" height="50" fill="rgb(236,244,238)" stroke="#ddd"/>
+<text x="531" y="402" text-anchor="middle" fill="#111">15</text>
+<rect x="558" y="372" width="50" height="50" fill="rgb(252,253,252)" stroke="#ddd"/>
+<text x="583" y="402" text-anchor="middle" fill="#111">2</text>
+<rect x="90" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="142" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="194" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="246" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="298" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="350" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="454" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="558" y="424" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="90" y="476" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="142" y="476" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="194" y="476" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="246" y="476" width="50" height="50" fill="rgb(252,253,252)" stroke="#ddd"/>
+<text x="271" y="506" text-anchor="middle" fill="#111">2</text>
+<rect x="298" y="476" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="350" y="476" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="476" width="50" height="50" fill="rgb(222,237,225)" stroke="#ddd"/>
+<text x="427" y="506" text-anchor="middle" fill="#111">26</text>
+<rect x="454" y="476" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="476" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="558" y="476" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="90" y="528" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="142" y="528" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="194" y="528" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="246" y="528" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="298" y="528" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="350" y="528" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="402" y="528" width="50" height="50" fill="rgb(250,252,250)" stroke="#ddd"/>
+<text x="427" y="558" text-anchor="middle" fill="#111">4</text>
+<rect x="454" y="528" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="506" y="528" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+<rect x="558" y="528" width="50" height="50" fill="rgb(255,255,255)" stroke="#ddd"/>
+</svg>

@@ -41,7 +41,7 @@ def classify_actions(flow: Flow, mapping: AttackMapping) -> dict[str, dict]:
         r = mapping.lookup(a.technique_id)
         out[aid] = {
             "action_id": aid, "name": a.name, "technique_id": a.technique_id, "tactic_id": a.tactic_id,
-            "status": r["status"], "technique_used": r["technique_used"], "mapping": r["raw"],
+            "status": r["status"], "technique_used": r["technique_used"], "mapping": r["raw"], "framework": r.get("framework"),
             "alternatives": r["alternatives"],
             "clusters_certain": r["alternatives"][0] if r["status"] == "resolved" else [],
             "clusters_candidates": sorted({c for alt in r["alternatives"] for c in alt}, key=lambda s: int(s[1:])) if r["status"] == "rule_dependent" else [],
@@ -108,9 +108,13 @@ def derive_path(flow: Flow, per_action: dict[str, dict]) -> dict:
 
 
 def render_notation(steps: list[dict]) -> str:
+    """`#N` for a classified step, `?` for one unresolved action, `…` for a run of several unresolved actions (a gap)."""
     parts = []
     for i, s in enumerate(steps):
-        token = s["cluster"] if s["kind"] == "classified" else "?"
+        if s["kind"] == "classified":
+            token = s["cluster"]
+        else:
+            token = "…" if s.get("count", 1) > 1 else "?"
         parts.append(token)
         if i < len(steps) - 1:
             dt = s.get("delta_t_to_next")
@@ -190,6 +194,8 @@ def summarize(results: list[dict]) -> dict:
             "conditions": sum(r["counts"]["conditions"] for r in results), "operators": sum(r["counts"]["operators"] for r in results),
             "flows_with_cycle": cell(sum(1 for r in results if r["path"]["has_cycle"]), nf),
             "flows_whose_first_step_is_unresolved": cell(sum(1 for r in results if not r["entry_is_first_step"]), nf),
+            "actions_with_atlas_technique": cell(sum(1 for r in results for a in r["actions"] if a.get("framework") == "atlas"), na),
+            "flows_using_atlas": cell(sum(1 for r in results if any(a.get("framework") == "atlas" for a in r["actions"])), nf),
             "delta_t_edges": cell(sum(r["delta_t_edges"] for r in results), sum(max(r["steps_raw"] - 1, 0) for r in results)),
         },
         "action_status": {k: cell(status.get(k, 0), na) for k in ("resolved", "rule_dependent", "preparation", "unmapped", "no_technique")},
