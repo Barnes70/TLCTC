@@ -38,6 +38,13 @@ triggers, crafted assistant links, exposed AI services, …) and three ids that 
 labels each row, so it serves both the current release and the STIX consumers, and the validator
 reports drift against either pin when one is refreshed.
 
+The `tactics` of every current technique are the v2026.09 `achieves` relationships of the YAML
+(the validator enforces this); the three retired ids keep the STIX tactic set. Five techniques
+carry tactics the STIX distribution does not: `AML.T0012` and `AML.T0053` gained Lateral Movement,
+`AML.T0020` dropped Resource Development, and `AML.T0065` / `AML.T0066` moved from Resource
+Development to `AML.TA0001`, which v2026.09 renamed from *AI Attack Staging* to *AI Attack
+Adaptation* (the STIX bundle still uses the old name).
+
 ## Notation
 
 Same as the ATT&CK mapping: `#N` a cluster, `A → B` a sequence (A enables B), `A | B` alternatives

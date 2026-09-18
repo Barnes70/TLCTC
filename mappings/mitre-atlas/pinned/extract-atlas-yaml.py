@@ -15,7 +15,14 @@ src, out = sys.argv[1], sys.argv[2]
 raw = open(src, "rb").read()
 doc = yaml.safe_load(raw.decode("utf-8"))
 
-tactic_ids = {t["id"] for t in doc.get("tactics", []) if isinstance(t, dict)}
+def entries(section):
+    """Format 6 keeps tactics / techniques / relationships as maps keyed by id; older layouts used lists."""
+    if isinstance(section, dict):
+        return [v for v in section.values() if isinstance(v, dict)]
+    return [v for v in (section or []) if isinstance(v, dict)]
+
+
+tactic_ids = {t["id"] for t in entries(doc.get("tactics")) if isinstance(t.get("id"), str)}
 techniques = {}
 
 
@@ -40,9 +47,21 @@ def walk(o):
 
 
 walk(doc)
-# technique → tactic links may live in relationships rather than on the technique
-for r in doc.get("relationships", []) or []:
-    if not isinstance(r, dict):
+# technique → tactic links live in relationships rather than on the technique: in format 6 the section is a
+# map keyed by technique id whose values group `achieves` / `specializes` lists of {source, target} entries.
+def relationship_entries(section):
+    for e in entries(section):
+        if "source" in e or "target" in e:
+            yield e
+        for v in e.values():
+            if isinstance(v, list):
+                for r in v:
+                    if isinstance(r, dict):
+                        yield r
+
+
+for r in relationship_entries(doc.get("relationships")):
+    if r.get("relationship-type") not in (None, "achieves"):
         continue
     s, t = r.get("source"), r.get("target")
     s = s.get("id") if isinstance(s, dict) else s

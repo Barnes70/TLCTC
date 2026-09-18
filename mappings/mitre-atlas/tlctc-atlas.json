@@ -124,7 +124,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "Open-source reconnaissance held by @External sources: no boundary crossing into the victim domain and no exploited generic vulnerability (N/A, as for ATT&CK T1593/T1589).",
       "techniqueDescription": "Adversaries may search public internet-scan services to identify a victim's exposed AI infrastructure. These services, such as Shodan and Censys, continuously scan the internet and publish the active IP addresses, hostnames, open ports, and service banners, which adversaries can query without interacting with the target directly. \n\nInformation gathered this way may also reveal candidates for follow-on [Active Scanning](/techniques/AML.T0006) to confirm that services remain reachable, to probe for misconfigurations or unauthorized endpoints. It may also inform later initial access attempts such as [Exploit Public-Facing Application](/techniques/AML.T0049). Unlike [Active Scanning](/techniques/AML.T0006), this technique relies on third-party scan data and involves no direct interaction with the victim system.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0002"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0000.003",
       "atlasStatus": "current",
@@ -355,7 +357,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Enumerating the resources a victim has deployed on an agentic or SaaS platform uses the platform's designed listing and metadata functions: #1, reconnaissance carried out as function abuse (as ATT&CK T1595).",
       "techniqueDescription": "Adversaries may directly probe an agentic or SaaS platform to enumerate the resources a specific victim has deployed on it. Platforms frequently host AI agents behind predictable URL structures derived from identifiers such as environment, tenant, resource-group, or agent names, and default out-of-the-box deployment configurations keep these conventions consistent across victims. Adversaries can learn these conventions from public sources such as vendor documentation, code repositories and actual hosted resources, then fuzz or brute-force the derived namespace to discover live AI agents, endpoints, and associated metadata. Discovered resources can be used to identify targets for further access, collection, or attack adaptation.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0002"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0006.000",
       "atlasStatus": "current",
@@ -370,7 +374,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Querying a hosting platform's documented or undocumented metadata APIs is use of designed, if unadvertised, functions: #1.",
       "techniqueDescription": "Adversaries may query documented or undocumented APIs in agentic SaaS hosting platforms to uncover agentic targets. SaaS and agentic platforms can expose provider control-plane or identity APIs that return tenant, environment, or deployment information IDs, including for resources that are misconfigured or unintentionally accessible by unauthenticated users. \n\nAttackers have been seen abusing this type of functionality to perform information gathering on SaaS platforms, for example via AADInternals' OSINT page,[[aadinternals]] an OSINT online tool showcasing an undocumented API reconnaissance method for Entra ID. This undocumented Power Platform API could be used to uncover environment IDs, which may subsequently be used to scan for public agents. Following the identified abuse, required authentication was added to the tool.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0002"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0006.001",
       "atlasStatus": "current",
@@ -385,7 +391,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Scanning ports and services to find deployed AI backends probes the victim's exposed functions: #1 (as ATT&CK T1595).",
       "techniqueDescription": "Adversaries may scan network ports and services to identify deployed AI backends, model-serving endpoints, and AI agent infrastructure reachable over the internet. Self-hosted AI runtimes typically listen on predictable, well-known ports and expose standard API paths, allowing adversaries to efficiently locate candidate hosts and infer the platform running on them. \n\nAfter identifying candidate hosts, adversaries can interact with them directly to confirm live AI services, fingerprint the software stack, and determine version and configuration details. This information can be used to select exploitable targets and tailor subsequent access attempts.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0002"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0006.002",
       "atlasStatus": "current",
@@ -400,7 +408,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Sending crafted inputs to public trigger channels (mailboxes, webhooks, chat endpoints) to see whether an agent reacts uses those channels as designed: #1. A probe that already carries instructions is prompt injection, also #1.",
       "techniqueDescription": "Adversaries may send crafted inputs to potential public triggers, such as email addresses, webhooks, or messaging channels, to elicit a response that indicates an invocation of agentic activity. The nature of the response and its content can often reveal agent-managed accounts and expose the additional agentic attack surface. Identified triggers can be used to directly attack the agent.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0002"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0006.003",
       "atlasStatus": "current",
@@ -777,7 +787,8 @@
       "techniqueDescription": "Adversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access.\nCredentials may take the form of usernames and passwords of individual user accounts or API keys that provide access to various AI resources and services.\n\nCompromised credentials may provide access to additional AI artifacts and allow the adversary to perform [Discover AI Artifacts](/techniques/AML.T0007).\nCompromised credentials may also grant an adversary increased privileges such as write access to AI artifacts used during development or production.",
       "tactics": [
         "AML.TA0004",
-        "AML.TA0012"
+        "AML.TA0012",
+        "AML.TA0015"
       ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0012",
@@ -922,7 +933,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "Attacker-side preparation in the @AttackerInfra sphere: no interaction with a victim system and no generic vulnerability exploited. Threat potential, not a threat step (N/A, as for the ATT&CK Reconnaissance and Resource Development techniques).",
       "techniqueDescription": "Adversaries may search for and obtain exploits to support their operations. An exploit takes advantage of a bug or vulnerability in order to cause unintended or unanticipated behavior to occur on computer hardware or software. Exploits may be downloaded from public repositories, acquired from private sources, purchased, stolen, or obtained from vulnerability research and exploit-sharing communities. An obtained exploit may be used without modification or serve as input to later adaptation or development.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0003"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0016.003",
       "atlasStatus": "current",
@@ -937,7 +950,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "Attacker-side preparation in the @AttackerInfra sphere: no interaction with a victim system and no generic vulnerability exploited. Threat potential, not a threat step (N/A, as for the ATT&CK Reconnaissance and Resource Development techniques).",
       "techniqueDescription": "Adversaries may search for and obtain tools extend the capabilities of an AI agent. These capabilities may allow an agent to interact with operating systems, browsers, networks, cloud services, data stores, software repositories, identity systems, or other external resources.\n\nAI agent tools may be distributed as Model Context Protocol servers, plugins, skills, connectors, function libraries, computer-use adapters, execution brokers, remote APIs, or similar integrations. Adversaries may obtain legitimate tools and configure them for malicious use, acquire modified or purpose-built tools, or combine multiple integrations into an operational toolset.\n\nAgent tools may expose model-visible descriptions and executable interfaces that influence which capabilities an agent selects and how it invokes them. Obtaining these tools may give an agent access to resources, credentials, or actions that are unavailable through model inference alone.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0003"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0016.004",
       "atlasStatus": "current",
@@ -988,7 +1003,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "An attacker's autonomous agent developing or adapting an exploit is capability development on the attacker's side; the agent is attacker tooling, not a victim system. The exploit becomes a step when it is used (#2 or #3 by R-ROLE).",
       "techniqueDescription": "An autonomous AI agent may identify a software vulnerability and develop or materially adapt an exploit capability with limited human direction. The agent may analyze source code, documentation, service behavior, and error responses to infer a vulnerability and the conditions required to exploit it.\n\nThe agent may formulate and test vulnerability hypotheses, generate probes or payloads, interpret the results, and revise its approach through repeated action-observation cycles. It may combine multiple weaknesses into an exploit chain or package the resulting capability for later use. Validation may establish that the exploit produces the intended access, code execution, or other technical effect. The vulnerability may be publicly known or previously unknown.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0003"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0017.001",
       "atlasStatus": "current",
@@ -1003,7 +1020,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "Attacker-side preparation in the @AttackerInfra sphere: no interaction with a victim system and no generic vulnerability exploited. Threat potential, not a threat step (N/A, as for the ATT&CK Reconnaissance and Resource Development techniques).",
       "techniqueDescription": "Adversaries may develop or materially adapt tools, integrations, or tool servers designed to extend the capabilities of an AI agent. These capabilities may allow an agent to interact with operating systems, browsers, networks, cloud services, data stores, software repositories, identity systems, or other external resources.\n\nAI agent tools may be implemented as Model Context Protocol servers, plugins, skills, connectors, function libraries, computer-use adapters, execution brokers, remote APIs, or similar model-callable interfaces. Development may include creating executable functionality, model-visible tool descriptions, procedural instructions, input schemas, authentication methods, permission handling, or packaging needed to make a capability available to an agent.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0003"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0017.002",
       "atlasStatus": "current",
@@ -1094,7 +1113,10 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Editing prompt templates, role delimiters, embedded instructions or tool-call formats with access already obtained uses the designed configuration functions: #1, with a Data Risk Event Ii on the prompt-construction logic.",
       "techniqueDescription": "Adversaries may modify templates, role delimiters, embedded system instructions, tokenizer settings, tool-call formatting, or other artifact-bundled logic that constructs the context sent to an AI model. Model file formats such as GGUF can package this logic alongside model weights in a single distributable artifact. A compatible inference runtime may interpret the modified logic during future inference requests, enabling persistent covert instruction injection, altered instruction precedence, redirected tool use, or manipulated model output without changing model weights.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0001",
+        "AML.TA0006"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0018.003",
       "atlasStatus": "current",
@@ -1128,7 +1150,6 @@
       "mappingRationale": "Poisoning training data is either writing into a training pipeline the attacker can already reach through designed functions (#1: an upload, labelling or feedback function used against its purpose) or publishing data the victim ingests as trusted (#10 at the Trust Acceptance Event, R-SUPPLY). The effect on the model is a Data Risk Event Ii, never a cluster.",
       "techniqueDescription": "Adversaries may attempt to poison datasets used by an AI model by modifying the underlying data or its labels.\nThis allows the adversary to embed vulnerabilities in AI models trained on the data that may not be easily detectable.\nData poisoning attacks may or may not require modifying the labels.\nThe embedded vulnerability is activated at a later time by data samples with an [Insert Backdoor Trigger](/techniques/AML.T0043.004)\n\nPoisoned data can be introduced via [AI Supply Chain Compromise](/techniques/AML.T0010) or the data may be poisoned after the adversary gains [Initial Access](/tactics/AML.TA0004) to the system.",
       "tactics": [
-        "AML.TA0003",
         "AML.TA0006"
       ],
       "isSubtechnique": false,
@@ -1907,7 +1928,8 @@
       "techniqueDescription": "Adversaries may use their access to an AI agent to invoke tools the agent has access to. LLMs are often connected to other services or resources via tools to increase their capabilities. Tools may include integrations with other applications, access to public or private data sources, and the ability to execute code.\n\nThis may allow adversaries to execute API calls to integrated applications or services, providing the adversary with increased privileges on the system. Adversaries may take advantage of connected data sources to retrieve sensitive information. They may also use an LLM integrated with a command or script interpreter to execute arbitrary instructions.\n\nAI agents may be configured to have access to tools that are not directly accessible by users. Adversaries may abuse this to gain access to tools they otherwise wouldn't be able to use.",
       "tactics": [
         "AML.TA0005",
-        "AML.TA0012"
+        "AML.TA0012",
+        "AML.TA0015"
       ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0053",
@@ -2124,7 +2146,7 @@
       "mappingRationale": "Attacker-side preparation in the @AttackerInfra sphere: no interaction with a victim system and no generic vulnerability exploited. Threat potential, not a threat step (N/A, as for the ATT&CK Reconnaissance and Resource Development techniques).",
       "techniqueDescription": "Adversaries may use their acquired knowledge of the target generative AI system to craft prompts that bypass its defenses and allow malicious instructions to be executed.\n\nThe adversary may iterate on the prompt to ensure that it works as-intended consistently.",
       "tactics": [
-        "AML.TA0003"
+        "AML.TA0001"
       ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0065",
@@ -2142,7 +2164,7 @@
       "mappingRationale": "Attacker-side preparation in the @AttackerInfra sphere: no interaction with a victim system and no generic vulnerability exploited. Threat potential, not a threat step (N/A, as for the ATT&CK Reconnaissance and Resource Development techniques).",
       "techniqueDescription": "Adversaries may write content designed to be retrieved by user queries and influence a user of the system in some way. This abuses the trust the user has in the system.\n\nThe crafted content can be combined with a prompt injection. It can also stand alone in a separate document or email. The adversary must get the crafted content into the victim\\u0027s database, such as a vector database used in a retrieval augmented generation (RAG) system. This may be accomplished via cyber access, or by abusing the ingestion mechanisms common in RAG systems (see [RAG Poisoning](/techniques/AML.T0070)).\n\nLarge language models may be used as an assistant to aid an adversary in crafting content.",
       "tactics": [
-        "AML.TA0003"
+        "AML.TA0001"
       ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0066",
@@ -2844,7 +2866,9 @@
       "tlctcMappingName": "Identity Theft (#4)",
       "mappingRationale": "ATLAS mirrors ATT&CK T1550.004 (Use Alternate Authentication Material: Web Session Cookie) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Web session cookies are identity artifacts that prove an authenticated session. A stolen session cookie presented to an AI-enabled application authenticates as its owner.",
       "techniqueDescription": "Adversaries may use stolen web session cookies to authenticate to AI-enabled applications and supporting services as another user. This technique may bypass some multi-factor authentication controls because the session represented by the cookie has already been authenticated.\n\nAuthentication cookies are commonly used by web applications and cloud-based services after a user has authenticated, allowing the user to continue using the service without repeatedly passing credentials. These cookies may remain valid for extended periods of time. After obtaining a cookie through [Steal Web Session Cookie](/techniques/AML.T0103), an adversary may import the cookie into a browser or automated client they control and access the corresponding application as the victim while the session remains active.\n\nIn attacks on AI systems, web session cookies may grant access to AI chat histories, AI agent control panels, model provider dashboards, customer support systems, retrieval or knowledge management interfaces, or AI DevOps resources. If the stolen cookie belongs to an operator, support agent, developer, or administrator, the adversary may be able to view sensitive conversations, manipulate agent configuration, access private data available through AI tools, or perform actions with the victim account's permissions.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0015"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0091.001",
       "atlasStatus": "current",
@@ -3220,7 +3244,9 @@
       "tlctcMappingName": "Supply Chain Attack (#10) | Abuse of Functions (#1)",
       "mappingRationale": "Poisoning a tool's model-visible definition or instructions is an indirect prompt injection carried by the tool: #10 where the poisoned tool was adopted from a registry or marketplace (the Trust Acceptance Event, R-SUPPLY), #1 where a tool already in use was modified with access held; the agent then follows the instructions through its designed tool-use function.",
       "techniqueDescription": "Adversaries may poison the model-visible definition or operational instructions of an AI agent tool to manipulate how an agent interprets, selects, or invokes the tool. The poisoned content may be contained in tool descriptions, docstrings, parameter names, help text, input or output schemas, annotations, examples, manifests, skill instruction files, or other static content used to explain a tool's capabilities to the model.\n\nMalicious instructions in this layer may direct the agent to collect additional data, populate hidden or unnecessary parameters, conceal actions from the user, or invoke other tools. Because an agent may receive a more complete representation of a tool than is shown in the user interface, the model may process malicious instructions that are invisible or only partially visible to a human reviewer[[invariant-tool-poisoning]].\n\nDefinition poisoning may also be used for tool shadowing, in which the definition of one malicious tool contains instructions that alter how the agent selects or invokes another trusted tool. The poisoned tool may not need to be invoked for its definition to influence the agent if definitions from multiple connected tools are included in the same model context[[invariant-tool-poisoning]].",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0006"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0110.000",
       "atlasStatus": "current",
@@ -3235,7 +3261,9 @@
       "tlctcMappingName": "(Supply Chain Attack (#10) → Malware (#7)) | (Abuse of Functions (#1) → Malware (#7))",
       "mappingRationale": "Poisoning a tool's executable implementation makes ordinary invocation run attacker code: the adoption of the tool is #10 at the Trust Acceptance Event (or #1 where a tool in place was modified), and the code executing on invocation is #7 (R-EXEC).",
       "techniqueDescription": "Adversaries may poison the executable implementation of an AI agent tool so that normal tool invocation produces unauthorized behavior or hidden side effects. The tool may continue to provide its represented functionality while also accessing additional data, modifying requests, changing recipients or destinations, executing unauthorized commands, weakening security controls, or performing covert data exfiltration.\n\nImplementation poisoning does not require the model to interpret or follow malicious instructions. The adversarial effect is produced by executable logic when the agent or user invokes the tool. For example, a poisoned email tool may send the requested message while silently adding an adversary-controlled blind-copy recipient. A file-processing tool may return the requested result while also transmitting the source file to an external service.\n\nImplementation poisoning may be introduced before publication, through compromise of a tool's source repository or build process, or through a malicious update after users have adopted a benign version. Installed copies may continue to exhibit the poisoned behavior even after the malicious package or remote listing is removed[[koi-postmark]].",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0006"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0110.001",
       "atlasStatus": "current",
@@ -3250,7 +3278,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Instructions smuggled into a tool's runtime response reach the model through the channel it is designed to read: indirect prompt injection through the tool, #1.",
       "techniqueDescription": "Adversaries may poison the runtime response channel of a malicious or compromised AI agent tool by deliberately returning content intended to influence the model's subsequent reasoning, decisions, or actions. Poisoned responses may contain malicious instructions, deceptive data, fabricated errors, embedded resources, or other content designed to be treated as trusted context after an approved tool invocation.\n\nBecause tool responses are commonly incorporated into the model's context, an adversary may use them to direct the agent to invoke additional tools, access sensitive information, alter an ongoing workflow, or transmit data to an adversary-controlled destination. Poisoned instructions may be mixed with legitimate results so that the tool appears to operate normally. Responses may use structured or unstructured content, including text, images, resource links, embedded resources, or schema-conforming fields [[mcp-tools]][[owasp-tool-poisoning]].",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0006"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0110.002",
       "atlasStatus": "current",
@@ -3337,7 +3367,9 @@
       "tlctcMappingName": "Abuse of Functions (#1) | Malware (#7)",
       "mappingRationale": "ATLAS mirrors ATT&CK T1539 (Steal Web Session Cookie) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Stealing web session cookies is **acquisition**. Cookies for AI-enabled applications and the services behind them.",
       "techniqueDescription": "Adversaries may steal web application or service session cookies used to authenticate users to AI-enabled systems, AI services, or supporting enterprise applications.\n\nWeb applications often use session cookies as authentication tokens after a user has signed in. These cookies may remain valid for extended periods of time, even when the application is not actively being used. In AI systems, session cookies may provide access to chat interfaces, AI agents, AI service consoles, customer support platforms, model management dashboards, or other tools connected to sensitive data and workflows.\n\nAdversaries may obtain session cookies from browser storage, process memory, network traffic, or applications that store authentication material in memory. They may also steal cookies by injecting malicious JavaScript into AI-rendered content, abusing unsafe rendering of LLM outputs, or tricking users or AI operators into opening poisoned content that executes in their browser.\n\nIn attacks on AI systems, session cookie theft can allow adversaries to bypass normal authentication flows and gain access to privileged AI-enabled applications without knowing the victim's username, password, or MFA secret. Stolen cookies may then be used with [Use Alternate Authentication Material: Web Session Cookie](/techniques/AML.T0091.001) to access the corresponding service as the victim.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0013"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0113",
       "atlasStatus": "current",
@@ -3352,7 +3384,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "ATLAS mirrors ATT&CK T1102 (Web Service) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Web Service C2: attacker uses a legitimate third-party web service (Twitter/X, GitHub Gists, Pastebin, Discord, cloud storage) as a relay or dead drop. The web interface of an AI service used as a covert channel through its designed chat or completion functions.",
       "techniqueDescription": "Adversaries may communicate with compromised systems by abusing the web interface of an AI service as an intermediary command-and-control relay. Instead of connecting directly to attacker-controlled infrastructure or using an AI provider's API, malware may open or automate a browser, embedded browser, or WebView component to interact with a public AI assistant.\n\nThe malware may prompt the AI assistant to fetch an attacker-controlled URL, include victim data in URL parameters or prompt content, and return attacker-supplied content through the AI assistant's response. The implant can then parse the response and execute embedded instructions.\n\nThis technique is especially useful when an AI web interface permits anonymous or unauthenticated browsing, summarization, or URL-fetch behavior. In those cases, adversaries may avoid controls that depend on API keys, service accounts, user identities, or revocable credentials.\n\nThis technique allows command-and-control traffic to blend into apparently legitimate AI web traffic to trusted service domains. In this pattern, the AI service acts as a proxy between the compromised system and attacker-controlled infrastructure, shifting detection from API key and account monitoring toward browser automation, prompt content, URL-fetch behavior, and AI service telemetry.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0014"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0114",
       "atlasStatus": "current",
@@ -3367,7 +3401,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "Publishing poisoned AI artefacts (datasets, models, agent tools) through public or shared channels is attacker-side staging; the step is recorded when a victim adopts the artefact as trusted (AI Supply Chain Compromise, #10 at the Trust Acceptance Event). Supersedes the retired Publish Poisoned Datasets / Models / AI Agent Tool ids.",
       "techniqueDescription": "Adversaries may create or modify AI artifacts and publish them through public or shared distribution channels to facilitate compromise of downstream AI systems. Poisoned AI artifacts may include datasets, models, and AI agent tools containing malicious content, behaviors, code, or configurations.\n\nAdversaries may publish novel artifacts or malicious variants of legitimate artifacts through dataset or model repositories, package registries, source code repositories, tool hubs, or remotely hosted services. Victims may subsequently acquire and integrate these artifacts through [AI Supply Chain Compromise](/techniques/AML.T0010).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0003"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0115",
       "atlasStatus": "current",
@@ -3382,7 +3418,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "Publishing a poisoned dataset is attacker-side staging; the step is recorded when a victim ingests it as trusted training data (AI Supply Chain Compromise: Data, #10).",
       "techniqueDescription": "Adversaries may publish poisoned datasets intended for training or fine-tuning AI models. The dataset may be newly created or a modified variant of a legitimate dataset and may contain manipulated samples, labels, annotations, or metadata.\n\nAdversaries may distribute poisoned datasets through dataset repositories, code repositories, file-sharing services, or compromised data sources. A victim that incorporates the dataset into a training pipeline may be affected by [Training Data Poisoning](/techniques/AML.T0020), potentially through [AI Supply Chain Compromise](/techniques/AML.T0010).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0003"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0115.000",
       "atlasStatus": "current",
@@ -3397,7 +3435,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "Publishing a poisoned model is attacker-side staging; the step is recorded when a victim loads it as trusted (AI Supply Chain Compromise: Model, #10, then #7 if the artefact executes code).",
       "techniqueDescription": "Adversaries may publish poisoned AI models through model registries, code repositories, or other model distribution channels. The model may be newly created or a modified variant of a legitimate model and may contain manipulated weights, configurations, architecture, serialized code, or other components that produce malicious behavior or execute malicious code.\n\nVictims may subsequently download and integrate the model through [AI Supply Chain Compromise](/techniques/AML.T0010).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0003"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0115.001",
       "atlasStatus": "current",
@@ -3412,7 +3452,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "Publishing a poisoned agent tool is attacker-side staging; the step is recorded when the victim's agent adopts it (AI Supply Chain Compromise: AI Agent Tool, #10) or invokes it (User Execution: Poisoned AI Agent Tool).",
       "techniqueDescription": "Adversaries may create and publish poisoned AI agent tools. Poisoned tools may contain malicious model-visible definitions or instructions, hidden executable behavior, or runtime responses designed to manipulate an AI agent. Tools may be published through source code repositories, package registries, agent tool or skill registries, or adversary-controlled remote services. The tool may be newly created or a modified variant of a legitimate tool and may produce malicious behavior when selected, installed, or invoked by a victim's AI agent.\n\nAdversaries may distribute poisoned tools through open-source version control repositories (e.g. GitHub, GitLab), package registries (e.g. npm), or to repositories specifically designed for sharing tools (e.g. OpenClaw Hub). These registries may be largely unregulated and may contain many poisoned tools [[opensourcemalware]]. Tools may also be published as remotely hosted servers [[mcpservers]].",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0003"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0115.002",
       "atlasStatus": "current",
@@ -3427,7 +3469,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "Reconnaissance carried out by an attacker's autonomous agent is still reconnaissance: the agent is the attacker's tool (Axiom IV). Activities that touch a victim system classify by their own technique (Active Scanning, #1); the rest is N/A.",
       "techniqueDescription": "Adversaries may use autonomous AI agents to conduct [Reconnaissance](/tactics/AML.TA0002) activities. Given an objective, target, or partial lead, an agent may autonomously determine what information to obtain and how to investigate it. It may interpret observations, identify gaps in its understanding of the externally observable attack surface, and select subsequent reconnaissance actions without a human specifying each investigative step.\n\nThe agent may formulate investigative questions or hypotheses, select sources and approaches for addressing them, and update its understanding as new information is obtained. Findings may generate additional reconnaissance objectives or change the scope, depth, or direction of the investigation. This creates a recursive action-observation process in which reconnaissance results influence what the agent investigates next rather than merely supplying output from a predefined procedure.\n\nThe agent may correlate information across public sources and externally accessible services, prioritize promising systems, investigate suspected vulnerabilities, abandon unsuccessful approaches, or select alternative methods. It may also expand or substitute targets based on discovered names, infrastructure, or contextual relationships and independently reassess whether a system remains relevant or in scope. Incorrect assumptions may cause unrelated or unauthorized systems to be pursued, while successful scope recognition may cause the agent to stop or redirect its activity.\n\nAutonomous AI agents can sustain reconnaissance across long-running operations, reason over multiple information sources, and test many alternative paths at a speed and volume difficult for human operators to maintain.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0002"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0116",
       "atlasStatus": "current",
@@ -3442,7 +3486,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "An agent revising its own attack path is the attacker's planning loop, on the attacker's side; every step the agent then takes against the victim classifies by its own technique. No step of its own (N/A).",
       "techniqueDescription": "Adversaries may use an AI agent to autonomously construct and repeatedly revise an attack path toward an adversary-defined objective. Given a high-level objective, the system may derive intermediate objectives, identify prerequisites, and compare candidate paths, and incorporate observations from previous actions to adaptively sequence techniques without a human directing each step.\n\nAutonomous AI agents may also exhibit this behavior while pursuing an objective provided for a legitimate, benign, or authorized purpose when the intermediate objectives or methods selected by the system cross an authorization, trust, control, or safety boundary and result in attempted or realized harmful cyber activity.\n\nThrough repeated observation-decision-action cycles, the system may interpret command output, errors, defensive responses, changes in access, and newly discovered information. It may use those observations to reprioritize actions, replace an intermediate objective, abandon an unproductive branch, discard findings invalidated by additional evidence, or pursue an alternative path.\n\nAn autonomous AI system may generate enabling objectives whose primary purpose is to increase its future operational capability rather than directly accomplishing the assigned objective. These objectives may include acquiring new exploits (See [Autonomous Exploit Development](/techniques/AML.T0017.001)), additional authorities, identities, execution environments, communication paths, tools, or trust relationships that expand the set of actions available to subsequent planning cycles. Newly acquired capabilities may themselves become prerequisites for additional enabling objectives, resulting in progressive expansion of the agent's operational reach over the course of an operation.\n\nAttack-path replanning may occur within one agent run or emerge across multiple independent agents. Agents may communicate persistent, shared artifacts (See [Autonomous AI Agent Communication: Communication via Shared Artifacts](/techniques/AML.T0118.000)), allowing discoveries, requests, capabilities, constraints, task state, and results produced by one agent to affect the subsequent path selected by another. Participating agents may adopt peer requests, divide work voluntarily, reuse successful methods, continue incomplete activity, or redirect their local paths without a centralized planner, shared context window, or complete view of the broader operation.\n\nHuman involvement does not preclude autonomous attack-path replanning. A human operator, user, evaluator, or workflow may select the target, define the objective, establish constraints, provide capabilities, or approve consequential transitions.\n\n[Autonomous Attack-Path Adaptation](/techniques/AML.T0117) and [Autonomous Attack Orchestration](/techniques/AML.T0124) may occur together but describe different control functions. Attack-path adaptation captures how evidence changes the selected path. Attack orchestration captures how work is allocated, coordinated, validated, and redirected across agents.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0001"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0117",
       "atlasStatus": "current",
@@ -3457,7 +3503,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Attacker agents exchanging operational information through a victim's shared resources or agent interfaces use those functions as designed: #1, a command channel like ATT&CK Web Service C2. Where both agents run on attacker infrastructure the exchange touches no victim system and is N/A.",
       "techniqueDescription": "Autonomous AI agents may exchange operational information with other AI agents, sub-agents, or independent agent runs. Exchanged information may include discoveries, objectives, tasking, capabilities, credentials, constraints, operating rules, task state, targeting information, instructions, or results. Communication enables autonomous AI agents to coordinate activities, share discoveries, delegate work, request assistance, validate results, or revise future actions without requiring a human operator to direct each interaction. \n\nAutonomous AI agents may independently determine when communication is operationally beneficial, what information to exchange, and how to best utilize exchanged information to accomplish their task. The receiving AI agent may interpret the shared information and use it to continue prior activity, investigate a lead, perform a task, reuse a capability, validate a result, or revise subsequent attack activity.\n\nCommunication may occur directly through an agent interface (See [Direct Agent Communication](/techniques/AML.T0118.001)) or indirectly via writeable shared resources (See [Communication via Shared Artifacts](/techniques/AML.T0118.000)).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0001"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0118",
       "atlasStatus": "current",
@@ -3472,7 +3520,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Communicating by writing artefacts into a shared resource the victim operates uses its designed storage functions as a channel: #1.",
       "techniqueDescription": "Autonomous AI agents may communicate by creating or modifying artifacts in a shared resource that persists outside their individual execution contexts. Shared artifacts may convey discoveries, objectives, tasking, credentials, capabilities, operating rules, progress, scripts, targeting information, instructions, or results.\n\nShared artifacts allow communication to occur asynchronously and across independent runs. An agent may publish information for later retrieval, adopt information left by another agent, or update the shared state with new findings, progress, or results. Participating agents do not need to share a model, orchestrator, context window, or overlapping execution period.\n\nThe shared resource may be established for the operation or may be an existing repository, file store, message board, database, object store, queue, or similar service repurposed by the agents.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0001"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0118.000",
       "atlasStatus": "current",
@@ -3487,7 +3537,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Agent-to-agent or orchestrator interfaces used as a channel between attacker-controlled agents inside the victim environment: #1, the agent's designed communication function abused.",
       "techniqueDescription": "Autonomous AI agents may communicate directly through agent-to-agent, sub-agent, or orchestrator interfaces. An agent may provide another agent with operational context, discoveries, objectives, tasking, capabilities, credentials, or constraints, and may receive status, findings, or completed work in response.\n\nDirect communication may include delegation when the sending agent formulates or selects an objective or subtask and the recipient retains meaningful discretion over how to perform it. Direct exchanges may also report discoveries, request independent validation, synchronize activity, transfer capabilities, or return findings without delegating a new task.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0001"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0118.001",
       "atlasStatus": "current",
@@ -3502,7 +3554,9 @@
       "tlctcMappingName": "Abuse of Functions (#1) | (Abuse of Functions (#1) → Malware (#7)) | (Supply Chain Attack (#10) → Malware (#7))",
       "mappingRationale": "Submitting or modifying an artefact so that an automated pipeline processes it triggers a designed function (#1); where the artefact executes code inside the pipeline, #7 follows (R-EXEC); where the pipeline pulls the artefact from a source it trusts, the Trust Acceptance Event makes it #10 first.",
       "techniqueDescription": "Adversaries may submit, publish, or modify an artifact in a way that triggers an automated processing pipeline. As the pipeline handles the artifact, adversary-controlled content or configuration may exploit a weakness in the processing logic, causing the processor to act outside its intended behavior using the permissions and access of a processing worker.\n\nExploitation may cause the worker to access local or internal resources and expose information through normal processing output or evaluate adversary-controlled content and execute code. The attack is triggered by automated backend processing and does not require a victim to open, load, or approve the artifact.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0004"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0119",
       "atlasStatus": "current",
@@ -3517,7 +3571,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "ATLAS mirrors ATT&CK T1102 (Web Service) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Web Service C2: attacker uses a legitimate third-party web service (Twitter/X, GitHub Gists, Pastebin, Discord, cloud storage) as a relay or dead drop. An AI artefact repository (model hub, dataset store) used as an asynchronous command channel through its designed upload and download functions.",
       "techniqueDescription": "Adversaries may repurpose AI artifact repositories as asynchronous command-and-control channels. Commands, payloads, or tasking may be placed in repository objects for a compromised system to retrieve or poll. The compromised system may then write execution results, status, or collected information back to the repository for retrieval by the adversary.\n\nThis communication can use ordinary artifact and repository operations, such as reading or updating artifact content, metadata, or revisions through an API or version-control interface. The repository acts as a message queue or dead drop, allowing the parties to exchange information without a continuous direct connection and potentially blending the activity with legitimate artifact traffic.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0014"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0120",
       "atlasStatus": "current",
@@ -3532,7 +3588,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "An attacker agent reconstructing its own working environment to resume an operation is attacker-side tooling behaviour; no victim step (N/A).",
       "techniqueDescription": "An autonomous AI agent may reconstruct the environment needed to continue an existing operation after its execution environment is lost, reset, replaced, denied, or made unusable. The agent may recover or recreate tools, dependencies, configuration, credentials or access paths, communication or coordination resources, working artifacts, and externally stored operational state in order to resume the same objective.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0006"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0121",
       "atlasStatus": "current",
@@ -3547,7 +3605,9 @@
       "tlctcMappingName": "Exploiting Server (#2)",
       "mappingRationale": "ATLAS mirrors ATT&CK T1210 (Exploitation of Remote Services) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Exploiting an implementation flaw in a remote service (SMB, RDP, SSH daemon, database server, container runtime, hypervisor management plane) for lateral movement. The remote service may be a model-serving endpoint, a vector database or an agent tool server.",
       "techniqueDescription": "Adversaries may exploit a software or design weakness in a service reachable from their current environment to gain unauthorized access to another system, component, network, or trust boundary. Exploitation may allow the adversary to execute code, access protected resources, invoke unauthorized operations, obtain the service's privileges, or cause the service to make network requests or perform actions on the adversary's behalf.\n\nIn AI environments, remote services may include package caches, artifact and model registries, dataset services, evaluation infrastructure, inference gateways, experiment trackers, vector databases, notebooks, training pipelines, orchestration services, and cloud or cluster control-plane interfaces. These services may be reachable from otherwise isolated training, evaluation, or agent workloads and can provide transitive access to internal infrastructure or external networks.\n\nExploitation does not require compromise of the remote service's underlying host. For example, an adversary may exploit a server-side request vulnerability in a shared service to cross a network-containment boundary while leaving the service host itself uncompromised. Exploitation that produces host access, privilege escalation, credential disclosure, command execution, or another effect should be mapped separately to the applicable technique.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0015"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0122",
       "atlasStatus": "current",
@@ -3562,7 +3622,9 @@
       "tlctcMappingName": "Abuse of Functions (#1) | Malware (#7)",
       "mappingRationale": "ATLAS mirrors ATT&CK T1027 (Obfuscated Files or Information) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Obfuscated Files or Information: render attacker payloads/commands harder to analyze.",
       "techniqueDescription": "Adversaries may attempt to make an executable or file difficult to discover or analyze by encrypting, encoding, or otherwise obfuscating its contents on the system or in transit. This is common behavior that can be used across different platforms and the network to evade defenses.\n\nObfuscation may target AI-enabled defensive systems, including malware classifiers, content filters, secret scanners, and automated review systems. Content that appears benign or incomplete to a person or detector may be decoded, assembled, or interpreted by a downstream application, tool, or compromised system.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0007"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0123",
       "atlasStatus": "current",
@@ -3577,7 +3639,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "An autonomous control layer that manages several attacker agents is the attacker's orchestration, on the attacker's side (N/A); the agents' steps against victims classify by their own techniques.",
       "techniqueDescription": "Adversaries may use autonomous AI systems as an operational control layer to manage multiple distinct autonomous agents or sub-agents toward a common adversary-defined objective. The orchestrating system may create assignments, select executors, allocate tools or resources, establish dependencies, schedule or synchronize activities, and track progress without a human directing each assignment.\n\nThe autonomous system exhibits centralized control over distributed execution including which agent performs which work, when it performs it, and how its output affects other assigned work. The system may aggregate findings and status from participating agents, request independent validation, reconcile conflicting results, prevent or resolve duplicated effort, and determine when an output satisfies a prerequisite for another activity. It may reassign stalled work, increase or reduce resources allocated to a branch, terminate low-value work, or initiate additional research or testing.\n\nOrchestration may use direct agent interfaces (See [Autonomous AI Agent Communication: Direct Agent Communication](/techniques/AML.T0118.001)) to transmit assignments, status, and results.\n\nHuman involvement does not preclude autonomous attack orchestration. A human operator may define campaign objectives, select targets, provide infrastructure, establish constraints, or retain approval over consequential transitions.\n\n[Autonomous Attack-Path Adaptation](/techniques/AML.T0117) and [Autonomous Attack Orchestration](/techniques/AML.T0124) may occur together but describe different control functions. Attack-path adaptation captures how evidence changes the selected path. Attack orchestration captures how work is allocated, coordinated, validated, and redirected across agents.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0001"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0124",
       "atlasStatus": "current",
@@ -3592,7 +3656,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "ATLAS mirrors ATT&CK T1136 (Create Account) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Create Account: create a new identity (local user, domain user, cloud account) via designed identity-management functions. An account on the AI platform, model registry or agent console.",
       "techniqueDescription": "Adversaries may create an account to maintain access to an AI system or its supporting infrastructure. With a sufficient level of access, creating such accounts may be used to establish secondary credentialed access that do not require persistent remote access tools to be deployed on the system.\n\nAccounts may be created on local systems, in enterprise domains, cloud tenants, identity providers, or individual services. In AI environments, adversaries may create user, service, workload, or automation accounts in AI platforms, model or dataset repositories, development environments, experiment trackers, orchestration services, data stores, and other AI operations infrastructure.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0006"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0125",
       "atlasStatus": "current",
@@ -3607,7 +3673,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "ATLAS mirrors ATT&CK T1119 (Automated Collection) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Automated Collection: scripted enumeration and copy of files matching attacker criteria, via designed file-search and read APIs (`dir /s`, `Get-ChildItem -Recurse`, `find`, regex over file content). Scripted or agent-driven collection from AI systems and their supporting environment.",
       "techniqueDescription": "Adversaries may use automated techniques to collect data from AI systems and supporting enterprise environments. Automation may use scripts, command interpreters, command-line tools, or AI agent tools to identify, retrieve, copy, or aggregate data without a human selecting each individual item.\n\nCollection criteria may be fixed, such as file name, type, location, owner, date. Automation may also collect repeatedly, monitor for new material, traverse related resources, or combine data from local systems, cloud services, repositories, databases, object stores, and application APIs.\n\nIn AI environments, targeted material may include models, datasets, configurations, conversation histories, retrieval databases, deployment information, logs, and other operational data.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0009"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0126",
       "atlasStatus": "current",
@@ -3622,7 +3690,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "ATLAS mirrors ATT&CK T1074 (Data Staged) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Move collected data into a chosen location (local or remote) prior to exfiltration.",
       "techniqueDescription": "Adversaries may stage collected data in a central location before exfiltration. Staging consolidates, organizes, or prepares information obtained from one or more sources so it can be reviewed, processed, transferred, or retrieved more efficiently.\n\nData may be staged on a compromised local system, another system in the victim environment, a cloud instance, shared storage, an application repository, or other remote infrastructure. It may remain in separate files or be combined into archives, databases, structured documents, manifests, or other collections. Adversaries may compress, encrypt, encode, split, rename, or otherwise transform staged data.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0009"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0127",
       "atlasStatus": "current",
@@ -3637,7 +3707,9 @@
       "tlctcMappingName": "N/A",
       "mappingRationale": "ATLAS mirrors ATT&CK T1584 (Compromise Infrastructure) for AI-enabled systems; the same generic vulnerability applies, so the ATT&CK mapping is carried over: Attacker compromises a third party (`@OtherVictims` sphere) to acquire a domain, DNS server, VPS, server, botnet, or web service originally belonging to someone else (often by guessing weak admin credentials, exploiting a vulnerability, or abusing access). Third-party infrastructure repurposed against AI systems.",
       "techniqueDescription": "Adversaries may compromise third-party infrastructure and repurpose it to support attacks against AI system. Rather than buying, leasing, registering, or otherwise legitimately acquiring a resource, the adversary gains unauthorized control of infrastructure owned or operated by another party.\n\nCompromised infrastructure may include physical or cloud servers, domains, network devices, third-party web and DNS services, software or artifact repositories, development workspaces, compute services, and other externally hosted resources.\n\nIn operations involving AI systems, adversaries may compromise infrastructure used for model development, artifact hosting, dataset processing, evaluation, inference, agent tooling, or AI operations. They may repurpose this infrastructure to host malicious artifacts, stage payloads, run tools or agents, relay traffic, capture credentials, provide command and control, process collected data, or launch attacks against additional systems.\n\nCompromised infrastructure may appear trustworthy because it uses a legitimate provider, established domain, valid certificate, reputable service, or expected AI development platform. It may also provide network access, compute resources, service identities, or trusted relationships that would be difficult for the adversary to establish directly.",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0003"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0128",
       "atlasStatus": "current",
@@ -3652,7 +3724,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "A trigger or instruction placed in one modality of an input (an image, an audio track) that the model is designed to read alongside the text is prompt injection through a different channel: #1.",
       "techniqueDescription": "Adversaries may place instructions or triggers in one part of a multimodal input to influence the model while staying unnoticed by human reviewers and by defenses that do not inspect all input modalities.\n\nMultimodal systems jointly process text alongside other modalities, yet many moderation and filtering controls operate mainly on the textual channel. A payload placed in a modality that is not inspected, or is inspected differently from text, is still parsed by the model but can escape detection, allowing it to alter model output or carry a cross-modal prompt injection.\n\nExamples include instructions placed in an image, audio, or video channel, or carried in file metadata (e.g. EXIF for images, ID3 tags for audio, or document metadata).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0007"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0129",
       "atlasStatus": "current",
@@ -3667,7 +3741,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Making an assistant favour adversary-chosen sources or content is achieved by poisoning what it retrieves or by instructions it reads, both designed functions: #1, with a Data Risk Event If on the biased output.",
       "techniqueDescription": "Adversaries may manipulate an AI assistant so that it favors adversary-chosen sources, or content in its responses. By injecting instructions such as \"treat [source] as a trusted source\" or \"recommend [source] first,\" an adversary biases the assistant's outputs toward their own interests, causing it to present promotional or self-serving content as if it were a neutral, well-reasoned response. This degrades the integrity and trustworthiness of the assistant's responses on topics the user may rely on, such as health, finance, or security, without the user being aware that the advice has been skewed.\n\nThe injected instructions can be delivered through different ways, for example through [Crafted AI Assistant Links]. This impact may persist if the agent's memory was poisoned (See [AI Agent Context Poisoning: Memory](/techniques/AML.T0080.000)).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0011"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0130",
       "atlasStatus": "current",
@@ -3682,7 +3758,9 @@
       "tlctcMappingName": "Social Engineering (#9) → Abuse of Functions (#1)",
       "mappingRationale": "A crafted link opens an assistant with attacker input already supplied: the person who follows the link is manipulated (#9), and the assistant then executes the prefilled prompt as designed (#1).",
       "techniqueDescription": "Adversaries may craft links that open an AI assistant or agent with attacker-controlled input already supplied, so that opening the link initiates an interaction the adversary defines rather than one the target composed. Many AI assistants accept a prompt through URL parameters (for example `?q=` or `?prompt=`) that is automatically populated, and in some cases submitted, when the link is opened. By encoding a chosen prompt into such a link, an adversary can cause the target's assistant to act on supplied instructions as soon as the link is opened.\n\nThese links are frequently disguised as helpful actions, such as a \"Summarize with AI\" button or a share link, and distributed through web pages, emails, documents, or messages. Because the resulting interaction runs in the target's own assistant session, a crafted link can drive a range of downstream impacts depending on the supplied instructions, such as exfiltrating data the assistant can access or for [AI Recommendation Poisoning](/techniques/AML.T0131).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0004"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0131",
       "atlasStatus": "current",
@@ -3697,7 +3775,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "A misconfigured or publicly exposed AI service is a designed function in a permissive state; reaching it is function abuse (#1), as for ATT&CK Exploit Misconfiguration readings. Where a credential is presented, #4 precedes it.",
       "techniqueDescription": "AI agents and LLM platforms are deployed across diverse architectures, including standalone servers, SaaS platforms, and low-code builders. All of these often have misconfigured access controls, ranging from missing authentication in LLM runtimes to permissive public access settings, that significantly expand their attack surface.\n\nAI agent's security posture affects how attackers are able to explore which agentic attack surface is available to them and directly either expands or limits an adversary's ability to discover and interact with a target's AI agents. For example, one internet-facing AI service could be more easily discoverable by any unauthenticated user, while another may require compromised credentials to even be discovered.\n\nAdversaries may discover and interact with AI agents and LLM services as unauthenticated users via a combination of various OSINT and active scanning methods. These could include using search engines to discover accessible agentic deployments (See [Search Open Technical Databases](/techniques/AML.T0000)), search backlinks which could indicate existing or open agents which have been embedded to frontends (See [Search Open Website/Domains](/techniques/AML.T0095)), or directly scanning a target's AI infrastructure (See [Active Scanning](/techniques/AML.T0006)).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0004"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0132",
       "atlasStatus": "current",
@@ -3712,7 +3792,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Interacting with an agent at runtime to reveal its capabilities queries a designed interface for what it is willing to answer: #1 (discovery).",
       "techniqueDescription": "Adversaries may interact with an AI agent at runtime to reveal the capabilities available to it, without requiring access to its underlying configuration. Direct interaction with the agent can surface its registered tools and their accepted parameters, the actions it can take, the resources it can reach, and the identity and permission scope it acts under. Capabilities can also be inferred indirectly by issuing varied requests and observing which succeeded, failed, or refused.\n\nAI agents are often interconnected with enterprise resources, tools and databases, or embedded within SaaS platforms and have permissions to act on behalf of users in order to facilitate functionality. Once adversaries identify a functional agent that they have access to, they could map the attack surface within that agent, by testing its functionality, enumerating tools, capabilities, knowledge, and embedded credentials and permissions.\n\nThis mapping process often reveals the AI agent's full toolset and configuration details and exposes additional exploitation, as enabled by [AI Agent Tool Invocation](/techniques/AML.T0053). The resulting intelligence facilitates follow-on exploitation, including [Initial Access](/tactics/AML.TA0004), [Persistence](/tactics/AML.TA0006), [Privilege Escalation](/tactics/AML.TA0012), and [Exfiltration](/tactics/AML.TA0010).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0008"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0133",
       "atlasStatus": "current",
@@ -3727,7 +3809,9 @@
       "tlctcMappingName": "Abuse of Functions (#1)",
       "mappingRationale": "Serving different content to AI crawlers and agents than to humans is content placed where the victim's AI reads it as designed: the indirect-injection reading, #1. The attacker's own server does the cloaking; the step is the victim's designed reading function acting on it.",
       "techniqueDescription": "Adversaries may selectively deliver malicious or manipulated content to AI systems, while presenting different benign content to human users, web crawlers, or security detection mechanisms. They may identify AI browsers or agents via user-agent strings and condition the server response so that AI-based clients receive prompt injections or misleading content.\n\nPreventing human visitors, conventional web crawlers, and security tools from observing the same content allows adversaries to make malicious input more difficult to detect. [AI Targeted Cloaking](/techniques/AML.T0134) may be combined with [Drive-by Compromise](/techniques/AML.T0078) to deliver an [LLM Prompt Injection](/techniques/AML.T0051).",
-      "tactics": [],
+      "tactics": [
+        "AML.TA0007"
+      ],
       "isSubtechnique": false,
       "atlasUrl": "https://atlas.mitre.org/techniques/AML.T0134",
       "atlasStatus": "current",

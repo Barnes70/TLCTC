@@ -5,7 +5,8 @@
  *  1. Every technique of the pinned ATLAS v2026.09 release (dist/v6 YAML) and every active attack-pattern of
  *     the pinned STIX distribution has exactly one mapping; no mapping names an unknown technique; atlasStatus
  *     (current | retired) agrees with the v2026.09 release.
- *  2. techniqueName equals the ATLAS name; tactics resolve to ATLAS tactic ids.
+ *  2. techniqueName equals the ATLAS name; tactics are non-empty, resolve to ATLAS tactic ids, and for
+ *     current techniques equal the v2026.09 `achieves` relationships (retired ids keep the STIX tactic set).
  *  3. tlctcMapping is 'N/A' or parses under the mapping notation grammar (#N, #N.M, →, |, parentheses),
  *     every cluster id is one of the ten, and tlctcMappingName is consistent with it.
  *  4. Every rationale is at least 40 characters; metadata.tlctc_version equals the dictionary's;
@@ -54,15 +55,31 @@ const tacticIds = new Set(atlas.objects.filter((o) => o.type === 'x-mitre-tactic
 // ATLAS v2026.09 (format 6) YAML: a minimal line reader for `id:` / `name:` pairs (no YAML dependency).
 const V6 = path.join(ROOT, 'mappings/mitre-atlas/pinned/ATLAS-2026.09.yaml');
 const v6Names = new Map();
+const v6Tactics = new Map(); // technique id → tactic ids, from the `achieves` relationships
 if (fs.existsSync(V6)) {
   const lines = fs.readFileSync(V6, 'utf8').split(/\r?\n/);
   // In the format-6 YAML an entry's `name:` line precedes its `id:` line.
   let lastName = null;
+  // Technique → tactic links live under `relationships:` as `- source: AML.Tx / target: AML.TAx /
+  // relationship-type: achieves` triples, not on the technique entries.
+  let relSource = null, relTarget = null;
   for (const line of lines) {
     const nm = line.match(/^\s*-?\s*(?:&\S+\s+)?name:\s*(.+?)\s*$/);
     if (nm) { lastName = nm[1].replace(/^['"]|['"]$/g, ''); continue; }
     const idm = line.match(/^\s*-?\s*(?:&\S+\s+)?id:\s*(AML\.T[A\d.]+)\s*$/);
-    if (idm) { if (!v6Names.has(idm[1]) && lastName) v6Names.set(idm[1], lastName); lastName = null; }
+    if (idm) { if (!v6Names.has(idm[1]) && lastName) v6Names.set(idm[1], lastName); lastName = null; continue; }
+    const sm = line.match(/^\s*-\s*source:\s*(AML\.T[\d.]+)\s*$/);
+    if (sm) { relSource = sm[1]; relTarget = null; continue; }
+    const tm = line.match(/^\s*target:\s*(AML\.TA\d+)\s*$/);
+    if (tm) { relTarget = tm[1]; continue; }
+    const rm = line.match(/^\s*relationship-type:\s*(\S+)\s*$/);
+    if (rm) {
+      if (rm[1] === 'achieves' && relSource && relTarget) {
+        if (!v6Tactics.has(relSource)) v6Tactics.set(relSource, []);
+        if (!v6Tactics.get(relSource).includes(relTarget)) v6Tactics.get(relSource).push(relTarget);
+      }
+      relSource = null; relTarget = null;
+    }
   }
   for (const [id, name] of v6Names) {
     if (id.startsWith('AML.TA')) tacticIds.add(id);
@@ -83,7 +100,14 @@ for (const m of mapping.mappings) {
   if (!['current', 'retired'].includes(m.atlasStatus)) fail(`${m.techniqueId}: atlasStatus must be current or retired`);
   if (m.atlasStatus === 'current' && !v6name) fail(`${m.techniqueId}: marked current but absent from ATLAS v2026.09`);
   if (m.atlasStatus === 'retired' && v6name) fail(`${m.techniqueId}: marked retired but present in ATLAS v2026.09`);
+  if (!Array.isArray(m.tactics) || m.tactics.length === 0) fail(`${m.techniqueId}: tactics empty`);
   for (const t of m.tactics || []) if (!tacticIds.has(t)) fail(`${m.techniqueId}: tactic ${t} unknown`);
+  // current techniques carry the v2026.09 tactic set (achieves relationships); retired ones keep the STIX set
+  if (m.atlasStatus === 'current' && v6Tactics.size) {
+    const want = [...(v6Tactics.get(m.techniqueId) || [])].sort().join(',');
+    const have = [...(m.tactics || [])].sort().join(',');
+    if (want !== have) fail(`${m.techniqueId}: tactics ${have || '(none)'} differ from ATLAS v2026.09 ${want || '(none)'}`);
+  }
   if (typeof m.mappingRationale !== 'string' || m.mappingRationale.length < 40) fail(`${m.techniqueId}: rationale missing or too short`);
   if (m.tlctcMapping === 'N/A') {
     if (m.tlctcMappingName !== 'N/A') fail(`${m.techniqueId}: N/A mapping with a mapping name`);
