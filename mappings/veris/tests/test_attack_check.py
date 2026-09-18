@@ -25,24 +25,24 @@ class AttackCheckTests(unittest.TestCase):
 
     def test_phishing_agrees(self):
         r = classify(rec({"social": {"variety": ["Phishing"], "vector": ["Email"]}}), self.m)
-        c = attack_check.check(r, self.va, self.at)
+        c = attack_check.check(r, self.va, self.at, self.m)
         self.assertEqual(c["class"], "agree")
         self.assertIn("#9", c["transitive"])
 
     def test_error_has_no_attack_edge(self):
         r = classify(rec({"error": {"variety": ["Misdelivery"], "vector": ["Carelessness"]}}), self.m)
-        c = attack_check.check(r, self.va, self.at)
+        c = attack_check.check(r, self.va, self.at, self.m)
         self.assertEqual(c["class"], "no-attack-edge")
 
     def test_classes_are_closed(self):
         r = classify(rec({"hacking": {"variety": ["SQLi"], "vector": ["Web application"]}}), self.m)
-        c = attack_check.check(r, self.va, self.at)
+        c = attack_check.check(r, self.va, self.at, self.m)
         self.assertIn(c["class"], ("agree", "subset", "disjoint", "no-attack-edge"))
         self.assertEqual(c["direct"], ["#2"])
 
     def test_summarize_agreement(self):
         results = [classify(rec({"social": {"variety": ["Phishing"]}}), self.m), classify(rec({"error": {"variety": ["Loss"]}}), self.m)]
-        checks = [attack_check.check(r, self.va, self.at) for r in results]
+        checks = [attack_check.check(r, self.va, self.at, self.m) for r in results]
         s = attack_check.summarize_agreement(checks, self.m)
         self.assertEqual(s["classes"]["agree"]["n"], 1)
         self.assertEqual(s["classes"]["no-attack-edge"]["n"], 1)
