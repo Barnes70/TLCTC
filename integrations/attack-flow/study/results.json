@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T18:26:58Z",
+  "generated": "2026-09-18T19:17:03Z",
   "corpus": {
     "repo": "center-for-threat-informed-defense/attack-flow",
     "commit": "0bd4a2d45dceacce499d7e94b85f7966e70f5399",
@@ -8,7 +8,7 @@
   },
   "attack_mapping": {
     "file": "mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json",
-    "techniques": 698,
+    "techniques": 909,
     "tlctc_version": "2.3"
   },
   "tables": {
@@ -50,24 +50,24 @@
       },
       "delta_t_edges": {
         "n": 40,
-        "denominator": 1153
+        "denominator": 1145
       }
     },
     "action_status": {
       "resolved": {
-        "n": 646,
+        "n": 668,
         "denominator": 952
       },
       "rule_dependent": {
-        "n": 122,
+        "n": 124,
         "denominator": 952
       },
       "preparation": {
-        "n": 16,
+        "n": 28,
         "denominator": 952
       },
       "unmapped": {
-        "n": 43,
+        "n": 7,
         "denominator": 952
       },
       "no_technique": {
@@ -78,19 +78,19 @@
     "frequency": {
       "#1": {
         "actions_certain": {
-          "n": 491,
+          "n": 511,
           "denominator": 952
         },
         "actions_upper": {
-          "n": 602,
+          "n": 624,
           "denominator": 952
         },
         "flows_certain": {
-          "n": 38,
+          "n": 40,
           "denominator": 41
         },
         "flows_upper": {
-          "n": 38,
+          "n": 40,
           "denominator": 41
         }
       },
@@ -114,19 +114,19 @@
       },
       "#3": {
         "actions_certain": {
-          "n": 9,
+          "n": 11,
           "denominator": 952
         },
         "actions_upper": {
-          "n": 20,
+          "n": 22,
           "denominator": 952
         },
         "flows_certain": {
-          "n": 9,
+          "n": 11,
           "denominator": 41
         },
         "flows_upper": {
-          "n": 14,
+          "n": 16,
           "denominator": 41
         }
       },
@@ -186,19 +186,19 @@
       },
       "#7": {
         "actions_certain": {
-          "n": 259,
+          "n": 263,
           "denominator": 952
         },
         "actions_upper": {
-          "n": 374,
+          "n": 380,
           "denominator": 952
         },
         "flows_certain": {
-          "n": 35,
+          "n": 37,
           "denominator": 41
         },
         "flows_upper": {
-          "n": 38,
+          "n": 40,
           "denominator": 41
         }
       },
@@ -263,7 +263,7 @@
         "denominator": 41
       },
       "#1": {
-        "n": 6,
+        "n": 8,
         "denominator": 41
       },
       "#2": {
@@ -282,12 +282,12 @@
         "n": 3,
         "denominator": 41
       },
-      "?": {
-        "n": 3,
-        "denominator": 41
-      },
       "#7": {
         "n": 2,
+        "denominator": 41
+      },
+      "?": {
+        "n": 1,
         "denominator": 41
       }
     },
@@ -295,12 +295,12 @@
       {
         "from": "#1",
         "to": "#7",
-        "n": 177
+        "n": 179
       },
       {
         "from": "#7",
         "to": "#1",
-        "n": 142
+        "n": 144
       },
       {
         "from": "#4",
@@ -330,7 +330,7 @@
       {
         "from": "#3",
         "to": "#7",
-        "n": 9
+        "n": 11
       },
       {
         "from": "#2",
@@ -371,11 +371,11 @@
     "transition_matrix": {
       "#1|#1": 0,
       "#1|#2": 4,
-      "#1|#3": 0,
+      "#1|#3": 2,
       "#1|#4": 43,
       "#1|#5": 3,
       "#1|#6": 0,
-      "#1|#7": 177,
+      "#1|#7": 179,
       "#1|#8": 0,
       "#1|#9": 1,
       "#1|#10": 0,
@@ -395,7 +395,7 @@
       "#3|#4": 0,
       "#3|#5": 0,
       "#3|#6": 0,
-      "#3|#7": 9,
+      "#3|#7": 11,
       "#3|#8": 0,
       "#3|#9": 0,
       "#3|#10": 0,
@@ -429,7 +429,7 @@
       "#6|#8": 0,
       "#6|#9": 0,
       "#6|#10": 0,
-      "#7|#1": 142,
+      "#7|#1": 144,
       "#7|#2": 2,
       "#7|#3": 2,
       "#7|#4": 12,
@@ -472,8 +472,8 @@
     },
     "compression": {
       "actions_total": 952,
-      "steps_compressed_total": 843,
-      "mean_actions_per_step": 1.13,
+      "steps_compressed_total": 853,
+      "mean_actions_per_step": 1.12,
       "flows_fully_classified": {
         "n": 0,
         "denominator": 41
@@ -832,24 +832,28 @@
         "flow": "OpenClaw Command & Control via Prompt Injection",
         "scope": "incident",
         "actions": 18,
-        "steps": 1,
+        "steps": 6,
         "unresolved": 1,
-        "entry": "?",
-        "notation": "…",
+        "entry": "#1",
+        "notation": "? → #1 → #3 → #7 → #1 → #7",
         "status": {
-          "unmapped": 18
+          "preparation": 6,
+          "resolved": 11,
+          "rule_dependent": 1
         }
       },
       {
         "flow": "OpenClaw Command & Control via Prompt Injection (with Mitigations/Detections)",
         "scope": "incident",
         "actions": 18,
-        "steps": 1,
+        "steps": 6,
         "unresolved": 1,
-        "entry": "?",
-        "notation": "…",
+        "entry": "#1",
+        "notation": "? → #1 → #3 → #7 → #1 → #7",
         "status": {
-          "unmapped": 18
+          "preparation": 6,
+          "resolved": 11,
+          "rule_dependent": 1
         }
       },
       {
@@ -24671,174 +24675,137 @@
         "with_execution_start": 0
       },
       "action_status": {
-        "unmapped": 18
+        "preparation": 6,
+        "resolved": 11,
+        "rule_dependent": 1
       },
-      "clusters_certain": [],
-      "clusters_upper": [],
-      "entry_cluster": null,
-      "first_classified_cluster": null,
+      "clusters_certain": [
+        "#1",
+        "#3",
+        "#7"
+      ],
+      "clusters_upper": [
+        "#1",
+        "#3",
+        "#7"
+      ],
+      "entry_cluster": "#1",
+      "first_classified_cluster": "#1",
       "path": {
         "raw": [
-          {
-            "action_id": "0048bdb7-d62f-4f07-a739-5c20838a5916",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": false,
-            "execution_start": null
-          },
-          {
-            "action_id": "ecdd9b30-ce05-4b96-95b1-d8b341969b8b",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": false,
-            "execution_start": null
-          },
           {
             "action_id": "4988e954-5b8e-4af4-90d3-b22e350c56cd",
             "cluster": null,
             "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": false,
-            "execution_start": null
-          },
-          {
-            "action_id": "5caf1553-c7e8-47d8-9f43-6f49bd6c24a4",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": false,
-            "execution_start": null
-          },
-          {
-            "action_id": "ae01b0a9-4ad1-425a-98fb-5a38d3ef4079",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "candidates": [
+              "#1",
+              "#7"
+            ],
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "0f6a14c6-03b3-4de5-9c11-042e760dcd2d",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "90321223-4be8-4f81-b479-76d83b11bed2",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
-            "action_id": "bd733b5b-cfc8-4c5c-9a2e-b5c91249387d",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": true,
-            "execution_start": null
-          },
-          {
-            "action_id": "062f6d4d-f064-4565-8ef0-7f65197abbdc",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": true,
+            "action_id": "2849f56c-c485-4864-bc03-3530714f9f6a",
+            "cluster": "#3",
+            "kind": "classified",
+            "implied": false,
+            "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "2849f56c-c485-4864-bc03-3530714f9f6a",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#7",
+            "kind": "classified",
+            "implied": true,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "7d8f066a-6e4a-4354-95e3-c307b2d35e31",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "1c29d65b-024b-4a40-9529-912c6b9053ff",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "395b4149-2a07-4907-bd62-94969778f278",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "4663a57e-57bf-486d-832a-494d8621cd07",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "74cbc7bd-2c09-4a82-8840-1079a6daa144",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "100d27dc-9be4-4765-94ab-1aec5e45192f",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "f85ca0f6-072d-488b-996d-1cd211724b1b",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "767095cb-69da-4b45-953d-8c4602ced215",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": true,
+            "execution_start": null
+          },
+          {
+            "action_id": "767095cb-69da-4b45-953d-8c4602ced215",
+            "cluster": "#7",
+            "kind": "classified",
+            "implied": true,
+            "parallel_hint": false,
             "execution_start": null
           }
         ],
@@ -24846,22 +24813,59 @@
           {
             "cluster": null,
             "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "candidates": [
+              "#1",
+              "#7"
+            ],
             "parallel_hint": false,
             "execution_start": null,
-            "count": 18,
+            "count": 1,
             "action_ids": [
-              "0048bdb7-d62f-4f07-a739-5c20838a5916",
-              "ecdd9b30-ce05-4b96-95b1-d8b341969b8b",
-              "4988e954-5b8e-4af4-90d3-b22e350c56cd",
-              "5caf1553-c7e8-47d8-9f43-6f49bd6c24a4",
-              "ae01b0a9-4ad1-425a-98fb-5a38d3ef4079",
+              "4988e954-5b8e-4af4-90d3-b22e350c56cd"
+            ]
+          },
+          {
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 2,
+            "action_ids": [
               "0f6a14c6-03b3-4de5-9c11-042e760dcd2d",
-              "90321223-4be8-4f81-b479-76d83b11bed2",
-              "bd733b5b-cfc8-4c5c-9a2e-b5c91249387d",
-              "062f6d4d-f064-4565-8ef0-7f65197abbdc",
-              "2849f56c-c485-4864-bc03-3530714f9f6a",
+              "90321223-4be8-4f81-b479-76d83b11bed2"
+            ]
+          },
+          {
+            "cluster": "#3",
+            "kind": "classified",
+            "implied": false,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 1,
+            "action_ids": [
+              "2849f56c-c485-4864-bc03-3530714f9f6a"
+            ]
+          },
+          {
+            "cluster": "#7",
+            "kind": "classified",
+            "implied": true,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 1,
+            "action_ids": [
+              "2849f56c-c485-4864-bc03-3530714f9f6a"
+            ]
+          },
+          {
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 8,
+            "action_ids": [
               "7d8f066a-6e4a-4354-95e3-c307b2d35e31",
               "1c29d65b-024b-4a40-9529-912c6b9053ff",
               "395b4149-2a07-4907-bd62-94969778f278",
@@ -24871,15 +24875,26 @@
               "f85ca0f6-072d-488b-996d-1cd211724b1b",
               "767095cb-69da-4b45-953d-8c4602ced215"
             ]
+          },
+          {
+            "cluster": "#7",
+            "kind": "classified",
+            "implied": true,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 1,
+            "action_ids": [
+              "767095cb-69da-4b45-953d-8c4602ced215"
+            ]
           }
         ],
         "notes": [],
         "has_cycle": false
       },
-      "notation_raw": "? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ?",
-      "notation_compressed": "…",
-      "steps_raw": 18,
-      "steps_compressed": 1,
+      "notation_raw": "? → #1 → #1 → #3 → #7 → #1 → #1 → #1 → #1 → #1 → #1 → #1 → #1 → #7",
+      "notation_compressed": "? → #1 → #3 → #7 → #1 → #7",
+      "steps_raw": 14,
+      "steps_compressed": 6,
       "unresolved_steps": 1,
       "delta_t_edges": 0,
       "actions": [
@@ -24888,9 +24903,9 @@
           "name": "Acquire Infrastructure",
           "technique_id": "AML.T0008",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0008",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -24901,9 +24916,9 @@
           "name": "Search Open Websites/Domains: Code Repositories",
           "technique_id": "AML.T0095.000",
           "tactic_id": "AML.TA0002",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0095.000",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -24914,22 +24929,32 @@
           "name": "Masquerading",
           "technique_id": "AML.T0074",
           "tactic_id": "AML.TA0007",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "rule_dependent",
+          "technique_used": "AML.T0074",
+          "mapping": "#1 | #7",
           "framework": "atlas",
-          "alternatives": [],
+          "alternatives": [
+            [
+              "#1"
+            ],
+            [
+              "#7"
+            ]
+          ],
           "clusters_certain": [],
-          "clusters_candidates": []
+          "clusters_candidates": [
+            "#1",
+            "#7"
+          ]
         },
         {
           "action_id": "5caf1553-c7e8-47d8-9f43-6f49bd6c24a4",
           "name": "Acquire Public AI Artifacts: AI Agent Configuration",
           "technique_id": "AML.T0002.002",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0002.002",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -24940,9 +24965,9 @@
           "name": "LLM Prompt Crafting",
           "technique_id": "AML.T0065",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0065",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -24953,12 +24978,18 @@
           "name": "Discover LLM System Information: System Instruction Keywords",
           "technique_id": "AML.T0069.001",
           "tactic_id": "AML.TA0008",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0069.001",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -24966,12 +24997,18 @@
           "name": "Discover LLM System Information: Special Character Sets",
           "technique_id": "AML.T0069.000",
           "tactic_id": "AML.TA0008",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0069.000",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -24979,9 +25016,9 @@
           "name": "Stage Capabilities",
           "technique_id": "AML.T0079",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0079",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -24992,9 +25029,9 @@
           "name": "LLM Prompt Crafting",
           "technique_id": "AML.T0065",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0065",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -25005,12 +25042,20 @@
           "name": "Drive-by Compromise",
           "technique_id": "AML.T0078",
           "tactic_id": "AML.TA0004",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0078",
+          "mapping": "#3 → #7",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#3",
+              "#7"
+            ]
+          ],
+          "clusters_certain": [
+            "#3",
+            "#7"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25018,12 +25063,18 @@
           "name": "LLM Prompt Injection: Indirect",
           "technique_id": "AML.T0051.001",
           "tactic_id": "AML.TA0005",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0051.001",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25031,12 +25082,18 @@
           "name": "LLM Jailbreak",
           "technique_id": "AML.T0054",
           "tactic_id": "AML.TA0012",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0054",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25044,12 +25101,18 @@
           "name": "AI Agent Tool Invocation",
           "technique_id": "AML.T0053",
           "tactic_id": "AML.TA0005",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0053",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25057,12 +25120,18 @@
           "name": "Modify AI Agent Configuration",
           "technique_id": "AML.T0081",
           "tactic_id": "AML.TA0006",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0081",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25070,12 +25139,18 @@
           "name": "LLM Prompt Injection: Direct",
           "technique_id": "AML.T0051.000",
           "tactic_id": "AML.TA0005",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0051.000",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25083,12 +25158,18 @@
           "name": "AI Agent Context Poisoning: Thread",
           "technique_id": "AML.T0080.001",
           "tactic_id": "AML.TA0006",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0080.001",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25096,12 +25177,18 @@
           "name": "AI Agent",
           "technique_id": "AML.T0108",
           "tactic_id": "AML.TA0014",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0108",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25109,12 +25196,20 @@
           "name": "Machine Compromise: Local AI Agent",
           "technique_id": "AML.T0112.000",
           "tactic_id": "AML.TA0011",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0112.000",
+          "mapping": "#1 → #7",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1",
+              "#7"
+            ]
+          ],
+          "clusters_certain": [
+            "#1",
+            "#7"
+          ],
           "clusters_candidates": []
         }
       ]
@@ -25133,174 +25228,137 @@
         "with_execution_start": 0
       },
       "action_status": {
-        "unmapped": 18
+        "preparation": 6,
+        "resolved": 11,
+        "rule_dependent": 1
       },
-      "clusters_certain": [],
-      "clusters_upper": [],
-      "entry_cluster": null,
-      "first_classified_cluster": null,
+      "clusters_certain": [
+        "#1",
+        "#3",
+        "#7"
+      ],
+      "clusters_upper": [
+        "#1",
+        "#3",
+        "#7"
+      ],
+      "entry_cluster": "#1",
+      "first_classified_cluster": "#1",
       "path": {
         "raw": [
-          {
-            "action_id": "0048bdb7-d62f-4f07-a739-5c20838a5916",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": false,
-            "execution_start": null
-          },
-          {
-            "action_id": "ecdd9b30-ce05-4b96-95b1-d8b341969b8b",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": false,
-            "execution_start": null
-          },
           {
             "action_id": "4988e954-5b8e-4af4-90d3-b22e350c56cd",
             "cluster": null,
             "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": false,
-            "execution_start": null
-          },
-          {
-            "action_id": "5caf1553-c7e8-47d8-9f43-6f49bd6c24a4",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": false,
-            "execution_start": null
-          },
-          {
-            "action_id": "ae01b0a9-4ad1-425a-98fb-5a38d3ef4079",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "candidates": [
+              "#1",
+              "#7"
+            ],
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "0f6a14c6-03b3-4de5-9c11-042e760dcd2d",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "90321223-4be8-4f81-b479-76d83b11bed2",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
-            "action_id": "bd733b5b-cfc8-4c5c-9a2e-b5c91249387d",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": true,
-            "execution_start": null
-          },
-          {
-            "action_id": "062f6d4d-f064-4565-8ef0-7f65197abbdc",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
-            "parallel_hint": true,
+            "action_id": "2849f56c-c485-4864-bc03-3530714f9f6a",
+            "cluster": "#3",
+            "kind": "classified",
+            "implied": false,
+            "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "2849f56c-c485-4864-bc03-3530714f9f6a",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#7",
+            "kind": "classified",
+            "implied": true,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "7d8f066a-6e4a-4354-95e3-c307b2d35e31",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "1c29d65b-024b-4a40-9529-912c6b9053ff",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "395b4149-2a07-4907-bd62-94969778f278",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "4663a57e-57bf-486d-832a-494d8621cd07",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "74cbc7bd-2c09-4a82-8840-1079a6daa144",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "100d27dc-9be4-4765-94ab-1aec5e45192f",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "f85ca0f6-072d-488b-996d-1cd211724b1b",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
           {
             "action_id": "767095cb-69da-4b45-953d-8c4602ced215",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": true,
+            "execution_start": null
+          },
+          {
+            "action_id": "767095cb-69da-4b45-953d-8c4602ced215",
+            "cluster": "#7",
+            "kind": "classified",
+            "implied": true,
+            "parallel_hint": false,
             "execution_start": null
           }
         ],
@@ -25308,22 +25366,59 @@
           {
             "cluster": null,
             "kind": "unresolved",
-            "candidates": [],
-            "reason": "unmapped",
+            "candidates": [
+              "#1",
+              "#7"
+            ],
             "parallel_hint": false,
             "execution_start": null,
-            "count": 18,
+            "count": 1,
             "action_ids": [
-              "0048bdb7-d62f-4f07-a739-5c20838a5916",
-              "ecdd9b30-ce05-4b96-95b1-d8b341969b8b",
-              "4988e954-5b8e-4af4-90d3-b22e350c56cd",
-              "5caf1553-c7e8-47d8-9f43-6f49bd6c24a4",
-              "ae01b0a9-4ad1-425a-98fb-5a38d3ef4079",
+              "4988e954-5b8e-4af4-90d3-b22e350c56cd"
+            ]
+          },
+          {
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 2,
+            "action_ids": [
               "0f6a14c6-03b3-4de5-9c11-042e760dcd2d",
-              "90321223-4be8-4f81-b479-76d83b11bed2",
-              "bd733b5b-cfc8-4c5c-9a2e-b5c91249387d",
-              "062f6d4d-f064-4565-8ef0-7f65197abbdc",
-              "2849f56c-c485-4864-bc03-3530714f9f6a",
+              "90321223-4be8-4f81-b479-76d83b11bed2"
+            ]
+          },
+          {
+            "cluster": "#3",
+            "kind": "classified",
+            "implied": false,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 1,
+            "action_ids": [
+              "2849f56c-c485-4864-bc03-3530714f9f6a"
+            ]
+          },
+          {
+            "cluster": "#7",
+            "kind": "classified",
+            "implied": true,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 1,
+            "action_ids": [
+              "2849f56c-c485-4864-bc03-3530714f9f6a"
+            ]
+          },
+          {
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 8,
+            "action_ids": [
               "7d8f066a-6e4a-4354-95e3-c307b2d35e31",
               "1c29d65b-024b-4a40-9529-912c6b9053ff",
               "395b4149-2a07-4907-bd62-94969778f278",
@@ -25333,15 +25428,26 @@
               "f85ca0f6-072d-488b-996d-1cd211724b1b",
               "767095cb-69da-4b45-953d-8c4602ced215"
             ]
+          },
+          {
+            "cluster": "#7",
+            "kind": "classified",
+            "implied": true,
+            "parallel_hint": false,
+            "execution_start": null,
+            "count": 1,
+            "action_ids": [
+              "767095cb-69da-4b45-953d-8c4602ced215"
+            ]
           }
         ],
         "notes": [],
         "has_cycle": false
       },
-      "notation_raw": "? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ? → ?",
-      "notation_compressed": "…",
-      "steps_raw": 18,
-      "steps_compressed": 1,
+      "notation_raw": "? → #1 → #1 → #3 → #7 → #1 → #1 → #1 → #1 → #1 → #1 → #1 → #1 → #7",
+      "notation_compressed": "? → #1 → #3 → #7 → #1 → #7",
+      "steps_raw": 14,
+      "steps_compressed": 6,
       "unresolved_steps": 1,
       "delta_t_edges": 0,
       "actions": [
@@ -25350,9 +25456,9 @@
           "name": "Acquire Infrastructure",
           "technique_id": "AML.T0008",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0008",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -25363,9 +25469,9 @@
           "name": "Search Open Websites/Domains: Code Repositories",
           "technique_id": "AML.T0095.000",
           "tactic_id": "AML.TA0002",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0095.000",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -25376,22 +25482,32 @@
           "name": "Masquerading",
           "technique_id": "AML.T0074",
           "tactic_id": "AML.TA0007",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "rule_dependent",
+          "technique_used": "AML.T0074",
+          "mapping": "#1 | #7",
           "framework": "atlas",
-          "alternatives": [],
+          "alternatives": [
+            [
+              "#1"
+            ],
+            [
+              "#7"
+            ]
+          ],
           "clusters_certain": [],
-          "clusters_candidates": []
+          "clusters_candidates": [
+            "#1",
+            "#7"
+          ]
         },
         {
           "action_id": "5caf1553-c7e8-47d8-9f43-6f49bd6c24a4",
           "name": "Acquire Public AI Artifacts: AI Agent Configuration",
           "technique_id": "AML.T0002.002",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0002.002",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -25402,9 +25518,9 @@
           "name": "LLM Prompt Crafting",
           "technique_id": "AML.T0065",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0065",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -25415,12 +25531,18 @@
           "name": "Discover LLM System Information: System Instruction Keywords",
           "technique_id": "AML.T0069.001",
           "tactic_id": "AML.TA0008",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0069.001",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25428,12 +25550,18 @@
           "name": "Discover LLM System Information: Special Character Sets",
           "technique_id": "AML.T0069.000",
           "tactic_id": "AML.TA0008",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0069.000",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25441,9 +25569,9 @@
           "name": "Stage Capabilities",
           "technique_id": "AML.T0079",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0079",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -25454,9 +25582,9 @@
           "name": "LLM Prompt Crafting",
           "technique_id": "AML.T0065",
           "tactic_id": "AML.TA0003",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "preparation",
+          "technique_used": "AML.T0065",
+          "mapping": "N/A",
           "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
@@ -25467,12 +25595,20 @@
           "name": "Drive-by Compromise",
           "technique_id": "AML.T0078",
           "tactic_id": "AML.TA0004",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0078",
+          "mapping": "#3 → #7",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#3",
+              "#7"
+            ]
+          ],
+          "clusters_certain": [
+            "#3",
+            "#7"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25480,12 +25616,18 @@
           "name": "LLM Prompt Injection: Indirect",
           "technique_id": "AML.T0051.001",
           "tactic_id": "AML.TA0005",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0051.001",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25493,12 +25635,18 @@
           "name": "LLM Jailbreak",
           "technique_id": "AML.T0054",
           "tactic_id": "AML.TA0012",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0054",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25506,12 +25654,18 @@
           "name": "AI Agent Tool Invocation",
           "technique_id": "AML.T0053",
           "tactic_id": "AML.TA0005",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0053",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25519,12 +25673,18 @@
           "name": "Modify AI Agent Configuration",
           "technique_id": "AML.T0081",
           "tactic_id": "AML.TA0006",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0081",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25532,12 +25692,18 @@
           "name": "LLM Prompt Injection: Direct",
           "technique_id": "AML.T0051.000",
           "tactic_id": "AML.TA0005",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0051.000",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25545,12 +25711,18 @@
           "name": "AI Agent Context Poisoning: Thread",
           "technique_id": "AML.T0080.001",
           "tactic_id": "AML.TA0006",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0080.001",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25558,12 +25730,18 @@
           "name": "AI Agent",
           "technique_id": "AML.T0108",
           "tactic_id": "AML.TA0014",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0108",
+          "mapping": "#1",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1"
+            ]
+          ],
+          "clusters_certain": [
+            "#1"
+          ],
           "clusters_candidates": []
         },
         {
@@ -25571,12 +25749,20 @@
           "name": "Machine Compromise: Local AI Agent",
           "technique_id": "AML.T0112.000",
           "tactic_id": "AML.TA0011",
-          "status": "unmapped",
-          "technique_used": null,
-          "mapping": null,
+          "status": "resolved",
+          "technique_used": "AML.T0112.000",
+          "mapping": "#1 → #7",
           "framework": "atlas",
-          "alternatives": [],
-          "clusters_certain": [],
+          "alternatives": [
+            [
+              "#1",
+              "#7"
+            ]
+          ],
+          "clusters_certain": [
+            "#1",
+            "#7"
+          ],
           "clusters_candidates": []
         }
       ]

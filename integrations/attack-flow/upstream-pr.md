@@ -77,4 +77,4 @@ If maintainers ask for changes to the bundle itself: edit the generator `scripts
 
 ## Not in scope of either phase
 
-Tags with TLCTC colours, mitigations and detections on exported actions, an ATLAS→TLCTC mapping (the two OpenClaw corpus flows use ATLAS techniques, which the study reports as unmapped), and the AI-generation prompts. Each is a later offer.
+Tags with TLCTC colours, mitigations and detections on exported actions, an ATT&CK-for-ICS mapping, and the AI-generation prompts. Each is a later offer. (An ATLAS→TLCTC mapping exists at `mappings/mitre-atlas/` and the classifier already uses it; offering it to the Builder as a second TLCTC reading of ATLAS-based flows is part of Phase 2's follow-up.)

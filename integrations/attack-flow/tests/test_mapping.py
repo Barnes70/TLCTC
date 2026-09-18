@@ -52,6 +52,15 @@ class LookupTests(unittest.TestCase):
     def test_case_insensitive(self):
         self.assertEqual(self.m.lookup("t1078")["technique_used"], "T1078")
 
+    def test_atlas_routed(self):
+        r = self.m.lookup("AML.T0051.001")  # indirect prompt injection
+        self.assertEqual(r["framework"], "atlas")
+        self.assertEqual(r["status"], "resolved")
+        self.assertEqual(r["alternatives"], [["#1"]])
+        self.assertEqual(self.m.lookup("AML.T0010.001")["alternatives"], [["#10", "#7"]])
+        self.assertEqual(self.m.lookup("AML.T0048")["status"], "preparation")
+        self.assertGreaterEqual(sum(1 for k in self.m.by_id if k.startswith("AML.")), 170)
+
 
 if __name__ == "__main__":
     unittest.main()

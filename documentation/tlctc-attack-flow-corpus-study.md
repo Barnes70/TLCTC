@@ -4,12 +4,12 @@
 **Version:** 1.0
 **Date:** 2026-09-18
 **License:** CC BY 4.0
-**Implements:** TLCTC framework specification v2.5 (canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`); MITRE Attack Flow schema 2.0.0 and corpus at `center-for-threat-informed-defense/attack-flow` commit `0bd4a2d` (main, 2026-08-13, Builder 4.0 in development); ATT&CK→TLCTC mapping `mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json` (698 techniques). This study introduces no normative content; every cluster, axiom and rule is cited from the core paper and the dictionary.
+**Implements:** TLCTC framework specification v2.5 (canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`); MITRE Attack Flow schema 2.0.0 and corpus at `center-for-threat-informed-defense/attack-flow` commit `0bd4a2d` (main, 2026-08-13, Builder 4.0 in development); ATT&CK→TLCTC mapping `mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json` (698 techniques) and ATLAS→TLCTC mapping `mappings/mitre-atlas/tlctc-atlas.json` (211 techniques: ATLAS v2026.09 plus the STIX distribution's retired ids). This study introduces no normative content; every cluster, axiom and rule is cited from the core paper and the dictionary.
 **Companion to:** *A Cause-Oriented Cyber Threat Taxonomy: The TLCTC Framework* (v2.5 core paper) — DOI [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176); the integration lives in `integrations/attack-flow/` of the TLCTC repository.
 
 ## Abstract
 
-Attack Flow, the MITRE Center for Threat-Informed Defense's language for describing how adversaries compose ATT&CK techniques into attacks, already has what most incident formats lack: order. A flow is a graph of actions, conditions and operators, and every action names a technique. What it does not have is cause: a technique is a behaviour, and the same behaviour can exploit different generic vulnerabilities. This study joins the two. A converter reads any Attack Flow (`.afb` v2 or STIX 2.1), sends every action through the repository's 698-technique ATT&CK→TLCTC mapping, and derives a TLCTC path in the flow's own order; a second direction exports a TLCTC Layer 3 attack path to an Attack Flow bundle with a formal STIX property extension, importable into the Builder; and a source bundle in the shape the Builder consumes for its other frameworks makes TLCTC selectable on any action. Run over the 41 flows of the Attack Flow corpus (952 actions), the classifier resolves 68% of actions to one cluster or one cluster sequence, leaves 13% rule-dependent (the flow does not say whether a technique was performed by the operator or by a running payload, or on which side of a server/client interface), and finds 13% of actions carry no technique at all. Two corpus incidents that also exist as hand-classified TLCTC paths give a step-level check: for SolarWinds the hand path is a subsequence of the derived one and every cluster is reached; for Tesla Kubernetes three of four steps align and the entry differs for a stated reason. The dominant transition in the corpus, function abuse alternating with malware, is the granularity gap the study names: Attack Flow records a payload's behaviours as separate actions where TLCTC records one #7 step and its features. The pieces are offered to the Attack Flow project as a framework source, an extension and, later, corpus flows.
+Attack Flow, the MITRE Center for Threat-Informed Defense's language for describing how adversaries compose ATT&CK techniques into attacks, already has what most incident formats lack: order. A flow is a graph of actions, conditions and operators, and every action names a technique. What it does not have is cause: a technique is a behaviour, and the same behaviour can exploit different generic vulnerabilities. This study joins the two. A converter reads any Attack Flow (`.afb` v2 or STIX 2.1), sends every action through the repository's 698-technique ATT&CK→TLCTC mapping, and derives a TLCTC path in the flow's own order; a second direction exports a TLCTC Layer 3 attack path to an Attack Flow bundle with a formal STIX property extension, importable into the Builder; and a source bundle in the shape the Builder consumes for its other frameworks makes TLCTC selectable on any action. Run over the 41 flows of the Attack Flow corpus (952 actions), the classifier, using the repository's ATT&CK and ATLAS mappings, resolves 70% of actions to one cluster or one cluster sequence, leaves 13% rule-dependent (the flow does not say whether a technique was performed by the operator or by a running payload, or on which side of a server/client interface), and finds 13% of actions carry no technique at all. Two corpus incidents that also exist as hand-classified TLCTC paths give a step-level check: for SolarWinds the hand path is a subsequence of the derived one and every cluster is reached; for Tesla Kubernetes three of four steps align and the entry differs for a stated reason. The dominant transition in the corpus, function abuse alternating with malware, is the granularity gap the study names: Attack Flow records a payload's behaviours as separate actions where TLCTC records one #7 step and its features. The pieces are offered to the Attack Flow project as a framework source, an extension and, later, corpus flows.
 
 **Keywords:** Attack Flow; ATT&CK; STIX 2.1; attack paths; cause-oriented taxonomy; TLCTC; sequencing; extension
 
@@ -29,7 +29,7 @@ This study builds the bridge in both directions and measures what it carries. Se
 
 ### 2.2 Classifying
 
-Each action's technique id (a sub-technique first, then its parent if the sub-technique is unknown) is looked up in the ATT&CK→TLCTC mapping, whose `tlctcMapping` strings use a small grammar: `#N`, `A → B` for a sequence, `A | B` for alternatives, parentheses, and `N/A` for threat potential outside the target domain. The string is parsed into alternatives of cluster sequences. An action is *resolved* when exactly one alternative remains (a single cluster, or a sequence such as `#10 → #7` for a compromised software supply chain), *rule-dependent* when several remain, *preparation* when the mapping says N/A (Resource Development techniques: acquiring infrastructure, developing capabilities), *unmapped* when the technique is unknown to the mapping (ATLAS, ATT&CK for ICS, revoked ATT&CK ids), and *no technique* when the action names only a tactic.
+Each action's technique id (a sub-technique first, then its parent if the sub-technique is unknown) is looked up in the ATT&CK→TLCTC mapping, or in the ATLAS→TLCTC mapping for `AML.` ids, whose `tlctcMapping` strings use a small grammar: `#N`, `A → B` for a sequence, `A | B` for alternatives, parentheses, and `N/A` for threat potential outside the target domain. The string is parsed into alternatives of cluster sequences. An action is *resolved* when exactly one alternative remains (a single cluster, or a sequence such as `#10 → #7` for a compromised software supply chain), *rule-dependent* when several remain, *preparation* when the mapping says N/A (Resource Development techniques: acquiring infrastructure, developing capabilities), *unmapped* when the technique is unknown to both mappings (ATT&CK for ICS, revoked ATT&CK ids), and *no technique* when the action names only a tactic.
 
 The derived path walks the flow in topological order from its declared start (or from the actions with no incoming edge). Resolved actions contribute their clusters in order; rule-dependent and technique-less actions contribute `?` with candidates; preparation is left out of the path and listed separately; a condition continues on its true branch and the false branch is noted; an AND operator marks its successors as parallel; an OR operator lists its alternatives in order. The *compressed* form collapses consecutive steps with the same cluster into one step and keeps the count, and renders a run of several unresolved actions as `…` (a gap) rather than a string of `?`. Δt is computed only where two adjacent actions both carry `execution_start`. Three corpus flows contain a cycle; the walk breaks it in insertion order and the result flags it.
 
@@ -76,13 +76,13 @@ Attack Flow's own timing field is almost unused: 46 actions carry a start timest
 
 | Outcome | Actions | Meaning |
 |---|---|---|
-| resolved | 646 (67.9%) | one cluster, or one cluster sequence (151 of them `#1 → #7`: a tool is brought in through a designed function and then runs; 46 `#4 → #1`; 26 `#9 → #7`) |
-| rule-dependent | 122 (12.8%) | the mapping leaves a rule open the flow cannot decide |
-| preparation | 16 (1.7%) | Resource Development: outside the target domain, no step |
-| unmapped | 43 (4.5%) | 36 ATLAS techniques (two OpenClaw flows), 3 ATT&CK for ICS, 4 revoked or non-Enterprise ATT&CK ids |
+| resolved | 668 (70.2%) | one cluster, or one cluster sequence (151 of them `#1 → #7`: a tool is brought in through a designed function and then runs; 46 `#4 → #1`; 26 `#9 → #7`) |
+| rule-dependent | 124 (13.0%) | the mapping leaves a rule open the flow cannot decide |
+| preparation | 28 (2.9%) | Resource Development and AI attack staging: outside the target domain, no step |
+| unmapped | 7 (0.7%) | 3 ATT&CK for ICS, 4 revoked or non-Enterprise ATT&CK ids; the 36 ATLAS actions of the two OpenClaw flows classify through the ATLAS mapping |
 | no technique | 125 (13.1%) | tactic-only actions; 63 of them in the attack-tree example |
 
-The rule-dependent actions are dominated by one question. `T1041` Exfiltration over C2 channel (11 actions), `T1003.001` LSASS memory (8), `T1027` Obfuscated files (8), `T1529` System shutdown (5), `T1132.001` Standard encoding (5), `T1219` Remote access software (4) and `T1090` Proxy (4) all map to `#1 | #7`: the technique is function abuse when the operator performs it with the system's own tools and a feature of the payload when the payload performs it. `T1555` Credentials from password stores maps to `(#1 | #7) → #4`, the same question followed by credential use. `T1068` Exploitation for privilege escalation maps to `(#2 | #3) → #7`, the server/client question of R-ROLE. An Attack Flow does not record who acts, the operator or the implant, and it does not record the role of a flawed component, so these 122 actions stay `?` with their candidates.
+The rule-dependent actions are dominated by one question. `T1041` Exfiltration over C2 channel (11 actions), `T1003.001` LSASS memory (8), `T1027` Obfuscated files (8), `T1529` System shutdown (5), `T1132.001` Standard encoding (5), `T1219` Remote access software (4) and `T1090` Proxy (4) all map to `#1 | #7`: the technique is function abuse when the operator performs it with the system's own tools and a feature of the payload when the payload performs it. `T1555` Credentials from password stores maps to `(#1 | #7) → #4`, the same question followed by credential use. `T1068` Exploitation for privilege escalation maps to `(#2 | #3) → #7`, the server/client question of R-ROLE. An Attack Flow does not record who acts, the operator or the implant, and it does not record the role of a flawed component, so these 124 actions stay `?` with their candidates.
 
 ### 4.3 Clusters and entries
 
@@ -90,35 +90,35 @@ The rule-dependent actions are dominated by one question. `T1041` Exfiltration o
 
 | Cluster | Actions | Flows |
 |---|---|---|
-| #1 Abuse of Functions | 491 / 602 | 38 / 38 |
+| #1 Abuse of Functions | 511 / 624 | 40 / 40 |
 | #2 Exploiting Server | 13 / 20 | 10 / 15 |
-| #3 Exploiting Client | 9 / 20 | 9 / 14 |
+| #3 Exploiting Client | 11 / 22 | 11 / 16 |
 | #4 Identity Theft | 92 / 104 | 27 / 28 |
 | #5 Man in the Middle | 4 / 6 | 4 / 5 |
 | #6 Flooding Attack | 0 / 0 | 0 / 0 |
-| #7 Malware | 259 / 374 | 35 / 38 |
+| #7 Malware | 263 / 380 | 37 / 40 |
 | #8 Physical Attack | 0 / 0 | 0 / 0 |
 | #9 Social Engineering | 31 / 35 | 19 / 19 |
 | #10 Supply Chain Attack | 5 / 9 | 3 / 5 |
 
 ![Figure 1. Corpus flows touching each cluster.](images/attack-flow-cluster-frequency.svg)
 
-Two clusters never appear: #6, because no corpus flow models a flood, and #8, because none models physical access. #1 is present in 38 of 41 flows and accounts for 491 certain actions, led by `T1105` Ingress Tool Transfer (61 actions, the first half of `#1 → #7`), indicator removal, disabling tools, and the discovery techniques (`T1057`, `T1082`, `T1083`, `T1018`). #7 is present in 35 flows; its top techniques are deobfuscation (`T1140`), application-layer C2 (`T1071.001`), data encryption for impact (`T1486`) and embedded payloads (`T1027.009`), that is, things a payload does. #4 appears in 27 flows, almost always as `T1078` Valid Accounts and its cloud sub-technique.
+Two clusters never appear: #6, because no corpus flow models a flood, and #8, because none models physical access. #1 is present in 40 of 41 flows and accounts for 511 certain actions, led by `T1105` Ingress Tool Transfer (61 actions, the first half of `#1 → #7`), indicator removal, disabling tools, and the discovery techniques (`T1057`, `T1082`, `T1083`, `T1018`). #7 is present in 37 flows; its top techniques are deobfuscation (`T1140`), application-layer C2 (`T1071.001`), data encryption for impact (`T1486`) and embedded payloads (`T1027.009`), that is, things a payload does. #4 appears in 27 flows, almost always as `T1078` Valid Accounts and its cloud sub-technique.
 
 **Table 4. Entry cluster (the first classified step of the derived path).**
 
 | Entry | Flows |
 |---|---|
 | #9 Social Engineering | 14 |
-| #1 Abuse of Functions | 6 |
+| #1 Abuse of Functions | 8 |
 | #2 Exploiting Server | 5 |
 | #3 Exploiting Client | 4 |
 | #4 Identity Theft | 4 |
 | #10 Supply Chain Attack | 3 |
 | #7 Malware | 2 |
-| none (no action resolves) | 3 |
+| none (no action resolves) | 1 |
 
-In 9 of 41 flows the first step of the derived path is unresolved (the entry cluster is then the first classified step after it); in 3 flows no action resolves at all: the attack-tree example, whose 63 actions carry no technique, and the two OpenClaw flows, whose actions are ATLAS techniques the ATT&CK mapping does not cover.
+In 9 of 41 flows the first step of the derived path is unresolved (the entry cluster is then the first classified step after it); in one flow no action resolves at all: the attack-tree example, whose 63 actions carry no technique. The two OpenClaw prompt-injection flows, whose actions are ATLAS techniques, classify through the ATLAS mapping to `? → #1 → #3 → #7 → #1 → #7`: indirect injection at the agent's designed interface, a drive-by compromise, and the agent driven to execute attacker content, the path B and path E shapes of the agentic-AI corpus.
 
 ### 4.4 Transitions and the granularity gap
 
@@ -126,15 +126,15 @@ In 9 of 41 flows the first step of the derived path is unresolved (the entry clu
 
 | Transition | n | Transition | n |
 |---|---|---|---|
-| #1 → #7 | 177 | #7 → #9 | 15 |
-| #7 → #1 | 142 | #7 → #4 | 12 |
-| #4 → #1 | 69 | #3 → #7 | 9 |
+| #1 → #7 | 179 | #7 → #9 | 15 |
+| #7 → #1 | 144 | #7 → #4 | 12 |
+| #4 → #1 | 69 | #3 → #7 | 11 |
 | #1 → #4 | 43 | #2 → #1 | 6 |
 | #9 → #7 | 26 | #1 → #2 | 4 |
 
 ![Figure 2. Cluster transitions along corpus flows.](images/attack-flow-transitions.svg)
 
-Two transitions make up 61% of the 523 classified edges, and they are each other's reverse: `#1 → #7` (177) and `#7 → #1` (142). The corpus's typical flow reads, after compression, `#9 → #7 → #1 → #7 → #1 → #7 → …`: a lure, a payload, then an alternation of function-abuse techniques (discovery, tool transfer, defence evasion) and payload techniques (C2, encoding, encryption). In TLCTC that alternation is largely one step. Once foreign code executes (#7, R-EXEC), the techniques the payload performs are features of that step, not new exploitations of a generic vulnerability; only an operator reaching a new function, a new credential or a new flaw opens a new step. Attack Flow cannot make the distinction because an `attack-action` has no actor field for "the implant did this", and the mapping cannot make it because a technique id does not say who ran it. Compression therefore removes little: 952 actions become 843 steps, 1.13 actions per step, and no flow is fully classified (164 of the 843 steps are `?` or `…`).
+Two transitions make up 61% of the 531 classified edges, and they are each other's reverse: `#1 → #7` (179) and `#7 → #1` (144). The corpus's typical flow reads, after compression, `#9 → #7 → #1 → #7 → #1 → #7 → …`: a lure, a payload, then an alternation of function-abuse techniques (discovery, tool transfer, defence evasion) and payload techniques (C2, encoding, encryption). In TLCTC that alternation is largely one step. Once foreign code executes (#7, R-EXEC), the techniques the payload performs are features of that step, not new exploitations of a generic vulnerability; only an operator reaching a new function, a new credential or a new flaw opens a new step. Attack Flow cannot make the distinction because an `attack-action` has no actor field for "the implant did this", and the mapping cannot make it because a technique id does not say who ran it. Compression therefore removes little: 952 actions become 853 steps, 1.12 actions per step, and no flow is fully classified (164 of the 853 steps are `?` or `…`).
 
 ![Figure 3. Actions per flow and derived steps after compression.](images/attack-flow-compression.svg)
 
@@ -157,19 +157,19 @@ For SolarWinds the hand path is a subsequence of the derived path: the four clus
 
 ### 4.6 What Attack Flow cannot say
 
-Structurally, and independently of any mapping: no cause (a technique is a behaviour; 122 actions stay rule-dependent for that reason), no actor of an action (operator versus payload; the granularity gap of §4.4), no responsibility-sphere or intra-system boundary (the `#10` steps in SolarWinds, NotPetya and Target are recognisable only through the technique id, never as a Trust Acceptance Event), no Data Risk Event (the corpus records "Data Encrypted for Impact" as an action, not as an `Ac` outcome on the records), and velocity only where an author typed timestamps (40 pairs of 1,153). All of these have a field in the TLCTC extension of §3, and none changes what Attack Flow already does well.
+Structurally, and independently of any mapping: no cause (a technique is a behaviour; 124 actions stay rule-dependent for that reason), no actor of an action (operator versus payload; the granularity gap of §4.4), no responsibility-sphere or intra-system boundary (the `#10` steps in SolarWinds, NotPetya and Target are recognisable only through the technique id, never as a Trust Acceptance Event), no Data Risk Event (the corpus records "Data Encrypted for Impact" as an action, not as an `Ac` outcome on the records), and velocity only where an author typed timestamps (40 pairs of 1,153). All of these have a field in the TLCTC extension of §3, and none changes what Attack Flow already does well.
 
 ## 5. Discussion
 
-**Attack Flow plus a cause axis.** The corpus shows what joining the two buys. Every flow gains a cluster reading of two thirds of its actions at no authoring cost, a derived path that a defender can compare across incidents ("#9 → #7 → #1" is the same story whether the payload was Conti, REvil or Black Basta), an entry-cluster statistic (Social Engineering opens 14 of 38 classifiable flows; server exploitation, 5), and a list of exactly the actions where an analyst's judgement is needed. In the Builder, once TLCTC is a selectable framework, that judgement becomes a click on the action: the tactic slot takes the cluster, the technique slot the operational position.
+**Attack Flow plus a cause axis.** The corpus shows what joining the two buys. Every flow gains a cluster reading of seven in ten of its actions at no authoring cost, a derived path that a defender can compare across incidents ("#9 → #7 → #1" is the same story whether the payload was Conti, REvil or Black Basta), an entry-cluster statistic (Social Engineering opens 14 of 38 classifiable flows; server exploitation, 5), and a list of exactly the actions where an analyst's judgement is needed. In the Builder, once TLCTC is a selectable framework, that judgement becomes a click on the action: the tactic slot takes the cluster, the technique slot the operational position.
 
 **What only the analyst adds.** The granularity gap is not a defect of the mapping; it is the difference between a behaviour catalogue and a cause taxonomy. Attack Flow authors model what was observed, technique by technique, and a payload's twelve behaviours are twelve observations. TLCTC asks which of them opened a new exploitation of a generic vulnerability, and the answer requires knowing who acted. The extension gives the analyst the fields to record the answer (`tlctc_fec_executed`, `tlctc_fec_recorded_in_step_id`, the boundary, the DRE) and the derived path gives them the list of places to look. A flow that carries both, ATT&CK on every action and a TLCTC cluster on the actions that are steps, is more useful than either alone, and the SolarWinds comparison shows the two are consistent where both exist.
 
-**Two coverage gaps the study surfaced.** ATLAS techniques (the two OpenClaw prompt-injection flows, 36 actions) have no TLCTC mapping yet; the repository's agentic-AI paths classify the same behaviours by hand (indirect prompt injection is #1 at the agent's designed interface) and an ATLAS→TLCTC mapping in the same shape as the ATT&CK one is a natural next piece. ATT&CK for ICS (3 actions) is the same story. Revoked Enterprise ids (`T1063`, `T1183`, `T1076`) in older flows are an upstream corpus matter.
+**A coverage gap the study closed, and two it left.** The first run of the study found the two OpenClaw prompt-injection flows (36 actions) unmapped because the repository had no ATLAS→TLCTC mapping; that mapping now exists (`mappings/mitre-atlas/`, every technique of ATLAS v2026.09 and of the STIX distribution, doctrine from the agentic-AI paths: injection, jailbreak, RAG and context poisoning and agent tool abuse are #1, supply chain is #10 at the Trust Acceptance Event, staging is N/A) and the two flows classify. ATT&CK for ICS (3 actions) still has no mapping. Revoked Enterprise ids (`T1063`, `T1183`, `T1076`) in older flows are an upstream corpus matter.
 
 **Precision the extension enforces.** Two points where a naive export would have produced wrong Attack Flow: a parallel group is not an operator that fans out but a set of actions that lead into an AND operator, and a flow cannot start at an operator, so a leading parallel group starts at its members; and an unresolved step carries neither a cluster nor a DRE, which the extension schema refuses rather than leaves to convention.
 
-**What the TLCTC project offers next.** (1) The Builder framework source, as a pull request prepared to the project's contribution rules (signed-off commits, tests passing), with the bundle served from this repository and regenerated on every TLCTC release. (2) Corpus flows for incidents the repository has already classified (the Shai-Hulud npm worm, the Chaos/MuddyWater false-flag ransomware) with both ATT&CK and TLCTC on every action, once the framework is selectable. (3) An ATLAS→TLCTC mapping. (4) The derived-path classifier as an optional check in the Builder's validator or as an `af` sub-command, so an author sees which actions a cause reading cannot resolve. (5) A tag set for the ten clusters for authors who want the colour without the framework.
+**What the TLCTC project offers next.** (1) The Builder framework source, as a pull request prepared to the project's contribution rules (signed-off commits, tests passing), with the bundle served from this repository and regenerated on every TLCTC release. (2) Corpus flows for incidents the repository has already classified (the Shai-Hulud npm worm, the Chaos/MuddyWater false-flag ransomware) with both ATT&CK and TLCTC on every action, once the framework is selectable. (3) The ATLAS→TLCTC mapping, now in this repository, as the Builder's TLCTC reading of ATLAS-based flows. (4) The derived-path classifier as an optional check in the Builder's validator or as an `af` sub-command, so an author sees which actions a cause reading cannot resolve. (5) A tag set for the ten clusters for authors who want the colour without the framework.
 
 ## 6. Limitations
 
@@ -186,7 +186,7 @@ python -m cli export ../../json-schemas/layer-3/examples/solarwinds-2020.json -o
 python study/run-study.py                                     # downloads the 41 corpus flows at the pinned commit, verifies sha256, rewrites results
 ```
 
-Pinned inputs: `center-for-threat-informed-defense/attack-flow` commit `0bd4a2d45dceacce499d7e94b85f7966e70f5399` (schema 2.0.0, extension-definition, 41 corpus files with sha256 in `study/corpus-sha256.json`); OASIS `cti-stix2-json-schemas` common schemas (stix2.1 branch); the TLCTC v2.5 dictionary, the operational enumeration and the ATT&CK→TLCTC mapping at the repository commit that carries this document.
+Pinned inputs: `center-for-threat-informed-defense/attack-flow` commit `0bd4a2d45dceacce499d7e94b85f7966e70f5399` (schema 2.0.0, extension-definition, 41 corpus files with sha256 in `study/corpus-sha256.json`); OASIS `cti-stix2-json-schemas` common schemas (stix2.1 branch); the TLCTC v2.5 dictionary, the operational enumeration, the ATT&CK→TLCTC mapping and the ATLAS→TLCTC mapping (ATLAS STIX from `mitre-atlas/atlas-navigator-data` commit `2f55d5f`, 170 techniques, and `atlas-data` release v2026.09, 208 techniques) at the repository commit that carries this document.
 
 ## References
 
@@ -195,6 +195,7 @@ Pinned inputs: `center-for-threat-informed-defense/attack-flow` commit `0bd4a2d4
 3. Attack Flow, *Changelog* (versions 3.1, 3.2, 4.0) and *AI Generation*, docs at the pinned commit. https://github.com/center-for-threat-informed-defense/attack-flow/blob/main/docs/changelog.rst
 4. B. Kreinz. *A Cause-Oriented Cyber Threat Taxonomy: The TLCTC Framework*, v2.5.1 core paper, 2026. DOI 10.5281/zenodo.20633176.
 5. TLCTC Project. *MITRE ATT&CK Enterprise → TLCTC Mapping* (698 techniques). `mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json`, https://github.com/Barnes70/TLCTC
-6. MITRE. *ATT&CK* v19.1 (Enterprise), https://attack.mitre.org/; *ATLAS*, https://atlas.mitre.org/
+6. MITRE. *ATT&CK* v19.1 (Enterprise), https://attack.mitre.org/; *ATLAS*, https://atlas.mitre.org/ (data: https://github.com/mitre-atlas/atlas-data, STIX distribution: https://github.com/mitre-atlas/atlas-navigator-data)
+6a. TLCTC Project. *MITRE ATLAS → TLCTC Mapping* (211 techniques). `mappings/mitre-atlas/tlctc-atlas.json`, https://github.com/Barnes70/TLCTC
 7. B. Kreinz. *Applying the Top Level Cyber Threat Clusters*, v2.5.1 application paper, 2026. DOI 10.5281/zenodo.22697636.
 8. TLCTC Project. *TLCTC for Attack Flow* (source bundle, extension, converter, study). https://github.com/Barnes70/TLCTC/tree/main/integrations/attack-flow

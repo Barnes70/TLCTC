@@ -53,10 +53,10 @@ python -m cli classify /path/to/corpus --summary --format md                # a 
 python -m cli export ../../json-schemas/layer-3/examples/solarwinds-2020.json -o solarwinds.attack-flow.json
 ```
 
-Per action the result says what the ATT&CK mapping establishes: `resolved` (one cluster, or one
+Per action the result says what the ATT&CK mapping (or, for `AML.` ids, the [ATLAS mapping](../../mappings/mitre-atlas/)) establishes: `resolved` (one cluster, or one
 sequence such as `#10 → #7`), `rule_dependent` (alternatives the flow cannot decide, rendered `?`
 with candidates), `preparation` (attacker-side, outside the target domain, left out of the path),
-`unmapped` (technique unknown to the mapping) or `no_technique` (tactic-only action, rendered `?`).
+`unmapped` (technique unknown to both mappings: ATT&CK for ICS, revoked ids) or `no_technique` (tactic-only action, rendered `?`).
 The derived path follows the flow's own order: conditions continue on the true branch (the false
 branch is noted), `AND` operators mark parallel actions, `OR` operators list alternatives in order.
 The *compressed* form collapses consecutive actions with the same cluster into one step and keeps

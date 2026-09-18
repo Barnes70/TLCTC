@@ -3,41 +3,41 @@
 <text x="142" y="60" text-anchor="end">#1</text>
 <rect x="150" y="44" width="510.0" height="22" fill="#c7e9c0"/>
 <rect x="150" y="44" width="510.0" height="22" fill="#238b45"/>
-<text x="666.0" y="60">38 / 38 flows · 491 actions</text>
+<text x="666.0" y="60">40 / 40 flows · 511 actions</text>
 <text x="142" y="94" text-anchor="end">#2</text>
-<rect x="150" y="78" width="201.3" height="22" fill="#c7e9c0"/>
-<rect x="150" y="78" width="134.2" height="22" fill="#238b45"/>
-<text x="357.3" y="94">10 / 15 flows · 13 actions</text>
+<rect x="150" y="78" width="191.2" height="22" fill="#c7e9c0"/>
+<rect x="150" y="78" width="127.5" height="22" fill="#238b45"/>
+<text x="347.2" y="94">10 / 15 flows · 13 actions</text>
 <text x="142" y="128" text-anchor="end">#3</text>
-<rect x="150" y="112" width="187.9" height="22" fill="#c7e9c0"/>
-<rect x="150" y="112" width="120.8" height="22" fill="#238b45"/>
-<text x="343.9" y="128">9 / 14 flows · 9 actions</text>
+<rect x="150" y="112" width="204.0" height="22" fill="#c7e9c0"/>
+<rect x="150" y="112" width="140.2" height="22" fill="#238b45"/>
+<text x="360.0" y="128">11 / 16 flows · 11 actions</text>
 <text x="142" y="162" text-anchor="end">#4</text>
-<rect x="150" y="146" width="375.8" height="22" fill="#c7e9c0"/>
-<rect x="150" y="146" width="362.4" height="22" fill="#238b45"/>
-<text x="531.8" y="162">27 / 28 flows · 92 actions</text>
+<rect x="150" y="146" width="357.0" height="22" fill="#c7e9c0"/>
+<rect x="150" y="146" width="344.2" height="22" fill="#238b45"/>
+<text x="513.0" y="162">27 / 28 flows · 92 actions</text>
 <text x="142" y="196" text-anchor="end">#5</text>
-<rect x="150" y="180" width="67.1" height="22" fill="#c7e9c0"/>
-<rect x="150" y="180" width="53.7" height="22" fill="#238b45"/>
-<text x="223.1" y="196">4 / 5 flows · 4 actions</text>
+<rect x="150" y="180" width="63.8" height="22" fill="#c7e9c0"/>
+<rect x="150" y="180" width="51.0" height="22" fill="#238b45"/>
+<text x="219.8" y="196">4 / 5 flows · 4 actions</text>
 <text x="142" y="230" text-anchor="end">#6</text>
 <rect x="150" y="214" width="0.0" height="22" fill="#c7e9c0"/>
 <rect x="150" y="214" width="0.0" height="22" fill="#238b45"/>
 <text x="156.0" y="230">0 / 0 flows · 0 actions</text>
 <text x="142" y="264" text-anchor="end">#7</text>
 <rect x="150" y="248" width="510.0" height="22" fill="#c7e9c0"/>
-<rect x="150" y="248" width="469.7" height="22" fill="#238b45"/>
-<text x="666.0" y="264">35 / 38 flows · 259 actions</text>
+<rect x="150" y="248" width="471.8" height="22" fill="#238b45"/>
+<text x="666.0" y="264">37 / 40 flows · 263 actions</text>
 <text x="142" y="298" text-anchor="end">#8</text>
 <rect x="150" y="282" width="0.0" height="22" fill="#c7e9c0"/>
 <rect x="150" y="282" width="0.0" height="22" fill="#238b45"/>
 <text x="156.0" y="298">0 / 0 flows · 0 actions</text>
 <text x="142" y="332" text-anchor="end">#9</text>
-<rect x="150" y="316" width="255.0" height="22" fill="#c7e9c0"/>
-<rect x="150" y="316" width="255.0" height="22" fill="#238b45"/>
-<text x="411.0" y="332">19 / 19 flows · 31 actions</text>
+<rect x="150" y="316" width="242.2" height="22" fill="#c7e9c0"/>
+<rect x="150" y="316" width="242.2" height="22" fill="#238b45"/>
+<text x="398.2" y="332">19 / 19 flows · 31 actions</text>
 <text x="142" y="366" text-anchor="end">#10</text>
-<rect x="150" y="350" width="67.1" height="22" fill="#c7e9c0"/>
-<rect x="150" y="350" width="40.3" height="22" fill="#238b45"/>
-<text x="223.1" y="366">3 / 5 flows · 5 actions</text>
+<rect x="150" y="350" width="63.8" height="22" fill="#c7e9c0"/>
+<rect x="150" y="350" width="38.2" height="22" fill="#238b45"/>
+<text x="219.8" y="366">3 / 5 flows · 5 actions</text>
 </svg>

@@ -13,6 +13,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 DEFAULT_ATTACK_MAPPING = HERE.parent.parent.parent / "mappings" / "mitre-attack-enterprise" / "tlctc-enterprise-attack.json"
+DEFAULT_ATLAS_MAPPING = HERE.parent.parent.parent / "mappings" / "mitre-atlas" / "tlctc-atlas.json"
 
 CLUSTER_RE = re.compile(r"#(10|[1-9])(?:\.(\d+))?")
 
@@ -115,9 +116,15 @@ def parse_mapping(s: str) -> list[list[str]]:
 
 
 class AttackMapping:
-    def __init__(self, doc: dict):
+    """ATT&CK Enterprise mapping plus, when present, the ATLAS mapping; ids are routed by prefix (AML. → ATLAS)."""
+
+    def __init__(self, doc: dict, atlas_doc: dict | None = None):
         self.metadata = doc.get("metadata", {})
         self.by_id: dict[str, dict] = {m["techniqueId"]: m for m in doc["mappings"]}
+        self.atlas_metadata = (atlas_doc or {}).get("metadata", {})
+        if atlas_doc:
+            for m in atlas_doc["mappings"]:
+                self.by_id[m["techniqueId"]] = m
 
     def lookup(self, technique_id: str | None) -> dict:
         """{status: resolved|rule_dependent|preparation|unmapped|no_technique, alternatives, technique_used, raw}"""
@@ -142,7 +149,13 @@ class AttackMapping:
         return {"status": "resolved" if len(alts) == 1 else "rule_dependent", "alternatives": alts, "technique_used": used, "raw": raw, "framework": framework}
 
 
-def load_attack_mapping(path: str | Path | None = None) -> AttackMapping:
+def load_attack_mapping(path: str | Path | None = None, atlas_path: str | Path | None = None) -> AttackMapping:
     p = Path(path) if path else DEFAULT_ATTACK_MAPPING
     with open(p, encoding="utf-8") as fh:
-        return AttackMapping(json.load(fh))
+        doc = json.load(fh)
+    ap = Path(atlas_path) if atlas_path else DEFAULT_ATLAS_MAPPING
+    atlas_doc = None
+    if ap.exists():
+        with open(ap, encoding="utf-8") as fh:
+            atlas_doc = json.load(fh)
+    return AttackMapping(doc, atlas_doc)
