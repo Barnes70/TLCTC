@@ -345,6 +345,12 @@ Incident records carry the cause their actions imply. The [`mappings/veris/`](ma
 
 See the [mapping README](mappings/veris/README.md) for the seven mapping types and the classifier, the [decision tree](mappings/veris/decision-tree.md) for how a VERIS value is classified, and the [study results](mappings/veris/study/results.md) for every table by stratum.
 
+### Attack Flow ↔ TLCTC
+
+Attack Flow says what an adversary did; TLCTC says which generic vulnerability each step exploited. The [`integrations/attack-flow/`](integrations/attack-flow/) directory holds the framework as a **STIX 2.1 source bundle** in the shape the Attack Flow Builder consumes for its other frameworks (clusters as tactics, cluster roots and sub-clusters as techniques), a **STIX property extension** that carries the full TLCTC step record on an `attack-action`, a stdlib **converter both ways** (Attack Flow → per-action classification through the ATT&CK→TLCTC mapping and a derived TLCTC path; Layer 3 → an Attack Flow bundle importable into the Builder), and a **study over the 41 corpus flows** written up in [`documentation/tlctc-attack-flow-corpus-study.md`](documentation/tlctc-attack-flow-corpus-study.md).
+
+See the [integration README](integrations/attack-flow/README.md) and the [study results](integrations/attack-flow/study/results.md) for every derived path.
+
 > **Note:** Like the ATT&CK and CWE mappings, the Sigma derivation inherits the experimental, AI-generated ATT&CK→TLCTC mapping.
 
 ### SARIF Scanner Findings → TLCTC
@@ -582,6 +588,7 @@ tlctc/
 │       ├── ncsc-google-2024-JB-bericht*.json # NCSC/Google 2024 annual report datasets (5 files)
 │       └── npm-*.json                        # npm supply chain incident examples (3 files)
 ├── integrations/                             # External-tool deployments (operational)
+│   ├── attack-flow/                          # TLCTC source bundle + STIX extension for MITRE Attack Flow, converter, corpus study
 │   ├── README.md                             # Index of available integration packs
 │   ├── cortex-xsoar/                         # Cortex XSOAR 6.2.x per-object YAML/JSON pack
 │   ├── cortex-xsoar-8/                       # Cortex XSOAR 8.x / XSIAM Marketplace Content Pack
@@ -688,11 +695,12 @@ tlctc/
 8. **Track active exploitation** — See [`mappings/cisa-kev/`](mappings/cisa-kev/) for a TLCTC-cluster view of the CISA Known Exploited Vulnerabilities catalog (1,568 CVEs, weekly-refreshable, deterministically derived).
 9. **Audit your detection coverage** — See [`mappings/sigma/`](mappings/sigma/) for a per-rule TLCTC cluster derivation of 3,132 SigmaHQ detection rules — cross-walk your SOC ruleset against the strategic cluster model.
 10. **Read incident records by cause** — See [`mappings/veris/`](mappings/veris/) to classify VERIS/VCDB incident records into clusters, and the [VCDB study](documentation/tlctc-veris-vcdb-study.md) for what a cause axis recovers from 10,047 records and what only sequencing can.
-11. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
-12. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
-13. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.8 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.8 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment), [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification), and [`tlctc-replication-notation-proposal.md`](documentation/tlctc-replication-notation-proposal.md) (replication notation — ×N fan-out / ×* self-propagation, conceptual).
-14. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping), and the generic SARIF classifier (any SARIF 2.1.0 producer → TLCTC clusters; CWE-first with CVE→KEV fallback; stdlib-only).
-15. **Feed an LLM agent** — Point a RAG pipeline or agent at the [`okf/`](okf/) Open Knowledge Format bundle (markdown + YAML frontmatter) rendering the whole taxonomy — clusters, axioms, rules, glossary, attack paths, controls, and mappings — for machine consumption. Regenerate with `npm run validate`.
+11. **Bring cause into Attack Flow** — See [`integrations/attack-flow/`](integrations/attack-flow/) to classify any Attack Flow through the ATT&CK→TLCTC mapping, export a TLCTC path into the Builder, and read the [corpus study](documentation/tlctc-attack-flow-corpus-study.md).
+12. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
+13. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
+14. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.8 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.8 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment), [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification), and [`tlctc-replication-notation-proposal.md`](documentation/tlctc-replication-notation-proposal.md) (replication notation — ×N fan-out / ×* self-propagation, conceptual).
+15. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping), and the generic SARIF classifier (any SARIF 2.1.0 producer → TLCTC clusters; CWE-first with CVE→KEV fallback; stdlib-only).
+16. **Feed an LLM agent** — Point a RAG pipeline or agent at the [`okf/`](okf/) Open Knowledge Format bundle (markdown + YAML frontmatter) rendering the whole taxonomy — clusters, axioms, rules, glossary, attack paths, controls, and mappings — for machine consumption. Regenerate with `npm run validate`.
 
 ## Contributing
 

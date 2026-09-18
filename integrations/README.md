@@ -10,6 +10,7 @@ your platform; behaviour is identical across builds.
 | [`sonarqube/`](sonarqube/) | SonarQube **self-hosted** + **SonarCloud** | Python 3.11+ CLI (stdlib only) + declarative starter assets | `git clone` then `python -m cli classify` (see [`sonarqube/deploy.md`](sonarqube/deploy.md)) |
 | [`sarif/`](sarif/) | Any **SARIF 2.1.0** producer (Semgrep, CodeQL, Trivy, Grype, Bandit, gosec) | Python 3.10+ CLI (stdlib only) | `git clone` then `python -m cli classify scan.sarif` |
 | [`misp/`](misp/) | **MISP** (any 2.4/2.5 instance) | Taxonomy (`machinetag.json`) + 2 object templates + Python 3.10+ CLI (stdlib only) | Copy taxonomy/templates into the instance (see [`misp/README.md`](misp/README.md)); `python -m cli convert attack-paths/*.json --out-dir out/` |
+| [`attack-flow/`](attack-flow/) | **MITRE Attack Flow** (Builder 4.0, STIX 2.1) | TLCTC framework source bundle + STIX property extension + Python 3.10+ CLI (stdlib only) | `python -m cli classify flow.afb` / `python -m cli export path.json` (see [`attack-flow/README.md`](attack-flow/README.md)); Builder framework PR per [`attack-flow/upstream-pr.md`](attack-flow/upstream-pr.md) |
 
 The two Cortex builds:
 
@@ -45,5 +46,13 @@ The MISP build:
 - `tlctc-attack-path` / `tlctc-attack-step` object templates carry the ordered path — velocity (`Δt` on `followed-by` references), boundary crossings, DRE, unresolved steps — so the MISP event graph shows the attack path.
 - Converter turns any Layer 3 file into a deterministic MISP event (uuid v5 over the incident id); `validate` checks an emitted event against the templates.
 - Upstream PRs to MISP/misp-taxonomies and MISP/misp-objects are opened by the owner (`misp/upstream-pr.md`).
+
+The Attack Flow build:
+
+- `stix/tlctc-stix-bundle.json`: the framework as a STIX 2.1 source in the shape the Builder consumes for ATLAS and F3 — ten clusters as tactics, cluster roots and published sub-clusters as techniques (generated from the v2.5 dictionary by `scripts/build-attack-flow-stix.js`).
+- A STIX `property-extension` that carries cluster, sub-cluster, Δt, boundaries, DRE, FEC and unresolved state on `attack-action` (schema in the repository, id `extension-definition--69b4eaba-45a8-4101-b935-3a7ae2cb3a1a`).
+- Converter both ways: an Attack Flow (`.afb` v2 or STIX) → per-action TLCTC classification through the ATT&CK→TLCTC mapping and a derived TLCTC path; a Layer 3 path → an Attack Flow bundle with the extension, importable into the Builder.
+- A study over the 41 corpus flows (`attack-flow/study/`, report in `documentation/tlctc-attack-flow-corpus-study.md`).
+- The Builder framework PR and the corpus PRs are opened by the owner (`attack-flow/upstream-pr.md`).
 
 Each directory has its own README, deploy or upstream runbook, and test cases.

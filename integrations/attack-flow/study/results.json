@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T18:25:10Z",
+  "generated": "2026-09-18T18:26:58Z",
   "corpus": {
     "repo": "center-for-threat-informed-defense/attack-flow",
     "commit": "0bd4a2d45dceacce499d7e94b85f7966e70f5399",
@@ -41,7 +41,7 @@
         "denominator": 41
       },
       "actions_with_atlas_technique": {
-        "n": 32,
+        "n": 36,
         "denominator": 952
       },
       "flows_using_atlas": {
@@ -23410,7 +23410,7 @@
           "status": "unmapped",
           "technique_used": null,
           "mapping": null,
-          "framework": "attack",
+          "framework": "attack-ics",
           "alternatives": [],
           "clusters_certain": [],
           "clusters_candidates": []
@@ -24899,12 +24899,12 @@
         {
           "action_id": "ecdd9b30-ce05-4b96-95b1-d8b341969b8b",
           "name": "Search Open Websites/Domains: Code Repositories",
-          "technique_id": "[ATL] AML.T0095.000 Code Repositories",
+          "technique_id": "AML.T0095.000",
           "tactic_id": "AML.TA0002",
           "status": "unmapped",
           "technique_used": null,
           "mapping": null,
-          "framework": "other",
+          "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
           "clusters_candidates": []
@@ -24925,12 +24925,12 @@
         {
           "action_id": "5caf1553-c7e8-47d8-9f43-6f49bd6c24a4",
           "name": "Acquire Public AI Artifacts: AI Agent Configuration",
-          "technique_id": "[ATL] AML.T0002.002 AI Agent Configuration",
+          "technique_id": "AML.T0002.002",
           "tactic_id": "AML.TA0003",
           "status": "unmapped",
           "technique_used": null,
           "mapping": null,
-          "framework": "other",
+          "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
           "clusters_candidates": []
@@ -25361,12 +25361,12 @@
         {
           "action_id": "ecdd9b30-ce05-4b96-95b1-d8b341969b8b",
           "name": "Search Open Websites/Domains: Code Repositories",
-          "technique_id": "[ATL] AML.T0095.000 Code Repositories",
+          "technique_id": "AML.T0095.000",
           "tactic_id": "AML.TA0002",
           "status": "unmapped",
           "technique_used": null,
           "mapping": null,
-          "framework": "other",
+          "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
           "clusters_candidates": []
@@ -25387,12 +25387,12 @@
         {
           "action_id": "5caf1553-c7e8-47d8-9f43-6f49bd6c24a4",
           "name": "Acquire Public AI Artifacts: AI Agent Configuration",
-          "technique_id": "[ATL] AML.T0002.002 AI Agent Configuration",
+          "technique_id": "AML.T0002.002",
           "tactic_id": "AML.TA0003",
           "status": "unmapped",
           "technique_used": null,
           "mapping": null,
-          "framework": "other",
+          "framework": "atlas",
           "alternatives": [],
           "clusters_certain": [],
           "clusters_candidates": []
@@ -35414,7 +35414,7 @@
           "status": "unmapped",
           "technique_used": null,
           "mapping": null,
-          "framework": "attack",
+          "framework": "attack-ics",
           "alternatives": [],
           "clusters_certain": [],
           "clusters_candidates": []
@@ -35831,7 +35831,7 @@
           "status": "unmapped",
           "technique_used": null,
           "mapping": null,
-          "framework": "attack",
+          "framework": "attack-ics",
           "alternatives": [],
           "clusters_certain": [],
           "clusters_candidates": []

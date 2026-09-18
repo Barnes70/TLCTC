@@ -1,6 +1,6 @@
 # Attack Flow corpus study results
 
-Generated 2026-09-18T18:25:10Z from center-for-threat-informed-defense/attack-flow commit `0bd4a2d45dceacce499d7e94b85f7966e70f5399` (41 flows), ATT&CK→TLCTC mapping with 698 techniques.
+Generated 2026-09-18T18:26:58Z from center-for-threat-informed-defense/attack-flow commit `0bd4a2d45dceacce499d7e94b85f7966e70f5399` (41 flows), ATT&CK→TLCTC mapping with 698 techniques.
 
 ### All corpus flows
 
@@ -14,7 +14,7 @@ Generated 2026-09-18T18:25:10Z from center-for-threat-informed-defense/attack-fl
 | operators | 118 |
 | flows_with_cycle | 3 (7.3%) |
 | flows_whose_first_step_is_unresolved | 9 (22.0%) |
-| actions_with_atlas_technique | 32 (3.4%) |
+| actions_with_atlas_technique | 36 (3.8%) |
 | flows_using_atlas | 2 (4.9%) |
 | delta_t_edges | 40 (3.5%) |
 

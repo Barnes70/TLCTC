@@ -11,6 +11,7 @@ blocks expose their outgoing branches on anchors keyed "branch:True" / "branch:F
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from .flow import Action, Condition, Edge, Flow, Operator
@@ -23,6 +24,17 @@ ATTACHMENT_KINDS = {
     "mutex", "x509_certificate", "autonomous_system", "observed_data", "indicator", "attack_pattern",
     "grouping", "intrusion_set", "report", "opinion", "email_message", "location",
 }
+
+
+LABEL_RE = re.compile(r"^\[[A-Z0-9]+\]\s+(\S+)")
+
+
+def _bare_id(value):
+    """Builder 4.0 stores the option label ('[ENT] T1078 Valid Accounts', '[ATL] AML.T0051 …'); keep the id only."""
+    if not isinstance(value, str):
+        return value
+    m = LABEL_RE.match(value)
+    return m.group(1) if m else value
 
 
 def props(obj: dict) -> dict:
@@ -71,6 +83,7 @@ def read_afb(path: str | Path) -> Flow:
                 d = {k: v for k, v in ttp if isinstance(k, str)}
                 tactic = tactic or d.get("tactic")
                 technique = technique or d.get("technique")
+            tactic, technique = _bare_id(tactic), _bare_id(technique)
             flow.actions[o["instance"]] = Action(
                 id=o["instance"], name=str(p.get("name") or ""), technique_id=technique or None, tactic_id=tactic or None,
                 description=p.get("description"), execution_start=p.get("execution_start"), execution_end=p.get("execution_end"),

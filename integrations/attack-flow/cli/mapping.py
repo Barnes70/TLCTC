@@ -124,7 +124,7 @@ class AttackMapping:
         if not technique_id:
             return {"status": "no_technique", "alternatives": [], "technique_used": None, "raw": None, "framework": None}
         tid = technique_id.strip().upper()
-        framework = "atlas" if tid.startswith("AML.") else "attack" if tid.startswith("T") else "other"
+        framework = "atlas" if tid.startswith("AML.") else "attack-ics" if re.match(r"^T0\d{3}", tid) else "attack" if tid.startswith("T") else "other"
         used = tid
         m = self.by_id.get(tid)
         if m is None and "." in tid:
