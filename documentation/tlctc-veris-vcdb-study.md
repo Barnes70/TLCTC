@@ -255,6 +255,15 @@ Where both routes speak, they agree on 2,122 of 2,417 records (87.8%) and contra
 
 VERIS 1.4.x has already moved in this direction on its own: `Prompt injection` was added as a hacking variety with a cause-side description, `MitM` was renamed to `AitM`, and the coding guidance stopped using `Social.Extortion` for ransomware. Each of those is a step towards a term meaning one thing. The table is the rest of the list.
 
+**What the TLCTC project offers next.** The mapping is the first contribution, not the last. Each of the following is scoped, and the VERIS and VCDB maintainers decide which, if any, is welcome:
+
+1. *Maintenance.* The crosswalk regenerated for every VERIS release (1.4.2, 1.5), in the same file layout, with the study re-run on the VCDB snapshot of the day. The generator and validator already exist; a refresh is a pinned-commit change.
+2. *Two small enumeration additions*, drafted as issues with the evidence from Tables 4 and 3: a `role` value (server or client) on `Exploit vuln`, which would resolve 1,034 records, and an entitlement flag on the misuse block (inside the actor's grant or past it), which would separate Abuse of Rights from Abuse of Functions in 1,789 records. Neither breaks an existing record.
+3. *A sequencing proposal for issue #127.* A worked draft of an ordered action list for VERIS 2.0, with one cluster per step, a velocity annotation between steps and the attribute outcomes attached to the step that produced them; TLCTC's Layer 3 schema, its JSON Schema and the 59 published attack paths are available as a tested starting point, and the classifier can be extended to emit a candidate sequence for a coder to confirm.
+4. *Data-quality checks for VCDB.* The study's findings translate into lints VCDB's pipeline could run before validation: a record whose action set matches the five-value ransomware template, a ransomware record with no availability attribute, a malware record with no delivering action, a credential-use record with no acquisition action. Each is a one-line rule over fields that already exist.
+5. *A pilot of sequenced encodings.* A batch of VCDB incidents encoded through VCDB's own pipeline with the TLCTC path recorded in `plus.analyst_notes`, so that sequencing can be evaluated on real records before any schema changes.
+6. *An inter-rater test.* A stratified sample of VERIS values coded independently by VERIS coders and TLCTC analysts, reported with Cohen's κ, which would test the mapping's rows the way §6 says they need testing.
+
 **On the errors and the insiders.** Nothing in this study says that misdelivery, lost laptops and dishonest administrators do not matter; 3,498 of the 4,020 operational-only records carry a confirmed Data Risk Event. It says that they answer a different question. A control catalogue that treats "Miscellaneous Errors" or "Privilege Misuse" as a threat pattern beside "System Intrusion" will look for an attacker where there is none and miss the process or governance control that would have prevented the event. Keeping the rows on separate axes is what lets each be counted and controlled on its own terms.
 
 ## 6. Limitations

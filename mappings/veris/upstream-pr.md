@@ -52,6 +52,8 @@ What the file contains (346 rows, 337 VERIS values, total coverage of `action.*.
 
 A standard-library Python classifier that applies the mapping to VERIS/VCDB records, and a study that runs it over the 10,047 records of the VCDB joined dataset (snapshot 2026-08-04) with an ATT&CK-transitive consistency check, are at https://github.com/Barnes70/TLCTC/tree/main/mappings/veris. The study report: https://github.com/Barnes70/TLCTC/blob/main/documentation/tlctc-veris-vcdb-study.md. Its discussion section lists, term by term, where a VERIS enumeration value carries more than one meaning (for example `Backdoor` as a hacking variety, a malware variety and a vector) and which existing definition would make it precise; the maintainers may find that list useful independently of this mapping.
 
+If useful, we can also keep the file current per VERIS release, draft two small enumeration additions the study points at (a server/client `role` on `Exploit vuln`; an in-grant/past-grant flag on misuse), turn the study's findings into pre-validation lints for VCDB (template-coded ransomware records, ransomware without an availability attribute, malware without a delivering action), and contribute a worked sequencing draft for #127. Any of these on request; none is assumed by this PR.
+
 Licence: the CSV is contributed under CC BY-SA 4.0 (the repository licence), attribution "TLCTC Project"; the source mapping is CC BY 4.0.
 References: https://www.tlctc.net · https://github.com/Barnes70/TLCTC · https://doi.org/10.5281/zenodo.20633176
 BODY
