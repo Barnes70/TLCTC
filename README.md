@@ -339,6 +339,12 @@ Each rule resolves to one of three states: `ok` (a single concrete cluster), `am
 
 See the [mapping README](mappings/sigma/README.md) for the record schema and regeneration recipe, and the [decision tree](mappings/sigma/decision-tree.md) for the resolution algorithm.
 
+### VERIS → TLCTC
+
+Incident records carry the cause their actions imply. The [`mappings/veris/`](mappings/veris/) directory maps **every VERIS 1.4.1 action variety, vector, result and attribute value** (337 entries) to TLCTC: the cluster whose generic vulnerability the action exploits, the rule that decides where VERIS cannot (`Exploit vuln` is #2 or #3 by R-ROLE), the companion step the rules require but VERIS does not record (malware needs its delivery, credential use its acquisition), the partition row for errors and environmental events that are not threats, and the Data Risk Event code for outcomes (`Obscuration` is `Ac`, `Loss` is `Av`). A generated CSV in the layout of the VERIS repository's own ATT&CK crosswalk is the upstream deliverable; a stdlib Python classifier applies the mapping to VERIS/VCDB records; and a reproducible study runs it over the 10,047 records of the VERIS Community Database, with the write-up in [`documentation/tlctc-veris-vcdb-study.md`](documentation/tlctc-veris-vcdb-study.md).
+
+See the [mapping README](mappings/veris/README.md) for the seven mapping types and the classifier, the [decision tree](mappings/veris/decision-tree.md) for how a VERIS value is classified, and the [study results](mappings/veris/study/results.md) for every table by stratum.
+
 > **Note:** Like the ATT&CK and CWE mappings, the Sigma derivation inherits the experimental, AI-generated ATT&CK→TLCTC mapping.
 
 ### SARIF Scanner Findings → TLCTC
@@ -417,6 +423,12 @@ TLCTC relies on 10 non-negotiable axioms organized into four groups. These preve
 ```
 tlctc/
 ├── mappings/
+│   ├── veris/                                # VERIS 1.4.1 → TLCTC (337 entries), classifier, VCDB study
+│   │   ├── tlctc-veris.json                  # Canonical mapping with rule and rationale per entry
+│   │   ├── veris-1.4.1_tlctc-2.5.csv         # Generated upstream CSV (vz-risk/veris mappings/ layout)
+│   │   ├── cli/                              # Stdlib classifier for VERIS/VCDB records
+│   │   ├── study/                            # run-study.py + committed results.{json,md}
+│   │   └── decision-tree.md                  # Classification methodology
 │   ├── mitre-attack-enterprise/              # MITRE ATT&CK Enterprise → TLCTC
 │   │   ├── README.md                         # Mapping documentation & notation
 │   │   ├── tlctc-enterprise-attack.json      # 698 technique mappings with rationale
@@ -675,9 +687,10 @@ tlctc/
 7. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
 8. **Track active exploitation** — See [`mappings/cisa-kev/`](mappings/cisa-kev/) for a TLCTC-cluster view of the CISA Known Exploited Vulnerabilities catalog (1,568 CVEs, weekly-refreshable, deterministically derived).
 9. **Audit your detection coverage** — See [`mappings/sigma/`](mappings/sigma/) for a per-rule TLCTC cluster derivation of 3,132 SigmaHQ detection rules — cross-walk your SOC ruleset against the strategic cluster model.
-10. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
-11. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
-12. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.8 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.8 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment), [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification), and [`tlctc-replication-notation-proposal.md`](documentation/tlctc-replication-notation-proposal.md) (replication notation — ×N fan-out / ×* self-propagation, conceptual).
+10. **Read incident records by cause** — See [`mappings/veris/`](mappings/veris/) to classify VERIS/VCDB incident records into clusters, and the [VCDB study](documentation/tlctc-veris-vcdb-study.md) for what a cause axis recovers from 10,047 records and what only sequencing can.
+11. **Use the glossary** — See [`glossary/`](glossary/) for precise, machine-readable definitions of all TLCTC terms and cyber security vocabulary.
+12. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
+13. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.8 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.8 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment), [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification), and [`tlctc-replication-notation-proposal.md`](documentation/tlctc-replication-notation-proposal.md) (replication notation — ×N fan-out / ×* self-propagation, conceptual).
 13. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping), and the generic SARIF classifier (any SARIF 2.1.0 producer → TLCTC clusters; CWE-first with CVE→KEV fallback; stdlib-only).
 14. **Feed an LLM agent** — Point a RAG pipeline or agent at the [`okf/`](okf/) Open Knowledge Format bundle (markdown + YAML frontmatter) rendering the whole taxonomy — clusters, axioms, rules, glossary, attack paths, controls, and mappings — for machine consumption. Regenerate with `npm run validate`.
 
