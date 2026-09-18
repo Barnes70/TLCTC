@@ -1,0 +1,3340 @@
+{
+  "metadata": {
+    "title": "VERIS → TLCTC Mapping",
+    "description": "Maps every VERIS 1.4.1 action variety and vector, action result and attribute outcome enumeration to TLCTC v2.5: the cluster(s) whose generic vulnerability the action exploits (with the rule that decides), the companion step the rules require but VERIS does not record, the boundary context a vector implies, the cause-side partition row for actions that are not threats, and the Data Risk Event code for outcomes.",
+    "tlctc_version": "2.5",
+    "framework_ref": "json-schemas/layer-1/tlctc-framework.v2.5.json",
+    "veris_version": "1.4.1",
+    "veris_source": {
+      "repo": "vz-risk/veris",
+      "commit": "45d9d7ace489b9b7bc4f1cee1daa4bf4872dfcaf",
+      "files": [
+        "verisc-enum.json",
+        "verisc-labels.json"
+      ],
+      "see": "PINNED.md"
+    },
+    "license": "CC-BY-4.0",
+    "publisher": "TLCTC Project",
+    "source": "https://github.com/Barnes70/TLCTC/tree/main/mappings/veris",
+    "mapping_types": {
+      "direct": "The value names exactly one generic vulnerability: one cluster.",
+      "conditional": "The value spans clusters; each target carries the rule and the condition under which it applies. The record alone cannot decide.",
+      "chain": "The value names one cluster, and the rules require a companion step (before or after) that VERIS does not record.",
+      "context": "Vectors: no cluster. The value annotates the boundary context, a responsibility-sphere crossing, an intra-system boundary, or a role hint for R-ROLE.",
+      "no-cluster": "Off the threat axis: the cause-side partition row is named (failure, error_in_use, abuse_of_rights), or the action is intentional but involves no IT-system step (row attack with out_of_scope).",
+      "outcome": "Not a cause (Axiom III). Attribute values map to a Data Risk Event code; action results map to nothing.",
+      "unresolved": "Other / Unknown: the record says something happened without saying what. An unresolved step in TLCTC notation, excluded from statistics (R-UNRES-3)."
+    },
+    "entry_fields": {
+      "targets[].tlctc": "cluster id #1 … #10",
+      "targets[].rule": "rule_id from the dictionary that decides the target",
+      "targets[].condition": "conditional only: when this target applies",
+      "targets[].role_hint": "server | client: the R-ROLE reading VERIS implies",
+      "targets[].sub_cluster_hint": "informative operational sub-cluster (e.g. 8.1 mechanical, 8.2 signal)",
+      "companion.before / companion.after": "chain only: the step the rules require around the named cluster",
+      "companion.notation": "the sequence in TLCTC notation with placeholders in angle brackets",
+      "context.boundary_context": "human | physical | update | …",
+      "context.boundary": "responsibility-sphere crossing, e.g. @Vendor→@Org",
+      "context.intra_system_boundary": "hypervisor | privilege | sandbox | process",
+      "context.role_hint": "server | client",
+      "partition_row": "no-cluster only: failure | error_in_use | abuse_of_rights | attack",
+      "basis": "no-cluster only: the axiom or rule that takes the action off the threat axis",
+      "out_of_scope": "no-cluster with row attack only: why no cluster applies",
+      "dre": "outcome only: C | I | Ii | If | A | Av | Ac",
+      "certainty": "outcome only: potential when the record marks the disclosure as at risk rather than confirmed"
+    },
+    "created": "2026-09-18",
+    "updated": "2026-09-18",
+    "entry_count": 337
+  },
+  "entries": [
+    {
+      "veris_id": "action.hacking.variety.Abuse of functionality",
+      "veris_description": "Abuse of functionality.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Designed functionality used beyond its intended purpose; no code flaw and no foreign code are required."
+    },
+    {
+      "veris_id": "action.hacking.variety.Backdoor",
+      "veris_description": "Hacking action that creates a backdoor for use.",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#1",
+          "condition": "the backdoor is a designed function left open (account, service, scheduled task, configuration)"
+        },
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC",
+          "condition": "the backdoor is foreign executable content installed on the system"
+        }
+      ],
+      "rationale": "VERIS records the persistence result; TLCTC classifies the act that created it: reuse of designed functions is #1, an installed implant is #7 at the moment it executes."
+    },
+    {
+      "veris_id": "action.hacking.variety.Brute force",
+      "veris_description": "Brute force or password guessing attacks.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "rationale": "Password guessing or credential stuffing is credential application: the attacker authenticates as an identity that is not their own (R-CRED, Axiom X)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Buffer overflow",
+      "veris_description": "Buffer overflow. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Cache poisoning",
+      "veris_description": "Cache poisoning. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Cryptanalysis",
+      "veris_description": "Cryptanalysis. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#5",
+          "rule": "R-CHANNEL"
+        }
+      ],
+      "rationale": "Breaking the channel's cryptography is a defect in a communication-path control; the generic vulnerability is insufficient control over the communication path (R-CHANNEL)."
+    },
+    {
+      "veris_id": "action.hacking.variety.CSRF",
+      "veris_description": "Cross-site request forgery. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "role_hint": "client"
+        }
+      ],
+      "rationale": "The forged request exploits the browser's trust handling on the client side; the flawed component is in a client role relative to the attacker (R-ROLE)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Disable controls",
+      "veris_description": "Disable or interfere with security controls",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Turning off or interfering with security controls uses administrative functions the attacker can already reach; the control failure that follows is not itself a threat (Axiom V)."
+    },
+    {
+      "veris_id": "action.hacking.variety.DoS",
+      "veris_description": "Denial of service",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#6",
+          "rule": "R-FLOOD",
+          "condition": "volume or intensity exhausts finite resources"
+        },
+        {
+          "tlctc": "#2",
+          "rule": "R-FLOOD",
+          "condition": "an implementation defect crashes or hangs a server-role component"
+        },
+        {
+          "tlctc": "#3",
+          "rule": "R-FLOOD",
+          "condition": "an implementation defect crashes or hangs a client-role component"
+        }
+      ],
+      "rationale": "VERIS records the availability effect; TLCTC asks which generic vulnerability produced it (R-FLOOD): capacity is #6, a code defect is #2 or #3 per R-ROLE."
+    },
+    {
+      "veris_id": "action.hacking.variety.Evade Defenses",
+      "veris_description": "Modification of the action (rather than the system, as in 'Disable controls') to avoid detection.",
+      "mapping_type": "outcome",
+      "rationale": "A property of how a step was carried out, not a step: evasion has no generic vulnerability of its own and is recorded as a capability of the classified step."
+    },
+    {
+      "veris_id": "action.hacking.variety.Exploit misconfig",
+      "veris_description": "Exploit a misconfiguration (vs vuln or weakness)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "A misconfiguration is a designed function in a permissive state; using it is function abuse, not exploitation of a code flaw."
+    },
+    {
+      "veris_id": "action.hacking.variety.Exploit vuln",
+      "veris_description": "Exploit vulnerability in code (vs misconfig or weakness). This can be used with other hacking enumerations, (such as XSS when an XSS vuln exists.). Parent of many hacking varieties.",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "condition": "the flawed component serves the attacker's request (server role)"
+        },
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "condition": "the flawed component consumes attacker-supplied content (client role)"
+        }
+      ],
+      "rationale": "A code flaw was exploited; the cluster follows from the role of the flawed component relative to the attacker (R-ROLE), which VERIS does not record."
+    },
+    {
+      "veris_id": "action.hacking.variety.Forced browsing",
+      "veris_description": "Forced browsing or predictable resource location. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Format string attack",
+      "veris_description": "Format string attack. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Fuzz testing",
+      "veris_description": "Fuzz testing. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Hijack",
+      "veris_description": "To assume control over and steal functionality for an illicit purpose (e.g. Hijacking phone number intercept SMS verification codes)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Taking over a function such as a phone number or a session uses the provider's designed processes; where the takeover then presents another party's identity, a separate #4 step follows (R-CRED)."
+    },
+    {
+      "veris_id": "action.hacking.variety.HTTP request smuggling",
+      "veris_description": "HTTP request smuggling. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.HTTP request splitting",
+      "veris_description": "HTTP request splitting. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.HTTP response smuggling",
+      "veris_description": "HTTP response smuggling. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.HTTP response splitting",
+      "veris_description": "HTTP response splitting. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Insecure deserialization",
+      "veris_description": "iterating over sequential or obvious values. https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Integer overflows",
+      "veris_description": "Integer overflows. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.LDAP injection",
+      "veris_description": "LDAP injection. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Mail command injection",
+      "veris_description": "Mail command injection. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.AitM",
+      "veris_description": "Adversary-in-the-middle attack. Child of 'Exploit vuln'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#5",
+          "rule": "R-MITM"
+        }
+      ],
+      "companion": {
+        "before": "the position-acquiring cluster (#1, #2, #4, #9 or #7)",
+        "notation": "<position acquisition> → #5"
+      },
+      "rationale": "Interception or relay from an on-path position is #5 once the position exists; gaining the position is a separate earlier step (R-MITM)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Null byte injection",
+      "veris_description": "Null byte injection. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Offline cracking",
+      "veris_description": "Offline password or key cracking (e.g., rainbow tables, Hashcat, JtR)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "companion": {
+        "before": "the cluster that yielded the hashes or key material (#2, #7, #1 or #8)",
+        "notation": "<hash acquisition> → #4"
+      },
+      "rationale": "Cracking is attacker-side preparation; the recorded step is the later authentication with the recovered credential (#4), with the step that exposed the hashes before it (Axiom X)."
+    },
+    {
+      "veris_id": "action.hacking.variety.OS commanding",
+      "veris_description": "OS commanding. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Pass-the-hash",
+      "veris_description": "Pass-the-hash",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "companion": {
+        "before": "the acquiring cluster (#9, #7, #3, #2, #10, #8 or #5)",
+        "notation": "<acquisition> → #4"
+      },
+      "rationale": "Presenting a captured hash authenticates as another identity: credential application is #4 whatever the acquisition (R-CRED); the capture is a separate earlier step."
+    },
+    {
+      "veris_id": "action.hacking.variety.Path traversal",
+      "veris_description": "Path traversal. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Profile host",
+      "veris_description": "Enumerating the state of the current host",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Host enumeration uses designed system functions; it is reconnaissance carried out as function abuse on a system the attacker can already reach."
+    },
+    {
+      "veris_id": "action.hacking.variety.Prompt injection",
+      "veris_description": "Crafting malicious or misleading prompts to bypassing safety filters and executing unintended instructions in LLMs",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Instructions placed in content the model is designed to read use the model's intended function; no code flaw and no foreign executable are involved (substrate-neutral reading used in the agentic-AI paths)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Reverse engineering",
+      "veris_description": "Reverse engineering. Child of 'Exploit vuln'.",
+      "mapping_type": "no-cluster",
+      "partition_row": "attack",
+      "rationale": "Analysis of code or hardware in the attacker's own environment is preparation; no step touches the victim's system, so no cluster applies (threat potential, not a threat).",
+      "out_of_scope": "attacker-side preparation, no step against the target system"
+    },
+    {
+      "veris_id": "action.hacking.variety.RFI",
+      "veris_description": "Remote file inclusion. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Routing detour",
+      "veris_description": "Routing detour. Child of 'Exploit vuln'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#5",
+          "rule": "R-MITM"
+        }
+      ],
+      "companion": {
+        "before": "#1 (abuse of routing or resolution functions to gain position)",
+        "notation": "#1 → #5"
+      },
+      "rationale": "Redirecting traffic gains an on-path position through designed routing functions; the interception that follows is #5 (R-MITM)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Scan network",
+      "veris_description": "Enumerating the state of the network",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Network enumeration uses designed protocol functions; it is reconnaissance carried out as function abuse from a position the attacker already holds."
+    },
+    {
+      "veris_id": "action.hacking.variety.Session fixation",
+      "veris_description": "Session fixation. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A flaw in the service's session management lets the attacker choose the victim's session identifier; the flawed component is in a server role (R-ROLE)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Session prediction",
+      "veris_description": "Credential or session prediction. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "Guessable session identifiers are a flaw in the service's session generation; the flawed component is in a server role (R-ROLE)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Session replay",
+      "veris_description": "Session replay. Child of 'Exploit vuln'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "companion": {
+        "before": "the acquiring cluster (#9, #7, #3, #2, #10, #8 or #5)",
+        "notation": "<acquisition> → #4"
+      },
+      "rationale": "Replaying a captured session token presents another identity's proof of authentication: credential application is #4 (R-CRED); the capture is a separate earlier step."
+    },
+    {
+      "veris_id": "action.hacking.variety.Soap array abuse",
+      "veris_description": "Soap array abuse. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.Special element injection",
+      "veris_description": "Special element injection. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.SQLi",
+      "veris_description": "SQL injection. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.SSI injection",
+      "veris_description": "SSI injection. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.URL redirector abuse",
+      "veris_description": "URL redirector abuse. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "role_hint": "client"
+        }
+      ],
+      "rationale": "An open redirect is abused to deliver the victim's browser to attacker content; the component that acts on the attacker-supplied target is in a client role (R-ROLE)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Use of stolen creds",
+      "veris_description": "Use of stolen or default authentication credentials (including credential stuffing)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "companion": {
+        "before": "the acquiring cluster (#9, #7, #3, #2, #10, #8 or #5)",
+        "notation": "<acquisition> → #4"
+      },
+      "rationale": "Authenticating with a credential that is not the presenter's own is always #4 (R-CRED, Axiom X); the acquisition is a separate earlier step whose cluster VERIS does not record. Default credentials count as stolen for this purpose."
+    },
+    {
+      "veris_id": "action.hacking.variety.User breakout",
+      "veris_description": "Elevation of privilege by another customer in shared environment. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "Escaping a tenant boundary exploits a flaw in the shared platform that serves the tenant; the boundary crossed is an intra-system annotation, not a classification input (R-INTRA-7)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Virtual machine escape",
+      "veris_description": "Virtual machine escape. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "The hypervisor serves the guest's requests; a flaw in it is a server-role flaw (R-ROLE, hypercall interface). The |[hypervisor]| boundary is an annotation only (R-INTRA-7)."
+    },
+    {
+      "veris_id": "action.hacking.variety.XML attribute blowup",
+      "veris_description": "XML attribute blowup. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.XML entity expansion",
+      "veris_description": "XML entity expansion. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.XML external entities",
+      "veris_description": "XML external entities. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.XML injection",
+      "veris_description": "XML injection. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.XPath injection",
+      "veris_description": "XPath injection. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.XQuery injection",
+      "veris_description": "XQuery injection. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "role_hint": "server"
+        }
+      ],
+      "rationale": "A code flaw exploited in a server-role component of the victim's service (R-ROLE); the sub-technique names the flaw class, not a different generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.variety.XSS",
+      "veris_description": "Cross-site scripting. Child of 'Exploit vuln'.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "role_hint": "client"
+        }
+      ],
+      "rationale": "The injected script executes in the victim's browser; the flawed component relative to the attacker is the client that renders the content (R-ROLE)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Other",
+      "veris_description": "Other",
+      "mapping_type": "unresolved",
+      "rationale": "The record says a hacking action occurred without naming it; no cluster can be defended from the value alone (R-UNRES-9 applies to the evidence, not to the label)."
+    },
+    {
+      "veris_id": "action.hacking.variety.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The record says a hacking action occurred without naming it; no cluster can be defended from the value alone."
+    },
+    {
+      "veris_id": "action.hacking.vector.3rd party desktop",
+      "veris_description": "3rd party online desktop sharing (LogMeIn, Go2Assist)",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "server",
+        "note": "remote-access service"
+      },
+      "rationale": "A remote-access service reached from outside; the cluster comes from what was done at it: credential application (#4) or a flaw in the service (#2)."
+    },
+    {
+      "veris_id": "action.hacking.vector.Backdoor",
+      "veris_description": "Hacking actions taken through a backdoor.  C2 is only used by malware.",
+      "mapping_type": "context",
+      "context": {
+        "note": "channel established by an earlier step"
+      },
+      "rationale": "Actions taken through a backdoor established by an earlier step; classify the step that created the backdoor, and the actions taken through it by their own generic vulnerability."
+    },
+    {
+      "veris_id": "action.hacking.vector.Command shell",
+      "veris_description": "Remote shell",
+      "mapping_type": "context",
+      "context": {
+        "note": "channel established by an earlier step"
+      },
+      "rationale": "A remote shell is the channel of later steps, not a generic vulnerability; classify the step that provided the shell."
+    },
+    {
+      "veris_id": "action.hacking.vector.Desktop sharing",
+      "veris_description": "Graphical desktop sharing (RDP, VNC, PCAnywhere, Citrix)",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "server",
+        "note": "remote-access service"
+      },
+      "rationale": "A graphical remote-access service reached from outside; the cluster comes from what was done at it: credential application (#4) or a flaw in the service (#2)."
+    },
+    {
+      "veris_id": "action.hacking.vector.Desktop sharing software",
+      "veris_description": "Superset of 'Desktop sharing' and '3rd party desktop'.  Please use in place of the other two",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "server",
+        "note": "remote-access service"
+      },
+      "rationale": "A remote-access service reached from outside; the cluster comes from what was done at it: credential application (#4) or a flaw in the service (#2)."
+    },
+    {
+      "veris_id": "action.hacking.vector.Hypervisor",
+      "veris_description": "Hypervisor break-out attack",
+      "mapping_type": "context",
+      "context": {
+        "intra_system_boundary": "hypervisor"
+      },
+      "rationale": "The crossing is an intra-system boundary |[hypervisor][@guest→@host]|; it never changes the cluster (R-INTRA-7), which follows from the flaw exploited (R-ROLE)."
+    },
+    {
+      "veris_id": "action.hacking.vector.Inter-tenant",
+      "veris_description": "Penetration of another VM or web site on shared device or infrastructure",
+      "mapping_type": "context",
+      "context": {
+        "intra_system_boundary": "privilege"
+      },
+      "rationale": "Crossing from one tenant to another is an intra-system or platform boundary annotation; the cluster follows from the flaw or function used to cross it."
+    },
+    {
+      "veris_id": "action.hacking.vector.Other network service",
+      "veris_description": "Network service that is not remote access or a web application.",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "server"
+      },
+      "rationale": "A network service in a server role relative to the attacker; the cluster follows from what was exploited at it (#2 for a flaw, #1 for a designed function, #4 for a credential)."
+    },
+    {
+      "veris_id": "action.hacking.vector.Partner",
+      "veris_description": "Partner connection or credential. (Indicates supply chain breach.)",
+      "mapping_type": "context",
+      "context": {
+        "boundary": "@Vendor→@Org",
+        "note": "R-SUPPLY decides #10 versus transit"
+      },
+      "rationale": "A partner connection or credential marks a responsibility-sphere crossing ||[…][@Vendor→@Org]||. It is #10 only where a trust artefact from the partner was honoured by the victim's system (R-SUPPLY); otherwise the partner is a transit carrier (⇒) and the step keeps its own cluster."
+    },
+    {
+      "veris_id": "action.hacking.vector.Physical access",
+      "veris_description": "Physical access or connection (i.e., at keyboard or via cable) ",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "The step was carried out at the keyboard or on a cable; this is the [physical] boundary context of the step, whose cluster follows from what was done (#8 for hardware interaction, #1 or #4 for actions at the console)."
+    },
+    {
+      "veris_id": "action.hacking.vector.VPN",
+      "veris_description": "VPN",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "server",
+        "note": "remote-access service"
+      },
+      "rationale": "A remote-access service in a server role; the cluster follows from what was exploited at it (#4 for credentials, #2 for a flaw in the gateway, #1 for a permissive configuration)."
+    },
+    {
+      "veris_id": "action.hacking.vector.Web application",
+      "veris_description": "Web application",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "server"
+      },
+      "rationale": "The web application is in a server role relative to the attacker; ambiguous #2 | #3 mappings resolve to #2 here (R-ROLE)."
+    },
+    {
+      "veris_id": "action.hacking.vector.Other",
+      "veris_description": "Other",
+      "mapping_type": "unresolved",
+      "rationale": "The vector is recorded as unspecified; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.hacking.vector.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The vector is not recorded; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.malware.variety.Adminware",
+      "veris_description": "System or network utilities (e.g., PsTools, Netcat)",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#1",
+          "condition": "the tooling is legitimate software already present or installable through designed functions (living off the land)"
+        },
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC",
+          "condition": "the attacker introduced foreign executable content"
+        }
+      ],
+      "rationale": "System utilities used by an attacker are function abuse unless the binary itself is foreign to the system; VERIS does not record which."
+    },
+    {
+      "veris_id": "action.malware.variety.Adware",
+      "veris_description": "Adware",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Unwanted advertising code that executes on the system is foreign executable content (#7 at execution, R-EXEC); its delivery is a separate earlier step."
+    },
+    {
+      "veris_id": "action.malware.variety.Backdoor",
+      "veris_description": "Malware creates a backdoor capability for hacking. Child of 'RAT' when combined with 'Trojan'. Child of 'Backdoor or C2'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "The payload's remote-access capability is a feature of the executed foreign code; #7 is recorded once, at execution (R-EXEC)."
+    },
+    {
+      "veris_id": "action.malware.variety.Backdoor or C2",
+      "veris_description": "Malware creates a remote control capability, but it's unclear if it's a backdoor for hacking or C2 for malware. Parent of 'C2' and 'Backdoor'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Remote-control capability of the executed foreign code; #7 at execution (R-EXEC), whether the channel is later used by hand or by the malware."
+    },
+    {
+      "veris_id": "action.malware.variety.Brute force",
+      "veris_description": "Brute force attack",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "companion": {
+        "before": "#7 (the malware that performs the guessing)",
+        "notation": "#7 → #4"
+      },
+      "rationale": "Malware guessing credentials against further systems: the guessing itself is credential application (#4) by the running payload; the payload's execution is the #7 step before it."
+    },
+    {
+      "veris_id": "action.malware.variety.C2",
+      "veris_description": "Malware creates Command and Control capability for malware. Child of 'Backdoor or C2'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Command-and-control is a capability of the executed foreign code; #7 at execution (R-EXEC). Later operator actions through the channel classify by their own generic vulnerability."
+    },
+    {
+      "veris_id": "action.malware.variety.Capture app data",
+      "veris_description": "Capture data from application or system process",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Capture stored data",
+      "veris_description": "Capture data stored on system disk",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Click fraud",
+      "veris_description": "Click fraud, whether or not cryptocurrency mining.  Also mark 'Click fraud or cryptocurrency mining'. Child of 'Click fraud and cryptocurrency mining'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Click fraud and cryptocurrency mining",
+      "veris_description": "Click fraud or cryptocurrency mining. Parent of 'Click fraud' and 'Cryptocurrency mining'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Client-side attack",
+      "veris_description": "Client-side or browser attack (e.g., redirection, XSS, AitB)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "role_hint": "client"
+        }
+      ],
+      "rationale": "Browser or client attacks (redirection, cross-site scripting, adversary-in-the-browser) exploit a client-role component (R-ROLE); where foreign code then executes, #7 follows (R-EXEC)."
+    },
+    {
+      "veris_id": "action.malware.variety.Cryptocurrency mining",
+      "veris_description": "Cryptocurrency mining, whether or not click fraud. Child of 'Click fraud and cryptocurrency mining'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Destroy data",
+      "veris_description": "Destroy or corrupt stored data",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Data-destroying payloads are #7 at execution (R-EXEC); the destruction is the Data Risk Event Av (data absent) on the affected records, never a cluster (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.variety.In-memory",
+      "veris_description": "(malware never stored to persistent storage)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Code that never touches persistent storage is still foreign executable content; #7 is recorded at execution (R-EXEC). Storage location is not a classification input."
+    },
+    {
+      "veris_id": "action.malware.variety.AitM",
+      "veris_description": "Adversary-in-the-middle attack. Child of 'Exploit vuln'.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "after": "#5 (interception from the position the payload holds)",
+        "notation": "<enabler> → #7 → #5"
+      },
+      "rationale": "The payload intercepts or relays traffic from the position its execution gave it: #7 at execution (R-EXEC), then #5 for the interception (R-MITM)."
+    },
+    {
+      "veris_id": "action.malware.variety.Modify data",
+      "veris_description": "Malware which compromises a legitimate file rather than creating new filess",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "A payload that alters legitimate files is #7 at execution (R-EXEC); the alteration is the Data Risk Event Ii on the affected records (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.variety.Disable controls",
+      "veris_description": "Disable or interfere with security controls",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "A payload that disables security controls is #7 at execution (R-EXEC); the disabled control is a control failure, not a threat (Axiom V)."
+    },
+    {
+      "veris_id": "action.malware.variety.DoS",
+      "veris_description": "DoS attack",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "A payload that produces denial of service is #7 at execution on the infected system (R-EXEC); the availability effect is a Data Risk Event (A/Av). Traffic it sends against a third party is #6 in that party's record (R-FLOOD)."
+    },
+    {
+      "veris_id": "action.malware.variety.Downloader",
+      "veris_description": "Downloader (pull updates or other malware) ",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "after": "#7 (the fetched second stage)",
+        "notation": "<enabler> → #7 → #7"
+      },
+      "rationale": "A downloader is #7 at its own execution (R-EXEC); the second stage it fetches is a further #7 step when it executes."
+    },
+    {
+      "veris_id": "action.malware.variety.Exploit misconfig",
+      "veris_description": "Exploit a misconfiguration (vs vuln or weakness)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Malware that uses a permissive configuration exercises a designed function (#1); the payload's own execution is the #7 step it enables (R-EXEC)."
+    },
+    {
+      "veris_id": "action.malware.variety.Evade Defenses",
+      "veris_description": "Modification of the action (rather than the system, as in 'Disable controls') to avoid detection.",
+      "mapping_type": "outcome",
+      "rationale": "A property of how the payload behaves, not a step: evasion is a capability of the #7 step already recorded."
+    },
+    {
+      "veris_id": "action.malware.variety.Exploit vuln",
+      "veris_description": "Exploit vulnerability in code (vs misconfig or weakness). This can be used with other malware enumerations, (such as Remote injection when a Remote injection vuln exists.)",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "condition": "the payload exploits a flaw in a server-role component"
+        },
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "condition": "the payload exploits a flaw in a client-role component"
+        }
+      ],
+      "rationale": "Malware exploiting a code flaw: the exploitation is #2 or #3 per R-ROLE and enables the #7 execution that follows (R-EXEC); VERIS does not record the role."
+    },
+    {
+      "veris_id": "action.malware.variety.Export data",
+      "veris_description": "Export data to another site or system",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Exfiltration capability of the executed foreign code; #7 at execution (R-EXEC), with the Data Risk Event C on the exported records (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.variety.Packet sniffer",
+      "veris_description": "Packet sniffer (capture data from network)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "after": "#5 (interception from the position the payload holds)",
+        "notation": "<enabler> → #7 → #5"
+      },
+      "rationale": "A sniffer captures traffic from the position its execution gave it: #7 at execution (R-EXEC), then #5 for the interception (R-MITM)."
+    },
+    {
+      "veris_id": "action.malware.variety.Pass-the-hash",
+      "veris_description": "Pass-the-hash",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "companion": {
+        "before": "#7 (the payload that presents the hash)",
+        "notation": "#7 → #4"
+      },
+      "rationale": "Malware presenting captured hashes authenticates as another identity: #4 (R-CRED) performed by the running payload, whose execution is the #7 step before it."
+    },
+    {
+      "veris_id": "action.malware.variety.Password dumper",
+      "veris_description": "Password dumper (extract credential hashes)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "after": "#4 (use of the dumped credentials, R-CRED)",
+        "notation": "<enabler> → #7 → #4"
+      },
+      "rationale": "Credential-dumping capability of the executed foreign code; #7 at execution (R-EXEC). Using the dumped credentials is a separate later #4 step (R-CRED)."
+    },
+    {
+      "veris_id": "action.malware.variety.Profile host",
+      "veris_description": "Enumerating the state of the current host",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.RAM scraper",
+      "veris_description": "RAM scraper or memory parser (capture data from volatile memory)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Ransomware",
+      "veris_description": "Ransomware (encrypt or seize stored data)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Ransomware is #7 at execution (R-EXEC); the encryption is the Data Risk Event Ac (data present but unusable), never a cluster (Axiom III). VERIS records the outcome under attribute.availability.variety.Obscuration."
+    },
+    {
+      "veris_id": "action.malware.variety.RAT",
+      "veris_description": "Remote Access Trojan.  Parent of 'Backdoor' and 'Trojan'",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Rootkit",
+      "veris_description": "Rootkit (maintain local privileges and stealth)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Scan network",
+      "veris_description": "Enumerating the state of the network",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Spam",
+      "veris_description": "Send spam",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Spyware/Keylogger",
+      "veris_description": "Spyware, keylogger or form-grabber (capture user input or activity)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "Foreign executable content ran on the victim's system: a #7 step is recorded at the execution moment (R-EXEC). The capability VERIS names is a feature of the payload, not a separate step; the step that delivered the payload is a separate earlier step whose cluster VERIS does not record."
+    },
+    {
+      "veris_id": "action.malware.variety.Trojan",
+      "veris_description": "An application which appears legitimate but hides malicious functionality. Child of 'RAT' when combined with 'Backdoor'",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "notation": "<enabler> → #7"
+      },
+      "rationale": "A trojan is foreign executable content that the victim was induced to run: #7 at execution (R-EXEC), typically with #9 as the enabling step."
+    },
+    {
+      "veris_id": "action.malware.variety.Worm",
+      "veris_description": "Worm (propagate to other systems or devices)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
+        "after": "#2 | #3 | #4 (propagation) → #7 on the next host",
+        "notation": "<enabler> → #7 → #2"
+      },
+      "rationale": "A worm is #7 at execution on each host (R-EXEC); its propagation to the next host is a separate step (#2, #3 or #4) followed by a further #7 there."
+    },
+    {
+      "veris_id": "action.malware.variety.Other",
+      "veris_description": "Other",
+      "mapping_type": "unresolved",
+      "rationale": "The record says malware was involved without naming its capability; #7 is likely under R-EXEC but the record does not establish that foreign code executed."
+    },
+    {
+      "veris_id": "action.malware.variety.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The record says malware was involved without naming its capability; #7 is likely under R-EXEC but the record does not establish that foreign code executed."
+    },
+    {
+      "veris_id": "action.malware.vector.C2",
+      "veris_description": "Malware actions taken through a Command and Control (C2) channel.  Backdoor is only used by hacking.",
+      "mapping_type": "context",
+      "context": {
+        "note": "channel established by an earlier step"
+      },
+      "rationale": "Actions through an existing command-and-control channel; classify the step that established the channel and each later action by its own generic vulnerability."
+    },
+    {
+      "veris_id": "action.malware.vector.Direct install",
+      "veris_description": "Directly installed or inserted by threat agent (after system access)",
+      "mapping_type": "context",
+      "context": {
+        "note": "#1 → #7 sequence"
+      },
+      "rationale": "Installed by the attacker after access was gained: the installation uses designed functions (#1) and the payload's execution is #7, so the sequence is #1 → #7."
+    },
+    {
+      "veris_id": "action.malware.vector.Download by malware",
+      "veris_description": "Downloaded and installed by local malware",
+      "mapping_type": "context",
+      "context": {
+        "note": "#7 → #7 sequence"
+      },
+      "rationale": "Fetched by malware already running: a #7 → #7 sequence (R-EXEC records each execution)."
+    },
+    {
+      "veris_id": "action.malware.vector.Email",
+      "veris_description": "Email. Parent to 'Email attachment', 'Email autoexecute', 'Email link', 'Email unknown'",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Delivered by email: the enabling step is #9 where a person had to act (attachment, link) or #3 where the client executed it unaided (R-ROLE)."
+    },
+    {
+      "veris_id": "action.malware.vector.Email attachment",
+      "veris_description": "Email via user-executed attachment. Child of 'Email'",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "A user-executed attachment: #9 enables #7 (R-EXEC)."
+    },
+    {
+      "veris_id": "action.malware.vector.Email autoexecute",
+      "veris_description": "Email via automatic execution. Child of 'Email'",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "client"
+      },
+      "rationale": "Executed by the mail client without user action: a client-role flaw (#3, R-ROLE) enables #7."
+    },
+    {
+      "veris_id": "action.malware.vector.Email link",
+      "veris_description": "Email via embedded link. Child of 'Email'",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "A user-followed link: #9 enables the download and #7 at execution (R-EXEC)."
+    },
+    {
+      "veris_id": "action.malware.vector.Email unknown",
+      "veris_description": "Email but sub-variety (attachment, autoexecute, link, etc) not known. Child of 'Email'",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Delivered by email, mechanism unknown: the enabler is #9 or #3."
+    },
+    {
+      "veris_id": "action.malware.vector.Email other",
+      "veris_description": "Email sub-variety known, but not one of those listed (attachment, link, autoexecute, etc). Child of 'Email'",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Delivered by email through another mechanism: the enabler is #9 or #3."
+    },
+    {
+      "veris_id": "action.malware.vector.Instant messaging",
+      "veris_description": "Instant Messaging",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Delivered over instant messaging: #9 enables #7 where a person had to act."
+    },
+    {
+      "veris_id": "action.malware.vector.Network propagation",
+      "veris_description": "Network propagation",
+      "mapping_type": "context",
+      "context": {
+        "note": "propagation step precedes #7"
+      },
+      "rationale": "Reached the host from another infected host: the propagation step is #2, #3 or #4, followed by #7 (R-EXEC)."
+    },
+    {
+      "veris_id": "action.malware.vector.Partner",
+      "veris_description": "Partner connection or credential. (Indicates supply chain breach.)",
+      "mapping_type": "context",
+      "context": {
+        "boundary": "@Vendor→@Org",
+        "note": "R-SUPPLY decides #10 versus transit"
+      },
+      "rationale": "A partner connection or credential marks a responsibility-sphere crossing ||[…][@Vendor→@Org]||. It is #10 only where a trust artefact from the partner was honoured (R-SUPPLY); otherwise the partner is a transit carrier (⇒)."
+    },
+    {
+      "veris_id": "action.malware.vector.Remote injection",
+      "veris_description": "Remotely injected by agent (i.e. via SQLi)",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "server"
+      },
+      "rationale": "Injected through a server-side flaw (for example SQL injection): #2 enables #7 (R-ROLE, R-EXEC)."
+    },
+    {
+      "veris_id": "action.malware.vector.Removable media",
+      "veris_description": "Removable storage media or devices",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Delivered on removable media: [physical] or [human] boundary context; the enabler is #8 (hardware connection) or #9 (a person runs it)."
+    },
+    {
+      "veris_id": "action.malware.vector.Software update",
+      "veris_description": "Included in automated software update",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "update",
+        "note": "R-SUPPLY: #10 at the Trust Acceptance Event"
+      },
+      "rationale": "Delivered inside a legitimate update: the Trust Acceptance Event makes this #10 (R-SUPPLY) with the [update] boundary context, followed by #7 at execution."
+    },
+    {
+      "veris_id": "action.malware.vector.Web application",
+      "veris_description": "Web application. Parent of 'Web application - download' and 'Web application - drive-by.",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "server"
+      },
+      "rationale": "Delivered through a web application: #2 (a flaw in the service) or #9 (a person downloads it) enables #7."
+    },
+    {
+      "veris_id": "action.malware.vector.Web application - download",
+      "veris_description": "Web via user-executed or downloaded content. Child of 'Web application'.",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "A user-downloaded file: #9 enables #7 (R-EXEC)."
+    },
+    {
+      "veris_id": "action.malware.vector.Web application - drive-by",
+      "veris_description": "Web via auto-executed or \"drive-by\" infection. Child of 'Web application'.",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "client"
+      },
+      "rationale": "Executed by the browser without user action: a client-role flaw (#3, R-ROLE) enables #7."
+    },
+    {
+      "veris_id": "action.malware.vector.Other",
+      "veris_description": "Other",
+      "mapping_type": "unresolved",
+      "rationale": "The vector is recorded as unspecified; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.malware.vector.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The vector is not recorded; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.social.variety.Baiting",
+      "veris_description": "Prepare malicious content in a location where a victim is likely to interact with it. (e.g. SEO - vect: websites, left usbs- vect: removable media, etc)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "#7 (the payload the person runs)",
+        "notation": "#9 → #7"
+      },
+      "rationale": "A person is induced to interact with prepared content (#9); the payload that then runs is a separate #7 step (R-EXEC)."
+    },
+    {
+      "veris_id": "action.social.variety.Bribery",
+      "veris_description": "Bribery or solicitation",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "the technical follow-on (#4, #7 or #1)",
+        "notation": "#9 → <follow-on>"
+      },
+      "rationale": "Recruiting an insider is manipulation of a person (#9); what the insider then does on the system is a separate step (#1, or #4 if they present another identity)."
+    },
+    {
+      "veris_id": "action.social.variety.Elicitation",
+      "veris_description": "Elicitation (subtle extraction of info through conversation)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "#4 (use of an elicited credential) or a Data Risk Event C",
+        "notation": "#9 → #4 | #9 + [DRE: C]"
+      },
+      "rationale": "Extracting information through conversation is #9; where the information is a credential its later use is #4 (R-CRED), where it is data the Data Risk Event C is recorded directly."
+    },
+    {
+      "veris_id": "action.social.variety.Evade Defenses",
+      "veris_description": "Modification of the action (rather than the system, as in 'Disable controls') to avoid detection.",
+      "mapping_type": "outcome",
+      "rationale": "A property of how the manipulation was carried out, not a step."
+    },
+    {
+      "veris_id": "action.social.variety.Extortion",
+      "veris_description": "Extortion or blackmail",
+      "mapping_type": "no-cluster",
+      "partition_row": "attack",
+      "rationale": "A demand made to a person is intentional and outside any grant, but it is not a step against an IT system; it belongs to the business-side event chain (BRE), outside the core clusters.",
+      "out_of_scope": "no IT-system step (TLCTC+)"
+    },
+    {
+      "veris_id": "action.social.variety.Forgery",
+      "veris_description": "Forgery or counterfeiting (fake hardware, software, documents, etc)",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#9",
+          "condition": "a person is deceived by the counterfeit document, hardware or software"
+        },
+        {
+          "tlctc": "#10",
+          "rule": "R-SUPPLY",
+          "condition": "a system honours the counterfeit as a trust artefact (Trust Acceptance Event)"
+        }
+      ],
+      "rationale": "A forgery aimed at a person is #9; a forgery accepted by a system as authoritative is #10 at the Trust Acceptance Event (R-SUPPLY)."
+    },
+    {
+      "veris_id": "action.social.variety.Influence",
+      "veris_description": "Influence tactics (Leveraging authority or obligation, framing, etc)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "the technical follow-on (#4, #7 or #1)",
+        "notation": "#9 → <follow-on>"
+      },
+      "rationale": "Authority, obligation or framing used to make a person act (#9); the act they perform on a system is the separate follow-on step, typically #1 (fraudulent transfer through a designed function)."
+    },
+    {
+      "veris_id": "action.social.variety.Phishing",
+      "veris_description": "Any type of *ishing.  Phishing always involves getting data from the victim. Phishing usually has some element of pretexting, but often it doesn’t rise to the level of an invented scenario. E.g. A fake google login page isn’t really pretexting.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "#4 (harvested credential applied) or #7 (payload executed)",
+        "notation": "#9 → #4 | #9 → #7"
+      },
+      "rationale": "Phishing obtains data or an action from a person (#9); the credential it harvests is applied in a separate #4 step (R-CRED) and any payload runs as a separate #7 step (R-EXEC)."
+    },
+    {
+      "veris_id": "action.social.variety.Pretexting",
+      "veris_description": "Pretexting (dialogue leveraging invented scenario).  Unlike 'Phishing', does not transfer data. (A fraudulent transfer or changing a bank account on a business account is not really disclosing data.",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "#1 (the action the person performs through a designed function)",
+        "notation": "#9 → #1"
+      },
+      "rationale": "An invented scenario moves a person to act (#9); the action taken through a designed function (payment, account change) is a separate #1 step."
+    },
+    {
+      "veris_id": "action.social.variety.Prompt bombing",
+      "veris_description": "Bombarding the user with MFA prompts to get them to accept the login request",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "#4 (the approved authentication)",
+        "notation": "#9 → #4"
+      },
+      "rationale": "Repeated MFA prompts wear a person down until they approve (#9); the approved login is the attacker authenticating as that person, a separate #4 step (R-CRED)."
+    },
+    {
+      "veris_id": "action.social.variety.Propaganda",
+      "veris_description": "Propaganda or disinformation",
+      "mapping_type": "no-cluster",
+      "partition_row": "attack",
+      "rationale": "Disinformation aimed at people is intentional and outside any grant, but it involves no step against the victim's IT system; outside the core clusters.",
+      "out_of_scope": "no IT-system step (TLCTC+)"
+    },
+    {
+      "veris_id": "action.social.variety.Scam",
+      "veris_description": "Online scam or hoax (e.g., scareware, 419 scam, auction fraud)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "the technical follow-on (#4, #7 or #1)",
+        "notation": "#9 → <follow-on>"
+      },
+      "rationale": "A hoax moves a person to pay, install or disclose (#9); the follow-on is a separate step (#1 payment through a designed function, #7 installed software, or a Data Risk Event C)."
+    },
+    {
+      "veris_id": "action.social.variety.Spam",
+      "veris_description": "Spam (unsolicited or undesired email and advertisements)",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "the technical follow-on (#4, #7 or #1)",
+        "notation": "#9 → <follow-on>"
+      },
+      "rationale": "Unsolicited messages are the delivery of a lure to people (#9); the follow-on depends on what the message carried."
+    },
+    {
+      "veris_id": "action.social.variety.Other",
+      "veris_description": "Other",
+      "mapping_type": "unresolved",
+      "rationale": "The record says a social action occurred without naming it; #9 is likely but the value alone does not establish that a person was manipulated into an IT-system step."
+    },
+    {
+      "veris_id": "action.social.variety.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The record says a social action occurred without naming it."
+    },
+    {
+      "veris_id": "action.social.vector.Documents",
+      "veris_description": "Documents",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Delivered as a document handed or sent to a person: [human] boundary context of the #9 step."
+    },
+    {
+      "veris_id": "action.social.vector.Email",
+      "veris_description": "Email",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Delivered by email: [human] boundary context of the #9 step."
+    },
+    {
+      "veris_id": "action.social.vector.IM",
+      "veris_description": "Instant messaging",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Delivered over instant messaging: [human] boundary context of the #9 step."
+    },
+    {
+      "veris_id": "action.social.vector.In-person",
+      "veris_description": "In-person",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Face-to-face manipulation: [human] boundary context of the #9 step."
+    },
+    {
+      "veris_id": "action.social.vector.Partner",
+      "veris_description": "Partner connection or credential. (Indicates supply chain breach.)",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human",
+        "boundary": "@Vendor→@Org"
+      },
+      "rationale": "The lure came through a partner relationship or account: [human] context with a responsibility-sphere crossing ||[human][@Vendor→@Org]||; the partner is a transit carrier unless a trust artefact was honoured (R-SUPPLY)."
+    },
+    {
+      "veris_id": "action.social.vector.Phone",
+      "veris_description": "Phone",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Voice manipulation: [human] boundary context of the #9 step."
+    },
+    {
+      "veris_id": "action.social.vector.Removable media",
+      "veris_description": "Removable storage media",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Media left for a person to use: [human] boundary context of the #9 step; the payload that runs is #7 (R-EXEC)."
+    },
+    {
+      "veris_id": "action.social.vector.SMS",
+      "veris_description": "SMS or texting",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Text-message manipulation: [human] boundary context of the #9 step; the carrier is a transit party (⇒), not a cluster."
+    },
+    {
+      "veris_id": "action.social.vector.Social media",
+      "veris_description": "Social media or networking",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Manipulation over a social platform: [human] boundary context of the #9 step; the platform is a transit party (⇒)."
+    },
+    {
+      "veris_id": "action.social.vector.Software",
+      "veris_description": "Software",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "A fake or trojanised application offered to a person: [human] context of the #9 step; the installed code is #7 (R-EXEC), or #10 where it arrived as a trusted update (R-SUPPLY)."
+    },
+    {
+      "veris_id": "action.social.vector.Virtual meeting",
+      "veris_description": "Virtual meeting",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Manipulation in a video call: [human] boundary context of the #9 step."
+    },
+    {
+      "veris_id": "action.social.vector.Web application",
+      "veris_description": "Web application",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "human"
+      },
+      "rationale": "Manipulation through a web page or form: [human] boundary context of the #9 step."
+    },
+    {
+      "veris_id": "action.social.vector.Other",
+      "veris_description": "Other",
+      "mapping_type": "unresolved",
+      "rationale": "The vector is recorded as unspecified; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.social.vector.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The vector is not recorded; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.misuse.variety.Data mishandling",
+      "veris_description": "Handling of data in an unapproved manner",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Handling data outside the purpose it was entrusted for exceeds the grant even though the access function was available; the action is on the Attack row and uses designed functions (#1, R-SCOPE)."
+    },
+    {
+      "veris_id": "action.misuse.variety.Email misuse",
+      "veris_description": "Inappropriate use of email or IM",
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "rationale": "An insider acting inside the entitlement a grantor conferred, against policy but not against the system: Abuse of Rights, operational risk, no cluster (R-SCOPE).",
+      "basis": "R-SCOPE"
+    },
+    {
+      "veris_id": "action.misuse.variety.Evade Defenses",
+      "veris_description": "Modification of the action (rather than the system, as in 'Disable controls') to avoid detection.",
+      "mapping_type": "outcome",
+      "rationale": "A property of how the misuse was carried out, not a step."
+    },
+    {
+      "veris_id": "action.misuse.variety.Illicit content",
+      "veris_description": "Storage or distribution of illicit content",
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "rationale": "An insider acting inside the entitlement a grantor conferred, against policy but not against the system: Abuse of Rights, operational risk, no cluster (R-SCOPE).",
+      "basis": "R-SCOPE"
+    },
+    {
+      "veris_id": "action.misuse.variety.Knowledge abuse",
+      "veris_description": "Abuse of private or entrusted knowledge",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Using entrusted knowledge for an unauthorised purpose exceeds the grant; where it is applied to a system it is function abuse (#1). Where no IT-system step occurs the event stays outside the core clusters."
+    },
+    {
+      "veris_id": "action.misuse.variety.Net misuse",
+      "veris_description": "Inappropriate use of network or Web access including cloud services",
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "rationale": "An insider acting inside the entitlement a grantor conferred, against policy but not against the system: Abuse of Rights, operational risk, no cluster (R-SCOPE).",
+      "basis": "R-SCOPE"
+    },
+    {
+      "veris_id": "action.misuse.variety.Password or Session Sharing",
+      "veris_description": "Sharing of a legitimate user's credential or session",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "companion": {
+        "before": "the sharer's act (Abuse of Rights, operational risk, no cluster)",
+        "notation": "<sharing: no cluster> → #4"
+      },
+      "rationale": "The person who uses a shared credential authenticates as an identity that is not their own: #4 (R-CRED). The sharing itself is an in-grant policy violation with no cluster (R-SCOPE)."
+    },
+    {
+      "veris_id": "action.misuse.variety.Possession abuse",
+      "veris_description": "Abuse of physical access to asset",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Abusing physical access one is entitled to, for a purpose outside the grant, is function abuse at the console (#1); it is #8 only where hardware itself is manipulated."
+    },
+    {
+      "veris_id": "action.misuse.variety.Privilege abuse",
+      "veris_description": "Abuse of system access privileges",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Using system privileges for a purpose outside the grant is the definition of Abuse of Functions (#1): the access was designed, the use was not. 'Functioned as designed' does not make the action in-grant (R-SCOPE)."
+    },
+    {
+      "veris_id": "action.misuse.variety.Snap picture",
+      "veris_description": "Actor photographs the confidentiality data variety.",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "rationale": "Photographing displayed data exceeds the purpose for which the display function was granted; the display is the abused function (#1), and the Data Risk Event C follows."
+    },
+    {
+      "veris_id": "action.misuse.variety.Unapproved hardware",
+      "veris_description": "Use of unapproved hardware or devices",
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "rationale": "An insider acting inside the entitlement a grantor conferred, against policy but not against the system: Abuse of Rights, operational risk, no cluster (R-SCOPE).",
+      "basis": "R-SCOPE"
+    },
+    {
+      "veris_id": "action.misuse.variety.Unapproved software",
+      "veris_description": "Use of unapproved software or services",
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "rationale": "An insider acting inside the entitlement a grantor conferred, against policy but not against the system: Abuse of Rights, operational risk, no cluster (R-SCOPE).",
+      "basis": "R-SCOPE"
+    },
+    {
+      "veris_id": "action.misuse.variety.Unapproved workaround",
+      "veris_description": "Unapproved workaround or shortcut",
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "rationale": "An insider acting inside the entitlement a grantor conferred, against policy but not against the system: Abuse of Rights, operational risk, no cluster (R-SCOPE).",
+      "basis": "R-SCOPE"
+    },
+    {
+      "veris_id": "action.misuse.variety.Other",
+      "veris_description": " Other",
+      "mapping_type": "unresolved",
+      "rationale": "The record says an insider misuse occurred without naming it; the partition row (Attack versus Abuse of Rights) cannot be decided from the value alone (R-SCOPE)."
+    },
+    {
+      "veris_id": "action.misuse.variety.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The record says an insider misuse occurred without naming it; the partition row cannot be decided from the value alone (R-SCOPE)."
+    },
+    {
+      "veris_id": "action.misuse.vector.LAN access",
+      "veris_description": "Local network access within corporate facility",
+      "mapping_type": "context",
+      "context": {
+        "note": "location"
+      },
+      "rationale": "Carried out from inside the corporate network; location only, no classification input."
+    },
+    {
+      "veris_id": "action.misuse.vector.Non-corporate",
+      "veris_description": "Non-corporate facilities or networks",
+      "mapping_type": "context",
+      "context": {
+        "note": "location"
+      },
+      "rationale": "Carried out from outside corporate facilities or networks; location only."
+    },
+    {
+      "veris_id": "action.misuse.vector.Physical access",
+      "veris_description": "Physical access within corporate facility",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Carried out with physical presence at the asset: [physical] boundary context."
+    },
+    {
+      "veris_id": "action.misuse.vector.Remote access",
+      "veris_description": "Remote access connection to corporate network (i.e. VPN)",
+      "mapping_type": "context",
+      "context": {
+        "note": "channel"
+      },
+      "rationale": "Carried out over a remote-access connection; the connection is the channel, not a classification input."
+    },
+    {
+      "veris_id": "action.misuse.vector.Web application",
+      "veris_description": "Web application",
+      "mapping_type": "context",
+      "context": {
+        "role_hint": "server"
+      },
+      "rationale": "Carried out through a web application; the application is the abused function's interface."
+    },
+    {
+      "veris_id": "action.misuse.vector.Other",
+      "veris_description": "Other",
+      "mapping_type": "unresolved",
+      "rationale": "The vector is recorded as unspecified; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.misuse.vector.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The vector is not recorded; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.physical.variety.Assault",
+      "veris_description": "Assault (threats or acts of physical violence)",
+      "mapping_type": "no-cluster",
+      "partition_row": "attack",
+      "rationale": "Violence or threats against a person are intentional and outside any grant, but they are not a step against an IT system; outside the core clusters.",
+      "out_of_scope": "no IT-system step (TLCTC+)"
+    },
+    {
+      "veris_id": "action.physical.variety.Bypassed controls",
+      "veris_description": "Bypassed physical barriers or controls",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.1"
+        }
+      ],
+      "rationale": "Getting past a physical barrier exploits the physical layer's lack of control over access to the substrate (#8, mechanical vector)."
+    },
+    {
+      "veris_id": "action.physical.variety.Connection",
+      "veris_description": "Connection",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.1"
+        }
+      ],
+      "rationale": "Attaching a device to hardware or a port is direct physical interaction with the substrate (#8); if the device then runs code on the system, #7 follows (R-EXEC)."
+    },
+    {
+      "veris_id": "action.physical.variety.Destruction",
+      "veris_description": "Destruction (deliberate damaging or disabling)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.1"
+        }
+      ],
+      "rationale": "Deliberately damaging hardware acts on the substrate itself (#8); the availability effect is the Data Risk Event Av."
+    },
+    {
+      "veris_id": "action.physical.variety.Disabled controls",
+      "veris_description": "Disabled physical barriers or controls",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.1"
+        }
+      ],
+      "rationale": "Disabling a physical barrier or sensor acts on the substrate (#8)."
+    },
+    {
+      "veris_id": "action.physical.variety.Evade Defenses",
+      "veris_description": "Modification of the action (rather than the system, as in 'Disable controls') to avoid detection.",
+      "mapping_type": "outcome",
+      "rationale": "A property of how the physical step was carried out, not a step."
+    },
+    {
+      "veris_id": "action.physical.variety.Skimmer",
+      "veris_description": "Installing card skimming device",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.1"
+        }
+      ],
+      "rationale": "Installing a skimming device is a mechanical interaction with the terminal (#8); the device then captures the channel at the physical interface."
+    },
+    {
+      "veris_id": "action.physical.variety.Snooping",
+      "veris_description": "Snooping (sneak about to gain info or access)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.2"
+        }
+      ],
+      "rationale": "Sneaking about to observe or reach systems exploits the physical layer's lack of control over who is present (#8, signal vector: observation). Observation of people with no system involved is outside core."
+    },
+    {
+      "veris_id": "action.physical.variety.Surveillance",
+      "veris_description": "Surveillance (monitoring and observation)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.2"
+        }
+      ],
+      "rationale": "Monitoring systems or screens exploits emanations and line of sight, a physical-layer property (#8, signal vector). Surveillance of people with no system involved is outside core."
+    },
+    {
+      "veris_id": "action.physical.variety.Tampering",
+      "veris_description": "Tampering (alter physical form or function)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.1"
+        }
+      ],
+      "rationale": "Altering hardware's form or function acts on the substrate (#8); a hardware implant that runs code adds #7 (R-EXEC)."
+    },
+    {
+      "veris_id": "action.physical.variety.Theft",
+      "veris_description": "Theft (taking assets without permission)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.1"
+        }
+      ],
+      "rationale": "Taking an asset exploits the physical layer's lack of control over possession (#8); the Data Risk Event follows from what the asset held."
+    },
+    {
+      "veris_id": "action.physical.variety.Wiretapping",
+      "veris_description": "Wiretapping (Physical tap to comms line)",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "rule": "R-SUBSTRATE",
+          "sub_cluster_hint": "8.2"
+        }
+      ],
+      "rationale": "A physical tap on a line exploits a physical-layer property of the substrate (#8, signal vector); the interception it enables is #5 once the position exists (R-MITM)."
+    },
+    {
+      "veris_id": "action.physical.variety.Other",
+      "veris_description": "Other",
+      "mapping_type": "unresolved",
+      "rationale": "The record says a physical action occurred without naming it."
+    },
+    {
+      "veris_id": "action.physical.variety.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The record says a physical action occurred without naming it."
+    },
+    {
+      "veris_id": "action.physical.vector.Partner facility",
+      "veris_description": "Partner facility or area",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical",
+        "boundary": "@Vendor→@Org"
+      },
+      "rationale": "The step took place on partner premises or in a partner vehicle: [physical] context with a responsibility-sphere crossing ||[physical][@Vendor→@Org]||."
+    },
+    {
+      "veris_id": "action.physical.vector.Partner vehicle",
+      "veris_description": "Partner vehicle (e.g., delivery truck)",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical",
+        "boundary": "@Vendor→@Org"
+      },
+      "rationale": "The step took place on partner premises or in a partner vehicle: [physical] context with a responsibility-sphere crossing ||[physical][@Vendor→@Org]||."
+    },
+    {
+      "veris_id": "action.physical.vector.Personal residence",
+      "veris_description": "Personal residence",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Location of the physical step; [physical] boundary context, no classification input."
+    },
+    {
+      "veris_id": "action.physical.vector.Personal vehicle",
+      "veris_description": "Personal vehicle",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Location of the physical step; [physical] boundary context, no classification input."
+    },
+    {
+      "veris_id": "action.physical.vector.Public facility",
+      "veris_description": "Public facility or area",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Location of the physical step; [physical] boundary context, no classification input."
+    },
+    {
+      "veris_id": "action.physical.vector.Public vehicle",
+      "veris_description": "Public vehicle (e.g., plane, taxi)",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Location of the physical step; [physical] boundary context, no classification input."
+    },
+    {
+      "veris_id": "action.physical.vector.Victim grounds",
+      "veris_description": "Victim outdoor grounds",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Location of the physical step; [physical] boundary context, no classification input."
+    },
+    {
+      "veris_id": "action.physical.vector.Victim public area",
+      "veris_description": "Victim public or customer area (e.g., lobby, storefront)",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Location of the physical step; [physical] boundary context, no classification input."
+    },
+    {
+      "veris_id": "action.physical.vector.Victim secure area",
+      "veris_description": "Victim high security area (e.g., server room, R&D labs)",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Location of the physical step; [physical] boundary context, no classification input."
+    },
+    {
+      "veris_id": "action.physical.vector.Victim work area",
+      "veris_description": "Victim private or work area (e.g., office space)",
+      "mapping_type": "context",
+      "context": {
+        "boundary_context": "physical"
+      },
+      "rationale": "Location of the physical step; [physical] boundary context, no classification input."
+    },
+    {
+      "veris_id": "action.physical.vector.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "unresolved",
+      "rationale": "The location is not recorded; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.physical.vector.Other",
+      "veris_description": "Other",
+      "mapping_type": "unresolved",
+      "rationale": "The location is not recorded; no context annotation can be derived."
+    },
+    {
+      "veris_id": "action.error.variety.Capacity shortage",
+      "veris_description": "Poor capacity planning",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "No actor intended the outcome and, at the time of the event, no actor was acting: 'Capacity shortage' is a system failure on the cause-side partition's Failure row (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Classification error",
+      "veris_description": "Classification or labeling error",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Classification error' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Data entry error",
+      "veris_description": "Data entry error",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Data entry error' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Disposal error",
+      "veris_description": "Disposal error",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Disposal error' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Gaffe",
+      "veris_description": "Gaffe (social or verbal slip)",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Gaffe' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Loss",
+      "veris_description": "Loss or misplacement",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Loss' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Maintenance error",
+      "veris_description": "Maintenance error",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Maintenance error' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Malfunction",
+      "veris_description": "Technical malfunction or glitch",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "No actor intended the outcome and, at the time of the event, no actor was acting: 'Malfunction' is a system failure on the cause-side partition's Failure row (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Misconfiguration",
+      "veris_description": "Misconfiguration",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "No actor intended the outcome and, at the time of the event, no actor was acting: 'Misconfiguration' is a system failure on the cause-side partition's Failure row (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Misdelivery",
+      "veris_description": "Misdelivery (send wrong info or to wrong recipient)",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Misdelivery' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Misinformation",
+      "veris_description": "Misinformation (unintentionally giving false info)",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Misinformation' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Physical accidents",
+      "veris_description": "Physical accidents (e.g., drops, bumps, spills)",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Physical accidents' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Programming error",
+      "veris_description": "Programming error (flaws or bugs in custom code). This is the error equivalent of the hacking/malware 'Exploit vuln' enumerations.",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "No actor intended the outcome and, at the time of the event, no actor was acting: 'Programming error' is a system failure on the cause-side partition's Failure row (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Publishing error",
+      "veris_description": "Publishing error (private info to public doc or site)",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Publishing error' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Other",
+      "veris_description": "Other",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An error whose kind is not recorded is still an action without intent: Error in Use, operational risk, no cluster (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An error whose kind is not recorded is still an action without intent: Error in Use, operational risk, no cluster (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.vector.Carelessness",
+      "veris_description": "Carelessness. An honest mistake due to inattention to detail. Use it when it is known to be so.",
+      "mapping_type": "context",
+      "context": {
+        "note": "contributing condition of an error"
+      },
+      "rationale": "Contributing condition of an error ('Carelessness'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+    },
+    {
+      "veris_id": "action.error.vector.Inadequate personnel",
+      "veris_description": "Inadequate or insufficient personnel",
+      "mapping_type": "context",
+      "context": {
+        "note": "contributing condition of an error"
+      },
+      "rationale": "Contributing condition of an error ('Inadequate personnel'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+    },
+    {
+      "veris_id": "action.error.vector.Inadequate processes",
+      "veris_description": "Inadequate or insufficient processes",
+      "mapping_type": "context",
+      "context": {
+        "note": "contributing condition of an error"
+      },
+      "rationale": "Contributing condition of an error ('Inadequate processes'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+    },
+    {
+      "veris_id": "action.error.vector.Inadequate technology",
+      "veris_description": "Inadequate or insufficient technology resources",
+      "mapping_type": "context",
+      "context": {
+        "note": "contributing condition of an error"
+      },
+      "rationale": "Contributing condition of an error ('Inadequate technology'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+    },
+    {
+      "veris_id": "action.error.vector.Other",
+      "veris_description": "Other",
+      "mapping_type": "context",
+      "context": {
+        "note": "contributing condition of an error"
+      },
+      "rationale": "Contributing condition of an error ('Other'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+    },
+    {
+      "veris_id": "action.error.vector.Random error",
+      "veris_description": "Random error (no reason, no fault)",
+      "mapping_type": "context",
+      "context": {
+        "note": "contributing condition of an error"
+      },
+      "rationale": "Contributing condition of an error ('Random error'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+    },
+    {
+      "veris_id": "action.error.vector.Web application",
+      "veris_description": "Web application",
+      "mapping_type": "context",
+      "context": {
+        "note": "contributing condition of an error"
+      },
+      "rationale": "Contributing condition of an error ('Web application'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+    },
+    {
+      "veris_id": "action.error.vector.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "context",
+      "context": {
+        "note": "contributing condition of an error"
+      },
+      "rationale": "Contributing condition of an error ('Unknown'); errors carry no cluster, so the vector is recorded for the operational-risk register only."
+    },
+    {
+      "veris_id": "action.environmental.variety.Deterioration",
+      "veris_description": "Deterioration and degradation",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Deterioration'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Earthquake",
+      "veris_description": "Earthquake",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Earthquake'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.EMI",
+      "veris_description": "Electromagnetic interference (EMI)",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('EMI'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.ESD",
+      "veris_description": "Electrostatic discharge (ESD)",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('ESD'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Fire",
+      "veris_description": "Fire",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Fire'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Flood",
+      "veris_description": "Flood",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Flood'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Hazmat",
+      "veris_description": "Hazardous material",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Hazmat'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Humidity",
+      "veris_description": "Humidity",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Humidity'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Hurricane",
+      "veris_description": "Hurricane",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Hurricane'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Ice",
+      "veris_description": "Ice and snow",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Ice'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Landslide",
+      "veris_description": "Landslide",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Landslide'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Leak",
+      "veris_description": "Water leak",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Leak'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Lightning",
+      "veris_description": "Lightning",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Lightning'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Meteorite",
+      "veris_description": "Meteorite",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Meteorite'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Particulates",
+      "veris_description": "Particulate matter (e.g., dust, smoke)",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Particulates'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Pathogen",
+      "veris_description": "Pathogen",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Pathogen'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Power failure",
+      "veris_description": "Power failure or fluctuation",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Power failure'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Temperature",
+      "veris_description": "Extreme temperature",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Temperature'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Tornado",
+      "veris_description": "Tornado",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Tornado'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Tsunami",
+      "veris_description": "Tsunami",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Tsunami'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Vermin",
+      "veris_description": "Vermin",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Vermin'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Volcano",
+      "veris_description": "Volcanic eruption",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Volcano'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Wind",
+      "veris_description": "Wind",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Wind'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Other",
+      "veris_description": "Other",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Other'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.environmental.variety.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "rationale": "An external event without an actor ('Unknown'): the Failure row of the cause-side partition, operational or continuity risk, no cluster. TLCTC scopes to interactions between systems and actors (Axiom II).",
+      "basis": "Axiom II"
+    },
+    {
+      "veris_id": "action.hacking.result.Infiltrate",
+      "veris_description": "The hacking action resulted in additional security access",
+      "mapping_type": "outcome",
+      "rationale": "'Infiltrate' describes what the hacking action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.hacking.result.Exfiltrate",
+      "veris_description": "The hacking action exfiltrated data from the victim",
+      "mapping_type": "outcome",
+      "rationale": "'Exfiltrate' describes what the hacking action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.hacking.result.Elevate",
+      "veris_description": "The hacking action resulted in additional security permissions",
+      "mapping_type": "outcome",
+      "rationale": "'Elevate' describes what the hacking action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.hacking.result.Lateral movement",
+      "veris_description": "The hacking action used security access or permissions already acuired",
+      "mapping_type": "outcome",
+      "rationale": "'Lateral movement' describes what the hacking action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.hacking.result.Deploy payload",
+      "veris_description": "e.g. cryptomining, ransomware, etc",
+      "mapping_type": "outcome",
+      "rationale": "'Deploy payload' describes what the hacking action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.hacking.result.Persist",
+      "veris_description": "The action resulted in some form of persistence on the system",
+      "mapping_type": "outcome",
+      "rationale": "'Persist' describes what the hacking action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.hacking.result.Other",
+      "veris_description": "The result of the hacking action is not listed",
+      "mapping_type": "outcome",
+      "rationale": "'Other' describes what the hacking action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.hacking.result.Unknown",
+      "veris_description": "The result of the hacking action is unknown",
+      "mapping_type": "outcome",
+      "rationale": "'Unknown' describes what the hacking action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.hacking.result.NA",
+      "veris_description": "The hacking action did not have a result",
+      "mapping_type": "outcome",
+      "rationale": "'NA' describes what the hacking action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.result.Infiltrate",
+      "veris_description": "The malware action resulted in additional security access",
+      "mapping_type": "outcome",
+      "rationale": "'Infiltrate' describes what the malware action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.result.Exfiltrate",
+      "veris_description": "The malware action exfiltrated data from the victim",
+      "mapping_type": "outcome",
+      "rationale": "'Exfiltrate' describes what the malware action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.result.Elevate",
+      "veris_description": "The malware action resulted in additional security permissions",
+      "mapping_type": "outcome",
+      "rationale": "'Elevate' describes what the malware action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.result.Lateral movement",
+      "veris_description": "The malware action used security access or permissions already acuired",
+      "mapping_type": "outcome",
+      "rationale": "'Lateral movement' describes what the malware action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.result.Deploy payload",
+      "veris_description": "e.g. cryptomining, ransomware, etc",
+      "mapping_type": "outcome",
+      "rationale": "'Deploy payload' describes what the malware action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.result.Persist",
+      "veris_description": "The action resulted in some form of persistence on the system",
+      "mapping_type": "outcome",
+      "rationale": "'Persist' describes what the malware action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.result.Other",
+      "veris_description": "The result of the malware action is not listed",
+      "mapping_type": "outcome",
+      "rationale": "'Other' describes what the malware action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.result.Unknown",
+      "veris_description": "The result of the malware action is unknown",
+      "mapping_type": "outcome",
+      "rationale": "'Unknown' describes what the malware action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.malware.result.NA",
+      "veris_description": "The malware action did not have a result",
+      "mapping_type": "outcome",
+      "rationale": "'NA' describes what the malware action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.social.result.Infiltrate",
+      "veris_description": "The social action resulted in additional security access",
+      "mapping_type": "outcome",
+      "rationale": "'Infiltrate' describes what the social action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.social.result.Exfiltrate",
+      "veris_description": "The social action exfiltrated data from the victim",
+      "mapping_type": "outcome",
+      "rationale": "'Exfiltrate' describes what the social action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.social.result.Elevate",
+      "veris_description": "The social action resulted in additional security permissions",
+      "mapping_type": "outcome",
+      "rationale": "'Elevate' describes what the social action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.social.result.Lateral movement",
+      "veris_description": "The social action used security access or permissions already acuired",
+      "mapping_type": "outcome",
+      "rationale": "'Lateral movement' describes what the social action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.social.result.Deploy payload",
+      "veris_description": "e.g. cryptomining, ransomware, etc",
+      "mapping_type": "outcome",
+      "rationale": "'Deploy payload' describes what the social action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.social.result.Persist",
+      "veris_description": "The action resulted in some form of persistence on the system",
+      "mapping_type": "outcome",
+      "rationale": "'Persist' describes what the social action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.social.result.Other",
+      "veris_description": "The result of the social action is not listed",
+      "mapping_type": "outcome",
+      "rationale": "'Other' describes what the social action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.social.result.Unknown",
+      "veris_description": "The result of the social action is unknown",
+      "mapping_type": "outcome",
+      "rationale": "'Unknown' describes what the social action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.social.result.NA",
+      "veris_description": "The social action did not have a result",
+      "mapping_type": "outcome",
+      "rationale": "'NA' describes what the social action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.misuse.result.Infiltrate",
+      "veris_description": "Do not use. Misuse inherently implies having permission so none can be gained.",
+      "mapping_type": "outcome",
+      "rationale": "'Infiltrate' describes what the misuse action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.misuse.result.Exfiltrate",
+      "veris_description": "The misuse action exfiltrated data from the victim",
+      "mapping_type": "outcome",
+      "rationale": "'Exfiltrate' describes what the misuse action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.misuse.result.Elevate",
+      "veris_description": "Do not use. Misuse inherently implies having permission so none can be elevated.",
+      "mapping_type": "outcome",
+      "rationale": "'Elevate' describes what the misuse action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.misuse.result.Lateral movement",
+      "veris_description": "The misuse action used security access or permissions already acuired",
+      "mapping_type": "outcome",
+      "rationale": "'Lateral movement' describes what the misuse action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.misuse.result.Deploy payload",
+      "veris_description": "e.g. cryptomining, ransomware, etc",
+      "mapping_type": "outcome",
+      "rationale": "'Deploy payload' describes what the misuse action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.misuse.result.Persist",
+      "veris_description": "The action resulted in some form of persistence on the system",
+      "mapping_type": "outcome",
+      "rationale": "'Persist' describes what the misuse action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.misuse.result.Other",
+      "veris_description": "The result of the misuse action is not listed",
+      "mapping_type": "outcome",
+      "rationale": "'Other' describes what the misuse action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.misuse.result.Unknown",
+      "veris_description": "The result of the misuse action is unknown",
+      "mapping_type": "outcome",
+      "rationale": "'Unknown' describes what the misuse action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.misuse.result.NA",
+      "veris_description": "The misuse action did not have a result",
+      "mapping_type": "outcome",
+      "rationale": "'NA' describes what the misuse action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.physical.result.Infiltrate",
+      "veris_description": "The physical action resulted in additional security access",
+      "mapping_type": "outcome",
+      "rationale": "'Infiltrate' describes what the physical action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.physical.result.Exfiltrate",
+      "veris_description": "The physical action exfiltrated data from the victim",
+      "mapping_type": "outcome",
+      "rationale": "'Exfiltrate' describes what the physical action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.physical.result.Elevate",
+      "veris_description": "The physical action resulted in additional security permissions",
+      "mapping_type": "outcome",
+      "rationale": "'Elevate' describes what the physical action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.physical.result.Lateral movement",
+      "veris_description": "The physical action used security access or permissions already acuired",
+      "mapping_type": "outcome",
+      "rationale": "'Lateral movement' describes what the physical action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.physical.result.Deploy payload",
+      "veris_description": "e.g. cryptomining, ransomware, etc",
+      "mapping_type": "outcome",
+      "rationale": "'Deploy payload' describes what the physical action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.physical.result.Persist",
+      "veris_description": "The action resulted in some form of persistence on the system",
+      "mapping_type": "outcome",
+      "rationale": "'Persist' describes what the physical action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.physical.result.Other",
+      "veris_description": "The result of the physical action is not listed",
+      "mapping_type": "outcome",
+      "rationale": "'Other' describes what the physical action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.physical.result.Unknown",
+      "veris_description": "The result of the physical action is unknown",
+      "mapping_type": "outcome",
+      "rationale": "'Unknown' describes what the physical action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.physical.result.NA",
+      "veris_description": "The physical action did not have a result",
+      "mapping_type": "outcome",
+      "rationale": "'NA' describes what the physical action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown.result.Infiltrate",
+      "veris_description": "The environmental action resulted in additional security access",
+      "mapping_type": "outcome",
+      "rationale": "'Infiltrate' describes what the unknown action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown.result.Exfiltrate",
+      "veris_description": "The environmental action exfiltrated data from the victim",
+      "mapping_type": "outcome",
+      "rationale": "'Exfiltrate' describes what the unknown action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown.result.Elevate",
+      "veris_description": "The environmental action resulted in additional security permissions",
+      "mapping_type": "outcome",
+      "rationale": "'Elevate' describes what the unknown action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown.result.Lateral movement",
+      "veris_description": "The environmental action used security access or permissions already acuired",
+      "mapping_type": "outcome",
+      "rationale": "'Lateral movement' describes what the unknown action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown.result.Deploy payload",
+      "veris_description": "e.g. cryptomining, ransomware, etc",
+      "mapping_type": "outcome",
+      "rationale": "'Deploy payload' describes what the unknown action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown.result.Persist",
+      "veris_description": "The action resulted in some form of persistence on the system",
+      "mapping_type": "outcome",
+      "rationale": "'Persist' describes what the unknown action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown.result.Other",
+      "veris_description": "The result of the environmental action is not listed",
+      "mapping_type": "outcome",
+      "rationale": "'Other' describes what the unknown action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown.result.Unknown",
+      "veris_description": "The result of the environmental action is unknown",
+      "mapping_type": "outcome",
+      "rationale": "'Unknown' describes what the unknown action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown.result.NA",
+      "veris_description": "The environmental action did not have a result",
+      "mapping_type": "outcome",
+      "rationale": "'NA' describes what the unknown action achieved, not the generic vulnerability it exploited; outcomes are not classification inputs (Axiom III)."
+    },
+    {
+      "veris_id": "action.unknown",
+      "veris_description": "Action category not recorded",
+      "mapping_type": "unresolved",
+      "rationale": "The record says something happened without naming even the action category; an unresolved step (?) in TLCTC notation, excluded from cluster statistics (R-UNRES-3)."
+    },
+    {
+      "veris_id": "attribute.confidentiality.data_disclosure.No",
+      "veris_description": "No",
+      "mapping_type": "outcome",
+      "rationale": "No disclosure: no Data Risk Event on the confidentiality property."
+    },
+    {
+      "veris_id": "attribute.confidentiality.data_disclosure.Potentially",
+      "veris_description": "Potentially (at risk)",
+      "mapping_type": "outcome",
+      "rationale": "Data was at risk but disclosure is not confirmed: recorded as a potential Data Risk Event C.",
+      "dre": "C",
+      "certainty": "potential"
+    },
+    {
+      "veris_id": "attribute.confidentiality.data_disclosure.Yes",
+      "veris_description": "Yes (confirmed)",
+      "mapping_type": "outcome",
+      "rationale": "Confirmed disclosure to a party not entitled to the data: Data Risk Event C.",
+      "dre": "C"
+    },
+    {
+      "veris_id": "attribute.confidentiality.data_disclosure.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "outcome",
+      "rationale": "Disclosure status not recorded: no Data Risk Event can be asserted."
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Alter behavior",
+      "veris_description": "Influence or alter human behavior",
+      "mapping_type": "outcome",
+      "rationale": "A change in a person's behaviour is not a change in a record's state; no Data Risk Event."
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Created account",
+      "veris_description": "Created new user account",
+      "mapping_type": "outcome",
+      "rationale": "A record (the account store) now holds content that its authorised process did not produce: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Defacement",
+      "veris_description": "Deface content",
+      "mapping_type": "outcome",
+      "rationale": "Content was replaced: the record's correspondence to its intended state failed: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Fraudulent transaction",
+      "veris_description": "Initiate fraudulent transaction",
+      "mapping_type": "outcome",
+      "rationale": "The transaction record is accurate about what happened but misattributed to an entitled party: If.",
+      "dre": "If"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Hardware tampering",
+      "veris_description": "Hardware tampering or physical alteration",
+      "mapping_type": "outcome",
+      "rationale": "The physical state of the asset no longer corresponds to its intended state: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Log tampering",
+      "veris_description": "Log tampering or modification",
+      "mapping_type": "outcome",
+      "rationale": "Log content no longer corresponds to what occurred: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Misrepresentation",
+      "veris_description": "compromise of authenticity (e.g. masquerading as the legitimate owner of an account)",
+      "mapping_type": "outcome",
+      "rationale": "Authenticity failed: content may be accurate but its attribution is false: If.",
+      "dre": "If"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Modify authentication",
+      "veris_description": "Modified how a user account is authenticated, such as removing MFA device",
+      "mapping_type": "outcome",
+      "rationale": "The authentication configuration no longer corresponds to its intended state: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Modify configuration",
+      "veris_description": "Modified configuration or services",
+      "mapping_type": "outcome",
+      "rationale": "Configuration no longer corresponds to its intended state: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Modify data",
+      "veris_description": "Modified stored data or content",
+      "mapping_type": "outcome",
+      "rationale": "Stored data no longer corresponds to its intended state: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Modify privileges",
+      "veris_description": "Modified privileges or permissions",
+      "mapping_type": "outcome",
+      "rationale": "The authorisation state no longer corresponds to its intended state: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Register MFA device",
+      "veris_description": "Register an attacker controlled MFA device to an account",
+      "mapping_type": "outcome",
+      "rationale": "The account's authentication state now includes a device its authorised process did not enrol: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Repurpose",
+      "veris_description": "Repurposed asset for unauthorized function",
+      "mapping_type": "outcome",
+      "rationale": "The asset's configured function no longer corresponds to its intended state: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Software installation",
+      "veris_description": "On-disk software installation or code modification",
+      "mapping_type": "outcome",
+      "rationale": "The system's software state no longer corresponds to its intended state: Ii.",
+      "dre": "Ii"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Other",
+      "veris_description": "Other",
+      "mapping_type": "outcome",
+      "rationale": "An integrity effect of unrecorded kind: parent code I (refinement unknown).",
+      "dre": "I"
+    },
+    {
+      "veris_id": "attribute.integrity.variety.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "outcome",
+      "rationale": "An integrity effect of unrecorded kind: parent code I (refinement unknown).",
+      "dre": "I"
+    },
+    {
+      "veris_id": "attribute.availability.variety.Acceleration",
+      "veris_description": "Acceleration",
+      "mapping_type": "outcome",
+      "rationale": "Service behaviour changed in timing; the data's availability state is affected in an unrefined way: parent code A.",
+      "dre": "A"
+    },
+    {
+      "veris_id": "attribute.availability.variety.Degradation",
+      "veris_description": "Performance degradation",
+      "mapping_type": "outcome",
+      "rationale": "Service degraded; the data's availability state is affected without the record saying whether it is absent or unusable: parent code A.",
+      "dre": "A"
+    },
+    {
+      "veris_id": "attribute.availability.variety.Destruction",
+      "veris_description": "Destruction",
+      "mapping_type": "outcome",
+      "rationale": "Data is gone: Av (unavailable).",
+      "dre": "Av"
+    },
+    {
+      "veris_id": "attribute.availability.variety.Interruption",
+      "veris_description": "Interruption",
+      "mapping_type": "outcome",
+      "rationale": "Service interrupted; whether the data is absent or present but unreachable is not recorded: parent code A.",
+      "dre": "A"
+    },
+    {
+      "veris_id": "attribute.availability.variety.Loss",
+      "veris_description": "Loss",
+      "mapping_type": "outcome",
+      "rationale": "Data or the asset holding it is gone: Av (unavailable).",
+      "dre": "Av"
+    },
+    {
+      "veris_id": "attribute.availability.variety.Obscuration",
+      "veris_description": "Conversion or obscuration (ransomware)",
+      "mapping_type": "outcome",
+      "rationale": "Data is present but converted or encrypted so it cannot be used (ransomware): Ac (inaccessible).",
+      "dre": "Ac"
+    },
+    {
+      "veris_id": "attribute.availability.variety.Other",
+      "veris_description": "Other",
+      "mapping_type": "outcome",
+      "rationale": "An availability effect of unrecorded kind: parent code A.",
+      "dre": "A"
+    },
+    {
+      "veris_id": "attribute.availability.variety.Unknown",
+      "veris_description": "Unknown",
+      "mapping_type": "outcome",
+      "rationale": "An availability effect of unrecorded kind: parent code A.",
+      "dre": "A"
+    }
+  ]
+}
