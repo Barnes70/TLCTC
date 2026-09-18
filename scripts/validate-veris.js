@@ -11,7 +11,7 @@
  *     for outcome, nothing extra for unresolved); partition_row 'attack' requires out_of_scope.
  *  4. veris_description equals the pinned labels text.
  *  5. The generated CSV is byte-identical to the generator output, LF only, no BOM.
- *  6. study/results.json, when present, names the mapping's `updated` date, the VCDB sha256
+ *  6. study/results.json exists, names the mapping's `updated` date, the VCDB commit and sha256
  *     listed in PINNED.md, and every table cell satisfies n <= denominator.
  *
  * Exit: 0 = valid, 1 = at least one failure (all failures printed).
@@ -176,7 +176,8 @@ else {
 
 // ---------------------------------------------------------------- 6. study results
 let studyNote = 'no study results';
-if (fs.existsSync(RESULTS)) {
+if (!fs.existsSync(RESULTS)) fail(`${rel(RESULTS)} missing — run python mappings/veris/study/run-study.py`);
+else {
   const r = readJSON(RESULTS);
   const pinnedMd = fs.readFileSync(path.join(DIR, 'PINNED.md'), 'utf8');
   if (r.mapping_updated !== mapping.metadata.updated) fail(`study/results.json mapping_updated ${r.mapping_updated} != metadata.updated ${mapping.metadata.updated}`);

@@ -67,7 +67,7 @@ def run_classify(args: argparse.Namespace) -> tuple[list[dict], dict | None]:
     if args.attack_check:
         va = attack_check.load_veris_attack()
         at = attack_check.load_attack_tlctc()
-        checks = [attack_check.check(res, va, at) for res in results]
+        checks = [attack_check.check(res, va, at, mapping) for res in results]
         for res, chk in zip(results, checks):
             res["attack_check"] = chk
     summary = None

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="404" viewBox="0 0 800 404" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<text x="130" y="24" font-size="14" font-weight="bold">attribute.availability.variety re-read as Data Risk Event codes</text>
+<rect x="130" y="34" width="12" height="12" fill="#b30000"/><text x="146" y="45">Av: data gone</text>
+<rect x="260" y="34" width="12" height="12" fill="#fc8d59"/><text x="276" y="45">Ac: present but unusable</text>
+<rect x="440" y="34" width="12" height="12" fill="#fdd49e"/><text x="456" y="45">A: refinement not recorded</text>
+<text x="122" y="76" text-anchor="end">Loss</text>
+<rect x="130" y="60" width="510.0" height="22" fill="#b30000"/>
+<text x="646.0" y="76">2061 (Av)</text>
+<text x="122" y="108" text-anchor="end">Destruction</text>
+<rect x="130" y="92" width="10.9" height="22" fill="#b30000"/>
+<text x="146.9" y="108">44 (Av)</text>
+<text x="122" y="140" text-anchor="end">Obscuration</text>
+<rect x="130" y="124" width="73.0" height="22" fill="#fc8d59"/>
+<text x="209.0" y="140">295 (Ac)</text>
+<text x="122" y="172" text-anchor="end">Interruption</text>
+<rect x="130" y="156" width="76.5" height="22" fill="#fdd49e"/>
+<text x="212.5" y="172">309 (A)</text>
+<text x="122" y="204" text-anchor="end">Degradation</text>
+<rect x="130" y="188" width="6.4" height="22" fill="#fdd49e"/>
+<text x="142.4" y="204">26 (A)</text>
+<text x="122" y="236" text-anchor="end">Other</text>
+<rect x="130" y="220" width="0.7" height="22" fill="#fdd49e"/>
+<text x="136.7" y="236">3 (A)</text>
+<text x="122" y="268" text-anchor="end">Unknown</text>
+<rect x="130" y="252" width="1.5" height="22" fill="#fdd49e"/>
+<text x="137.5" y="268">6 (A)</text>
+<text x="130" y="304" font-weight="bold">Ransomware records (n = 1084): Obscuration/Ac 290, Loss/Av 13, Destruction/Av 0, Interruption/A 16, no availability attribute 772</text>
+</svg>

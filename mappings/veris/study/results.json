@@ -1,0 +1,4610 @@
+{
+  "generated": "2026-09-18T15:53:59Z",
+  "vcdb": {
+    "commit": "230cf22b56a481dd1a994b21e4d94c59e2bccea9",
+    "url": "https://raw.githubusercontent.com/vz-risk/VCDB/230cf22b56a481dd1a994b21e4d94c59e2bccea9/data/joined/vcdb.json.zip",
+    "sha256": "e4be5dd432ccfad16520a6b60dd83e9d47c63b0f3352c26c4d43a5dd774c32c0",
+    "records": 10047,
+    "schema_versions": {
+      "1.4.0": 9907,
+      "1.4.1": 111,
+      "1.3.7": 26,
+      "1.3.5": 2,
+      "1.3.6": 1
+    },
+    "note": "joined dataset; VCDB's packaging excludes the web-skimmer batch"
+  },
+  "mapping_updated": "2026-09-18",
+  "mapping_veris_version": "1.4.1",
+  "mapping_tlctc_version": "2.5",
+  "strata": {
+    "all": {
+      "records": 10047,
+      "filter": "every record in the joined dataset"
+    },
+    "year:<=2014": {
+      "records": 5684,
+      "filter": "timeline.incident.year <= 2014"
+    },
+    "year:2015-2019": {
+      "records": 3046,
+      "filter": "timeline.incident.year in 2015..2019"
+    },
+    "year:2020-2026": {
+      "records": 1317,
+      "filter": "timeline.incident.year in 2020..2026"
+    },
+    "sub_source:none": {
+      "records": 8110,
+      "filter": "plus.sub_source absent (random selection per the VCDB README)"
+    },
+    "sub_source:phidbr": {
+      "records": 1310,
+      "filter": "plus.sub_source = phidbr (healthcare, selected on purpose)"
+    },
+    "sub_source:priority": {
+      "records": 602,
+      "filter": "plus.sub_source = priority (selected on purpose)"
+    },
+    "sub_source:other": {
+      "records": 25,
+      "filter": "plus.sub_source has another value"
+    }
+  },
+  "tables": {
+    "all": {
+      "records": 10047,
+      "purity": {
+        "records": {
+          "n": 10047,
+          "denominator": 10047
+        },
+        "threat_bearing": {
+          "n": 5632,
+          "denominator": 10047
+        },
+        "threat_only": {
+          "n": 5464,
+          "denominator": 10047
+        },
+        "mixed_threat_and_operational": {
+          "n": 168,
+          "denominator": 10047
+        },
+        "operational_only": {
+          "n": 2615,
+          "denominator": 10047
+        },
+        "operational_only.error_or_failure": {
+          "n": 2578,
+          "denominator": 10047
+        },
+        "operational_only.abuse_of_rights": {
+          "n": 33,
+          "denominator": 10047
+        },
+        "operational_only.other_mix": {
+          "n": 2,
+          "denominator": 10047
+        },
+        "out_of_scope_only": {
+          "n": 2,
+          "denominator": 10047
+        },
+        "unknown_only": {
+          "n": 1800,
+          "denominator": 10047
+        },
+        "empty": {
+          "n": 0,
+          "denominator": 10047
+        }
+      },
+      "recoverability": {
+        "threat_bearing": {
+          "n": 5632,
+          "denominator": 5632
+        },
+        "resolved": {
+          "n": 3546,
+          "denominator": 5632
+        },
+        "rule_dependent": {
+          "n": 1310,
+          "denominator": 5632
+        },
+        "cause_lost": {
+          "n": 776,
+          "denominator": 5632
+        },
+        "cause_lost.malware_without_enabler": {
+          "n": 422,
+          "denominator": 5632
+        },
+        "cause_lost.credential_use_without_acquisition": {
+          "n": 206,
+          "denominator": 5632
+        },
+        "cause_lost.social_without_follow_on": {
+          "n": 148,
+          "denominator": 5632
+        },
+        "cause_lost.interception_without_position": {
+          "n": 0,
+          "denominator": 5632
+        },
+        "single_cluster_records": {
+          "n": 3912,
+          "denominator": 5632
+        },
+        "multi_cluster_records": {
+          "n": 1720,
+          "denominator": 5632
+        },
+        "mean_clusters_lower_bound": 1.078,
+        "mean_clusters_upper_bound": 1.676
+      },
+      "frequency": {
+        "#1": {
+          "certain": {
+            "n": 1748,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 2497,
+            "denominator": 10047
+          }
+        },
+        "#2": {
+          "certain": {
+            "n": 145,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 1289,
+            "denominator": 10047
+          }
+        },
+        "#3": {
+          "certain": {
+            "n": 14,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 1291,
+            "denominator": 10047
+          }
+        },
+        "#4": {
+          "certain": {
+            "n": 505,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 505,
+            "denominator": 10047
+          }
+        },
+        "#5": {
+          "certain": {
+            "n": 11,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 11,
+            "denominator": 10047
+          }
+        },
+        "#6": {
+          "certain": {
+            "n": 0,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 166,
+            "denominator": 10047
+          }
+        },
+        "#7": {
+          "certain": {
+            "n": 1482,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 1483,
+            "denominator": 10047
+          }
+        },
+        "#8": {
+          "certain": {
+            "n": 1593,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 1593,
+            "denominator": 10047
+          }
+        },
+        "#9": {
+          "certain": {
+            "n": 573,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 587,
+            "denominator": 10047
+          }
+        },
+        "#10": {
+          "certain": {
+            "n": 0,
+            "denominator": 10047
+          },
+          "upper": {
+            "n": 18,
+            "denominator": 10047
+          }
+        }
+      },
+      "cooccurrence": {
+        "records_with_two_or_more_certain": {
+          "n": 541,
+          "denominator": 10047
+        },
+        "matrix": {
+          "#1|#2": 2,
+          "#1|#3": 0,
+          "#1|#4": 17,
+          "#1|#5": 1,
+          "#1|#6": 0,
+          "#1|#7": 10,
+          "#1|#8": 54,
+          "#1|#9": 67,
+          "#1|#10": 0,
+          "#2|#3": 1,
+          "#2|#4": 5,
+          "#2|#5": 0,
+          "#2|#6": 0,
+          "#2|#7": 9,
+          "#2|#8": 1,
+          "#2|#9": 2,
+          "#2|#10": 0,
+          "#3|#4": 2,
+          "#3|#5": 0,
+          "#3|#6": 0,
+          "#3|#7": 2,
+          "#3|#8": 0,
+          "#3|#9": 1,
+          "#3|#10": 0,
+          "#4|#5": 3,
+          "#4|#6": 0,
+          "#4|#7": 136,
+          "#4|#8": 10,
+          "#4|#9": 201,
+          "#4|#10": 0,
+          "#5|#6": 0,
+          "#5|#7": 7,
+          "#5|#8": 0,
+          "#5|#9": 7,
+          "#5|#10": 0,
+          "#6|#7": 0,
+          "#6|#8": 0,
+          "#6|#9": 0,
+          "#6|#10": 0,
+          "#7|#8": 2,
+          "#7|#9": 251,
+          "#7|#10": 0,
+          "#8|#9": 13,
+          "#8|#10": 0,
+          "#9|#10": 0
+        },
+        "top_pairs": [
+          {
+            "pair": "#7 + #9",
+            "n": 251,
+            "hypothesis": "#9 → #7"
+          },
+          {
+            "pair": "#4 + #9",
+            "n": 201,
+            "hypothesis": "#9 → #4"
+          },
+          {
+            "pair": "#4 + #7",
+            "n": 136,
+            "hypothesis": "#4 → #7 | #7 → #4"
+          },
+          {
+            "pair": "#1 + #9",
+            "n": 67,
+            "hypothesis": "#9 → #1"
+          },
+          {
+            "pair": "#1 + #8",
+            "n": 54,
+            "hypothesis": "order unknown"
+          },
+          {
+            "pair": "#1 + #4",
+            "n": 17,
+            "hypothesis": "#1 → #4"
+          },
+          {
+            "pair": "#8 + #9",
+            "n": 13,
+            "hypothesis": "#9 → #8"
+          },
+          {
+            "pair": "#1 + #7",
+            "n": 10,
+            "hypothesis": "#1 → #7"
+          },
+          {
+            "pair": "#4 + #8",
+            "n": 10,
+            "hypothesis": "#8 → #4"
+          },
+          {
+            "pair": "#2 + #7",
+            "n": 9,
+            "hypothesis": "#2 → #7"
+          }
+        ]
+      },
+      "availability": {
+        "records_with_availability_attribute": {
+          "n": 2669,
+          "denominator": 10047
+        },
+        "varieties": {
+          "Loss": {
+            "n": 2061,
+            "denominator": 10047,
+            "dre": "Av"
+          },
+          "Destruction": {
+            "n": 44,
+            "denominator": 10047,
+            "dre": "Av"
+          },
+          "Obscuration": {
+            "n": 295,
+            "denominator": 10047,
+            "dre": "Ac"
+          },
+          "Interruption": {
+            "n": 309,
+            "denominator": 10047,
+            "dre": "A"
+          },
+          "Degradation": {
+            "n": 26,
+            "denominator": 10047,
+            "dre": "A"
+          },
+          "Acceleration": {
+            "n": 0,
+            "denominator": 10047,
+            "dre": "A"
+          },
+          "Other": {
+            "n": 3,
+            "denominator": 10047,
+            "dre": "A"
+          },
+          "Unknown": {
+            "n": 6,
+            "denominator": 10047,
+            "dre": "A"
+          }
+        },
+        "dre_codes": {
+          "C": {
+            "n": 7000,
+            "denominator": 10047
+          },
+          "I": {
+            "n": 42,
+            "denominator": 10047
+          },
+          "Ii": {
+            "n": 2537,
+            "denominator": 10047
+          },
+          "If": {
+            "n": 307,
+            "denominator": 10047
+          },
+          "A": {
+            "n": 334,
+            "denominator": 10047
+          },
+          "Av": {
+            "n": 2096,
+            "denominator": 10047
+          },
+          "Ac": {
+            "n": 295,
+            "denominator": 10047
+          }
+        },
+        "ransomware": {
+          "records": {
+            "n": 1084,
+            "denominator": 10047
+          },
+          "with_obscuration_Ac": {
+            "n": 290,
+            "denominator": 1084
+          },
+          "with_loss_Av": {
+            "n": 13,
+            "denominator": 1084
+          },
+          "with_destruction_Av": {
+            "n": 0,
+            "denominator": 1084
+          },
+          "with_interruption_A": {
+            "n": 16,
+            "denominator": 1084
+          },
+          "with_no_availability_attribute": {
+            "n": 772,
+            "denominator": 1084
+          },
+          "with_confirmed_disclosure_C": {
+            "n": 849,
+            "denominator": 1084
+          }
+        }
+      },
+      "unknown": {
+        "action_unknown": {
+          "n": 287,
+          "denominator": 10047
+        },
+        "any_unresolved_item": {
+          "n": 3255,
+          "denominator": 10047
+        },
+        "unknown_only": {
+          "n": 1800,
+          "denominator": 10047
+        },
+        "per_category": {
+          "hacking": {
+            "records": {
+              "n": 3368,
+              "denominator": 10047
+            },
+            "variety_unknown": {
+              "n": 1695,
+              "denominator": 10047
+            },
+            "variety_other": {
+              "n": 42,
+              "denominator": 10047
+            }
+          },
+          "malware": {
+            "records": {
+              "n": 1647,
+              "denominator": 10047
+            },
+            "variety_unknown": {
+              "n": 172,
+              "denominator": 10047
+            },
+            "variety_other": {
+              "n": 65,
+              "denominator": 10047
+            }
+          },
+          "social": {
+            "records": {
+              "n": 647,
+              "denominator": 10047
+            },
+            "variety_unknown": {
+              "n": 17,
+              "denominator": 10047
+            },
+            "variety_other": {
+              "n": 11,
+              "denominator": 10047
+            }
+          },
+          "misuse": {
+            "records": {
+              "n": 1789,
+              "denominator": 10047
+            },
+            "variety_unknown": {
+              "n": 47,
+              "denominator": 10047
+            },
+            "variety_other": {
+              "n": 5,
+              "denominator": 10047
+            }
+          },
+          "physical": {
+            "records": {
+              "n": 1626,
+              "denominator": 10047
+            },
+            "variety_unknown": {
+              "n": 6,
+              "denominator": 10047
+            },
+            "variety_other": {
+              "n": 2,
+              "denominator": 10047
+            }
+          },
+          "error": {
+            "records": {
+              "n": 2681,
+              "denominator": 10047
+            },
+            "variety_unknown": {
+              "n": 50,
+              "denominator": 10047
+            },
+            "variety_other": {
+              "n": 76,
+              "denominator": 10047
+            }
+          },
+          "environmental": {
+            "records": {
+              "n": 10,
+              "denominator": 10047
+            },
+            "variety_unknown": {
+              "n": 4,
+              "denominator": 10047
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 10047
+            }
+          }
+        },
+        "unmapped_values": {
+          "n": 0,
+          "denominator": 10047
+        }
+      },
+      "attack_agreement": {
+        "classes": {
+          "agree": {
+            "n": 2120,
+            "denominator": 10047
+          },
+          "subset": {
+            "n": 288,
+            "denominator": 10047
+          },
+          "disjoint": {
+            "n": 9,
+            "denominator": 10047
+          },
+          "no-attack-edge": {
+            "n": 7630,
+            "denominator": 10047
+          }
+        },
+        "top_disagreements": [
+          {
+            "veris_id": "action.malware.variety.Capture stored data",
+            "n": 187,
+            "direct": "#7",
+            "transitive": "#1, #4, #5"
+          },
+          {
+            "veris_id": "action.malware.variety.Scan network",
+            "n": 106,
+            "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.hacking.variety.Forced browsing",
+            "n": 19,
+            "direct": "#2",
+            "transitive": "#1, #7"
+          },
+          {
+            "veris_id": "action.malware.variety.Packet sniffer",
+            "n": 7,
+            "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.hacking.variety.Buffer overflow",
+            "n": 5,
+            "direct": "#2",
+            "transitive": "#3, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.OS commanding",
+            "n": 4,
+            "direct": "#2",
+            "transitive": "#1, #4, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.Cryptanalysis",
+            "n": 3,
+            "direct": "#5",
+            "transitive": "#1, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.Session prediction",
+            "n": 1,
+            "direct": "#2",
+            "transitive": "#1, #4"
+          },
+          {
+            "veris_id": "action.malware.variety.DoS",
+            "n": 1,
+            "direct": "#7",
+            "transitive": "#1, #2, #6"
+          }
+        ]
+      }
+    },
+    "year:<=2014": {
+      "records": 5684,
+      "purity": {
+        "records": {
+          "n": 5684,
+          "denominator": 5684
+        },
+        "threat_bearing": {
+          "n": 2869,
+          "denominator": 5684
+        },
+        "threat_only": {
+          "n": 2779,
+          "denominator": 5684
+        },
+        "mixed_threat_and_operational": {
+          "n": 90,
+          "denominator": 5684
+        },
+        "operational_only": {
+          "n": 1612,
+          "denominator": 5684
+        },
+        "operational_only.error_or_failure": {
+          "n": 1591,
+          "denominator": 5684
+        },
+        "operational_only.abuse_of_rights": {
+          "n": 17,
+          "denominator": 5684
+        },
+        "operational_only.other_mix": {
+          "n": 2,
+          "denominator": 5684
+        },
+        "out_of_scope_only": {
+          "n": 2,
+          "denominator": 5684
+        },
+        "unknown_only": {
+          "n": 1203,
+          "denominator": 5684
+        },
+        "empty": {
+          "n": 0,
+          "denominator": 5684
+        }
+      },
+      "recoverability": {
+        "threat_bearing": {
+          "n": 2869,
+          "denominator": 2869
+        },
+        "resolved": {
+          "n": 2315,
+          "denominator": 2869
+        },
+        "rule_dependent": {
+          "n": 380,
+          "denominator": 2869
+        },
+        "cause_lost": {
+          "n": 174,
+          "denominator": 2869
+        },
+        "cause_lost.malware_without_enabler": {
+          "n": 88,
+          "denominator": 2869
+        },
+        "cause_lost.credential_use_without_acquisition": {
+          "n": 55,
+          "denominator": 2869
+        },
+        "cause_lost.social_without_follow_on": {
+          "n": 31,
+          "denominator": 2869
+        },
+        "cause_lost.interception_without_position": {
+          "n": 0,
+          "denominator": 2869
+        },
+        "single_cluster_records": {
+          "n": 2270,
+          "denominator": 2869
+        },
+        "multi_cluster_records": {
+          "n": 599,
+          "denominator": 2869
+        },
+        "mean_clusters_lower_bound": 1.108,
+        "mean_clusters_upper_bound": 1.382
+      },
+      "frequency": {
+        "#1": {
+          "certain": {
+            "n": 1140,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 1140,
+            "denominator": 5684
+          }
+        },
+        "#2": {
+          "certain": {
+            "n": 93,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 368,
+            "denominator": 5684
+          }
+        },
+        "#3": {
+          "certain": {
+            "n": 8,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 370,
+            "denominator": 5684
+          }
+        },
+        "#4": {
+          "certain": {
+            "n": 231,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 231,
+            "denominator": 5684
+          }
+        },
+        "#5": {
+          "certain": {
+            "n": 11,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 11,
+            "denominator": 5684
+          }
+        },
+        "#6": {
+          "certain": {
+            "n": 0,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 127,
+            "denominator": 5684
+          }
+        },
+        "#7": {
+          "certain": {
+            "n": 324,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 324,
+            "denominator": 5684
+          }
+        },
+        "#8": {
+          "certain": {
+            "n": 1065,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 1065,
+            "denominator": 5684
+          }
+        },
+        "#9": {
+          "certain": {
+            "n": 307,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 316,
+            "denominator": 5684
+          }
+        },
+        "#10": {
+          "certain": {
+            "n": 0,
+            "denominator": 5684
+          },
+          "upper": {
+            "n": 12,
+            "denominator": 5684
+          }
+        }
+      },
+      "cooccurrence": {
+        "records_with_two_or_more_certain": {
+          "n": 335,
+          "denominator": 5684
+        },
+        "matrix": {
+          "#1|#2": 1,
+          "#1|#3": 0,
+          "#1|#4": 10,
+          "#1|#5": 1,
+          "#1|#6": 0,
+          "#1|#7": 7,
+          "#1|#8": 25,
+          "#1|#9": 40,
+          "#1|#10": 0,
+          "#2|#3": 0,
+          "#2|#4": 4,
+          "#2|#5": 0,
+          "#2|#6": 0,
+          "#2|#7": 6,
+          "#2|#8": 0,
+          "#2|#9": 2,
+          "#2|#10": 0,
+          "#3|#4": 2,
+          "#3|#5": 0,
+          "#3|#6": 0,
+          "#3|#7": 1,
+          "#3|#8": 0,
+          "#3|#9": 1,
+          "#3|#10": 0,
+          "#4|#5": 3,
+          "#4|#6": 0,
+          "#4|#7": 114,
+          "#4|#8": 6,
+          "#4|#9": 121,
+          "#4|#10": 0,
+          "#5|#6": 0,
+          "#5|#7": 7,
+          "#5|#8": 0,
+          "#5|#9": 7,
+          "#5|#10": 0,
+          "#6|#7": 0,
+          "#6|#8": 0,
+          "#6|#9": 0,
+          "#6|#10": 0,
+          "#7|#8": 2,
+          "#7|#9": 209,
+          "#7|#10": 0,
+          "#8|#9": 9,
+          "#8|#10": 0,
+          "#9|#10": 0
+        },
+        "top_pairs": [
+          {
+            "pair": "#7 + #9",
+            "n": 209,
+            "hypothesis": "#9 → #7"
+          },
+          {
+            "pair": "#4 + #9",
+            "n": 121,
+            "hypothesis": "#9 → #4"
+          },
+          {
+            "pair": "#4 + #7",
+            "n": 114,
+            "hypothesis": "#4 → #7 | #7 → #4"
+          },
+          {
+            "pair": "#1 + #9",
+            "n": 40,
+            "hypothesis": "#9 → #1"
+          },
+          {
+            "pair": "#1 + #8",
+            "n": 25,
+            "hypothesis": "order unknown"
+          },
+          {
+            "pair": "#1 + #4",
+            "n": 10,
+            "hypothesis": "#1 → #4"
+          },
+          {
+            "pair": "#8 + #9",
+            "n": 9,
+            "hypothesis": "#9 → #8"
+          },
+          {
+            "pair": "#1 + #7",
+            "n": 7,
+            "hypothesis": "#1 → #7"
+          },
+          {
+            "pair": "#5 + #7",
+            "n": 7,
+            "hypothesis": "#5 → #7"
+          },
+          {
+            "pair": "#5 + #9",
+            "n": 7,
+            "hypothesis": "#9 → #5"
+          }
+        ]
+      },
+      "availability": {
+        "records_with_availability_attribute": {
+          "n": 1823,
+          "denominator": 5684
+        },
+        "varieties": {
+          "Loss": {
+            "n": 1598,
+            "denominator": 5684,
+            "dre": "Av"
+          },
+          "Destruction": {
+            "n": 28,
+            "denominator": 5684,
+            "dre": "Av"
+          },
+          "Obscuration": {
+            "n": 11,
+            "denominator": 5684,
+            "dre": "Ac"
+          },
+          "Interruption": {
+            "n": 225,
+            "denominator": 5684,
+            "dre": "A"
+          },
+          "Degradation": {
+            "n": 14,
+            "denominator": 5684,
+            "dre": "A"
+          },
+          "Acceleration": {
+            "n": 0,
+            "denominator": 5684,
+            "dre": "A"
+          },
+          "Other": {
+            "n": 3,
+            "denominator": 5684,
+            "dre": "A"
+          },
+          "Unknown": {
+            "n": 0,
+            "denominator": 5684,
+            "dre": "A"
+          }
+        },
+        "dre_codes": {
+          "C": {
+            "n": 3561,
+            "denominator": 5684
+          },
+          "I": {
+            "n": 27,
+            "denominator": 5684
+          },
+          "Ii": {
+            "n": 957,
+            "denominator": 5684
+          },
+          "If": {
+            "n": 160,
+            "denominator": 5684
+          },
+          "A": {
+            "n": 236,
+            "denominator": 5684
+          },
+          "Av": {
+            "n": 1618,
+            "denominator": 5684
+          },
+          "Ac": {
+            "n": 11,
+            "denominator": 5684
+          }
+        },
+        "ransomware": {
+          "records": {
+            "n": 19,
+            "denominator": 5684
+          },
+          "with_obscuration_Ac": {
+            "n": 8,
+            "denominator": 19
+          },
+          "with_loss_Av": {
+            "n": 8,
+            "denominator": 19
+          },
+          "with_destruction_Av": {
+            "n": 0,
+            "denominator": 19
+          },
+          "with_interruption_A": {
+            "n": 1,
+            "denominator": 19
+          },
+          "with_no_availability_attribute": {
+            "n": 2,
+            "denominator": 19
+          },
+          "with_confirmed_disclosure_C": {
+            "n": 3,
+            "denominator": 19
+          }
+        }
+      },
+      "unknown": {
+        "action_unknown": {
+          "n": 199,
+          "denominator": 5684
+        },
+        "any_unresolved_item": {
+          "n": 2067,
+          "denominator": 5684
+        },
+        "unknown_only": {
+          "n": 1203,
+          "denominator": 5684
+        },
+        "per_category": {
+          "hacking": {
+            "records": {
+              "n": 1560,
+              "denominator": 5684
+            },
+            "variety_unknown": {
+              "n": 1074,
+              "denominator": 5684
+            },
+            "variety_other": {
+              "n": 24,
+              "denominator": 5684
+            }
+          },
+          "malware": {
+            "records": {
+              "n": 414,
+              "denominator": 5684
+            },
+            "variety_unknown": {
+              "n": 100,
+              "denominator": 5684
+            },
+            "variety_other": {
+              "n": 61,
+              "denominator": 5684
+            }
+          },
+          "social": {
+            "records": {
+              "n": 344,
+              "denominator": 5684
+            },
+            "variety_unknown": {
+              "n": 5,
+              "denominator": 5684
+            },
+            "variety_other": {
+              "n": 7,
+              "denominator": 5684
+            }
+          },
+          "misuse": {
+            "records": {
+              "n": 1164,
+              "denominator": 5684
+            },
+            "variety_unknown": {
+              "n": 21,
+              "denominator": 5684
+            },
+            "variety_other": {
+              "n": 2,
+              "denominator": 5684
+            }
+          },
+          "physical": {
+            "records": {
+              "n": 1071,
+              "denominator": 5684
+            },
+            "variety_unknown": {
+              "n": 2,
+              "denominator": 5684
+            },
+            "variety_other": {
+              "n": 1,
+              "denominator": 5684
+            }
+          },
+          "error": {
+            "records": {
+              "n": 1631,
+              "denominator": 5684
+            },
+            "variety_unknown": {
+              "n": 24,
+              "denominator": 5684
+            },
+            "variety_other": {
+              "n": 39,
+              "denominator": 5684
+            }
+          },
+          "environmental": {
+            "records": {
+              "n": 8,
+              "denominator": 5684
+            },
+            "variety_unknown": {
+              "n": 4,
+              "denominator": 5684
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 5684
+            }
+          }
+        },
+        "unmapped_values": {
+          "n": 0,
+          "denominator": 5684
+        }
+      },
+      "attack_agreement": {
+        "classes": {
+          "agree": {
+            "n": 481,
+            "denominator": 5684
+          },
+          "subset": {
+            "n": 243,
+            "denominator": 5684
+          },
+          "disjoint": {
+            "n": 6,
+            "denominator": 5684
+          },
+          "no-attack-edge": {
+            "n": 4954,
+            "denominator": 5684
+          }
+        },
+        "top_disagreements": [
+          {
+            "veris_id": "action.malware.variety.Capture stored data",
+            "n": 174,
+            "direct": "#7",
+            "transitive": "#1, #4, #5"
+          },
+          {
+            "veris_id": "action.malware.variety.Scan network",
+            "n": 105,
+            "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.hacking.variety.Forced browsing",
+            "n": 8,
+            "direct": "#2",
+            "transitive": "#1, #7"
+          },
+          {
+            "veris_id": "action.malware.variety.Packet sniffer",
+            "n": 6,
+            "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.hacking.variety.Buffer overflow",
+            "n": 3,
+            "direct": "#2",
+            "transitive": "#3, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.Cryptanalysis",
+            "n": 3,
+            "direct": "#5",
+            "transitive": "#1, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.Session prediction",
+            "n": 1,
+            "direct": "#2",
+            "transitive": "#1, #4"
+          },
+          {
+            "veris_id": "action.malware.variety.DoS",
+            "n": 1,
+            "direct": "#7",
+            "transitive": "#1, #2, #6"
+          }
+        ]
+      }
+    },
+    "year:2015-2019": {
+      "records": 3046,
+      "purity": {
+        "records": {
+          "n": 3046,
+          "denominator": 3046
+        },
+        "threat_bearing": {
+          "n": 1701,
+          "denominator": 3046
+        },
+        "threat_only": {
+          "n": 1625,
+          "denominator": 3046
+        },
+        "mixed_threat_and_operational": {
+          "n": 76,
+          "denominator": 3046
+        },
+        "operational_only": {
+          "n": 855,
+          "denominator": 3046
+        },
+        "operational_only.error_or_failure": {
+          "n": 841,
+          "denominator": 3046
+        },
+        "operational_only.abuse_of_rights": {
+          "n": 14,
+          "denominator": 3046
+        },
+        "operational_only.other_mix": {
+          "n": 0,
+          "denominator": 3046
+        },
+        "out_of_scope_only": {
+          "n": 0,
+          "denominator": 3046
+        },
+        "unknown_only": {
+          "n": 490,
+          "denominator": 3046
+        },
+        "empty": {
+          "n": 0,
+          "denominator": 3046
+        }
+      },
+      "recoverability": {
+        "threat_bearing": {
+          "n": 1701,
+          "denominator": 1701
+        },
+        "resolved": {
+          "n": 1162,
+          "denominator": 1701
+        },
+        "rule_dependent": {
+          "n": 145,
+          "denominator": 1701
+        },
+        "cause_lost": {
+          "n": 394,
+          "denominator": 1701
+        },
+        "cause_lost.malware_without_enabler": {
+          "n": 223,
+          "denominator": 1701
+        },
+        "cause_lost.credential_use_without_acquisition": {
+          "n": 55,
+          "denominator": 1701
+        },
+        "cause_lost.social_without_follow_on": {
+          "n": 116,
+          "denominator": 1701
+        },
+        "cause_lost.interception_without_position": {
+          "n": 0,
+          "denominator": 1701
+        },
+        "single_cluster_records": {
+          "n": 1397,
+          "denominator": 1701
+        },
+        "multi_cluster_records": {
+          "n": 304,
+          "denominator": 1701
+        },
+        "mean_clusters_lower_bound": 1.069,
+        "mean_clusters_upper_bound": 1.228
+      },
+      "frequency": {
+        "#1": {
+          "certain": {
+            "n": 581,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 583,
+            "denominator": 3046
+          }
+        },
+        "#2": {
+          "certain": {
+            "n": 48,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 136,
+            "denominator": 3046
+          }
+        },
+        "#3": {
+          "certain": {
+            "n": 5,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 136,
+            "denominator": 3046
+          }
+        },
+        "#4": {
+          "certain": {
+            "n": 153,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 153,
+            "denominator": 3046
+          }
+        },
+        "#5": {
+          "certain": {
+            "n": 0,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 3046
+          }
+        },
+        "#6": {
+          "certain": {
+            "n": 0,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 37,
+            "denominator": 3046
+          }
+        },
+        "#7": {
+          "certain": {
+            "n": 280,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 281,
+            "denominator": 3046
+          }
+        },
+        "#8": {
+          "certain": {
+            "n": 515,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 515,
+            "denominator": 3046
+          }
+        },
+        "#9": {
+          "certain": {
+            "n": 237,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 242,
+            "denominator": 3046
+          }
+        },
+        "#10": {
+          "certain": {
+            "n": 0,
+            "denominator": 3046
+          },
+          "upper": {
+            "n": 6,
+            "denominator": 3046
+          }
+        }
+      },
+      "cooccurrence": {
+        "records_with_two_or_more_certain": {
+          "n": 173,
+          "denominator": 3046
+        },
+        "matrix": {
+          "#1|#2": 1,
+          "#1|#3": 0,
+          "#1|#4": 6,
+          "#1|#5": 0,
+          "#1|#6": 0,
+          "#1|#7": 3,
+          "#1|#8": 28,
+          "#1|#9": 27,
+          "#1|#10": 0,
+          "#2|#3": 1,
+          "#2|#4": 1,
+          "#2|#5": 0,
+          "#2|#6": 0,
+          "#2|#7": 3,
+          "#2|#8": 1,
+          "#2|#9": 0,
+          "#2|#10": 0,
+          "#3|#4": 0,
+          "#3|#5": 0,
+          "#3|#6": 0,
+          "#3|#7": 1,
+          "#3|#8": 0,
+          "#3|#9": 0,
+          "#3|#10": 0,
+          "#4|#5": 0,
+          "#4|#6": 0,
+          "#4|#7": 17,
+          "#4|#8": 4,
+          "#4|#9": 61,
+          "#4|#10": 0,
+          "#5|#6": 0,
+          "#5|#7": 0,
+          "#5|#8": 0,
+          "#5|#9": 0,
+          "#5|#10": 0,
+          "#6|#7": 0,
+          "#6|#8": 0,
+          "#6|#9": 0,
+          "#6|#10": 0,
+          "#7|#8": 0,
+          "#7|#9": 31,
+          "#7|#10": 0,
+          "#8|#9": 4,
+          "#8|#10": 0,
+          "#9|#10": 0
+        },
+        "top_pairs": [
+          {
+            "pair": "#4 + #9",
+            "n": 61,
+            "hypothesis": "#9 → #4"
+          },
+          {
+            "pair": "#7 + #9",
+            "n": 31,
+            "hypothesis": "#9 → #7"
+          },
+          {
+            "pair": "#1 + #8",
+            "n": 28,
+            "hypothesis": "order unknown"
+          },
+          {
+            "pair": "#1 + #9",
+            "n": 27,
+            "hypothesis": "#9 → #1"
+          },
+          {
+            "pair": "#4 + #7",
+            "n": 17,
+            "hypothesis": "#4 → #7 | #7 → #4"
+          },
+          {
+            "pair": "#1 + #4",
+            "n": 6,
+            "hypothesis": "#1 → #4"
+          },
+          {
+            "pair": "#4 + #8",
+            "n": 4,
+            "hypothesis": "#8 → #4"
+          },
+          {
+            "pair": "#8 + #9",
+            "n": 4,
+            "hypothesis": "#9 → #8"
+          },
+          {
+            "pair": "#1 + #7",
+            "n": 3,
+            "hypothesis": "#1 → #7"
+          },
+          {
+            "pair": "#2 + #7",
+            "n": 3,
+            "hypothesis": "#2 → #7"
+          }
+        ]
+      },
+      "availability": {
+        "records_with_availability_attribute": {
+          "n": 703,
+          "denominator": 3046
+        },
+        "varieties": {
+          "Loss": {
+            "n": 449,
+            "denominator": 3046,
+            "dre": "Av"
+          },
+          "Destruction": {
+            "n": 12,
+            "denominator": 3046,
+            "dre": "Av"
+          },
+          "Obscuration": {
+            "n": 166,
+            "denominator": 3046,
+            "dre": "Ac"
+          },
+          "Interruption": {
+            "n": 72,
+            "denominator": 3046,
+            "dre": "A"
+          },
+          "Degradation": {
+            "n": 11,
+            "denominator": 3046,
+            "dre": "A"
+          },
+          "Acceleration": {
+            "n": 0,
+            "denominator": 3046,
+            "dre": "A"
+          },
+          "Other": {
+            "n": 0,
+            "denominator": 3046,
+            "dre": "A"
+          },
+          "Unknown": {
+            "n": 5,
+            "denominator": 3046,
+            "dre": "A"
+          }
+        },
+        "dre_codes": {
+          "C": {
+            "n": 2190,
+            "denominator": 3046
+          },
+          "I": {
+            "n": 13,
+            "denominator": 3046
+          },
+          "Ii": {
+            "n": 676,
+            "denominator": 3046
+          },
+          "If": {
+            "n": 138,
+            "denominator": 3046
+          },
+          "A": {
+            "n": 85,
+            "denominator": 3046
+          },
+          "Av": {
+            "n": 460,
+            "denominator": 3046
+          },
+          "Ac": {
+            "n": 166,
+            "denominator": 3046
+          }
+        },
+        "ransomware": {
+          "records": {
+            "n": 192,
+            "denominator": 3046
+          },
+          "with_obscuration_Ac": {
+            "n": 164,
+            "denominator": 192
+          },
+          "with_loss_Av": {
+            "n": 5,
+            "denominator": 192
+          },
+          "with_destruction_Av": {
+            "n": 0,
+            "denominator": 192
+          },
+          "with_interruption_A": {
+            "n": 8,
+            "denominator": 192
+          },
+          "with_no_availability_attribute": {
+            "n": 16,
+            "denominator": 192
+          },
+          "with_confirmed_disclosure_C": {
+            "n": 24,
+            "denominator": 192
+          }
+        }
+      },
+      "unknown": {
+        "action_unknown": {
+          "n": 69,
+          "denominator": 3046
+        },
+        "any_unresolved_item": {
+          "n": 969,
+          "denominator": 3046
+        },
+        "unknown_only": {
+          "n": 490,
+          "denominator": 3046
+        },
+        "per_category": {
+          "hacking": {
+            "records": {
+              "n": 770,
+              "denominator": 3046
+            },
+            "variety_unknown": {
+              "n": 490,
+              "denominator": 3046
+            },
+            "variety_other": {
+              "n": 17,
+              "denominator": 3046
+            }
+          },
+          "malware": {
+            "records": {
+              "n": 354,
+              "denominator": 3046
+            },
+            "variety_unknown": {
+              "n": 71,
+              "denominator": 3046
+            },
+            "variety_other": {
+              "n": 4,
+              "denominator": 3046
+            }
+          },
+          "social": {
+            "records": {
+              "n": 266,
+              "denominator": 3046
+            },
+            "variety_unknown": {
+              "n": 11,
+              "denominator": 3046
+            },
+            "variety_other": {
+              "n": 4,
+              "denominator": 3046
+            }
+          },
+          "misuse": {
+            "records": {
+              "n": 603,
+              "denominator": 3046
+            },
+            "variety_unknown": {
+              "n": 26,
+              "denominator": 3046
+            },
+            "variety_other": {
+              "n": 3,
+              "denominator": 3046
+            }
+          },
+          "physical": {
+            "records": {
+              "n": 542,
+              "denominator": 3046
+            },
+            "variety_unknown": {
+              "n": 4,
+              "denominator": 3046
+            },
+            "variety_other": {
+              "n": 1,
+              "denominator": 3046
+            }
+          },
+          "error": {
+            "records": {
+              "n": 904,
+              "denominator": 3046
+            },
+            "variety_unknown": {
+              "n": 26,
+              "denominator": 3046
+            },
+            "variety_other": {
+              "n": 36,
+              "denominator": 3046
+            }
+          },
+          "environmental": {
+            "records": {
+              "n": 2,
+              "denominator": 3046
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 3046
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 3046
+            }
+          }
+        },
+        "unmapped_values": {
+          "n": 0,
+          "denominator": 3046
+        }
+      },
+      "attack_agreement": {
+        "classes": {
+          "agree": {
+            "n": 612,
+            "denominator": 3046
+          },
+          "subset": {
+            "n": 42,
+            "denominator": 3046
+          },
+          "disjoint": {
+            "n": 3,
+            "denominator": 3046
+          },
+          "no-attack-edge": {
+            "n": 2389,
+            "denominator": 3046
+          }
+        },
+        "top_disagreements": [
+          {
+            "veris_id": "action.malware.variety.Capture stored data",
+            "n": 12,
+            "direct": "#7",
+            "transitive": "#1, #4, #5"
+          },
+          {
+            "veris_id": "action.hacking.variety.Forced browsing",
+            "n": 11,
+            "direct": "#2",
+            "transitive": "#1, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.OS commanding",
+            "n": 4,
+            "direct": "#2",
+            "transitive": "#1, #4, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.Buffer overflow",
+            "n": 2,
+            "direct": "#2",
+            "transitive": "#3, #7"
+          },
+          {
+            "veris_id": "action.malware.variety.Packet sniffer",
+            "n": 1,
+            "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.malware.variety.Scan network",
+            "n": 1,
+            "direct": "#7",
+            "transitive": "#1"
+          }
+        ]
+      }
+    },
+    "year:2020-2026": {
+      "records": 1317,
+      "purity": {
+        "records": {
+          "n": 1317,
+          "denominator": 1317
+        },
+        "threat_bearing": {
+          "n": 1062,
+          "denominator": 1317
+        },
+        "threat_only": {
+          "n": 1060,
+          "denominator": 1317
+        },
+        "mixed_threat_and_operational": {
+          "n": 2,
+          "denominator": 1317
+        },
+        "operational_only": {
+          "n": 148,
+          "denominator": 1317
+        },
+        "operational_only.error_or_failure": {
+          "n": 146,
+          "denominator": 1317
+        },
+        "operational_only.abuse_of_rights": {
+          "n": 2,
+          "denominator": 1317
+        },
+        "operational_only.other_mix": {
+          "n": 0,
+          "denominator": 1317
+        },
+        "out_of_scope_only": {
+          "n": 0,
+          "denominator": 1317
+        },
+        "unknown_only": {
+          "n": 107,
+          "denominator": 1317
+        },
+        "empty": {
+          "n": 0,
+          "denominator": 1317
+        }
+      },
+      "recoverability": {
+        "threat_bearing": {
+          "n": 1062,
+          "denominator": 1062
+        },
+        "resolved": {
+          "n": 69,
+          "denominator": 1062
+        },
+        "rule_dependent": {
+          "n": 785,
+          "denominator": 1062
+        },
+        "cause_lost": {
+          "n": 208,
+          "denominator": 1062
+        },
+        "cause_lost.malware_without_enabler": {
+          "n": 111,
+          "denominator": 1062
+        },
+        "cause_lost.credential_use_without_acquisition": {
+          "n": 96,
+          "denominator": 1062
+        },
+        "cause_lost.social_without_follow_on": {
+          "n": 1,
+          "denominator": 1062
+        },
+        "cause_lost.interception_without_position": {
+          "n": 0,
+          "denominator": 1062
+        },
+        "single_cluster_records": {
+          "n": 245,
+          "denominator": 1062
+        },
+        "multi_cluster_records": {
+          "n": 817,
+          "denominator": 1062
+        },
+        "mean_clusters_lower_bound": 1.01,
+        "mean_clusters_upper_bound": 3.189
+      },
+      "frequency": {
+        "#1": {
+          "certain": {
+            "n": 27,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 774,
+            "denominator": 1317
+          }
+        },
+        "#2": {
+          "certain": {
+            "n": 4,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 785,
+            "denominator": 1317
+          }
+        },
+        "#3": {
+          "certain": {
+            "n": 1,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 785,
+            "denominator": 1317
+          }
+        },
+        "#4": {
+          "certain": {
+            "n": 121,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 121,
+            "denominator": 1317
+          }
+        },
+        "#5": {
+          "certain": {
+            "n": 0,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 1317
+          }
+        },
+        "#6": {
+          "certain": {
+            "n": 0,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 2,
+            "denominator": 1317
+          }
+        },
+        "#7": {
+          "certain": {
+            "n": 878,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 878,
+            "denominator": 1317
+          }
+        },
+        "#8": {
+          "certain": {
+            "n": 13,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 13,
+            "denominator": 1317
+          }
+        },
+        "#9": {
+          "certain": {
+            "n": 29,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 29,
+            "denominator": 1317
+          }
+        },
+        "#10": {
+          "certain": {
+            "n": 0,
+            "denominator": 1317
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 1317
+          }
+        }
+      },
+      "cooccurrence": {
+        "records_with_two_or_more_certain": {
+          "n": 33,
+          "denominator": 1317
+        },
+        "matrix": {
+          "#1|#2": 0,
+          "#1|#3": 0,
+          "#1|#4": 1,
+          "#1|#5": 0,
+          "#1|#6": 0,
+          "#1|#7": 0,
+          "#1|#8": 1,
+          "#1|#9": 0,
+          "#1|#10": 0,
+          "#2|#3": 0,
+          "#2|#4": 0,
+          "#2|#5": 0,
+          "#2|#6": 0,
+          "#2|#7": 0,
+          "#2|#8": 0,
+          "#2|#9": 0,
+          "#2|#10": 0,
+          "#3|#4": 0,
+          "#3|#5": 0,
+          "#3|#6": 0,
+          "#3|#7": 0,
+          "#3|#8": 0,
+          "#3|#9": 0,
+          "#3|#10": 0,
+          "#4|#5": 0,
+          "#4|#6": 0,
+          "#4|#7": 5,
+          "#4|#8": 0,
+          "#4|#9": 19,
+          "#4|#10": 0,
+          "#5|#6": 0,
+          "#5|#7": 0,
+          "#5|#8": 0,
+          "#5|#9": 0,
+          "#5|#10": 0,
+          "#6|#7": 0,
+          "#6|#8": 0,
+          "#6|#9": 0,
+          "#6|#10": 0,
+          "#7|#8": 0,
+          "#7|#9": 11,
+          "#7|#10": 0,
+          "#8|#9": 0,
+          "#8|#10": 0,
+          "#9|#10": 0
+        },
+        "top_pairs": [
+          {
+            "pair": "#4 + #9",
+            "n": 19,
+            "hypothesis": "#9 → #4"
+          },
+          {
+            "pair": "#7 + #9",
+            "n": 11,
+            "hypothesis": "#9 → #7"
+          },
+          {
+            "pair": "#4 + #7",
+            "n": 5,
+            "hypothesis": "#4 → #7 | #7 → #4"
+          },
+          {
+            "pair": "#1 + #4",
+            "n": 1,
+            "hypothesis": "#1 → #4"
+          },
+          {
+            "pair": "#1 + #8",
+            "n": 1,
+            "hypothesis": "order unknown"
+          }
+        ]
+      },
+      "availability": {
+        "records_with_availability_attribute": {
+          "n": 143,
+          "denominator": 1317
+        },
+        "varieties": {
+          "Loss": {
+            "n": 14,
+            "denominator": 1317,
+            "dre": "Av"
+          },
+          "Destruction": {
+            "n": 4,
+            "denominator": 1317,
+            "dre": "Av"
+          },
+          "Obscuration": {
+            "n": 118,
+            "denominator": 1317,
+            "dre": "Ac"
+          },
+          "Interruption": {
+            "n": 12,
+            "denominator": 1317,
+            "dre": "A"
+          },
+          "Degradation": {
+            "n": 1,
+            "denominator": 1317,
+            "dre": "A"
+          },
+          "Acceleration": {
+            "n": 0,
+            "denominator": 1317,
+            "dre": "A"
+          },
+          "Other": {
+            "n": 0,
+            "denominator": 1317,
+            "dre": "A"
+          },
+          "Unknown": {
+            "n": 1,
+            "denominator": 1317,
+            "dre": "A"
+          }
+        },
+        "dre_codes": {
+          "C": {
+            "n": 1249,
+            "denominator": 1317
+          },
+          "I": {
+            "n": 2,
+            "denominator": 1317
+          },
+          "Ii": {
+            "n": 904,
+            "denominator": 1317
+          },
+          "If": {
+            "n": 9,
+            "denominator": 1317
+          },
+          "A": {
+            "n": 13,
+            "denominator": 1317
+          },
+          "Av": {
+            "n": 18,
+            "denominator": 1317
+          },
+          "Ac": {
+            "n": 118,
+            "denominator": 1317
+          }
+        },
+        "ransomware": {
+          "records": {
+            "n": 873,
+            "denominator": 1317
+          },
+          "with_obscuration_Ac": {
+            "n": 118,
+            "denominator": 873
+          },
+          "with_loss_Av": {
+            "n": 0,
+            "denominator": 873
+          },
+          "with_destruction_Av": {
+            "n": 0,
+            "denominator": 873
+          },
+          "with_interruption_A": {
+            "n": 7,
+            "denominator": 873
+          },
+          "with_no_availability_attribute": {
+            "n": 754,
+            "denominator": 873
+          },
+          "with_confirmed_disclosure_C": {
+            "n": 822,
+            "denominator": 873
+          }
+        }
+      },
+      "unknown": {
+        "action_unknown": {
+          "n": 19,
+          "denominator": 1317
+        },
+        "any_unresolved_item": {
+          "n": 219,
+          "denominator": 1317
+        },
+        "unknown_only": {
+          "n": 107,
+          "denominator": 1317
+        },
+        "per_category": {
+          "hacking": {
+            "records": {
+              "n": 1038,
+              "denominator": 1317
+            },
+            "variety_unknown": {
+              "n": 131,
+              "denominator": 1317
+            },
+            "variety_other": {
+              "n": 1,
+              "denominator": 1317
+            }
+          },
+          "malware": {
+            "records": {
+              "n": 879,
+              "denominator": 1317
+            },
+            "variety_unknown": {
+              "n": 1,
+              "denominator": 1317
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 1317
+            }
+          },
+          "social": {
+            "records": {
+              "n": 37,
+              "denominator": 1317
+            },
+            "variety_unknown": {
+              "n": 1,
+              "denominator": 1317
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 1317
+            }
+          },
+          "misuse": {
+            "records": {
+              "n": 22,
+              "denominator": 1317
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 1317
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 1317
+            }
+          },
+          "physical": {
+            "records": {
+              "n": 13,
+              "denominator": 1317
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 1317
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 1317
+            }
+          },
+          "error": {
+            "records": {
+              "n": 146,
+              "denominator": 1317
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 1317
+            },
+            "variety_other": {
+              "n": 1,
+              "denominator": 1317
+            }
+          },
+          "environmental": {
+            "records": {
+              "n": 0,
+              "denominator": 1317
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 1317
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 1317
+            }
+          }
+        },
+        "unmapped_values": {
+          "n": 0,
+          "denominator": 1317
+        }
+      },
+      "attack_agreement": {
+        "classes": {
+          "agree": {
+            "n": 1027,
+            "denominator": 1317
+          },
+          "subset": {
+            "n": 3,
+            "denominator": 1317
+          },
+          "disjoint": {
+            "n": 0,
+            "denominator": 1317
+          },
+          "no-attack-edge": {
+            "n": 287,
+            "denominator": 1317
+          }
+        },
+        "top_disagreements": [
+          {
+            "veris_id": "action.malware.variety.Capture stored data",
+            "n": 1,
+            "direct": "#7",
+            "transitive": "#1, #4, #5"
+          }
+        ]
+      }
+    },
+    "sub_source:none": {
+      "records": 8110,
+      "purity": {
+        "records": {
+          "n": 8110,
+          "denominator": 8110
+        },
+        "threat_bearing": {
+          "n": 4679,
+          "denominator": 8110
+        },
+        "threat_only": {
+          "n": 4549,
+          "denominator": 8110
+        },
+        "mixed_threat_and_operational": {
+          "n": 130,
+          "denominator": 8110
+        },
+        "operational_only": {
+          "n": 1993,
+          "denominator": 8110
+        },
+        "operational_only.error_or_failure": {
+          "n": 1967,
+          "denominator": 8110
+        },
+        "operational_only.abuse_of_rights": {
+          "n": 22,
+          "denominator": 8110
+        },
+        "operational_only.other_mix": {
+          "n": 2,
+          "denominator": 8110
+        },
+        "out_of_scope_only": {
+          "n": 2,
+          "denominator": 8110
+        },
+        "unknown_only": {
+          "n": 1438,
+          "denominator": 8110
+        },
+        "empty": {
+          "n": 0,
+          "denominator": 8110
+        }
+      },
+      "recoverability": {
+        "threat_bearing": {
+          "n": 4679,
+          "denominator": 4679
+        },
+        "resolved": {
+          "n": 2911,
+          "denominator": 4679
+        },
+        "rule_dependent": {
+          "n": 1246,
+          "denominator": 4679
+        },
+        "cause_lost": {
+          "n": 522,
+          "denominator": 4679
+        },
+        "cause_lost.malware_without_enabler": {
+          "n": 258,
+          "denominator": 4679
+        },
+        "cause_lost.credential_use_without_acquisition": {
+          "n": 162,
+          "denominator": 4679
+        },
+        "cause_lost.social_without_follow_on": {
+          "n": 102,
+          "denominator": 4679
+        },
+        "cause_lost.interception_without_position": {
+          "n": 0,
+          "denominator": 4679
+        },
+        "single_cluster_records": {
+          "n": 3113,
+          "denominator": 4679
+        },
+        "multi_cluster_records": {
+          "n": 1566,
+          "denominator": 4679
+        },
+        "mean_clusters_lower_bound": 1.076,
+        "mean_clusters_upper_bound": 1.774
+      },
+      "frequency": {
+        "#1": {
+          "certain": {
+            "n": 1340,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 2089,
+            "denominator": 8110
+          }
+        },
+        "#2": {
+          "certain": {
+            "n": 120,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 1231,
+            "denominator": 8110
+          }
+        },
+        "#3": {
+          "certain": {
+            "n": 12,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 1233,
+            "denominator": 8110
+          }
+        },
+        "#4": {
+          "certain": {
+            "n": 397,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 397,
+            "denominator": 8110
+          }
+        },
+        "#5": {
+          "certain": {
+            "n": 11,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 11,
+            "denominator": 8110
+          }
+        },
+        "#6": {
+          "certain": {
+            "n": 0,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 164,
+            "denominator": 8110
+          }
+        },
+        "#7": {
+          "certain": {
+            "n": 1281,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 1282,
+            "denominator": 8110
+          }
+        },
+        "#8": {
+          "certain": {
+            "n": 1419,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 1419,
+            "denominator": 8110
+          }
+        },
+        "#9": {
+          "certain": {
+            "n": 454,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 462,
+            "denominator": 8110
+          }
+        },
+        "#10": {
+          "certain": {
+            "n": 0,
+            "denominator": 8110
+          },
+          "upper": {
+            "n": 12,
+            "denominator": 8110
+          }
+        }
+      },
+      "cooccurrence": {
+        "records_with_two_or_more_certain": {
+          "n": 442,
+          "denominator": 8110
+        },
+        "matrix": {
+          "#1|#2": 2,
+          "#1|#3": 0,
+          "#1|#4": 14,
+          "#1|#5": 1,
+          "#1|#6": 0,
+          "#1|#7": 10,
+          "#1|#8": 44,
+          "#1|#9": 58,
+          "#1|#10": 0,
+          "#2|#3": 1,
+          "#2|#4": 3,
+          "#2|#5": 0,
+          "#2|#6": 0,
+          "#2|#7": 7,
+          "#2|#8": 1,
+          "#2|#9": 1,
+          "#2|#10": 0,
+          "#3|#4": 1,
+          "#3|#5": 0,
+          "#3|#6": 0,
+          "#3|#7": 1,
+          "#3|#8": 0,
+          "#3|#9": 0,
+          "#3|#10": 0,
+          "#4|#5": 3,
+          "#4|#6": 0,
+          "#4|#7": 124,
+          "#4|#8": 9,
+          "#4|#9": 159,
+          "#4|#10": 0,
+          "#5|#6": 0,
+          "#5|#7": 7,
+          "#5|#8": 0,
+          "#5|#9": 7,
+          "#5|#10": 0,
+          "#6|#7": 0,
+          "#6|#8": 0,
+          "#6|#9": 0,
+          "#6|#10": 0,
+          "#7|#8": 2,
+          "#7|#9": 231,
+          "#7|#10": 0,
+          "#8|#9": 12,
+          "#8|#10": 0,
+          "#9|#10": 0
+        },
+        "top_pairs": [
+          {
+            "pair": "#7 + #9",
+            "n": 231,
+            "hypothesis": "#9 → #7"
+          },
+          {
+            "pair": "#4 + #9",
+            "n": 159,
+            "hypothesis": "#9 → #4"
+          },
+          {
+            "pair": "#4 + #7",
+            "n": 124,
+            "hypothesis": "#4 → #7 | #7 → #4"
+          },
+          {
+            "pair": "#1 + #9",
+            "n": 58,
+            "hypothesis": "#9 → #1"
+          },
+          {
+            "pair": "#1 + #8",
+            "n": 44,
+            "hypothesis": "order unknown"
+          },
+          {
+            "pair": "#1 + #4",
+            "n": 14,
+            "hypothesis": "#1 → #4"
+          },
+          {
+            "pair": "#8 + #9",
+            "n": 12,
+            "hypothesis": "#9 → #8"
+          },
+          {
+            "pair": "#1 + #7",
+            "n": 10,
+            "hypothesis": "#1 → #7"
+          },
+          {
+            "pair": "#4 + #8",
+            "n": 9,
+            "hypothesis": "#8 → #4"
+          },
+          {
+            "pair": "#2 + #7",
+            "n": 7,
+            "hypothesis": "#2 → #7"
+          }
+        ]
+      },
+      "availability": {
+        "records_with_availability_attribute": {
+          "n": 2197,
+          "denominator": 8110
+        },
+        "varieties": {
+          "Loss": {
+            "n": 1748,
+            "denominator": 8110,
+            "dre": "Av"
+          },
+          "Destruction": {
+            "n": 34,
+            "denominator": 8110,
+            "dre": "Av"
+          },
+          "Obscuration": {
+            "n": 154,
+            "denominator": 8110,
+            "dre": "Ac"
+          },
+          "Interruption": {
+            "n": 297,
+            "denominator": 8110,
+            "dre": "A"
+          },
+          "Degradation": {
+            "n": 25,
+            "denominator": 8110,
+            "dre": "A"
+          },
+          "Acceleration": {
+            "n": 0,
+            "denominator": 8110,
+            "dre": "A"
+          },
+          "Other": {
+            "n": 3,
+            "denominator": 8110,
+            "dre": "A"
+          },
+          "Unknown": {
+            "n": 5,
+            "denominator": 8110,
+            "dre": "A"
+          }
+        },
+        "dre_codes": {
+          "C": {
+            "n": 5484,
+            "denominator": 8110
+          },
+          "I": {
+            "n": 39,
+            "denominator": 8110
+          },
+          "Ii": {
+            "n": 2266,
+            "denominator": 8110
+          },
+          "If": {
+            "n": 244,
+            "denominator": 8110
+          },
+          "A": {
+            "n": 320,
+            "denominator": 8110
+          },
+          "Av": {
+            "n": 1773,
+            "denominator": 8110
+          },
+          "Ac": {
+            "n": 154,
+            "denominator": 8110
+          }
+        },
+        "ransomware": {
+          "records": {
+            "n": 924,
+            "denominator": 8110
+          },
+          "with_obscuration_Ac": {
+            "n": 149,
+            "denominator": 924
+          },
+          "with_loss_Av": {
+            "n": 10,
+            "denominator": 924
+          },
+          "with_destruction_Av": {
+            "n": 0,
+            "denominator": 924
+          },
+          "with_interruption_A": {
+            "n": 12,
+            "denominator": 924
+          },
+          "with_no_availability_attribute": {
+            "n": 758,
+            "denominator": 924
+          },
+          "with_confirmed_disclosure_C": {
+            "n": 801,
+            "denominator": 924
+          }
+        }
+      },
+      "unknown": {
+        "action_unknown": {
+          "n": 242,
+          "denominator": 8110
+        },
+        "any_unresolved_item": {
+          "n": 2615,
+          "denominator": 8110
+        },
+        "unknown_only": {
+          "n": 1438,
+          "denominator": 8110
+        },
+        "per_category": {
+          "hacking": {
+            "records": {
+              "n": 2857,
+              "denominator": 8110
+            },
+            "variety_unknown": {
+              "n": 1343,
+              "denominator": 8110
+            },
+            "variety_other": {
+              "n": 37,
+              "denominator": 8110
+            }
+          },
+          "malware": {
+            "records": {
+              "n": 1418,
+              "denominator": 8110
+            },
+            "variety_unknown": {
+              "n": 143,
+              "denominator": 8110
+            },
+            "variety_other": {
+              "n": 65,
+              "denominator": 8110
+            }
+          },
+          "social": {
+            "records": {
+              "n": 504,
+              "denominator": 8110
+            },
+            "variety_unknown": {
+              "n": 7,
+              "denominator": 8110
+            },
+            "variety_other": {
+              "n": 9,
+              "denominator": 8110
+            }
+          },
+          "misuse": {
+            "records": {
+              "n": 1361,
+              "denominator": 8110
+            },
+            "variety_unknown": {
+              "n": 26,
+              "denominator": 8110
+            },
+            "variety_other": {
+              "n": 5,
+              "denominator": 8110
+            }
+          },
+          "physical": {
+            "records": {
+              "n": 1439,
+              "denominator": 8110
+            },
+            "variety_unknown": {
+              "n": 5,
+              "denominator": 8110
+            },
+            "variety_other": {
+              "n": 2,
+              "denominator": 8110
+            }
+          },
+          "error": {
+            "records": {
+              "n": 2036,
+              "denominator": 8110
+            },
+            "variety_unknown": {
+              "n": 36,
+              "denominator": 8110
+            },
+            "variety_other": {
+              "n": 45,
+              "denominator": 8110
+            }
+          },
+          "environmental": {
+            "records": {
+              "n": 9,
+              "denominator": 8110
+            },
+            "variety_unknown": {
+              "n": 4,
+              "denominator": 8110
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 8110
+            }
+          }
+        },
+        "unmapped_values": {
+          "n": 0,
+          "denominator": 8110
+        }
+      },
+      "attack_agreement": {
+        "classes": {
+          "agree": {
+            "n": 1732,
+            "denominator": 8110
+          },
+          "subset": {
+            "n": 284,
+            "denominator": 8110
+          },
+          "disjoint": {
+            "n": 8,
+            "denominator": 8110
+          },
+          "no-attack-edge": {
+            "n": 6086,
+            "denominator": 8110
+          }
+        },
+        "top_disagreements": [
+          {
+            "veris_id": "action.malware.variety.Capture stored data",
+            "n": 182,
+            "direct": "#7",
+            "transitive": "#1, #4, #5"
+          },
+          {
+            "veris_id": "action.malware.variety.Scan network",
+            "n": 105,
+            "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.hacking.variety.Forced browsing",
+            "n": 15,
+            "direct": "#2",
+            "transitive": "#1, #7"
+          },
+          {
+            "veris_id": "action.malware.variety.Packet sniffer",
+            "n": 6,
+            "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.hacking.variety.Buffer overflow",
+            "n": 4,
+            "direct": "#2",
+            "transitive": "#3, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.Cryptanalysis",
+            "n": 3,
+            "direct": "#5",
+            "transitive": "#1, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.OS commanding",
+            "n": 2,
+            "direct": "#2",
+            "transitive": "#1, #4, #7"
+          },
+          {
+            "veris_id": "action.malware.variety.DoS",
+            "n": 1,
+            "direct": "#7",
+            "transitive": "#1, #2, #6"
+          }
+        ]
+      }
+    },
+    "sub_source:phidbr": {
+      "records": 1310,
+      "purity": {
+        "records": {
+          "n": 1310,
+          "denominator": 1310
+        },
+        "threat_bearing": {
+          "n": 757,
+          "denominator": 1310
+        },
+        "threat_only": {
+          "n": 725,
+          "denominator": 1310
+        },
+        "mixed_threat_and_operational": {
+          "n": 32,
+          "denominator": 1310
+        },
+        "operational_only": {
+          "n": 403,
+          "denominator": 1310
+        },
+        "operational_only.error_or_failure": {
+          "n": 393,
+          "denominator": 1310
+        },
+        "operational_only.abuse_of_rights": {
+          "n": 10,
+          "denominator": 1310
+        },
+        "operational_only.other_mix": {
+          "n": 0,
+          "denominator": 1310
+        },
+        "out_of_scope_only": {
+          "n": 0,
+          "denominator": 1310
+        },
+        "unknown_only": {
+          "n": 150,
+          "denominator": 1310
+        },
+        "empty": {
+          "n": 0,
+          "denominator": 1310
+        }
+      },
+      "recoverability": {
+        "threat_bearing": {
+          "n": 757,
+          "denominator": 757
+        },
+        "resolved": {
+          "n": 559,
+          "denominator": 757
+        },
+        "rule_dependent": {
+          "n": 15,
+          "denominator": 757
+        },
+        "cause_lost": {
+          "n": 183,
+          "denominator": 757
+        },
+        "cause_lost.malware_without_enabler": {
+          "n": 119,
+          "denominator": 757
+        },
+        "cause_lost.credential_use_without_acquisition": {
+          "n": 24,
+          "denominator": 757
+        },
+        "cause_lost.social_without_follow_on": {
+          "n": 40,
+          "denominator": 757
+        },
+        "cause_lost.interception_without_position": {
+          "n": 0,
+          "denominator": 757
+        },
+        "single_cluster_records": {
+          "n": 673,
+          "denominator": 757
+        },
+        "multi_cluster_records": {
+          "n": 84,
+          "denominator": 757
+        },
+        "mean_clusters_lower_bound": 1.09,
+        "mean_clusters_upper_bound": 1.124
+      },
+      "frequency": {
+        "#1": {
+          "certain": {
+            "n": 367,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 367,
+            "denominator": 1310
+          }
+        },
+        "#2": {
+          "certain": {
+            "n": 5,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 9,
+            "denominator": 1310
+          }
+        },
+        "#3": {
+          "certain": {
+            "n": 0,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 9,
+            "denominator": 1310
+          }
+        },
+        "#4": {
+          "certain": {
+            "n": 64,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 64,
+            "denominator": 1310
+          }
+        },
+        "#5": {
+          "certain": {
+            "n": 0,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 1310
+          }
+        },
+        "#6": {
+          "certain": {
+            "n": 0,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 1,
+            "denominator": 1310
+          }
+        },
+        "#7": {
+          "certain": {
+            "n": 139,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 139,
+            "denominator": 1310
+          }
+        },
+        "#8": {
+          "certain": {
+            "n": 155,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 155,
+            "denominator": 1310
+          }
+        },
+        "#9": {
+          "certain": {
+            "n": 95,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 101,
+            "denominator": 1310
+          }
+        },
+        "#10": {
+          "certain": {
+            "n": 0,
+            "denominator": 1310
+          },
+          "upper": {
+            "n": 6,
+            "denominator": 1310
+          }
+        }
+      },
+      "cooccurrence": {
+        "records_with_two_or_more_certain": {
+          "n": 71,
+          "denominator": 1310
+        },
+        "matrix": {
+          "#1|#2": 0,
+          "#1|#3": 0,
+          "#1|#4": 1,
+          "#1|#5": 0,
+          "#1|#6": 0,
+          "#1|#7": 0,
+          "#1|#8": 10,
+          "#1|#9": 9,
+          "#1|#10": 0,
+          "#2|#3": 0,
+          "#2|#4": 0,
+          "#2|#5": 0,
+          "#2|#6": 0,
+          "#2|#7": 1,
+          "#2|#8": 0,
+          "#2|#9": 0,
+          "#2|#10": 0,
+          "#3|#4": 0,
+          "#3|#5": 0,
+          "#3|#6": 0,
+          "#3|#7": 0,
+          "#3|#8": 0,
+          "#3|#9": 0,
+          "#3|#10": 0,
+          "#4|#5": 0,
+          "#4|#6": 0,
+          "#4|#7": 6,
+          "#4|#8": 1,
+          "#4|#9": 32,
+          "#4|#10": 0,
+          "#5|#6": 0,
+          "#5|#7": 0,
+          "#5|#8": 0,
+          "#5|#9": 0,
+          "#5|#10": 0,
+          "#6|#7": 0,
+          "#6|#8": 0,
+          "#6|#9": 0,
+          "#6|#10": 0,
+          "#7|#8": 0,
+          "#7|#9": 12,
+          "#7|#10": 0,
+          "#8|#9": 1,
+          "#8|#10": 0,
+          "#9|#10": 0
+        },
+        "top_pairs": [
+          {
+            "pair": "#4 + #9",
+            "n": 32,
+            "hypothesis": "#9 → #4"
+          },
+          {
+            "pair": "#7 + #9",
+            "n": 12,
+            "hypothesis": "#9 → #7"
+          },
+          {
+            "pair": "#1 + #8",
+            "n": 10,
+            "hypothesis": "order unknown"
+          },
+          {
+            "pair": "#1 + #9",
+            "n": 9,
+            "hypothesis": "#9 → #1"
+          },
+          {
+            "pair": "#4 + #7",
+            "n": 6,
+            "hypothesis": "#4 → #7 | #7 → #4"
+          },
+          {
+            "pair": "#1 + #4",
+            "n": 1,
+            "hypothesis": "#1 → #4"
+          },
+          {
+            "pair": "#2 + #7",
+            "n": 1,
+            "hypothesis": "#2 → #7"
+          },
+          {
+            "pair": "#4 + #8",
+            "n": 1,
+            "hypothesis": "#8 → #4"
+          },
+          {
+            "pair": "#8 + #9",
+            "n": 1,
+            "hypothesis": "#9 → #8"
+          }
+        ]
+      },
+      "availability": {
+        "records_with_availability_attribute": {
+          "n": 351,
+          "denominator": 1310
+        },
+        "varieties": {
+          "Loss": {
+            "n": 236,
+            "denominator": 1310,
+            "dre": "Av"
+          },
+          "Destruction": {
+            "n": 2,
+            "denominator": 1310,
+            "dre": "Av"
+          },
+          "Obscuration": {
+            "n": 108,
+            "denominator": 1310,
+            "dre": "Ac"
+          },
+          "Interruption": {
+            "n": 6,
+            "denominator": 1310,
+            "dre": "A"
+          },
+          "Degradation": {
+            "n": 1,
+            "denominator": 1310,
+            "dre": "A"
+          },
+          "Acceleration": {
+            "n": 0,
+            "denominator": 1310,
+            "dre": "A"
+          },
+          "Other": {
+            "n": 0,
+            "denominator": 1310,
+            "dre": "A"
+          },
+          "Unknown": {
+            "n": 0,
+            "denominator": 1310,
+            "dre": "A"
+          }
+        },
+        "dre_codes": {
+          "C": {
+            "n": 958,
+            "denominator": 1310
+          },
+          "I": {
+            "n": 2,
+            "denominator": 1310
+          },
+          "Ii": {
+            "n": 168,
+            "denominator": 1310
+          },
+          "If": {
+            "n": 54,
+            "denominator": 1310
+          },
+          "A": {
+            "n": 7,
+            "denominator": 1310
+          },
+          "Av": {
+            "n": 238,
+            "denominator": 1310
+          },
+          "Ac": {
+            "n": 108,
+            "denominator": 1310
+          }
+        },
+        "ransomware": {
+          "records": {
+            "n": 126,
+            "denominator": 1310
+          },
+          "with_obscuration_Ac": {
+            "n": 108,
+            "denominator": 126
+          },
+          "with_loss_Av": {
+            "n": 3,
+            "denominator": 126
+          },
+          "with_destruction_Av": {
+            "n": 0,
+            "denominator": 126
+          },
+          "with_interruption_A": {
+            "n": 3,
+            "denominator": 126
+          },
+          "with_no_availability_attribute": {
+            "n": 13,
+            "denominator": 126
+          },
+          "with_confirmed_disclosure_C": {
+            "n": 22,
+            "denominator": 126
+          }
+        }
+      },
+      "unknown": {
+        "action_unknown": {
+          "n": 19,
+          "denominator": 1310
+        },
+        "any_unresolved_item": {
+          "n": 343,
+          "denominator": 1310
+        },
+        "unknown_only": {
+          "n": 150,
+          "denominator": 1310
+        },
+        "per_category": {
+          "hacking": {
+            "records": {
+              "n": 213,
+              "denominator": 1310
+            },
+            "variety_unknown": {
+              "n": 141,
+              "denominator": 1310
+            },
+            "variety_other": {
+              "n": 1,
+              "denominator": 1310
+            }
+          },
+          "malware": {
+            "records": {
+              "n": 153,
+              "denominator": 1310
+            },
+            "variety_unknown": {
+              "n": 14,
+              "denominator": 1310
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 1310
+            }
+          },
+          "social": {
+            "records": {
+              "n": 115,
+              "denominator": 1310
+            },
+            "variety_unknown": {
+              "n": 7,
+              "denominator": 1310
+            },
+            "variety_other": {
+              "n": 2,
+              "denominator": 1310
+            }
+          },
+          "misuse": {
+            "records": {
+              "n": 395,
+              "denominator": 1310
+            },
+            "variety_unknown": {
+              "n": 18,
+              "denominator": 1310
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 1310
+            }
+          },
+          "physical": {
+            "records": {
+              "n": 168,
+              "denominator": 1310
+            },
+            "variety_unknown": {
+              "n": 1,
+              "denominator": 1310
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 1310
+            }
+          },
+          "error": {
+            "records": {
+              "n": 424,
+              "denominator": 1310
+            },
+            "variety_unknown": {
+              "n": 13,
+              "denominator": 1310
+            },
+            "variety_other": {
+              "n": 22,
+              "denominator": 1310
+            }
+          },
+          "environmental": {
+            "records": {
+              "n": 1,
+              "denominator": 1310
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 1310
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 1310
+            }
+          }
+        },
+        "unmapped_values": {
+          "n": 0,
+          "denominator": 1310
+        }
+      },
+      "attack_agreement": {
+        "classes": {
+          "agree": {
+            "n": 242,
+            "denominator": 1310
+          },
+          "subset": {
+            "n": 1,
+            "denominator": 1310
+          },
+          "disjoint": {
+            "n": 1,
+            "denominator": 1310
+          },
+          "no-attack-edge": {
+            "n": 1066,
+            "denominator": 1310
+          }
+        },
+        "top_disagreements": [
+          {
+            "veris_id": "action.malware.variety.Capture stored data",
+            "n": 3,
+            "direct": "#7",
+            "transitive": "#1, #4, #5"
+          },
+          {
+            "veris_id": "action.hacking.variety.Forced browsing",
+            "n": 2,
+            "direct": "#2",
+            "transitive": "#1, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.Buffer overflow",
+            "n": 1,
+            "direct": "#2",
+            "transitive": "#3, #7"
+          }
+        ]
+      }
+    },
+    "sub_source:priority": {
+      "records": 602,
+      "purity": {
+        "records": {
+          "n": 602,
+          "denominator": 602
+        },
+        "threat_bearing": {
+          "n": 185,
+          "denominator": 602
+        },
+        "threat_only": {
+          "n": 180,
+          "denominator": 602
+        },
+        "mixed_threat_and_operational": {
+          "n": 5,
+          "denominator": 602
+        },
+        "operational_only": {
+          "n": 207,
+          "denominator": 602
+        },
+        "operational_only.error_or_failure": {
+          "n": 206,
+          "denominator": 602
+        },
+        "operational_only.abuse_of_rights": {
+          "n": 1,
+          "denominator": 602
+        },
+        "operational_only.other_mix": {
+          "n": 0,
+          "denominator": 602
+        },
+        "out_of_scope_only": {
+          "n": 0,
+          "denominator": 602
+        },
+        "unknown_only": {
+          "n": 210,
+          "denominator": 602
+        },
+        "empty": {
+          "n": 0,
+          "denominator": 602
+        }
+      },
+      "recoverability": {
+        "threat_bearing": {
+          "n": 185,
+          "denominator": 185
+        },
+        "resolved": {
+          "n": 70,
+          "denominator": 185
+        },
+        "rule_dependent": {
+          "n": 49,
+          "denominator": 185
+        },
+        "cause_lost": {
+          "n": 66,
+          "denominator": 185
+        },
+        "cause_lost.malware_without_enabler": {
+          "n": 40,
+          "denominator": 185
+        },
+        "cause_lost.credential_use_without_acquisition": {
+          "n": 20,
+          "denominator": 185
+        },
+        "cause_lost.social_without_follow_on": {
+          "n": 6,
+          "denominator": 185
+        },
+        "cause_lost.interception_without_position": {
+          "n": 0,
+          "denominator": 185
+        },
+        "single_cluster_records": {
+          "n": 117,
+          "denominator": 185
+        },
+        "multi_cluster_records": {
+          "n": 68,
+          "denominator": 185
+        },
+        "mean_clusters_lower_bound": 1.076,
+        "mean_clusters_upper_bound": 1.492
+      },
+      "frequency": {
+        "#1": {
+          "certain": {
+            "n": 39,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 39,
+            "denominator": 602
+          }
+        },
+        "#2": {
+          "certain": {
+            "n": 20,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 49,
+            "denominator": 602
+          }
+        },
+        "#3": {
+          "certain": {
+            "n": 2,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 49,
+            "denominator": 602
+          }
+        },
+        "#4": {
+          "certain": {
+            "n": 44,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 44,
+            "denominator": 602
+          }
+        },
+        "#5": {
+          "certain": {
+            "n": 0,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 602
+          }
+        },
+        "#6": {
+          "certain": {
+            "n": 0,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 1,
+            "denominator": 602
+          }
+        },
+        "#7": {
+          "certain": {
+            "n": 55,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 55,
+            "denominator": 602
+          }
+        },
+        "#8": {
+          "certain": {
+            "n": 17,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 17,
+            "denominator": 602
+          }
+        },
+        "#9": {
+          "certain": {
+            "n": 22,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 22,
+            "denominator": 602
+          }
+        },
+        "#10": {
+          "certain": {
+            "n": 0,
+            "denominator": 602
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 602
+          }
+        }
+      },
+      "cooccurrence": {
+        "records_with_two_or_more_certain": {
+          "n": 26,
+          "denominator": 602
+        },
+        "matrix": {
+          "#1|#2": 0,
+          "#1|#3": 0,
+          "#1|#4": 2,
+          "#1|#5": 0,
+          "#1|#6": 0,
+          "#1|#7": 0,
+          "#1|#8": 0,
+          "#1|#9": 0,
+          "#1|#10": 0,
+          "#2|#3": 0,
+          "#2|#4": 2,
+          "#2|#5": 0,
+          "#2|#6": 0,
+          "#2|#7": 1,
+          "#2|#8": 0,
+          "#2|#9": 1,
+          "#2|#10": 0,
+          "#3|#4": 1,
+          "#3|#5": 0,
+          "#3|#6": 0,
+          "#3|#7": 1,
+          "#3|#8": 0,
+          "#3|#9": 1,
+          "#3|#10": 0,
+          "#4|#5": 0,
+          "#4|#6": 0,
+          "#4|#7": 6,
+          "#4|#8": 0,
+          "#4|#9": 10,
+          "#4|#10": 0,
+          "#5|#6": 0,
+          "#5|#7": 0,
+          "#5|#8": 0,
+          "#5|#9": 0,
+          "#5|#10": 0,
+          "#6|#7": 0,
+          "#6|#8": 0,
+          "#6|#9": 0,
+          "#6|#10": 0,
+          "#7|#8": 0,
+          "#7|#9": 6,
+          "#7|#10": 0,
+          "#8|#9": 0,
+          "#8|#10": 0,
+          "#9|#10": 0
+        },
+        "top_pairs": [
+          {
+            "pair": "#4 + #9",
+            "n": 10,
+            "hypothesis": "#9 → #4"
+          },
+          {
+            "pair": "#4 + #7",
+            "n": 6,
+            "hypothesis": "#4 → #7 | #7 → #4"
+          },
+          {
+            "pair": "#7 + #9",
+            "n": 6,
+            "hypothesis": "#9 → #7"
+          },
+          {
+            "pair": "#1 + #4",
+            "n": 2,
+            "hypothesis": "#1 → #4"
+          },
+          {
+            "pair": "#2 + #4",
+            "n": 2,
+            "hypothesis": "#2 → #4"
+          },
+          {
+            "pair": "#2 + #7",
+            "n": 1,
+            "hypothesis": "#2 → #7"
+          },
+          {
+            "pair": "#2 + #9",
+            "n": 1,
+            "hypothesis": "#9 → #2"
+          },
+          {
+            "pair": "#3 + #4",
+            "n": 1,
+            "hypothesis": "#3 → #4"
+          },
+          {
+            "pair": "#3 + #7",
+            "n": 1,
+            "hypothesis": "#3 → #7"
+          },
+          {
+            "pair": "#3 + #9",
+            "n": 1,
+            "hypothesis": "#9 → #3"
+          }
+        ]
+      },
+      "availability": {
+        "records_with_availability_attribute": {
+          "n": 113,
+          "denominator": 602
+        },
+        "varieties": {
+          "Loss": {
+            "n": 75,
+            "denominator": 602,
+            "dre": "Av"
+          },
+          "Destruction": {
+            "n": 8,
+            "denominator": 602,
+            "dre": "Av"
+          },
+          "Obscuration": {
+            "n": 27,
+            "denominator": 602,
+            "dre": "Ac"
+          },
+          "Interruption": {
+            "n": 6,
+            "denominator": 602,
+            "dre": "A"
+          },
+          "Degradation": {
+            "n": 0,
+            "denominator": 602,
+            "dre": "A"
+          },
+          "Acceleration": {
+            "n": 0,
+            "denominator": 602,
+            "dre": "A"
+          },
+          "Other": {
+            "n": 0,
+            "denominator": 602,
+            "dre": "A"
+          },
+          "Unknown": {
+            "n": 1,
+            "denominator": 602,
+            "dre": "A"
+          }
+        },
+        "dre_codes": {
+          "C": {
+            "n": 536,
+            "denominator": 602
+          },
+          "I": {
+            "n": 1,
+            "denominator": 602
+          },
+          "Ii": {
+            "n": 96,
+            "denominator": 602
+          },
+          "If": {
+            "n": 9,
+            "denominator": 602
+          },
+          "A": {
+            "n": 7,
+            "denominator": 602
+          },
+          "Av": {
+            "n": 83,
+            "denominator": 602
+          },
+          "Ac": {
+            "n": 27,
+            "denominator": 602
+          }
+        },
+        "ransomware": {
+          "records": {
+            "n": 27,
+            "denominator": 602
+          },
+          "with_obscuration_Ac": {
+            "n": 27,
+            "denominator": 27
+          },
+          "with_loss_Av": {
+            "n": 0,
+            "denominator": 27
+          },
+          "with_destruction_Av": {
+            "n": 0,
+            "denominator": 27
+          },
+          "with_interruption_A": {
+            "n": 1,
+            "denominator": 27
+          },
+          "with_no_availability_attribute": {
+            "n": 0,
+            "denominator": 27
+          },
+          "with_confirmed_disclosure_C": {
+            "n": 21,
+            "denominator": 27
+          }
+        }
+      },
+      "unknown": {
+        "action_unknown": {
+          "n": 26,
+          "denominator": 602
+        },
+        "any_unresolved_item": {
+          "n": 290,
+          "denominator": 602
+        },
+        "unknown_only": {
+          "n": 210,
+          "denominator": 602
+        },
+        "per_category": {
+          "hacking": {
+            "records": {
+              "n": 295,
+              "denominator": 602
+            },
+            "variety_unknown": {
+              "n": 208,
+              "denominator": 602
+            },
+            "variety_other": {
+              "n": 4,
+              "denominator": 602
+            }
+          },
+          "malware": {
+            "records": {
+              "n": 69,
+              "denominator": 602
+            },
+            "variety_unknown": {
+              "n": 15,
+              "denominator": 602
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 602
+            }
+          },
+          "social": {
+            "records": {
+              "n": 26,
+              "denominator": 602
+            },
+            "variety_unknown": {
+              "n": 3,
+              "denominator": 602
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 602
+            }
+          },
+          "misuse": {
+            "records": {
+              "n": 31,
+              "denominator": 602
+            },
+            "variety_unknown": {
+              "n": 3,
+              "denominator": 602
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 602
+            }
+          },
+          "physical": {
+            "records": {
+              "n": 17,
+              "denominator": 602
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 602
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 602
+            }
+          },
+          "error": {
+            "records": {
+              "n": 209,
+              "denominator": 602
+            },
+            "variety_unknown": {
+              "n": 1,
+              "denominator": 602
+            },
+            "variety_other": {
+              "n": 9,
+              "denominator": 602
+            }
+          },
+          "environmental": {
+            "records": {
+              "n": 0,
+              "denominator": 602
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 602
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 602
+            }
+          }
+        },
+        "unmapped_values": {
+          "n": 0,
+          "denominator": 602
+        }
+      },
+      "attack_agreement": {
+        "classes": {
+          "agree": {
+            "n": 139,
+            "denominator": 602
+          },
+          "subset": {
+            "n": 3,
+            "denominator": 602
+          },
+          "disjoint": {
+            "n": 0,
+            "denominator": 602
+          },
+          "no-attack-edge": {
+            "n": 460,
+            "denominator": 602
+          }
+        },
+        "top_disagreements": [
+          {
+            "veris_id": "action.hacking.variety.Forced browsing",
+            "n": 2,
+            "direct": "#2",
+            "transitive": "#1, #7"
+          },
+          {
+            "veris_id": "action.hacking.variety.OS commanding",
+            "n": 2,
+            "direct": "#2",
+            "transitive": "#1, #4, #7"
+          },
+          {
+            "veris_id": "action.malware.variety.Capture stored data",
+            "n": 2,
+            "direct": "#7",
+            "transitive": "#1, #4, #5"
+          },
+          {
+            "veris_id": "action.hacking.variety.Session prediction",
+            "n": 1,
+            "direct": "#2",
+            "transitive": "#1, #4"
+          },
+          {
+            "veris_id": "action.malware.variety.Packet sniffer",
+            "n": 1,
+            "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.malware.variety.Scan network",
+            "n": 1,
+            "direct": "#7",
+            "transitive": "#1"
+          }
+        ]
+      }
+    },
+    "sub_source:other": {
+      "records": 25,
+      "purity": {
+        "records": {
+          "n": 25,
+          "denominator": 25
+        },
+        "threat_bearing": {
+          "n": 11,
+          "denominator": 25
+        },
+        "threat_only": {
+          "n": 10,
+          "denominator": 25
+        },
+        "mixed_threat_and_operational": {
+          "n": 1,
+          "denominator": 25
+        },
+        "operational_only": {
+          "n": 12,
+          "denominator": 25
+        },
+        "operational_only.error_or_failure": {
+          "n": 12,
+          "denominator": 25
+        },
+        "operational_only.abuse_of_rights": {
+          "n": 0,
+          "denominator": 25
+        },
+        "operational_only.other_mix": {
+          "n": 0,
+          "denominator": 25
+        },
+        "out_of_scope_only": {
+          "n": 0,
+          "denominator": 25
+        },
+        "unknown_only": {
+          "n": 2,
+          "denominator": 25
+        },
+        "empty": {
+          "n": 0,
+          "denominator": 25
+        }
+      },
+      "recoverability": {
+        "threat_bearing": {
+          "n": 11,
+          "denominator": 11
+        },
+        "resolved": {
+          "n": 6,
+          "denominator": 11
+        },
+        "rule_dependent": {
+          "n": 0,
+          "denominator": 11
+        },
+        "cause_lost": {
+          "n": 5,
+          "denominator": 11
+        },
+        "cause_lost.malware_without_enabler": {
+          "n": 5,
+          "denominator": 11
+        },
+        "cause_lost.credential_use_without_acquisition": {
+          "n": 0,
+          "denominator": 11
+        },
+        "cause_lost.social_without_follow_on": {
+          "n": 0,
+          "denominator": 11
+        },
+        "cause_lost.interception_without_position": {
+          "n": 0,
+          "denominator": 11
+        },
+        "single_cluster_records": {
+          "n": 9,
+          "denominator": 11
+        },
+        "multi_cluster_records": {
+          "n": 2,
+          "denominator": 11
+        },
+        "mean_clusters_lower_bound": 1.182,
+        "mean_clusters_upper_bound": 1.182
+      },
+      "frequency": {
+        "#1": {
+          "certain": {
+            "n": 2,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 2,
+            "denominator": 25
+          }
+        },
+        "#2": {
+          "certain": {
+            "n": 0,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 25
+          }
+        },
+        "#3": {
+          "certain": {
+            "n": 0,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 25
+          }
+        },
+        "#4": {
+          "certain": {
+            "n": 0,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 25
+          }
+        },
+        "#5": {
+          "certain": {
+            "n": 0,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 25
+          }
+        },
+        "#6": {
+          "certain": {
+            "n": 0,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 25
+          }
+        },
+        "#7": {
+          "certain": {
+            "n": 7,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 7,
+            "denominator": 25
+          }
+        },
+        "#8": {
+          "certain": {
+            "n": 2,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 2,
+            "denominator": 25
+          }
+        },
+        "#9": {
+          "certain": {
+            "n": 2,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 2,
+            "denominator": 25
+          }
+        },
+        "#10": {
+          "certain": {
+            "n": 0,
+            "denominator": 25
+          },
+          "upper": {
+            "n": 0,
+            "denominator": 25
+          }
+        }
+      },
+      "cooccurrence": {
+        "records_with_two_or_more_certain": {
+          "n": 2,
+          "denominator": 25
+        },
+        "matrix": {
+          "#1|#2": 0,
+          "#1|#3": 0,
+          "#1|#4": 0,
+          "#1|#5": 0,
+          "#1|#6": 0,
+          "#1|#7": 0,
+          "#1|#8": 0,
+          "#1|#9": 0,
+          "#1|#10": 0,
+          "#2|#3": 0,
+          "#2|#4": 0,
+          "#2|#5": 0,
+          "#2|#6": 0,
+          "#2|#7": 0,
+          "#2|#8": 0,
+          "#2|#9": 0,
+          "#2|#10": 0,
+          "#3|#4": 0,
+          "#3|#5": 0,
+          "#3|#6": 0,
+          "#3|#7": 0,
+          "#3|#8": 0,
+          "#3|#9": 0,
+          "#3|#10": 0,
+          "#4|#5": 0,
+          "#4|#6": 0,
+          "#4|#7": 0,
+          "#4|#8": 0,
+          "#4|#9": 0,
+          "#4|#10": 0,
+          "#5|#6": 0,
+          "#5|#7": 0,
+          "#5|#8": 0,
+          "#5|#9": 0,
+          "#5|#10": 0,
+          "#6|#7": 0,
+          "#6|#8": 0,
+          "#6|#9": 0,
+          "#6|#10": 0,
+          "#7|#8": 0,
+          "#7|#9": 2,
+          "#7|#10": 0,
+          "#8|#9": 0,
+          "#8|#10": 0,
+          "#9|#10": 0
+        },
+        "top_pairs": [
+          {
+            "pair": "#7 + #9",
+            "n": 2,
+            "hypothesis": "#9 → #7"
+          }
+        ]
+      },
+      "availability": {
+        "records_with_availability_attribute": {
+          "n": 8,
+          "denominator": 25
+        },
+        "varieties": {
+          "Loss": {
+            "n": 2,
+            "denominator": 25,
+            "dre": "Av"
+          },
+          "Destruction": {
+            "n": 0,
+            "denominator": 25,
+            "dre": "Av"
+          },
+          "Obscuration": {
+            "n": 6,
+            "denominator": 25,
+            "dre": "Ac"
+          },
+          "Interruption": {
+            "n": 0,
+            "denominator": 25,
+            "dre": "A"
+          },
+          "Degradation": {
+            "n": 0,
+            "denominator": 25,
+            "dre": "A"
+          },
+          "Acceleration": {
+            "n": 0,
+            "denominator": 25,
+            "dre": "A"
+          },
+          "Other": {
+            "n": 0,
+            "denominator": 25,
+            "dre": "A"
+          },
+          "Unknown": {
+            "n": 0,
+            "denominator": 25,
+            "dre": "A"
+          }
+        },
+        "dre_codes": {
+          "C": {
+            "n": 22,
+            "denominator": 25
+          },
+          "I": {
+            "n": 0,
+            "denominator": 25
+          },
+          "Ii": {
+            "n": 7,
+            "denominator": 25
+          },
+          "If": {
+            "n": 0,
+            "denominator": 25
+          },
+          "A": {
+            "n": 0,
+            "denominator": 25
+          },
+          "Av": {
+            "n": 2,
+            "denominator": 25
+          },
+          "Ac": {
+            "n": 6,
+            "denominator": 25
+          }
+        },
+        "ransomware": {
+          "records": {
+            "n": 7,
+            "denominator": 25
+          },
+          "with_obscuration_Ac": {
+            "n": 6,
+            "denominator": 7
+          },
+          "with_loss_Av": {
+            "n": 0,
+            "denominator": 7
+          },
+          "with_destruction_Av": {
+            "n": 0,
+            "denominator": 7
+          },
+          "with_interruption_A": {
+            "n": 0,
+            "denominator": 7
+          },
+          "with_no_availability_attribute": {
+            "n": 1,
+            "denominator": 7
+          },
+          "with_confirmed_disclosure_C": {
+            "n": 5,
+            "denominator": 7
+          }
+        }
+      },
+      "unknown": {
+        "action_unknown": {
+          "n": 0,
+          "denominator": 25
+        },
+        "any_unresolved_item": {
+          "n": 7,
+          "denominator": 25
+        },
+        "unknown_only": {
+          "n": 2,
+          "denominator": 25
+        },
+        "per_category": {
+          "hacking": {
+            "records": {
+              "n": 3,
+              "denominator": 25
+            },
+            "variety_unknown": {
+              "n": 3,
+              "denominator": 25
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 25
+            }
+          },
+          "malware": {
+            "records": {
+              "n": 7,
+              "denominator": 25
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 25
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 25
+            }
+          },
+          "social": {
+            "records": {
+              "n": 2,
+              "denominator": 25
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 25
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 25
+            }
+          },
+          "misuse": {
+            "records": {
+              "n": 2,
+              "denominator": 25
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 25
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 25
+            }
+          },
+          "physical": {
+            "records": {
+              "n": 2,
+              "denominator": 25
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 25
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 25
+            }
+          },
+          "error": {
+            "records": {
+              "n": 12,
+              "denominator": 25
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 25
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 25
+            }
+          },
+          "environmental": {
+            "records": {
+              "n": 0,
+              "denominator": 25
+            },
+            "variety_unknown": {
+              "n": 0,
+              "denominator": 25
+            },
+            "variety_other": {
+              "n": 0,
+              "denominator": 25
+            }
+          }
+        },
+        "unmapped_values": {
+          "n": 0,
+          "denominator": 25
+        }
+      },
+      "attack_agreement": {
+        "classes": {
+          "agree": {
+            "n": 7,
+            "denominator": 25
+          },
+          "subset": {
+            "n": 0,
+            "denominator": 25
+          },
+          "disjoint": {
+            "n": 0,
+            "denominator": 25
+          },
+          "no-attack-edge": {
+            "n": 18,
+            "denominator": 25
+          }
+        },
+        "top_disagreements": []
+      }
+    }
+  }
+}
