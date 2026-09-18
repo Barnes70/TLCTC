@@ -8,14 +8,29 @@ an AI system is a system and the ten clusters do not change for it (Axiom I).
 ## Q0 — Is there a victim system in the step at all?
 
 ```
-Reconnaissance, Resource Development, AI Attack Staging (proxy models, adversarial data,
-deepfakes, generated commands, prompt and retrieval-content crafting), publishing poisoned
-datasets / models / tools / hallucinated entities, reputation inflation
+Reconnaissance held by public sources (papers, blogs, code and app repositories, victim-owned
+websites, internet-scan services, identity OSINT)
+      → N/A: nothing of the victim's is touched (as ATT&CK T1589–T1594, T1596, T1597).
+Reconnaissance that interacts with a victim system (Active Scanning and its sub-techniques:
+enumerating hosted resources, metadata APIs, exposed AI infrastructure, agent trigger channels;
+a "gather" technique performed by querying the system)
+      → Q1: it classifies like any other step, normally #1 with a DRE C (as ATT&CK T1595).
+Reconnaissance that elicits information from a person
+      → #9 (as ATT&CK T1598 Phishing for Information); a credential learned this way is an
+        Enabling Condition, its later use #4 (R-CRED).
+Resource Development, AI Attack Staging (proxy models, adversarial data, deepfakes, generated
+commands, prompt and retrieval-content crafting), publishing poisoned datasets / models / tools /
+hallucinated entities, reputation inflation
       → N/A: attacker-side; the step is recorded when the artefact meets a victim system.
 External Harms (financial, reputational, societal, user, IP theft)
       → N/A: Business Risk Events on the consequence side, never causes (Axiom III).
 Everything else → Q1.
 ```
+
+An umbrella technique whose description spans both an OSINT and a direct branch (Gather RAG-Indexed
+Targets, Gather Victim Identity Information) keeps `N/A` as its row value, as the ATT&CK mapping does
+for T1589–T1592, and names the classified branches in its rationale; `N/A` never appears inside an
+alternative.
 
 ## Q1 — Is the AI component the thing exploited, or just the thing reached?
 

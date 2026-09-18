@@ -35,7 +35,7 @@
     },
     "doctrine": [
       "Prompt injection, jailbreaks, RAG and context poisoning, and agent tool abuse are #1: the model or agent does what it is designed to do with the input it was designed to accept; the agent is the capability vector, not the actor (Axiom IV).",
-      "Reconnaissance, resource development and AI attack staging are attacker-side (N/A); the step is recorded when the prepared artefact meets a victim system.",
+      "OSINT reconnaissance, resource development and AI attack staging are attacker-side (N/A); the step is recorded when the prepared artefact meets a victim system. Reconnaissance that touches the victim classifies like any other step: probing its services is #1 with a DRE C (Active Scanning and sub-techniques), eliciting from a person is #9; umbrella techniques spanning both modes stay N/A and name the branches in their rationale.",
       "Supply-chain techniques are #10 at the Trust Acceptance Event (R-SUPPLY); code that then executes adds #7 (R-EXEC).",
       "Model, data and context degradation are Data Risk Events (Ii, If, Av, C) produced by a #1 or #10 step, never clusters (Axiom III); External Harms are Business Risk Events.",
       "Denial of AI service and cost harvesting follow R-FLOOD: volume or intensity exhausting finite capacity is #6, a designed function driven against its purpose below that point is #1."
@@ -2125,7 +2125,7 @@
       "techniqueName": "Gather RAG-Indexed Targets",
       "tlctcMapping": "N/A",
       "tlctcMappingName": "N/A",
-      "mappingRationale": "Identifying which data sources a victim's retrieval-augmented system indexes is reconnaissance about the victim held in public sources; the step against the system comes later (RAG Poisoning, #1).",
+      "mappingRationale": "Umbrella reconnaissance technique: learning which data sources a victim's retrieval-augmented system indexes from public documentation is OSINT held by @External sources, no boundary crossing and no exploited generic vulnerability (N/A, as ATT&CK T1592). ATLAS also allows the sources to be inferred by interacting with the system directly and observing its references; that branch is the model interface answering what it is willing to answer, #1 as for Discover LLM System Information (AML.T0069), with a DRE C on the system's configuration. The step against the sources themselves comes later (RAG Poisoning, #1).",
       "techniqueDescription": "Adversaries may identify data sources used in retrieval augmented generation (RAG) systems for targeting purposes. By pinpointing these sources, attackers can focus on poisoning or otherwise manipulating the external data repositories the AI relies on.\n\nRAG-indexed data may be identified in public documentation about the system, or by interacting with the system directly and observing any indications of or references to external data sources.",
       "tactics": [
         "AML.TA0002"
@@ -2756,7 +2756,7 @@
       "techniqueName": "Gather Victim Identity Information",
       "tlctcMapping": "N/A",
       "tlctcMappingName": "N/A",
-      "mappingRationale": "Open-source reconnaissance held by @External sources: no boundary crossing into the victim domain and no exploited generic vulnerability (N/A, as for ATT&CK T1593/T1589).",
+      "mappingRationale": "Umbrella reconnaissance technique, classified as its ATT&CK twin T1589: OSINT collection of employee names, addresses and credential or MFA details from @External sources is N/A, no boundary crossing and no exploited generic vulnerability. ATLAS names two branches that do cross into the victim domain and classify on their own: direct elicitation from a person is #9 (Phishing for Information, ATT&CK T1598, DRE C on the disclosed identity data), and probing the victim's services for identity information is #1 (Active Scanning, AML.T0006). A credential learned this way is an Enabling Condition; its later use is #4 (R-CRED).",
       "techniqueDescription": "Adversaries may gather information about the victim's identity that can be used during targeting. Information about identities may include a variety of details, including personal data (ex: employee names, email addresses, photos, etc.) as well as sensitive details such as credentials or multi-factor authentication (MFA) configurations.\n\nAdversaries may gather this information in various ways, such as direct elicitation, [Search Victim-Owned Websites](/techniques/AML.T0003), or via leaked information on the black market.\n\nAdversaries may use the gathered victim data to Create Deepfakes and impersonate them in a convincing manner. This may create opportunities for adversaries to [Establish Accounts](/techniques/AML.T0021) under the impersonated identity, or allow them to perform convincing [Phishing](/techniques/AML.T0052) attacks.",
       "tactics": [
         "AML.TA0002"

@@ -65,10 +65,15 @@ development, AI attack staging on the attacker's side, and business-side harms).
   or agent does what it is designed to do with input it was designed to accept; no implementation
   flaw and no foreign executable content are involved. The agent is the capability vector, not the
   actor (Axiom IV). This is the reading of agentic paths A, B and E and of the agent theses.
-- **Attacker-side work is N/A.** Reconnaissance, resource development (including publishing
+- **Attacker-side work is N/A.** OSINT reconnaissance, resource development (including publishing
   poisoned datasets, models, hallucinated entities and agent tools) and AI attack staging (proxy
   models, adversarial data, deepfakes, generated commands) touch no victim system; the step is
-  recorded when the artefact meets one.
+  recorded when the artefact meets one. Reconnaissance that does touch the victim classifies like
+  any other step, as in the ATT&CK mapping: Active Scanning and its sub-techniques (enumerating
+  hosted resources, metadata APIs, exposed AI infrastructure, agent trigger channels) are #1 with
+  a DRE C, elicitation from a person is #9. Umbrella techniques that span both modes (Gather
+  RAG-Indexed Targets, Gather Victim Identity Information) stay N/A and name the classified
+  branches in their rationale.
 - **Supply chain is #10 at the Trust Acceptance Event** (R-SUPPLY): a dataset, model, package,
   container image or agent tool honoured as trusted. Code that then executes adds #7 (R-EXEC);
   instructions that an agent then follows add #1.
