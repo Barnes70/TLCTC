@@ -1,0 +1,26 @@
+{
+  "incident_id": "11111111-0000-4000-8000-000000000007",
+  "schema_version": "1.3.5",
+  "security_incident": "Confirmed",
+  "action": {
+    "hacking": {
+      "variety": [
+        "MitM"
+      ],
+      "vector": [
+        "Other network service"
+      ]
+    }
+  },
+  "attribute": {
+    "confidentiality": {
+      "data_disclosure": "Yes"
+    }
+  },
+  "timeline": {
+    "incident": {
+      "year": 2016
+    }
+  },
+  "plus": {}
+}

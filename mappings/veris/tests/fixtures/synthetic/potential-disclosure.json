@@ -1,0 +1,26 @@
+{
+  "incident_id": "11111111-0000-4000-8000-000000000008",
+  "schema_version": "1.4.1",
+  "security_incident": "Confirmed",
+  "action": {
+    "physical": {
+      "variety": [
+        "Theft"
+      ],
+      "vector": [
+        "Personal vehicle"
+      ]
+    }
+  },
+  "attribute": {
+    "confidentiality": {
+      "data_disclosure": "Potentially"
+    }
+  },
+  "timeline": {
+    "incident": {
+      "year": 2024
+    }
+  },
+  "plus": {}
+}

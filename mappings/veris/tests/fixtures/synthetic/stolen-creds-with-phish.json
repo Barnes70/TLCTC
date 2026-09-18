@@ -1,0 +1,42 @@
+{
+  "incident_id": "11111111-0000-4000-8000-000000000001",
+  "schema_version": "1.4.1",
+  "security_incident": "Confirmed",
+  "action": {
+    "social": {
+      "variety": [
+        "Phishing"
+      ],
+      "vector": [
+        "Email"
+      ],
+      "target": [
+        "End-user"
+      ]
+    },
+    "hacking": {
+      "variety": [
+        "Use of stolen creds"
+      ],
+      "vector": [
+        "Web application"
+      ]
+    }
+  },
+  "attribute": {
+    "confidentiality": {
+      "data_disclosure": "Yes",
+      "data": [
+        {
+          "variety": "Personal"
+        }
+      ]
+    }
+  },
+  "timeline": {
+    "incident": {
+      "year": 2024
+    }
+  },
+  "plus": {}
+}

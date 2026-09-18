@@ -1,0 +1,50 @@
+{
+  "incident_id": "11111111-0000-4000-8000-000000000009",
+  "schema_version": "1.4.1",
+  "security_incident": "Confirmed",
+  "action": {
+    "hacking": {
+      "variety": [
+        "Exploit vuln",
+        "SQLi"
+      ],
+      "vector": [
+        "Partner"
+      ]
+    },
+    "malware": {
+      "variety": [
+        "Backdoor"
+      ],
+      "vector": [
+        "Remote injection"
+      ]
+    },
+    "misuse": {
+      "variety": [
+        "Unapproved software"
+      ],
+      "vector": [
+        "LAN access"
+      ]
+    }
+  },
+  "attribute": {
+    "confidentiality": {
+      "data_disclosure": "Yes"
+    },
+    "integrity": {
+      "variety": [
+        "Software installation"
+      ]
+    }
+  },
+  "timeline": {
+    "incident": {
+      "year": 2024
+    }
+  },
+  "plus": {
+    "sub_source": "priority"
+  }
+}

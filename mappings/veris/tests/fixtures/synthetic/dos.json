@@ -1,0 +1,28 @@
+{
+  "incident_id": "11111111-0000-4000-8000-000000000004",
+  "schema_version": "1.4.1",
+  "security_incident": "Confirmed",
+  "action": {
+    "hacking": {
+      "variety": [
+        "DoS"
+      ],
+      "vector": [
+        "Web application"
+      ]
+    }
+  },
+  "attribute": {
+    "availability": {
+      "variety": [
+        "Interruption"
+      ]
+    }
+  },
+  "timeline": {
+    "incident": {
+      "year": 2024
+    }
+  },
+  "plus": {}
+}
