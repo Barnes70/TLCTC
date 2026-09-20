@@ -98,7 +98,7 @@ The generic-vulnerability strings above are reproduced verbatim from the canonic
 
 - **#7 Malware** — Execution of **Foreign Executable Content (FEC)** through the environment's designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters), including dual-use tooling when it executes attacker-controlled FEC.
 
-- **#8 Physical Attack** — Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces (including removable media), or signals — via direct contact or exploitation of physical phenomena/emanations.
+- **#8 Physical Attack** — Unauthorized physical interaction with or interference to hardware, media, interfaces (including removable media), or signals — via direct contact or exploitation of physical phenomena/emanations.
 
 - **#9 Social Engineering** — Psychological manipulation that causes a human to perform an action counter to security interests — disclosing information, granting access, executing content, modifying configuration, or bypassing procedures.
 
