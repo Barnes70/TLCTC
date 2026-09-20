@@ -82,7 +82,11 @@ function overlap(a, b) {
 // Exploiting Server, which targets flaws on the server side" — is legitimate and
 // must not be flagged; a labelled field is the page asserting the framework's own
 // wording, and that is what has to match.
-const LABEL = /\b(Definition|Generic Vulnerability|Generic vulnerability|Attacker'?s? View|Attacker'?s? view)\s*[:–-]\s*/g;
+// A page may qualify the label before the colon — "Generic Vulnerability (Axiom I):"
+// is how tlctc-topology-of-cyber-attacks.html writes it, and that parenthetical was
+// enough to hide a paraphrased #8 that still named facilities. Allow a short
+// parenthetical, and any markup the strip() left between the two.
+const LABEL = /\b(Definition|Generic Vulnerability|Generic vulnerability|Attacker'?s? View|Attacker'?s? view)\s*(?:\([^)]{0,40}\))?\s*[:–-]\s*/g;
 
 function labelledClaims(text) {
   const out = [];
