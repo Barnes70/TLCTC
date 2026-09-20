@@ -96,6 +96,27 @@ function labelledClaims(text) {
   return out;
 }
 
+// A claim states at most one canonical string. #2 and #3 differ by one word
+// ("server role" / "client role"), so cluster-2.md scores 88% against #3's
+// definition while stating #2's perfectly — flagging that would train the reader
+// to ignore this check. Attribute each claim to the canon it most resembles and
+// report only against that one.
+function bestCanonFor(claimText) {
+  let best = { score: 0, text: '' };
+  for (const c of CANON) {
+    const s = overlap(c.text, claimText);
+    if (s > best.score) best = { score: s, text: c.text };
+  }
+  return best;
+}
+
+// Quoting style is not paraphrase: an attacker's view rendered "…" with curly
+// quotes is the dictionary's wording, presented.
+const unwrap = (s) => s
+  .replace(/^[\s*"'“”‘’]+/, '')
+  .replace(/[\s*"'“”‘’]+$/, '')
+  .trim();
+
 function bestClaim(claims, canon) {
   let best = { score: 0, text: '' };
   for (const c of claims) {
@@ -106,28 +127,69 @@ function bestClaim(claims, canon) {
   return best;
 }
 
+// A page may also carry canon as data rather than prose — a cluster dictionary
+// embedded in a <script> block, which strip() removes before anything else can
+// see it. That is how tlctc-10-definitions.html kept serving the pre-erratum #8
+// ("hardware, facilities, media, …") while this very check reported the site
+// clean. Harvest those values from the RAW text, before stripping.
+const JSON_LABEL = /"(definition|scope|genericVulnerability|generic_vulnerability|attackersView|attackers_view)"\s*:\s*"((?:[^"\\]|\\.)*)"/gi;
+
+function jsonClaims(raw) {
+  const out = [];
+  JSON_LABEL.lastIndex = 0;
+  for (let m = JSON_LABEL.exec(raw); m; m = JSON_LABEL.exec(raw)) {
+    const value = m[2]
+      .replace(/\\"/g, '"')
+      .replace(/\\n/g, ' ')
+      .replace(/\\\\/g, '\\');
+    out.push({ field: m[1].toLowerCase(), text: strip(value).replace(/\*\*/g, '').trim() });
+  }
+  return out;
+}
+
 // Historical artifacts: superseded paper snapshots are records of what was
 // published then, and must not be "corrected" (provenance rule).
 const ARCHIVED = /^(TLCTCWhitePaperVersion|tlctc-v[12]\.|index-new|index\d|unused)/i;
 
-const files = fs.readdirSync(SITE).filter((f) => f.endsWith('.html'));
+// The published surface is not only the root .html pages: okf/ ships the
+// agent-consumable view of the same dictionary, and it drifted unnoticed for
+// exactly as long.
+function okfMarkdown(dir, base = 'okf') {
+  const out = [];
+  const full = path.join(SITE, dir);
+  if (!fs.existsSync(full)) return out;
+  for (const entry of fs.readdirSync(full, { withFileTypes: true })) {
+    const rel = `${base}/${entry.name}`;
+    if (entry.isDirectory()) out.push(...okfMarkdown(path.join(dir, entry.name), rel));
+    else if (entry.name.endsWith('.md')) out.push(rel);
+  }
+  return out;
+}
+
+const files = fs.readdirSync(SITE).filter((f) => f.endsWith('.html')).concat(okfMarkdown('okf'));
 let scanned = 0, verbatim = 0;
 const problems = [];
 
 let skipped = 0;
 for (const f of files) {
-  if (ARCHIVED.test(f)) { skipped++; continue; }
-  const text = strip(fs.readFileSync(path.join(SITE, f), 'utf8'));
-  if (!/#\d/.test(text)) continue;
-  const claims = labelledClaims(text);
+  if (ARCHIVED.test(path.basename(f))) { skipped++; continue; }
+  const raw = fs.readFileSync(path.join(SITE, f), 'utf8');
+  const text = strip(raw);
+  if (!/#\d/.test(raw)) continue;
+  const claims = labelledClaims(text).concat(jsonClaims(raw));
   if (!claims.length) continue;
   scanned++;
+  // Canon quoted inside a <script> block survives only in the harvested claims,
+  // so the verbatim test has to look there too.
+  const blob = `${text}\n${claims.map((c) => c.text).join('\n')}`;
   for (const c of CANON) {
-    if (text.includes(c.text)) { verbatim++; continue; }      // quoted correctly
+    if (blob.includes(c.text)) { verbatim++; continue; }      // quoted correctly
     const hit = bestClaim(claims, c.text);
     if (hit.score < 0.75) continue;                            // not attempting this string
-    if (norm(hit.text) === norm(c.text)) { verbatim++; continue; } // punctuation-only
-    problems.push({ file: f, id: c.id, field: c.field, found: hit.text, canon: c.text, score: hit.score });
+    if (norm(unwrap(hit.text)) === norm(unwrap(c.text))) { verbatim++; continue; } // punctuation-only
+    const owner = bestCanonFor(hit.text);
+    if (owner.text !== c.text && owner.score > hit.score) continue; // states a different cluster's canon
+    problems.push({ file: f, id: c.id, field: c.field, found: unwrap(hit.text), canon: c.text, score: hit.score });
   }
 }
 

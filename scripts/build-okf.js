@@ -158,6 +158,52 @@ function extractClusterSections(md) {
 }
 const clusterSections = extractClusterSections(whitepaper);
 
+// The whitepaper supplies the prose, but Definition, Generic Vulnerability and
+// Attacker's View belong to the dictionary — the OKF README says so, and for a
+// long time nothing enforced it: the #8 erratum that dropped "facilities" landed
+// in tlctc-framework.v2.5.json and never reached whitepaper §4.1, so the bundle
+// published the superseded definition. Two sources, one silent winner.
+//
+// Rather than overwrite the prose (which would hide the divergence), fail loudly
+// and name the field. Scope, Developer's View and Boundary Tests stay the
+// whitepaper's own and are not checked here.
+const CANON_FIELDS = [
+  ['Definition', 'definition'],
+  ['Generic Vulnerability', 'generic_vulnerability'],
+  ["Attacker's View", 'attackers_view'],
+];
+const canonNorm = (s) => String(s)
+  .replace(/[‘’]/g, "'")
+  .replace(/[“”]/g, '"')
+  .replace(/\*\*/g, '')
+  .replace(/^["']|["']$/g, '')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+function assertClusterCanon() {
+  const drift = [];
+  for (const id of CLUSTER_IDS) {
+    const c = framework.clusters[id];
+    const section = clusterSections[clusterNum(id)];
+    if (!section) continue;
+    for (const [label, key] of CANON_FIELDS) {
+      const re = new RegExp('\\*\\*' + label.replace("'", "[’']") + ':\\*\\*\\s*(.+)');
+      const m = section.match(re);
+      if (!m) continue;
+      if (canonNorm(m[1]) !== canonNorm(c[key])) {
+        drift.push(`  ${id} ${label}\n    whitepaper: ${canonNorm(m[1])}\n    dictionary: ${canonNorm(c[key])}`);
+      }
+    }
+  }
+  if (drift.length) {
+    console.error('build-okf: whitepaper §4.1 has drifted from the canonical dictionary.\n' +
+      'These three fields are the dictionary\'s; update whitepaper §4.1 to match, do not edit okf/ by hand.\n' +
+      drift.join('\n'));
+    process.exit(1);
+  }
+}
+assertClusterCanon();
+
 function buildClusters() {
   for (const id of CLUSTER_IDS) {
     const c = framework.clusters[id];

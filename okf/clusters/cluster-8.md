@@ -14,9 +14,9 @@ topology: "bridge"
 ---
 # #8 Physical Attack
 
-**Definition:** Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.
+**Definition:** Unauthorized physical interaction with or interference to hardware, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.
 
-**Scope:** Direct contact with hardware, facilities, media, and interfaces (including **removable media**), as well as exploitation of physical-layer properties such as wireless spectrum, emanations, and environmental dependencies.
+**Scope:** Direct contact with hardware, media, and interfaces (including **removable media**), as well as exploitation of physical-layer properties such as wireless spectrum, emanations, and environmental dependencies.
 
 **Generic Vulnerability:** Physical accessibility of infrastructure and the exploitability of physical-layer properties.
 
