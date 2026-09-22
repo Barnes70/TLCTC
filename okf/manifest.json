@@ -3,7 +3,7 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.6",
   "generator": "scripts/build-okf.js",
-  "document_count": 438,
+  "document_count": 437,
   "type_counts": {
     "attack-path": 59,
     "axiom": 10,
@@ -17,10 +17,10 @@
     "intra-boundary-type": 4,
     "mapping-set": 30,
     "partition": 1,
-    "rule": 19,
+    "rule": 17,
     "sphere": 9,
     "sre": 1,
-    "term": 259
+    "term": 260
   },
   "documents": [
     {
@@ -2621,7 +2621,7 @@
       "path": "/glossary/implementation-flaw.md",
       "type": "term",
       "title": "Implementation Flaw",
-      "description": "A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate neutral per R SUBSTRATE).",
+      "description": "A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate neutral per the substrate clause of R SPECIFIC).",
       "resource": "tlctc:term:implementation-flaw",
       "tags": [
         "glossary"
@@ -3230,8 +3230,8 @@
     {
       "path": "/glossary/r-channel-channel-control-vs-code-flaw.md",
       "type": "term",
-      "title": "R-CHANNEL (Channel Control vs Code Flaw)",
-      "description": "Global mapping rule (v2.5): If the defective logic is itself a communication path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as 5 Man in the Middle , not as 2 or 3 under R ROLE.",
+      "title": "R-CHANNEL (Channel Control vs Code Flaw) **",
+      "description": "Retired v2.5 rule ID; since v2.6 the channel clause of R SPECIFIC, with its proposition unchanged.",
       "resource": "tlctc:term:r-channel-channel-control-vs-code-flaw",
       "tags": [
         "glossary"
@@ -3260,8 +3260,8 @@
     {
       "path": "/glossary/r-flood-capacity-exhaustion-vs-implementation-defect.md",
       "type": "term",
-      "title": "R-FLOOD (Capacity Exhaustion vs Implementation Defect)",
-      "description": "Global mapping rule: If the primary mechanism is volume or intensity exhausting finite resources, classify as 6 Flooding Attack .",
+      "title": "R-FLOOD (Capacity Exhaustion vs Implementation Defect) **",
+      "description": "Retired v2.5 rule ID; since v2.6 the capacity clause of R SPECIFIC, with its proposition unchanged.",
       "resource": "tlctc:term:r-flood-capacity-exhaustion-vs-implementation-defect",
       "tags": [
         "glossary"
@@ -3321,7 +3321,7 @@
       "path": "/glossary/r-rules-quick-reference.md",
       "type": "term",
       "title": "R-* Rules Quick Reference",
-      "description": "The v2.5 normative registry contains exactly 19 rules : nine core rules and ten v2.1 extension rules.",
+      "description": "The v2.6 normative registry contains exactly 17 rules : seven core rules and ten v2.1 extension rules.",
       "resource": "tlctc:term:r-rules-quick-reference",
       "tags": [
         "glossary"
@@ -3338,10 +3338,20 @@
       ]
     },
     {
+      "path": "/glossary/r-specific-specific-generic-vulnerability-over-residual-test.md",
+      "type": "term",
+      "title": "R-SPECIFIC (Specific Generic Vulnerability over Residual Test)",
+      "description": "Global mapping rule (v2.6): where one weakness is describable both as a specific generic vulnerability and as a residual one, classify it under the specific.",
+      "resource": "tlctc:term:r-specific-specific-generic-vulnerability-over-residual-test",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
       "path": "/glossary/r-substrate-physical-property-vs-implemented-logic.md",
       "type": "term",
-      "title": "R-SUBSTRATE (Physical Property vs Implemented Logic)",
-      "description": "Global mapping rule (v2.5): Classify as 8 Physical Attack only where a physical layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission borne timing, wear, or material state — is itself the exploited generic vulnerability.",
+      "title": "R-SUBSTRATE (Physical Property vs Implemented Logic) **",
+      "description": "Retired v2.5 rule ID; since v2.6 the substrate clause of R SPECIFIC, with its proposition unchanged.",
       "resource": "tlctc:term:r-substrate-physical-property-vs-implemented-logic",
       "tags": [
         "glossary"
@@ -4548,18 +4558,6 @@
       ]
     },
     {
-      "path": "/rules/r-channel.md",
-      "type": "rule",
-      "title": "R-CHANNEL",
-      "description": "If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as #5, not as #2 or #3 under R-ROLE.",
-      "resource": "tlctc:rule:R-CHANNEL",
-      "tags": [
-        "taxonomy",
-        "rule",
-        "must"
-      ]
-    },
-    {
       "path": "/rules/r-cred.md",
       "type": "rule",
       "title": "R-CRED",
@@ -4577,18 +4575,6 @@
       "title": "R-EXEC",
       "description": "If Foreign Executable Content executes, a #7 step MUST be recorded at the execution moment.",
       "resource": "tlctc:rule:R-EXEC",
-      "tags": [
-        "taxonomy",
-        "rule",
-        "must"
-      ]
-    },
-    {
-      "path": "/rules/r-flood.md",
-      "type": "rule",
-      "title": "R-FLOOD",
-      "description": "If the primary mechanism is volume or intensity exhausting finite resources, classify as #6.",
-      "resource": "tlctc:rule:R-FLOOD",
       "tags": [
         "taxonomy",
         "rule",
@@ -4656,11 +4642,11 @@
       ]
     },
     {
-      "path": "/rules/r-substrate.md",
+      "path": "/rules/r-specific.md",
       "type": "rule",
-      "title": "R-SUBSTRATE",
-      "description": "Classify as #8 only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability.",
-      "resource": "tlctc:rule:R-SUBSTRATE",
+      "title": "R-SPECIFIC",
+      "description": "Where one weakness is describable both as a specific generic vulnerability and as a residual one, classify it under the specific.",
+      "resource": "tlctc:rule:R-SPECIFIC",
       "tags": [
         "taxonomy",
         "rule",

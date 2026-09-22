@@ -104,6 +104,7 @@ for (const id of ruleIds) if (!new RegExp(`\\*\\*${id}\\*\\*`).test(glossary)) n
 
 const core = read('documentation/tlctc-v2.6-core.md');
 for (const id of ruleIds) if (!new RegExp(`\\*\\*${id}\\*\\*`).test(core)) note(`core paper: rule ${id} not defined in bold`);
+for (const r of fw.rules) if (!core.includes(r.statement)) note(`core paper: rule ${r.rule_id} statement not reproduced verbatim`);
 const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
 const wm = /the (\w+) core rules \(([^)]+)\)/.exec(core);
 if (!wm) note('core paper: "the N core rules (...)" sentence not found');

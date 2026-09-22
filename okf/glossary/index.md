@@ -1,6 +1,6 @@
 # glossary
 
-259 document(s).
+260 document(s).
 
 - [Abuse of Functions (#1)](/glossary/abuse-of-functions-1.md) — `term`
 - [Abuse of Rights](/glossary/abuse-of-rights.md) — `term`
@@ -165,10 +165,10 @@
 - [Propagated PR](/glossary/propagated-pr.md) — `term`
 - [Protection Ring Architecture](/glossary/protection-ring-architecture.md) — `term`
 - [R-ABUSE (Function Misuse Determination) **](/glossary/r-abuse-function-misuse-determination.md) — `term`
-- [R-CHANNEL (Channel Control vs Code Flaw)](/glossary/r-channel-channel-control-vs-code-flaw.md) — `term`
+- [R-CHANNEL (Channel Control vs Code Flaw) **](/glossary/r-channel-channel-control-vs-code-flaw.md) — `term`
 - [R-CRED (Credential Lifecycle Non-Overlap)](/glossary/r-cred-credential-lifecycle-non-overlap.md) — `term`
 - [R-EXEC (Foreign Execution Recording Rule)](/glossary/r-exec-foreign-execution-recording-rule.md) — `term`
-- [R-FLOOD (Capacity Exhaustion vs Implementation Defect)](/glossary/r-flood-capacity-exhaustion-vs-implementation-defect.md) — `term`
+- [R-FLOOD (Capacity Exhaustion vs Implementation Defect) **](/glossary/r-flood-capacity-exhaustion-vs-implementation-defect.md) — `term`
 - [R-HUMAN (Human Manipulation Isolation) **](/glossary/r-human-human-manipulation-isolation.md) — `term`
 - [R-INTRA (Intra-System Boundary Rules)](/glossary/r-intra-intra-system-boundary-rules.md) — `term`
 - [R-MITM (Position vs Action)](/glossary/r-mitm-position-vs-action.md) — `term`
@@ -176,7 +176,8 @@
 - [R-ROLE (Server vs Client Determination)](/glossary/r-role-server-vs-client-determination.md) — `term`
 - [R-* Rules Quick Reference](/glossary/r-rules-quick-reference.md) — `term`
 - [R-SCOPE (Entitlement Scope Boundary)](/glossary/r-scope-entitlement-scope-boundary.md) — `term`
-- [R-SUBSTRATE (Physical Property vs Implemented Logic)](/glossary/r-substrate-physical-property-vs-implemented-logic.md) — `term`
+- [R-SPECIFIC (Specific Generic Vulnerability over Residual Test)](/glossary/r-specific-specific-generic-vulnerability-over-residual-test.md) — `term`
+- [R-SUBSTRATE (Physical Property vs Implemented Logic) **](/glossary/r-substrate-physical-property-vs-implemented-logic.md) — `term`
 - [R-SUPPLY (Trust Acceptance Event Placement)](/glossary/r-supply-trust-acceptance-event-placement.md) — `term`
 - [R-TRANSIT (Transit Boundary Rules)](/glossary/r-transit-transit-boundary-rules.md) — `term`
 - [Ransomware](/glossary/ransomware.md) — `term`

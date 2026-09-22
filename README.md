@@ -16,12 +16,12 @@ TLCTC v2.5 is the current citable baseline: the v2.3 consolidation freeze of the
 
 | Document | Role |
 |---|---|
-| [**Core Paper**](documentation/tlctc-v2.5-core.md) ([PDF](documentation/tlctc-v2.5-core.pdf)) | **The canonical, citable definition** of the framework: derivation, 10 clusters, 10 axioms, 19 classification rules, attack-path notation, glossary, references. Cite this. |
+| [**Core Paper**](documentation/tlctc-v2.6-core.md) ([PDF](documentation/tlctc-v2.6-core.pdf)) | **The canonical definition** of the framework in the v2.6 working version: derivation, 10 clusters, 10 axioms, 17 classification rules, attack-path notation, glossary, references. The deposited, citable version is v2.5.1 (see Citation). |
 | [**Application Paper**](documentation/tlctc-v2.5-application.md) ([PDF](documentation/tlctc-v2.5-application.pdf), [DOI](https://doi.org/10.5281/zenodo.22697636)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. Separately citable. |
 | [**White Paper**](documentation/tlctc-v2.0-whitepaper.md) ([web](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)) | The extended practitioner handbook: full notation grammar (§11), boundary catalogs, decision procedures, anti-patterns, and worked detail beyond the core. Conforms to the core; filename kept for link stability. |
 | [**Operational Enumeration**](documentation/tlctc-operational-enumeration.md) ([JSON](json-schemas/operational/tlctc-operational-enumeration.json)) | The *evolving* `TLCTC-XX.YY` sub-cluster catalogue. The strategic layer (10 clusters) is frozen; the operational layer grows by contribution. |
 
-Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.5.json`](json-schemas/layer-1/tlctc-framework.v2.5.json). The v2.3 and v2.4 dictionaries are retained unchanged as frozen records for classifications made under those versions.
+Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.6.json`](json-schemas/layer-1/tlctc-framework.v2.6.json) (v2.6 working version). The v2.3, v2.4 and v2.5 dictionaries are retained unchanged as frozen records for classifications made under those versions.
 
 ---
 
@@ -489,7 +489,8 @@ tlctc/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
 │   │   ├── tlctc-framework.v2.3.json         # V2.3 frozen record (retained for 2.3.x classifications)
-│   │   └── tlctc-framework.v2.5.json         # V2.5 citable baseline: clusters, axioms, 19 rules, DRE tree, cause-side partition, SRE types
+│   │   ├── tlctc-framework.v2.5.json         # V2.5.1 citable baseline (frozen): clusters, axioms, rule registry, DRE tree, cause-side partition, SRE types
+│   │   └── tlctc-framework.v2.6.json         # V2.6 working version (not deposited): clusters, axioms, 17 rules, DRE tree, cause-side partition, SRE types, FEC boundary
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
 │   │   └── example-registry.json             # Example org-specific registry

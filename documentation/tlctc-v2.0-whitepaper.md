@@ -373,7 +373,7 @@ Each cluster below uses the same structure:
 
 - Gaining the privileged position maps to another cluster; #5 begins once the position is controlled (R-MITM).
 - If the primary act is credential use after capture → #4 for the use step.
-- If the defective logic is itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry or revocation checking, channel encryption, algorithm negotiation) → #5, not #2/#3 (R-CHANNEL).
+- If the defective logic is itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry or revocation checking, channel encryption, algorithm negotiation) → #5, not #2/#3 (R-SPECIFIC, channel).
 - If the defect is incidental to that control rather than constitutive of it (e.g. memory corruption in a TLS parser) → #2/#3 per R-ROLE.
 
 **Examples (position acquisition, non-normative):**
@@ -401,7 +401,7 @@ Each cluster below uses the same structure:
 **Boundary Tests (normative):**
 
 - If availability loss is primarily caused by an implementation defect (crash, algorithmic-complexity weakness such as ReDoS) → #2/#3.
-- If availability loss is primarily capacity exhaustion by volume/intensity → #6 (R-FLOOD).
+- If availability loss is primarily capacity exhaustion by volume/intensity → #6 (R-SPECIFIC, capacity).
 - If attackers amplify load by abusing legitimate functions, the enabling step may be #1, but the exhaustion event remains #6.
 
 **Topology:** Internal.
@@ -451,7 +451,7 @@ Each cluster below uses the same structure:
 **Boundary Tests (normative):**
 
 - If the physical step leads to FEC execution → `#8 → #7`.
-- If a physical-layer property of the substrate is the exploited generic vulnerability → #8 (R-SUBSTRATE).
+- If a physical-layer property of the substrate is the exploited generic vulnerability → #8 (R-SPECIFIC, substrate).
 - If the physical layer is only the readout channel for a defect in implemented logic → #2/#3 per R-ROLE. Spectre-class transient execution is #2 on this test; Rowhammer is #8.
 - Attacker proximity or possession is not required. Software-triggered exploitation of physical phenomena — Rowhammer, software-controlled voltage or clock glitching — remains #8.
 - Where foreign code executes in order to induce the physical effect, the execution is a separate #7 step per R-EXEC and Axiom VI → `#7 → #8`.

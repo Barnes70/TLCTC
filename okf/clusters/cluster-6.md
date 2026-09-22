@@ -27,7 +27,7 @@ topology: "internal"
 **Boundary Tests (normative):**
 
 - If availability loss is primarily caused by an implementation defect (crash, algorithmic-complexity weakness such as ReDoS) → #2/#3.
-- If availability loss is primarily capacity exhaustion by volume/intensity → #6 (R-FLOOD).
+- If availability loss is primarily capacity exhaustion by volume/intensity → #6 (R-SPECIFIC, capacity).
 - If attackers amplify load by abusing legitimate functions, the enabling step may be #1, but the exhaustion event remains #6.
 
 **Topology:** Internal.

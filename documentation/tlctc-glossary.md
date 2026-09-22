@@ -9,7 +9,7 @@
 
 > Reference lines cite the v2.5 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
 
-This glossary contains all defined terms of the TLCTC framework, organized alphabetically, including the v2.1 boundary extensions, the v2.5 disambiguation rules (R-CHANNEL, R-SUBSTRATE), and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Entries carried over from the V2.0/V2.1 whitepaper keep their whitepaper section cross-references. V2.1 additions are marked with *(V2.1)*; v2.5 additions with *(v2.5)*. Industry terms commonly used in the field are marked with *(Industry Term)*. Rule IDs that are no longer part of the v2.5 normative registry are explicitly marked **(Deprecated alias)** — a retired ID keeps its original meaning and is never reused for a different proposition; the sole historical exception (the v2.1 draft R-INTRA numbering) is documented in the R-INTRA entry.
+This glossary contains all defined terms of the TLCTC framework, organized alphabetically, including the v2.1 boundary extensions, the v2.6 consolidation rule R-SPECIFIC (which folds the v2.5 rules R-FLOOD, R-CHANNEL and R-SUBSTRATE), and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Entries carried over from the V2.0/V2.1 whitepaper keep their whitepaper section cross-references. V2.1 additions are marked with *(V2.1)*; v2.5 additions with *(v2.5)*, v2.6 additions with *(v2.6)*. Industry terms commonly used in the field are marked with *(Industry Term)*. Rule IDs that are no longer part of the v2.6 normative registry are explicitly marked **(Deprecated alias)** or **(Retired alias)** — a retired ID keeps its original meaning and is never reused for a different proposition; the sole historical exception (the v2.1 draft R-INTRA numbering) is documented in the R-INTRA entry.
 
 ---
 
@@ -740,13 +740,13 @@ Foreign code that targets specific vulnerabilities to modify software behavior, 
 
 ### Exploiting Client (#3)
 
-A threat cluster where an attacker targets and leverages implementation flaws within any component acting in a client role (requesting/processing data from a server or resource). These vulnerabilities allow manipulation of client behavior or unauthorized access using Exploit Code, often when the client interacts with malicious content. The generic vulnerability is that client-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per R-SUBSTRATE, the location of a flaw never determines the cluster, the role of the flawed component does.
+A threat cluster where an attacker targets and leverages implementation flaws within any component acting in a client role (requesting/processing data from a server or resource). These vulnerabilities allow manipulation of client behavior or unauthorized access using Exploit Code, often when the client interacts with malicious content. The generic vulnerability is that client-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per the substrate clause of R-SPECIFIC, the location of a flaw never determines the cluster, the role of the flawed component does.
 
 **Related reading:** [CVE-2025-21333 revisited: #2 after all (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-21510: Windows Shell SmartScreen bypass](https://www.tlctc.net/cve-2026-21510.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
 
 ### Exploiting Server (#2)
 
-A threat cluster where an attacker targets and leverages implementation flaws within a component acting in a server role. These vulnerabilities allow manipulation of server behavior or unauthorized access using Exploit Code, forcing a data→code transition where exploit code executes as new, foreign code in the server context. The generic vulnerability is that server-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per R-SUBSTRATE, the location of a flaw never determines the cluster, the role of the flawed component does.
+A threat cluster where an attacker targets and leverages implementation flaws within a component acting in a server role. These vulnerabilities allow manipulation of server behavior or unauthorized access using Exploit Code, forcing a data→code transition where exploit code executes as new, foreign code in the server context. The generic vulnerability is that server-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per the substrate clause of R-SPECIFIC, the location of a flaw never determines the cluster, the role of the flawed component does.
 
 **Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-31431 (Copy Fail): Linux kernel AF_ALG](https://www.tlctc.net/cve-2026-31431.html), [CVE-2026-35414: 15-year-old OpenSSH cert flaw](https://www.tlctc.net/cve-2026-35414.html), [CVE-2026-46300 (Fragnesia): Linux kernel XFRM](https://www.tlctc.net/cve-2026-46300.html), [Verizon DBIR 2025 — TLCTC](https://www.tlctc.net/tlctc-dbir-2025.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
 
@@ -841,7 +841,7 @@ The governance function in NIST CSF 2.0, operating at a strategic level to estab
 
 ### HTTP Flood *(Industry Term)*
 
-An application-layer denial of service attack that overwhelms a web server with seemingly legitimate HTTP requests. In TLCTC: maps to `#6 Flooding Attack` — the primary mechanism is volume exceeding finite capacity at the application layer. Distinguished from implementation-flaw-based DoS (which maps to `#2` or `#3` per R-FLOOD).
+An application-layer denial of service attack that overwhelms a web server with seemingly legitimate HTTP requests. In TLCTC: maps to `#6 Flooding Attack` — the primary mechanism is volume exceeding finite capacity at the application layer. Distinguished from implementation-flaw-based DoS (which maps to `#2` or `#3` per R-SPECIFIC, capacity).
 
 See also: Flooding Attack (#6), DDoS, Slowloris, SYN Flood
 
@@ -876,7 +876,7 @@ A flaw in code logic, parsing, memory handling, or resource handling that causes
 
 ### Implementation Flaw
 
-A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate-neutral per R-SUBSTRATE). Implementation flaws are exploited by `#2 Exploiting Server` (server-role) or `#3 Exploiting Client` (client-role).
+A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate-neutral per the substrate clause of R-SPECIFIC). Implementation flaws are exploited by `#2 Exploiting Server` (server-role) or `#3 Exploiting Client` (client-role).
 
 **Reference:** Handbook §4.2.2 (Global Definitions), §4.1 (#2 and #3 Definitions); Core paper §9, §4
 
@@ -1278,7 +1278,7 @@ See also: Physical Attack (#8), Man in the Middle (#5), Rogue Hotspot
 
 ### Ping of Death *(Industry Term)*
 
-A denial-of-service attack that sends malformed or oversized ICMP packets to crash or destabilize a target system. In TLCTC: if the crash results from an implementation flaw (buffer overflow in ICMP handling), maps to `#2 Exploiting Server` or `#3 Exploiting Client` per R-ROLE and R-FLOOD. If the primary mechanism is volume-based, maps to `#6 Flooding Attack`.
+A denial-of-service attack that sends malformed or oversized ICMP packets to crash or destabilize a target system. In TLCTC: if the crash results from an implementation flaw (buffer overflow in ICMP handling), maps to `#2 Exploiting Server` or `#3 Exploiting Client` per R-ROLE and R-SPECIFIC (capacity). If the primary mechanism is volume-based, maps to `#6 Flooding Attack`.
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#2)
 
@@ -1391,19 +1391,23 @@ Global mapping rule: Whenever Foreign Executable Content (FEC) is interpreted, l
 
 
 
-### R-FLOOD (Capacity Exhaustion vs Implementation Defect)
+### R-FLOOD (Capacity Exhaustion vs Implementation Defect) **(Retired alias)**
 
-Global mapping rule: If the primary mechanism is volume or intensity exhausting finite resources, classify as `#6 Flooding Attack`. If the primary mechanism is an implementation defect that causes crash/hang/degradation (including algorithmic complexity), classify as `#2` or `#3` per R-ROLE.
+*Retired v2.5 rule ID; since v2.6 the **capacity** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
 
-**Reference:** Handbook §4.2.5 (R-FLOOD); Core paper §6.1
+Original statement (v2.5): If the primary mechanism is volume or intensity exhausting finite resources, classify as `#6 Flooding Attack`. If the primary mechanism is an implementation defect that causes crash/hang/degradation (including algorithmic complexity), classify as `#2` or `#3` per R-ROLE.
 
-### R-CHANNEL (Channel Control vs Code Flaw)
+**Reference:** Handbook §4.2.5 (R-FLOOD); Core paper §6.1 (R-SPECIFIC)
 
-Global mapping rule (v2.5): If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as `#5 Man in the Middle`, not as `#2` or `#3` under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it (for example, memory corruption in a TLS parser).
+### R-CHANNEL (Channel Control vs Code Flaw) **(Retired alias)**
+
+*Retired v2.5 rule ID; since v2.6 the **channel** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
+
+Original statement (v2.5): If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as `#5 Man in the Middle`, not as `#2` or `#3` under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it (for example, memory corruption in a TLS parser).
 
 R-CHANNEL classifies the *weakness*; R-MITM sequences the *attack path* (position acquisition versus action). The two do not conflict.
 
-**Reference:** Handbook §6.1 (R-CHANNEL); Core paper §3.4
+**Reference:** Handbook §6.1 (R-CHANNEL); Core paper §6.1 (R-SPECIFIC)
 
 ### R-SCOPE (Entitlement Scope Boundary) *(v2.5)*
 
@@ -1413,15 +1417,31 @@ Admission rule for the whole registry: a step is classified under a cluster only
 
 See also: Cause-Side Partition, Abuse of Rights, Entitlement, Error in Use, R-CRED
 
-### R-SUBSTRATE (Physical Property vs Implemented Logic)
+### R-SPECIFIC (Specific Generic Vulnerability over Residual Test) *(v2.6)*
 
-Global mapping rule (v2.5): Classify as `#8 Physical Attack` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (`#2` or `#3` per R-ROLE). Attacker proximity or possession is **not** the test.
+Global mapping rule (v2.6): where one weakness is describable both as a specific generic vulnerability and as a residual one, classify it under the specific. The residual tests — designed functionality (`#1`) and implementation flaw (`#2`/`#3` per R-ROLE) — apply only where no specific generic vulnerability is the one exploited. Three clauses decide the recurring cases:
+
+- **capacity** — volume or intensity exhausting finite resources → `#6`; an implementation defect causing crash, hang or degradation (including algorithmic complexity) → `#2`/`#3`.
+- **channel** — defective logic that is itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry or revocation checking, channel encryption, algorithm negotiation) → `#5`; a defect incidental to that control (memory corruption in a TLS parser) → `#2`/`#3`.
+- **substrate** — a physical-layer property of the substrate (charge, voltage, emission, temperature, emission-borne timing, wear, material state) as the exploited generic vulnerability → `#8`, whether or not the attacker has physical access; the physical layer as mere readout of a logic defect → classify by that defect (Rowhammer `#8`, Spectre `#2`, power analysis `#8`).
+
+Each clause keeps the proposition of the v2.5 rule it replaces; R-FLOOD, R-CHANNEL and R-SUBSTRATE are retired aliases of the capacity, channel and substrate clauses. Cited as "R-SPECIFIC (capacity)", or inside parentheses as "R-SPECIFIC, capacity".
+
+**Reference:** Core paper §6.1; dictionary `rules[R-SPECIFIC]`
+
+See also: R-ROLE, Generic Vulnerability, Flooding Attack (#6), Man in the Middle (#5), Physical Attack (#8)
+
+### R-SUBSTRATE (Physical Property vs Implemented Logic) **(Retired alias)**
+
+*Retired v2.5 rule ID; since v2.6 the **substrate** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
+
+Original statement (v2.5): Classify as `#8 Physical Attack` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (`#2` or `#3` per R-ROLE). Attacker proximity or possession is **not** the test.
 
 The discriminating question is whether the attack is against the *implemented logic* or against the *physical representation* that logic runs on. Rowhammer is `#8` (charge migration between adjacent DRAM cells is the vulnerability; nothing logical fails) even though it can be mounted from JavaScript. Spectre is `#2` (speculation crosses an isolation boundary the design was meant to enforce; cache timing is only the readout). Power side-channel analysis is `#8`, because the cryptography is correct and the emission itself is the vulnerability.
 
 R-SUBSTRATE is the *admission* test — whether a weakness qualifies as `#8` at all. The sequencing principle formerly stated as R-PHYSICAL (now a deprecated alias) still holds — a qualifying physical step is `#8` and subsequent technical steps are classified separately. They are complementary.
 
-**Reference:** Handbook §6.1 (R-SUBSTRATE); Core paper §3.4
+**Reference:** Handbook §6.1 (R-SUBSTRATE); Core paper §6.1 (R-SPECIFIC)
 
 ### R-HUMAN (Human Manipulation Isolation) **(Deprecated alias)**
 
@@ -1454,11 +1474,11 @@ Global mapping rule: The method of gaining a privileged communication-path posit
 
 ### R-PHYSICAL (Physical Domain Isolation) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its sequencing substance is carried by the #8 cluster definition and boundary tests (core paper §4); its admission question is now settled normatively by R-SUBSTRATE. The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its sequencing substance is carried by the #8 cluster definition and boundary tests (core paper §4); its admission question is now settled normatively by R-SPECIFIC, substrate clause. The ID keeps this original meaning and is never reused.*
 
-Original statement: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately. Note that R-SUBSTRATE corrects a latent misreading of this phrasing: attacker physical access or proximity is NOT required for `#8`.
+Original statement: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately. Note that the substrate clause of R-SPECIFIC corrects a latent misreading of this phrasing: attacker physical access or proximity is NOT required for `#8`.
 
-**Reference:** Handbook §4.2.5 (R-PHYSICAL); superseded by core paper §4 (#8 boundary tests) and R-SUBSTRATE (core §6.1)
+**Reference:** Handbook §4.2.5 (R-PHYSICAL); superseded by core paper §4 (#8 boundary tests) and R-SPECIFIC, substrate clause (core §6.1)
 
 ### R-ROLE (Server vs Client Determination)
 
@@ -2209,19 +2229,17 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 
 ### R-* Rules Quick Reference
 
-The v2.5 normative registry contains exactly **19 rules**: nine core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.5.json`); summaries are condensed, the dictionary statement governs.
+The v2.6 normative registry contains exactly **17 rules**: seven core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.6.json`); summaries are condensed, the dictionary statement governs.
 
-**Core rules (9):**
+**Core rules (7):**
 
 | Rule | Distinguishes | Key Decision |
 | --- | --- | --- |
 | **R-EXEC** | FEC Execution | If FEC executes → `#7` MUST be recorded (plus enabling cluster) |
 | **R-ROLE** | `#2` vs `#3` | Server-role (accepts inbound) → `#2`; Client-role (consumes external) → `#3`; roles set by call direction at any interface, network not required |
-| **R-FLOOD** | Capacity vs Defect | Volume exhaustion → `#6`; Implementation defect → `#2/#3` per R-ROLE |
+| **R-SPECIFIC** *(v2.6)* | Specific vs Residual | Capacity: volume exhaustion → `#6`, defect → `#2/#3`; Channel: defective channel control → `#5`, incidental defect → `#2/#3`; Substrate: physical property exploited → `#8`, readout only → `#2/#3` |
 | **R-SUPPLY** | TAE Placement | `#10` at Trust Acceptance Event where third-party trust is honored |
 | **R-MITM** | Position vs Action | Gaining position → enabling cluster; Interception/modification/relay → `#5` |
-| **R-CHANNEL** *(v2.5)* | Control vs Code Flaw | Defective logic constitutive of channel control → `#5`; Incidental defect → `#2/#3` |
-| **R-SUBSTRATE** *(v2.5)* | Property vs Logic | Physical property exploited → `#8`; Physical layer as readout only → `#2/#3` |
 | **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` (unless the identity is the presenter's own — self-issued enrolment is `#1`); separate steps |
 | **R-SCOPE** *(v2.5)* | Attack vs Abuse of Rights | Actor? Intent? Entitlement covering this action? → in-grant intended action = Abuse of Rights (OpRisk, no cluster, no SRE); unentitled → Attack row, clusters apply |
 
@@ -2246,7 +2264,10 @@ The v2.5 normative registry contains exactly **19 rules**: nine core rules and t
 | --- | --- | --- |
 | **R-ABUSE** | Deprecated v2.0 alias | #1 cluster definition and boundary tests (core §4) |
 | **R-HUMAN** | Deprecated v2.0 alias | #9 cluster definition and boundary tests (core §4) |
-| **R-PHYSICAL** | Deprecated v2.0 alias | #8 boundary tests (core §4) + R-SUBSTRATE (admission) |
+| **R-PHYSICAL** | Deprecated v2.0 alias | #8 boundary tests (core §4) + R-SPECIFIC, substrate clause (admission) |
+| **R-FLOOD** | Retired v2.5 rule (v2.6) | R-SPECIFIC, capacity clause |
+| **R-CHANNEL** | Retired v2.5 rule (v2.6) | R-SPECIFIC, channel clause |
+| **R-SUBSTRATE** | Retired v2.5 rule (v2.6) | R-SPECIFIC, substrate clause |
 | **R-TRANSIT-1/2/4/5/6/7/8** | Withdrawn v2.1 draft series | Non-normative transit notation practice (see R-TRANSIT entry); cluster independence is SG-2 |
 | **R-INTRA-1…6, -8** | Withdrawn v2.1 draft series | Non-normative intra-system notation practice (see R-INTRA entry) |
 | **R-UNRES-1, -4** | Consolidated during v2.1 finalization | R-UNRES-1 → R-UNRES-2; draft R-UNRES-4's threshold → canonical R-UNRES-9 |
