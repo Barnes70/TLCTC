@@ -105,6 +105,21 @@
         "notes": { "type": "string" }
       }
     },
+    "changes_from_v2_5": {
+      "type": "array",
+      "description": "v2.6 change record: one entry per change item, traced to the review point it answers.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "review_point", "summary", "affects"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^C\\d+$" },
+          "review_point": { "type": "string" },
+          "summary": { "type": "string" },
+          "affects": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        }
+      }
+    },
     "extensions": {
       "type": "object",
       "description": "Forward-compatible container for non-standard fields."

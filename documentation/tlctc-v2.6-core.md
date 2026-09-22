@@ -767,3 +767,29 @@ The following adjacent frameworks are referenced in this paper for positioning. 
 13. Popper, K. R. *The Logic of Scientific Discovery.* Hutchinson, 1959 (orig. *Logik der Forschung*, 1934).
 
 14. MITRE Corporation. *Common Attack Pattern Enumeration and Classification (CAPEC).* Version 3.9. https://capec.mitre.org/
+
+## Appendix A. Changes from v2.5
+
+v2.6 answers an external review of v2.5. Each change item is traced to the review point it answers and recorded identically in the dictionary's `changes_from_v2_5` section.
+
+| ID | Review point | Change | Affects |
+| --- | --- | --- | --- |
+| C1 | 1 — partition does not follow one principle | Derivation under a stated criterion (a distinct control lever and owner); #1 and #2/#3 named as residual clusters | §2, §3.2, §8 |
+| C2 | 1 — fold the precedence rules | R-FLOOD, R-CHANNEL, R-SUBSTRATE folded into R-SPECIFIC; registry 19 → 17 | §6.1 |
+| C3 | 2 — #10 swallows most CVEs | #10 definition names subversion of the trusted third party | §4 #10 |
+| C4 | 2 — #10 boundary test | Subversion test; falsifier reworded (Log4Shell is #2) | §2, §4 #10 |
+| C5 | 2 — federation inflates #10 | Assertion presentation is #4; #10 → #4 only where the IdP was subverted | §4 #10 |
+| C6 | 2 — #10 at rule level | R-SUPPLY requires subversion; step 10 names it | §2, §6.1 |
+| C7 | 3 — entitlement contradicts itself | Envelope = scope (objects, actions, limits); purpose = conduct norm | §3.5 |
+| C8 | 3 — Adoboli | Adoboli removed; claims-handler pair added | §3.5 |
+| C9 | 4 — R-SCOPE step 4 | Step 4 routes to the cluster rules | §3.5, §6.1 |
+| C10 | 5 — FEC boundary | Data-vs-code boundary in the canon (`fec`) | §4 #7 |
+| C11 | 5 — prompt injection | Prompt injection is #1; #1 → #7 on attacker-controlled execution | §4 #1 |
+| C12 | 6 — SRE dilutes Compromise | Compromise = behaviour leaving owner control, including floods and passive interception | §3.4 |
+| C13 | 6 — attempts | Successes only; attempts are indicators, not steps | §3.4, §8 |
+| C14 | 7 — positioning | VERIS and CAPEC tables; CAPEC cited | §1.1, §10 |
+| C15 | smaller — DCS | DCS_d / DCS_c on P90 distributions | §7.2 |
+| C16 | smaller — names | Naming note; names unchanged | §4 |
+| C17 | all — application | Application paper aligned to v2.6 | application |
+| C18 | plan-time finding | Boundary tests canonical here, mirrored into whitepaper §4.1 under a build check | §4 |
+| C19 | plan-time finding | Rule statements verbatim from the dictionary, checked | §6 |

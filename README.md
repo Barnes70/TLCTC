@@ -2,6 +2,8 @@
 
 **Version 2.5** · CC BY 4.0 · [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20633176.svg)](https://doi.org/10.5281/zenodo.20633176) · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.5-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
+> **Branch `v2.6-core`:** TLCTC 2.6 is a working version — not deposited on Zenodo and not deployed on tlctc.net. The citable version remains v2.5.1 (see Citation); the v2.6 core and dictionary are listed below as the working canon.
+
 A cause-oriented, axiomatic cyber threat taxonomy. We are aware of no prior framework that classifies threats by the generic vulnerability exploited rather than by outcome or actor.
 
 TLCTC provides the missing semantic foundation for cybersecurity: a stable, non-overlapping classification of cyber threats based on **why** compromise happens — the generic vulnerability exploited — rather than **what** happens afterwards (outcomes like "data breach," "ransomware," or "denial of service").
