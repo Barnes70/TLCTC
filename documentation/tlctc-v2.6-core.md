@@ -20,13 +20,46 @@ Cybersecurity suffers from a persistent language problem: the field describes fu
 
 This semantic diffusion — the absence of a shared, stable meaning for the field's core terms — has practical costs. When cause, technique, actor, and outcome share a vocabulary, it becomes difficult to compare incidents across organizations, aggregate threat intelligence into stable categories, design controls that target a specific root weakness, or communicate cyber risk consistently between leadership, risk functions, and technical teams. The same event may be classified differently by two analysts not because they disagree about the facts, but because the underlying terms admit multiple readings. Outcome-named categories such as "ransomware" or "data breach" compound the problem: they describe an effect, not the generic vulnerability an attacker exploited, so they cannot anchor a reproducible mapping from threat to control. The condition is not mere terminological untidiness: threat-intelligence vendors and agencies each report under their own scheme — adversary groups, e-crime categories, threat-landscape buckets — so accounts of the same event resist combination. In Kuhn's terms, the field remains *pre-paradigmatic*: competing schools coexist, each with its own terminology, methods, and explanatory models, with no shared foundation that lets their results accumulate [12].
 
-Existing frameworks address adjacent layers of this space but leave the cause side underspecified. Control catalogues and management standards (e.g. the NIST Cybersecurity Framework, and risk-assessment guidance such as NIST SP 800-30) organize what an organization should do; adversary-technique knowledge bases (e.g. MITRE ATT&CK) enumerate observed behaviours; software-weakness and vulnerability registries (e.g. MITRE CWE and CVE) catalogue concrete defects; and quantitative methods (e.g. FAIR) estimate loss. Adjacent threat-classification and attack-lifecycle models — STRIDE, VERIS, the Lockheed Martin Cyber Kill Chain, the Diamond Model, and threat-landscape reporting such as the ENISA Threat Landscape — describe techniques, incident attributes, intrusion phases, or observed activity. Each is valuable within its scope, yet none provides a compact, non-overlapping taxonomy of the generic vulnerabilities that compromises ultimately exploit — a stable backbone that holds across enterprise IT, cloud, OT, IoT, and endpoint environments without being tied to a particular technology or actor.
+Existing frameworks address adjacent layers of this space but leave the cause side underspecified. Control catalogues and management standards (e.g. the NIST Cybersecurity Framework, and risk-assessment guidance such as NIST SP 800-30) organize what an organization should do; adversary-technique knowledge bases (e.g. MITRE ATT&CK) enumerate observed behaviours; attack-pattern catalogues (e.g. MITRE CAPEC) describe attack mechanisms; software-weakness and vulnerability registries (e.g. MITRE CWE and CVE) catalogue concrete defects; and quantitative methods (e.g. FAIR) estimate loss. Adjacent threat-classification and attack-lifecycle models — STRIDE, VERIS, the Lockheed Martin Cyber Kill Chain, the Diamond Model, and threat-landscape reporting such as the ENISA Threat Landscape — describe techniques, incident attributes, intrusion phases, or observed activity. Each is valuable within its scope, yet none provides a compact, non-overlapping taxonomy of the generic vulnerabilities that compromises ultimately exploit — a stable backbone that holds across enterprise IT, cloud, OT, IoT, and endpoint environments without being tied to a particular technology or actor.
 
 The Top Level Cyber Threat Clusters (TLCTC) framework addresses this gap by anchoring analysis in causality. A cyber threat is defined by the generic vulnerability (root weakness) it exploits, not by who performs it and not by the consequence that follows. The framework's contribution is a compact set of ten non-overlapping, cause-side threat clusters, each defined by the single generic vulnerability it initially targets. Threats are kept on the cause side and separated from outcomes, actor identity, and control failures, so that complete real-world intrusions can be expressed as ordered sequences of cluster steps — attack paths — without changing the meaning of the individual steps.
 
 A further consequence of the same ambiguity is organizational. Strategic risk governance, security operations, and secure software development each describe threats in their own vocabulary, so a finding rarely travels intact from a board-level risk register to a SOC playbook to a developer's backlog. TLCTC is designed as a shared, cause-oriented vocabulary across these communities: a stable strategic management view (the ten clusters and their generic vulnerabilities) maps both to a concrete operational security view (specific vulnerabilities, techniques, and procedures) and to a development view (the design responsibility each cluster implies). The same cluster therefore names a threat consistently for the executive who must govern it, the analyst who must detect it, and the engineer who must prevent it.
 
 TLCTC does not claim to be a finished paradigm. It is offered as a testable proposal for the shared foundation a paradigm would require — common axioms, definitions, and cause-side categories — so that, when independent analysts and vendors classify against the same clusters, their otherwise incompatible reports become combinable.
+
+### 1.1 Positioning against VERIS and CAPEC
+
+Two adjacent schemes come closest to TLCTC's cause side, and comparing them shows where the contribution lies.
+
+**VERIS** [2] records each incident's actions in seven categories — Malware, Hacking, Social, Misuse, Physical, Error, Environmental — and several of them already separate what TLCTC separates. Table 1 reads the VERIS 1.4.1 action varieties in TLCTC terms, using the published 337-entry crosswalk (`mappings/veris/`, study in `documentation/tlctc-veris-vcdb-study.md`).
+
+| VERIS action category | TLCTC reading (varieties) |
+| --- | --- |
+| Hacking | split by generic vulnerability: #2 ×29, #1 ×12, #4 ×7, #6 ×3, #3 ×3, #5 ×2, #7 ×1 |
+| Malware | #7, with an enabling step VERIS does not record |
+| Social | #9 |
+| Misuse | the Abuse of Rights row (13 of 15 varieties); #4 ×1 |
+| Physical | #8 (10 of 14 varieties) |
+| Error | Error in Use row (12), Failure row (4) |
+| Environmental | Failure / external-event row (25) |
+
+*Table 1 — VERIS 1.4.1 action categories in TLCTC terms. Counts are varieties, not incidents; the remaining varieties are outcomes, vectors or unresolved values.*
+
+Misuse, Error and Environmental correspond to the three operational-risk rows of the cause-side partition (Section 3.5), so VERIS already keeps them apart from attack. TLCTC adds three things: it splits Hacking — the category that carries most of the cause — by the generic vulnerability exploited; it gives supply chain a cluster of its own, where VERIS records it as a vector or partner attribute; and it orders an incident's steps into a path with Δt between them. VERIS records an unordered set of actions, and its maintainers list sequencing as future work.
+
+**CAPEC** [14] catalogues attack patterns under a *Mechanisms of Attack* view. Its categories group patterns by mechanism, which cuts across TLCTC's generic vulnerabilities (Table 2).
+
+| CAPEC 3.9 category | Member patterns and their TLCTC cluster |
+| --- | --- |
+| 210 Abuse Existing Functionality | 212 Functionality Misuse #1 · 125 Flooding #6 · 216 Communication Channel Manipulation #5 |
+| 225 Subvert Access Control | 94 Adversary in the Middle #5 · 560 Use of Known Domain Credentials #4 · 507 Physical Theft #8 |
+| 152 Inject Unexpected Items | 248 Command Injection #2 → #7 · 624 Hardware Fault Injection #8 |
+| 262 Manipulate System Resources | 438 Modification During Manufacture #10 · 176 Configuration/Environment Manipulation #1 |
+
+*Table 2 — Four CAPEC categories and the clusters their member patterns reach.*
+
+Abuse Existing Functionality is closest to #1 but also holds flooding and channel-manipulation patterns; Subvert Access Control spans credential use, interception and physical theft. CAPEC answers *how* an attack works; TLCTC answers *which generic vulnerability* it exploits. The two are complementary: CAPEC patterns attach beneath the clusters at the operational layer (Section 4), as ATT&CK techniques and CWE weaknesses do.
 
 ## 2. The Thought Experiment: Deriving the Ten Clusters
 
@@ -729,3 +762,5 @@ The following adjacent frameworks are referenced in this paper for positioning. 
 12. Kuhn, T. S. *The Structure of Scientific Revolutions.* University of Chicago Press, 1962.
 
 13. Popper, K. R. *The Logic of Scientific Discovery.* Hutchinson, 1959 (orig. *Logik der Forschung*, 1934).
+
+14. MITRE Corporation. *Common Attack Pattern Enumeration and Classification (CAPEC)*, version 3.9. https://capec.mitre.org/
