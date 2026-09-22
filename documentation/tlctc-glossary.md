@@ -553,7 +553,7 @@ An outcome event describing **Loss of Confidentiality (C)** (data stolen / unaut
 
 A normative classification principle: Domain-specific expressions (e.g., SQL, LDAP, XPath, GraphQL, template syntax, configuration languages) are treated as **data** unless they directly cause **FEC execution** via a general-purpose execution engine.
 
-**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §9
+**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §4 (#7); dictionary `fec.boundary`
 
 ### Delta t (Δt) *(V2.0)*
 
@@ -799,9 +799,9 @@ See also: Foreign Executable Content (FEC), Living Off the Land / LOLBAS, Dual-U
 
 ### Foreign Executable Content (FEC)
 
-Attacker-controlled (or otherwise untrusted) program text or bytes that are **interpreted, loaded, or executed** by a **general-purpose execution engine** in the target environment. Includes attacker-controlled commands fed into interpreters. FEC execution includes in-memory (fileless) execution, interpreted code, macro execution, and reflective loading—no "on-disk" requirement exists.
+Attacker-controlled (or otherwise untrusted) program text or bytes that are **interpreted, loaded, or executed** by a **general-purpose execution engine** in the target environment. Includes attacker-controlled commands fed into general-purpose interpreters (shells, script hosts). Domain-specific expression languages (SQL, LDAP, XPath, GraphQL, template syntax, configuration languages) are data unless they cause execution in such an engine (see Data vs Code Boundary). Natural-language instructions to a model or agent are not FEC (see Prompt Injection). FEC execution includes in-memory (fileless) execution, interpreted code, macro execution, and reflective loading—no "on-disk" requirement exists.
 
-**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §9
+**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §4 (#7), §9; dictionary `fec`
 
 **Related reading:** [The File Type Fallacy — extension blocklists](https://www.tlctc.net/tlctc-file-type-fallacy.html), [GovCERT-CH blocked filetypes × TLCTC](https://www.tlctc.net/tlctc-govcert-blocked-filetypes.html)
 
@@ -1340,6 +1340,14 @@ See also: Abuse of Functions (#1), Exploiting Server (#2), Implementation Flaw
 A development role focused on architecture and strategy, responsible for designing overall software architecture and component interactions, making strategic decisions about frameworks and protocols, establishing secure coding standards and security requirements, and considering system-wide security implications. Primary responsibility for addressing threat clusters #1, #4, #5, #10 at an architectural level. Contrasts with the Coder role which focuses on implementation and craftsmanship.
 
 **Related reading:** [Taming SonarQube with TLCTC (Secure-Dev pt 2)](https://www.tlctc.net/tlctc-sdlc-dev-blog.html), [Programmer vs Coder in TLCTC (Secure-Dev pt 1)](https://www.tlctc.net/tlctc-sdlc-prog-coder.html), [Adding the Developer's View to TLCTC](https://www.tlctc.net/tlctc-definitions-sdlc-prog-coder.html)
+
+### Prompt Injection *(Industry Term)*
+
+Instructions placed in the input of a language model or agent — directly by the user, or indirectly in content the agent reads (web pages, documents, tool output) — so that the model acts on them. In TLCTC: `#1 Abuse of Functions`. Acting on natural-language input is the model's designed function; no implementation flaw is required, and natural-language instructions are not Foreign Executable Content. Jailbreaks, RAG or context poisoning and agent tool abuse classify the same way. Where the agent then executes code or commands whose content the attacker controls, the execution is `#7` (`#1 → #7`, R-EXEC); a flaw in the model-serving or agent software is `#2`/`#3`; a subverted third-party model, dataset or tool is `#10`. The agent is the attacker's capability vector, not the actor (Axiom IV).
+
+**Reference:** Core paper §4 (#1); dictionary `fec.boundary`; MITRE ATLAS mapping (`mappings/mitre-atlas/`)
+
+See also: Abuse of Functions (#1), Foreign Executable Content (FEC), AI / AGI / ASI (Positioning in TLCTC)
 
 ### Propagated PR *(V2.0)*
 

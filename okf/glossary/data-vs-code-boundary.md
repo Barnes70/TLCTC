@@ -10,4 +10,4 @@ tags:
 
 A normative classification principle: Domain-specific expressions (e.g., SQL, LDAP, XPath, GraphQL, template syntax, configuration languages) are treated as **data** unless they directly cause **FEC execution** via a general-purpose execution engine.
 
-**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §9
+**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §4 (#7); dictionary `fec.boundary`

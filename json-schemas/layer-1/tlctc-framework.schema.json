@@ -50,6 +50,19 @@
       "minItems": 1,
       "items": { "$ref": "#/definitions/rule_def" }
     },
+    "fec": {
+      "type": "object",
+      "description": "Foreign Executable Content and the data-vs-code boundary (v2.6): what counts as execution for R-EXEC.",
+      "additionalProperties": false,
+      "required": ["definition", "general_purpose_engines", "data_languages", "boundary"],
+      "properties": {
+        "definition": { "type": "string" },
+        "general_purpose_engines": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "data_languages": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "boundary": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
     "data_risk_events": {
       "type": "object",
       "description": "Data Risk Event (DRE) type codes as a refinement tree (v2.5): three parent properties, two admitted refinements, and the stopping rule that admits them. Outcome annotations only — never clusters, never classification inputs (Axiom III).",

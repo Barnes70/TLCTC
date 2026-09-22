@@ -189,12 +189,16 @@ Each cluster is identified by a strategic ID (`#N`) for management-level use and
 
 This cluster covers the manipulation of legitimate software capabilities — features, APIs, configurations, administrative settings, and workflows — through standard interfaces using built-in input types and valid sequences of actions, achieving an attacker advantage without requiring an implementation flaw.
 
+**Models and agents.** A model or agent that acts on natural-language input is software functionality like any other, and its designed function is to follow the instructions it is given. Prompt injection, jailbreaks and context poisoning therefore classify as #1 — abuse of that designed function through input it was designed to accept — not as #7, because natural-language instructions are not foreign executable content, and not as #2/#3, because no implementation flaw is required. The agent is the attacker's capability vector, not the actor (Axiom IV). The MITRE ATLAS mapping applies this reading across its techniques.
+
 **Boundary tests (normative):**
 
 - If an implementation flaw is required → #2 or #3.
 - If this step enables execution of FEC → record #1 for enablement and `→ #7` for execution (`#1 → #7`).
 - If the step is primarily credential use/presentation → #4.
 - If the step abuses a designed enrolment/registration function to obtain an identity or permissions outside its intended population or scope → #1; subsequent authentication as self is not a #4 step (R-CRED).
+- Natural-language instructions to a model or agent — prompt injection (direct or indirect), jailbreaks, RAG or context poisoning, agent tool abuse — are #1: the model's designed function acting on input it was designed to accept, no implementation flaw, no FEC.
+- If the agent then executes code or commands whose content the attacker controls, including code it generated at the attacker's instruction → `#1 → #7` (R-EXEC); a flaw in the model-serving or agent software → #2/#3 (R-ROLE); a subverted third-party model, dataset or tool → #10 at the TAE.
 
 ### #2 Exploiting Server
 
@@ -215,7 +219,7 @@ The vulnerable component accepts and handles inbound requests or stimuli relativ
 - If the vulnerable component is in a client role → #3.
 - TOCTOU / race conditions are implementation flaws → #2 (and `→ #7` only if FEC executes).
 - If exploitation results in FEC execution → append `→ #7` (`#2 → #7`) per R-EXEC.
-- If exploitation yields security impact without FEC execution (e.g. authorization bypass, SQLi data read/write) → #2 only; document outcomes as Data Risk Events.
+- If exploitation yields security impact without FEC execution (e.g. authorization bypass, SQLi data read/write) → #2 only (data-vs-code boundary, #7); document outcomes as Data Risk Events.
 
 ### #3 Exploiting Client
 
@@ -307,7 +311,9 @@ The cluster covers exhaustion of finite resources — bandwidth, CPU, memory, st
 - **Generic vulnerability:** The software environment's designed capability to execute potentially untrusted foreign code.
 - **Topology:** Internal.
 
-The cluster covers execution of Foreign Executable Content (FEC) through the environment's designed execution capabilities — binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters — including dual-use tooling when it executes attacker-controlled content. If FEC executes, a #7 step must be recorded at the execution moment (see R-EXEC).
+The cluster covers execution of Foreign Executable Content (FEC) through the environment's designed execution capabilities — binaries, scripts, macros, modules, or attacker-controlled commands fed into general-purpose interpreters (shells, script hosts) — including dual-use tooling when it executes attacker-controlled content. If FEC executes, a #7 step must be recorded at the execution moment (see R-EXEC).
+
+**What counts as execution.** FEC is content executed by a general-purpose execution engine — an OS loader, shell, script interpreter, macro engine, browser JavaScript engine, module or plugin loader, or general-purpose language runtime. Domain-specific expression languages — SQL, LDAP, XPath, GraphQL, template syntax, configuration languages — are data unless they cause execution in such an engine: SQL injection that reads a table is #2 alone; SQL injection that invokes `xp_cmdshell`, or template injection that reaches a code-evaluation call, is `#2 → #7`. The dictionary carries this boundary in its `fec` section.
 
 **Boundary tests (normative):**
 
@@ -315,6 +321,7 @@ The cluster covers execution of Foreign Executable Content (FEC) through the env
 - If legitimate function misuse enables FEC execution → `#1 → #7`.
 - If an exploit payload triggers an implementation flaw and results in FEC execution → `#2/#3 → #7`.
 - If an implementation flaw is exploited but no FEC executes → do not add #7.
+- Domain-specific expression languages are data unless they cause execution in a general-purpose engine; injection that only reads or writes data is #2/#3 without #7.
 
 ### #8 Physical Attack
 
@@ -677,7 +684,7 @@ The following one-line definitions cover the terms used in this paper so that it
 - **Entitlement** — what an accountable grantor actually conferred on a person for an action (an access right, a role, a mandate); its envelope is scope — objects, actions, limits. Purpose is the conduct norm, not part of the envelope: an in-envelope action against purpose is Abuse of Rights. Entitled is not permitted: permission is what the access-control system returns, entitlement is what was conferred. It attaches to the person, never to the token.
 - **Epistemic state** — the knowledge status of a step in a path: classified (`#X`), low-confidence (`#X [conf=low]`), inferred (`#X [inferred]`), or unresolved (`?` / `…`); these are distinct from the step's ontological cluster classification.
 - **Error in Use** — an actor, any actor, producing an outcome they did not intend; operational risk, no cluster, entitlement not asked. Can enter any altitude directly and produce any DRE type.
-- **FEC (Foreign Executable Content)** — program content that the environment loads, interprets, or executes through its intended execution capability; its execution is the generic vulnerability of #7 Malware (R-EXEC).
+- **FEC (Foreign Executable Content)** — program content that the environment loads, interprets, or executes through its intended execution capability; its execution is the generic vulnerability of #7 Malware (R-EXEC) — content run by a general-purpose execution engine; domain-specific expression languages (SQL, LDAP, XPath, template syntax) are data unless they reach one, and natural-language instructions to a model are not FEC (dictionary `fec`).
 - **Generic vulnerability** — the single root-level attack surface that defines a cluster; the stable, technology-independent weakness a cluster targets. Every generic vulnerability maps to exactly one cluster (Axiom VI), and every specific vulnerability (e.g. a CVE) is an instance of one.
 - **Intra-system boundary** — a boundary crossing within a single host (sandbox, privilege, process, hypervisor), annotated with `|...|`; an observability annotation that never changes classification (R-INTRA-7).
 - **Responsibility sphere** — the organizational owner of a domain, denoted `@Entity` (e.g. `@Org`, `@Vendor`, `@Facilities`); spheres have distinct policies, teams, and legal boundaries.

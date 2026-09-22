@@ -3,7 +3,7 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.6",
   "generator": "scripts/build-okf.js",
-  "document_count": 437,
+  "document_count": 438,
   "type_counts": {
     "attack-path": 59,
     "axiom": 10,
@@ -20,7 +20,7 @@
     "rule": 17,
     "sphere": 9,
     "sre": 1,
-    "term": 260
+    "term": 261
   },
   "documents": [
     {
@@ -3193,6 +3193,16 @@
       "title": "Programmer",
       "description": "A development role focused on architecture and strategy, responsible for designing overall software architecture and component interactions, making strategic decisions about frameworks and protocols, establishing secure coding standards and security requirements, and considering system wide security implications.",
       "resource": "tlctc:term:programmer",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/prompt-injection.md",
+      "type": "term",
+      "title": "Prompt Injection",
+      "description": "Instructions placed in the input of a language model or agent — directly by the user, or indirectly in content the agent reads (web pages, documents, tool output) — so that the model acts on them.",
+      "resource": "tlctc:term:prompt-injection",
       "tags": [
         "glossary"
       ]

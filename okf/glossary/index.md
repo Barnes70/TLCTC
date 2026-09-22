@@ -1,6 +1,6 @@
 # glossary
 
-260 document(s).
+261 document(s).
 
 - [Abuse of Functions (#1)](/glossary/abuse-of-functions-1.md) — `term`
 - [Abuse of Rights](/glossary/abuse-of-rights.md) — `term`
@@ -162,6 +162,7 @@
 - [Privilege Escalation](/glossary/privilege-escalation.md) — `term`
 - [Process Injection](/glossary/process-injection.md) — `term`
 - [Programmer](/glossary/programmer.md) — `term`
+- [Prompt Injection](/glossary/prompt-injection.md) — `term`
 - [Propagated PR](/glossary/propagated-pr.md) — `term`
 - [Protection Ring Architecture](/glossary/protection-ring-architecture.md) — `term`
 - [R-ABUSE (Function Misuse Determination) **](/glossary/r-abuse-function-misuse-determination.md) — `term`

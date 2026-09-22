@@ -274,6 +274,8 @@ Each cluster below uses the same structure:
 - If this step enables execution of FEC → record #1 for enablement and `→ #7` for execution (`#1 → #7`).
 - If the step is primarily credential use/presentation → #4.
 - If the step abuses a designed enrolment/registration function to obtain an identity or permissions outside its intended population or scope → #1; subsequent authentication as self is not a #4 step (R-CRED).
+- Natural-language instructions to a model or agent — prompt injection (direct or indirect), jailbreaks, RAG or context poisoning, agent tool abuse — are #1: the model's designed function acting on input it was designed to accept, no implementation flaw, no FEC.
+- If the agent then executes code or commands whose content the attacker controls, including code it generated at the attacker's instruction → `#1 → #7` (R-EXEC); a flaw in the model-serving or agent software → #2/#3 (R-ROLE); a subverted third-party model, dataset or tool → #10 at the TAE.
 
 **Topology:** Internal.
 
@@ -301,7 +303,7 @@ Each cluster below uses the same structure:
 - If the vulnerable component is in a client role → #3.
 - TOCTOU / race conditions are implementation flaws → #2 (and `→ #7` only if FEC executes).
 - If exploitation results in FEC execution → append `→ #7` (`#2 → #7`) per R-EXEC.
-- If exploitation yields security impact without FEC execution (e.g. authorization bypass, SQLi data read/write) → #2 only; document outcomes as Data Risk Events.
+- If exploitation yields security impact without FEC execution (e.g. authorization bypass, SQLi data read/write) → #2 only (data-vs-code boundary, #7); document outcomes as Data Risk Events.
 
 **Topology:** Internal.
 
@@ -412,7 +414,7 @@ Each cluster below uses the same structure:
 
 **Definition:** An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.
 
-**Scope:** Execution of **Foreign Executable Content (FEC)** through the environment’s designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters), including dual-use tooling when it executes attacker-controlled FEC.
+**Scope:** Execution of **Foreign Executable Content (FEC)** through the environment’s designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into general-purpose interpreters (shells, script hosts)), including dual-use tooling when it executes attacker-controlled FEC.
 
 **Generic Vulnerability:** The software environment's designed capability to execute potentially untrusted foreign code.
 
@@ -426,6 +428,7 @@ Each cluster below uses the same structure:
 - If legitimate function misuse enables FEC execution → `#1 → #7`.
 - If an exploit payload triggers an implementation flaw and results in FEC execution → `#2/#3 → #7`.
 - If an implementation flaw is exploited but no FEC executes → do not add #7.
+- Domain-specific expression languages are data unless they cause execution in a general-purpose engine; injection that only reads or writes data is #2/#3 without #7.
 
 **Explicit SQLi clarification (non-normative but recommended):**
 

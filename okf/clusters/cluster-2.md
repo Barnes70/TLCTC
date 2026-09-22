@@ -34,7 +34,7 @@ topology: "internal"
 - If the vulnerable component is in a client role → #3.
 - TOCTOU / race conditions are implementation flaws → #2 (and `→ #7` only if FEC executes).
 - If exploitation results in FEC execution → append `→ #7` (`#2 → #7`) per R-EXEC.
-- If exploitation yields security impact without FEC execution (e.g. authorization bypass, SQLi data read/write) → #2 only; document outcomes as Data Risk Events.
+- If exploitation yields security impact without FEC execution (e.g. authorization bypass, SQLi data read/write) → #2 only (data-vs-code boundary, #7); document outcomes as Data Risk Events.
 
 **Topology:** Internal.
 

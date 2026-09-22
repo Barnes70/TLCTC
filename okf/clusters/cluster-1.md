@@ -30,6 +30,8 @@ topology: "internal"
 - If this step enables execution of FEC → record #1 for enablement and `→ #7` for execution (`#1 → #7`).
 - If the step is primarily credential use/presentation → #4.
 - If the step abuses a designed enrolment/registration function to obtain an identity or permissions outside its intended population or scope → #1; subsequent authentication as self is not a #4 step (R-CRED).
+- Natural-language instructions to a model or agent — prompt injection (direct or indirect), jailbreaks, RAG or context poisoning, agent tool abuse — are #1: the model's designed function acting on input it was designed to accept, no implementation flaw, no FEC.
+- If the agent then executes code or commands whose content the attacker controls, including code it generated at the attacker's instruction → `#1 → #7` (R-EXEC); a flaw in the model-serving or agent software → #2/#3 (R-ROLE); a subverted third-party model, dataset or tool → #10 at the TAE.
 
 **Topology:** Internal.
 
