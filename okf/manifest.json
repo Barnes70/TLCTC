@@ -994,7 +994,7 @@
       "path": "/clusters/cluster-10.md",
       "type": "cluster",
       "title": "#10 Supply Chain Attack",
-      "description": "An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.",
+      "description": "An attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain.",
       "resource": "tlctc:cluster:#10",
       "tags": [
         "taxonomy",
@@ -3771,7 +3771,7 @@
       "path": "/glossary/supply-chain-attack-10.md",
       "type": "term",
       "title": "Supply Chain Attack (#10)",
-      "description": "A top level threat cluster on the cause side of the bow tie, where an attacker compromises systems by abusing the trust relationship within an organization's supply chain.",
+      "description": "A top level threat cluster on the cause side of the bow tie, where an attacker compromises systems by subverting third party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain.",
       "resource": "tlctc:term:supply-chain-attack-10",
       "tags": [
         "glossary"

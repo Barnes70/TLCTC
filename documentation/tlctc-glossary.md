@@ -1843,7 +1843,7 @@ Specific, detailed attack techniques or methods that fall within a broader Top L
 
 ### Supply Chain Attack (#10)
 
-A top-level threat cluster on the cause side of the bow-tie, where an attacker compromises systems by abusing the trust relationship within an organization's supply chain. The attacker targets vulnerabilities in third-party software components, hardware, services, or distribution/update mechanisms that are **trusted and integrated** into the organization's own environment or products. The generic vulnerability is the necessary reliance on, and implicit trust placed in, external suppliers, vendors, components, and their associated development or distribution processes.
+A top-level threat cluster on the cause side of the bow-tie, where an attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain. The generic vulnerability is that trust in third-party components and update channels can be subverted. A defect in a legitimately supplied component is **not** `#10`: it is classified where it is exploited (`#2`/`#3` per R-ROLE — Log4Shell is `#2`), because where flawed code came from is location, not generic vulnerability. Falsifier: remove the attacker's subversion of the third party, not the third party itself; if the step still succeeds, it was never `#10`.
 
 **Supply Chain as "Bridge Not Bucket":** #10 is a *bridge* threat cluster that marks the use of a trusted supply-chain channel as an attack vector to cross from one domain/trust boundary into another (e.g. @Vendor → @Org). It does *not* absorb the semantics of other clusters (#1–#9).
 
@@ -2002,7 +2002,7 @@ This provides machine readability, consistent sorting, and extensibility for sub
 
 ### Trust Acceptance Event (TAE)
 
-The moment your domain **honors** the Third-Party Trust Link and treats a Trust Artifact/Decision as authoritative. Actions at TAE include: validate, accept, install, apply, execute, attach privileges. `#10 Supply Chain Attack` is placed at the TAE.
+The moment your domain **honors** the Third-Party Trust Link and treats a Trust Artifact/Decision as authoritative. Actions at TAE include: validate, accept, install, apply, execute, attach privileges. `#10 Supply Chain Attack` is placed at the TAE. `#10` requires the accepted artifact, or the third party issuing it, to have been subverted before acceptance (subversion test, core §4). In federation, presenting an assertion as another identity is `#4`; a service provider honouring an assertion from an identity provider that was not subverted is not a step; `#10` applies only where the identity provider or its federation trust material was itself subverted (`#10 → #4`).
 
 **Reference:** Handbook §4.2.2 (Global Definitions), R-SUPPLY (§4.2.5), §4.1 (#10 Definition); Core paper §9, §6.1, §4
 

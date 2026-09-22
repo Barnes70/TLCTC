@@ -484,9 +484,9 @@ Each cluster below uses the same structure:
 
 #### #10 Supply Chain Attack
 
-**Definition:** An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.
+**Definition:** An attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain.
 
-**Scope:** Exploitation of an organization’s **third-party trust link** such that the organization (or its systems) **accepts third-party–originating artifacts or decisions as authoritative within the organization’s domain**, enabling unauthorized action or compromise.
+**Scope:** Subversion of an organization’s **third-party trust link** such that the organization (or its systems) **accepts subverted third-party–originating artifacts or decisions as authoritative within the organization’s domain**, enabling unauthorized action or compromise. A flaw in a legitimately supplied component is not in scope; it is classified where it is exploited.
 
 **Hook terms (normative):**
 
@@ -503,13 +503,14 @@ Each cluster below uses the same structure:
 **Boundary Tests (normative):**
 
 - Place #10 at the Trust Acceptance Event (TAE), where the third-party trust link is honored and becomes authoritative inside the organization.
-- Falsifiability: if removing the third-party trust link stops this step from succeeding → #10 belongs here.
+- Subversion test: #10 requires that the trust artifact — package, update, build output, hardware, service response, federation assertion or metadata — or the third party issuing it was subverted by the attacker before the target accepted it. A defect in a legitimately supplied component is not #10: classify it where it is exploited, by R-ROLE or R-SPECIFIC (Log4Shell → #2). Where flawed code came from is location, not generic vulnerability.
+- Falsifiability: remove the attacker's subversion of the third party — not the third party itself. If the step still succeeds, it was never #10.
 - Downstream effects map normally: often `#10 → #7` (accepted artifact leads to FEC execution) or `#10 → #1` (accepted authorization/entitlement enables function abuse).
-- Federation clarity: credential use at the identity provider is #4; acceptance of the IdP assertion/token at the service provider is #10.
+- Federation: presenting a credential or assertion to authenticate as another identity is #4, wherever it is presented and however it was obtained (R-CRED). A service provider honouring an assertion from an identity provider that was not subverted is the trust link working as designed and is not a step. Where the identity provider or its federation trust material was itself subverted, the service provider's acceptance of the subverted authority is the TAE (#10), and each impersonating assertion presented through it remains #4: `#10 → #4`.
 
 **Optional boundary notation (recommended):**
 
-- Runtime federation: **`#4 → #10 ||[auth][@Vendor(IdP)→@Org(SP)]|| → #1`**
+- Subverted identity provider: **`#10 ||[auth][@Vendor(IdP)→@Org(SP)]|| → #4 → #1`** (credential use at an identity provider that was not subverted is `#4` alone)
 - Update channel delivery: **`#10 ||[dev][@Vendor→@Org]|| → #7`**
 
 **Topology:** Bridge (Third-party → Organization).
