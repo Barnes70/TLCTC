@@ -1,6 +1,6 @@
 # glossary
 
-261 document(s).
+262 document(s).
 
 - [Abuse of Functions (#1)](/glossary/abuse-of-functions-1.md) — `term`
 - [Abuse of Rights](/glossary/abuse-of-rights.md) — `term`
@@ -236,6 +236,7 @@
 - [Threat (in TLCTC)](/glossary/threat-in-tlctc.md) — `term`
 - [Threat Topology](/glossary/threat-topology.md) — `term`
 - [Tie-Breaker Rules](/glossary/tie-breaker-rules.md) — `term`
+- [Time to Detect (TTD) / Time to Contain (TTC)](/glossary/time-to-detect-ttd-time-to-contain-ttc.md) — `term`
 - [TLCTC Enumeration](/glossary/tlctc-enumeration.md) — `term`
 - [TLCTC (Top Level Cyber Threat Clusters)](/glossary/tlctc-top-level-cyber-threat-clusters.md) — `term`
 - [Token Hijacking](/glossary/token-hijacking.md) — `term`

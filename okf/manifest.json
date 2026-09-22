@@ -3,7 +3,7 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.6",
   "generator": "scripts/build-okf.js",
-  "document_count": 438,
+  "document_count": 439,
   "type_counts": {
     "attack-path": 59,
     "axiom": 10,
@@ -20,7 +20,7 @@
     "rule": 17,
     "sphere": 9,
     "sre": 1,
-    "term": 261
+    "term": 262
   },
   "documents": [
     {
@@ -2281,7 +2281,7 @@
       "path": "/glossary/detection-coverage-score-dcs.md",
       "type": "term",
       "title": "Detection Coverage Score (DCS)",
-      "description": "A strategic Key Performance Indicator (KPI) measuring detection timing adequacy relative to Attack Velocity.",
+      "description": "A strategic indicator measuring the defender's timing adequacy relative to Attack Velocity, in two forms read on distributions rather than means (v2.6) : detection DCS d = TTD P90 / Δt and containment DCS c = TTC P90 / Δt , where TTD and TTC are the defender's time to detect and time to contain distributions at an edge, read at the 90th percentile.",
       "resource": "tlctc:term:detection-coverage-score-dcs",
       "tags": [
         "glossary"
@@ -3933,6 +3933,16 @@
       "title": "Tie-Breaker Rules",
       "description": "Precedence rules applied when a step appears to fit multiple clusters.",
       "resource": "tlctc:term:tie-breaker-rules",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/time-to-detect-ttd-time-to-contain-ttc.md",
+      "type": "term",
+      "title": "Time to Detect (TTD) / Time to Contain (TTC)",
+      "description": "The distributions of elapsed time from an attack step to its detection (TTD) and to its containment (TTC) at a given edge of an attack path.",
+      "resource": "tlctc:term:time-to-detect-ttd-time-to-contain-ttc",
       "tags": [
         "glossary"
       ]

@@ -209,6 +209,8 @@ Third party is a modifier over all four rows, not a fifth row: any of them may o
 
 Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.6.json`) so that this paper and the schema cannot drift. The developer's view — the defensive design responsibility implied by each cluster — and the supporting prose are drawn from the canonical cluster definitions (whitepaper §4.1). The normative **boundary tests** are canonical here, in this section, and are mirrored verbatim in whitepaper §4.1, where a build check refuses any difference. Neither is carried in the JSON dictionary.
 
+**Names are labels; the definitions govern.** Two cluster names carry strong everyday meanings that the framework does not use. *#4 Identity Theft* means presenting a credential that is not the presenter's own at the point of authentication — not consumer identity fraud. *#7 Malware* means the execution of foreign executable content, including a built-in interpreter running attacker-controlled commands — a PowerShell step is #7 — not only malicious binaries. For executive audiences the names can carry a gloss without changing them: *#4 Identity Theft (credential misuse)*, *#7 Malware (foreign code execution)*. The names and identifiers themselves are unchanged.
+
 ### #1 Abuse of Functions
 
 - **Strategic ID:** #1
@@ -582,13 +584,14 @@ The set of Δt values across a path expresses its **attack velocity** (Axiom IX)
 
 A transition at VC-3 or faster is structurally too fast for purely human response at that edge; defense must be automated or architectural.
 
-Because velocity is a time, it can be compared directly against the defender's own time. The **Detection Coverage Score (DCS)** expresses that comparison as a ratio of the defender's mean time to detect (MTTD) at an edge to the attacker's velocity across it:
+Because velocity is a time, it can be compared directly against the defender's own time. The **Detection Coverage Score (DCS)** expresses that comparison as a ratio of the defender's time at an edge to the attacker's velocity across it. It comes in two forms, and both are read on distributions rather than means:
 
 ```
-DCS = MTTD / Δt
+DCS_d = TTD_P90 / Δt      (detection)
+DCS_c = TTC_P90 / Δt      (containment)
 ```
 
-A score below 1.0 means detection occurs before the attacker completes the transition (the defender is ahead); a score above 1.0 means the step completes before it is detected (the attacker is ahead). For example, if an adversary moves `#4 → #1` in 10 minutes while detection takes 15 minutes, DCS = 1.5 — a structural blind spot that analyst effort cannot close at that speed, only automation or architecture. DCS belongs in the core because it is fundamentally a time relationship between attack velocity and detection; its use as a control-effectiveness key control indicator (KCI) is a downstream result developed in the separate application and governance document.
+TTD and TTC are the defender's time-to-detect and time-to-contain distributions at that edge, read at the 90th percentile, so the score describes the slow tail an attacker can count on rather than an average that hides it. Where Δt is itself a distribution — a transition observed many times — it is read at a fast percentile (P10), setting the defender's slow tail against the attacker's fast one. A score below 1.0 means the defender acts before the attacker completes the transition; above 1.0, the step completes first. Only `DCS_c < 1` means the transition is stopped: `DCS_d < 1` with `DCS_c > 1` means the step was seen but not stopped. For example, if an adversary moves `#4 → #1` in 10 minutes while detection takes 15 minutes at P90, DCS_d = 1.5 — a structural blind spot that analyst effort cannot close at that speed, only automation or architecture. The v2.5 form `DCS = MTTD / Δt` is the mean-based special case of DCS_d and remains valid where only means are available, which keeps earlier figures comparable. DCS belongs in the core because it is fundamentally a time relationship between attack velocity and defender action; its use as a control-effectiveness key control indicator (KCI) is a downstream result developed in the separate application and governance document.
 
 ### 7.3 Domain Boundary Operator
 
@@ -711,7 +714,7 @@ The following one-line definitions cover the terms used in this paper so that it
 - **BRE (Business Risk Event)** — a business-level consequence event (e.g. regulatory notification, outage declaration, fine) triggered by a DRE or a preceding BRE; BREs may chain.
 - **Business Impact (BI)** — the role assigned to the terminal BRE in a consequence chain, set by an organization's risk appetite; not a separate event type and context-dependent (one organization's terminal BI may be another's mid-chain BRE).
 - **Cause-side partition** — the four rows of the cause side of any risk event, produced by three questions asked in order (actor? intent? entitlement?): failure or external event, Error in Use, Abuse of Rights, Attack. Only the Attack row is in TLCTC scope; the ten clusters classify its steps (Section 3.5).
-- **DCS (Detection Coverage Score)** — a time ratio comparing the defender's mean time to detect at an edge to the attacker's velocity across it (`DCS = MTTD / Δt`); below 1.0 the defender detects before the step completes, above 1.0 the attacker is ahead. Used operationally as a control-effectiveness KCI (developed in the application doc).
+- **DCS (Detection Coverage Score)** — a time ratio comparing the defender's time at an edge to the attacker's velocity across it, in two forms read at the 90th percentile: detection `DCS_d = TTD_P90 / Δt` and containment `DCS_c = TTC_P90 / Δt`; below 1.0 the defender acts before the step completes, and only `DCS_c < 1` stops the transition. The v2.5 `MTTD / Δt` is the mean-based special case. Used operationally as a control-effectiveness KCI (developed in the application doc).
 - **Δt / attack velocity** — the time interval between two adjacent steps, attached to the sequence operator (an edge property, not a step property). The set of Δt values expresses a path's velocity; transitions are grouped into classes VC-1 through VC-4.
 - **Domain** — a set of assets governed by a coherent control regime (policies, monitoring, enforcement, accountability); may be technical, organizational, or socio-technical (e.g. cyber/IT, physical security, human decision, vendor development).
 - **Domain boundary** — a point where responsibility spheres or control regimes change; crossing it moves the attack from one set of applicable controls to another, annotated with the `||...||` operator.
