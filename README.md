@@ -17,7 +17,7 @@ TLCTC v2.5 is the current citable baseline: the v2.3 consolidation freeze of the
 | Document | Role |
 |---|---|
 | [**Core Paper**](documentation/tlctc-v2.6-core.md) ([PDF](documentation/tlctc-v2.6-core.pdf)) | **The canonical definition** of the framework in the v2.6 working version: derivation, 10 clusters, 10 axioms, 17 classification rules, attack-path notation, glossary, references. The deposited, citable version is v2.5.1 (see Citation). |
-| [**Application Paper**](documentation/tlctc-v2.5-application.md) ([PDF](documentation/tlctc-v2.5-application.pdf), [DOI](https://doi.org/10.5281/zenodo.22697636)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. Separately citable. |
+| [**Application Paper**](documentation/tlctc-v2.6-application.md) ([PDF](documentation/tlctc-v2.6-application.pdf), [DOI](https://doi.org/10.5281/zenodo.22697636)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. Separately citable. |
 | [**White Paper**](documentation/tlctc-v2.0-whitepaper.md) ([web](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)) | The extended practitioner handbook: full notation grammar (§11), boundary catalogs, decision procedures, anti-patterns, and worked detail beyond the core. Conforms to the core; filename kept for link stability. |
 | [**Operational Enumeration**](documentation/tlctc-operational-enumeration.md) ([JSON](json-schemas/operational/tlctc-operational-enumeration.json)) | The *evolving* `TLCTC-XX.YY` sub-cluster catalogue. The strategic layer (10 clusters) is frozen; the operational layer grows by contribution. |
 
