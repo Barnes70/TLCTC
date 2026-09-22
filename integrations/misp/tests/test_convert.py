@@ -84,7 +84,7 @@ class TestSolarWinds(unittest.TestCase):
 
     def test_path_object(self):
         self.assertEqual(self.pobj["template_uuid"], RES.path_template.uuid)
-        self.assertEqual(self.pobj["template_version"], "1")
+        self.assertEqual(self.pobj["template_version"], "2")
         self.assertEqual(attr(self.pobj, "incident-id"), "SOLARWINDS-SUNBURST-2020")
         self.assertEqual(attr(self.pobj, "entry-cluster"), "#10")
         self.assertEqual(attr(self.pobj, "analyst-confidence"), "high")
