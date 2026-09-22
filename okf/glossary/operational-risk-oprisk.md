@@ -15,6 +15,4 @@ The broader category of risks arising from inadequate or failed internal process
 
 
 
-**Related reading:** [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html)
-
 See also: Cyber Risk, Business Risk Event

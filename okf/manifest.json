@@ -2421,7 +2421,7 @@
       "path": "/glossary/entitlement.md",
       "type": "term",
       "title": "Entitlement",
-      "description": "What an accountable grantor actually conferred on a person for an action: an access right, a role, or a mandate, held genuinely and bounded by its purpose and scope.",
+      "description": "What an accountable grantor actually conferred on a person for an action: an access right, a role, or a mandate, held genuinely.",
       "resource": "tlctc:term:entitlement",
       "tags": [
         "glossary"
