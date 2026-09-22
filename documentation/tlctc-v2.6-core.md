@@ -2,7 +2,7 @@
 
 **Author:** Bernhard Kreinz
 **Version:** 2.6
-**Date:** 2026-09-22
+**Date:** 2026-09-23
 **License:** CC BY 4.0
 **Status:** Working version — not deposited. Cite v2.5.1: [10.5281/zenodo.22697432](https://doi.org/10.5281/zenodo.22697432).
 

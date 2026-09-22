@@ -2,7 +2,7 @@
 
 **Author:** Bernhard Kreinz
 **Version:** 2.6
-**Date:** 2026-09-22
+**Date:** 2026-09-23
 **License:** CC BY 4.0
 **Companion to:** *A Cause-Oriented Cyber Threat Taxonomy: The TLCTC Framework* (the v2.6 core paper, `documentation/tlctc-v2.6-core.md`)
 **Status:** Working version — not deposited. Cite v2.5.1: [10.5281/zenodo.22697637](https://doi.org/10.5281/zenodo.22697637).
