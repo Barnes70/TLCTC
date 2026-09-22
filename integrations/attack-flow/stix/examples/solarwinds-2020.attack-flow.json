@@ -44,10 +44,10 @@
       "spec_version": "2.1",
       "id": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
       "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "name": "TLCTC Project",
       "identity_class": "organization",
-      "description": "Publisher of the Top Level Cyber Threat Clusters (TLCTC) framework, v2.5. https://www.tlctc.net",
+      "description": "Publisher of the Top Level Cyber Threat Clusters (TLCTC) framework, v2.6. https://www.tlctc.net",
       "contact_information": "https://www.tlctc.net"
     },
     {
@@ -56,9 +56,9 @@
       "id": "extension-definition--69b4eaba-45a8-4101-b935-3a7ae2cb3a1a",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
       "created": "2026-09-18T00:00:00.000Z",
-      "modified": "2026-09-18T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "name": "TLCTC for Attack Flow",
-      "description": "Adds TLCTC v2.5 cause classification to Attack Flow objects: on attack-action the cause cluster (#1..#10) of the step, its operational sub-cluster, the attack velocity to the next step, responsibility-sphere and intra-system boundaries, Data Risk Events, foreign-code execution and the unresolved state; on attack-flow the path-level metadata and notation; on attack-operator the parallel-group metadata. Attack Flow says what the adversary did; this extension says which generic vulnerability each step exploited.",
+      "description": "Adds TLCTC v2.6 cause classification to Attack Flow objects: on attack-action the cause cluster (#1..#10) of the step, its operational sub-cluster, the attack velocity to the next step, responsibility-sphere and intra-system boundaries, Data Risk Events, foreign-code execution and the unresolved state; on attack-flow the path-level metadata and notation; on attack-operator the parallel-group metadata. Attack Flow says what the adversary did; this extension says which generic vulnerability each step exploited.",
       "schema": "https://raw.githubusercontent.com/Barnes70/TLCTC/main/integrations/attack-flow/stix/tlctc-attack-flow-extension-schema-1.0.0.json",
       "version": "1.0.0",
       "extension_types": [
@@ -103,7 +103,7 @@
         },
         {
           "source_name": "DOI",
-          "description": "TLCTC v2.5 core paper",
+          "description": "TLCTC core paper (v2.5.1 deposit; v2.6 is not deposited)",
           "url": "https://doi.org/10.5281/zenodo.20633176"
         }
       ]

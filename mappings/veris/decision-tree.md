@@ -2,7 +2,7 @@
 
 How a VERIS 1.4.1 enumeration value was assigned its `mapping_type` and target in
 `tlctc-veris.json`, and how to classify a value the mapping does not know (a future VERIS
-enumeration). Clusters, axioms and rules are cited by id from the v2.5 dictionary; nothing here
+enumeration). Clusters, axioms and rules are cited by id from the v2.6 dictionary; nothing here
 redefines them.
 
 ## Q0 — Which VERIS field is it?
@@ -76,13 +76,13 @@ Q2.3 Does the value describe manipulating a person?
        every social.variety                     → chain #9, companion AFTER = the technical follow-on (#4, #7 or #1)
          except: Forgery (conditional #9 | #10 at a Trust Acceptance Event, R-SUPPLY)
 
-Q2.4 Does the value describe interception, relay or a channel-control defect?  (R-MITM, R-CHANNEL)
+Q2.4 Does the value describe interception, relay or a channel-control defect?  (R-MITM, R-SPECIFIC, channel)
        hacking AitM                             → chain #5, companion BEFORE = position acquisition
        Routing detour                           → chain #2 → #5 (a server-role routing flaw gains the position)
        Hijack                                   → chain #1 → #5 | #4 (a designed process is taken over, then used)
-       Cryptanalysis                            → direct #5 (R-CHANNEL)
+       Cryptanalysis                            → direct #5 (R-SPECIFIC, channel)
 
-Q2.5 Does the value describe exhausting capacity?                              (R-FLOOD)
+Q2.5 Does the value describe exhausting capacity?                              (R-SPECIFIC, capacity)
        DoS                                      → conditional #6 (volume) | #2 | #3 (defect, by R-ROLE)
        XML entity expansion, XML attribute blowup → direct #6 (intensity exhausting finite capacity)
 
@@ -99,7 +99,7 @@ Q2.7 Does the value describe using a designed function beyond its purpose?
        (the last four are children of Exploit vuln in VERIS but abuse designed functions with no
         code flaw: CWE-352, CWE-601, CWE-425, CWE-349 in the repository's CWE mapping)
 
-Q2.8 Does the value describe acting on the physical substrate?                 (R-SUBSTRATE)
+Q2.8 Does the value describe acting on the physical substrate?                 (R-SPECIFIC, substrate)
        every physical.variety                   → direct #8; sub_cluster_hint 8.1 (mechanical) or
                                                   8.2 (signal: Wiretapping, Surveillance, Snooping)
 ```

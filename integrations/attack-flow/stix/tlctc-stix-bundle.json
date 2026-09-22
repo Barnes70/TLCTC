@@ -1,16 +1,16 @@
 {
   "type": "bundle",
-  "id": "bundle--8c526628-1537-5c78-ac5c-75f2e5bd16da",
+  "id": "bundle--90be7be3-d5f9-5ca8-a9ee-1f1e5c419ec7",
   "objects": [
     {
       "type": "identity",
       "spec_version": "2.1",
       "id": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "name": "TLCTC Project",
       "identity_class": "organization",
-      "description": "Publisher of the Top Level Cyber Threat Clusters (TLCTC) framework, v2.5. https://www.tlctc.net",
+      "description": "Publisher of the Top Level Cyber Threat Clusters (TLCTC) framework, v2.6. https://www.tlctc.net",
       "contact_information": "https://www.tlctc.net"
     },
     {
@@ -29,8 +29,8 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--32f42345-42f5-5e67-83d0-d4e0886c7209",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -40,7 +40,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -55,8 +55,8 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--2b6ccd02-8962-54f0-a17a-fd9ac87bd98d",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -66,7 +66,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -81,8 +81,8 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--1d408bb3-90d4-5eeb-9e80-9a2d7d1b4152",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -92,7 +92,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -107,8 +107,8 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--3a6eda55-172b-5a2a-afec-7d1ac18e909e",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -118,7 +118,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -133,8 +133,8 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--95313aef-c394-5f51-81bc-af666eeed08b",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -144,7 +144,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -159,8 +159,8 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--24010f22-7f98-5bff-b651-2351929509fa",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -170,7 +170,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -185,8 +185,8 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--a03fa4cc-37d8-5aee-9c48-df828c3e3ba4",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -196,7 +196,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -211,8 +211,8 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--92f11240-4ce5-5b1c-b0fa-2144f10d22fd",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -222,7 +222,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -237,8 +237,8 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--e20ccbc1-2ec8-54c4-a01d-23127bfc5c55",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -248,7 +248,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -263,18 +263,18 @@
       "spec_version": "2.1",
       "id": "x-mitre-tactic--8296d058-1649-5117-a7c3-a72aa798a12b",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
       "name": "Supply Chain Attack",
-      "description": "An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.",
+      "description": "An attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain.",
       "x_mitre_shortname": "tlctc-10",
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_deprecated": false,
       "external_references": [
         {
@@ -289,8 +289,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--e7b7edbf-0e99-5e65-8cd5-64aba683f2ba",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -305,7 +305,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -321,8 +321,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--cd23cd5c-1c7b-5022-88b0-48dc9496446a",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -337,7 +337,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -353,8 +353,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--1a688447-c36d-5deb-8652-03359660d586",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -385,8 +385,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--bea57f15-e881-5b40-a3f6-028e3c0cab4c",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -417,8 +417,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--99be6ae8-f038-59a2-a01d-70d81b69c3e7",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -449,8 +449,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--371e8593-ab6b-50f8-b625-89bf1ed26d71",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -465,7 +465,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -481,8 +481,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--1bfe0e4a-4d7c-5a64-9877-26c851f4d9fa",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -513,8 +513,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--ff62db43-c692-5a10-a58d-fcd8b4f16ff2",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -545,8 +545,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--b2faf8de-b47f-590e-b423-90eb601c2a26",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -577,8 +577,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--828cf54d-b71e-5be9-ac0b-a870b3bdda26",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -593,7 +593,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -609,8 +609,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--b68dd328-550f-5741-b592-e1584d5aeb80",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -625,7 +625,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -641,8 +641,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--c3798380-f90c-5094-8ed9-cd5d989d62e3",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -657,7 +657,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -673,8 +673,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--361a52b3-1b7d-5125-99fb-899ac8a75575",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -689,7 +689,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -705,8 +705,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--f0359269-4f8d-5a5f-b77e-d1027fbe102d",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -721,7 +721,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -737,8 +737,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--40b426dd-85a6-59fd-b896-fa8b362f284d",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -769,8 +769,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--06077686-1110-5c47-8319-48a855ccfbf6",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -801,8 +801,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--c9c7ff31-43fd-57e0-b7eb-8279b89336ec",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -817,7 +817,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -833,8 +833,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--8e48003a-7c1a-5282-99c6-54369311c704",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -849,7 +849,7 @@
       "x_mitre_domains": [
         "tlctc"
       ],
-      "x_mitre_version": "2.5",
+      "x_mitre_version": "2.6",
       "x_mitre_is_subtechnique": false,
       "x_mitre_deprecated": false,
       "external_references": [
@@ -865,8 +865,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--291a417b-9103-52f6-8d6c-31ab7d48b564",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -897,8 +897,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--3a50a6f7-d94a-5956-a25c-e424ed1540a2",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],
@@ -929,8 +929,8 @@
       "spec_version": "2.1",
       "id": "attack-pattern--a12f3d4c-6cd9-54e0-94c8-0da2681e76ce",
       "created_by_ref": "identity--025fe838-800e-4b4f-a9c3-2fab5d1366f5",
-      "created": "2026-08-08T00:00:00.000Z",
-      "modified": "2026-08-08T00:00:00.000Z",
+      "created": "2026-09-22T00:00:00.000Z",
+      "modified": "2026-09-22T00:00:00.000Z",
       "object_marking_refs": [
         "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
       ],

@@ -1,6 +1,6 @@
 # TLCTC for MISP
 
-Brings TLCTC v2.5 into MISP as three pieces that work together:
+Brings TLCTC v2.6 into MISP as three pieces that work together:
 
 | Piece | Path | Upstream target |
 |---|---|---|
@@ -15,7 +15,7 @@ graph shows the attack path itself. The converter turns any file in
 `attack-paths/` into an importable event that uses both.
 
 Cluster definitions and generic vulnerabilities in the taxonomy are copied
-verbatim from the v2.5 dictionary (`json-schemas/layer-1/tlctc-framework.v2.5.json`);
+verbatim from the v2.6 dictionary (`json-schemas/layer-1/tlctc-framework.v2.6.json`);
 `npm run validate-misp` fails on any drift.
 
 ## Tags

@@ -14,9 +14,9 @@
     },
     "note": "joined dataset; VCDB's packaging excludes the web-skimmer batch"
   },
-  "mapping_updated": "2026-09-18",
+  "mapping_updated": "2026-09-22",
   "mapping_veris_version": "1.4.1",
-  "mapping_tlctc_version": "2.5",
+  "mapping_tlctc_version": "2.6",
   "strata": {
     "all": {
       "records": 10047,

@@ -15,7 +15,7 @@ from .stixutil import (AF_EXT_ID, TLCTC_EXT_ID, TLCTC_IDENTITY_ID, af_extension_
                        load_attack_flow_extension_objects, load_extension_objects, stix_id)
 
 HERE = Path(__file__).resolve().parent
-DICTIONARY = HERE.parent.parent.parent / "json-schemas" / "layer-1" / "tlctc-framework.v2.5.json"
+DICTIONARY = HERE.parent.parent.parent / "json-schemas" / "layer-1" / "tlctc-framework.v2.6.json"
 TECHNIQUE_RE = re.compile(r"\bT\d{4}(?:\.\d{3})?\b")
 
 

@@ -1,9 +1,9 @@
 {
   "metadata": {
     "title": "VERIS → TLCTC Mapping",
-    "description": "Maps every VERIS 1.4.1 action variety and vector, action result and attribute outcome enumeration to TLCTC v2.5: the cluster(s) whose generic vulnerability the action exploits (with the rule that decides), the companion step the rules require but VERIS does not record, the boundary context a vector implies, the cause-side partition row for actions that are not threats, and the Data Risk Event code for outcomes.",
-    "tlctc_version": "2.5",
-    "framework_ref": "json-schemas/layer-1/tlctc-framework.v2.5.json",
+    "description": "Maps every VERIS 1.4.1 action variety and vector, action result and attribute outcome enumeration to TLCTC v2.6: the cluster(s) whose generic vulnerability the action exploits (with the rule that decides), the companion step the rules require but VERIS does not record, the boundary context a vector implies, the cause-side partition row for actions that are not threats, and the Data Risk Event code for outcomes.",
+    "tlctc_version": "2.6",
+    "framework_ref": "json-schemas/layer-1/tlctc-framework.v2.6.json",
     "veris_version": "1.4.1",
     "veris_source": {
       "repo": "vz-risk/veris",
@@ -45,7 +45,7 @@
       "certainty": "outcome only: potential when the record marks the disclosure as at risk rather than confirmed"
     },
     "created": "2026-09-18",
-    "updated": "2026-09-18",
+    "updated": "2026-09-22",
     "entry_count": 337
   },
   "entries": [
@@ -120,10 +120,10 @@
       "targets": [
         {
           "tlctc": "#5",
-          "rule": "R-CHANNEL"
+          "rule": "R-SPECIFIC"
         }
       ],
-      "rationale": "Breaking the cryptography that protects a channel is a defect in a communication-path control: the generic vulnerability is insufficient control over the communication path, #5 (R-CHANNEL). Where the broken cryptography protects stored data, the step is the one that obtained the ciphertext and the cryptanalysis is attacker-side preparation."
+      "rationale": "Breaking the cryptography that protects a channel is a defect in a communication-path control: the generic vulnerability is insufficient control over the communication path, #5 (R-SPECIFIC, channel). Where the broken cryptography protects stored data, the step is the one that obtained the ciphertext and the cryptanalysis is attacker-side preparation."
     },
     {
       "veris_id": "action.hacking.variety.CSRF",
@@ -154,21 +154,21 @@
       "targets": [
         {
           "tlctc": "#6",
-          "rule": "R-FLOOD",
+          "rule": "R-SPECIFIC",
           "condition": "volume or intensity exhausts finite resources"
         },
         {
           "tlctc": "#2",
-          "rule": "R-FLOOD",
+          "rule": "R-SPECIFIC",
           "condition": "an implementation defect crashes or hangs a server-role component"
         },
         {
           "tlctc": "#3",
-          "rule": "R-FLOOD",
+          "rule": "R-SPECIFIC",
           "condition": "an implementation defect crashes or hangs a client-role component"
         }
       ],
-      "rationale": "VERIS records the availability effect; TLCTC asks which generic vulnerability produced it (R-FLOOD): capacity is #6, a code defect is #2 or #3 per R-ROLE."
+      "rationale": "VERIS records the availability effect; TLCTC asks which generic vulnerability produced it (R-SPECIFIC, capacity): capacity is #6, a code defect is #2 or #3 per R-ROLE."
     },
     {
       "veris_id": "action.hacking.variety.Evade Defenses",
@@ -679,10 +679,10 @@
       "targets": [
         {
           "tlctc": "#6",
-          "rule": "R-FLOOD"
+          "rule": "R-SPECIFIC"
         }
       ],
-      "rationale": "A document crafted to make attribute parsing quadratic exhausts finite processing capacity: #6 (R-FLOOD), the same shape as entity expansion."
+      "rationale": "A document crafted to make attribute parsing quadratic exhausts finite processing capacity: #6 (R-SPECIFIC, capacity), the same shape as entity expansion."
     },
     {
       "veris_id": "action.hacking.variety.XML entity expansion",
@@ -691,10 +691,10 @@
       "targets": [
         {
           "tlctc": "#6",
-          "rule": "R-FLOOD"
+          "rule": "R-SPECIFIC"
         }
       ],
-      "rationale": "Recursive entity references make a small document expand into a resource-exhausting one: intensity exhausting finite capacity, #6 (R-FLOOD, consistent with the CWE-776 mapping)."
+      "rationale": "Recursive entity references make a small document expand into a resource-exhausting one: intensity exhausting finite capacity, #6 (R-SPECIFIC (capacity), consistent with the CWE-776 mapping)."
     },
     {
       "veris_id": "action.hacking.variety.XML external entities",
@@ -1196,7 +1196,7 @@
         "before": "the enabling cluster (#9, #3, #2, #1, #10, #4, #8 or #5)",
         "notation": "<enabler> → #7"
       },
-      "rationale": "A payload that produces denial of service is #7 at execution on the infected system (R-EXEC); the availability effect is a Data Risk Event (A/Av). Traffic it sends against a third party is #6 in that party's record (R-FLOOD)."
+      "rationale": "A payload that produces denial of service is #7 at execution on the infected system (R-EXEC); the availability effect is a Data Risk Event (A/Av). Traffic it sends against a third party is #6 in that party's record (R-SPECIFIC, capacity)."
     },
     {
       "veris_id": "action.malware.variety.Downloader",
@@ -2174,7 +2174,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.1"
         }
       ],
@@ -2187,7 +2187,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.1"
         }
       ],
@@ -2200,7 +2200,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.1"
         }
       ],
@@ -2213,7 +2213,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.1"
         }
       ],
@@ -2232,7 +2232,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.1"
         }
       ],
@@ -2245,7 +2245,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.1"
         }
       ],
@@ -2258,7 +2258,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.2"
         }
       ],
@@ -2271,7 +2271,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.1"
         }
       ],
@@ -2284,7 +2284,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.1"
         }
       ],
@@ -2297,7 +2297,7 @@
       "targets": [
         {
           "tlctc": "#8",
-          "rule": "R-SUBSTRATE",
+          "rule": "R-SPECIFIC",
           "sub_cluster_hint": "8.2"
         }
       ],

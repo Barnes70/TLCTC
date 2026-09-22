@@ -35,7 +35,7 @@
       {
         "name": "tlctc-attack-path",
         "meta-category": "misc",
-        "description": "A TLCTC (Top Level Cyber Threat Clusters) attack path: the ordered sequence of cause clusters observed in one incident, with attack velocity, boundary crossings and Data Risk Events. References each tlctc-attack-step object with \"includes\". TLCTC v2.5, https://www.tlctc.net",
+        "description": "A TLCTC (Top Level Cyber Threat Clusters) attack path: the ordered sequence of cause clusters observed in one incident, with attack velocity, boundary crossings and Data Risk Events. References each tlctc-attack-step object with \"includes\". TLCTC v2.6, https://www.tlctc.net",
         "template_uuid": "7bda2ebc-9447-4273-a491-b7bd7a0715db",
         "template_version": "1",
         "uuid": "a2ece4b3-2fc9-5bde-9641-183d11f49428",
@@ -197,7 +197,7 @@
       {
         "name": "tlctc-attack-step",
         "meta-category": "misc",
-        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.6.",
         "template_uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
         "template_version": "1",
         "uuid": "a593b4c3-b574-5ce2-b587-7eb9595e3baa",
@@ -325,7 +325,7 @@
       {
         "name": "tlctc-attack-step",
         "meta-category": "misc",
-        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.6.",
         "template_uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
         "template_version": "1",
         "uuid": "49fc3bed-1447-59f8-a526-ee7d4157ff7e",
@@ -441,7 +441,7 @@
       {
         "name": "tlctc-attack-step",
         "meta-category": "misc",
-        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.6.",
         "template_uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
         "template_version": "1",
         "uuid": "bf9808b6-90c4-5241-b30e-ff812c98e72e",
@@ -533,7 +533,7 @@
       {
         "name": "tlctc-attack-step",
         "meta-category": "misc",
-        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+        "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.6.",
         "template_uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
         "template_version": "1",
         "uuid": "703ffdc0-cbee-555e-99bc-2c190dd80a82",

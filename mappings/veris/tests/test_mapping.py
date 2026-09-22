@@ -81,7 +81,7 @@ class MappingTests(unittest.TestCase):
 
     def test_metadata(self):
         self.assertEqual(self.m.veris_version, "1.4.1")
-        self.assertEqual(self.m.tlctc_version, "2.5")
+        self.assertEqual(self.m.tlctc_version, "2.6")
         self.assertEqual(self.m.metadata["entry_count"], len(self.m))
 
 

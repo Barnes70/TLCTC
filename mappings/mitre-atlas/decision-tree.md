@@ -91,7 +91,7 @@ AI Service API as C2 → #1 (as ATT&CK Web Service)
       → carried over verbatim from tlctc-enterprise-attack.json; the rationale names the analogue.
 ```
 
-## Q5 — Is the effect a capacity problem? (R-FLOOD)
+## Q5 — Is the effect a capacity problem? (R-SPECIFIC, capacity)
 
 ```
 Denial of AI Service, Excessive Queries, Resource-Intensive Queries, Chaff Data
@@ -100,7 +100,7 @@ Denial of AI Service, Excessive Queries, Resource-Intensive Queries, Chaff Data
         #2 if a code defect is what fails (R-ROLE).
 ```
 
-## Q6 — Physical world? (R-SUBSTRATE)
+## Q6 — Physical world? (R-SPECIFIC, substrate)
 
 ```
 Physical Environment Access
