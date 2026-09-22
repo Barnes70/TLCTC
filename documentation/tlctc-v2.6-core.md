@@ -37,8 +37,8 @@ Two adjacent schemes come closest to TLCTC's cause side, and comparing them show
 | VERIS action category | TLCTC reading (varieties) |
 | --- | --- |
 | Hacking | split by generic vulnerability: #2 ×29, #1 ×12, #4 ×7, #6 ×3, #3 ×3, #5 ×2, #7 ×1 |
-| Malware | #7, with an enabling step VERIS does not record |
-| Social | #9 |
+| Malware | #7 ×31 (also #1 ×2, #4 ×2, #3 ×2, #2 ×1), with an enabling step VERIS does not record |
+| Social | #9 ×10, #10 ×1 |
 | Misuse | the Abuse of Rights row (13 of 15 varieties); #4 ×1 |
 | Physical | #8 (10 of 14 varieties) |
 | Error | Error in Use row (12), Failure row (4) |
@@ -763,4 +763,4 @@ The following adjacent frameworks are referenced in this paper for positioning. 
 
 13. Popper, K. R. *The Logic of Scientific Discovery.* Hutchinson, 1959 (orig. *Logik der Forschung*, 1934).
 
-14. MITRE Corporation. *Common Attack Pattern Enumeration and Classification (CAPEC)*, version 3.9. https://capec.mitre.org/
+14. MITRE Corporation. *Common Attack Pattern Enumeration and Classification (CAPEC).* Version 3.9. https://capec.mitre.org/
