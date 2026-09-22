@@ -95,7 +95,7 @@
     },
     "system_risk_event": {
       "type": "object",
-      "description": "The System Risk Event. The framework defines one type, System Compromise (loss of control, reached only through cluster steps, the cyber pivot); other events at the same altitude with no actor holding capability (System Failure foremost) are operational risk and are named only to place the boundary.",
+      "description": "The System Risk Event. The framework defines one type, System Compromise (loss of control, reached only through cluster steps, the cyber pivot); other events at the same altitude that serve no attacker's objective (System Failure foremost) are operational risk and are named only to place the boundary.",
       "additionalProperties": false,
       "required": ["definition", "types"],
       "properties": {
