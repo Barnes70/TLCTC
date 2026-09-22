@@ -26,9 +26,10 @@ topology: "internal"
 
 **Boundary Tests (normative):**
 
-- If an implementation flaw is required → **#2 or #3**.
-- If this step enables execution of **FEC** → record **`#1`** for enablement and **`→ #7`** for execution (**`#1 → #7`**).
-- If the step is primarily credential use/presentation → **#4**.
+- If an implementation flaw is required → #2 or #3.
+- If this step enables execution of FEC → record #1 for enablement and `→ #7` for execution (`#1 → #7`).
+- If the step is primarily credential use/presentation → #4.
+- If the step abuses a designed enrolment/registration function to obtain an identity or permissions outside its intended population or scope → #1; subsequent authentication as self is not a #4 step (R-CRED).
 
 **Topology:** Internal.
 

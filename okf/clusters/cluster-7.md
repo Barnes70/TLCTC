@@ -26,10 +26,10 @@ topology: "internal"
 
 **Boundary Tests (normative):**
 
-- If **FEC executes** → **#7** (per **R-EXEC**), even if execution is **in-memory** and no files are created.
-- If legitimate function misuse enables FEC execution → **`#1 → #7`**.
-- If exploit payload triggers an implementation flaw and results in FEC execution → **`#2/#3 → #7`**.
-- If an implementation flaw is exploited but no FEC executes → **do not add #7**.
+- If FEC executes → #7 (R-EXEC), even if execution is in-memory and no files are created.
+- If legitimate function misuse enables FEC execution → `#1 → #7`.
+- If an exploit payload triggers an implementation flaw and results in FEC execution → `#2/#3 → #7`.
+- If an implementation flaw is exploited but no FEC executes → do not add #7.
 
 **Explicit SQLi clarification (non-normative but recommended):**
 

@@ -32,10 +32,10 @@ topology: "bridge"
 
 **Boundary Tests (normative):**
 
-- Place **#10 at the Trust Acceptance Event (TAE)** where the third-party trust link is **honored** and becomes authoritative inside the org.
-- **Falsifiability:** If removing the third-party trust link stops this step from succeeding → **#10 belongs here**.
-- Downstream effects map normally: often **`#10 → #7`** (accepted artifact leads to FEC execution) or **`#10 → #1`** (accepted auth/entitlement enables function abuse).
-- Federation clarity: credential use at IdP is **#4**; acceptance of the IdP assertion/token at the SP is **#10**.
+- Place #10 at the Trust Acceptance Event (TAE), where the third-party trust link is honored and becomes authoritative inside the organization.
+- Falsifiability: if removing the third-party trust link stops this step from succeeding → #10 belongs here.
+- Downstream effects map normally: often `#10 → #7` (accepted artifact leads to FEC execution) or `#10 → #1` (accepted authorization/entitlement enables function abuse).
+- Federation clarity: credential use at the identity provider is #4; acceptance of the IdP assertion/token at the service provider is #10.
 
 **Optional boundary notation (recommended):**
 

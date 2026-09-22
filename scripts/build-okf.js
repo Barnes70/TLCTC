@@ -22,6 +22,7 @@ const OUT = path.join(ROOT, 'okf');
 // ───────────────────────── source paths ──────────────────────────────────────
 const SRC = {
   framework: 'json-schemas/layer-1/tlctc-framework.v2.6.json',
+  core: 'documentation/tlctc-v2.6-core.md',
   registry: 'json-schemas/layer-2/example-registry.json',
   whitepaper: 'documentation/tlctc-v2.0-whitepaper.md',
   glossary: 'documentation/tlctc-glossary.md',
@@ -203,6 +204,15 @@ function assertClusterCanon() {
   }
 }
 assertClusterCanon();
+
+// Boundary tests are canonical in core §4 and mirrored in whitepaper §4.1 (v2.6, C18).
+// The cluster pages below render the whitepaper's copy, so a stale mirror must fail here.
+const boundaryDrift = require('./boundary-tests').diff(readText(SRC.core), whitepaper);
+if (boundaryDrift.length) {
+  console.error('build-okf: whitepaper §4.1 boundary tests differ from core §4 (canonical).\n' +
+    'Run: npm run sync-boundary-tests\n  ' + boundaryDrift.join('\n  '));
+  process.exit(1);
+}
 
 function buildClusters() {
   for (const id of CLUSTER_IDS) {

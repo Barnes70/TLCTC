@@ -173,7 +173,7 @@ Third party is a modifier over all four rows, not a fifth row: any of them may o
 
 ## 4. The Ten Threat Clusters
 
-Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.6.json`) so that this paper and the schema cannot drift. The developer's view — the defensive design responsibility implied by each cluster — the normative **boundary tests**, and the supporting prose are drawn from the canonical cluster definitions (whitepaper §4.1); these are editorial/normative guidance and are not carried in the JSON dictionary.
+Each cluster is identified by a strategic ID (`#N`) for management-level use and an operational root ID (`TLCTC-0N.00`) that anchors its operational sub-threats. The definition, attacker's view, and generic vulnerability for each cluster below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.6.json`) so that this paper and the schema cannot drift. The developer's view — the defensive design responsibility implied by each cluster — and the supporting prose are drawn from the canonical cluster definitions (whitepaper §4.1). The normative **boundary tests** are canonical here, in this section, and are mirrored verbatim in whitepaper §4.1, where a build check refuses any difference. Neither is carried in the JSON dictionary.
 
 ### #1 Abuse of Functions
 

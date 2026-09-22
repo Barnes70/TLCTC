@@ -26,9 +26,9 @@ topology: "bridge"
 
 **Boundary Tests (normative):**
 
-- Technical vulnerabilities (CVEs) are never **#9**.
-- **#9** is only the human manipulation step; subsequent technical steps map to their own clusters.
-- Typical sequences: **`#9 → #4`**, **`#9 → #7`**, **`#9 → #1`**.
+- Technical vulnerabilities (CVEs) are never #9.
+- #9 is only the human manipulation step; subsequent technical steps map to their own clusters.
+- Typical sequences: `#9 → #4`, `#9 → #7`, `#9 → #1`.
 
 **Topology:** Bridge (Human → Cyber).
 

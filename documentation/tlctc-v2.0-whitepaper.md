@@ -252,7 +252,7 @@ Each cluster below uses the same structure:
 - **Boundary Tests**
 - **Topology**
 
-> **Canonical-source note (normative):** The **Definition**, **Generic Vulnerability**, and **Attacker’s View** strings below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.5.json`), so that this document and the schema cannot drift. The **Scope**, **Developer’s View**, and **Boundary Tests** fields are canonical in this document and are not carried in the JSON dictionary. Where a conflict is suspected, the JSON dictionary governs the three JSON-owned fields and this document governs the rest.
+> **Canonical-source note (normative):** The **Definition**, **Generic Vulnerability**, and **Attacker’s View** strings below are reproduced verbatim from the canonical machine-readable framework dictionary (`tlctc-framework.v2.6.json`), so that this document and the schema cannot drift. The **Scope** and **Developer’s View** fields are canonical in this document and are not carried in the JSON dictionary. The **Boundary Tests** are canonical in the core paper (`tlctc-v2.6-core.md` §4) and mirrored here verbatim; `build-okf` fails when the two lists differ, and `npm run sync-boundary-tests` restores the mirror. Where a conflict is suspected, the JSON dictionary governs the three JSON-owned fields, the core paper governs the boundary tests, and this document governs Scope and Developer’s View.
 
 ---
 
@@ -270,9 +270,10 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- If an implementation flaw is required → **#2 or #3**.
-- If this step enables execution of **FEC** → record **`#1`** for enablement and **`→ #7`** for execution (**`#1 → #7`**).
-- If the step is primarily credential use/presentation → **#4**.
+- If an implementation flaw is required → #2 or #3.
+- If this step enables execution of FEC → record #1 for enablement and `→ #7` for execution (`#1 → #7`).
+- If the step is primarily credential use/presentation → #4.
+- If the step abuses a designed enrolment/registration function to obtain an identity or permissions outside its intended population or scope → #1; subsequent authentication as self is not a #4 step (R-CRED).
 
 **Topology:** Internal.
 
@@ -296,11 +297,11 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- If behavior is achieved without an implementation flaw (pure feature/config misuse) → **#1**.
-- If the vulnerable component is in a client role → **#3**.
-- **TOCTOU / race conditions** are implementation flaws → **#2** (and **`→ #7`** only if FEC executes).
-- If exploitation results in **FEC execution** → append **`→ #7`** (i.e., **`#2 → #7`**) per **R-EXEC**.
-- If exploitation yields security impact **without** FEC execution (e.g., authz bypass, SQLi data read/write) → **#2** only; document outcomes as **Data Risk Events**.
+- If behavior is achieved without an implementation flaw (pure feature/config misuse) → #1.
+- If the vulnerable component is in a client role → #3.
+- TOCTOU / race conditions are implementation flaws → #2 (and `→ #7` only if FEC executes).
+- If exploitation results in FEC execution → append `→ #7` (`#2 → #7`) per R-EXEC.
+- If exploitation yields security impact without FEC execution (e.g. authorization bypass, SQLi data read/write) → #2 only; document outcomes as Data Risk Events.
 
 **Topology:** Internal.
 
@@ -322,10 +323,10 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- If behavior is achieved without an implementation flaw (pure feature misuse) → **#1**.
-- If the vulnerable component is in a server role → **#2**.
-- If exploitation results in **FEC execution** → append **`→ #7`** (i.e., **`#3 → #7`**) per **R-EXEC**.
-- If exploitation yields security impact **without** FEC execution → **#3** only; document outcomes as **Data Risk Events**.
+- If behavior is achieved without an implementation flaw (pure feature misuse) → #1.
+- If the vulnerable component is in a server role → #2.
+- If exploitation results in FEC execution → append `→ #7` (`#3 → #7`) per R-EXEC.
+- If exploitation yields security impact without FEC execution → #3 only; document outcomes as Data Risk Events.
 
 **Topology:** Internal.
 
@@ -345,9 +346,10 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- Credential acquisition/exposure/derivation/forgery maps to the enabling cluster; credential use/presentation always maps to **#4** (**R-CRED**) — provided the identity claimed is not the presenter's own (a system-issued self-enrolled identity used as self is not #4; out-of-scope enrolment is #1).
-- If the step involves creating fraudulent credentials, certificates, or tokens, map **that creation/derivation** to the enabling mechanism (**#1/#2/#3/#7/#10** as appropriate), then map subsequent use to **#4**.
-- If the step is primarily persuading a human to reveal/approve → **#9** for that manipulation step.
+- Credential acquisition/exposure/derivation/forgery maps to the enabling cluster; credential use/presentation always maps to #4 (R-CRED).
+- If the step creates fraudulent credentials, certificates, or tokens, map that creation/derivation to the enabling mechanism (#1/#2/#3/#7/#10 as appropriate), then map subsequent use to #4.
+- If the presented credential was issued to the presenter by the target system through a designed enrolment function, the presenter is the authentic holder → not #4; examine the enrolment step under #1 (R-CRED). If enrolment was completed AS an existing identity, the path is #1 → #4.
+- If the step is primarily persuading a human to reveal or approve → #9 for that manipulation step.
 
 **Topology:** Internal.
 
@@ -369,8 +371,10 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- Gaining the privileged position maps to another cluster; **#5 begins once the position is controlled** (**R-MITM**).
-- If the primary act is credential use after capture → **#4** for the use step.
+- Gaining the privileged position maps to another cluster; #5 begins once the position is controlled (R-MITM).
+- If the primary act is credential use after capture → #4 for the use step.
+- If the defective logic is itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry or revocation checking, channel encryption, algorithm negotiation) → #5, not #2/#3 (R-CHANNEL).
+- If the defect is incidental to that control rather than constitutive of it (e.g. memory corruption in a TLS parser) → #2/#3 per R-ROLE.
 
 **Examples (position acquisition, non-normative):**
 
@@ -396,9 +400,9 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- If availability loss is primarily caused by an implementation defect (crash, algorithmic complexity weakness such as **ReDoS**) → **#2/#3**.
-- If availability loss is primarily capacity exhaustion by volume/intensity → **#6** (**R-FLOOD**).
-- If attackers amplify load by abusing legitimate functions, the enabling step may be **#1**, but the exhaustion event remains **#6**.
+- If availability loss is primarily caused by an implementation defect (crash, algorithmic-complexity weakness such as ReDoS) → #2/#3.
+- If availability loss is primarily capacity exhaustion by volume/intensity → #6 (R-FLOOD).
+- If attackers amplify load by abusing legitimate functions, the enabling step may be #1, but the exhaustion event remains #6.
 
 **Topology:** Internal.
 
@@ -418,10 +422,10 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- If **FEC executes** → **#7** (per **R-EXEC**), even if execution is **in-memory** and no files are created.
-- If legitimate function misuse enables FEC execution → **`#1 → #7`**.
-- If exploit payload triggers an implementation flaw and results in FEC execution → **`#2/#3 → #7`**.
-- If an implementation flaw is exploited but no FEC executes → **do not add #7**.
+- If FEC executes → #7 (R-EXEC), even if execution is in-memory and no files are created.
+- If legitimate function misuse enables FEC execution → `#1 → #7`.
+- If an exploit payload triggers an implementation flaw and results in FEC execution → `#2/#3 → #7`.
+- If an implementation flaw is exploited but no FEC executes → do not add #7.
 
 **Explicit SQLi clarification (non-normative but recommended):**
 
@@ -446,7 +450,11 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- If the physical step leads to FEC execution → **`#8 → #7`**.
+- If the physical step leads to FEC execution → `#8 → #7`.
+- If a physical-layer property of the substrate is the exploited generic vulnerability → #8 (R-SUBSTRATE).
+- If the physical layer is only the readout channel for a defect in implemented logic → #2/#3 per R-ROLE. Spectre-class transient execution is #2 on this test; Rowhammer is #8.
+- Attacker proximity or possession is not required. Software-triggered exploitation of physical phenomena — Rowhammer, software-controlled voltage or clock glitching — remains #8.
+- Where foreign code executes in order to induce the physical effect, the execution is a separate #7 step per R-EXEC and Axiom VI → `#7 → #8`.
 
 **Topology:** Bridge (Physical → Cyber).
 
@@ -466,9 +474,9 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- Technical vulnerabilities (CVEs) are never **#9**.
-- **#9** is only the human manipulation step; subsequent technical steps map to their own clusters.
-- Typical sequences: **`#9 → #4`**, **`#9 → #7`**, **`#9 → #1`**.
+- Technical vulnerabilities (CVEs) are never #9.
+- #9 is only the human manipulation step; subsequent technical steps map to their own clusters.
+- Typical sequences: `#9 → #4`, `#9 → #7`, `#9 → #1`.
 
 **Topology:** Bridge (Human → Cyber).
 
@@ -494,10 +502,10 @@ Each cluster below uses the same structure:
 
 **Boundary Tests (normative):**
 
-- Place **#10 at the Trust Acceptance Event (TAE)** where the third-party trust link is **honored** and becomes authoritative inside the org.
-- **Falsifiability:** If removing the third-party trust link stops this step from succeeding → **#10 belongs here**.
-- Downstream effects map normally: often **`#10 → #7`** (accepted artifact leads to FEC execution) or **`#10 → #1`** (accepted auth/entitlement enables function abuse).
-- Federation clarity: credential use at IdP is **#4**; acceptance of the IdP assertion/token at the SP is **#10**.
+- Place #10 at the Trust Acceptance Event (TAE), where the third-party trust link is honored and becomes authoritative inside the organization.
+- Falsifiability: if removing the third-party trust link stops this step from succeeding → #10 belongs here.
+- Downstream effects map normally: often `#10 → #7` (accepted artifact leads to FEC execution) or `#10 → #1` (accepted authorization/entitlement enables function abuse).
+- Federation clarity: credential use at the identity provider is #4; acceptance of the IdP assertion/token at the service provider is #10.
 
 **Optional boundary notation (recommended):**
 
