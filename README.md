@@ -526,10 +526,14 @@ tlctc/
 │   ├── controls/                             # NIST CSF × ISO 27001 matrix, effectiveness model, indicators
 │   └── mappings/                             # ATT&CK / CWE / Sigma grouped by cluster
 ├── documentation/
-│   ├── tlctc-v2.5-core.md                    # ⭐ Citable core paper (v2.5) — canonical definition
-│   ├── tlctc-v2.5-core.pdf                   # PDF of the core paper (citation target)
-│   ├── tlctc-v2.5-application.md             # Application & governance companion (v2.5)
-│   ├── tlctc-v2.5-application.pdf            # PDF of the application paper
+│   ├── tlctc-v2.6-core.md                    # ⭐ Core paper (v2.6 working version, not deposited)
+│   ├── tlctc-v2.6-core.pdf                   # PDF of the v2.6 core paper
+│   ├── tlctc-v2.6-application.md             # Application & governance companion (v2.6)
+│   ├── tlctc-v2.6-application.pdf            # PDF of the v2.6 application paper
+│   ├── tlctc-v2.5-core.md                    # Citable core paper (v2.5.1 deposit; frozen)
+│   ├── tlctc-v2.5-core.pdf                   # PDF of the v2.5.1 core paper (citation target)
+│   ├── tlctc-v2.5-application.md             # Application companion (v2.5.1 deposit; frozen)
+│   ├── tlctc-v2.5-application.pdf            # PDF of the v2.5.1 application paper
 │   ├── tlctc-traceability.md            # consolidation & version traceability (v2.1 → v2.5)
 │   ├── tlctc-operational-enumeration.md      # Evolving TLCTC-XX.YY sub-cluster catalogue
 │   ├── tlctc-v2.0-whitepaper.md              # Extended practitioner handbook (v2.1 content; filename kept for link stability)
@@ -695,10 +699,10 @@ tlctc/
 
 ## Getting Started
 
-1. **Read the core paper** — [`documentation/tlctc-v2.5-core.md`](documentation/tlctc-v2.5-core.md) is the canonical, citable definition: derivation, clusters, axioms, rules, and notation in one self-contained paper.
+1. **Read the core paper** — [`documentation/tlctc-v2.6-core.md`](documentation/tlctc-v2.6-core.md) is the canonical definition (v2.6 working version; v2.5.1 is the citable deposit): derivation, clusters, axioms, rules, and notation in one self-contained paper.
 2. **Read the axioms** — They are the non-negotiable foundation. If you skip them, you'll misclassify.
 3. **Understand the Bow-Tie** — Threats are causes, outcomes are consequences. Never confuse them.
-4. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation. The [Application Paper](documentation/tlctc-v2.5-application.md) walks the procedure end-to-end.
+4. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation. The [Application Paper](documentation/tlctc-v2.6-application.md) walks the procedure end-to-end.
 5. **Use the JSON schemas** — Validate your attack path instances against Layer 3 schema.
 6. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
 7. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
@@ -728,8 +732,8 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 
 | Resource | Description |
 |---|---|
-| [Core Paper v2.5](documentation/tlctc-v2.5-core.md) ([PDF](documentation/tlctc-v2.5-core.pdf)) | The canonical, citable definition of the framework |
-| [Application Paper v2.5](documentation/tlctc-v2.5-application.md) ([PDF](documentation/tlctc-v2.5-application.pdf)) | Classification in practice, governance, controls, and indicators |
+| [Core Paper v2.6](documentation/tlctc-v2.6-core.md) ([PDF](documentation/tlctc-v2.6-core.pdf)) | The canonical definition of the framework (v2.6 working version; cite v2.5.1) |
+| [Application Paper v2.6](documentation/tlctc-v2.6-application.md) ([PDF](documentation/tlctc-v2.6-application.pdf)) | Classification in practice, governance, controls, and indicators |
 | [tlctc.net](https://tlctc.net) | Official TLCTC website with documentation, visuals, and tools |
 | [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Extended practitioner handbook: boundary logic, epistemic operators, and complete notation specification |
 | [barnes.ch](https://barnes.ch) | Author's site with foundational analysis on cybersecurity's language problem |
