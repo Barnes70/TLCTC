@@ -2,10 +2,10 @@
   "metadata": {
     "incident_id": "S1NGULARITY-NX-2025",
     "analyst_confidence": "high",
-    "tlctc_version": "2.5",
-    "framework_ref": "tlctc-framework.v2.5.json",
+    "tlctc_version": "2.6",
+    "framework_ref": "tlctc-framework.v2.6.json",
     "created_at": "2026-03-19T00:00:00Z",
-    "notes": "S1ngularity / Nx monorepo tool supply chain compromise (August 26, 2025). A pull_request_target GitHub Actions workflow ran attacker-submitted PR code in the base repo's security context, exposing the npm publishing token. Trojanized versions of nx and related packages were published. The QUIETVAULT payload harvested credentials, downloaded TruffleHog, and — notably — weaponized an LLM coding assistant already present on victims' machines for deeper credential scanning. Exfiltrated data was committed to a public GitHub repository. Attack path: #1 →[instant] #7 + [DRE: C] →[~5m] #4 →[instant] #1 + [DRE: I] → #10 ||[dev][@Nrwl(Nx)⇒@npm→@Consumers]|| →[instant] #1 →[instant] #7 →[instant] #1 + [DRE: C] →[instant] #7 →[instant] #1 + [DRE: C]. Development vector (#10.2): consumers pulled trojanized versions during dependency installation. Velocity profile: CI compromise to publication in minutes; consumer exposure hours to days; consumer-side exploitation near-instantaneous. Sources: Sysdig TRT, Palo Alto Unit 42, ReversingLabs, Nx post-mortem disclosure."
+    "notes": "S1ngularity / Nx monorepo tool supply chain compromise (August 26, 2025). A pull_request_target GitHub Actions workflow ran attacker-submitted PR code in the base repo's security context, exposing the npm publishing token. Trojanized versions of nx and related packages were published. The QUIETVAULT payload harvested credentials, downloaded TruffleHog, and — notably — weaponized an LLM coding assistant already present on victims' machines for deeper credential scanning. Exfiltrated data was committed to a public GitHub repository. Attack path: #1 →[instant] #7 + [DRE: C] →[~5m] #4 →[instant] #1 + [DRE: I] → #10 ||[dev][@Nrwl(Nx)⇒@npm→@Consumers]|| →[instant] #1 →[instant] #7 →[instant] #1 + [DRE: C] →[instant] #7 →[instant] #1 + [DRE: C]. Development vector (#10.2): consumers pulled trojanized versions during dependency installation. Velocity profile: CI compromise to publication in minutes; consumer exposure hours to days; consumer-side exploitation near-instantaneous. Sources: Sysdig TRT, Palo Alto Unit 42, ReversingLabs, Nx post-mortem disclosure. v2.6 requalification (2026-09-23): classification unchanged; s5 now states the v2.6 subversion test and falsifier instead of the v2.5 remove-the-trust-link test."
   },
   "path_sequence": [
     {
@@ -45,7 +45,7 @@
         "transit_spheres": ["@npm"]
       },
       "delta_t_to_next": "instant",
-      "notes": "Trust Acceptance Event (Development Vector / #10.2). Consumers pull the trojanized Nx version during dependency installation. npm serves as transit infrastructure with its own control surface (abuse detection, provenance checking). Boundary test: if the consumer had no dependency on Nx, the attack would not reach them."
+      "notes": "Trust Acceptance Event (Development Vector / #10.2). Consumers pull the trojanized Nx version during dependency installation. npm serves as transit infrastructure with its own control surface (abuse detection, provenance checking). Subversion and falsifiability (v2.6): the Nx release pipeline was subverted before consumers accepted the version; remove that subversion - a genuine Nx release - and the step fails, so #10 holds."
     },
     {
       "step_id": "s6-install-processing",

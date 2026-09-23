@@ -11,7 +11,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-04-14T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # MANDIANT-HANDOFF-RANSOMWARE-2025
 
@@ -39,4 +39,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Composite attack path representing the infostealer → initial access broker (IAB) → ransomware-affiliate pipeline described in Mandiant M-Trends 2026 'A Minor Infection Today Can Be a Ransomware Attack Tomorrow' (pp. 55-59). Three distinct actors: (1) the stealer distributor, (2) the IAB credential aggregator, (3) the ransomware affiliate. Hand-off time between credential harvest and affiliate login observed at <30 seconds in 2025 cases. Prior compromise / stolen-credential pathways were the #1 ransomware initial access vector (30%). Sources: M-Trends 2026 pp. 29-37 (ransomware chapter), pp. 55-59 (hand-off article).
+Composite attack path representing the infostealer → initial access broker (IAB) → ransomware-affiliate pipeline described in Mandiant M-Trends 2026 'A Minor Infection Today Can Be a Ransomware Attack Tomorrow' (pp. 55-59). Three distinct actors: (1) the stealer distributor, (2) the IAB credential aggregator, (3) the ransomware affiliate. Hand-off time between credential harvest and affiliate login observed at <30 seconds in 2025 cases. Prior compromise / stolen-credential pathways were the #1 ransomware initial access vector (30%). Sources: M-Trends 2026 pp. 29-37 (ransomware chapter), pp. 55-59 (hand-off article). v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

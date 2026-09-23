@@ -11,7 +11,7 @@ tags:
   - "cluster-7"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # LOCKBIT-BYOVD-2023
 
@@ -39,4 +39,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-LockBit affiliate attack using Bring Your Own Vulnerable Driver (BYOVD) technique, representative of multiple 2023 incidents. Affiliate purchased RDP credentials from initial access broker, loaded a vulnerable signed driver (e.g., Dell dbutil_2_3.sys or Process Explorer driver) to disable EDR/AV, exfiltrated data, and deployed LockBit ransomware. Attack path: #4 →[Δt=~30m] (#1 + #3) →[Δt=~2h] #1 + [DRE: C] →[Δt=~4h] #7 + [DRE: C, A]. Sources: Sophos X-Ops BYOVD research (2023), Sentinel Labs driver vulnerability reports, CISA #StopRansomware: LockBit 3.0 advisory (AA23-165A).
+LockBit affiliate attack using Bring Your Own Vulnerable Driver (BYOVD) technique, representative of multiple 2023 incidents. Affiliate purchased RDP credentials from initial access broker, loaded a vulnerable signed driver (e.g., Dell dbutil_2_3.sys or Process Explorer driver) to disable EDR/AV, exfiltrated data, and deployed LockBit ransomware. Attack path: #4 →[Δt=~30m] (#1 + #3) →[Δt=~2h] #1 + [DRE: C] →[Δt=~4h] #7 + [DRE: C, A]. Sources: Sophos X-Ops BYOVD research (2023), Sentinel Labs driver vulnerability reports, CISA #StopRansomware: LockBit 3.0 advisory (AA23-165A). v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

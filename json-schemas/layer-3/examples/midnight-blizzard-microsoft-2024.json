@@ -2,11 +2,11 @@
   "metadata": {
     "incident_id": "MIDNIGHT-BLIZZARD-MICROSOFT-2024",
     "analyst_confidence": "high",
-    "tlctc_version": "2.3",
-    "framework_ref": "tlctc-framework.v2.3.json",
+    "tlctc_version": "2.6",
+    "framework_ref": "tlctc-framework.v2.6.json",
     "registry_ref": "example-registry.json",
     "created_at": "2026-03-24T00:00:00Z",
-    "notes": "Midnight Blizzard (APT29/Nobelium) compromise of Microsoft corporate email (January 2024). Attack path: #4 →[Δt=VC-1] #1 →[Δt=VC-1] #1 →[Δt=VC-2] #4 →[Δt=VC-3] #1 + [DRE: C]. Password spray against legacy test tenant without MFA, escalation via overly permissive OAuth application, creation of additional malicious OAuth apps, and systematic exfiltration of senior leadership, cybersecurity, and legal staff email. Per Axiom IV, APT29 attribution does not change cluster classification. Sources: Microsoft MSRC blog (January/March 2024), Splunk/Cisco Top 50 Cybersecurity Threats report, CISA Emergency Directive 24-02."
+    "notes": "Midnight Blizzard (APT29/Nobelium) compromise of Microsoft corporate email (January 2024). Attack path: #4 →[Δt=VC-1] #1 →[Δt=VC-1] #1 →[Δt=VC-2] #4 →[Δt=VC-3] #1 + [DRE: C]. Password spray against legacy test tenant without MFA, escalation via overly permissive OAuth application, creation of additional malicious OAuth apps, and systematic exfiltration of senior leadership, cybersecurity, and legal staff email. Per Axiom IV, APT29 attribution does not change cluster classification. Sources: Microsoft MSRC blog (January/March 2024), Splunk/Cisco Top 50 Cybersecurity Threats report, CISA Emergency Directive 24-02. v2.6 requalification (2026-09-23): this record had not been lifted to v2.5; checked against the v2.5 changes (R-SCOPE: the attacker is not a grantee of any step, so every step stays in the Attack row) and the v2.6 changes - classification unchanged; retired R-ABUSE citations now name the #1 boundary test."
   },
   "path_sequence": [
     {
@@ -20,13 +20,13 @@
       "step_id": "s2-oauth-app-abuse",
       "cluster": "#1",
       "delta_t_to_next": "~7d",
-      "notes": "Compromised test account used to access a legacy test OAuth application that had been granted full_access_as_app permission to the Microsoft corporate Exchange Online environment. The OAuth grant was legitimate but overly permissive — a designed authorization mechanism used beyond its intended scope. No code flaw exploited; the identity platform functioned as configured. R-ABUSE: abuse of designed OAuth delegation capability."
+      "notes": "Compromised test account used to access a legacy test OAuth application that had been granted full_access_as_app permission to the Microsoft corporate Exchange Online environment. The OAuth grant was legitimate but overly permissive — a designed authorization mechanism used beyond its intended scope. No code flaw exploited; the identity platform functioned as configured. #1 boundary test (R-ABUSE in v2.0): abuse of designed OAuth delegation capability."
     },
     {
       "step_id": "s3-oauth-persistence",
       "cluster": "#1",
       "delta_t_to_next": "~2h",
-      "notes": "Attacker created additional malicious OAuth applications and granted them Exchange Online mailbox read permissions via Microsoft Graph API. The Azure AD application registration and consent APIs functioned as designed; the administrative scope was abused to establish persistent, broad mailbox access. This step provided persistence independent of the original test account. R-ABUSE: legitimate admin APIs, abused scope."
+      "notes": "Attacker created additional malicious OAuth applications and granted them Exchange Online mailbox read permissions via Microsoft Graph API. The Azure AD application registration and consent APIs functioned as designed; the administrative scope was abused to establish persistent, broad mailbox access. This step provided persistence independent of the original test account. #1 boundary test (R-ABUSE in v2.0): legitimate admin APIs, abused scope."
     },
     {
       "step_id": "s4-token-authentication",

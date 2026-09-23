@@ -11,7 +11,7 @@ tags:
   - "cluster-7"
   - "confidence-medium"
 timestamp: "2026-04-16T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # BLOCKADE-SPIDER-EMBARGO-2025
 
@@ -47,4 +47,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-BLOCKADE SPIDER's cross-domain Embargo ransomware campaigns (throughout 2025). Composite path derived from CrowdStrike's description of the adversary's progressive tradecraft spanning four operational domains: edge devices, identity/cloud, SaaS applications, and virtualization infrastructure. Techniques are 'conceptually similar to SCATTERED SPIDER, including creating unmanaged VMs in victim networks and subtly modifying existing identity-oriented security policies. No known link exists between the two adversaries.' Analyst confidence is medium because this is a composite from multiple campaigns, not a single incident with exact timestamps. Attack path: #2 + [DRE: C] →[Δt=?] #4 →[Δt=?] #1 + [DRE: C] →[Δt=?] #1 →[Δt=?] #1 →[Δt=?] #7 →[Δt=?] #1 + [DRE: C] →[Δt=?] #7 + [DRE: Ac]. Source: CrowdStrike 2026 Global Threat Report, pp. 24-25, Figure 13.
+BLOCKADE SPIDER's cross-domain Embargo ransomware campaigns (throughout 2025). Composite path derived from CrowdStrike's description of the adversary's progressive tradecraft spanning four operational domains: edge devices, identity/cloud, SaaS applications, and virtualization infrastructure. Techniques are 'conceptually similar to SCATTERED SPIDER, including creating unmanaged VMs in victim networks and subtly modifying existing identity-oriented security policies. No known link exists between the two adversaries.' Analyst confidence is medium because this is a composite from multiple campaigns, not a single incident with exact timestamps. Attack path: #2 + [DRE: C] →[Δt=?] #4 →[Δt=?] #1 + [DRE: C] →[Δt=?] #1 →[Δt=?] #1 →[Δt=?] #7 →[Δt=?] #1 + [DRE: C] →[Δt=?] #7 + [DRE: Ac]. Source: CrowdStrike 2026 Global Threat Report, pp. 24-25, Figure 13. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

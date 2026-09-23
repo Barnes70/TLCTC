@@ -8,7 +8,7 @@ tags:
   - "cluster-6"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # CLOUDFLARE-HTTP2-DDOS-2023
 
@@ -30,4 +30,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Record-breaking HTTP/2 Rapid Reset DDoS attack, October 2023. Exploiting CVE-2023-44487, attackers generated up to 398 million requests per second against Cloudflare infrastructure (similar attacks hit Google at 398M rps and AWS). The attack used HTTP/2 Rapid Reset: rapidly opening and canceling HTTP/2 streams to overwhelm servers while maintaining a single TCP connection. Botnet of ~20,000 machines achieved amplification through protocol-level asymmetry. Attack path: #6 + [DRE: A]. Sources: Cloudflare blog 'HTTP/2 Rapid Reset' (October 2023), Google Cloud blog on CVE-2023-44487, AWS Shield response, CISA advisory on HTTP/2 Rapid Reset.
+Record-breaking HTTP/2 Rapid Reset DDoS attack, October 2023. Exploiting CVE-2023-44487, attackers generated up to 398 million requests per second against Cloudflare infrastructure (similar attacks hit Google at 398M rps and AWS). The attack used HTTP/2 Rapid Reset: rapidly opening and canceling HTTP/2 streams to overwhelm servers while maintaining a single TCP connection. Botnet of ~20,000 machines achieved amplification through protocol-level asymmetry. Attack path: #6 + [DRE: A]. Sources: Cloudflare blog 'HTTP/2 Rapid Reset' (October 2023), Google Cloud blog on CVE-2023-44487, AWS Shield response, CISA advisory on HTTP/2 Rapid Reset. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

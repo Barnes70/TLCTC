@@ -2,11 +2,11 @@
   "metadata": {
     "incident_id": "SOLARWINDS-SUNBURST-2020",
     "analyst_confidence": "high",
-    "tlctc_version": "2.3",
-    "framework_ref": "tlctc-framework.v2.3.json",
+    "tlctc_version": "2.6",
+    "framework_ref": "tlctc-framework.v2.6.json",
     "registry_ref": "example-registry.json",
     "created_at": "2026-02-23T00:00:00Z",
-    "notes": "SolarWinds SUNBURST supply chain compromise (December 2020). Attack path: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 + [DRE: C] →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]. APT29/Cozy Bear attributed (Axiom IV: actor identity does not change cluster classification). Sources: CISA Alert AA20-352A, Microsoft MSRC, FireEye/Mandiant UNC2452 report."
+    "notes": "SolarWinds SUNBURST supply chain compromise (December 2020). Attack path: #10 ||[update][@Vendor→@Org]|| →[Δt=instant] #7 + [DRE: C] →[Δt=~14d] #4 →[Δt=~2h] #1 + [DRE: C]. APT29/Cozy Bear attributed (Axiom IV: actor identity does not change cluster classification). Sources: CISA Alert AA20-352A, Microsoft MSRC, FireEye/Mandiant UNC2452 report. v2.6 requalification (2026-09-23): this record had not been lifted to v2.5; checked against the v2.5 and v2.6 changes. Classification unchanged; s1 now states the v2.6 subversion test and falsifier. s3 stays #4 without a #10: the forged SAML tokens were signed with the victim organisation's own federation key, not issued by a subverted third-party identity provider."
   },
   "path_sequence": [
     {
@@ -18,7 +18,7 @@
         "target_sphere": "@Org"
       },
       "delta_t_to_next": "instant",
-      "notes": "Trust Acceptance Event: SolarWinds Orion update v2019.4-2020.2.1 containing SUNBURST backdoor accepted and installed by target organization via legitimate update channel. The compromised DLL (SolarWinds.Orion.Core.BusinessLayer.dll) was digitally signed by SolarWinds, passing all trust verification. Falsifiability test: removing the third-party trust link (not accepting the update) would have prevented this step."
+      "notes": "Trust Acceptance Event: SolarWinds Orion update v2019.4-2020.2.1 containing SUNBURST backdoor accepted and installed by target organization via legitimate update channel. The compromised DLL (SolarWinds.Orion.Core.BusinessLayer.dll) was digitally signed by SolarWinds, passing all trust verification. Subversion and falsifiability (v2.6): the vendor build was subverted before the target accepted the update; remove that subversion - SolarWinds shipping its genuine Orion update - and the step fails, so #10 holds."
     },
     {
       "step_id": "s2-sunburst-execution",

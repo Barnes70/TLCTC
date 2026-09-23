@@ -2,10 +2,10 @@
   "metadata": {
     "incident_id": "UNRESOLVED-EXAMPLE-2026-001",
     "analyst_confidence": "medium",
-    "tlctc_version": "2.3",
-    "framework_ref": "tlctc-framework.v2.3.json",
+    "tlctc_version": "2.6",
+    "framework_ref": "tlctc-framework.v2.6.json",
     "created_at": "2026-04-10T00:00:00Z",
-    "notes": "Canonical example demonstrating V2.1 unresolved-step operators (see whitepaper §11.5.4). This is a synthetic illustrative incident, not a real event. It shows: (1) a 'single' unresolved step (? operator) where evidence confirms a step exists but its cluster cannot yet be determined; (2) a 'gap' unresolved step (… operator) representing one or more unknown steps across a destroyed-log window; (3) the rule that unresolved steps carry neither 'cluster' nor 'outcomes' (R-UNRES-2, R-UNRES-5) and MUST carry a 'notes' prose annotation (R-UNRES-8); (4) the use of 'candidates' as informational-only metadata (R-UNRES-9); (5) velocity annotations (delta_t_to_next) and boundary operators applied to unresolved steps (R-UNRES-4, R-UNRES-6). Textual equivalent: #3 →[Δt=0s] #7 →[Δt=4h] ? →[Δt=<10m] #4 → … → #1 →[Δt=0s] + [DRE: Ac]"
+    "notes": "Canonical example demonstrating V2.1 unresolved-step operators (see whitepaper §11.5.4). This is a synthetic illustrative incident, not a real event. It shows: (1) a 'single' unresolved step (? operator) where evidence confirms a step exists but its cluster cannot yet be determined; (2) a 'gap' unresolved step (… operator) representing one or more unknown steps across a destroyed-log window; (3) the rule that unresolved steps carry neither 'cluster' nor 'outcomes' (R-UNRES-2, R-UNRES-5) and MUST carry a 'notes' prose annotation (R-UNRES-8); (4) the use of 'candidates' as informational-only metadata (R-UNRES-9); (5) velocity annotations (delta_t_to_next) and boundary operators applied to unresolved steps (R-UNRES-4, R-UNRES-6). Textual equivalent: #3 →[Δt=0s] #7 →[Δt=4h] ? →[Δt=<10m] #4 → … → #1 →[Δt=0s] + [DRE: Ac] v2.6 requalification (2026-09-23): this record had not been lifted to v2.5; checked against the v2.5 changes (R-SCOPE scope gate, channel and substrate rules) and the v2.6 changes (#10 subversion test, federation, successes only, data-vs-code boundary, R-SPECIFIC consolidation) - classification unchanged."
   },
   "path_sequence": [
     {

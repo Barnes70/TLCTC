@@ -10,7 +10,7 @@ tags:
   - "cluster-7"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # COLONIAL-PIPELINE-2021
 
@@ -38,4 +38,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-DarkSide ransomware attack on Colonial Pipeline, May 2021. Largest fuel pipeline in the US shut down for 6 days, causing fuel shortages across the US East Coast. Attacker used a compromised VPN password (no MFA, likely from a prior breach). Attack path: #4 →[Δt=~7d] #1 →[Δt=~2h] #1 + [DRE: C] →[Δt=~4h] #7 + [DRE: A]. $4.4M ransom paid (DOJ later recovered $2.3M). Sources: Mandiant incident report, CISA Alert AA21-131A, Bloomberg reporting, DOJ Bitcoin recovery announcement.
+DarkSide ransomware attack on Colonial Pipeline, May 2021. Largest fuel pipeline in the US shut down for 6 days, causing fuel shortages across the US East Coast. Attacker used a compromised VPN password (no MFA, likely from a prior breach). Attack path: #4 →[Δt=~7d] #1 →[Δt=~2h] #1 + [DRE: C] →[Δt=~4h] #7 + [DRE: A]. $4.4M ransom paid (DOJ later recovered $2.3M). Sources: Mandiant incident report, CISA Alert AA21-131A, Bloomberg reporting, DOJ Bitcoin recovery announcement. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

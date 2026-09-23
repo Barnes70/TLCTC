@@ -2,9 +2,9 @@
   "metadata": {
     "incident_id": "agentic-path-A",
     "analyst_confidence": "high",
-    "tlctc_version": "2.5",
-    "framework_ref": "tlctc-framework.v2.5.json",
-    "notes": "Path A — Direct Prompt Injection. Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Attacker manipulates agent through its designed input interface (first #1). Agent abuses its own tool-use capabilities (second #1) to exfiltrate data or modify systems. Both steps exploit functional scope, not implementation flaws. Notation: #1→[instant]#1 + [DRE: C, I]. Velocity: VC-4 — entire chain executes within single inference cycle. No human-speed gaps. Only architectural controls (capability restriction, output filtering) are viable. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
+    "tlctc_version": "2.6",
+    "framework_ref": "tlctc-framework.v2.6.json",
+    "notes": "Path A — Direct Prompt Injection. Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Attacker manipulates agent through its designed input interface (first #1). Agent abuses its own tool-use capabilities (second #1) to exfiltrate data or modify systems. Both steps exploit functional scope, not implementation flaws. Notation: #1→[instant]#1 + [DRE: C, I]. Velocity: VC-4 — entire chain executes within single inference cycle. No human-speed gaps. Only architectural controls (capability restriction, output filtering) are viable. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25). v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged."
   },
   "path_sequence": [
     {

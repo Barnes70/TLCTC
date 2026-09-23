@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-04-16T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # CHATTY-SPIDER-LAWFIRM-2025
 
@@ -36,4 +36,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-CHATTY SPIDER's four-minute vishing-to-exfiltration intrusion targeting a U.S.-based law firm (2025). This incident exemplifies the adversary's signature speed and the risk posed by abuse of legitimate credentials and trusted administrative tools. The adversary convinced an employee to grant workstation access via Microsoft Quick Assist, downloaded WinSCP within two minutes, and attempted SFTP exfiltration within three minutes — blocked by firewall controls. CHATTY SPIDER pivoted to Google Drive exfiltration within 10 seconds of the firewall block. CrowdStrike OverWatch detected the activity before data exfiltration was completed. CHATTY SPIDER continued to primarily target law firms in 2025, exclusively exfiltrating from beachhead hosts and accessible network shares; intrusions often lasted less than an hour. Attack path: #9 ||[human][@ChattySpider→@LawFirm]|| →[Δt=~2m] #7 →[Δt=~10s] #1 + [DRE: C]. Velocity class VC-3 to VC-4 throughout. Source: CrowdStrike 2026 Global Threat Report, p. 11, Figure 4.
+CHATTY SPIDER's four-minute vishing-to-exfiltration intrusion targeting a U.S.-based law firm (2025). This incident exemplifies the adversary's signature speed and the risk posed by abuse of legitimate credentials and trusted administrative tools. The adversary convinced an employee to grant workstation access via Microsoft Quick Assist, downloaded WinSCP within two minutes, and attempted SFTP exfiltration within three minutes — blocked by firewall controls. CHATTY SPIDER pivoted to Google Drive exfiltration within 10 seconds of the firewall block. CrowdStrike OverWatch detected the activity before data exfiltration was completed. CHATTY SPIDER continued to primarily target law firms in 2025, exclusively exfiltrating from beachhead hosts and accessible network shares; intrusions often lasted less than an hour. Attack path: #9 ||[human][@ChattySpider→@LawFirm]|| →[Δt=~2m] #7 →[Δt=~10s] #1 + [DRE: C]. Velocity class VC-3 to VC-4 throughout. Source: CrowdStrike 2026 Global Threat Report, p. 11, Figure 4. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

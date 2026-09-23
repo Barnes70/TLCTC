@@ -11,7 +11,7 @@ tags:
   - "cluster-4"
   - "confidence-high"
 timestamp: "2026-04-14T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # MANDIANT-MULTI-YEAR-ESPIONAGE-2025
 
@@ -43,4 +43,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Composite attack path modeled on Mandiant M-Trends 2026 'Multi-Year Intrusions Highlighting Extreme Persistence' (pp. 66-69). UNC1549 (Iran, aerospace/defense) and UNC5807 (PRC, edge/core network devices) both maintained years-long dwell. This path represents the UNC1549-style pattern: spear phishing for initial access, custom malware for long-term tasking, living-off-the-land lateral movement, and slow exfiltration over VC-1 timescales. Axiom IV: actor identity does not determine cluster classification. Sources: M-Trends 2026 pp. 66-69.
+Composite attack path modeled on Mandiant M-Trends 2026 'Multi-Year Intrusions Highlighting Extreme Persistence' (pp. 66-69). UNC1549 (Iran, aerospace/defense) and UNC5807 (PRC, edge/core network devices) both maintained years-long dwell. This path represents the UNC1549-style pattern: spear phishing for initial access, custom malware for long-term tasking, living-off-the-land lateral movement, and slow exfiltration over VC-1 timescales. Axiom IV: actor identity does not determine cluster classification. Sources: M-Trends 2026 pp. 66-69. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

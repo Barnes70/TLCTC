@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-04-09T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # PUNYTOAD-F5-BIGIP-2025
 
@@ -36,4 +36,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-PunyToad (UNC5221/UTA0178/Warp Panda) F5 BIG-IP breach, confirmed October 2025 by Cloudforce One. PunyToad maintained persistent access to F5 systems for over a year, exfiltrating BIG-IP source code and documentation on undisclosed vulnerabilities. Malware: BRICKSTORM, a Go-based ELF binary obfuscated with Garble. Reverse C2 logic: the malware acts as a web server; the C2 connects to it as a client via WebSockets (wss://). Stealth: masquerades as legitimate VMware/Postgres processes (pg-update, rpclistener) in /opt/vmware/vpostgres/. Infrastructure: DNS over HTTP (DoH) to resolve C2 domains, proxy tunneling to bypass firewall rules. Attack path: #2 -> #7 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 22), F5 advisory K000154696, Google Cloud blog.
+PunyToad (UNC5221/UTA0178/Warp Panda) F5 BIG-IP breach, confirmed October 2025 by Cloudforce One. PunyToad maintained persistent access to F5 systems for over a year, exfiltrating BIG-IP source code and documentation on undisclosed vulnerabilities. Malware: BRICKSTORM, a Go-based ELF binary obfuscated with Garble. Reverse C2 logic: the malware acts as a web server; the C2 connects to it as a client via WebSockets (wss://). Stealth: masquerades as legitimate VMware/Postgres processes (pg-update, rpclistener) in /opt/vmware/vpostgres/. Infrastructure: DNS over HTTP (DoH) to resolve C2 domains, proxy tunneling to bypass firewall rules. Attack path: #2 -> #7 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 22), F5 advisory K000154696, Google Cloud blog. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

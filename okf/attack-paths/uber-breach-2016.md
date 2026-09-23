@@ -9,7 +9,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # UBER-BREACH-2016
 
@@ -33,4 +33,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Uber data breach of 2016 (disclosed November 2017). Attackers accessed a private GitHub repository used by Uber engineers, found AWS access keys hardcoded in the source code, and used those credentials to access S3 buckets containing personal data of 57 million riders and drivers. Uber paid $100K to the attackers through a bug bounty program to suppress disclosure, leading to criminal charges against Uber's CSO. Attack path: #4 →[Δt=instant] #1 + [DRE: C]. Sources: Uber disclosure (November 2017), Bloomberg reporting, FTC investigation, DOJ criminal case against CSO Joseph Sullivan (2022).
+Uber data breach of 2016 (disclosed November 2017). Attackers accessed a private GitHub repository used by Uber engineers, found AWS access keys hardcoded in the source code, and used those credentials to access S3 buckets containing personal data of 57 million riders and drivers. Uber paid $100K to the attackers through a bug bounty program to suppress disclosure, leading to criminal charges against Uber's CSO. Attack path: #4 →[Δt=instant] #1 + [DRE: C]. Sources: Uber disclosure (November 2017), Bloomberg reporting, FTC investigation, DOJ criminal case against CSO Joseph Sullivan (2022). v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

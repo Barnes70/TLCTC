@@ -12,7 +12,7 @@ tags:
   - "cluster-10"
   - "confidence-high"
 timestamp: "2026-04-16T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # PRESSURE-CHOLLIMA-BYBIT-2025
 
@@ -46,4 +46,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-PRESSURE CHOLLIMA's supply chain compromise of Safe{Wallet} to steal $1.46 billion USD from Bybit (February 2025), the largest cryptocurrency theft in history. The adversary compromised a Safe{Wallet} developer's machine via a trojanized Python project (likely social engineering), exfiltrated development credentials, pivoted to Safe{Wallet}'s cloud infrastructure, and injected malicious JavaScript and a customized smart contract into the frontend. When Bybit performed a routine wallet transaction through Safe{Wallet}, the malicious logic modified the transaction to redirect funds to an attacker-controlled wallet. The adversary immediately restored the original JavaScript post-theft for anti-forensics. Attack path: #9 ||[human][@PressureChollima→@SafeWallet-Dev]|| →[Δt=?] #7 + [DRE: C] →[Δt=?] #4 →[Δt=?] #1 + [DRE: I] →[Δt=?] #10 ||[update][@SafeWallet→@Bybit]|| →[Δt=instant] #1 + [DRE: C, I] →[Δt=instant] #1. Source: CrowdStrike 2026 Global Threat Report, pp. 31-32, Figure 16.
+PRESSURE CHOLLIMA's supply chain compromise of Safe{Wallet} to steal $1.46 billion USD from Bybit (February 2025), the largest cryptocurrency theft in history. The adversary compromised a Safe{Wallet} developer's machine via a trojanized Python project (likely social engineering), exfiltrated development credentials, pivoted to Safe{Wallet}'s cloud infrastructure, and injected malicious JavaScript and a customized smart contract into the frontend. When Bybit performed a routine wallet transaction through Safe{Wallet}, the malicious logic modified the transaction to redirect funds to an attacker-controlled wallet. The adversary immediately restored the original JavaScript post-theft for anti-forensics. Attack path: #9 ||[human][@PressureChollima→@SafeWallet-Dev]|| →[Δt=?] #7 + [DRE: C] →[Δt=?] #4 →[Δt=?] #1 + [DRE: I] →[Δt=?] #10 ||[update][@SafeWallet→@Bybit]|| →[Δt=instant] #1 + [DRE: C, I] →[Δt=instant] #1. Source: CrowdStrike 2026 Global Threat Report, pp. 31-32, Figure 16. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

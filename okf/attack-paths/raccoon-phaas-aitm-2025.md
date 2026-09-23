@@ -11,7 +11,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-04-09T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # RACCOON-PHAAS-AITM-2025
 
@@ -39,4 +39,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-RaccoonO365 Phishing-as-a-Service (PhaaS) adversary-in-the-middle (AitM) campaign, disrupted by Cloudforce One in 2025. Industrialized phishing pipeline marketed as no-downtime Telegram-based mailer bots with tiered subscriptions ($355/30 days). Features: 100% inbox delivery via automated rotation of clean residential proxies, turnkey brand impersonation (Google, Microsoft 365, Kraken, Gemini), CAPTCHA-based human verification, browser fingerprinting, and anti-analysis scripts. Critical capability: AitM integration that acts as transparent proxy between victim and legitimate service, harvesting live session tokens to bypass MFA. The captured already-authenticated session state turns ransomware into 'a simple login event'. Attack path: #9 ||[email][@External->@Org]|| -> #5 -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 35-36), Cloudforce One RaccoonO365 disruption.
+RaccoonO365 Phishing-as-a-Service (PhaaS) adversary-in-the-middle (AitM) campaign, disrupted by Cloudforce One in 2025. Industrialized phishing pipeline marketed as no-downtime Telegram-based mailer bots with tiered subscriptions ($355/30 days). Features: 100% inbox delivery via automated rotation of clean residential proxies, turnkey brand impersonation (Google, Microsoft 365, Kraken, Gemini), CAPTCHA-based human verification, browser fingerprinting, and anti-analysis scripts. Critical capability: AitM integration that acts as transparent proxy between victim and legitimate service, harvesting live session tokens to bypass MFA. The captured already-authenticated session state turns ransomware into 'a simple login event'. Attack path: #9 ||[email][@External->@Org]|| -> #5 -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 35-36), Cloudforce One RaccoonO365 disruption. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.
