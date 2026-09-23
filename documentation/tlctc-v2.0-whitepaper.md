@@ -1086,7 +1086,9 @@ These rules are **global**: they apply across all clusters and are **normative**
 
 ---
 
-##### R-FLOOD — Capacity Exhaustion vs Implementation Defect *(retired in v2.6 — now the capacity clause of R-SPECIFIC; proposition unchanged)*
+##### R-FLOOD — Capacity Exhaustion vs Implementation Defect
+
+*(retired in v2.6 — now the capacity clause of R-SPECIFIC; proposition unchanged)*
 
 **Rule (Normative):**
 
@@ -1260,7 +1262,9 @@ If the attacker's advantage in the step comes from **psychological manipulation 
 
 ---
 
-##### R-PHYSICAL — Physical Domain Isolation *(retired rule ID since v2.5 — sequencing now carried by the #8 boundary tests, admission by the substrate clause of R-SPECIFIC; "facilities" dropped from #8 in the v2.5.1 erratum)*
+##### R-PHYSICAL — Physical Domain Isolation
+
+*(retired rule ID since v2.5 — sequencing now carried by the #8 boundary tests, admission by the substrate clause of R-SPECIFIC; "facilities" dropped from #8 in the v2.5.1 erratum)*
 
 **Rule (Normative):**
 If the attacker's advantage in the step comes from **unauthorized physical interaction or interference** with hardware, media, interfaces, or signals, that physical step **MUST** be classified as **`#8 Physical Attack`**, and subsequent technical steps **MUST** be classified separately.
@@ -1282,7 +1286,9 @@ If the attacker's advantage in the step comes from **unauthorized physical inter
 
 ---
 
-##### R-CHANNEL — Channel Control vs Code Flaw *(V2.4; retired in v2.6 — now the channel clause of R-SPECIFIC; proposition unchanged)*
+##### R-CHANNEL — Channel Control vs Code Flaw
+
+*(V2.4; retired in v2.6 — now the channel clause of R-SPECIFIC; proposition unchanged)*
 
 **Rule (Normative):**
 If the defective logic is itself a **communication-path control** — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness **MUST** be classified as **`#5 Man in the Middle`**, not as `#2` or `#3` under R-ROLE.
@@ -1295,7 +1301,9 @@ If the defective logic is itself a **communication-path control** — peer authe
 
 ---
 
-##### R-SUBSTRATE — Physical Property vs Implemented Logic *(V2.4; retired in v2.6 — now the substrate clause of R-SPECIFIC; proposition unchanged)*
+##### R-SUBSTRATE — Physical Property vs Implemented Logic
+
+*(V2.4; retired in v2.6 — now the substrate clause of R-SPECIFIC; proposition unchanged)*
 
 **Rule (Normative):**
 A weakness **MUST** be classified as **`#8 Physical Attack`** only where a **physical-layer property of the substrate** — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the **readout channel** for a defect in implemented logic, the weakness **MUST** be classified by that defect (`#2` or `#3` per R-ROLE).
