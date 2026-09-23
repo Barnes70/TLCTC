@@ -10,7 +10,7 @@ tags:
   - "cluster-4"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # TESLA-K8S-CRYPTOJACKING-2018
 
@@ -38,4 +38,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Tesla Kubernetes cryptojacking incident, February 2018 (discovered by RedLock). Attackers found an unauthenticated Kubernetes dashboard exposed to the internet for one of Tesla's AWS environments. Through the dashboard, they deployed a cryptomining container (Stratum protocol, behind CloudFlare to evade IP-based detection), then discovered AWS credentials in Kubernetes secrets, which provided access to additional Tesla data. Attack path: #1 →[Δt=~5m] #7 →[Δt=~20m] #1 + [DRE: C] →[Δt=~5m] #4. Sources: RedLock CSI Team report (February 2018), The Register reporting, Tesla acknowledgment.
+Tesla Kubernetes cryptojacking incident, February 2018 (discovered by RedLock). Attackers found an unauthenticated Kubernetes dashboard exposed to the internet for one of Tesla's AWS environments. Through the dashboard, they deployed a cryptomining container (Stratum protocol, behind CloudFlare to evade IP-based detection), then discovered AWS credentials in Kubernetes secrets, which provided access to additional Tesla data. Attack path: #1 →[Δt=~5m] #7 →[Δt=~20m] #1 + [DRE: C] →[Δt=~5m] #4. Sources: RedLock CSI Team report (February 2018), The Register reporting, Tesla acknowledgment. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-04-09T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # CLUMSYTOAD-SNAKEDISK-2025
 
@@ -36,4 +36,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-ClumsyToad (Mustang Panda/BASIN/Earth Preta) SnakeDisk USB worm campaign targeting Thailand, September 2025. Cloudforce One identified a novel USB worm geofenced to execute exclusively on Thailand-based IP addresses. SnakeDisk propagates via infected removable drives to deploy the Yokai backdoor, specifically targeting Thai government and police infrastructure. ClumsyToad also moved from standard .lnk files to Windows Management Console (.msc) files to bypass EDR LotL detections. Attack path: #8 ||[physical][@External->@ThaiGov]|| -> #7 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 20), Cloudforce One.
+ClumsyToad (Mustang Panda/BASIN/Earth Preta) SnakeDisk USB worm campaign targeting Thailand, September 2025. Cloudforce One identified a novel USB worm geofenced to execute exclusively on Thailand-based IP addresses. SnakeDisk propagates via infected removable drives to deploy the Yokai backdoor, specifically targeting Thai government and police infrastructure. ClumsyToad also moved from standard .lnk files to Windows Management Console (.msc) files to bypass EDR LotL detections. Attack path: #8 ||[physical][@External->@ThaiGov]|| -> #7 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 20), Cloudforce One. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

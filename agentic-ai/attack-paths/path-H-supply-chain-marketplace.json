@@ -2,9 +2,9 @@
   "metadata": {
     "incident_id": "agentic-path-H",
     "analyst_confidence": "high",
-    "tlctc_version": "2.5",
-    "framework_ref": "tlctc-framework.v2.5.json",
-    "notes": "Path H — Supply Chain: Trojanised Agent via Marketplace. Scenario: MaliciousAgentIntroduced (Layer 2 AI-Specific). Trojanised agent delivered through trusted vendor channels or AI marketplaces. The SolarWinds pattern adapted for the AI agent ecosystem. The trust dependency on the agent vendor/marketplace is the #10 generic vulnerability. Notation: #10 ||[dev][@Vendor→@Org]|| →[Δt=~2w] #7→[instant]#1 + [DRE: C, I]. Velocity: VC-1 (supply chain dwell), then VC-4 (activation and exploitation). Extended dwell time creates threat hunting opportunity (VC-1). After activation, exploitation is machine-speed. Supply chain validation and code signing are the primary cause-side controls. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25)."
+    "tlctc_version": "2.6",
+    "framework_ref": "tlctc-framework.v2.6.json",
+    "notes": "Path H — Supply Chain: Trojanised Agent via Marketplace. Scenario: MaliciousAgentIntroduced (Layer 2 AI-Specific). Trojanised agent delivered through trusted vendor channels or AI marketplaces. The SolarWinds pattern adapted for the AI agent ecosystem. The trust dependency on the agent vendor/marketplace is the #10 generic vulnerability. Notation: #10 ||[dev][@Vendor→@Org]|| →[Δt=~2w] #7→[instant]#1 + [DRE: C, I]. Velocity: VC-1 (supply chain dwell), then VC-4 (activation and exploitation). Extended dwell time creates threat hunting opportunity (VC-1). After activation, exploitation is machine-speed. Supply chain validation and code signing are the primary cause-side controls. Source: 'Agentic AI Under the Microscope — Why AI Security Is Not a Threat Category' (Bernhard Kreinz, 2026-02-25). v2.6 requalification (2026-09-23): classification unchanged; s1 now states the v2.6 falsifier (subverted or planted artifact in a trusted channel)."
   },
   "path_sequence": [
     {
@@ -16,7 +16,7 @@
         "target_sphere": "@Org"
       },
       "delta_t_to_next": "~2w",
-      "notes": "Trojanised agent package delivered through trusted marketplace or vendor update channel. Generic vulnerability: third-party trust dependencies — organisation trusts the agent vendor/marketplace. Removing the trust link (not using the marketplace) would prevent this attack → confirms #10."
+      "notes": "Trojanised agent package delivered through trusted marketplace or vendor update channel. Generic vulnerability: third-party trust dependencies — organisation trusts the agent vendor/marketplace. v2.6: the trojanised package is a subverted or planted artifact in a trusted marketplace channel; remove that subversion and the step fails → confirms #10."
     },
     {
       "step_id": "s2-fec-execution",

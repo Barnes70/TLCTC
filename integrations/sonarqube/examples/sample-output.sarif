@@ -83,7 +83,7 @@
             }
           ],
           "properties": {
-            "tlctc_version": "2.1",
+            "tlctc_version": "2.6",
             "sonar_project": "demo"
           }
         }
@@ -174,7 +174,7 @@
               ],
               "cwe": "CWE-79",
               "verdict": "Allowed",
-              "raw_mapping": "#2 → #7 | #3",
+              "raw_mapping": "#2 → #7 | #3 → #7",
               "resolved_path": "#2 → #7",
               "role_resolution": {
                 "role": "server",
@@ -206,20 +206,33 @@
               }
             }
           ],
-          "relatedLocations": [],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "demo:src/main/webapp/components/CommentList.tsx"
+                }
+              },
+              "message": {
+                "text": "chained cluster #7 (tlctc-07)"
+              }
+            }
+          ],
           "properties": {
             "tlctc": {
               "primary_cluster": "#3",
               "all_clusters": [
-                "#3"
+                "#3",
+                "#7"
               ],
               "tags": [
-                "tlctc-03"
+                "tlctc-03",
+                "tlctc-07"
               ],
               "cwe": "CWE-79",
               "verdict": "Allowed",
-              "raw_mapping": "#2 → #7 | #3",
-              "resolved_path": "#3",
+              "raw_mapping": "#2 → #7 | #3 → #7",
+              "resolved_path": "#3 → #7",
               "role_resolution": {
                 "role": "client",
                 "matched_glob": "**/*.tsx",

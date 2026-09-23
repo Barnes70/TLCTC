@@ -11,7 +11,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # WATERING-HOLE-IPHONEDEVSDK-2013
 
@@ -39,4 +39,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Watering hole attack targeting Apple, Facebook, Twitter, and Microsoft employees, February 2013. Attackers compromised the iPhoneDevSDK.com developer forum and injected a Java browser exploit (CVE-2013-0422). Developers from major tech companies visited the forum and had their browsers exploited, leading to RAT installation on corporate machines. Multiple tech companies confirmed employee compromises. Attack path: #2 →[Δt=~14d] #3 →[Δt=instant] #7 →[Δt=~60d] #1 + [DRE: C]. Sources: Facebook Security blog (February 2013), Apple and Twitter incident confirmations, iPhoneDevSDK.com compromise disclosure, Oracle CVE-2013-0422 advisory.
+Watering hole attack targeting Apple, Facebook, Twitter, and Microsoft employees, February 2013. Attackers compromised the iPhoneDevSDK.com developer forum and injected a Java browser exploit (CVE-2013-0422). Developers from major tech companies visited the forum and had their browsers exploited, leading to RAT installation on corporate machines. Multiple tech companies confirmed employee compromises. Attack path: #2 →[Δt=~14d] #3 →[Δt=instant] #7 →[Δt=~60d] #1 + [DRE: C]. Sources: Facebook Security blog (February 2013), Apple and Twitter incident confirmations, iPhoneDevSDK.com compromise disclosure, Oracle CVE-2013-0422 advisory. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

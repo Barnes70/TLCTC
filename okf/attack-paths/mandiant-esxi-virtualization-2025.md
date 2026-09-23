@@ -10,7 +10,7 @@ tags:
   - "cluster-7"
   - "confidence-high"
 timestamp: "2026-04-14T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # MANDIANT-ESXI-VIRTUALIZATION-2025
 
@@ -46,4 +46,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Attack path derived from Mandiant M-Trends 2026 'Adversary Focus on Virtualized Infrastructure' (pp. 70-73). Illustrates the VMDK-mount credential-dump technique and ESXi-only ransomware (FOULFOG.LINUX, INC.LINUX) that bypasses endpoint EDR entirely. Initial access presumed to be stolen-credential / VPN login consistent with the broader 2025 pattern. Intra-system hypervisor boundary annotated per v2.1 R-INTRA rules — boundaries are observability annotations and do NOT change cluster classification. Sources: M-Trends 2026 pp. 70-73.
+Attack path derived from Mandiant M-Trends 2026 'Adversary Focus on Virtualized Infrastructure' (pp. 70-73). Illustrates the VMDK-mount credential-dump technique and ESXi-only ransomware (FOULFOG.LINUX, INC.LINUX) that bypasses endpoint EDR entirely. Initial access presumed to be stolen-credential / VPN login consistent with the broader 2025 pattern. Intra-system hypervisor boundary annotated per v2.1 R-INTRA rules — boundaries are observability annotations and do NOT change cluster classification. Sources: M-Trends 2026 pp. 70-73. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

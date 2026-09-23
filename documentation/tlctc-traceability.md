@@ -175,3 +175,19 @@ A post-deposit erratum to v2.5 (first v2.5 Zenodo deposit: 2026-09-06, version D
 **Consistency repairs (non-normative).** (1) Core §6 wording "eighteen rules" corrected to nineteen; the registry was already 19 and the consistency validator checks numerals, not words. (2) Glossary: 80 reference lines cited bare section numbers that exist only in the v2.0 handbook while the glossary declares v2.5; all are now labelled *Handbook §n*, 74 additionally carry a mapped *Core paper §n*, and the preamble states the two labels. (3) Five attack-path records that named a single "SRE for @sphere" were reframed to "decisive compromise", with every step recording its own SRE; the AP-4 asymmetry note no longer describes read-only exploits as disclosing data "without conferring control".
 
 **Harmonization.** Applied across `tlctc-framework.v2.5.json` (#8 definition, `system_risk_event`, partition failure row, metadata notes), `tlctc-framework.schema.json`, `tlctc-v2.5-core.md` (§3.4, §3.5, §4 #8, §6, §9), `tlctc-v2.5-application.md` (§4, §8 pivot wording), `tlctc-glossary.md`, `scripts/build-okf.js`, the OKF bundle, the MISP taxonomy, and the five attack-path records. PDFs rebuilt for this erratum; the core PDF deposited as Zenodo version 2.5.1 of the same record, published 2026-09-10, version DOI 10.5281/zenodo.22697432.
+
+## Normative Change — v2.6: Answers to an External Review (2026-09-23)
+
+v2.6 answers an external review of v2.5 with change items C1–C19. The full table is the core paper's Appendix A; the dictionary records the same items under `changes_from_v2_5`. **NOT classification-preserving.**
+
+| Area | Change |
+|---|---|
+| #10 Supply Chain Attack | Definition names subversion of the trusted third party; subversion test (a flaw in a legitimately supplied component is classified where it is exploited — Log4Shell is `#2`); falsifier: remove the attacker's subversion of the third party, not the third party itself; planting an attacker-authored artifact in a trusted channel counts as subversion (owner ruling, 2026-09-23); federation is `#4` unless the identity provider was subverted (`#10 → #4`) |
+| Rule registry | R-FLOOD, R-CHANNEL and R-SUBSTRATE folded into R-SPECIFIC (capacity, channel, substrate clauses; propositions unchanged; the IDs are retired aliases); 19 → 17 rules |
+| Scope and events | Entitlement envelope = scope, purpose = conduct norm (claims-handler pair replaces Adoboli); R-SCOPE step 4 routes to the cluster rules; System Compromise defined by behaviour leaving owner control; successes only — attempts are indicators, not steps |
+| Boundaries | Data-vs-code boundary for FEC in the canon (`fec`); prompt injection is `#1`, `#1 → #7` on attacker-controlled execution |
+| Other | DCS_d / DCS_c on P90 distributions; VERIS and CAPEC positioning; boundary tests canonical in the core and mirrored into the handbook under a build check; rule statements verbatim from the dictionary |
+
+**Re-qualification.** All 73 Layer-3 records were re-checked against v2.6 and declare 2.6: two blocked attempts left their paths (cozy-bear-oauth-ngo-2025, openai-hf-artifactory-2026) and one path was re-sequenced `#10 → #4` (mandiant-saas-cascade-2025). The CWE mapping was re-audited, the ATT&CK mapping spot-checked, the KEV and Sigma snapshots regenerated, the Mandiant M-Trends mapping aligned with the canonical ATT&CK mapping, and the integrations (MISP, VERIS, ATLAS, Attack Flow, SARIF, SonarQube) migrated.
+
+**Artifacts.** `tlctc-framework.v2.6.json` (new; `tlctc-framework.v2.5.json` retained unchanged), `tlctc-v2.6-core.md`, `tlctc-v2.6-application.md`, glossary v2.6.

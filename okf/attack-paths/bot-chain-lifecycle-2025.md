@@ -11,7 +11,7 @@ tags:
   - "cluster-6"
   - "confidence-medium"
 timestamp: "2026-04-09T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # BOT-CHAIN-LIFECYCLE-2025
 
@@ -39,4 +39,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Triple-threat bot chain lifecycle as described by Cloudforce One (Cloudflare 2026 Threat Report). Three phases: (1) Identity exploitation — automated credential stuffing using compromised credential databases, with 94% of all login attempts originating from bots and 63% of human logins involving previously compromised credentials. Tools like Selenium and Puppeteer mimic human behavior to bypass detection. (2) Host compromise — secured footholds escalated to systematic data extraction, including targeting LLM interfaces for proprietary data theft. Infrastructure: botnets like 911 S5 (dismantled) and Mantis (hijacked VMs). (3) Infrastructure disruption — botnet power turned into DDoS weapons (Aisuru, Kimwolf). ~30% of all HTTP traffic observed by Cloudflare originates from bots. Attack path: #4 -> #1 + [DRE: C] -> #7 -> #6 + [DRE: A]. Sources: Cloudflare 2026 Threat Report (pp. 42-43). AI-GENERATED EXAMPLE: This is a composite/canonical pattern derived from the report's bot chain lifecycle description.
+Triple-threat bot chain lifecycle as described by Cloudforce One (Cloudflare 2026 Threat Report). Three phases: (1) Identity exploitation — automated credential stuffing using compromised credential databases, with 94% of all login attempts originating from bots and 63% of human logins involving previously compromised credentials. Tools like Selenium and Puppeteer mimic human behavior to bypass detection. (2) Host compromise — secured footholds escalated to systematic data extraction, including targeting LLM interfaces for proprietary data theft. Infrastructure: botnets like 911 S5 (dismantled) and Mantis (hijacked VMs). (3) Infrastructure disruption — botnet power turned into DDoS weapons (Aisuru, Kimwolf). ~30% of all HTTP traffic observed by Cloudflare originates from bots. Attack path: #4 -> #1 + [DRE: C] -> #7 -> #6 + [DRE: A]. Sources: Cloudflare 2026 Threat Report (pp. 42-43). AI-GENERATED EXAMPLE: This is a composite/canonical pattern derived from the report's bot chain lifecycle description. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

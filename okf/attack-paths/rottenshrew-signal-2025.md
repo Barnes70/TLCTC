@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-04-09T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # ROTTENSHREW-SIGNAL-2025
 
@@ -36,4 +36,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-RottenShrew (UAC-0185/Lost Potential/UNC4221) Signal device-linking campaign, 2025. Specialized reconnaissance unit focused on geolocation of Ukrainian military personnel, likely followed by kinetic action. The campaign mimicked the Kropyva application (a proprietary Ukrainian artillery guidance system) to entice military users to link their Signal accounts to RottenShrew-controlled instances. Also targeted Delta (military app), Teneta-related sites (tactical modem/blue force tracking), Diia (digital government), and e-Cherha (border crossing service). Tools: PINPOINT (JS geolocation payload using browser Geolocation API), MESHAGENT (RMM for persistence), custom Signal Phish Kit. Attack path: #9 ||[human][@External->@UkrainianMilitary]|| -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 18), CERT-UA.
+RottenShrew (UAC-0185/Lost Potential/UNC4221) Signal device-linking campaign, 2025. Specialized reconnaissance unit focused on geolocation of Ukrainian military personnel, likely followed by kinetic action. The campaign mimicked the Kropyva application (a proprietary Ukrainian artillery guidance system) to entice military users to link their Signal accounts to RottenShrew-controlled instances. Also targeted Delta (military app), Teneta-related sites (tactical modem/blue force tracking), Diia (digital government), and e-Cherha (border crossing service). Tools: PINPOINT (JS geolocation payload using browser Geolocation API), MESHAGENT (RMM for persistence), custom Signal Phish Kit. Attack path: #9 ||[human][@External->@UkrainianMilitary]|| -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 18), CERT-UA. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

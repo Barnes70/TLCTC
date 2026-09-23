@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "TLCTC npm Supply Chain Attack Patterns",
-    "description": "Canonical attack path patterns for npm supply chain attacks, decomposed into TLCTC threat cluster sequences. Each pattern represents a structurally distinct attack archetype observed in real-world npm incidents. Patterns use TLCTC v2.3 cluster notation with v2.1 transit boundary extensions.",
-    "tlctc_version": "2.3",
+    "description": "Canonical attack path patterns for npm supply chain attacks, decomposed into TLCTC threat cluster sequences. Each pattern represents a structurally distinct attack archetype observed in real-world npm incidents. Patterns use TLCTC v2.6 cluster notation with v2.1 transit boundary extensions. Under v2.6, #10 requires a subverted trust artifact or supplier, and planting an attacker-authored package in the registry channel counts as subversion, so the malicious-package and typosquatting patterns keep #10 at the TAE.",
+    "tlctc_version": "2.6",
     "domain": "npm-registry",
     "total_patterns": 5,
     "license": "CC-BY-4.0",
@@ -12,7 +12,7 @@
       "arrow": "→ denotes sequential causation (left enables right)",
       "boundary": "||[context][@Source→@Target]|| denotes inter-organizational domain boundary crossing",
       "transit": "||[context][@Source⇒@Transit→@Target]|| denotes transit boundary (carrier relay)",
-      "dre": "+ [DRE: X] denotes Data Risk Event (C=Confidentiality, I=Integrity, A=Availability, Ac=Accessibility)",
+      "dre": "+ [DRE: X] denotes Data Risk Event (C=Confidentiality; I=Integrity, refined Ii=incorrect state, If=misattributed state; A=Availability/Accessibility, refined Av=unavailable, Ac=inaccessible - present but unusable)",
       "recursive": "[RECURSIVE] denotes cyclic propagation — the path loops back to a prior step"
     },
     "vector_definitions": {

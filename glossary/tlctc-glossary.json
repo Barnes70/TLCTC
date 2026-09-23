@@ -1,13 +1,13 @@
 {
   "metadata": {
     "glossary_id": "tlctc-cyber-glossary",
-    "glossary_version": "0.2.0",
-    "tlctc_version": "2.5",
+    "glossary_version": "0.3.0",
+    "tlctc_version": "2.6",
     "created_at": "2026-03-07T00:00:00Z",
     "license": "CC-BY-4.0",
     "publisher": "TLCTC Project",
-    "description": "A universal, machine-readable glossary for cyber risk and cyber security. Establishes precise, unambiguous definitions to create a common language across frameworks, teams, and organizations. Generated from the TLCTC v2.5 canonical dictionary and terminology.",
-    "total_terms": 72
+    "description": "A universal, machine-readable glossary for cyber risk and cyber security. Establishes precise, unambiguous definitions to create a common language across frameworks, teams, and organizations. Generated from the TLCTC v2.6 canonical dictionary and terminology.",
+    "total_terms": 80
   },
   "terms": [
     {
@@ -16,7 +16,7 @@
       "definition": "A cause-side phenomenon: the generic method or mechanism by which an attacker can compromise a system. Classified by the generic vulnerability it exploits, not by its outcome.",
       "not_to_be_confused_with": "Outcome, impact, or event. 'Ransomware' is not a threat — it is an outcome. The threat is the generic vulnerability exploited to deliver it (e.g., #7 Malware execution, #9 Social Engineering).",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5 — Axiom III",
+      "source": "TLCTC v2.6 — Axiom III",
       "see_also": ["generic-vulnerability", "threat-cluster", "outcome"],
       "examples": ["A phishing email exploiting human trust (#9)", "A buffer overflow in server code (#2)"]
     },
@@ -26,15 +26,24 @@
       "definition": "The effect or impact of a successful attack step or attack path. Outcomes describe what happened as a result, not why it happened.",
       "not_to_be_confused_with": "Threat. 'Data breach', 'ransomware', 'account takeover' are outcomes, not threats. TLCTC classifies causes, not outcomes.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5 — Axiom III",
+      "source": "TLCTC v2.6 — Axiom III",
       "see_also": ["threat", "data-risk-event"]
+    },
+    {
+      "term_id": "system-risk-event",
+      "term": "System Risk Event",
+      "abbreviation": "SRE",
+      "definition": "Any risk event at the system altitude: the point at which a system's behaviour, privileges, data, or trust relationships depart from what its owner controls. The SRE is the central event of the Cyber Bow-Tie and the first node of the consequence chain SRE -> DRE -> BRE*. The SRE the framework defines is System Compromise, reached only through cluster steps; every cluster step records one, so a path of n cluster steps records n SREs, each admitting a Data Risk Event, a further cluster step (a chained SRE, against the same system or another), or both. Other events occur at the same altitude that serve no attacker's objective - System Failure is the standing example - and are operational risk with no cluster; the framework names them to place the boundary, not to classify them. Classification applies to steps that succeeded: a cluster assignment asserts the step's SRE, and an attempted or blocked step records no SRE and is not a step of an attack path.",
+      "domain": "tlctc-core",
+      "source": "TLCTC v2.6",
+      "see_also": ["threat-cluster", "data-risk-event", "abuse-of-rights"]
     },
     {
       "term_id": "threat-cluster",
       "term": "Threat Cluster",
       "definition": "One of exactly 10 non-overlapping, cause-oriented categories in the TLCTC framework. Each cluster represents a distinct generic vulnerability that an attacker exploits. Every cyber attack step maps to exactly one cluster.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["generic-vulnerability", "axiom-vi", "internal-topology", "bridge-topology"],
       "examples": ["#1 Abuse of Functions", "#7 Malware", "#10 Supply Chain Attack"]
     },
@@ -44,7 +53,7 @@
       "definition": "The fundamental, inherent weakness that a threat cluster exploits. Each of the 10 clusters is defined by exactly one generic vulnerability. This is not a specific CVE or software bug, but the underlying category of exploitable weakness.",
       "not_to_be_confused_with": "A specific vulnerability (CVE). A generic vulnerability is the abstract class; a CVE is a concrete instance.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5 — Axiom VI",
+      "source": "TLCTC v2.6 — Axiom VI",
       "see_also": ["threat-cluster"],
       "examples": [
         "#6: 'Finite capacity limitations inherent in any system component'",
@@ -56,7 +65,7 @@
       "term": "Axiom",
       "definition": "A foundational, non-negotiable rule that governs how the TLCTC framework classifies threats. The 10 axioms define the logical boundaries and invariants of the classification system.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["classification-rule"],
       "notes": "Axioms are immutable within a framework version. They are not guidelines — they are constraints."
     },
@@ -65,14 +74,14 @@
       "term": "Axiom I — Universal Applicability",
       "definition": "The framework is generic and applies to all IT systems; it does not differentiate by system type.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5"
+      "source": "TLCTC v2.6"
     },
     {
       "term_id": "axiom-ii",
       "term": "Axiom II — Client-Server Abstraction",
       "definition": "All system interactions, networked or intra-system, can be abstracted as client-server interaction.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["r-role"]
     },
     {
@@ -80,7 +89,7 @@
       "term": "Axiom III — Cause, Not Outcome",
       "definition": "Threats are on the cause side; outcomes and events are not threats.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat", "outcome"],
       "notes": "This is the most frequently violated axiom. 'Ransomware' is an outcome. The payload execution is #7; the impact is a DRE."
     },
@@ -89,7 +98,7 @@
       "term": "Axiom IV — Actor Independence",
       "definition": "Threat clusters are separate from threat actors. Actor identity must never determine cluster classification.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "notes": "Whether the attacker is a nation-state, insider, or script kiddie does not change the cluster. The same technique maps to the same cluster regardless of who performs it."
     },
     {
@@ -97,7 +106,7 @@
       "term": "Axiom V — Controls Are Not Threats",
       "definition": "Control failures are not threats. A missing firewall rule is not a threat — the attack that exploits the gap is.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "not_to_be_confused_with": "Vulnerability. A control failure creates exposure, but the threat is the attacker action that exploits it."
     },
     {
@@ -105,7 +114,7 @@
       "term": "Axiom VI — Non-Overlap (Single-Cluster Rule)",
       "definition": "For every generic vulnerability, there is one threat cluster. Each attack step maps to exactly one cluster. If a step appears to map to two clusters, it must be split into two separate steps.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "attack-step"]
     },
     {
@@ -113,7 +122,7 @@
       "term": "Axiom VII — Vector Definition",
       "definition": "Each distinct attack vector is defined by the generic vulnerability it initially targets.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["attack-vector"]
     },
     {
@@ -121,7 +130,7 @@
       "term": "Axiom VIII — Strategic-Operational Layering",
       "definition": "Top-level clusters have sub-threats (strategic vs operational layering). The 10 clusters are the strategic level; operational sub-types provide finer granularity.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["strategic-id", "operational-id"]
     },
     {
@@ -129,7 +138,7 @@
       "term": "Axiom IX — Attack Paths and Velocity",
       "definition": "Clusters can be used in sequence to describe an attack path; delta-t (Δt) measures velocity between steps.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["attack-path", "attack-velocity", "delta-t"]
     },
     {
@@ -137,24 +146,24 @@
       "term": "Axiom X — Credential Duality",
       "definition": "Credentials are system control elements; acquisition and application are distinct steps. Credential acquisition maps to the enabling cluster; credential use (application) is always #4 Identity Theft.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["r-cred", "credential-acquisition", "credential-application"],
       "examples": ["Phishing for credentials: #9 (acquisition) → #4 (use)", "Brute-forcing a password: #1 (acquisition) → #4 (use)"]
     },
     {
       "term_id": "classification-rule",
       "term": "Classification Rule",
-      "definition": "A machine- or analyst-enforceable rule that resolves ambiguity in cluster assignment for specific attack patterns. Rules are prefixed with 'R-' and implement axiom constraints for practical classification.",
+      "definition": "A machine- or analyst-enforceable rule that resolves ambiguity in cluster assignment for specific attack patterns. Rules are prefixed with 'R-' and implement axiom constraints for practical classification. The v2.6 registry has 17 rules (7 core, 10 extension); R-FLOOD, R-CHANNEL and R-SUBSTRATE are retired aliases of the R-SPECIFIC clauses.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5",
-      "see_also": ["axiom", "r-exec", "r-role", "r-flood", "r-supply", "r-mitm", "r-cred"]
+      "source": "TLCTC v2.6",
+      "see_also": ["axiom", "r-exec", "r-role", "r-specific", "r-supply", "r-mitm", "r-cred", "r-scope"]
     },
     {
       "term_id": "r-exec",
       "term": "R-EXEC",
       "definition": "If Foreign Executable Content executes, a #7 step MUST be recorded at the execution moment.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["foreign-executable-content", "cluster-7-malware"]
     },
     {
@@ -162,23 +171,23 @@
       "term": "R-ROLE",
       "definition": "Classify by the role of the component containing the flaw relative to the attacker: server-role flaw = #2, client-role flaw = #3. Roles are established by call direction at any interface, including intra-system privilege interfaces (syscall, hypercall, IPC, driver IOCTL); a network is not a precondition.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["cluster-2-exploiting-server", "cluster-3-exploiting-client", "axiom-ii"]
     },
     {
       "term_id": "r-flood",
-      "term": "R-FLOOD",
-      "definition": "If the primary mechanism is volume or intensity exhausting finite resources, classify as #6. If it is an implementation defect causing crash/hang/degradation, classify as #2 or #3 per R-ROLE.",
+      "term": "R-FLOOD (retired alias)",
+      "definition": "Retired in v2.6 as a rule ID: an alias of the capacity clause of R-SPECIFIC, keeping its v2.5 meaning. Original proposition: If the primary mechanism is volume or intensity exhausting finite resources, classify as #6. If it is an implementation defect causing crash/hang/degradation, classify as #2 or #3 per R-ROLE.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5",
-      "see_also": ["cluster-6-flooding-attack"]
+      "source": "TLCTC v2.5; retired v2.6",
+      "see_also": ["r-specific", "cluster-6-flooding-attack"]
     },
     {
       "term_id": "r-supply",
       "term": "R-SUPPLY",
-      "definition": "#10 Supply Chain Attack MUST be placed at the Trust Acceptance Event — the moment the third-party trust link is honored and the trust artifact becomes authoritative inside the target domain.",
+      "definition": "#10 Supply Chain Attack MUST be placed at the Trust Acceptance Event (TAE) — the moment the third-party trust link is honored and the trust artifact becomes authoritative inside the target domain. A #10 step requires that the trust artifact, or the third party issuing it, was subverted before acceptance; a defect in a legitimately supplied component is classified where it is exploited.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["trust-acceptance-event", "cluster-10-supply-chain-attack"]
     },
     {
@@ -186,23 +195,56 @@
       "term": "R-MITM",
       "definition": "Position acquisition maps to the enabling cluster; once position is established, interception/modification/relay actions map to #5.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["cluster-5-man-in-the-middle"]
     },
     {
       "term_id": "r-cred",
       "term": "R-CRED",
-      "definition": "Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method, provided the identity claimed is not the presenter's own. A credential issued to the presenter by the target system through a designed enrolment function makes the presenter its authentic holder; such use is not #4, and out-of-scope enrolment maps to #1. These are separate attack steps.",
+      "definition": "Credential acquisition maps to the enabling cluster. Credential application (use of the credential to authenticate) is ALWAYS classified as #4 Identity Theft, regardless of the acquisition method, PROVIDED the identity claimed is not the presenter's own. A credential issued to the presenter by the target system through a designed enrolment function makes the presenter its authentic holder; such use MUST NOT be classified as #4, and where the enrolment function granted the identity or its permissions outside their intended population or scope, the enrolment step maps to #1. These are separate attack steps.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["axiom-x", "credential-acquisition", "credential-application", "cluster-4-identity-theft"]
+    },
+    {
+      "term_id": "r-specific",
+      "term": "R-SPECIFIC",
+      "definition": "Where one weakness is describable both as a specific generic vulnerability and as a residual one, classify it under the specific. The residual tests — designed functionality (#1) and implementation flaw (#2/#3 per R-ROLE) — apply only where no specific generic vulnerability is the one exploited. Three clauses decide the recurring cases: (capacity) if the primary mechanism is volume or intensity exhausting finite resources, #6; an implementation defect causing crash, hang or degradation is #2/#3; (channel) if the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — #5; a defect incidental to that control is #2/#3; (substrate) if a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability, #8, whether or not the attacker has physical access; where the physical layer is only the readout channel for a defect in implemented logic, classify by that defect.",
+      "domain": "tlctc-classification",
+      "source": "TLCTC v2.6",
+      "see_also": ["r-role", "r-flood", "cluster-5-man-in-the-middle", "cluster-6-flooding-attack", "cluster-8-physical-attack"]
+    },
+    {
+      "term_id": "r-scope",
+      "term": "R-SCOPE",
+      "definition": "A step is classified under a cluster only where the action fell outside the entitlement envelope an accountable grantor actually conferred for it. Cause-side classification asks three questions in strict order: (1) Is there an actor? No: failure or external event — operational risk, no cluster. (2) Did the actor intend the outcome? No: Error in Use — operational risk, no cluster. (3) Did an accountable grantor confer an entitlement covering THIS action? Yes: Abuse of Rights — operational risk, no cluster, no System Risk Event; the consequence chain starts at the Data Risk Event. Otherwise the step is an attack and is classified under the cluster rules — for example #2 or #3 per R-ROLE where an implementation flaw was required, #1 Abuse of Functions where a designed function was used outside the envelope — cyber, SRE recorded. Entitlement means entitled, not permitted: its envelope is scope (objects, actions, limits), purpose is the conduct norm, and it attaches to the person, not the token — use of a credential by anyone other than its grantee is never inside an envelope (#4 per R-CRED, subsequent function use #1), and exploiting an implementation flaw is never inside any grant.",
+      "domain": "tlctc-classification",
+      "source": "TLCTC v2.6",
+      "see_also": ["cause-side-partition", "abuse-of-rights", "r-cred"]
+    },
+    {
+      "term_id": "cause-side-partition",
+      "term": "Cause-side partition",
+      "definition": "The partition of the cause side of any risk event into four rows by three questions asked in strict order. Exactly one row — Attack — is in TLCTC scope; the ten clusters classify its steps and only its steps (R-SCOPE). The other three rows are operational risk with no cluster. The partition is a property of the action, not of the actor (Axiom IV): the same person can produce events in different rows on the same day.",
+      "domain": "tlctc-core",
+      "source": "TLCTC v2.6",
+      "see_also": ["r-scope", "abuse-of-rights", "threat-cluster"]
+    },
+    {
+      "term_id": "abuse-of-rights",
+      "term": "Abuse of Rights",
+      "definition": "An actor acting intentionally inside an entitlement — an access right, a role, a mandate — genuinely conferred by an accountable grantor, but against its purpose. The envelope — its objects, actions and limits — is honoured and the system behaved as designed and as authorised, so there is no generic vulnerability, no cluster and no System Risk Event; the consequence chain begins at the Data Risk Event. Examples: a badge holder propping open a door, an administrator using genuine root to exfiltrate, a clerk posting a false entry inside their role, an officer approving a payment inside their mandate, a claims handler knowingly approving an inflated claim inside their approval limit. Answered by segregation of duties, four-eyes, mandate limits, supervision, vetting and purpose auditing — owned by the CRO, the business line and HR, not the CISO.",
+      "not_to_be_confused_with": "An eleventh cluster. Abuse of Rights has no generic vulnerability and no System Risk Event; it is operational risk, filed outside the ten clusters (R-SCOPE).",
+      "domain": "governance",
+      "source": "TLCTC v2.6",
+      "see_also": ["r-scope", "cause-side-partition"]
     },
     {
       "term_id": "cluster-1-abuse-of-functions",
       "term": "Abuse of Functions (#1)",
       "definition": "An attacker abuses the logic or scope of existing, legitimate software functions for malicious purposes without exploiting a code flaw.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "internal-topology"],
       "notes": "Generic vulnerability: The inherent trust, scope, and complexity designed into software functionality and configuration."
     },
@@ -211,7 +253,7 @@
       "term": "Exploiting Server (#2)",
       "definition": "An attacker targets implementation flaws within a component acting in a server role.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "internal-topology", "r-role"],
       "notes": "Generic vulnerability: Server-side implementation flaws enable unintended behavior."
     },
@@ -220,7 +262,7 @@
       "term": "Exploiting Client (#3)",
       "definition": "An attacker targets implementation flaws within any component acting in a client role.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "internal-topology", "r-role"],
       "notes": "Generic vulnerability: Client-side implementation flaws enable unintended behavior."
     },
@@ -229,7 +271,7 @@
       "term": "Identity Theft (#4)",
       "definition": "An attacker misuses authentication credentials to impersonate an identity.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "internal-topology", "r-cred", "axiom-x", "credential-application"],
       "notes": "Generic vulnerability: Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims."
     },
@@ -238,7 +280,7 @@
       "term": "Man in the Middle (#5)",
       "definition": "An attacker intercepts, modifies, or relays communication between two parties by exploiting a privileged position on the communication path.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "internal-topology", "r-mitm"],
       "notes": "Generic vulnerability: The lack of sufficient control over the communication path."
     },
@@ -247,7 +289,7 @@
       "term": "Flooding Attack (#6)",
       "definition": "An attacker intentionally overwhelms system resources or exceeds capacity limits through a high volume of requests, data, or operations, leading to denial of service.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "internal-topology", "r-flood"],
       "notes": "Generic vulnerability: Finite capacity limitations inherent in any system component."
     },
@@ -256,7 +298,7 @@
       "term": "Malware (#7)",
       "definition": "An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "internal-topology", "r-exec", "foreign-executable-content"],
       "notes": "Generic vulnerability: The software environment's designed capability to execute potentially untrusted foreign code."
     },
@@ -265,7 +307,7 @@
       "term": "Physical Attack (#8)",
       "definition": "Unauthorized physical interaction with or interference to hardware, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5.1",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "bridge-topology", "boundary-context"],
       "notes": "Generic vulnerability: Physical accessibility of infrastructure and the exploitability of physical-layer properties."
     },
@@ -274,7 +316,7 @@
       "term": "Social Engineering (#9)",
       "definition": "An attacker psychologically manipulates individuals into performing actions counter to their best interests.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "bridge-topology", "boundary-context"],
       "notes": "Generic vulnerability: Humans can be influenced into unsafe actions or decisions."
     },
@@ -292,7 +334,7 @@
       "term": "Internal Topology",
       "definition": "A cluster topology where the attack operates within a single domain without crossing a trust boundary into a non-cyber domain. Clusters #1–#7 are internal topology.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["bridge-topology", "threat-cluster"]
     },
     {
@@ -300,7 +342,7 @@
       "term": "Bridge Topology",
       "definition": "A cluster topology where the attack crosses a domain boundary (human, physical, or third-party trust). Clusters #8–#10 are bridge topology and require a boundary annotation.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["internal-topology", "boundary-crossing", "boundary-context"]
     },
     {
@@ -308,7 +350,7 @@
       "term": "Attack Path",
       "definition": "An ordered sequence of attack steps, each classified by its threat cluster, that describes how an attacker progresses from initial access to final impact. Expressed using TLCTC notation with sequential (→) and parallel (+) operators.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5 — Axiom IX",
+      "source": "TLCTC v2.6 — Axiom IX",
       "see_also": ["attack-step", "path-sequence", "delta-t"],
       "examples": ["#9 ||[human][@External→@Org]|| →[Δt=24h] #7 →[Δt=5m] #4 →[Δt=15m] #1 → #7 + [DRE: A]"]
     },
@@ -317,7 +359,7 @@
       "term": "Attack Step",
       "definition": "A single, discrete action within an attack path. Each step maps to exactly one threat cluster (Axiom VI). Steps are the atomic unit of TLCTC classification.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["attack-path", "threat-cluster", "axiom-vi"]
     },
     {
@@ -325,7 +367,7 @@
       "term": "Attack Vector",
       "definition": "The method or pathway by which an attacker gains initial access or delivers an attack. In TLCTC, each distinct attack vector is defined by the generic vulnerability it initially targets (Axiom VII).",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5 — Axiom VII",
+      "source": "TLCTC v2.6 — Axiom VII",
       "see_also": ["axiom-vii", "generic-vulnerability"]
     },
     {
@@ -333,7 +375,7 @@
       "term": "Path Sequence",
       "definition": "The ordered list of attack steps and parallel groups that constitutes an attack path instance in Layer 3 JSON format.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["attack-path", "attack-step", "parallel-group"]
     },
     {
@@ -341,7 +383,7 @@
       "term": "Parallel Group",
       "definition": "Two or more attack steps that execute concurrently within an attack path. Notated as (#X + #Y) in path notation.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["attack-step", "path-sequence"]
     },
     {
@@ -350,7 +392,7 @@
       "abbreviation": "Δt",
       "definition": "The time interval between two consecutive attack steps in an attack path. Measures attack velocity — how fast an attacker progresses from one step to the next.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5 — Axiom IX",
+      "source": "TLCTC v2.6 — Axiom IX",
       "see_also": ["attack-velocity", "velocity-class"],
       "examples": ["→[Δt=5m]→ (5 minutes between steps)", "→[Δt=instant]→ (automated, no delay)"]
     },
@@ -359,7 +401,7 @@
       "term": "Attack Velocity",
       "definition": "The speed at which an attacker transitions between steps in an attack path, measured by delta-t intervals and categorized into velocity classes (VC-1 through VC-4).",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["delta-t", "velocity-class"]
     },
     {
@@ -368,7 +410,7 @@
       "abbreviation": "VC",
       "definition": "A categorical grouping of attack velocity into four tiers based on delta-t ranges: VC-1 (days to months), VC-2 (hours), VC-3 (minutes), VC-4 (seconds to milliseconds).",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["attack-velocity", "delta-t"],
       "notes": "VC-4 typically indicates fully automated attack progression where human response is impractical."
     },
@@ -376,67 +418,96 @@
       "term_id": "data-risk-event",
       "term": "Data Risk Event",
       "abbreviation": "DRE",
-      "definition": "An outcome annotation on an attack step or path indicating the type of data impact: Confidentiality (C), Integrity (I), Availability (A), or Accessibility (Ac). DREs describe effects, not causes, and do not change cluster classification.",
+      "definition": "Data Risk Event (DRE) type codes used in '+ [DRE: ...]' tags. Three parent properties — C (Confidentiality), I (Integrity), A (Availability/Accessibility) — with two admitted refinements: I → Ii/If and A → Av/Ac. A parent code stays legal whenever the refinement is unknown or irrelevant. Codes are outcome annotations recorded on the record that changed state: never clusters, never classification inputs (Axiom III), and never appended to unresolved steps (R-UNRES-5).",
       "not_to_be_confused_with": "Threat cluster. A DRE is an outcome tag, not a cause classification.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
-      "see_also": ["outcome", "dre-confidentiality", "dre-integrity", "dre-availability", "dre-accessibility"],
-      "examples": ["+ [DRE: C, I] — data was both exfiltrated and modified"]
+      "source": "TLCTC v2.6",
+      "see_also": ["outcome", "dre-confidentiality", "dre-integrity", "dre-incorrect-state", "dre-misattributed-state", "dre-availability", "dre-unavailable", "dre-accessibility", "system-risk-event"],
+      "examples": ["+ [DRE: C, I] — data was both exfiltrated and modified"],
+      "notes": "Stopping rule: Split a property only where the resulting states are distinguishable by inspecting the record itself — never by the story of how it got there. The rule admits exactly two splits (I → Ii/If: check provenance and attribution; A → Av/Ac: is the data absent, or present and unusable?), refuses every split of C (accidental versus deliberate disclosure is provenance; one party versus public is extent, i.e. severity, not a state), and refuses any split by cause — outcomes never inherit the classification of the step that produced them (Axiom III)."
     },
     {
       "term_id": "dre-confidentiality",
-      "term": "Confidentiality (C)",
+      "term": "DRE C — Loss of Confidentiality",
       "abbreviation": "C",
-      "definition": "A Data Risk Event where information is disclosed to unauthorized parties.",
+      "definition": "Data has been disclosed to a party not entitled to it. No refinement: disclosed data is disclosed, and the record's standing is identical however it leaked.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["data-risk-event"]
     },
     {
       "term_id": "dre-integrity",
-      "term": "Integrity (I)",
+      "term": "DRE I — Loss of Integrity",
       "abbreviation": "I",
-      "definition": "A Data Risk Event where information or systems are modified without authorization.",
+      "definition": "The standing of a record as a faithful and attributable representation has changed other than through its intended, authorised process. Use I when it is unknown or irrelevant whether correspondence (Ii) or provenance (If) failed.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
-      "see_also": ["data-risk-event"]
+      "source": "TLCTC v2.6",
+      "see_also": ["data-risk-event", "dre-incorrect-state", "dre-misattributed-state"]
+    },
+    {
+      "term_id": "dre-incorrect-state",
+      "term": "DRE Ii — Incorrect state",
+      "abbreviation": "Ii",
+      "definition": "The record no longer corresponds to what it represents, or is no longer complete; read off the record, the content is wrong. Answered by validation, reconciliation and four-eyes controls.",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.6",
+      "see_also": ["dre-integrity", "dre-misattributed-state"]
+    },
+    {
+      "term_id": "dre-misattributed-state",
+      "term": "DRE If — Misattributed state",
+      "abbreviation": "If",
+      "definition": "The record claims an origin, author or authority it does not have; read off the record, provenance fails while the content may be perfectly accurate. Answered by segregation of duties, provenance logging and behavioural monitoring.",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.6",
+      "see_also": ["dre-integrity", "dre-incorrect-state"]
     },
     {
       "term_id": "dre-availability",
-      "term": "Availability (A)",
+      "term": "DRE A — Loss of Availability / Accessibility",
       "abbreviation": "A",
-      "definition": "A Data Risk Event where systems or data are rendered inaccessible or destroyed.",
+      "definition": "Data can no longer serve its intended use by authorised processes. Use A when it is unknown or irrelevant whether the data is gone (Av) or present but unusable (Ac).",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
-      "see_also": ["data-risk-event"]
+      "source": "TLCTC v2.6",
+      "see_also": ["data-risk-event", "dre-unavailable", "dre-accessibility"]
+    },
+    {
+      "term_id": "dre-unavailable",
+      "term": "DRE Av — Unavailable",
+      "abbreviation": "Av",
+      "definition": "Data is gone or unreachable — the resource no longer exists or cannot be technically reached by the infrastructure (deletion, wiper, storage loss, system offline).",
+      "domain": "tlctc-notation",
+      "source": "TLCTC v2.6",
+      "see_also": ["dre-availability", "dre-accessibility"]
     },
     {
       "term_id": "dre-accessibility",
-      "term": "Accessibility (Ac)",
+      "term": "DRE Ac — Inaccessible",
       "abbreviation": "Ac",
-      "definition": "A Data Risk Event where the ability to reach or use a system is impaired, distinct from data destruction (Availability). Covers scenarios like account lockout or denied access to one's own resources.",
+      "definition": "Data is present and reachable but cannot be used for its intended purpose by authorised processes (ransomware encryption, corruption of the container, permission lockout).",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
-      "see_also": ["data-risk-event", "dre-availability"],
-      "notes": "Distinguishes 'I cannot reach it' (Ac) from 'It is gone or destroyed' (A)."
+      "source": "TLCTC v2.6",
+      "see_also": ["data-risk-event", "dre-availability", "dre-unavailable"],
+      "notes": "Since v2.5 Ac is a refinement of A, not a sibling of it: Ac is data present but unusable (ransomware), Av is data absent or unreachable (wiper). The term id is kept for link stability."
     },
     {
       "term_id": "foreign-executable-content",
       "term": "Foreign Executable Content",
       "abbreviation": "FEC",
-      "definition": "Any executable code, script, or tool that is introduced into a target environment by an attacker and executed there. Includes malware binaries, malicious scripts, and legitimate tools introduced by the attacker (e.g., attacker-dropped PsExec). When FEC executes, R-EXEC mandates a #7 step.",
+      "definition": "Foreign Executable Content (FEC): attacker-controlled or otherwise untrusted program content that a general-purpose execution engine in the target environment loads, interprets, or executes through its designed execution capability. Its execution is the generic vulnerability of #7 Malware and triggers R-EXEC. There is no on-disk requirement: in-memory, interpreted, macro and reflectively loaded content is FEC.",
       "not_to_be_confused_with": "Pre-installed legitimate tools used as-is. If the tool was already present and is used within its designed function, that is #1, not #7. If attacker-controlled code is executed through it, the code execution is #7.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5",
-      "see_also": ["r-exec", "cluster-7-malware"]
+      "source": "TLCTC v2.6",
+      "see_also": ["r-exec", "cluster-7-malware"],
+      "notes": "Domain-specific expression languages are data, not FEC, unless they cause execution in a general-purpose engine. Injection that only reads or writes data is #2/#3 without #7 (SQL injection reading a table: #2). Where the injected expression reaches a general-purpose engine the execution is FEC and a #7 step follows (SQL injection invoking xp_cmdshell or COPY ... PROGRAM, server-side template injection reaching a code-evaluation call: #2 -> #7). Natural-language instructions to a model or agent are not FEC: acting on natural-language input is the model's designed function (prompt injection is #1); code or commands the agent then executes whose content the attacker controls are FEC (#1 -> #7)."
     },
     {
       "term_id": "trust-acceptance-event",
       "term": "Trust Acceptance Event",
       "abbreviation": "TAE",
-      "definition": "The precise moment when a third-party trust link is honored and the trust artifact (e.g., a signed update, a dependency package) becomes authoritative inside the target domain. This is where #10 Supply Chain Attack is placed per R-SUPPLY.",
+      "definition": "The precise moment when a third-party trust link is honored and the trust artifact (e.g., a signed update, a dependency package) becomes authoritative inside the target domain. This is where #10 Supply Chain Attack is placed per R-SUPPLY. A #10 step requires that the trust artifact, or the third party issuing it, was subverted before acceptance; planting an attacker-authored artifact in a channel the target trusts counts as subversion. A flaw in a legitimately supplied component is not #10: it is classified where it is exploited.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["r-supply", "cluster-10-supply-chain-attack"],
       "examples": ["A compromised software update is installed and trusted by the target system", "A malicious npm package is resolved and integrated during build"]
     },
@@ -445,7 +516,7 @@
       "term": "Boundary Crossing",
       "definition": "The transition from one responsibility sphere to another through a boundary context. Required annotation for bridge topology clusters (#8, #9, #10). Notated as ||[context][@Source→@Target]||. In v2.1, may include transit spheres (⇒) for intermediate carriers.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["bridge-topology", "responsibility-sphere", "boundary-context", "transit-boundary", "intra-system-boundary"],
       "examples": ["||[human][@External→@Org]|| — social engineering crossing from external to organization via human boundary", "||[messaging][@Attacker⇒@SMSProvider→@Victim]|| — phishing via SMS with carrier as transit party"]
     },
@@ -454,7 +525,7 @@
       "term": "Responsibility Sphere",
       "definition": "A governance domain that defines who is responsible for the assets, systems, or decisions within that domain. Prefixed with '@' (e.g., @Org, @Vendor, @External). Defined in the Layer 2 registry and used in boundary crossing annotations.",
       "domain": "tlctc-architecture",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["boundary-crossing", "boundary-context", "layer-2"],
       "examples": ["@Org — primary organization", "@Vendor — vendor-managed assets", "@External — outside the organization boundary"]
     },
@@ -463,7 +534,7 @@
       "term": "Boundary Context",
       "definition": "The type of boundary through which a domain crossing occurs. Defined in the Layer 2 registry. Standard contexts include: human, physical, update, auth, dev, api, cloud. v2.1 adds: messaging, email, cdn, network, signaling, media, browser, exploit, legal, admin.",
       "domain": "tlctc-architecture",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["boundary-crossing", "responsibility-sphere", "layer-2"]
     },
     {
@@ -471,7 +542,7 @@
       "term": "Layer 1 — Framework (Static)",
       "definition": "The immutable framework dictionary containing the 10 cluster definitions, 10 axioms, and 6 classification rules. Rarely changes between major versions. The authoritative reference for all classification decisions.",
       "domain": "tlctc-architecture",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["layer-2", "layer-3", "three-layer-architecture"]
     },
     {
@@ -479,7 +550,7 @@
       "term": "Layer 2 — Registry (Context)",
       "definition": "Organization-specific reference registries defining responsibility spheres and boundary contexts. Provides the organizational context needed to annotate attack paths. Customized per organization.",
       "domain": "tlctc-architecture",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["layer-1", "layer-3", "three-layer-architecture", "responsibility-sphere", "boundary-context"]
     },
     {
@@ -487,7 +558,7 @@
       "term": "Layer 3 — Instance (Dynamic)",
       "definition": "Individual attack path instances documenting real or hypothetical incidents. Each instance is a JSON file validated against the Layer 3 schema, containing a path sequence with classified steps, velocity annotations, and outcome tags.",
       "domain": "tlctc-architecture",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["layer-1", "layer-2", "three-layer-architecture", "attack-path"]
     },
     {
@@ -495,7 +566,7 @@
       "term": "Three-Layer Architecture",
       "definition": "The TLCTC data architecture separating concerns into three layers: Layer 1 (static framework definitions), Layer 2 (organizational context registries), and Layer 3 (dynamic attack path instances). This separation allows the framework to remain stable while organizations customize context and continuously add incident analyses.",
       "domain": "tlctc-architecture",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["layer-1", "layer-2", "layer-3"]
     },
     {
@@ -503,7 +574,7 @@
       "term": "Strategic ID",
       "definition": "The top-level cluster identifier using the format #1 through #10. Represents the strategic classification level.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["operational-id", "axiom-viii"],
       "examples": ["#1", "#7", "#10"]
     },
@@ -512,7 +583,7 @@
       "term": "Operational ID",
       "definition": "The sub-cluster identifier using the format TLCTC-XX.YY (e.g., TLCTC-07.03). Represents the operational classification level with finer granularity than the strategic ID.",
       "domain": "tlctc-notation",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["strategic-id", "axiom-viii"],
       "examples": ["TLCTC-01.00", "TLCTC-07.03"]
     },
@@ -521,16 +592,16 @@
       "term": "Credential Acquisition",
       "definition": "The act of obtaining authentication credentials through any method (phishing, brute force, memory dump, etc.). Classified by the enabling cluster — the method used to obtain the credential, not by #4.",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5 — Axiom X, R-CRED",
+      "source": "TLCTC v2.6 — Axiom X, R-CRED",
       "see_also": ["credential-application", "axiom-x", "r-cred"],
       "examples": ["Phishing for credentials → #9", "Dumping LSASS → #1 or #7", "Brute-force login → #1"]
     },
     {
       "term_id": "credential-application",
       "term": "Credential Application",
-      "definition": "The act of using acquired credentials to authenticate as another identity. ALWAYS classified as #4 Identity Theft, regardless of how the credentials were obtained.",
+      "definition": "The act of using acquired credentials to authenticate as another identity. ALWAYS classified as #4 Identity Theft, regardless of how the credentials were obtained, provided the identity claimed is not the presenter's own (R-CRED self-issued proviso).",
       "domain": "tlctc-classification",
-      "source": "TLCTC v2.5 — Axiom X, R-CRED",
+      "source": "TLCTC v2.6 — Axiom X, R-CRED",
       "see_also": ["credential-acquisition", "axiom-x", "r-cred", "cluster-4-identity-theft"]
     },
     {
@@ -538,7 +609,7 @@
       "term": "Verdict",
       "definition": "A confidence classification used in TLCTC mappings to indicate the reliability of a mapping from an external framework entry to a TLCTC cluster. Five levels: Allowed (high confidence), Allowed-with-Review (context-dependent), Discouraged (too abstract), Prohibited (not a concrete entry), Unreviewed (not yet assessed).",
       "domain": "tlctc-mapping",
-      "source": "TLCTC v2.5 — CWE Mapping",
+      "source": "TLCTC v2.6 — CWE Mapping",
       "see_also": ["verdict-allowed", "verdict-allowed-with-review", "verdict-discouraged", "verdict-prohibited"]
     },
     {
@@ -546,7 +617,7 @@
       "term": "Verdict: Allowed",
       "definition": "High-confidence mapping; the external framework entry is specific enough for unambiguous TLCTC cluster classification.",
       "domain": "tlctc-mapping",
-      "source": "TLCTC v2.5 — CWE Mapping",
+      "source": "TLCTC v2.6 — CWE Mapping",
       "see_also": ["verdict"]
     },
     {
@@ -554,7 +625,7 @@
       "term": "Verdict: Allowed-with-Review",
       "definition": "Mapping is reasonable but context-dependent; analyst review is recommended before accepting the classification.",
       "domain": "tlctc-mapping",
-      "source": "TLCTC v2.5 — CWE Mapping",
+      "source": "TLCTC v2.6 — CWE Mapping",
       "see_also": ["verdict"]
     },
     {
@@ -562,7 +633,7 @@
       "term": "Verdict: Discouraged",
       "definition": "The external framework entry is too abstract or generic for reliable TLCTC cluster mapping.",
       "domain": "tlctc-mapping",
-      "source": "TLCTC v2.5 — CWE Mapping",
+      "source": "TLCTC v2.6 — CWE Mapping",
       "see_also": ["verdict"]
     },
     {
@@ -570,7 +641,7 @@
       "term": "Verdict: Prohibited",
       "definition": "The external framework entry is a category, view, or deprecated entry — not a concrete weakness or technique. Cannot be meaningfully mapped.",
       "domain": "tlctc-mapping",
-      "source": "TLCTC v2.5 — CWE Mapping",
+      "source": "TLCTC v2.6 — CWE Mapping",
       "see_also": ["verdict"]
     },
     {

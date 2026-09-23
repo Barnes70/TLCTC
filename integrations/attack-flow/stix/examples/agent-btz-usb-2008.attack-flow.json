@@ -103,7 +103,7 @@
         },
         {
           "source_name": "DOI",
-          "description": "TLCTC core paper (v2.5.1 deposit; v2.6 is not deposited)",
+          "description": "TLCTC core paper (concept DOI; resolves to the latest version)",
           "url": "https://doi.org/10.5281/zenodo.20633176"
         }
       ]
@@ -117,7 +117,7 @@
       "modified": "2026-03-20T00:00:00.000Z",
       "name": "AGENT-BTZ-USB-2008",
       "scope": "incident",
-      "description": "Agent.BTZ / Operation Buckshot Yankee (2008). A USB flash drive containing the Agent.BTZ worm was planted in a parking lot at a US military base in the Middle East, almost certainly by Russian intelligence (later attributed to the Turla group / APT). A soldier found the drive and inserted it into a laptop connected to SIPRNet (Secret Internet Protocol Router Network), the DoD's classified network. The worm spread via USB propagation and Windows network shares across both SIPRNet and NIPRNet (unclassified network), establishing covert C2 channels to exfiltrate classified data. The breach was not detected for approximately 14 months. This incident was the catalyst for the creation of United States Cyber Command (USCYBERCOM) in 2009. Attack path: (#8 + #9) ||[physical/human][@External→@Military]|| →[Δt=~10s] #7 →[Δt=~2d] #4 →[Δt=~30d] #1 + [DRE: C]. Sources: William J. Lynn III, 'Defending a New Domain' (Foreign Affairs, September/October 2010); Pentagon press statements (November 2008); DoD Operation Buckshot Yankee declassified summary; Kaspersky Lab Turla/Agent.BTZ technical analysis (2014); SANS Institute case study on removable media threats.",
+      "description": "Agent.BTZ / Operation Buckshot Yankee (2008). A USB flash drive containing the Agent.BTZ worm was planted in a parking lot at a US military base in the Middle East, almost certainly by Russian intelligence (later attributed to the Turla group / APT). A soldier found the drive and inserted it into a laptop connected to SIPRNet (Secret Internet Protocol Router Network), the DoD's classified network. The worm spread via USB propagation and Windows network shares across both SIPRNet and NIPRNet (unclassified network), establishing covert C2 channels to exfiltrate classified data. The breach was not detected for approximately 14 months. This incident was the catalyst for the creation of United States Cyber Command (USCYBERCOM) in 2009. Attack path: (#8 + #9) ||[physical/human][@External→@Military]|| →[Δt=~10s] #7 →[Δt=~2d] #4 →[Δt=~30d] #1 + [DRE: C]. Sources: William J. Lynn III, 'Defending a New Domain' (Foreign Affairs, September/October 2010); Pentagon press statements (November 2008); DoD Operation Buckshot Yankee declassified summary; Kaspersky Lab Turla/Agent.BTZ technical analysis (2014); SANS Institute case study on removable media threats. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.",
       "start_refs": [
         "attack-action--a4d5cab4-1761-5ed3-b62f-4f9133df998c",
         "attack-action--30602a5a-3f54-53f5-9eea-11687d2c9b97"
@@ -128,12 +128,12 @@
         },
         "extension-definition--69b4eaba-45a8-4101-b935-3a7ae2cb3a1a": {
           "extension_type": "property-extension",
-          "tlctc_version": "2.5",
+          "tlctc_version": "2.6",
           "tlctc_incident_id": "AGENT-BTZ-USB-2008",
           "tlctc_source": "layer3-export",
-          "tlctc_framework_ref": "tlctc-framework.v2.5.json",
+          "tlctc_framework_ref": "tlctc-framework.v2.6.json",
           "tlctc_analyst_confidence": "high",
-          "tlctc_notation": "#8 + #9) ||[physical/human][@External→@Military]|| →[Δt=~10s] #7 →[Δt=~2d] #4 →[Δt=~30d] #1 + [DRE: C]. Sources: William J. Lynn III, 'Defending a New Domain' (Foreign Affairs, September/October 2010); Pentagon press statements (November 2008); DoD Operation Buckshot Yankee declassified summary; Kaspersky Lab Turla/Agent.BTZ technical analysis (2014); SANS Institute case study on removable media threats"
+          "tlctc_notation": "#8 + #9) ||[physical/human][@External→@Military]|| →[Δt=~10s] #7 →[Δt=~2d] #4 →[Δt=~30d] #1 + [DRE: C]. Sources: William J. Lynn III, 'Defending a New Domain' (Foreign Affairs, September/October 2010); Pentagon press statements (November 2008); DoD Operation Buckshot Yankee declassified summary; Kaspersky Lab Turla/Agent.BTZ technical analysis (2014); SANS Institute case study on removable media threats. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged"
         }
       }
     },

@@ -10,7 +10,7 @@ tags:
   - "cluster-7"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # CHANGE-HEALTHCARE-2024
 
@@ -38,4 +38,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-ALPHV/BlackCat ransomware attack on Change Healthcare (UnitedHealth Group), February 2024. Largest healthcare data breach in US history, affecting ~100 million individuals. Attacker used stolen credentials for a Citrix remote access portal with no MFA. Attack path: #4 →[Δt=~9d] #1 →[Δt=~2d] #1 + [DRE: C] →[Δt=~1d] #7 + [DRE: A]. $22M ransom paid. Sources: UnitedHealth Group CEO testimony to US Senate (May 2024), CISA advisory, HHS breach notification, AHA analysis.
+ALPHV/BlackCat ransomware attack on Change Healthcare (UnitedHealth Group), February 2024. Largest healthcare data breach in US history, affecting ~100 million individuals. Attacker used stolen credentials for a Citrix remote access portal with no MFA. Attack path: #4 →[Δt=~9d] #1 →[Δt=~2d] #1 + [DRE: C] →[Δt=~1d] #7 + [DRE: A]. $22M ransom paid. Sources: UnitedHealth Group CEO testimony to US Senate (May 2024), CISA advisory, HHS breach notification, AHA analysis. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

@@ -53,11 +53,16 @@ const log = (s) => console.log(s);
 
 const sha = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
 const fileHash = (p) => (fs.existsSync(p) ? sha(fs.readFileSync(p)) : null);
+// Text files are compared with line endings normalised: the repo's generated files (okf/, md
+// mirrors) and the site tree's git checkout can differ only in CRLF vs LF, and a byte-exact
+// comparison turned that into "changed" files, sitemap lastmod bumps and needless uploads.
+const TEXT_RE = /\.(md|json|html|svg|txt|xml|csv|ya?ml)$/i;
+const normBuf = (buf, p) => (TEXT_RE.test(p) ? Buffer.from(buf.toString('utf8').replace(/\r\n/g, '\n'), 'utf8') : buf);
+const textHash = (p) => (fs.existsSync(p) ? sha(normBuf(fs.readFileSync(p), p)) : null);
 const rel = (p) => path.relative(SITE, p).split(path.sep).join('/');
 function copyIfChanged(src, dst, label) {
-  const before = fileHash(dst);
   const data = fs.readFileSync(src);
-  if (before === sha(data)) return false;
+  if (fs.existsSync(dst) && textHash(dst) === sha(normBuf(data, src))) return false;
   fs.mkdirSync(path.dirname(dst), { recursive: true });
   fs.writeFileSync(dst, data);
   changed.add(rel(dst));
@@ -73,8 +78,8 @@ function run(cmd, cmdArgs, cwd, env) {
 // ───────────────────────── 1. mirrors ────────────────────────────────────────
 log('1. mirrors');
 const PAPERS = [
-  { md: 'documentation/tlctc-v2.5-core.md', pdf: 'documentation/tlctc-v2.5-core.pdf', stablePdf: 'tlctc-whitepaper.pdf', html: 'tlctc-whitepaper.html' },
-  { md: 'documentation/tlctc-v2.5-application.md', pdf: 'documentation/tlctc-v2.5-application.pdf', stablePdf: 'tlctc-application.pdf', html: 'tlctc-application.html' },
+  { md: 'documentation/tlctc-v2.6-core.md', pdf: 'documentation/tlctc-v2.6-core.pdf', stablePdf: 'tlctc-whitepaper.pdf', html: 'tlctc-whitepaper.html' },
+  { md: 'documentation/tlctc-v2.6-application.md', pdf: 'documentation/tlctc-v2.6-application.pdf', stablePdf: 'tlctc-application.pdf', html: 'tlctc-application.html' },
   { md: 'documentation/tlctc-glossary.md', pdf: 'documentation/tlctc-glossary.pdf', stablePdf: 'tlctc-glossary.pdf', html: 'tlctc-glossary.html' },
 ];
 const mdChanged = {};
@@ -99,10 +104,15 @@ const force = opt('--rebuild-pdf', '');
 if (!NO_PDF) {
   for (const p of PAPERS) {
     const md = path.join(ROOT, p.md), pdf = path.join(ROOT, p.pdf);
-    const key = path.basename(p.md).replace(/^tlctc-(v2\.5-)?/, '').replace(/\.md$/, ''); // core | application | glossary
-    const h = fileHash(md);
+    const key = path.basename(p.md).replace(/^tlctc-(v\d+\.\d+-)?/, '').replace(/\.md$/, ''); // core | application | glossary
+    const h = textHash(md);
     const forced = force === 'all' || force === key;
-    if (firstRun && fs.existsSync(pdf) && !forced) { mdHashes[p.md] = h; continue; } // seed: trust the committed PDF
+    // One-time migration: states written before the line-ending fix hold raw-byte hashes.
+    if (mdHashes[p.md] && mdHashes[p.md] === fileHash(md)) mdHashes[p.md] = h;
+    // Seed, never rebuild, a PDF with no recorded source hash (first run, or a new version's
+    // files): the committed PDF is the release artifact that was uploaded to Zenodo, and a
+    // rebuild is not byte-identical to it.
+    if ((firstRun || !(p.md in mdHashes)) && fs.existsSync(pdf) && !forced) { mdHashes[p.md] = h; continue; }
     const stale = forced || !fs.existsSync(pdf) || mdHashes[p.md] !== h;
     if (!stale) continue;
     log(`  build ${p.pdf} (${forced ? '--rebuild-pdf' : 'source changed'})`);
@@ -220,7 +230,7 @@ log('10. sitemap');
     sm = sm.slice(0, j + 9) + date + sm.slice(k); return true;
   };
   // deployable outputs whose content changed → lastmod today (compare against last build state)
-  const deployable = [...changed].filter((f) => /\.(html|pdf|md|json)$/.test(f) && !/^tlctc-(v2\.5-core|v2\.5-application|glossary)\.md$/.test(f));
+  const deployable = [...changed].filter((f) => /\.(html|pdf|md|json)$/.test(f) && !/^tlctc-(v\d+\.\d+-core|v\d+\.\d+-application|glossary)\.md$/.test(f));
   let bumped = 0, added = 0, dropped = 0;
   for (const f of deployable) {
     if (prevHashes[f] && prevHashes[f] === fileHash(path.join(SITE, f))) continue; // unchanged vs last build

@@ -5,7 +5,7 @@
 
 ---
 
-**Implements:** TLCTC framework specification **v2.6** (working version — not deposited; the citable version is v2.5.1). The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`, reproduced and derived in the v2.6 core paper (`documentation/tlctc-v2.6-core.md`); where an entry here and the canon differ, the canon governs.
+**Implements:** TLCTC framework specification **v2.6**. The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`, reproduced and derived in the v2.6 core paper (`documentation/tlctc-v2.6-core.md`); where an entry here and the canon differ, the canon governs.
 
 > Reference lines cite the v2.6 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
 
@@ -2019,7 +2019,7 @@ See also: Detection Coverage Score (DCS), Attack Velocity (Δt), KCI (Key Contro
 
 ### Trust Acceptance Event (TAE)
 
-The moment your domain **honors** the Third-Party Trust Link and treats a Trust Artifact/Decision as authoritative. Actions at TAE include: validate, accept, install, apply, execute, attach privileges. `#10 Supply Chain Attack` is placed at the TAE. `#10` requires the accepted artifact, or the third party issuing it, to have been subverted before acceptance (subversion test, core §4). In federation, presenting an assertion as another identity is `#4`; a service provider honouring an assertion from an identity provider that was not subverted is not a step; `#10` applies only where the identity provider or its federation trust material was itself subverted (`#10 → #4`).
+The moment your domain **honors** the Third-Party Trust Link and treats a Trust Artifact/Decision as authoritative. Actions at TAE include: validate, accept, install, apply, execute, attach privileges. `#10 Supply Chain Attack` is placed at the TAE. `#10` requires the accepted artifact, or the third party issuing it, to have been subverted before acceptance (subversion test, core §4). Planting counts as subversion: an attacker-authored artifact placed in a channel the target trusts (a malicious package on a public registry, an image or model on a trusted hub, a dependency served under a trusted name) is a subverted service response of that channel, and its acceptance is the TAE. In federation, presenting an assertion as another identity is `#4`; a service provider honouring an assertion from an identity provider that was not subverted is not a step; `#10` applies only where the identity provider or its federation trust material was itself subverted (`#10 → #4`).
 
 **Reference:** Handbook §4.2.2 (Global Definitions), R-SUPPLY (§4.2.5), §4.1 (#10 Definition); Core paper §9, §6.1, §4
 

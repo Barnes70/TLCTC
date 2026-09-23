@@ -9,7 +9,7 @@ tags:
   - "cluster-4"
   - "confidence-medium"
 timestamp: "2026-04-09T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # GRUB1-SAAS-PIVOT-2025
 
@@ -35,4 +35,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-GRUB1 SaaS-to-SaaS supply chain pivot, tracked by Cloudforce One (Cloudflare 2026 Threat Report). An unsophisticated individual actor breached hundreds of corporate Salesforce tenants by targeting the connective tissue between SaaS integrations. Phase 1: automated credential discovery using secret-scanning tools (TruffleHog) against code repositories to harvest high-value credentials buried in repository history. Phase 2: AI-assisted navigation using generative AI in real time to navigate unfamiliar Salesforce environments, pinpointing specific database tables containing the most valuable information moments before unauthorized access. The campaign demonstrates the Measure of Effectiveness (MOE) paradigm: maximum disruption with minimum cost. Attack path: #1 + [DRE: C] -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 7), Cloudforce One investigation. AI-GENERATED EXAMPLE: This attack path is reconstructed from Cloudflare's public threat report description. Specific technical details and timing are analyst estimates based on the described campaign characteristics.
+GRUB1 SaaS-to-SaaS supply chain pivot, tracked by Cloudforce One (Cloudflare 2026 Threat Report). An unsophisticated individual actor breached hundreds of corporate Salesforce tenants by targeting the connective tissue between SaaS integrations. Phase 1: automated credential discovery using secret-scanning tools (TruffleHog) against code repositories to harvest high-value credentials buried in repository history. Phase 2: AI-assisted navigation using generative AI in real time to navigate unfamiliar Salesforce environments, pinpointing specific database tables containing the most valuable information moments before unauthorized access. The campaign demonstrates the Measure of Effectiveness (MOE) paradigm: maximum disruption with minimum cost. Attack path: #1 + [DRE: C] -> #4 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 7), Cloudforce One investigation. AI-GENERATED EXAMPLE: This attack path is reconstructed from Cloudflare's public threat report description. Specific technical details and timing are analyst estimates based on the described campaign characteristics. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

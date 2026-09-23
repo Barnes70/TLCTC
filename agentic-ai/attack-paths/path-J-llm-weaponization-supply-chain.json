@@ -2,10 +2,10 @@
   "metadata": {
     "incident_id": "agentic-path-J",
     "analyst_confidence": "high",
-    "tlctc_version": "2.5",
-    "framework_ref": "tlctc-framework.v2.5.json",
+    "tlctc_version": "2.6",
+    "framework_ref": "tlctc-framework.v2.6.json",
     "created_at": "2026-03-19T00:00:00Z",
-    "notes": "Path J — LLM Weaponization via Supply Chain (Real-World Precedent). Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Based on the S1ngularity/Nx campaign (August 2025), where the QUIETVAULT payload detected an LLM coding assistant already present on victims' machines and co-opted it as a credential-scanning tool. This is the first documented real-world instance of malware weaponizing a deployed AI agent. The pattern differs from Paths A–F (direct agent compromise) and G–I (malicious agent introduction): here, the agent is a secondary tool — a LOLBin discovered post-compromise and directed by external malware. The LLM's designed code generation and execution capabilities become an attacker force multiplier. Notation: #10 ||[dev][@Vendor⇒@npm→@Org]|| →[instant] #1 →[instant] #7 →[instant] #1 →[instant] #7 + [DRE: C] →[instant] #1 + [DRE: C]. Velocity: VC-4 — supply chain acceptance through agent weaponization is near-instantaneous once the install trigger fires. Source: S1ngularity/Nx post-mortem (Sysdig TRT, Palo Alto Unit 42, ReversingLabs, 2025)."
+    "notes": "Path J — LLM Weaponization via Supply Chain (Real-World Precedent). Scenario: LegitimateAgentCompromised (Layer 2 AI-Specific). Based on the S1ngularity/Nx campaign (August 2025), where the QUIETVAULT payload detected an LLM coding assistant already present on victims' machines and co-opted it as a credential-scanning tool. This is the first documented real-world instance of malware weaponizing a deployed AI agent. The pattern differs from Paths A–F (direct agent compromise) and G–I (malicious agent introduction): here, the agent is a secondary tool — a LOLBin discovered post-compromise and directed by external malware. The LLM's designed code generation and execution capabilities become an attacker force multiplier. Notation: #10 ||[dev][@Vendor⇒@npm→@Org]|| →[instant] #1 →[instant] #7 →[instant] #1 →[instant] #7 + [DRE: C] →[instant] #1 + [DRE: C]. Velocity: VC-4 — supply chain acceptance through agent weaponization is near-instantaneous once the install trigger fires. Source: S1ngularity/Nx post-mortem (Sysdig TRT, Palo Alto Unit 42, ReversingLabs, 2025). v2.6 requalification (2026-09-23): classification unchanged; s1 now states the v2.6 falsifier."
   },
   "path_sequence": [
     {
@@ -18,7 +18,7 @@
         "transit_spheres": ["@npm"]
       },
       "delta_t_to_next": "instant",
-      "notes": "Trust Acceptance Event: compromised npm package accepted during dependency installation. The developer's environment trusts the package source. Removing the trust link (not depending on the package) would prevent this step — confirms #10."
+      "notes": "Trust Acceptance Event: compromised npm package accepted during dependency installation. The developer's environment trusts the package source. v2.6 falsifier: the package was subverted before acceptance; remove that subversion and the step fails — confirms #10."
     },
     {
       "step_id": "s2-install-processing",

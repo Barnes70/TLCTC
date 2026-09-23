@@ -4,7 +4,7 @@
 **Version:** 2.6
 **Date:** 2026-09-23
 **License:** CC BY 4.0
-**Status:** Working version — not deposited. Cite v2.5.1: [10.5281/zenodo.22697432](https://doi.org/10.5281/zenodo.22697432).
+**DOI:** [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) (concept DOI — always resolves to the latest version)
 
 > **Canonical version declaration.** The TLCTC framework specification is **v2.6**. The normative authority for cluster definitions, axioms, and classification rules is exactly one artifact: the machine-readable framework dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`; this paper reproduces those verbatim and supplies the derivation, notation, and per-cluster boundary tests around them. The boundary tests are normative and are homed in this paper (Section 4) by design — the dictionary deliberately carries no boundary-test field. Companion documents (application paper, glossary, mappings, tools) declare which canonical version they implement. Retired rule aliases from earlier versions (R-ABUSE, R-HUMAN, R-PHYSICAL from v2.0; R-FLOOD, R-CHANNEL, R-SUBSTRATE from v2.5) are enumerated in Section 6 and are never reused with a different meaning.
 
@@ -416,6 +416,7 @@ The cluster is placed at the Trust Acceptance Event (TAE) — the moment the org
 - Place #10 at the Trust Acceptance Event (TAE), where the third-party trust link is honored and becomes authoritative inside the organization.
 - Subversion test: #10 requires that the trust artifact — package, update, build output, hardware, service response, federation assertion or metadata — or the third party issuing it was subverted by the attacker before the target accepted it. A defect in a legitimately supplied component is not #10: classify it where it is exploited, by R-ROLE or R-SPECIFIC (Log4Shell → #2). Where flawed code came from is location, not generic vulnerability.
 - Falsifiability: remove the attacker's subversion of the third party — not the third party itself. If the step still succeeds, it was never #10.
+- Planting counts as subversion: an artifact the attacker authored and placed in a channel the target trusts — a malicious package published to a public registry, an image or model uploaded to a trusted hub, a dependency served under a trusted name — is a subverted service response of that channel, and its acceptance is the TAE (#10). Remove the planted artifact from the channel and the step fails; a flaw in a legitimately supplied component is still not #10.
 - Downstream effects map normally: often `#10 → #7` (accepted artifact leads to FEC execution) or `#10 → #1` (accepted authorization/entitlement enables function abuse).
 - Federation: presenting a credential or assertion to authenticate as another identity is #4, wherever it is presented and however it was obtained (R-CRED). A service provider honouring an assertion from an identity provider that was not subverted is the trust link working as designed and is not a step. Where the identity provider or its federation trust material was itself subverted, the service provider's acceptance of the subverted authority is the TAE (#10), and each impersonating assertion presented through it remains #4: `#10 → #4`.
 
@@ -776,7 +777,7 @@ v2.6 answers an external review of v2.5. Each change item is traced to the revie
 | --- | --- | --- | --- |
 | C1 | 1 — partition does not follow one principle | Derivation under a stated criterion (a distinct control lever and owner); #1 and #2/#3 named as residual clusters | §2, §3.2, §8 |
 | C2 | 1 — fold the precedence rules | R-FLOOD, R-CHANNEL, R-SUBSTRATE folded into R-SPECIFIC; registry 19 → 17 | §6.1 |
-| C3 | 2 — #10 swallows most CVEs | #10 definition names subversion of the trusted third party | §4 #10 |
+| C3 | 2 — #10 swallows most CVEs | #10 definition names subversion of the trusted third party; planting an attacker-authored artifact in a trusted channel counts as subversion | §4 #10 |
 | C4 | 2 — #10 boundary test | Subversion test; falsifier reworded (Log4Shell is #2) | §2, §4 #10 |
 | C5 | 2 — federation inflates #10 | Assertion presentation is #4; #10 → #4 only where the IdP was subverted | §4 #10 |
 | C6 | 2 — #10 at rule level | R-SUPPLY requires subversion; step 10 names it | §2, §6.1 |

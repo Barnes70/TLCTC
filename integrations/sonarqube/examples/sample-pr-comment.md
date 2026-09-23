@@ -1,5 +1,5 @@
 ## TLCTC SAST Report
-_Project: `demo` &middot; TLCTC v2.1_
+_Project: `demo` &middot; TLCTC v2.6_
 
 **Findings classified:** 6 &nbsp;|&nbsp; **Low-confidence:** 1 &nbsp;|&nbsp; **Total issues seen:** 7
 
@@ -35,7 +35,7 @@ _Project: `demo` &middot; TLCTC v2.1_
 - **ISSUE-003** &mdash; `demo:src/main/webapp/components/CommentList.tsx`
   - Rule: `typescript:S5247` (severity `MAJOR`, type `VULNERABILITY`)
   - CWE: CWE-79
-  - CWE-79 &rarr; `#3` (Allowed) &mdash; component path matched client glob '**/*.tsx'
+  - CWE-79 &rarr; `#3 → #7` (Allowed) &mdash; component path matched client glob '**/*.tsx'
   - _DOM sink receives data from a URL parameter without sanitization._
 
 ### `#4` Identity Theft &mdash; 1 finding(s)

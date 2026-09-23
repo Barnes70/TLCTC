@@ -15,7 +15,7 @@ from typing import Iterable
 from . import path_parser
 from .path_parser import PathNode
 
-EXPECTED_TLCTC_VERSION = "2.1"
+EXPECTED_TLCTC_VERSION = "2.6"
 
 VERDICT_ALLOWED = "Allowed"
 VERDICT_REVIEW = "Allowed-with-Review"

@@ -52,6 +52,13 @@ class TestPathParser(unittest.TestCase):
     def test_unmapped(self) -> None:
         self.assertIsInstance(parse("N/A"), Unmapped)
 
+    def test_enabling_condition_is_unmapped(self) -> None:
+        # R-CRED enabling conditions (e.g. CWE-256) assign no cluster of their own.
+        node = parse("enabling-condition")
+        self.assertIsInstance(node, Unmapped)
+        self.assertEqual(str(node), "enabling-condition")
+        self.assertIsNone(primary_cluster(node))
+
     def test_cluster_tag_format(self) -> None:
         self.assertEqual(Cluster(2).tag, "tlctc-02")
         self.assertEqual(Cluster(10).tag, "tlctc-10")

@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # PEGASUS-FORCEDENTRY-2021
 
@@ -36,4 +36,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-NSO Group Pegasus spyware delivered via FORCEDENTRY zero-click exploit, 2021. Targeted iMessage on iOS. Malicious PDF disguised as GIF exploited integer overflow in CoreGraphics (CVE-2021-30860) within the sandboxed IMTranscoderAgent process, escaped BlastDoor sandbox, and installed Pegasus spyware. Zero user interaction required. Attack path: #3 |[sandbox][@IMTranscoderAgent→@os]| →[Δt=instant] #7 →[Δt=instant] #1 + [DRE: C]. Sources: Citizen Lab FORCEDENTRY report (September 2021), Apple security update for CVE-2021-30860, Google Project Zero JBIG2 exploit analysis.
+NSO Group Pegasus spyware delivered via FORCEDENTRY zero-click exploit, 2021. Targeted iMessage on iOS. Malicious PDF disguised as GIF exploited integer overflow in CoreGraphics (CVE-2021-30860) within the sandboxed IMTranscoderAgent process, escaped BlastDoor sandbox, and installed Pegasus spyware. Zero user interaction required. Attack path: #3 |[sandbox][@IMTranscoderAgent→@os]| →[Δt=instant] #7 →[Δt=instant] #1 + [DRE: C]. Sources: Citizen Lab FORCEDENTRY report (September 2021), Apple security update for CVE-2021-30860, Google Project Zero JBIG2 exploit analysis. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

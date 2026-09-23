@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # TWITTER-HACK-2020
 
@@ -42,4 +42,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Twitter account takeover attack, July 15, 2020. Attackers (led by teenager Graham Ivan Clark) vished Twitter employees to gain access to internal admin tools, then took over 130 high-profile accounts (Obama, Musk, Gates, Apple, etc.) to post Bitcoin scam messages. ~$120K in Bitcoin collected. Attack path: #9 ||[human][@External→@Twitter]|| →[Δt=~10m] #4 →[Δt=~5m] #1 →[Δt=~30m] #4 →[Δt=~5m] #1 + [DRE: C] →[Δt=~minutes] #1 + [DRE: I]. Sources: Twitter official blog post (July 2020), NYDFS investigation report, DOJ criminal complaint against Graham Ivan Clark, Florida State Attorney indictment.
+Twitter account takeover attack, July 15, 2020. Attackers (led by teenager Graham Ivan Clark) vished Twitter employees to gain access to internal admin tools, then took over 130 high-profile accounts (Obama, Musk, Gates, Apple, etc.) to post Bitcoin scam messages. ~$120K in Bitcoin collected. Attack path: #9 ||[human][@External→@Twitter]|| →[Δt=~10m] #4 →[Δt=~5m] #1 →[Δt=~30m] #4 →[Δt=~5m] #1 + [DRE: C] →[Δt=~minutes] #1 + [DRE: I]. Sources: Twitter official blog post (July 2020), NYDFS investigation report, DOJ criminal complaint against Graham Ivan Clark, Florida State Attorney indictment. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

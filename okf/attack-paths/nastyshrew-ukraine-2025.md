@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-04-09T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # NASTYSHREW-UKRAINE-2025
 
@@ -38,4 +38,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-NastyShrew (Gamaredon/Primitive Bear/UAC-0010/Aqua Blizzard) persistent campaigns targeting Ukrainian government and critical infrastructure, 2025. One of the most active and persistent Russian threats. Characterized by high-frequency campaigns maintaining persistence on thousands of endpoints. Infrastructure: dead drop resolvers on paste sites (teletype.in, rentry.co) for C2 tunnel rotation, geofencing to Ukrainian IP ranges, VPS purchased with cryptocurrency. Delivery: high-frequency phishing with .lnk and .ps1 files triggering multi-stage VBScript chains (Pteranodon family). Members arrested in Thailand (Phuket) in February and November 2025 in joint US/Thai operations. Attack path: #9 ||[email][@External->@Org]|| -> #7 -> #1 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 16), CERT-UA, Cloudforce One.
+NastyShrew (Gamaredon/Primitive Bear/UAC-0010/Aqua Blizzard) persistent campaigns targeting Ukrainian government and critical infrastructure, 2025. One of the most active and persistent Russian threats. Characterized by high-frequency campaigns maintaining persistence on thousands of endpoints. Infrastructure: dead drop resolvers on paste sites (teletype.in, rentry.co) for C2 tunnel rotation, geofencing to Ukrainian IP ranges, VPS purchased with cryptocurrency. Delivery: high-frequency phishing with .lnk and .ps1 files triggering multi-stage VBScript chains (Pteranodon family). Members arrested in Thailand (Phuket) in February and November 2025 in joint US/Thai operations. Attack path: #9 ||[email][@External->@Org]|| -> #7 -> #1 -> #1 + [DRE: C]. Sources: Cloudflare 2026 Threat Report (pp. 16), CERT-UA, Cloudforce One. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

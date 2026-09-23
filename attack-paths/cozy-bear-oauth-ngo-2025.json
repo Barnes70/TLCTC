@@ -2,10 +2,10 @@
   "metadata": {
     "incident_id": "COZY-BEAR-OAUTH-NGO-2025",
     "analyst_confidence": "high",
-    "tlctc_version": "2.5",
-    "framework_ref": "tlctc-framework.v2.5.json",
+    "tlctc_version": "2.6",
+    "framework_ref": "tlctc-framework.v2.6.json",
     "created_at": "2026-04-16T00:00:00Z",
-    "notes": "COZY BEAR's multi-layered trust exploitation campaign targeting a U.S.-based NGO (August 2025). The adversary combined three techniques: (1) interpersonal trust exploitation via impersonation of known professional contacts using compromised legitimate accounts, (2) platform trust abuse via Entra ID OAuth 2.0 phishing that redirected to authentic Microsoft login pages (eliminating suspicious domain indicators), and (3) multi-channel social engineering across IM, email, and video conferencing spanning 31+ days. Despite conditional access policies blocking initial Outlook access, persistent social engineering and repeated authentication attempts eventually yielded Windows Hello for Business persistence on Day 31. Attack path: #9 ||[human][@CozyBear→@Target-NGO]|| →[Δt=~6h] #9 →[Δt=~1h] #4 →[Δt=~5m] #1 →[Δt=~10m] #9 →[Δt=~26d] #4 →[Δt=?] #1 →[Δt=?] #1 + [DRE: C]. Source: CrowdStrike 2026 Global Threat Report, pp. 42-43, Figure 20."
+    "notes": "COZY BEAR's multi-layered trust exploitation campaign targeting a U.S.-based NGO (August 2025). The adversary combined three techniques: (1) interpersonal trust exploitation via impersonation of known professional contacts using compromised legitimate accounts, (2) platform trust abuse via Entra ID OAuth 2.0 phishing that redirected to authentic Microsoft login pages (eliminating suspicious domain indicators), and (3) multi-channel social engineering across IM, email, and video conferencing spanning 31+ days. Despite conditional access policies blocking initial Outlook access, persistent social engineering and repeated authentication attempts eventually yielded Windows Hello for Business persistence on Day 31. Attack path: #9 ||[human][@CozyBear→@Target-NGO]|| →[Δt=~6h] #9 →[Δt=~1h] #4 →[Δt=~15m] #9 →[Δt=~26d] #4 →[Δt=?] #1 →[Δt=?] #1 + [DRE: C]. Source: CrowdStrike 2026 Global Threat Report, pp. 42-43, Figure 20. v2.6 requalification (2026-09-23): step s4-outlook-blocked removed. v2.6 classifies successful steps only: the Day 1 14:33 Outlook access attempt was denied by the conditional access policy requiring Intune enrollment, recorded no System Risk Event and is not a step of the path. It is control-side evidence - an indicator that the conditional access control held (Axiom V) - and it motivated the persistent social engineering at s5. The s3 to s5 interval is now ~15m. Other steps unchanged."
   },
   "path_sequence": [
     {
@@ -28,14 +28,8 @@
     {
       "step_id": "s3-auth-code-exchange",
       "cluster": "#4",
-      "delta_t_to_next": "~5m",
+      "delta_t_to_next": "~15m",
       "notes": "Day 1, 14:26-14:29: Target user logs in via the threat actor-provided device registration URL (14:26:21), then sends the URL containing the authorization code to the threat actor via instant message (14:28:00). The threat actor immediately authenticates using the authorization code (14:29:09). R-CRED: credential application is always #4 regardless of acquisition method. Axiom X: the authorization code was obtained via social engineering (#9, s2 as enabling cluster); its use to authenticate is a separate #4 step. The 3-minute window from victim login to attacker authentication demonstrates real-time operational coordination."
-    },
-    {
-      "step_id": "s4-outlook-blocked",
-      "cluster": "#1",
-      "delta_t_to_next": "~10m",
-      "notes": "Day 1, 14:33: Attacker attempts to access Outlook using the authenticated session but is blocked by a conditional access policy requiring Intune enrollment. At 14:39, the attacker sends a follow-up authorization code URL targeting the Outlook mobile app, hoping the mobile path bypasses the Intune requirement. This step is modeled as #1 Abuse of Functions: the attacker uses legitimate OAuth token-based API access (the function works as designed) but the conditional access control denies the resource request. The step demonstrates defense-in-depth working — the conditional access policy successfully prevented the attacker from reaching the target resource. This failed access attempt directly motivates the persistent social engineering campaign that follows."
     },
     {
       "step_id": "s5-persistent-se",

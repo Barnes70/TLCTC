@@ -9,7 +9,7 @@ tags:
   - "cluster-6"
   - "confidence-high"
 timestamp: "2026-04-09T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # AISURU-DDOS-2025
 
@@ -33,4 +33,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Aisuru botnet hyper-volumetric DDoS attacks, 2025. Record-breaking 31.4 Tbps UDP flood in November 2025, nearly six times the peak volume of 2024's largest attack. Cloudflare observed 47.1 million DDoS attacks in 2025 (more than doubled from 2024), mitigating 5,376 attacks per hour. Aisuru and its successor Kimwolf control an estimated 1-4 million infected hosts. 19 new world records in 2025. Most attacks lasted less than 10 minutes, closing the window for human intervention. Successor network Kimwolf saw 550+ C2 nodes null-routed in early 2026. Botnets tunnel through residential proxy services to make traffic appear legitimate. Attack path: #7 -> #6 + [DRE: A]. Sources: Cloudflare 2026 Threat Report (pp. 42-45), Cloudflare DDoS quarterly reports.
+Aisuru botnet hyper-volumetric DDoS attacks, 2025. Record-breaking 31.4 Tbps UDP flood in November 2025, nearly six times the peak volume of 2024's largest attack. Cloudflare observed 47.1 million DDoS attacks in 2025 (more than doubled from 2024), mitigating 5,376 attacks per hour. Aisuru and its successor Kimwolf control an estimated 1-4 million infected hosts. 19 new world records in 2025. Most attacks lasted less than 10 minutes, closing the window for human intervention. Successor network Kimwolf saw 550+ C2 nodes null-routed in early 2026. Botnets tunnel through residential proxy services to make traffic appear legitimate. Attack path: #7 -> #6 + [DRE: A]. Sources: Cloudflare 2026 Threat Report (pp. 42-45), Cloudflare DDoS quarterly reports. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

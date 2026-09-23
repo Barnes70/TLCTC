@@ -27,7 +27,11 @@ const opt = (flag, dflt) => {
 const VERBOSE = argv.includes('--verbose');
 const SITE = path.resolve(opt('--site', process.env.TLCTC_SITE_DIR || path.join(ROOT, '..', 'web', 'tlctc')));
 
-const dict = require(path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.5.json'));
+// The newest canonical dictionary in layer-1 (older ones are frozen records); --dict overrides.
+const DICTS = fs.readdirSync(path.join(ROOT, 'json-schemas/layer-1')).map((f) => /^tlctc-framework\.v(\d+)\.(\d+)\.json$/.exec(f)).filter(Boolean)
+  .sort((a, b) => (+a[1] - +b[1]) || (+a[2] - +b[2]));
+const DICT = opt('--dict', `json-schemas/layer-1/${DICTS[DICTS.length - 1][0]}`);
+const dict = require(path.join(ROOT, DICT));
 
 // The strings the dictionary owns. Per feedback_cluster_definition_fields these
 // are never paraphrased: definition, generic vulnerability, attacker's view.

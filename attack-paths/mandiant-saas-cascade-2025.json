@@ -2,11 +2,11 @@
   "metadata": {
     "incident_id": "MANDIANT-SAAS-CASCADE-2025",
     "analyst_confidence": "high",
-    "tlctc_version": "2.5",
-    "framework_ref": "tlctc-framework.v2.5.json",
+    "tlctc_version": "2.6",
+    "framework_ref": "tlctc-framework.v2.6.json",
     "registry_ref": "example-registry.json",
     "created_at": "2026-04-14T00:00:00Z",
-    "notes": "Attack path derived from Mandiant M-Trends 2026 'The Cascading Impact of Third-Party SaaS Compromises' (pp. 74-77). UNC5221-style pattern: compromise a SaaS provider via a public-facing webshell / SQLi, extract Azure Service Principals and OAuth refresh tokens, then ride the provider's legitimate integration chain into downstream customer tenants. The downstream step is where #10 (Supply Chain) appears — at the customer's Trust Acceptance Event where the provider's service principal is honored. Sources: M-Trends 2026 pp. 21, 74-77."
+    "notes": "Attack path derived from Mandiant M-Trends 2026 'The Cascading Impact of Third-Party SaaS Compromises' (pp. 74-77). UNC5221-style pattern: compromise a SaaS provider via a public-facing webshell / SQLi, extract Azure Service Principals and OAuth refresh tokens, then ride the provider's legitimate integration chain into downstream customer tenants. The downstream step is where #10 (Supply Chain) appears — at the customer's Trust Acceptance Event where the provider's service principal is honored. Sources: M-Trends 2026 pp. 21, 74-77. v2.6 requalification (2026-09-23): the provider-to-customer segment is re-sequenced from #4 -> #10 to #10 -> #4. Under v2.6 federation, the customer's acceptance of the subverted provider authority (the provider and its service-principal secret were subverted at s1-s4) is the TAE (s5, #10), and each authentication presented through it remains #4 (s6). Step ids renumbered accordingly (v2.5: s5 = #4, s6 = #10). Path: #2 -> #7 -> #1 -> #1 + [DRE: C] -> #10 -> #4 -> #1 + [DRE: C]."
   },
   "path_sequence": [
     {
@@ -41,21 +41,21 @@
       "notes": "Extract service-principal secrets / OAuth refresh tokens that grant the provider's app delegated access into downstream customer tenants. Legitimate secret-retrieval APIs (Key Vault, configuration store), abused scope. DRE:C — the provider's cross-tenant credentials are the crown jewels."
     },
     {
-      "step_id": "s5-sp-auth-to-customer",
-      "cluster": "#4",
-      "delta_t_to_next": "instant",
-      "notes": "Authentication into the downstream customer tenant using the exfiltrated service-principal secret. R-CRED / Axiom X: credential application is ALWAYS #4, regardless of how the credential was acquired. The authentication looks indistinguishable from normal provider-to-customer integration traffic."
-    },
-    {
-      "step_id": "s6-trust-acceptance",
+      "step_id": "s5-trust-acceptance",
       "cluster": "#10",
       "topology_boundary": {
         "context": "api",
         "source_sphere": "@SaaSProvider",
         "target_sphere": "@Customer"
       },
+      "delta_t_to_next": "instant",
+      "notes": "Trust Acceptance Event (R-SUPPLY): the customer tenant honors the provider's service principal as if it were the provider itself — cryptographically it is. v2.6 federation: the provider and its service-principal secret, its federation trust material, were subverted at s1-s4, so the customer's acceptance of the subverted authority is the TAE (#10). Falsifiability (v2.6): remove that subversion and the acceptance is the trust link working as designed, not a step. Each authentication presented through the subverted authority remains #4 (s6): #10 → #4. v2.5 recorded the order #4 → #10."
+    },
+    {
+      "step_id": "s6-sp-auth-to-customer",
+      "cluster": "#4",
       "delta_t_to_next": "~1h",
-      "notes": "Trust Acceptance Event (R-SUPPLY): the customer tenant honors the provider's service principal as if it were the provider itself — cryptographically it is. This step marks the moment a cross-domain trust artifact becomes authoritative inside the customer's domain. Falsifiability test: if the customer had restricted the service principal's scope or enforced per-customer SP rotation, this TAE would not have enabled downstream data access."
+      "notes": "Authentication into the downstream customer tenant using the exfiltrated service-principal secret. R-CRED / Axiom X: credential application is ALWAYS #4, regardless of how the credential was acquired. The authentication looks indistinguishable from normal provider-to-customer integration traffic. Under v2.6 federation it follows the TAE (s5)."
     },
     {
       "step_id": "s7-customer-data-access",

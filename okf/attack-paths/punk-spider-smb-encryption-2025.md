@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-medium"
 timestamp: "2026-04-16T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # PUNK-SPIDER-SMB-ENCRYPTION-2025
 
@@ -36,4 +36,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-PUNK SPIDER's remote file encryption via SMB shares from unmanaged hosts (2025). PUNK SPIDER was the most active Big Game Hunting adversary in 2025, conducting 198 intrusions (134% increase year-over-year). The core technique: execute Akira ransomware on an unmanaged host (no EDR sensor), pull files from managed hosts via Windows SMB shares, encrypt locally, and push encrypted files back. Managed endpoints never see ransomware execution. This path models the webcam variant: PUNK SPIDER identified an unpatched webcam on a corporate network and executed Akira from this unmanaged IoT device. Other BGH actors also used remote encryption variations in 2025, including RECESS SPIDER, TRAVELING SPIDER affiliates, and WANDERING SPIDER. Analyst confidence is medium: the webcam variant is referenced from third-party reporting (S-RM) with limited detail; the SMB technique is described at a composite level across 198 intrusions. Attack path: #2 →[Δt=?] #7 →[Δt=instant] #1 + [DRE: Ac]. Source: CrowdStrike 2026 Global Threat Report, pp. 24-25, Figure 12; S-RM Inform report on Akira webcam deployment.
+PUNK SPIDER's remote file encryption via SMB shares from unmanaged hosts (2025). PUNK SPIDER was the most active Big Game Hunting adversary in 2025, conducting 198 intrusions (134% increase year-over-year). The core technique: execute Akira ransomware on an unmanaged host (no EDR sensor), pull files from managed hosts via Windows SMB shares, encrypt locally, and push encrypted files back. Managed endpoints never see ransomware execution. This path models the webcam variant: PUNK SPIDER identified an unpatched webcam on a corporate network and executed Akira from this unmanaged IoT device. Other BGH actors also used remote encryption variations in 2025, including RECESS SPIDER, TRAVELING SPIDER affiliates, and WANDERING SPIDER. Analyst confidence is medium: the webcam variant is referenced from third-party reporting (S-RM) with limited detail; the SMB technique is described at a composite level across 198 intrusions. Attack path: #2 →[Δt=?] #7 →[Δt=instant] #1 + [DRE: Ac]. Source: CrowdStrike 2026 Global Threat Report, pp. 24-25, Figure 12; S-RM Inform report on Akira webcam deployment. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

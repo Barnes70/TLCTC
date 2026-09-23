@@ -1,7 +1,7 @@
 # TLCTC SARIF Classifier
 
 Parses any SARIF 2.1.0 file, extracts CWE and CVE identifiers from findings,
-classifies them to TLCTC v2.1 clusters, and emits JSON / Markdown /
+classifies them to TLCTC v2.6 clusters, and emits JSON / Markdown /
 TLCTC-SARIF reports. Works with any SARIF producer — Semgrep, CodeQL,
 Trivy, Grype, Bandit, gosec, OWASP Dependency-Check, and others. The pack
 is **standalone and stdlib-only**: no third-party dependencies, no network
@@ -115,8 +115,8 @@ used in the [cortex-xsoar-8](../cortex-xsoar-8/) pack does not apply here.
 
 ## References
 
-- Kreinz, B. *TLCTC v2.1 White Paper* — cluster definitions, axioms, and
-  classification rules. [Read v2.1](https://www.tlctc.net/tlctc-v2.0-whitepaper.html).
+- Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (core paper, v2.6) — cluster definitions, axioms, and
+  classification rules. [Read the core paper](https://www.tlctc.net/tlctc-whitepaper.html).
 - `mappings/mitre-cwe/tlctc-cwe.json` — canonical CWE→TLCTC mapping (985
   entries, audited 2026-05-05).
 - `mappings/cisa-kev/tlctc-kev.json` — offline KEV→TLCTC derivation (1,568

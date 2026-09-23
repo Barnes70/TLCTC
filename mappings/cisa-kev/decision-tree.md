@@ -68,7 +68,7 @@ Given a `tlctcMapping` expression, the primary cluster is derived by parsing the
 
 ## Stage 4 — R-ROLE disambiguation
 
-The CWE mapping bucket `#2 | #3` (219 CWEs, the largest single bucket after role-collapse) is **not a classification failure** — it's a deliberate reflection of [R-ROLE](../../CLAUDE.md): the same memory-corruption weakness is `#2` in server-side code, `#3` in client-side code.
+The CWE mapping bucket `#2 | #3` (268 CWEs in the v2.6 mapping, the largest single bucket after role-collapse) is **not a classification failure** — it's a deliberate reflection of [R-ROLE](../../CLAUDE.md): the same memory-corruption weakness is `#2` in server-side code, `#3` in client-side code.
 
 KEV already encodes the context in `vendorProject` + `product`. The heuristic recovers it.
 

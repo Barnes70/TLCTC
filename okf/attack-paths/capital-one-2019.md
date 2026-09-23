@@ -10,7 +10,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # CAPITAL-ONE-2019
 
@@ -36,4 +36,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-Capital One data breach, March 2019 (disclosed July 2019). Former AWS employee Paige Thompson exploited a misconfigured WAF (ModSecurity) on Capital One's AWS infrastructure via Server-Side Request Forgery (SSRF) to reach the EC2 instance metadata service (IMDS v1), obtaining temporary IAM role credentials. Those credentials were used to access S3 buckets containing 106 million customer records (credit card applications, SSNs, bank account numbers). Attack path: #2 + [DRE: C] →[Δt=instant] #4 →[Δt=~4h] #1 + [DRE: C]. Sources: Capital One public statement (July 2019), DOJ criminal complaint, AWS IMDS security guidance, US District Court Western District of Washington case documents.
+Capital One data breach, March 2019 (disclosed July 2019). Former AWS employee Paige Thompson exploited a misconfigured WAF (ModSecurity) on Capital One's AWS infrastructure via Server-Side Request Forgery (SSRF) to reach the EC2 instance metadata service (IMDS v1), obtaining temporary IAM role credentials. Those credentials were used to access S3 buckets containing 106 million customer records (credit card applications, SSNs, bank account numbers). Attack path: #2 + [DRE: C] →[Δt=instant] #4 →[Δt=~4h] #1 + [DRE: C]. Sources: Capital One public statement (July 2019), DOJ criminal complaint, AWS IMDS security guidance, US District Court Western District of Washington case documents. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

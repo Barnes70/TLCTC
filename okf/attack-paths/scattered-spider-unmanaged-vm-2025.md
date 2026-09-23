@@ -11,7 +11,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-04-16T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # SCATTERED-SPIDER-UNMANAGED-VM-2025
 
@@ -49,4 +49,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-SCATTERED SPIDER's abuse of unmanaged virtual machines to dump Active Directory credentials, as documented in the CrowdStrike 2026 Global Threat Report (pp. 22-23, Figures 10-11). In mid-2025, the adversary completed this full chain in under three hours, interacting with only one managed endpoint. Initial access relied exclusively on vishing help desk personnel for self-service password resets. The core defense evasion technique: mount a domain controller's VMDK to a new or decommissioned VM (unmanaged — no EDR sensor) and copy the NTDS.dit database from that unmanaged host. SCATTERED SPIDER deployed ransomware only on VMware ESXi systems (not modeled here — the case highlight covers the credential-dump chain). Attack path: #9 ||[human][@External→@Org]|| →[Δt=15m] #4 →[Δt=45m] #7 →[Δt=15m] #9 ||[human][@External→@Org]|| →[Δt=15m] #4 →[Δt=5m] #1 + [DRE: C] →[Δt=5m] #4 →[Δt=30m] #1 →[Δt=30m] #7 + [DRE: C]. Source: CrowdStrike 2026 Global Threat Report, Case Highlight: SCATTERED SPIDER's Abuse of Unmanaged Systems.
+SCATTERED SPIDER's abuse of unmanaged virtual machines to dump Active Directory credentials, as documented in the CrowdStrike 2026 Global Threat Report (pp. 22-23, Figures 10-11). In mid-2025, the adversary completed this full chain in under three hours, interacting with only one managed endpoint. Initial access relied exclusively on vishing help desk personnel for self-service password resets. The core defense evasion technique: mount a domain controller's VMDK to a new or decommissioned VM (unmanaged — no EDR sensor) and copy the NTDS.dit database from that unmanaged host. SCATTERED SPIDER deployed ransomware only on VMware ESXi systems (not modeled here — the case highlight covers the credential-dump chain). Attack path: #9 ||[human][@External→@Org]|| →[Δt=15m] #4 →[Δt=45m] #7 →[Δt=15m] #9 ||[human][@External→@Org]|| →[Δt=15m] #4 →[Δt=5m] #1 + [DRE: C] →[Δt=5m] #4 →[Δt=30m] #1 →[Δt=30m] #7 + [DRE: C]. Source: CrowdStrike 2026 Global Threat Report, Case Highlight: SCATTERED SPIDER's Abuse of Unmanaged Systems. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.

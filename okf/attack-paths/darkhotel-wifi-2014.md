@@ -13,7 +13,7 @@ tags:
   - "cluster-1"
   - "confidence-high"
 timestamp: "2026-03-20T00:00:00Z"
-tlctc_version: "2.5"
+tlctc_version: "2.6"
 ---
 # DARKHOTEL-WIFI-2014
 
@@ -43,4 +43,4 @@ tlctc_version: "2.5"
 
 # Citations
 
-DarkHotel APT campaign targeting business executives via luxury hotel WiFi networks, documented by Kaspersky in November 2014 (active since ~2007). Attackers compromised hotel WiFi infrastructure to MitM executive guests, injecting fake software update prompts that delivered digitally signed malware (keylogger/backdoor). Targeted luxury hotels in Asia. Attack path: (#8 + #9) →[Δt=instant] #5 →[Δt=~5m] #7 + [DRE: C] →[Δt=~1h] #4 →[Δt=~2h] #1 + [DRE: C]. Sources: Kaspersky Lab 'DarkHotel' report (November 2014), Kaspersky SecureList APT analysis, ESET DarkHotel follow-up research.
+DarkHotel APT campaign targeting business executives via luxury hotel WiFi networks, documented by Kaspersky in November 2014 (active since ~2007). Attackers compromised hotel WiFi infrastructure to MitM executive guests, injecting fake software update prompts that delivered digitally signed malware (keylogger/backdoor). Targeted luxury hotels in Asia. Attack path: (#8 + #9) →[Δt=instant] #5 →[Δt=~5m] #7 + [DRE: C] →[Δt=~1h] #4 →[Δt=~2h] #1 + [DRE: C]. Sources: Kaspersky Lab 'DarkHotel' report (November 2014), Kaspersky SecureList APT analysis, ESET DarkHotel follow-up research. v2.6 requalification (2026-09-23): checked against the v2.6 changes - #10 subversion test (planting counts as subversion), federation (#4 unless the identity provider was subverted), successes only, the data-vs-code boundary and the R-SPECIFIC consolidation - classification unchanged.
