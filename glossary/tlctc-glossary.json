@@ -263,9 +263,9 @@
     {
       "term_id": "cluster-8-physical-attack",
       "term": "Physical Attack (#8)",
-      "definition": "Unauthorized physical interaction with or interference to hardware, facilities, media, interfaces, or signals — via direct contact or exploitation of physical phenomena/emanations.",
+      "definition": "Unauthorized physical interaction with or interference to hardware, media, interfaces, or signals—via direct contact or exploitation of physical phenomena/emanations.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.5.1",
       "see_also": ["threat-cluster", "bridge-topology", "boundary-context"],
       "notes": "Generic vulnerability: Physical accessibility of infrastructure and the exploitability of physical-layer properties."
     },
@@ -281,9 +281,9 @@
     {
       "term_id": "cluster-10-supply-chain-attack",
       "term": "Supply Chain Attack (#10)",
-      "definition": "An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.",
+      "definition": "An attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain.",
       "domain": "tlctc-core",
-      "source": "TLCTC v2.5",
+      "source": "TLCTC v2.6",
       "see_also": ["threat-cluster", "bridge-topology", "trust-acceptance-event", "r-supply"],
       "notes": "Generic vulnerability: Trust in third-party components and update channels can be subverted."
     },

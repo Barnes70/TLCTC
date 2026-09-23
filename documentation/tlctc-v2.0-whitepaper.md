@@ -1260,10 +1260,10 @@ If the attacker's advantage in the step comes from **psychological manipulation 
 
 ---
 
-##### R-PHYSICAL — Physical Domain Isolation
+##### R-PHYSICAL — Physical Domain Isolation *(retired rule ID since v2.5 — sequencing now carried by the #8 boundary tests, admission by the substrate clause of R-SPECIFIC; "facilities" dropped from #8 in the v2.5.1 erratum)*
 
 **Rule (Normative):**
-If the attacker's advantage in the step comes from **unauthorized physical interaction or interference** with hardware, facilities, media, or signals, that physical step **MUST** be classified as **`#8 Physical Attack`**, and subsequent technical steps **MUST** be classified separately.
+If the attacker's advantage in the step comes from **unauthorized physical interaction or interference** with hardware, media, interfaces, or signals, that physical step **MUST** be classified as **`#8 Physical Attack`**, and subsequent technical steps **MUST** be classified separately.
 
 **Clarifications (Normative):**
 
@@ -1278,7 +1278,7 @@ If the attacker's advantage in the step comes from **unauthorized physical inter
    - Physical access → tap network cable → `#8 → #5`
    - Physical access → steal device with data → `#8` + `[DRE: C]`
 3. `#8` is a bridge cluster. It crosses from the physical security domain to the software security domain.
-4. *(V2.4)* R-PHYSICAL governs **sequencing** — where a qualifying physical step sits and how subsequent steps are split. It does not decide **admission**. Whether a weakness qualifies as `#8` at all is decided by R-SUBSTRATE below. In particular, "unauthorized physical interaction" must not be read as requiring the attacker to be physically present: see R-SUBSTRATE.
+4. *(V2.4)* R-PHYSICAL governs **sequencing** — where a qualifying physical step sits and how subsequent steps are split. It does not decide **admission**. Whether a weakness qualifies as `#8` at all is decided by R-SUBSTRATE below (in v2.6, the substrate clause of R-SPECIFIC). In particular, "unauthorized physical interaction" must not be read as requiring the attacker to be physically present: see R-SUBSTRATE.
 
 ---
 
@@ -1643,7 +1643,7 @@ Check each R-\* rule for applicability:
 | **R-EXEC** | Does FEC execute? If yes, `#7` must be recorded (plus enabling cluster). |
 | **R-SUPPLY** | Is a third-party trust link involved? Is this the TAE? |
 | **R-HUMAN** | Is human psychological manipulation the mechanism? |
-| **R-PHYSICAL** | Is physical access/interference the mechanism? |
+| **R-PHYSICAL** *(retired v2.5 → #8 boundary tests; admission: R-SPECIFIC, substrate)* | Is physical access/interference the mechanism? |
 | **R-CHANNEL** *(V2.4; retired v2.6 → R-SPECIFIC, channel)* | Is the defective logic itself a communication-path control? If yes, `#5`, not `#2`/`#3`. |
 | **R-SUBSTRATE** *(V2.4; retired v2.6 → R-SPECIFIC, substrate)* | Is a physical property the vulnerability, or only the readout channel? Removal test decides. |
 | **R-ABUSE** | Is legitimate functionality being misused with no flaw required? |
@@ -1773,7 +1773,7 @@ Record:
 | **R-EXEC** | FEC Execution | If FEC executes → `#7` MUST be recorded (plus enabling cluster) |
 | **R-SUPPLY** | TAE Placement | `#10` at Trust Acceptance Event where third-party trust is honored |
 | **R-HUMAN** | Human Manipulation | Psychological manipulation → `#9`; subsequent tech steps separate |
-| **R-PHYSICAL** | Physical Access | Physical interaction → `#8`; subsequent tech steps separate |
+| **R-PHYSICAL** *(retired v2.5 → #8 boundary tests)* | Physical Access | Physical interaction → `#8`; subsequent tech steps separate |
 | **R-CHANNEL** *(V2.4; retired v2.6 → R-SPECIFIC, channel)* | Control vs Code Flaw | Defective channel control → `#5`; incidental defect → `#2/#3` |
 | **R-SUBSTRATE** *(V2.4; retired v2.6 → R-SPECIFIC, substrate)* | Property vs Logic | Physical property exploited → `#8`; physical layer as readout only → `#2/#3` |
 | **R-ABUSE** | Function Misuse | No flaw required, legitimate capability abused → `#1` |
