@@ -366,7 +366,7 @@
       return [...seeds].sort(clusterIdSort);
     };
 
-    // ============== CLUSTER DEFINITIONS (genericVuln/attackerView verbatim from tlctc-framework.v2.3.json) ==============
+    // ============== CLUSTER DEFINITIONS (genericVuln/attackerView verbatim from tlctc-framework.v2.6.json) ==============
     const CLUSTER_DEFINITIONS = {
       '#1': { genericVuln: 'The inherent trust, scope, and complexity designed into software functionality and configuration.', attackerView: 'I abuse a functionality, not a coding issue.', devView: 'I must understand and constrain the functional domain of my code. Every feature and configuration surface needs explicit boundaries and misuse assumptions.' },
       '#2': { genericVuln: 'Server-side implementation flaws enable unintended behavior.', attackerView: 'I abuse an implementation flaw in a component acting in a server role.', devView: 'I must apply language-specific secure coding principles for all server-side code.' },
@@ -1708,7 +1708,7 @@
       const exportJSON = () => {
         const data = {
           $schema: 'tlctc-threat-identification-v2',
-          tlctc_version: '2.3',
+          tlctc_version: '2.6',
           metadata: { ...projectMeta, exported: new Date().toISOString() },
           system_model: {
             groups: groups.map(g => ({ id: g.id, name: g.name, type: g.type, position: { x: g.x, y: g.y }, size: { width: g.width, height: g.height }, metadata: g.metadata })),
@@ -1772,7 +1772,7 @@
         const subtitleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         subtitleText.setAttribute('x', '20'); subtitleText.setAttribute('y', '48');
         subtitleText.setAttribute('fill', '#94a3b8'); subtitleText.setAttribute('font-size', '12');
-        subtitleText.textContent = `v${projectMeta.version} | ${projectMeta.sdlcPhase} | TLCTC v2.3 | ${new Date().toLocaleDateString()}`;
+        subtitleText.textContent = `v${projectMeta.version} | ${projectMeta.sdlcPhase} | TLCTC v2.6 | ${new Date().toLocaleDateString()}`;
         titleGroup.appendChild(subtitleText);
         
         clonedSvg.insertBefore(titleGroup, clonedSvg.firstChild);
@@ -2925,7 +2925,7 @@
                               </div>
                               {path.notation && (
                                 <div className={`mt-2 px-2 py-1.5 rounded text-[11px] font-mono leading-snug break-all ${darkMode ? 'bg-slate-900/60 text-slate-300 border border-slate-700' : 'bg-slate-100 text-slate-700 border border-slate-300'}`}
-                                  title="Canonical TLCTC v2.3 attack path notation">{path.notation}</div>
+                                  title="Canonical TLCTC v2.6 attack path notation">{path.notation}</div>
                               )}
                               <p className="text-xs text-slate-400 mt-2 leading-relaxed">{path.desc}</p>
                               <p className="text-xs text-slate-500 mt-1 italic leading-relaxed">{path.example}</p>
