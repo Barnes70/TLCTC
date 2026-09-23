@@ -66,6 +66,10 @@ The procedure in §2 establishes *what to ask*; the decision tree provides a fas
 ```
 Q1  Abusing a DESIGNED function/feature/API/config, no code flaw, no foreign
     binary required?                                  → #1 Abuse of Functions
+    Guard before Q2/Q3 (R-SPECIFIC, channel): is the flawed logic itself a
+    communication-path control (certificate validation, hostname matching,
+    revocation, channel encryption, algorithm negotiation)?
+                                                      → #5 Man in the Middle
 Q2  Exploiting a CODE IMPLEMENTATION FLAW, SERVER-role component?
                                                       → #2 Exploiting Server
 Q3  Exploiting a CODE IMPLEMENTATION FLAW, CLIENT-role component?
@@ -88,7 +92,7 @@ Q10 Exploiting subverted trust in a third-party
     └─ no match → re-examine; one of the above must apply.
 ```
 
-Two ordering consequences are worth noting. First, because Q1 precedes Q7, the LOLBAS pattern naturally resolves to two steps: the legitimate tool invoked through its designed interface stops at Q1 (#1), and the attacker-supplied content that subsequently runs is a second step at Q7 (#7) — the `#1 → #7` shape required by R-EXEC. Second, because Q4 (credential *application*) sits above the lower mechanics, credential *acquisition* is not classified here at all; it is classified by *how* it was acquired (a separate, earlier step) and only its use lands at Q4. When a single observation seems to match two questions, that is the signal to split it into separate steps (Step 6 of §2), each re-entering the tree on its own.
+Three ordering consequences are worth noting. First, because Q1 precedes Q7, the LOLBAS pattern naturally resolves to two steps: the legitimate tool invoked through its designed interface stops at Q1 (#1), and the attacker-supplied content that subsequently runs is a second step at Q7 (#7) — the `#1 → #7` shape required by R-EXEC. Second, because Q4 (credential *application*) sits above the lower mechanics, credential *acquisition* is not classified here at all; it is classified by *how* it was acquired (a separate, earlier step) and only its use lands at Q4. Third, because the tree stops at the first match and Q2/Q3 precede Q5, the channel guard sits in front of the code-flaw questions: a certificate check that never happened is both a code defect and a failed communication-path control, and R-SPECIFIC classifies it under the specific cluster, #5, while a memory-corruption bug that merely sits in TLS code still stops at Q2/Q3. When a single observation seems to match two questions, that is the signal to split it into separate steps (Step 6 of §2), each re-entering the tree on its own.
 
 ## 4. Recording Outcomes in Practice
 

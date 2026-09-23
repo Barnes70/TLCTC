@@ -25,6 +25,10 @@ Q1: Is the attacker abusing a DESIGNED function/feature/API/configuration,
     └── NO ↓
 
 Q2: Is the attacker exploiting a CODE IMPLEMENTATION FLAW on the SERVER side?
+    │   GUARD (R-SPECIFIC, channel) — applies to Q2 and Q3: if the flawed logic
+    │   IS a communication-path control (certificate validation, hostname
+    │   matching, expiry/revocation, channel encryption, algorithm negotiation)
+    │   → #5 Man in the Middle; a defect merely located in TLS code stays #2/#3
     ├── YES → #2 Exploiting Server
     │         (e.g., SQL injection, buffer overflow in server app)
     └── NO ↓
