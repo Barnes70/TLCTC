@@ -55,8 +55,10 @@ Q7: Is FOREIGN CODE being executed?
     │         (Note: if launched via legitimate tool → #1 → #7)
     └── NO ↓
 
-Q8: Does the attack require physical interaction with hardware/facilities?
+Q8: Does the attack exploit physical interaction with hardware/signals, or a
+    physical-layer property of the substrate itself (charge, emission, voltage)?
     ├── YES → #8 Physical Attack
+    │         (Note: attacker proximity is not the test — R-SPECIFIC, substrate)
     └── NO ↓
 
 Q9: Is the attacker psychologically manipulating a human?

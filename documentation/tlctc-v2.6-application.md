@@ -78,8 +78,9 @@ Q6  Overwhelming finite resources by volume or intensity? (a code bug that
     crashes is #2/#3, not #6)                         → #6 Flooding Attack
 Q7  Is FOREIGN CODE executing? (if launched via a legitimate tool, #1 → #7)
                                                       → #7 Malware
-Q8  Requires physical interaction with hardware/signals?
-                                                      → #8 Physical Attack
+Q8  Physical interaction with hardware/signals, or a physical-layer property
+    of the substrate itself (charge, emission, voltage)? Attacker proximity
+    is not the test (R-SPECIFIC, substrate)           → #8 Physical Attack
 Q9  Psychologically manipulating a human?             → #9 Social Engineering
 Q10 Exploiting subverted trust in a third-party
     component/service/update (placed at the
@@ -308,7 +309,7 @@ DCS_c = TTC_P90 / Δt      (containment)
 The core establishes DCS as a velocity relationship; here it is operationalized as a *control-effectiveness KCI* — the full control-indicator treatment deferred from the core. As a KCI, DCS sits between the control-objectives layer and the risk-event layer: it contextualizes raw time-to-detect and time-to-contain (procedural KCIs) by the threat reality (Δt), turning "how fast do we detect and contain?" into "do we act fast *enough* to matter?" Interpretation, for either form:
 
 - **DCS < 1.0** — detection (DCS_d) or containment (DCS_c) completes before the attacker completes the transition; the defender is ahead; the control is effective.
-- **DCS = 1.0** — detection matches attack speed; marginal, with no buffer.
+- **DCS = 1.0** — detection (DCS_d) or containment (DCS_c) matches attack speed; marginal, with no buffer.
 - **DCS > 1.0** — the transition completes before detection or containment; the attacker wins the transition; the control is ineffective at that edge.
 
 Detection alone does not stop a transition: `DCS_d < 1` with `DCS_c > 1` means the step was seen but completed anyway, so the containment form decides whether the control prevents the next step.
