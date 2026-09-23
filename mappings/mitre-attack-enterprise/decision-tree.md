@@ -63,9 +63,13 @@ Q9: Is the attacker psychologically manipulating a human?
     ├── YES → #9 Social Engineering
     └── NO ↓
 
-Q10: Is the attack exploiting trust in a third-party component/service/update?
-     ├── YES → #10 Supply Chain Attack
-     └── NO → Re-examine. One of the above must apply.
+Q10: Is a SUBVERTED third-party component/service/update/partner accepted as
+     authoritative? (v2.6 subversion test — the artifact, or the third party
+     issuing it, was subverted before acceptance)
+     ├── YES → #10 Supply Chain Attack (at the Trust Acceptance Event)
+     └── NO → Re-examine. One of the above must apply. A flaw in a legitimately
+              supplied component is Q2/Q3 (#2/#3), not #10; presenting a partner's
+              or IdP-issued credential is #4 (R-CRED).
 ```
 
 ## The Software Quadrant: #1, #2, #3, and #7
@@ -242,7 +246,7 @@ Execution techniques are dominated by the LOLBAS pattern (`#1 → #7`) — a des
 | Container runtime (T1609, T1610, T1059.013, T1053.007) | `#1 → #7` | Runtime/orchestrator API is `#1`; container content is `#7` |
 | User Execution (T1204*) | `#9 → #7` | Human induction is `#9`; what they run is `#7` |
 | Client exploit (T1203) | `#3 → #7` | Client-role flaw is `#3`; payload that runs is `#7` |
-| Supply-chain pipeline (T1677) | `#1 → #10.2 → #7` | Repo/pipeline injection (`#1`) → TAE in dev sphere (`#10.2`) → runner execution (`#7`) |
+| Supply-chain pipeline (T1677) | `(#1 → #7) \| (#10.2 → #7)` | Poisoning @Org's own pipeline through designed write access (`#1`) → runner execution (`#7`); only a subverted upstream dependency/action is a TAE (`#10.2 → #7`) |
 
 **Common older-mapping errors corrected in v2.1 revalidation:**
 
@@ -370,7 +374,7 @@ Defense Evasion is the largest tactic (215 entries) and the most varied. Most ma
 | Indicator removal via designed admin | `#1` | T1070* Indicator Removal (event logs, history, files) |
 | Hide artifacts via designed file/proc features | `#1` | T1564* Hide Artifacts (hidden attrs, ADS, hidden window, exclusions) |
 | Cloud admin abuse | `#1` | T1535, T1578*, T1666 |
-| Trust subversion (TAE for malicious-signed artifact) | `#1 \| #10` | T1553* Subvert Trust Controls (code signing, MOTW, root CA install) |
+| Trust subversion (TAE for an artifact signed with subverted third-party trust) | `#1 \| #10` | T1553, T1553.001, T1553.002 (stolen or misused vendor signing identity = `#10`; the attacker's own identity = `#1`). Root CA install (T1553.004) and code-signing policy changes (T1553.006) are `#1`; MOTW bypass (T1553.005) is `#1 \| #3` — no third party is subverted |
 | Obfuscation as FEC build feature | `#7` | T1027 sub-techniques: polymorphic, junk insertion, stripped, dynamic API, etc. |
 | Obfuscation reusing system libraries | `#1 \| #7` | T1027 mixed-mode subs |
 | FEC environmental gating | `#7` | T1480* Execution Guardrails, T1678 Delay, T1679 Selective Exclusion (and T1497 sandbox evasion, T1622 debugger evasion) |

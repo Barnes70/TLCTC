@@ -53,6 +53,8 @@ The corpus is the 41 `.afb` files at the pinned commit; the study script downloa
 
 All numbers come from `integrations/attack-flow/study/results.json` (generated 2026-09-18 from the pinned corpus); `results.md` holds every table and the derived path of every flow.
 
+> **Re-run on the v2.6 mapping (2026-09-23).** `results.json`, `results.md` and the three figures were regenerated from the same pinned corpus after a TLCTC v2.6 spot-check of the ATT&CK → TLCTC mapping (T1553.004 and T1553.006 are now `#1`, T1553.005 `#1 | #3`, T1677 `(#1 → #7) | (#10.2 → #7)`, under the v2.6 subversion test for `#10`). The numbers in this report remain those of the 2026-09-18 run against the v2.5 mapping. The re-run changes only these: resolved actions 668 → 670 (70.2% → 70.4%), rule-dependent 124 → 122 (13.0% → 12.8%), `#1` lower bound 511 → 513 actions, `#10` upper bound 9 → 7 actions and 5 → 4 flows, transitions `#1 → #7` 179 → 180, `#7 → #1` 144 → 145 and `#1 → #5` 3 → 4, steps after compression 853 → 852, and the derived paths of two flows (SearchAwesome Adware, Turla Snake Emulation Plan). No conclusion of the report changes.
+
 ### 4.1 The corpus as modelled
 
 **Table 1. Corpus profile.**

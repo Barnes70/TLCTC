@@ -3,7 +3,7 @@
 <text x="142" y="60" text-anchor="end">#1</text>
 <rect x="150" y="44" width="510.0" height="22" fill="#c7e9c0"/>
 <rect x="150" y="44" width="510.0" height="22" fill="#238b45"/>
-<text x="666.0" y="60">40 / 40 flows · 511 actions</text>
+<text x="666.0" y="60">40 / 40 flows · 513 actions</text>
 <text x="142" y="94" text-anchor="end">#2</text>
 <rect x="150" y="78" width="191.2" height="22" fill="#c7e9c0"/>
 <rect x="150" y="78" width="127.5" height="22" fill="#238b45"/>
@@ -37,7 +37,7 @@
 <rect x="150" y="316" width="242.2" height="22" fill="#238b45"/>
 <text x="398.2" y="332">19 / 19 flows · 31 actions</text>
 <text x="142" y="366" text-anchor="end">#10</text>
-<rect x="150" y="350" width="63.8" height="22" fill="#c7e9c0"/>
+<rect x="150" y="350" width="51.0" height="22" fill="#c7e9c0"/>
 <rect x="150" y="350" width="38.2" height="22" fill="#238b45"/>
-<text x="219.8" y="366">3 / 5 flows · 5 actions</text>
+<text x="207.0" y="366">3 / 4 flows · 5 actions</text>
 </svg>
