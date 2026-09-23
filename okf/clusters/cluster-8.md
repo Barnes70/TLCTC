@@ -26,7 +26,11 @@ topology: "bridge"
 
 **Boundary Tests (normative):**
 
-- If the physical step leads to FEC execution → **`#8 → #7`**.
+- If the physical step leads to FEC execution → `#8 → #7`.
+- If a physical-layer property of the substrate is the exploited generic vulnerability → #8 (R-SPECIFIC, substrate).
+- If the physical layer is only the readout channel for a defect in implemented logic → #2/#3 per R-ROLE. Spectre-class transient execution is #2 on this test; Rowhammer is #8.
+- Attacker proximity or possession is not required. Software-triggered exploitation of physical phenomena — Rowhammer, software-controlled voltage or clock glitching — remains #8.
+- Where foreign code executes in order to induce the physical effect, the execution is a separate #7 step per R-EXEC and Axiom VI → `#7 → #8`.
 
 **Topology:** Bridge (Physical → Cyber).
 

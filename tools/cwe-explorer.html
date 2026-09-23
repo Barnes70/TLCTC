@@ -1735,9 +1735,9 @@
     "cwe_id": "CWE-79",
     "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
     "cwe_status": "Stable",
-    "tlctc_mapping": "#2 → #7 | #3",
-    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client",
-    "mapping_argument": "Reflected/Stored XSS exploits a server-side coding flaw (#2) to deliver a script that the browser executes (#7). DOM-based XSS exploits a client-side coding flaw (#3).",
+    "tlctc_mapping": "#2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "Reflected/stored XSS exploits a server-side coding flaw (#2) to deliver a script; DOM-based XSS exploits a client-side coding flaw (#3). In both, the injected script executes in the browser's JavaScript engine — a general-purpose execution engine — so per R-EXEC and the v2.6 data-vs-code boundary each branch appends #7.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2021-25926, CVE-2021-25963, CVE-2021-1879, CVE-2020-3580, CVE-2014-8958, CVE-2017-9764, CVE-2014-5198, CVE-2008-5080, CVE-2006-4308, CVE-2007-5727, CVE-2008-5770, CVE-2008-4730, CVE-2008-5734, CVE-2008-0971, CVE-2008-5249, CVE-2006-3568, CVE-2006-3211, CVE-2006-3295"
   },
@@ -1745,9 +1745,9 @@
     "cwe_id": "CWE-80",
     "cwe_name": "Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#2 → #7 | #3",
-    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client",
-    "mapping_argument": "XSS variant. #2->#7 if server-side injection, #3 if client-side DOM.",
+    "tlctc_mapping": "#2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "XSS variant. #2->#7 if server-side injection, #3->#7 if client-side DOM; in both the script executes in the browser's JavaScript engine (R-EXEC, v2.6 data-vs-code boundary).",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2002-0938, CVE-2002-1495, CVE-2003-1136, CVE-2004-2171"
   },
@@ -1765,9 +1765,9 @@
     "cwe_id": "CWE-82",
     "cwe_name": "Improper Neutralization of Script in Attributes of IMG Tags in a Web Page",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#2 → #7 | #3",
-    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client",
-    "mapping_argument": "XSS variant — script payload in IMG attribute (e.g., onerror). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation (#3) per R-ROLE.",
+    "tlctc_mapping": "#2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "XSS variant — script payload in IMG attribute (e.g., onerror). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation whose script also executes in the browser (#3 -> #7) per R-ROLE and R-EXEC.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2006-3211, CVE-2002-1649, CVE-2002-1803, CVE-2002-1804, CVE-2002-1805, CVE-2002-1806, CVE-2002-1807, CVE-2002-1808"
   },
@@ -1775,9 +1775,9 @@
     "cwe_id": "CWE-83",
     "cwe_name": "Improper Neutralization of Script in Attributes in a Web Page",
     "cwe_status": "Draft",
-    "tlctc_mapping": "#2 → #7 | #3",
-    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client",
-    "mapping_argument": "XSS variant — script in arbitrary tag attributes (onclick, onmouseover, etc.). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation (#3) per R-ROLE.",
+    "tlctc_mapping": "#2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "XSS variant — script in arbitrary tag attributes (onclick, onmouseover, etc.). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation whose script also executes in the browser (#3 -> #7) per R-ROLE and R-EXEC.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2001-0520, CVE-2002-1493, CVE-2002-1965, CVE-2002-1495, CVE-2002-1681, CVE-2004-1935, CVE-2005-0945, CVE-2003-1136"
   },
@@ -1785,9 +1785,9 @@
     "cwe_id": "CWE-84",
     "cwe_name": "Improper Neutralization of Encoded URI Schemes in a Web Page",
     "cwe_status": "Draft",
-    "tlctc_mapping": "#2 → #7 | #3",
-    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client",
-    "mapping_argument": "XSS variant — encoded URI scheme bypass (e.g., javascript: URI in href). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation (#3) per R-ROLE.",
+    "tlctc_mapping": "#2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "XSS variant — encoded URI scheme bypass (e.g., javascript: URI in href). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation whose script also executes in the browser (#3 -> #7) per R-ROLE and R-EXEC.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2005-0563, CVE-2005-2276, CVE-2005-0692, CVE-2002-0117, CVE-2002-0118"
   },
@@ -1795,9 +1795,9 @@
     "cwe_id": "CWE-85",
     "cwe_name": "Doubled Character XSS Manipulations",
     "cwe_status": "Draft",
-    "tlctc_mapping": "#2 → #7 | #3",
-    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client",
-    "mapping_argument": "XSS variant — doubled-character bypass (e.g., '<<script' becoming '<script' after partial filtering). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation (#3) per R-ROLE.",
+    "tlctc_mapping": "#2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "XSS variant — doubled-character bypass (e.g., '<<script' becoming '<script' after partial filtering). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation whose script also executes in the browser (#3 -> #7) per R-ROLE and R-EXEC.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2002-2086, CVE-2000-0116, CVE-2001-1157"
   },
@@ -1805,9 +1805,9 @@
     "cwe_id": "CWE-86",
     "cwe_name": "Improper Neutralization of Invalid Characters in Identifiers in Web Pages",
     "cwe_status": "Draft",
-    "tlctc_mapping": "#2 → #7 | #3",
-    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client",
-    "mapping_argument": "XSS variant — invalid characters in script tag identifier (e.g., '<scrIpt>'). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation (#3) per R-ROLE.",
+    "tlctc_mapping": "#2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "XSS variant — invalid characters in script tag identifier (e.g., '<scrIpt>'). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation whose script also executes in the browser (#3 -> #7) per R-ROLE and R-EXEC.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2004-0595"
   },
@@ -1815,9 +1815,9 @@
     "cwe_id": "CWE-87",
     "cwe_name": "Improper Neutralization of Alternate XSS Syntax",
     "cwe_status": "Draft",
-    "tlctc_mapping": "#2 → #7 | #3",
-    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client",
-    "mapping_argument": "XSS variant — alternate XSS syntax (event handlers, data: URIs, malformed markup). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation (#3) per R-ROLE.",
+    "tlctc_mapping": "#2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "XSS variant — alternate XSS syntax (event handlers, data: URIs, malformed markup). Mapping inherited from CWE-79 parent: server-role injection delivering script for browser execution (#2 -> #7) or client-role DOM manipulation whose script also executes in the browser (#3 -> #7) per R-ROLE and R-EXEC.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2002-0738"
   },
@@ -3707,7 +3707,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Certificate validation is the peer-authenticity control of the communication path. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. Aligns this entry with CWE-940/757/300/311/319, already #5.",
+    "mapping_argument": "Certificate validation is the peer-authenticity control of the communication path. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. Aligns this entry with CWE-940/757/300/311/319, already #5.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2019-12496, CVE-2014-1266, CVE-2021-22909, CVE-2008-4989, CVE-2012-5821, CVE-2009-3046, CVE-2011-0199, CVE-2012-5810, CVE-2012-3446, CVE-2009-2408, CVE-2012-2993, CVE-2012-5822, CVE-2012-5819, CVE-2012-5817, CVE-2010-1378, CVE-2005-3170, CVE-2009-0265, CVE-2003-1229, CVE-2002-0862, CVE-2009-1358"
   },
@@ -3717,7 +3717,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Following a certificate's chain of trust is how the peer-authenticity control resolves to a trust anchor; failing to follow it defeats the control itself. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
+    "mapping_argument": "Following a certificate's chain of trust is how the peer-authenticity control resolves to a trust anchor; failing to follow it defeats the control itself. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2016-2402, CVE-2008-4989, CVE-2012-5821, CVE-2009-3046, CVE-2009-0265, CVE-2009-0124, CVE-2002-0970, CVE-2002-0862"
   },
@@ -3727,7 +3727,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Host mismatch validation binds the presented certificate to the intended endpoint — the peer-authenticity control of the communication path. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
+    "mapping_argument": "Host mismatch validation binds the presented certificate to the intended endpoint — the peer-authenticity control of the communication path. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2012-5810, CVE-2012-5811, CVE-2012-5807, CVE-2012-3446, CVE-2009-2408, CVE-2012-0867, CVE-2010-2074, CVE-2009-4565, CVE-2009-3767, CVE-2012-5806, CVE-2012-2993, CVE-2012-5804, CVE-2012-5824, CVE-2012-5822, CVE-2012-5819, CVE-2012-5817, CVE-2012-5784, CVE-2012-5782, CVE-2012-5780, CVE-2003-0355"
   },
@@ -3737,7 +3737,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Certificate expiration validation is the validity-window component of the peer-authenticity control. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
+    "mapping_argument": "Certificate expiration validation is the validity-window component of the peer-authenticity control. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -3747,7 +3747,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Revocation checking is the withdrawal component of the peer-authenticity control. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
+    "mapping_argument": "Revocation checking is the withdrawal component of the peer-authenticity control. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2011-2014, CVE-2011-0199, CVE-2010-5185, CVE-2009-3046, CVE-2009-0161, CVE-2011-2701, CVE-2011-0935, CVE-2009-1358, CVE-2009-0642, CVE-2008-4679, CVE-2006-4410, CVE-2006-4409"
   },
@@ -4407,7 +4407,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Revocation is checked initially but not re-checked, leaving the peer-authenticity control unenforced for the remainder of the session. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
+    "mapping_argument": "Revocation is checked initially but not re-checked, leaving the peer-authenticity control unenforced for the remainder of the session. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -4687,7 +4687,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server OR Exploiting Client",
-    "mapping_argument": "Algorithmic complexity is explicitly called out in R-FLOOD as #2/#3",
+    "mapping_argument": "Algorithmic complexity is explicitly called out in R-SPECIFIC (capacity) as #2/#3",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2021-32617, CVE-2020-10735, CVE-2020-5243, CVE-2014-1474, CVE-2003-0244, CVE-2003-0364, CVE-2002-1203, CVE-2001-1501, CVE-2004-2527, CVE-2006-6931, CVE-2006-3380, CVE-2006-3379, CVE-2005-2506, CVE-2005-1792"
   },
@@ -4845,9 +4845,9 @@
     "cwe_id": "CWE-426",
     "cwe_name": "Untrusted Search Path",
     "cwe_status": "Stable",
-    "tlctc_mapping": "#10",
-    "tlctc_name": "Supply Chain Attack",
-    "mapping_argument": "Trust in external search paths (DLL hijacking) typically abuses the loading mechanism for third-party components (#10) or is #1->#7.",
+    "tlctc_mapping": "#1 → #7",
+    "tlctc_name": "Abuse of Functions -> Malware",
+    "mapping_argument": "Untrusted search path (DLL/library search-order hijacking): the attacker places their own file in a location the loader searches, and the designed loading function picks it up. No third-party artifact or supplier is subverted, so this is not #10 under the v2.6 subversion test: the loader abuse is #1 and the planted code executing is #7 (R-EXEC). Decision tree Q8 -> NO -> Q9 -> #1 -> #7.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "CVE-1999-1120, CVE-2008-1810, CVE-2007-2027, CVE-2008-3485, CVE-2008-2613, CVE-2008-1319"
   },
@@ -5917,7 +5917,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
-    "mapping_argument": "Displaying a password in clear text is a deliberate interface design choice, and its abuse is observation of what the application chose to render. No physical-layer property is exploited (R-SUBSTRATE) and no code defect is present; the generic vulnerability is the trust and scope designed into the functionality (#1). Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Displaying a password in clear text is a deliberate interface design choice, and its abuse is observation of what the application chose to render. No physical-layer property is exploited (R-SPECIFIC, substrate) and no code defect is present; the generic vulnerability is the trust and scope designed into the functionality (#1). Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -5955,9 +5955,9 @@
     "cwe_id": "CWE-553",
     "cwe_name": "Command Shell in Externally Accessible Directory",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#10",
-    "tlctc_name": "Supply Chain Attack",
-    "mapping_argument": "Command shell present in an externally accessible directory — typically a backdoor artifact (deployed as #10) or a leftover dev tool. Decision tree Q8 -> #10.",
+    "tlctc_mapping": "#1 → #7 | #10 → #7",
+    "tlctc_name": "Abuse of Functions -> Malware OR Supply Chain Attack -> Malware",
+    "mapping_argument": "Command shell reachable in an externally accessible directory. A leftover shell (developer tool, forgotten admin script) is a designed function the attacker invokes — #1, with the commands run through it #7 (R-EXEC). Only where the shell was planted by a subverted supplier or build pipeline and shipped in the product is its acceptance #10 at the Trust Acceptance Event, then #7 (v2.6 subversion test). Decision tree Q8/Q9.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -6327,7 +6327,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Modifying the SSL_CTX after SSL objects are created means the configured verification settings never apply, defeating certificate verification by construction. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. Per decision-tree NOTE 4, \"authentication bypass\" here means PEER authenticity of the channel, not identity authentication of a principal, so NOTE 1's #1 ruling does not govern.",
+    "mapping_argument": "Modifying the SSL_CTX after SSL objects are created means the configured verification settings never apply, defeating certificate verification by construction. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. Per decision-tree NOTE 4, \"authentication bypass\" here means PEER authenticity of the channel, not identity authentication of a principal, so NOTE 1's #1 ruling does not govern.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -6387,7 +6387,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Trusting a certificate without consulting SSL_get_verify_result() means the verification result is never applied — the peer-authenticity control is present but inert. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
+    "mapping_argument": "Trusting a certificate without consulting SSL_get_verify_result() means the verification result is never applied — the peer-authenticity control is present but inert. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -6527,7 +6527,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Omitting the Secure attribute allows a session cookie to be transmitted over an unencrypted connection, placing a credential on a path with no confidentiality control. Per R-CHANNEL (v2.4) the attribute IS the per-cookie channel-encryption control, so its failure is the lack of sufficient control over the communication path (#5); consistent with CWE-319 Cleartext Transmission, already #5, and with the decision-tree enabling-condition table ('cleartext transmission / weak channel encryption -> #5'). The prior #1 rationale classified by substrate ('it is a configuration parameter') rather than by the generic vulnerability. Note CWE-1275 (SameSite) remains #1: SameSite governs cross-site request attachment (CSRF), not channel confidentiality. Reclassified from #1 in the 2026-08-06 R-CHANNEL remainder sweep.",
+    "mapping_argument": "Omitting the Secure attribute allows a session cookie to be transmitted over an unencrypted connection, placing a credential on a path with no confidentiality control. Per R-SPECIFIC (channel) (v2.4) the attribute IS the per-cookie channel-encryption control, so its failure is the lack of sufficient control over the communication path (#5); consistent with CWE-319 Cleartext Transmission, already #5, and with the decision-tree enabling-condition table ('cleartext transmission / weak channel encryption -> #5'). The prior #1 rationale classified by substrate ('it is a configuration parameter') rather than by the generic vulnerability. Note CWE-1275 (SameSite) remains #1: SameSite governs cross-site request attachment (CSRF), not channel confidentiality. Reclassified from #1 in the 2026-08-06 R-SPECIFIC (channel) remainder sweep.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2004-0462, CVE-2008-3663, CVE-2008-3662, CVE-2008-0128"
   },
@@ -8135,9 +8135,9 @@
     "cwe_id": "CWE-912",
     "cwe_name": "Hidden Functionality",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#10",
-    "tlctc_name": "Supply Chain Attack",
-    "mapping_argument": "Backdoor/Trapdoor implies supply chain or insider insertion (#10).",
+    "tlctc_mapping": "#1 | #10",
+    "tlctc_name": "Abuse of Functions OR Supply Chain Attack",
+    "mapping_argument": "Hidden functionality. An undocumented function the vendor shipped (debug mode, maintenance command) that the attacker invokes is #1 — designed functionality, no flaw. Where the function was maliciously inserted by a subverted supplier or build pipeline, the acceptance of the subverted artifact is #10 (v2.6 subversion test). Decision tree Q8/Q9.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "CVE-2022-31260, CVE-2022-3203"
   },
@@ -8237,7 +8237,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "Verifying that a communication channel terminates at the intended endpoint is the peer-authenticity control of that channel. Per R-CHANNEL (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5). This entry is the parent of CWE-940, which was already #5; the previous #1 mapping left parent and child in different clusters. Reclassified from #1 in the 2026-08-06 R-CHANNEL remainder sweep.",
+    "mapping_argument": "Verifying that a communication channel terminates at the intended endpoint is the peer-authenticity control of that channel. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5). This entry is the parent of CWE-940, which was already #5; the previous #1 mapping left parent and child in different clusters. Reclassified from #1 in the 2026-08-06 R-SPECIFIC (channel) remainder sweep.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2022-30319, CVE-2022-22547, CVE-2022-4390, CVE-2012-2292, CVE-2012-5810, CVE-2014-1266, CVE-2000-1218"
   },
@@ -8307,7 +8307,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
-    "mapping_argument": "The channel is established to an incorrectly specified destination (wrong host, port, or topic), so data reaches an endpoint that was never authenticated as the intended peer. Per R-CHANNEL (v2.4) endpoint correctness is constitutive of the communication-path control, not a separate function being abused (#1). Child of CWE-923; aligns with CWE-940. Reclassified from #1 in the 2026-08-06 R-CHANNEL remainder sweep.",
+    "mapping_argument": "The channel is established to an incorrectly specified destination (wrong host, port, or topic), so data reaches an endpoint that was never authenticated as the intended peer. Per R-SPECIFIC (channel) (v2.4) endpoint correctness is constitutive of the communication-path control, not a separate function being abused (#1). Child of CWE-923; aligns with CWE-940. Reclassified from #1 in the 2026-08-06 R-SPECIFIC (channel) remainder sweep.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2013-5211, CVE-1999-0513, CVE-1999-1379"
   },
@@ -9065,9 +9065,9 @@
     "cwe_id": "CWE-1104",
     "cwe_name": "Use of Unmaintained Third Party Components",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#10",
-    "tlctc_name": "Supply Chain Attack",
-    "mapping_argument": "Use of unmaintained third-party components — known-but-unfixed vulnerabilities accumulate; trust-acceptance event is the import. Decision tree Q8 -> #10.",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": "Exploiting Server OR Exploiting Client",
+    "mapping_argument": "Use of unmaintained third-party components — known-but-unfixed flaws accumulate. Not #10 under the v2.6 subversion test: the component was legitimately supplied and not subverted, so exploiting its flaws is classified where they are exploited — #2 or #3 per R-ROLE, or the specific cluster under R-SPECIFIC. Decision tree Q8 -> NO -> Q2.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9377,7 +9377,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: resource isolation on the SoC is enforced by design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: resource isolation on the SoC is enforced by design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2020-8698, CVE-2019-6260"
   },
@@ -9387,7 +9387,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: DMA enablement ordering during boot is sequencing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: DMA enablement ordering during boot is sequencing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9397,7 +9397,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2 | #8",
     "tlctc_name": undefined,
-    "mapping_argument": "The weakness is on-chip debug and test interface access control, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SUBSTRATE the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SUBSTRATE re-audit.",
+    "mapping_argument": "The weakness is on-chip debug and test interface access control, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SPECIFIC (substrate) the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "CVE-2019-18827"
   },
@@ -9407,7 +9407,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: IP-block identifier assignment is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: IP-block identifier assignment is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9417,7 +9417,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: core power-on ordering relative to fabric access control is sequencing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: core power-on ordering relative to fabric access control is sequencing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9447,7 +9447,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: reserved-bit disabling is configuration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: reserved-bit disabling is configuration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9467,7 +9467,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: register default values are configuration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: register default values are configuration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9477,7 +9477,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: the granularity of register-lock address coverage is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: the granularity of register-lock address coverage is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9487,7 +9487,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: a race on write-once attributes is a concurrency defect in the logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: a race on write-once attributes is a concurrency defect in the logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9497,7 +9497,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: write-once bit-field enforcement is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: write-once bit-field enforcement is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9527,7 +9527,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: lock-bit modification prevention is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: lock-bit modification prevention is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2017-6283"
   },
@@ -9537,7 +9537,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: lock behaviour across power state transitions is state-machine logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: lock behaviour across power state transitions is state-machine logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9547,7 +9547,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: lock-bit protection of security-sensitive controls is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: lock-bit protection of security-sensitive controls is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2018-9085, CVE-2014-8273"
   },
@@ -9557,7 +9557,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: debug-mode override of locks is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: debug-mode override of locks is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9587,7 +9587,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: register zeroization is clearing logic that failed to run, not charge that failed to dissipate. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: register zeroization is clearing logic that failed to run, not charge that failed to dissipate. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9617,7 +9617,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
-    "mapping_argument": "Undocumented features and chicken bits are functionality that exists by design but was never intended for use by the caller who invokes it. That is abuse of designed scope (#1), not a physical property (R-SUBSTRATE) and not an implementation defect. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Undocumented features and chicken bits are functionality that exists by design but was never intended for use by the caller who invokes it. That is abuse of designed scope (#1), not a physical property (R-SPECIFIC, substrate) and not an implementation defect. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9627,7 +9627,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #8",
     "tlctc_name": undefined,
-    "mapping_argument": "The weakness is protection of non-volatile secrets during debug, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SUBSTRATE the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SUBSTRATE re-audit.",
+    "mapping_argument": "The weakness is protection of non-volatile secrets during debug, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SPECIFIC (substrate) the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9637,7 +9637,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2 | #8",
     "tlctc_name": undefined,
-    "mapping_argument": "The weakness is internal asset exposure at unsafe debug access levels, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SUBSTRATE the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SUBSTRATE re-audit.",
+    "mapping_argument": "The weakness is internal asset exposure at unsafe debug access levels, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SPECIFIC (substrate) the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "CVE-2019-18827"
   },
@@ -9647,7 +9647,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: finite state machine correctness is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: finite state machine correctness is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9657,7 +9657,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Limited-write non-volatile memories degrade physically with write cycles; the attacker exhausts cell endurance. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Limited-write non-volatile memories degrade physically with write cycles; the attacker exhausts cell endurance. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9667,7 +9667,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Voltage and clock glitching drives the part outside its electrical operating envelope to induce faults. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Voltage and clock glitching drives the part outside its electrical operating envelope to induce faults. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2019-17391, CVE-2021-33478"
   },
@@ -9677,7 +9677,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Semiconductor defects are material flaws in the fabricated device itself. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Semiconductor defects are material flaws in the fabricated device itself. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9707,7 +9707,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: divergence between mirrored regions is coherency logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: divergence between mirrored regions is coherency logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9727,7 +9727,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: fuse value selection is a configuration decision, not a property of the fuse. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: fuse value selection is a configuration decision, not a property of the fuse. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9737,7 +9737,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: comparison granularity is logic; compare CWE-595/597, already #2 | #3. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: comparison granularity is logic; compare CWE-595/597, already #2 | #3. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2019-10482, CVE-2019-10071, CVE-2014-0984"
   },
@@ -9747,7 +9747,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Power draw during comparison correlates with the secret; the emission carries the data. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Power draw during comparison correlates with the secret; the emission carries the data. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2020-12788"
   },
@@ -9757,7 +9757,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#1 | #8",
     "tlctc_name": undefined,
-    "mapping_argument": "Software-exposed interfaces to hardware features (debug, JTAG, register access, voltage/frequency scaling). Abuse of the exposed function from software is #1; where exploitation instead turns on physical contact with the interface, #8. The prior rationale justified the #8 branch as 'physical-vector exploitation requires hardware access', which is the access criterion that R-SUBSTRATE retires: MITRE's own entry for this CWE lists Rowhammer and describes the class as enabling fault injection and side-channel attacks WITHOUT physical access. The #8 branch is retained, but on the correct ground — where a physical-layer property is the exploited generic vulnerability — not on attacker proximity. Corrected in the 2026-08-07 R-SUBSTRATE re-audit.",
+    "mapping_argument": "Software-exposed interfaces to hardware features (debug, JTAG, register access, voltage/frequency scaling). Abuse of the exposed function from software is #1; where exploitation instead turns on physical contact with the interface, #8. The prior rationale justified the #8 branch as 'physical-vector exploitation requires hardware access', which is the access criterion that R-SPECIFIC (substrate) retires: MITRE's own entry for this CWE lists Rowhammer and describes the class as enabling fault injection and side-channel attacks WITHOUT physical access. The #8 branch is retained, but on the correct ground — where a physical-layer property is the exploited generic vulnerability — not on attacker proximity. Corrected in the 2026-08-07 R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "CVE-2019-11157, CVE-2020-8694, CVE-2020-8695, CVE-2020-12912, CVE-2015-0565"
   },
@@ -9767,7 +9767,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: access control over aliased memory regions is address-decode and permission logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: access control over aliased memory regions is address-decode and permission logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9777,7 +9777,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: debug information left uncleared is clearing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: debug information left uncleared is clearing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2021-33080, CVE-2022-31162"
   },
@@ -9787,7 +9787,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security token assignment restriction is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security token assignment restriction is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9797,7 +9797,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: protected memory range overlap handling is address-decode logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: protected memory range overlap handling is address-decode logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2008-7096"
   },
@@ -9807,7 +9807,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Single event upsets are charge disturbances induced by ionising radiation. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Single event upsets are charge disturbances induced by ionising radiation. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9817,7 +9817,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: register interface access control is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: register interface access control is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2014-2915, CVE-2021-3011, CVE-2020-12446, CVE-2015-2150"
   },
@@ -9827,7 +9827,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "The weakness is the absence of physical access control to the device. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "The weakness is the absence of physical access control to the device. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9837,7 +9837,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: control/data channel synchronisation is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: control/data channel synchronisation is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2017-5754"
   },
@@ -9857,7 +9857,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Exploitation requires possession of decommissioned physical media retaining readable charge or magnetic state. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Exploitation requires possession of decommissioned physical media retaining readable charge or magnetic state. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9867,7 +9867,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: policy encoding selection is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: policy encoding selection is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9877,7 +9877,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: privilege consistency between control and data agents is policy logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: privilege consistency between control and data agents is policy logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9897,7 +9897,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security token generation is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security token generation is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9907,7 +9907,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: register initialisation on reset is initialisation logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: register initialisation on reset is initialisation logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9917,7 +9917,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: clearing sensitive data before a state transition is clearing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: clearing sensitive data before a state transition is clearing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2020-12926"
   },
@@ -9925,9 +9925,9 @@
     "cwe_id": "CWE-1273",
     "cwe_name": "Device Unlock Credential Sharing",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#10",
-    "tlctc_name": "Supply Chain Attack",
-    "mapping_argument": "Device unlock credentials are shared across many devices (master key) — once leaked, every device is unlockable. Supply-chain key-management flaw. Decision tree Q8 -> #10.",
+    "tlctc_mapping": "#4",
+    "tlctc_name": "Identity Theft",
+    "mapping_argument": "Device unlock credential shared across many devices (a master unlock key). Obtaining the credential maps to the enabling cluster; presenting it to unlock a device is credential use — #4 (R-CRED). Nothing third-party was subverted, so v2.6 does not place this at #10. Decision tree Q3 -> #4.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9937,7 +9937,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: access control over volatile boot-code memory is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: access control over volatile boot-code memory is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2019-2267"
   },
@@ -9957,7 +9957,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: child-to-parent block connection is integration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: child-to-parent block connection is integration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9977,7 +9977,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Imaging the die recovers design secrets from the physical structure of the integrated circuit. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Imaging the die recovers design secrets from the physical structure of the integrated circuit. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9987,7 +9987,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: running crypto before supporting units are ready is sequencing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: running crypto before supporting units are ready is sequencing logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -9997,7 +9997,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: performing the access-control check after the access is ordering logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: performing the access-control check after the access is ordering logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10007,7 +10007,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: an instruction sequence producing unexpected behaviour is a processor logic defect. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: an instruction sequence producing unexpected behaviour is a processor logic defect. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2021-26339, CVE-1999-1476"
   },
@@ -10017,7 +10017,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": undefined,
-    "mapping_argument": "A component stores data it treats as immutable in memory that remains writable, then reads it back and acts on it. Where the flaw is characterised as the block consuming data a lower-privileged entity was able to modify, the block is in client-role (#3); where it is characterised as the write path being insufficiently protected, the block is in server-role (#2). Per R-SUBSTRATE this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SUBSTRATE re-audit.",
+    "mapping_argument": "A component stores data it treats as immutable in memory that remains writable, then reads it back and acts on it. Where the flaw is characterised as the block consuming data a lower-privileged entity was able to modify, the block is in client-role (#3); where it is characterised as the write path being insufficiently protected, the block is in server-role (#2). Per R-SPECIFIC (substrate) this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10027,7 +10027,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": undefined,
-    "mapping_argument": "Attestation or measurement reporting data is mutable after being recorded. The verifying entity consumes that data to reach a trust decision, which is client-role (#3); the path that allowed the data to be altered is server-role (#2). Which one the CVE is about determines the cluster. Per R-SUBSTRATE this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SUBSTRATE re-audit.",
+    "mapping_argument": "Attestation or measurement reporting data is mutable after being recorded. The verifying entity consumes that data to reach a trust decision, which is client-role (#3); the path that allowed the data to be altered is server-role (#2). Which one the CVE is about determines the cluster. Per R-SPECIFIC (substrate) this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10097,7 +10097,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security identifier decoding is logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security identifier decoding is logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10117,7 +10117,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security identifier conversion is logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security identifier conversion is logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10137,7 +10137,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: the security identifier mechanism is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: the security identifier mechanism is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10157,7 +10157,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #8",
     "tlctc_name": undefined,
-    "mapping_argument": "The weakness is debug component chaining and granularity, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SUBSTRATE the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SUBSTRATE re-audit.",
+    "mapping_argument": "The weakness is debug component chaining and granularity, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SPECIFIC (substrate) the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "CVE-2017-18347, CVE-2020-1791"
   },
@@ -10177,7 +10177,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: race conditions in hardware logic are concurrency defects. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: race conditions in hardware logic are concurrency defects. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10187,7 +10187,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #8",
     "tlctc_name": undefined,
-    "mapping_argument": "The weakness is protection of an alternate hardware interface, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SUBSTRATE the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SUBSTRATE re-audit.",
+    "mapping_argument": "The weakness is protection of an alternate hardware interface, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SPECIFIC (substrate) the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "CVE-2022-38399, CVE-2020-9285, CVE-2020-8004, CVE-2017-18293, CVE-2020-15483"
   },
@@ -10197,7 +10197,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Power, electromagnetic, and acoustic emissions carry secret-correlated information; the cryptography itself is correct. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Power, electromagnetic, and acoustic emissions carry secret-correlated information; the cryptography itself is correct. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2022-35888, CVE-2021-3011, CVE-2019-14353, CVE-2020-27211, CVE-2013-4576, CVE-2020-28368, CVE-2019-18673"
   },
@@ -10207,7 +10207,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #8",
     "tlctc_name": undefined,
-    "mapping_argument": "The weakness is completeness of data removal within a hardware component, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SUBSTRATE the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SUBSTRATE re-audit.",
+    "mapping_argument": "The weakness is completeness of data removal within a hardware component, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SPECIFIC (substrate) the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "CVE-2019-8575"
   },
@@ -10217,7 +10217,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: source identifier inclusion in SoC transactions is protocol logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: source identifier inclusion in SoC transactions is protocol logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10237,7 +10237,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": undefined,
-    "mapping_argument": "Hardware configuration state is saved and restored across a power transition without integrity preservation. On restore the block consumes state that may have been altered while it was suspended, which is client-role (#3); the exposure that permitted the alteration is server-role (#2). Per R-SUBSTRATE this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SUBSTRATE re-audit.",
+    "mapping_argument": "Hardware configuration state is saved and restored across a power transition without integrity preservation. On restore the block consumes state that may have been altered while it was suspended, which is client-role (#3); the exposure that permitted the alteration is server-role (#2). Per R-SPECIFIC (substrate) this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10247,7 +10247,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: memory address decoding is logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: memory address decoding is logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10267,7 +10267,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security attribute translation at a fabric bridge is logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security attribute translation at a fabric bridge is logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10277,7 +10277,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: fabric firewall coverage of mirrored regions is configuration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: fabric firewall coverage of mirrored regions is configuration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10287,7 +10287,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: test/debug logic activation at runtime is software-reachable access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: test/debug logic activation at runtime is software-reachable access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2021-33150, CVE-2021-0146"
   },
@@ -10297,7 +10297,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: write protection of parametric data is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: write protection of parametric data is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2017-8252"
   },
@@ -10307,7 +10307,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: bus controlling capability configuration is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: bus controlling capability configuration is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10317,7 +10317,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: fabric address map overlap permission is configuration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: fabric address map overlap permission is configuration logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2009-4419"
   },
@@ -10327,7 +10327,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: fabric bridge access control is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: fabric bridge access control is access-control logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2019-6260"
   },
@@ -10337,7 +10337,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: absent security features in on-chip fabrics is a design omission. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: absent security features in on-chip fabrics is a design omission. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10347,7 +10347,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Electromagnetic fault injection couples energy into the device to corrupt computation. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Electromagnetic fault injection couples energy into the device to corrupt computation. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2020-27211"
   },
@@ -10357,7 +10357,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: protection of outbound error and alert signals is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: protection of outbound error and alert signals is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10387,7 +10387,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #8",
     "tlctc_name": undefined,
-    "mapping_argument": "The weakness is management of sensitive trace data, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SUBSTRATE the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SUBSTRATE re-audit.",
+    "mapping_argument": "The weakness is management of sensitive trace data, which is access-control or exposure logic and therefore #2 where the interface is reachable from software or firmware. Where exploitation instead requires physical contact with the debug or test interface, the enabling generic vulnerability is the physical accessibility of that interface (#8 — its definition covers \"physical interaction with ... interfaces\"). Per R-SPECIFIC (substrate) the logic defect alone does not make it #8, and per the same rule attacker proximity alone does not make it #8 either; the two readings correspond to genuinely different attacks, so this resolves at CVE or instance level. Re-examined in the 2026-08-07 R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10417,7 +10417,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": undefined,
-    "mapping_argument": "Without an immutable root of trust, the boot chain cannot anchor verification of the stages it loads, so the platform consumes code or data it cannot authenticate — client-role (#3). Where the instance turns instead on a mutable or writable trust anchor being reachable from software, that is server-role (#2). Per R-SUBSTRATE this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SUBSTRATE re-audit.",
+    "mapping_argument": "Without an immutable root of trust, the boot chain cannot anchor verification of the stages it loads, so the platform consumes code or data it cannot authenticate — client-role (#3). Where the instance turns instead on a mutable or writable trust anchor being reachable from software, that is server-role (#2). Per R-SPECIFIC (substrate) this is a defect in implemented logic and not a physical-layer property, so #8 does not apply. Per R-ROLE (v2.4) the role follows call direction at the interface, and here — unlike the register, fabric and access-control families, where software issues a transaction and the block services it — the direction is not fixed by the architecture. Resolved at CVE or instance level. Refined from #2 in the 2026-08-07 role review of the R-SPECIFIC (substrate) re-audit.",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10435,9 +10435,9 @@
     "cwe_id": "CWE-1328",
     "cwe_name": "Security Version Number Mutable to Older Versions",
     "cwe_status": "Draft",
-    "tlctc_mapping": "#10",
-    "tlctc_name": "Supply Chain Attack",
-    "mapping_argument": "Security version number can be downgraded — attacker reverts to an older, vulnerable version that still passes signature checks. Decision tree Q8 -> #10 (downgrade as a supply-chain trust-acceptance attack).",
+    "tlctc_mapping": "#1",
+    "tlctc_name": "Abuse of Functions",
+    "mapping_argument": "Security version number mutable to older versions: the attacker rolls a device back to an older, genuine, correctly signed image that still passes signature checks. The rolled-back image is not subverted, so this is not #10 under the v2.6 subversion test; the rollback abuses the designed update function — #1. Exploiting the flaws of the older image afterwards is a separate #2/#3 step. Decision tree Q8 -> NO -> Q9 -> #1.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10457,7 +10457,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Data remanence is the persistence of physical charge or magnetic state after a logical erase. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Data remanence is the persistence of physical charge or magnetic state after a logical erase. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2019-8575"
   },
@@ -10467,7 +10467,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: resource isolation in a network-on-chip is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: resource isolation in a network-on-chip is design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2021-33096"
   },
@@ -10477,7 +10477,7 @@
     "cwe_status": "Stable",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Induced faults cause the processor to skip instructions; the fault is a physical perturbation. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Induced faults cause the processor to skip instructions; the fault is a physical perturbation. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2019-15894"
   },
@@ -10497,7 +10497,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Error injection perturbs hardware redundancy mechanisms by inducing physical fault conditions. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Error injection perturbs hardware redundancy mechanisms by inducing physical fault conditions. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10515,9 +10515,9 @@
     "cwe_id": "CWE-1336",
     "cwe_name": "Improper Neutralization of Special Elements Used in a Template Engine",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#2 → #7 | #3 → #7",
-    "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
-    "mapping_argument": "Sanitization flaw allowing attacker input to be evaluated by a template engine. Server-Side Template Injection (#2, e.g., Jinja2/Velocity) or Client-Side Template Injection (#3, e.g., AngularJS) per R-ROLE. Per R-EXEC, template-engine evaluation executes attacker code — append → #7.",
+    "tlctc_mapping": "#2 | #3 | #2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server OR Exploiting Client OR Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "Sanitization flaw allowing attacker input to be evaluated by a template engine: Server-Side Template Injection (#2, e.g. Jinja2/Velocity) or Client-Side Template Injection (#3, e.g. AngularJS) per R-ROLE. Under the v2.6 data-vs-code boundary template syntax is data unless it reaches a code-evaluation call: injection that only reads or alters rendered data stays #2/#3; where it reaches code evaluation, append #7 (R-EXEC).",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2024-34359, CVE-2017-16783, CVE-2020-9437, CVE-2020-12790, CVE-2021-21244, CVE-2020-4027, CVE-2020-26282, CVE-2020-1961, CVE-2019-19999, CVE-2018-20465"
   },
@@ -10527,7 +10527,7 @@
     "cwe_status": "Draft",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Thermal conditions outside the safe envelope are exploited to induce misbehaviour. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Thermal conditions outside the safe envelope are exploited to induce misbehaviour. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10567,7 +10567,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "Behaviour outside the rated temperature range is a physical characteristic of the device. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "Behaviour outside the rated temperature range is a physical characteristic of the device. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10575,9 +10575,9 @@
     "cwe_id": "CWE-1357",
     "cwe_name": "Reliance on Insufficiently Trustworthy Component",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#10",
-    "tlctc_name": "Supply Chain Attack",
-    "mapping_argument": "Reliance on a third-party component whose trustworthiness is insufficient (untracked provenance, abandonware, suspicious supply chain). Trust-acceptance event when the component is imported. Decision tree Q8 -> #10.",
+    "tlctc_mapping": "#10 | #2 | #3",
+    "tlctc_name": "Supply Chain Attack OR Exploiting Server OR Exploiting Client",
+    "mapping_argument": "Reliance on a component whose trustworthiness is insufficient (untracked provenance, abandonware, suspicious supply chain). Context-dependent under the v2.6 subversion test: where the component or its supplier was subverted and the subverted artifact is accepted as authoritative, #10 at the Trust Acceptance Event; where it is merely flawed, the flaw is classified where it is exploited — #2 or #3 per R-ROLE. Decision tree Q8.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2020-9054"
   },
@@ -10587,7 +10587,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#8",
     "tlctc_name": "Physical Attack",
-    "mapping_argument": "The weakness is mishandling of physical and environmental operating conditions generally. Per R-SUBSTRATE the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SUBSTRATE re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
+    "mapping_argument": "The weakness is mishandling of physical and environmental operating conditions generally. Per R-SPECIFIC (substrate) the physical-layer property is itself the exploited generic vulnerability, not merely the readout channel: applying the removal test, if the physical property behaved ideally no flaw would remain. Confirmed #8 in the 2026-08-07 R-SPECIFIC (substrate) re-audit. Note that attacker proximity is not the criterion — software-triggered exploitation of a physical property (Rowhammer, CLKSCREW-class voltage/clock manipulation) is equally #8.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2019-17391"
   },
@@ -10675,9 +10675,9 @@
     "cwe_id": "CWE-1395",
     "cwe_name": "Dependency on Vulnerable Third-Party Component",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#10",
-    "tlctc_name": "Supply Chain Attack",
-    "mapping_argument": "Dependency on a third-party component with known vulnerabilities — the trust-acceptance event imports the vulnerability into the product. Decision tree Q8 -> #10.",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": "Exploiting Server OR Exploiting Client",
+    "mapping_argument": "Dependency on a third-party component with known vulnerabilities. Not #10 under the v2.6 subversion test (R-SUPPLY; core §4 #10): the component was legitimately supplied and nothing upstream was subverted, so the known flaw is classified where it is exploited — #2 or #3 per R-ROLE, or the specific cluster under R-SPECIFIC (e.g. #5 for a broken certificate check). Log4Shell is the reference case (#2). Decision tree Q8 -> NO -> Q2.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10735,9 +10735,9 @@
     "cwe_id": "CWE-1427",
     "cwe_name": "Improper Neutralization of Input Used for LLM Prompting",
     "cwe_status": "Incomplete",
-    "tlctc_mapping": "#2",
-    "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Prompt injection — server-side LLM endpoint concatenates attacker input into the prompt, letting the attacker override system instructions. Decision tree Q2 -> #2.",
+    "tlctc_mapping": "#1",
+    "tlctc_name": "Abuse of Functions",
+    "mapping_argument": "Prompt injection — attacker-controlled natural-language input placed where a model or agent acts on it (directly, or indirectly through content the agent reads). v2.6 (C11): acting on natural-language input is the model's designed function, no implementation flaw is required, and natural-language instructions are not Foreign Executable Content, so this is #1. Where the agent then executes code or commands the attacker controls, add #7 (#1 -> #7, R-EXEC); a flaw in the model-serving or agent software is #2/#3; a subverted third-party model, dataset or tool is #10. Consistent with the MITRE ATLAS mapping. Decision tree Q9 -> #1.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2023-32786, CVE-2024-5184, CVE-2024-5565"
   },
@@ -10757,7 +10757,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security-relevant feedback for unexecuted operations is interface design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: security-relevant feedback for unexecuted operations is interface design logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },
@@ -10767,7 +10767,7 @@
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SUBSTRATE the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: routing intermediate cryptographic state to module outputs is a design decision about what the interface exposes. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SUBSTRATE re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: routing intermediate cryptographic state to module outputs is a design decision about what the interface exposes. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
   },

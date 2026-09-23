@@ -1,7 +1,7 @@
 # MITRE ATLAS → TLCTC Mapping
 
 Maps every technique of **MITRE ATLAS** (Adversarial Threat Landscape for AI Systems: adversary
-tactics and techniques against AI-enabled systems) to **TLCTC v2.5** threat clusters, in the same
+tactics and techniques against AI-enabled systems) to **TLCTC v2.6** threat clusters, in the same
 record shape and notation as the [ATT&CK Enterprise mapping](../mitre-attack-enterprise/). ATLAS
 answers "what did the adversary do to the AI system?"; TLCTC answers "which generic vulnerability
 did that step exploit?", which is what decides the control.
@@ -80,11 +80,11 @@ development, AI attack staging on the attacker's side, and business-side harms).
 - **Degradation is an outcome.** Poisoned models, eroded datasets, corrupted context and leaked
   training data are Data Risk Events (`Ii`, `If`, `Av`, `C`) produced by a #1 or #10 step, never
   clusters (Axiom III). ATLAS's *External Harms* are Business Risk Events and map to N/A.
-- **Denial and cost follow R-FLOOD.** Volume or resource-intensive inputs that exhaust finite
+- **Denial and cost follow R-SPECIFIC (capacity).** Volume or resource-intensive inputs that exhaust finite
   capacity are #6; a metered or expensive function driven against its purpose below that point
   is #1.
 - **Physical inputs to sensors are #1, not #8**, unless the attacker manipulates the system's own
-  hardware (R-SUBSTRATE): a sticker on a sign exploits the designed perception function.
+  hardware (R-SPECIFIC, substrate): a sticker on a sign exploits the designed perception function.
 
 ## Examples
 

@@ -16,7 +16,7 @@ topology: "internal"
 
 **Definition:** An attacker abuses the inherent ability of a software environment to execute foreign executable content, including malicious code or legitimate tools executing attacker-controlled code.
 
-**Scope:** Execution of **Foreign Executable Content (FEC)** through the environment’s designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into interpreters), including dual-use tooling when it executes attacker-controlled FEC.
+**Scope:** Execution of **Foreign Executable Content (FEC)** through the environment’s designed execution capabilities (binaries, scripts, macros, modules, or attacker-controlled commands fed into general-purpose interpreters (shells, script hosts)), including dual-use tooling when it executes attacker-controlled FEC.
 
 **Generic Vulnerability:** The software environment's designed capability to execute potentially untrusted foreign code.
 
@@ -26,10 +26,11 @@ topology: "internal"
 
 **Boundary Tests (normative):**
 
-- If **FEC executes** → **#7** (per **R-EXEC**), even if execution is **in-memory** and no files are created.
-- If legitimate function misuse enables FEC execution → **`#1 → #7`**.
-- If exploit payload triggers an implementation flaw and results in FEC execution → **`#2/#3 → #7`**.
-- If an implementation flaw is exploited but no FEC executes → **do not add #7**.
+- If FEC executes → #7 (R-EXEC), even if execution is in-memory and no files are created.
+- If legitimate function misuse enables FEC execution → `#1 → #7`.
+- If an exploit payload triggers an implementation flaw and results in FEC execution → `#2/#3 → #7`.
+- If an implementation flaw is exploited but no FEC executes → do not add #7.
+- Domain-specific expression languages are data unless they cause execution in a general-purpose engine; injection that only reads or writes data is #2/#3 without #7.
 
 **Explicit SQLi clarification (non-normative but recommended):**
 

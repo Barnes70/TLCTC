@@ -50,6 +50,19 @@
       "minItems": 1,
       "items": { "$ref": "#/definitions/rule_def" }
     },
+    "fec": {
+      "type": "object",
+      "description": "Foreign Executable Content and the data-vs-code boundary (v2.6): what counts as execution for R-EXEC.",
+      "additionalProperties": false,
+      "required": ["definition", "general_purpose_engines", "data_languages", "boundary"],
+      "properties": {
+        "definition": { "type": "string" },
+        "general_purpose_engines": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "data_languages": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "boundary": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
     "data_risk_events": {
       "type": "object",
       "description": "Data Risk Event (DRE) type codes as a refinement tree (v2.5): three parent properties, two admitted refinements, and the stopping rule that admits them. Outcome annotations only — never clusters, never classification inputs (Axiom III).",
@@ -82,7 +95,7 @@
     },
     "system_risk_event": {
       "type": "object",
-      "description": "The System Risk Event. The framework defines one type, System Compromise (loss of control, reached only through cluster steps, the cyber pivot); other events at the same altitude with no actor holding capability (System Failure foremost) are operational risk and are named only to place the boundary.",
+      "description": "The System Risk Event. The framework defines one type, System Compromise (loss of control, reached only through cluster steps, the cyber pivot); other events at the same altitude that serve no attacker's objective (System Failure foremost) are operational risk and are named only to place the boundary.",
       "additionalProperties": false,
       "required": ["definition", "types"],
       "properties": {
@@ -90,6 +103,21 @@
         "types": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "$ref": "#/definitions/sre_type_def" } },
         "other_system_altitude_events": { "type": "object", "additionalProperties": false, "required": ["description", "examples"], "properties": { "description": { "type": "string" }, "examples": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/sre_type_def" } } } },
         "notes": { "type": "string" }
+      }
+    },
+    "changes_from_v2_5": {
+      "type": "array",
+      "description": "v2.6 change record: one entry per change item, traced to the review point it answers.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "review_point", "summary", "affects"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^C\\d+$" },
+          "review_point": { "type": "string" },
+          "summary": { "type": "string" },
+          "affects": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        }
       }
     },
     "extensions": {

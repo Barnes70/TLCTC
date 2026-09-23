@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
  * build-misp-taxonomy.js — Generate the `tlctc` MISP taxonomy (machinetag.json)
- * from the canonical TLCTC v2.5 framework dictionary.
+ * from the canonical TLCTC framework dictionary (v2.6).
  *
  * Usage:  node scripts/build-misp-taxonomy.js            (write the file)
  *         node scripts/build-misp-taxonomy.js --check    (exit 1 if the committed file differs)
@@ -22,11 +22,11 @@ const path = require('path');
 const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..');
-const DICT = path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.5.json');
+const DICT = path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.6.json');
 const OUT = path.join(ROOT, 'integrations/misp/taxonomies/tlctc/machinetag.json');
 
 const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
-const TAXONOMY_VERSION = 1;
+const TAXONOMY_VERSION = 2;
 
 // Fixed value slugs. Derived from the canonical names and cross-checked in
 // buildTaxonomy(); a mismatch means a cluster was renamed, which is a breaking
@@ -71,7 +71,7 @@ function entryDescription(cluster) {
 const DESCRIPTION =
   'TLCTC (Top Level Cyber Threat Clusters) is a cause-oriented cyber threat taxonomy: exactly ten ' +
   'non-overlapping clusters, each defined by the generic vulnerability an attacker exploits rather than ' +
-  'by the outcome of the attack. Tags follow TLCTC v2.5. Use cluster= for every cluster whose generic ' +
+  'by the outcome of the attack. Tags follow TLCTC v2.6. Use cluster= for every cluster whose generic ' +
   'vulnerability was exploited at some step of the attack path (one tag per distinct cluster observed) ' +
   'and entry-cluster= for the cluster of the first step.';
 

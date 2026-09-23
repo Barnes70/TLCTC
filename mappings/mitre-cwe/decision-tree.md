@@ -26,14 +26,14 @@ Q1: Is this CWE too abstract to determine a single generic vulnerability?
 Q2: Is this a CODE IMPLEMENTATION FLAW?
     (buffer overflow, injection, type confusion, use-after-free, etc.)
     │
-    │   GUARD (R-CHANNEL / R-FLOOD) — before answering YES, ask:
+    │   GUARD (R-SPECIFIC: channel / capacity) — before answering YES, ask:
     │   is the defective logic ITSELF a security control whose failure
     │   constitutes another cluster's generic vulnerability?
     │   If so, that cluster wins; Q2 is the residual test, not the first one.
     │     • communication-path control (cert validation, chain of trust,
     │       hostname match, expiry/revocation, channel encryption,
-    │       algorithm negotiation)              → #5   (R-CHANNEL, skip to Q4)
-    │     • capacity/throttling control          → #6   (R-FLOOD, skip to Q5)
+    │       algorithm negotiation)              → #5   (R-SPECIFIC, channel; skip to Q4)
+    │     • capacity/throttling control          → #6   (R-SPECIFIC, capacity; skip to Q5)
     │   The defect must be CONSTITUTIVE of the control, not incidental to it:
     │   memory corruption in a TLS parser is still Q2 → #2|#3, because the
     │   exploited generic vulnerability there is the code flaw, not the control.
@@ -44,6 +44,9 @@ Q2: Is this a CODE IMPLEMENTATION FLAW?
     │         └── Could be either → #2 | #3 (context-dependent)
     │
     │         Follow-up: Can the flaw enable code execution?
+    │         (v2.6 data-vs-code boundary: SQL, LDAP, XPath, GraphQL, template
+    │          syntax and configuration languages are DATA unless they reach a
+    │          general-purpose engine — SQLi reading a table stays #2)
     │         ├── YES → append → #7 (e.g., #2 → #7)
     │         └── NO → stop here
     └── NO ↓
@@ -77,9 +80,9 @@ Q4: Is this a COMMUNICATION PATH weakness?
     ├── YES → #5 Man in the Middle
     └── NO ↓
 
-    NOTE 3 — This question is reachable from the Q2 guard (R-CHANNEL).
+    NOTE 3 — This question is reachable from the Q2 guard (R-SPECIFIC, channel).
     Peer-authenticity controls are communication-path controls even though
-    the weakness reads as "the code failed to validate": per R-CHANNEL the
+    the weakness reads as "the code failed to validate": per the channel clause of R-SPECIFIC the
     generic vulnerability is the lack of sufficient control over the
     communication path (#5), not the code flaw (#2/#3). This covers
     CWE-295/296/297/298/299/370 and the OpenSSL-specific CWE-593/599, and
@@ -88,11 +91,11 @@ Q4: Is this a COMMUNICATION PATH weakness?
     or parsing bug in a TLS implementation, where the exploited generic
     vulnerability is the code flaw and the control is merely its location.
 
-    NOTE 4 — R-CHANNEL vs NOTE 1 (CWE-593). "Authentication bypass" in a
+    NOTE 4 — R-SPECIFIC (channel) vs NOTE 1 (CWE-593). "Authentication bypass" in a
     channel-security CWE means PEER authenticity (is the far end who it
     claims to be), not identity authentication of a principal. NOTE 1's
     #1 ruling governs the latter only. CWE-593 defeats certificate
-    verification by construction, so R-CHANNEL applies → #5.
+    verification by construction, so R-SPECIFIC (channel) applies → #5.
 
 Q5: Is this a RESOURCE EXHAUSTION or CAPACITY weakness?
     (uncontrolled resource consumption, asymmetric resource usage, missing rate limiting)
@@ -111,7 +114,7 @@ Q7: Is a PHYSICAL-LAYER PROPERTY OF THE SUBSTRATE the exploited
     (charge, voltage, electromagnetic emission, temperature,
      emission-borne timing, wear, material state)
     │
-    │   GUARD (R-SUBSTRATE) — this question is NOT "is this CWE about hardware?"
+    │   GUARD (R-SPECIFIC, substrate) — this question is NOT "is this CWE about hardware?"
     │   Hardware is a location, not a cause. Apply the removal test:
     │   if the physical property behaved ideally, is there still a flaw?
     │     • "No, nothing remains"          → #8   (the property IS the vulnerability)
@@ -126,13 +129,23 @@ Q7: Is a PHYSICAL-LAYER PROPERTY OF THE SUBSTRATE the exploited
     │         the execution as its own step per R-EXEC (e.g. #7 → #8).
     └── NO ↓
 
-Q8: Is this a TRUST RELATIONSHIP weakness with third-party components?
-    (dependency confusion, unsigned updates, unverified package sources)
-    ├── YES → #10 Supply Chain Attack
+Q8: Does this weakness let a SUBVERTED third-party artifact or supplier be
+    accepted as authoritative? (v2.6 subversion test)
+    (dependency confusion, unsigned or unverified updates, unverified package
+     sources, compromised build or signing trust, implants)
+    ├── YES → #10 Supply Chain Attack (placed at the Trust Acceptance Event)
     └── NO ↓
+    NOTE — A flaw in a legitimately supplied component is NOT #10: nothing
+    upstream was subverted, so it is classified where it is exploited — Q2
+    (R-ROLE) or the specific cluster (R-SPECIFIC). Log4Shell is #2
+    (CWE-1395, CWE-1104). Falsifier: remove the attacker's subversion of the
+    third party, not the third party itself; if the attack still works, it
+    was never #10.
 
 Q9: Is this a LOGIC, CONFIGURATION, or SCOPE weakness?
-    (privilege escalation via design, API misuse, missing authorization, default credentials)
+    (privilege escalation via design, API misuse, missing authorization, default credentials,
+     prompt injection into an LLM or agent — v2.6: #1, and #1 → #7 when the agent
+     executes attacker-controlled code, CWE-1427)
     ├── YES → #1 Abuse of Functions
     └── NO → Re-examine. One of the above must apply.
 ```
@@ -173,7 +186,8 @@ Per R-EXEC, if a weakness enables foreign code execution, the mapping must inclu
 |---------------|---------|-----------|
 | Buffer overflow (server) with RCE | `#2 → #7` | Code flaw enables unintended execution |
 | XSS (reflected/stored) | `#2 → #7` | Server flaw delivers script to client for execution |
-| XSS (DOM-based) | `#3` | Client-side flaw; script runs in client context |
+| XSS (DOM-based) | `#3 → #7` | Client-side flaw; the script executes in the browser's JavaScript engine (v2.6) |
+| Template injection | `#2`/`#3`, `→ #7` only if code evaluation is reached | Template syntax is data unless it reaches a code-evaluation call (v2.6 data-vs-code boundary) |
 | Deserialization (server) | `#2 → #7` | Server-side flaw enables arbitrary code execution |
 | Code injection via API | `#1 → #7` | Designed function abused to execute foreign code |
 
@@ -211,8 +225,8 @@ Before finalizing a CWE mapping, verify:
 
 - [ ] **Concrete weakness** — Not a category, view, list, or deprecated entry (else Prohibited)
 - [ ] **Specific enough** — Can determine a single generic vulnerability (or explicit alternatives)
-- [ ] **Q2 guard applied** — Before classifying as a code flaw, confirm the defective logic is not itself a communication-path control (`#5`, R-CHANNEL) or a capacity/throttling control (`#6`, R-FLOOD). Q2 is the residual test
-- [ ] **Q7 guard applied** — `#8` requires that a physical-layer *property* be the exploited generic vulnerability (R-SUBSTRATE). "The flaw is in hardware" is not sufficient, and attacker proximity is not the test
+- [ ] **Q2 guard applied** — Before classifying as a code flaw, confirm the defective logic is not itself a communication-path control (`#5`, R-SPECIFIC, channel) or a capacity/throttling control (`#6`, R-SPECIFIC, capacity). Q2 is the residual test
+- [ ] **Q7 guard applied** — `#8` requires that a physical-layer *property* be the exploited generic vulnerability (R-SPECIFIC, substrate). "The flaw is in hardware" is not sufficient, and attacker proximity is not the test
 - [ ] **Role considered** — If code flaw, is it server or client? If unclear, mark `#2 | #3`
 - [ ] **R-EXEC respected** — If the weakness enables foreign code execution, `→ #7` is included (e.g., code injection, deserialization, template injection, RFI, dynamic class loading from untrusted source)
 - [ ] **R-CRED respected** — Authentication-logic bypass = `#1`; credential application (point-of-use) = `#4`; credential acquisition — including cleartext/weakly-hashed credential storage — takes the cluster of the access vector, not `#4` (v2.3.1)

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T19:17:03Z",
+  "generated": "2026-09-23T09:02:03Z",
   "corpus": {
     "repo": "center-for-threat-informed-defense/attack-flow",
     "commit": "0bd4a2d45dceacce499d7e94b85f7966e70f5399",
@@ -9,7 +9,7 @@
   "attack_mapping": {
     "file": "mappings/mitre-attack-enterprise/tlctc-enterprise-attack.json",
     "techniques": 909,
-    "tlctc_version": "2.3"
+    "tlctc_version": "2.6"
   },
   "tables": {
     "flows": 41,
@@ -55,11 +55,11 @@
     },
     "action_status": {
       "resolved": {
-        "n": 668,
+        "n": 670,
         "denominator": 952
       },
       "rule_dependent": {
-        "n": 124,
+        "n": 122,
         "denominator": 952
       },
       "preparation": {
@@ -78,7 +78,7 @@
     "frequency": {
       "#1": {
         "actions_certain": {
-          "n": 511,
+          "n": 513,
           "denominator": 952
         },
         "actions_upper": {
@@ -244,7 +244,7 @@
           "denominator": 952
         },
         "actions_upper": {
-          "n": 9,
+          "n": 7,
           "denominator": 952
         },
         "flows_certain": {
@@ -252,7 +252,7 @@
           "denominator": 41
         },
         "flows_upper": {
-          "n": 5,
+          "n": 4,
           "denominator": 41
         }
       }
@@ -295,12 +295,12 @@
       {
         "from": "#1",
         "to": "#7",
-        "n": 179
+        "n": 180
       },
       {
         "from": "#7",
         "to": "#1",
-        "n": 144
+        "n": 145
       },
       {
         "from": "#4",
@@ -343,14 +343,14 @@
         "n": 4
       },
       {
-        "from": "#10",
-        "to": "#7",
+        "from": "#1",
+        "to": "#5",
         "n": 4
       },
       {
-        "from": "#1",
-        "to": "#5",
-        "n": 3
+        "from": "#10",
+        "to": "#7",
+        "n": 4
       },
       {
         "from": "#7",
@@ -373,9 +373,9 @@
       "#1|#2": 4,
       "#1|#3": 2,
       "#1|#4": 43,
-      "#1|#5": 3,
+      "#1|#5": 4,
       "#1|#6": 0,
-      "#1|#7": 179,
+      "#1|#7": 180,
       "#1|#8": 0,
       "#1|#9": 1,
       "#1|#10": 0,
@@ -429,7 +429,7 @@
       "#6|#8": 0,
       "#6|#9": 0,
       "#6|#10": 0,
-      "#7|#1": 144,
+      "#7|#1": 145,
       "#7|#2": 2,
       "#7|#3": 2,
       "#7|#4": 12,
@@ -472,7 +472,7 @@
     },
     "compression": {
       "actions_total": 952,
-      "steps_compressed_total": 853,
+      "steps_compressed_total": 852,
       "mean_actions_per_step": 1.12,
       "flows_fully_classified": {
         "n": 0,
@@ -887,13 +887,13 @@
         "flow": "SearchAwesome Adware",
         "scope": "malware",
         "actions": 11,
-        "steps": 13,
-        "unresolved": 3,
+        "steps": 12,
+        "unresolved": 2,
         "entry": "#9",
-        "notation": "#9 → #7 → #1 → ? → #5 → ? → #1 → ? → #1 → #7 → #1 → #4 → #1",
+        "notation": "#9 → #7 → #1 → #5 → ? → #1 → ? → #1 → #7 → #1 → #4 → #1",
         "status": {
-          "resolved": 7,
-          "rule_dependent": 3,
+          "resolved": 8,
+          "rule_dependent": 2,
           "preparation": 1
         }
       },
@@ -1015,12 +1015,12 @@
         "scope": "emulation-plan",
         "actions": 74,
         "steps": 72,
-        "unresolved": 9,
+        "unresolved": 8,
         "entry": "#3",
-        "notation": "#3 → #7 → #1 → #7 → #9 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #7 → #1 → #7 → ? → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #1 → #4 → #1 → #4 → #1 → #7 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #4 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → … → #1 → … → #7 → ?",
+        "notation": "#3 → #7 → #1 → #7 → #9 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #1 → #4 → #1 → #4 → #1 → #7 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #4 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → … → #1 → … → #7 → ?",
         "status": {
-          "resolved": 62,
-          "rule_dependent": 12
+          "resolved": 63,
+          "rule_dependent": 11
         }
       },
       {
@@ -28106,8 +28106,8 @@
         "with_execution_start": 0
       },
       "action_status": {
-        "resolved": 7,
-        "rule_dependent": 3,
+        "resolved": 8,
+        "rule_dependent": 2,
         "preparation": 1
       },
       "clusters_certain": [
@@ -28155,12 +28155,9 @@
           },
           {
             "action_id": "638fbd7e-e680-4360-86d5-29454f354071",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [
-              "#1",
-              "#10"
-            ],
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
@@ -28272,22 +28269,9 @@
             "implied": false,
             "parallel_hint": false,
             "execution_start": null,
-            "count": 1,
+            "count": 2,
             "action_ids": [
-              "91742a64-73d0-4302-9b43-5ae374a7516a"
-            ]
-          },
-          {
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [
-              "#1",
-              "#10"
-            ],
-            "parallel_hint": false,
-            "execution_start": null,
-            "count": 1,
-            "action_ids": [
+              "91742a64-73d0-4302-9b43-5ae374a7516a",
               "638fbd7e-e680-4360-86d5-29454f354071"
             ]
           },
@@ -28400,11 +28384,11 @@
         "notes": [],
         "has_cycle": false
       },
-      "notation_raw": "#9 → #7 → #1 → ? → #5 → ? → #1 → ? → #1 → #7 → #1 → #4 → #1",
-      "notation_compressed": "#9 → #7 → #1 → ? → #5 → ? → #1 → ? → #1 → #7 → #1 → #4 → #1",
+      "notation_raw": "#9 → #7 → #1 → #1 → #5 → ? → #1 → ? → #1 → #7 → #1 → #4 → #1",
+      "notation_compressed": "#9 → #7 → #1 → #5 → ? → #1 → ? → #1 → #7 → #1 → #4 → #1",
       "steps_raw": 13,
-      "steps_compressed": 13,
-      "unresolved_steps": 3,
+      "steps_compressed": 12,
+      "unresolved_steps": 2,
       "delta_t_edges": 0,
       "actions": [
         {
@@ -28452,23 +28436,19 @@
           "name": "Install Root Certificate",
           "technique_id": "T1553.004",
           "tactic_id": "TA0005",
-          "status": "rule_dependent",
+          "status": "resolved",
           "technique_used": "T1553.004",
-          "mapping": "#1 | #10",
+          "mapping": "#1",
           "framework": "attack",
           "alternatives": [
             [
               "#1"
-            ],
-            [
-              "#10"
             ]
           ],
-          "clusters_certain": [],
-          "clusters_candidates": [
-            "#1",
-            "#10"
-          ]
+          "clusters_certain": [
+            "#1"
+          ],
+          "clusters_candidates": []
         },
         {
           "action_id": "912ab340-e636-4742-8333-f692368ef2ee",
@@ -37110,8 +37090,8 @@
         "with_execution_start": 0
       },
       "action_status": {
-        "resolved": 62,
-        "rule_dependent": 12
+        "resolved": 63,
+        "rule_dependent": 11
       },
       "clusters_certain": [
         "#1",
@@ -37125,8 +37105,7 @@
         "#3",
         "#4",
         "#7",
-        "#9",
-        "#10"
+        "#9"
       ],
       "entry_cluster": "#3",
       "first_classified_cluster": "#3",
@@ -37340,12 +37319,9 @@
           },
           {
             "action_id": "009d1d65-5f49-42bf-8d5c-08d2abdd0688",
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [
-              "#1",
-              "#10"
-            ],
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null
           },
@@ -38212,12 +38188,9 @@
             ]
           },
           {
-            "cluster": null,
-            "kind": "unresolved",
-            "candidates": [
-              "#1",
-              "#10"
-            ],
+            "cluster": "#1",
+            "kind": "classified",
+            "implied": false,
             "parallel_hint": false,
             "execution_start": null,
             "count": 1,
@@ -38821,11 +38794,11 @@
         "notes": [],
         "has_cycle": false
       },
-      "notation_raw": "#3 → #7 → #1 → #7 → #9 → #7 → ? → #1 → #7 → #1 → #7 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #7 → #1 → #1 → #1 → #1 → #7 → ? → #7 → ? → #1 → #7 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #1 → #1 → #7 → #7 → #1 → #1 → #1 → #4 → #1 → #4 → #1 → #1 → #1 → #7 → #4 → #1 → #7 → #7 → #1 → #1 → #7 → #1 → #1 → #1 → #1 → #1 → #1 → #7 → ? → #4 → #4 → #1 → #7 → #1 → #1 → #1 → #1 → #1 → #7 → #1 → #4 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → ? → ? → #1 → #1 → ? → ? → ? → #7 → ?",
-      "notation_compressed": "#3 → #7 → #1 → #7 → #9 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #7 → #1 → #7 → ? → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #1 → #4 → #1 → #4 → #1 → #7 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #4 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → … → #1 → … → #7 → ?",
+      "notation_raw": "#3 → #7 → #1 → #7 → #9 → #7 → ? → #1 → #7 → #1 → #7 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #7 → #1 → #1 → #1 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #1 → #1 → #7 → #7 → #1 → #1 → #1 → #4 → #1 → #4 → #1 → #1 → #1 → #7 → #4 → #1 → #7 → #7 → #1 → #1 → #7 → #1 → #1 → #1 → #1 → #1 → #1 → #7 → ? → #4 → #4 → #1 → #7 → #1 → #1 → #1 → #1 → #1 → #7 → #1 → #4 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → ? → ? → #1 → #1 → ? → ? → ? → #7 → ?",
+      "notation_compressed": "#3 → #7 → #1 → #7 → #9 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #1 → #4 → #1 → #4 → #1 → #7 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #4 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → … → #1 → … → #7 → ?",
       "steps_raw": 100,
       "steps_compressed": 72,
-      "unresolved_steps": 9,
+      "unresolved_steps": 8,
       "delta_t_edges": 0,
       "actions": [
         {
@@ -39180,23 +39153,19 @@
           "name": "Code Signing Policy Modification",
           "technique_id": "T1553.006",
           "tactic_id": "TA0005",
-          "status": "rule_dependent",
+          "status": "resolved",
           "technique_used": "T1553.006",
-          "mapping": "#1 | #10",
+          "mapping": "#1",
           "framework": "attack",
           "alternatives": [
             [
               "#1"
-            ],
-            [
-              "#10"
             ]
           ],
-          "clusters_certain": [],
-          "clusters_candidates": [
-            "#1",
-            "#10"
-          ]
+          "clusters_certain": [
+            "#1"
+          ],
+          "clusters_candidates": []
         },
         {
           "action_id": "a29f0881-b501-4a9f-97de-bdb5e7f35ed2",

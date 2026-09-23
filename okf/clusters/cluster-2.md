@@ -30,11 +30,11 @@ topology: "internal"
 
 **Boundary Tests (normative):**
 
-- If behavior is achieved without an implementation flaw (pure feature/config misuse) → **#1**.
-- If the vulnerable component is in a client role → **#3**.
-- **TOCTOU / race conditions** are implementation flaws → **#2** (and **`→ #7`** only if FEC executes).
-- If exploitation results in **FEC execution** → append **`→ #7`** (i.e., **`#2 → #7`**) per **R-EXEC**.
-- If exploitation yields security impact **without** FEC execution (e.g., authz bypass, SQLi data read/write) → **#2** only; document outcomes as **Data Risk Events**.
+- If behavior is achieved without an implementation flaw (pure feature/config misuse) → #1.
+- If the vulnerable component is in a client role → #3.
+- TOCTOU / race conditions are implementation flaws → #2 (and `→ #7` only if FEC executes).
+- If exploitation results in FEC execution → append `→ #7` (`#2 → #7`) per R-EXEC.
+- If exploitation yields security impact without FEC execution (e.g. authorization bypass, SQLi data read/write) → #2 only (data-vs-code boundary, #7); document outcomes as Data Risk Events.
 
 **Topology:** Internal.
 

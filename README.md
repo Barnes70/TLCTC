@@ -2,6 +2,8 @@
 
 **Version 2.5** · CC BY 4.0 · [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20633176.svg)](https://doi.org/10.5281/zenodo.20633176) · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.5-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
+> **Branch `v2.6-core`:** TLCTC 2.6 is a working version — not deposited on Zenodo and not deployed on tlctc.net. The citable version remains v2.5.1 (see Citation); the v2.6 core and dictionary are listed below as the working canon.
+
 A cause-oriented, axiomatic cyber threat taxonomy. We are aware of no prior framework that classifies threats by the generic vulnerability exploited rather than by outcome or actor.
 
 TLCTC provides the missing semantic foundation for cybersecurity: a stable, non-overlapping classification of cyber threats based on **why** compromise happens — the generic vulnerability exploited — rather than **what** happens afterwards (outcomes like "data breach," "ransomware," or "denial of service").
@@ -16,12 +18,12 @@ TLCTC v2.5 is the current citable baseline: the v2.3 consolidation freeze of the
 
 | Document | Role |
 |---|---|
-| [**Core Paper**](documentation/tlctc-v2.5-core.md) ([PDF](documentation/tlctc-v2.5-core.pdf)) | **The canonical, citable definition** of the framework: derivation, 10 clusters, 10 axioms, 19 classification rules, attack-path notation, glossary, references. Cite this. |
-| [**Application Paper**](documentation/tlctc-v2.5-application.md) ([PDF](documentation/tlctc-v2.5-application.pdf), [DOI](https://doi.org/10.5281/zenodo.22697636)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. Separately citable. |
+| [**Core Paper**](documentation/tlctc-v2.6-core.md) ([PDF](documentation/tlctc-v2.6-core.pdf)) | **The canonical definition** of the framework in the v2.6 working version: derivation, 10 clusters, 10 axioms, 17 classification rules, attack-path notation, glossary, references. The deposited, citable version is v2.5.1 (see Citation). |
+| [**Application Paper**](documentation/tlctc-v2.6-application.md) ([PDF](documentation/tlctc-v2.6-application.pdf), [DOI](https://doi.org/10.5281/zenodo.22697636)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. The deposited v2.5.1 application paper is separately citable (DOI). |
 | [**White Paper**](documentation/tlctc-v2.0-whitepaper.md) ([web](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)) | The extended practitioner handbook: full notation grammar (§11), boundary catalogs, decision procedures, anti-patterns, and worked detail beyond the core. Conforms to the core; filename kept for link stability. |
 | [**Operational Enumeration**](documentation/tlctc-operational-enumeration.md) ([JSON](json-schemas/operational/tlctc-operational-enumeration.json)) | The *evolving* `TLCTC-XX.YY` sub-cluster catalogue. The strategic layer (10 clusters) is frozen; the operational layer grows by contribution. |
 
-Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.5.json`](json-schemas/layer-1/tlctc-framework.v2.5.json). The v2.3 and v2.4 dictionaries are retained unchanged as frozen records for classifications made under those versions.
+Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.6.json`](json-schemas/layer-1/tlctc-framework.v2.6.json) (v2.6 working version). The v2.3, v2.4 and v2.5 dictionaries are retained unchanged as frozen records for classifications made under those versions.
 
 ---
 
@@ -489,7 +491,8 @@ tlctc/
 │   ├── layer-1/                              # Framework Definition (Static)
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
 │   │   ├── tlctc-framework.v2.3.json         # V2.3 frozen record (retained for 2.3.x classifications)
-│   │   └── tlctc-framework.v2.5.json         # V2.5 citable baseline: clusters, axioms, 19 rules, DRE tree, cause-side partition, SRE types
+│   │   ├── tlctc-framework.v2.5.json         # V2.5.1 citable baseline (frozen): clusters, axioms, rule registry, DRE tree, cause-side partition, SRE types
+│   │   └── tlctc-framework.v2.6.json         # V2.6 working version (not deposited): clusters, axioms, 17 rules, DRE tree, cause-side partition, SRE types, FEC boundary
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
 │   │   └── example-registry.json             # Example org-specific registry
@@ -525,10 +528,14 @@ tlctc/
 │   ├── controls/                             # NIST CSF × ISO 27001 matrix, effectiveness model, indicators
 │   └── mappings/                             # ATT&CK / CWE / Sigma grouped by cluster
 ├── documentation/
-│   ├── tlctc-v2.5-core.md                    # ⭐ Citable core paper (v2.5) — canonical definition
-│   ├── tlctc-v2.5-core.pdf                   # PDF of the core paper (citation target)
-│   ├── tlctc-v2.5-application.md             # Application & governance companion (v2.5)
-│   ├── tlctc-v2.5-application.pdf            # PDF of the application paper
+│   ├── tlctc-v2.6-core.md                    # ⭐ Core paper (v2.6 working version, not deposited)
+│   ├── tlctc-v2.6-core.pdf                   # PDF of the v2.6 core paper
+│   ├── tlctc-v2.6-application.md             # Application & governance companion (v2.6)
+│   ├── tlctc-v2.6-application.pdf            # PDF of the v2.6 application paper
+│   ├── tlctc-v2.5-core.md                    # Citable core paper (v2.5.1 deposit; frozen)
+│   ├── tlctc-v2.5-core.pdf                   # PDF of the v2.5.1 core paper (citation target)
+│   ├── tlctc-v2.5-application.md             # Application companion (v2.5.1 deposit; frozen)
+│   ├── tlctc-v2.5-application.pdf            # PDF of the v2.5.1 application paper
 │   ├── tlctc-traceability.md            # consolidation & version traceability (v2.1 → v2.5)
 │   ├── tlctc-operational-enumeration.md      # Evolving TLCTC-XX.YY sub-cluster catalogue
 │   ├── tlctc-v2.0-whitepaper.md              # Extended practitioner handbook (v2.1 content; filename kept for link stability)
@@ -694,10 +701,10 @@ tlctc/
 
 ## Getting Started
 
-1. **Read the core paper** — [`documentation/tlctc-v2.5-core.md`](documentation/tlctc-v2.5-core.md) is the canonical, citable definition: derivation, clusters, axioms, rules, and notation in one self-contained paper.
+1. **Read the core paper** — [`documentation/tlctc-v2.6-core.md`](documentation/tlctc-v2.6-core.md) is the canonical definition (v2.6 working version; v2.5.1 is the citable deposit): derivation, clusters, axioms, rules, and notation in one self-contained paper.
 2. **Read the axioms** — They are the non-negotiable foundation. If you skip them, you'll misclassify.
 3. **Understand the Bow-Tie** — Threats are causes, outcomes are consequences. Never confuse them.
-4. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation. The [Application Paper](documentation/tlctc-v2.5-application.md) walks the procedure end-to-end.
+4. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation. The [Application Paper](documentation/tlctc-v2.6-application.md) walks the procedure end-to-end.
 5. **Use the JSON schemas** — Validate your attack path instances against Layer 3 schema.
 6. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
 7. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
@@ -727,8 +734,8 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 
 | Resource | Description |
 |---|---|
-| [Core Paper v2.5](documentation/tlctc-v2.5-core.md) ([PDF](documentation/tlctc-v2.5-core.pdf)) | The canonical, citable definition of the framework |
-| [Application Paper v2.5](documentation/tlctc-v2.5-application.md) ([PDF](documentation/tlctc-v2.5-application.pdf)) | Classification in practice, governance, controls, and indicators |
+| [Core Paper v2.6](documentation/tlctc-v2.6-core.md) ([PDF](documentation/tlctc-v2.6-core.pdf)) | The canonical definition of the framework (v2.6 working version; cite v2.5.1) |
+| [Application Paper v2.6](documentation/tlctc-v2.6-application.md) ([PDF](documentation/tlctc-v2.6-application.pdf)) | Classification in practice, governance, controls, and indicators |
 | [tlctc.net](https://tlctc.net) | Official TLCTC website with documentation, visuals, and tools |
 | [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Extended practitioner handbook: boundary logic, epistemic operators, and complete notation specification |
 | [barnes.ch](https://barnes.ch) | Author's site with foundational analysis on cybersecurity's language problem |

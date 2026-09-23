@@ -21,7 +21,8 @@ const OUT = path.join(ROOT, 'okf');
 
 // ───────────────────────── source paths ──────────────────────────────────────
 const SRC = {
-  framework: 'json-schemas/layer-1/tlctc-framework.v2.5.json',
+  framework: 'json-schemas/layer-1/tlctc-framework.v2.6.json',
+  core: 'documentation/tlctc-v2.6-core.md',
   registry: 'json-schemas/layer-2/example-registry.json',
   whitepaper: 'documentation/tlctc-v2.0-whitepaper.md',
   glossary: 'documentation/tlctc-glossary.md',
@@ -203,6 +204,15 @@ function assertClusterCanon() {
   }
 }
 assertClusterCanon();
+
+// Boundary tests are canonical in core §4 and mirrored in whitepaper §4.1 (v2.6, C18).
+// The cluster pages below render the whitepaper's copy, so a stale mirror must fail here.
+const boundaryDrift = require('./boundary-tests').diff(readText(SRC.core), whitepaper);
+if (boundaryDrift.length) {
+  console.error('build-okf: whitepaper §4.1 boundary tests differ from core §4 (canonical).\n' +
+    'Run: npm run sync-boundary-tests\n  ' + boundaryDrift.join('\n  '));
+  process.exit(1);
+}
 
 function buildClusters() {
   for (const id of CLUSTER_IDS) {
@@ -869,8 +879,9 @@ function writeRoot() {
     'controls, mappings).', '',
     '## Provenance notes', '',
     '- Cluster bodies render the whitepaper §4.1 seven-field definitions (Definition, Generic',
-    '  Vulnerability, and Attacker\'s View verbatim from `tlctc-framework.v2.5.json`; Scope,',
-    '  Developer\'s View, and Boundary Tests canonical in the whitepaper).',
+    '  Vulnerability, and Attacker\'s View verbatim from `tlctc-framework.v2.6.json`; Scope and',
+    '  Developer\'s View canonical in the whitepaper; Boundary Tests canonical in core §4 and',
+    '  mirrored into whitepaper §4.1 under a build check).',
     '- Control docs combine NIST CSF objectives (normative) with ISO 27001:2022 Annex A *starter*',
     '  controls (AI-assisted, from `tools/`) — guidance, not a certified control set.',
     '- CWE mappings are AI-generated and experimental.', '',

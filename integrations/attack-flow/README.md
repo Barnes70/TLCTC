@@ -1,6 +1,6 @@
 # TLCTC for Attack Flow
 
-Brings TLCTC v2.5 into the MITRE Center for Threat-Informed Defense
+Brings TLCTC v2.6 into the MITRE Center for Threat-Informed Defense
 [Attack Flow](https://github.com/center-for-threat-informed-defense/attack-flow) ecosystem.
 Attack Flow says *what* an adversary did, as a graph of ATT&CK techniques; TLCTC says *which
 generic vulnerability* each step exploited. The two are complementary, and this directory holds

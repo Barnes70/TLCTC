@@ -1,14 +1,14 @@
 ---
 type: "term"
 title: "R-INTRA (Intra-System Boundary Rules)"
-description: "The v2.5 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification."
+description: "The v2.6 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification."
 resource: "tlctc:term:r-intra-intra-system-boundary-rules"
 tags:
   - "glossary"
 ---
 # R-INTRA (Intra-System Boundary Rules)
 
-The v2.5 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
+The v2.6 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
 
 | Rule | Summary |
 |---|---|

@@ -28,10 +28,10 @@ topology: "internal"
 
 **Boundary Tests (normative):**
 
-- If behavior is achieved without an implementation flaw (pure feature misuse) → **#1**.
-- If the vulnerable component is in a server role → **#2**.
-- If exploitation results in **FEC execution** → append **`→ #7`** (i.e., **`#3 → #7`**) per **R-EXEC**.
-- If exploitation yields security impact **without** FEC execution → **#3** only; document outcomes as **Data Risk Events**.
+- If behavior is achieved without an implementation flaw (pure feature misuse) → #1.
+- If the vulnerable component is in a server role → #2.
+- If exploitation results in FEC execution → append `→ #7` (`#3 → #7`) per R-EXEC.
+- If exploitation yields security impact without FEC execution → #3 only; document outcomes as Data Risk Events.
 
 **Topology:** Internal.
 

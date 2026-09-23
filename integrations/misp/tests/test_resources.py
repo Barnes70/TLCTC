@@ -15,7 +15,7 @@ class TestResources(unittest.TestCase):
         self.assertEqual(self.res.path_template.name, "tlctc-attack-path")
         self.assertEqual(self.res.path_template.uuid, "7bda2ebc-9447-4273-a491-b7bd7a0715db")
         self.assertEqual(self.res.step_template.uuid, "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5")
-        self.assertEqual(self.res.step_template.version, 1)
+        self.assertEqual(self.res.step_template.version, 2)
         self.assertEqual(self.res.step_template.meta_category, "misc")
         self.assertIn("step-id", self.res.step_template.attributes)
         self.assertEqual(self.res.path_template.required, ["notation"])

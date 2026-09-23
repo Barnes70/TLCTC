@@ -1,15 +1,15 @@
-# TLCTC Framework Glossary — Version 2.5.1
+# TLCTC Framework Glossary — Version 2.6
 
 *Comprehensive definitions and concepts for the Top Level Cyber Threat Clusters framework.*
-*Author: Bernhard Kreinz | Last Updated: 10 Sep 2026*
+*Author: Bernhard Kreinz | Last Updated: 23 Sep 2026*
 
 ---
 
-**Implements:** TLCTC framework specification **v2.5**. The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`, reproduced and derived in the v2.5 core paper (`documentation/tlctc-v2.5-core.md`); where an entry here and the canon differ, the canon governs.
+**Implements:** TLCTC framework specification **v2.6** (working version — not deposited; the citable version is v2.5.1). The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`, reproduced and derived in the v2.6 core paper (`documentation/tlctc-v2.6-core.md`); where an entry here and the canon differ, the canon governs.
 
-> Reference lines cite the v2.5 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
+> Reference lines cite the v2.6 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
 
-This glossary contains all defined terms of the TLCTC framework, organized alphabetically, including the v2.1 boundary extensions, the v2.5 disambiguation rules (R-CHANNEL, R-SUBSTRATE), and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Entries carried over from the V2.0/V2.1 whitepaper keep their whitepaper section cross-references. V2.1 additions are marked with *(V2.1)*; v2.5 additions with *(v2.5)*. Industry terms commonly used in the field are marked with *(Industry Term)*. Rule IDs that are no longer part of the v2.5 normative registry are explicitly marked **(Deprecated alias)** — a retired ID keeps its original meaning and is never reused for a different proposition; the sole historical exception (the v2.1 draft R-INTRA numbering) is documented in the R-INTRA entry.
+This glossary contains all defined terms of the TLCTC framework, organized alphabetically, including the v2.1 boundary extensions, the v2.6 consolidation rule R-SPECIFIC (which folds the v2.5 rules R-FLOOD, R-CHANNEL and R-SUBSTRATE), and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Entries carried over from the V2.0/V2.1 whitepaper keep their whitepaper section cross-references. V2.1 additions are marked with *(V2.1)*; v2.5 additions with *(v2.5)*, v2.6 additions with *(v2.6)*. Industry terms commonly used in the field are marked with *(Industry Term)*. Rule IDs that are no longer part of the v2.6 normative registry are explicitly marked **(Deprecated alias)** or **(Retired alias)** — a retired ID keeps its original meaning and is never reused for a different proposition; the sole historical exception (the v2.1 draft R-INTRA numbering) is documented in the R-INTRA entry.
 
 ---
 
@@ -21,14 +21,14 @@ A threat cluster where an attacker misuses the logic, scope, or configuration of
 
 **Reference:** Core paper §4 (#1 boundary tests); formerly R-ABUSE (Handbook §4.2.5)
 
-**Related reading:** [AD → Domain Admin → Ransomware cascade](https://www.tlctc.net/ad-ransomware-tlctc-cascade.html), [CVE-2026-44578: Next.js WebSocket SSRF](https://www.tlctc.net/cve-2026-44578.html), [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [CrowdStrike 2025 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-analysis.html), [CrowdStrike 2025 Global Threat Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-report.html), [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html)
+**Related reading:** [AD → Domain Admin → Ransomware cascade](https://www.tlctc.net/ad-ransomware-tlctc-cascade.html), [CVE-2026-44578: Next.js WebSocket SSRF](https://www.tlctc.net/cve-2026-44578.html), [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [CrowdStrike 2025 Threat Hunting Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-analysis.html), [CrowdStrike 2025 Global Threat Report — TLCTC](https://www.tlctc.net/tlctc-crowdstrike-2025-report.html)
 
 
 
 
 ### Abuse of Rights *(v2.5)*
 
-An intended action inside an **entitlement** — an access right, a role, a mandate — genuinely conferred by an accountable grantor, but used against its purpose. The envelope is honoured: the system behaved as designed and as authorised, so there is **no generic vulnerability, no cluster, and no System Risk Event**; the consequence chain begins at the Data Risk Event. Register: operational risk, owned by the CRO, the business line and HR, not the CISO. Examples: a badge holder propping open a door, an administrator using genuine root to exfiltrate, a clerk posting a false entry inside their role, an officer approving a payment inside their mandate, a support agent opening a celebrity's record out of curiosity. Controls: segregation of duties, four-eyes, mandate limits, supervision, vetting, purpose auditing.
+An intended action inside an **entitlement** — an access right, a role, a mandate — genuinely conferred by an accountable grantor, but used against its purpose. The envelope — its objects, actions and limits — is honoured: the system behaved as designed and as authorised, so there is **no generic vulnerability, no cluster, and no System Risk Event**; the consequence chain begins at the Data Risk Event. Register: operational risk, owned by the CRO, the business line and HR, not the CISO. Examples: a badge holder propping open a door, an administrator using genuine root to exfiltrate, a clerk posting a false entry inside their role, an officer approving a payment inside their mandate, a support agent opening a celebrity's record out of curiosity, a claims handler knowingly approving an inflated claim inside their approval limit (the same handler exceeding the limit through a workflow that never enforced it is `#1`). Controls: segregation of duties, four-eyes, mandate limits, supervision, vetting, purpose auditing.
 
 **Why it is not cluster #11.** Rights are functions — every authorization check is designed functionality — which is why Abuse of Rights and `#1 Abuse of Functions` look alike. But rights are the subset of functions that partitions the invocation of all the others, and the taxonomy turns on which side of that partition the action fell. `#1` reaches *past* the entitlement using functions the designer left open, and its generic vulnerability is reducible by design (narrow the API, tighten the scope). A granted entitlement is irreducible by design — remove it and you have removed the business. Two exposures, two levers, two owners, two registers.
 
@@ -36,7 +36,7 @@ An intended action inside an **entitlement** — an access right, a role, a mand
 
 **Reference:** Core paper §3.5 (cause-side partition), §6.1 (R-SCOPE); dictionary `cause_side_partition`
 
-**Related reading:** [Functions and Rights — why one is a threat cluster and the other is not](https://www.tlctc.net/tlctc-functions-vs-rights.html), [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html)
+**Related reading:** [Functions and Rights — why one is a threat cluster and the other is not](https://www.tlctc.net/tlctc-functions-vs-rights.html)
 
 See also: Cause-Side Partition, Entitlement, Error in Use, R-SCOPE, Abuse of Functions (#1), Operational Risk (OpRisk)
 
@@ -333,7 +333,7 @@ See also: CWE, CVE, MITRE ATT&CK, Techniques (TTPs)
 
 Degradation or denial of service caused **primarily** by volume or intensity exceeding finite resources. Resources include: bandwidth, CPU cycles, memory, storage, database connections, API quotas, thread/process pools, file handles. Maps to `#6 Flooding Attack`.
 
-**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1
+**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1 (R-SPECIFIC, capacity)
 
 ### Cause-Side Partition *(v2.5)*
 
@@ -346,7 +346,7 @@ The partition of the cause side of any risk event into four rows by three questi
 | Yes | Yes | Yes | Abuse of Rights | OpRisk | none — no SRE; chain starts at the DRE |
 | Yes | Yes | No | Attack | Cyber | the ten TLCTC clusters; SRE recorded |
 
-Entitlement is asked only once intent is present (an unentitled actor who did not intend the outcome is Error in Use, not an attack), and *entitled* means entitled, not permitted. The partition is a property of the action, not of the actor (Axiom IV): an outsider with no grant and an insider outside their grant land in the same Attack row. Only the Attack row is in TLCTC scope; the ten clusters classify its steps and only its steps (R-SCOPE). Third party is a modifier over all four rows, carried by the domain-boundary operator, not a fifth row. Decision procedure: (1) actor? no → failure; (2) intended? no → Error in Use; (3) entitlement covering *this* action? yes → Abuse of Rights; (4) implementation flaw required? yes → `#2/#3` per R-ROLE, no → `#1`.
+Entitlement is asked only once intent is present (an unentitled actor who did not intend the outcome is Error in Use, not an attack), and *entitled* means entitled, not permitted. The partition is a property of the action, not of the actor (Axiom IV): an outsider with no grant and an insider outside their grant land in the same Attack row. Only the Attack row is in TLCTC scope; the ten clusters classify its steps and only its steps (R-SCOPE). Third party is a modifier over all four rows, carried by the domain-boundary operator, not a fifth row. Decision procedure: (1) actor? no → failure; (2) intended? no → Error in Use; (3) entitlement covering *this* action? yes → Abuse of Rights; (4) otherwise → the cluster rules (e.g. implementation flaw required → `#2/#3` per R-ROLE; designed function used outside the envelope → `#1`).
 
 **Reference:** Core paper §3.5; dictionary `cause_side_partition`
 
@@ -354,7 +354,7 @@ See also: Abuse of Rights, Error in Use, Entitlement, R-SCOPE, System Risk Event
 
 ### Central Event
 
-In the TLCTC Bow-Tie model: the **System Risk Event (SRE)** — and the SRE the framework defines is **System Compromise / Loss of Control**, the point at which an actor achieves unauthorized control over the system's behavior, privileges, data, or trust relationships, sufficient to pursue attack objectives; it is the only event the ten clusters reach, and one is recorded per cluster step. Other events at the same altitude with no actor holding capability — **System Failure / Loss of Function** foremost — are operational risk, no cluster; the framework names them to place its boundary. The central event is positioned before outcomes.
+In the TLCTC Bow-Tie model: the **System Risk Event (SRE)** — and the SRE the framework defines is **System Compromise / Loss of Control**, the point at which the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective; it is the only event the ten clusters reach, and one is recorded per cluster step. Other events at the same altitude that serve no attacker's objective — **System Failure / Loss of Function** foremost — are operational risk, no cluster; the framework names them to place its boundary. The central event is positioned before outcomes.
 
 **Reference:** Handbook §6.3 (Central Event); Core paper §3.4
 
@@ -455,7 +455,7 @@ An actual security breach or system compromise that has occurred, representing t
 
 The probability of occurrence of a cyber event in which control over IT systems or persons is lost due to one or more of the 10 Top Level Cyber Threat Clusters, leading (via event chains) to consequential damage (impact). Cyber risks are a subset of operational risks (OpRisk).
 
-**Related reading:** [ENISA Gap Analysis — TLCTC](https://www.tlctc.net/tlctc-enisa-gap-analysis.html), [NIST NICE × TLCTC — workforce capabilities](https://www.tlctc.net/tlctc-NIST-NICE.html), [FAIR × TLCTC — enhanced quantitative risk](https://www.tlctc.net/tlctc-fair.html), [ISO 27000 × TLCTC — name vs game](https://www.tlctc.net/blog-iso27001-iso27005.html), [OCTAVE × TLCTC v2.0 — causal taxonomy](https://www.tlctc.net/blog-tlctc-octave.html), [EU regulation (NIS2/DORA/CRA) vs TLCTC](https://www.tlctc.net/tlctc-eu-regulation.html), [Why DORA will fail regarding cyber risks](https://www.tlctc.net/tlctc-dora-cyber-risk-failure.html), [TLCTC vs 30+ standards & regulations](https://www.tlctc.net/tlctc-regulatorsANDstandards.html), [Basel operational risk × TLCTC Bow-Tie](https://www.tlctc.net/tlctc-banks-operational-risk-basel.html), [Cyber Resilience Act (CRA) — TLCTC pain points & fixes](https://www.tlctc.net/blog-tlctc-cra-pain-points.html), [Generic vulnerabilities — software & hardware failure](https://www.tlctc.net/tlctc-generic-vulnerabilities.html), [TLCTC — the missing link between strategy and ops](https://www.tlctc.net/tlctc-fillthegap.html), [The Audit Trap — compliance ≠ security](https://www.tlctc.net/tlctc-audit-trap.html), [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html), [TLCTC v2.5 monster prompt — CISO & Risk](https://www.tlctc.net/tlctc-prompt-ciso.html), [The Risk Appetite Conversation Your Board Isn't Having](https://www.tlctc.net/tlctc-strategy.html), [TLCTC — the missing link (brief)](https://www.tlctc.net/tlctc-brief-doc.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
+**Related reading:** [ENISA Gap Analysis — TLCTC](https://www.tlctc.net/tlctc-enisa-gap-analysis.html), [NIST NICE × TLCTC — workforce capabilities](https://www.tlctc.net/tlctc-NIST-NICE.html), [FAIR × TLCTC — enhanced quantitative risk](https://www.tlctc.net/tlctc-fair.html), [ISO 27000 × TLCTC — name vs game](https://www.tlctc.net/blog-iso27001-iso27005.html), [OCTAVE × TLCTC v2.0 — causal taxonomy](https://www.tlctc.net/blog-tlctc-octave.html), [EU regulation (NIS2/DORA/CRA) vs TLCTC](https://www.tlctc.net/tlctc-eu-regulation.html), [Why DORA will fail regarding cyber risks](https://www.tlctc.net/tlctc-dora-cyber-risk-failure.html), [TLCTC vs 30+ standards & regulations](https://www.tlctc.net/tlctc-regulatorsANDstandards.html), [Basel operational risk × TLCTC Bow-Tie](https://www.tlctc.net/tlctc-banks-operational-risk-basel.html), [Cyber Resilience Act (CRA) — TLCTC pain points & fixes](https://www.tlctc.net/blog-tlctc-cra-pain-points.html), [Generic vulnerabilities — software & hardware failure](https://www.tlctc.net/tlctc-generic-vulnerabilities.html), [TLCTC — the missing link between strategy and ops](https://www.tlctc.net/tlctc-fillthegap.html), [The Audit Trap — compliance ≠ security](https://www.tlctc.net/tlctc-audit-trap.html), [TLCTC v2.5 monster prompt — CISO & Risk](https://www.tlctc.net/tlctc-prompt-ciso.html), [The Risk Appetite Conversation Your Board Isn't Having](https://www.tlctc.net/tlctc-strategy.html), [TLCTC — the missing link (brief)](https://www.tlctc.net/tlctc-brief-doc.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
 
 ### Cyber Risk Event
 
@@ -553,7 +553,7 @@ An outcome event describing **Loss of Confidentiality (C)** (data stolen / unaut
 
 A normative classification principle: Domain-specific expressions (e.g., SQL, LDAP, XPath, GraphQL, template syntax, configuration languages) are treated as **data** unless they directly cause **FEC execution** via a general-purpose execution engine.
 
-**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §9
+**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §4 (#7); dictionary `fec.boundary`
 
 ### Delta t (Δt) *(V2.0)*
 
@@ -572,12 +572,15 @@ The environment's **intended** capability to load, interpret, or execute program
 
 ### Detection Coverage Score (DCS) *(V2.0)*
 
-A strategic Key Performance Indicator (KPI) measuring **detection timing adequacy** relative to Attack Velocity. Formula: `DCS = (Mean Time to Detect) / (Attack Velocity Δt)`. It answers one question: is detection latency shorter than the attacker's progression window between two adjacent steps?
+A strategic indicator measuring the defender's **timing adequacy** relative to Attack Velocity, in two forms read on distributions rather than means *(v2.6)*: detection `DCS_d = TTD_P90 / Δt` and containment `DCS_c = TTC_P90 / Δt`, where TTD and TTC are the defender's time-to-detect and time-to-contain distributions at an edge, read at the 90th percentile. Where Δt is itself a distribution it is read at a fast percentile (P10). It answers one question: does the defender act before the attacker completes the transition between two adjacent steps?
 
-- **Score < 1.0:** Detection is faster than the adversary's progression (the response window exists)
-- **Score > 1.0:** Adversary completes the step before detection (no response window)
+- **Score < 1.0:** the defender acts first (for `DCS_c`, the transition is stopped)
+- **Score > 1.0:** the adversary completes the step first
+- **`DCS_d < 1` with `DCS_c > 1`:** the step was seen but not stopped
 
-Example: If a ransomware group moves from #4 to #1 in 10 minutes and your SIEM alerts in 15 minutes, DCS = 15/10 = 1.5, indicating systematic blindness requiring automation rather than analyst intervention.
+The v2.0–v2.5 formula `DCS = MTTD / Δt` (mean time to detect) is the mean-based special case of `DCS_d` and remains valid where only means are available.
+
+Example: If a ransomware group moves from #4 to #1 in 10 minutes and your SIEM alerts in 15 minutes at P90, DCS_d = 15/10 = 1.5, indicating systematic blindness requiring automation rather than analyst intervention.
 
 *Scope note.* Despite the historical name, DCS measures timing adequacy, not coverage: it assumes the relevant activity is detectable at all. A detector with 10-second MTTD but low detection probability does not have good coverage merely because Δt is 60 seconds; detection probability and rule coverage must be assessed separately (see the application paper, Part B).
 
@@ -700,7 +703,7 @@ A transition between two adjacent Attack Steps, represented by the sequence oper
 
 ### Entitlement *(v2.5)*
 
-What an accountable grantor actually conferred on a person for an action: an access right, a role, or a mandate, held genuinely and bounded by its purpose and scope. **Entitled is not permitted.** Permission is what the access-control system happens to return; entitlement is what a grantor conferred. The two are supposed to coincide and frequently do not, and that gap is where the classification of a technical act can depend on a governance document — the framework refuses to pretend a question about authorization can be answered without consulting the authority. **An entitlement attaches to the person, never to the token:** an attacker holding a credential was never a grantee, so no action they take is inside any envelope (`#4` per R-CRED, then `#1`). The entitlement test is the authorization-side counterpart of R-CRED's authentication-side test (is the system deceived about who is authenticating?): both ask about the truth of a relation, never about the identity of the claimant.
+What an accountable grantor actually conferred on a person for an action: an access right, a role, or a mandate, held genuinely. Its envelope is **scope** — the objects, the actions, and the limits (quantity, value, time, frequency) the grant covers. **Purpose** is not part of the envelope: it is the conduct norm the grant is given for; an in-envelope action against it is Abuse of Rights, and purpose never widens or narrows the envelope. **Entitled is not permitted.** Permission is what the access-control system happens to return; entitlement is what a grantor conferred. The two are supposed to coincide and frequently do not, and that gap is where the classification of a technical act can depend on a governance document — the framework refuses to pretend a question about authorization can be answered without consulting the authority. **An entitlement attaches to the person, never to the token:** an attacker holding a credential was never a grantee, so no action they take is inside any envelope (`#4` per R-CRED, then `#1`). The entitlement test is the authorization-side counterpart of R-CRED's authentication-side test (is the system deceived about who is authenticating?): both ask about the truth of a relation, never about the identity of the claimant.
 
 **Reference:** Core paper §3.5; dictionary `cause_side_partition.entitlement`
 
@@ -740,13 +743,13 @@ Foreign code that targets specific vulnerabilities to modify software behavior, 
 
 ### Exploiting Client (#3)
 
-A threat cluster where an attacker targets and leverages implementation flaws within any component acting in a client role (requesting/processing data from a server or resource). These vulnerabilities allow manipulation of client behavior or unauthorized access using Exploit Code, often when the client interacts with malicious content. The generic vulnerability is that client-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per R-SUBSTRATE, the location of a flaw never determines the cluster, the role of the flawed component does.
+A threat cluster where an attacker targets and leverages implementation flaws within any component acting in a client role (requesting/processing data from a server or resource). These vulnerabilities allow manipulation of client behavior or unauthorized access using Exploit Code, often when the client interacts with malicious content. The generic vulnerability is that client-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per the substrate clause of R-SPECIFIC, the location of a flaw never determines the cluster, the role of the flawed component does.
 
 **Related reading:** [CVE-2025-21333 revisited: #2 after all (Kernel's Role pt 2)](https://www.tlctc.net/hyperv-vsp-tlctc-client.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-21510: Windows Shell SmartScreen bypass](https://www.tlctc.net/cve-2026-21510.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
 
 ### Exploiting Server (#2)
 
-A threat cluster where an attacker targets and leverages implementation flaws within a component acting in a server role. These vulnerabilities allow manipulation of server behavior or unauthorized access using Exploit Code, forcing a data→code transition where exploit code executes as new, foreign code in the server context. The generic vulnerability is that server-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per R-SUBSTRATE, the location of a flaw never determines the cluster, the role of the flawed component does.
+A threat cluster where an attacker targets and leverages implementation flaws within a component acting in a server role. These vulnerabilities allow manipulation of server behavior or unauthorized access using Exploit Code, forcing a data→code transition where exploit code executes as new, foreign code in the server context. The generic vulnerability is that server-side implementation flaws enable unintended behavior. "Implementation" is substrate-neutral — the flawed logic may live in application source code, firmware, microcode, or hardware logic; per the substrate clause of R-SPECIFIC, the location of a flaw never determines the cluster, the role of the flawed component does.
 
 **Related reading:** [Calif M5: #2 → #2 (Kernel's Role pt 1)](https://www.tlctc.net/calif-tlctc-chain.html), [Apache 2.4.67 — 11 CVEs decomposed](https://www.tlctc.net/apache-2.4.67-tlctc-analysis.html), [CVE-2026-31431 (Copy Fail): Linux kernel AF_ALG](https://www.tlctc.net/cve-2026-31431.html), [CVE-2026-35414: 15-year-old OpenSSH cert flaw](https://www.tlctc.net/cve-2026-35414.html), [CVE-2026-46300 (Fragnesia): Linux kernel XFRM](https://www.tlctc.net/cve-2026-46300.html), [Verizon DBIR 2025 — TLCTC](https://www.tlctc.net/tlctc-dbir-2025.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html)
 
@@ -799,9 +802,9 @@ See also: Foreign Executable Content (FEC), Living Off the Land / LOLBAS, Dual-U
 
 ### Foreign Executable Content (FEC)
 
-Attacker-controlled (or otherwise untrusted) program text or bytes that are **interpreted, loaded, or executed** by a **general-purpose execution engine** in the target environment. Includes attacker-controlled commands fed into interpreters. FEC execution includes in-memory (fileless) execution, interpreted code, macro execution, and reflective loading—no "on-disk" requirement exists.
+Attacker-controlled (or otherwise untrusted) program text or bytes that are **interpreted, loaded, or executed** by a **general-purpose execution engine** in the target environment. Includes attacker-controlled commands fed into general-purpose interpreters (shells, script hosts). Domain-specific expression languages (SQL, LDAP, XPath, GraphQL, template syntax, configuration languages) are data unless they cause execution in such an engine (see Data vs Code Boundary). Natural-language instructions to a model or agent are not FEC (see Prompt Injection). FEC execution includes in-memory (fileless) execution, interpreted code, macro execution, and reflective loading—no "on-disk" requirement exists.
 
-**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §9
+**Reference:** Handbook §4.2.2 (Global Definitions); Core paper §4 (#7), §9; dictionary `fec`
 
 **Related reading:** [The File Type Fallacy — extension blocklists](https://www.tlctc.net/tlctc-file-type-fallacy.html), [GovCERT-CH blocked filetypes × TLCTC](https://www.tlctc.net/tlctc-govcert-blocked-filetypes.html)
 
@@ -841,7 +844,7 @@ The governance function in NIST CSF 2.0, operating at a strategic level to estab
 
 ### HTTP Flood *(Industry Term)*
 
-An application-layer denial of service attack that overwhelms a web server with seemingly legitimate HTTP requests. In TLCTC: maps to `#6 Flooding Attack` — the primary mechanism is volume exceeding finite capacity at the application layer. Distinguished from implementation-flaw-based DoS (which maps to `#2` or `#3` per R-FLOOD).
+An application-layer denial of service attack that overwhelms a web server with seemingly legitimate HTTP requests. In TLCTC: maps to `#6 Flooding Attack` — the primary mechanism is volume exceeding finite capacity at the application layer. Distinguished from implementation-flaw-based DoS (which maps to `#2` or `#3` per R-SPECIFIC, capacity).
 
 See also: Flooding Attack (#6), DDoS, Slowloris, SYN Flood
 
@@ -872,11 +875,11 @@ Non-Overlap Rule: Credential acquisition maps to the enabling threat cluster; cr
 
 A flaw in code logic, parsing, memory handling, or resource handling that causes crash, hang, or degradation when triggered—**without** requiring volume/intensity to exceed normal capacity. Includes algorithmic complexity weaknesses (e.g., ReDoS). Maps to `#2` or `#3` per R-ROLE, not `#6`.
 
-**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1
+**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1 (R-SPECIFIC, capacity)
 
 ### Implementation Flaw
 
-A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate-neutral per R-SUBSTRATE). Implementation flaws are exploited by `#2 Exploiting Server` (server-role) or `#3 Exploiting Client` (client-role).
+A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate-neutral per the substrate clause of R-SPECIFIC). Implementation flaws are exploited by `#2 Exploiting Server` (server-role) or `#3 Exploiting Client` (client-role).
 
 **Reference:** Handbook §4.2.2 (Global Definitions), §4.1 (#2 and #3 Definitions); Core paper §9, §4
 
@@ -1017,7 +1020,7 @@ A Data Risk Event outcome where an attacker gains unauthorized access to data. F
 
 ### Loss of Control / System Compromise
 
-The System Risk Event (SRE) the framework defines — the central event in the Cyber Bow-Tie model — representing the point at which an actor achieves unauthorized control over a system's behavior, privileges, data, or trust relationships. It is the only event the ten clusters reach; other events at the same altitude with no actor holding capability (System Failure foremost) are operational risk. This serves as the pivot point between threat realization (cause) and potential consequences (effect); one is recorded per cluster step, so a multi-step path chains them. The SRE is the first event in the consequence chain: **SRE → DRE → BRE\***. Some attacks may have delayed data risk events (creating a detection window), while others lead to immediate data risk events. Examples: A server exploit (#2) enabling remote code execution leading to malware (#7) represents loss of control before any data breach occurs. In contrast, successful SQL injection (#2) can immediately result in Loss of Confidentiality.
+The System Risk Event (SRE) the framework defines — the central event in the Cyber Bow-Tie model — representing the point at which the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective. It is the only event the ten clusters reach; other events at the same altitude that serve no attacker's objective (System Failure foremost) are operational risk. Only steps that succeeded are classified: an attempted or blocked step records no SRE. This serves as the pivot point between threat realization (cause) and potential consequences (effect); one is recorded per cluster step, so a multi-step path chains them. The SRE is the first event in the consequence chain: **SRE → DRE → BRE\***. Some attacks may have delayed data risk events (creating a detection window), while others lead to immediate data risk events. Examples: A server exploit (#2) enabling remote code execution leading to malware (#7) represents loss of control before any data breach occurs. In contrast, successful SQL injection (#2) can immediately result in Loss of Confidentiality.
 
 **Reference:** Handbook §6.3 (Central Event), §6.3.1 (The Consequence Chain); Core paper §3.4
 
@@ -1171,8 +1174,6 @@ The broader category of risks arising from inadequate or failed internal process
 
 
 
-**Related reading:** [The Adoboli Paradox — Cyber vs Operational Risk](https://www.tlctc.net/tlctc-adoboli-paradox.html)
-
 See also: Cyber Risk, Business Risk Event
 
 ### Operational Security Layer
@@ -1278,7 +1279,7 @@ See also: Physical Attack (#8), Man in the Middle (#5), Rogue Hotspot
 
 ### Ping of Death *(Industry Term)*
 
-A denial-of-service attack that sends malformed or oversized ICMP packets to crash or destabilize a target system. In TLCTC: if the crash results from an implementation flaw (buffer overflow in ICMP handling), maps to `#2 Exploiting Server` or `#3 Exploiting Client` per R-ROLE and R-FLOOD. If the primary mechanism is volume-based, maps to `#6 Flooding Attack`.
+A denial-of-service attack that sends malformed or oversized ICMP packets to crash or destabilize a target system. In TLCTC: if the crash results from an implementation flaw (buffer overflow in ICMP handling), maps to `#2 Exploiting Server` or `#3 Exploiting Client` per R-ROLE and R-SPECIFIC (capacity). If the primary mechanism is volume-based, maps to `#6 Flooding Attack`.
 
 **Reference:** V1.9.1 Buzz-Word Refinement (#2)
 
@@ -1343,6 +1344,14 @@ A development role focused on architecture and strategy, responsible for designi
 
 **Related reading:** [Taming SonarQube with TLCTC (Secure-Dev pt 2)](https://www.tlctc.net/tlctc-sdlc-dev-blog.html), [Programmer vs Coder in TLCTC (Secure-Dev pt 1)](https://www.tlctc.net/tlctc-sdlc-prog-coder.html), [Adding the Developer's View to TLCTC](https://www.tlctc.net/tlctc-definitions-sdlc-prog-coder.html)
 
+### Prompt Injection *(Industry Term)*
+
+Instructions placed in the input of a language model or agent — directly by the user, or indirectly in content the agent reads (web pages, documents, tool output) — so that the model acts on them. In TLCTC: `#1 Abuse of Functions`. Acting on natural-language input is the model's designed function; no implementation flaw is required, and natural-language instructions are not Foreign Executable Content. Jailbreaks, RAG or context poisoning and agent tool abuse classify the same way. Where the agent then executes code or commands whose content the attacker controls, the execution is `#7` (`#1 → #7`, R-EXEC); a flaw in the model-serving or agent software is `#2`/`#3`; a subverted third-party model, dataset or tool is `#10`. The agent is the attacker's capability vector, not the actor (Axiom IV).
+
+**Reference:** Core paper §4 (#1); dictionary `fec.boundary`; MITRE ATLAS mapping (`mappings/mitre-atlas/`)
+
+See also: Abuse of Functions (#1), Foreign Executable Content (FEC), AI / AGI / ASI (Positioning in TLCTC)
+
 ### Propagated PR *(V2.0)*
 
 A Protection Requirement that "propagates backward" from a downstream event into the RS (Respond) container of an earlier event due to regulatory or policy requirements. Notation: `RS(Eₙ) = { Response } ∪ { Propagated PR(Eₙ₊₁) } ∪ { Propagated PR(Eₙ₊ₓ) }`.
@@ -1361,7 +1370,7 @@ The layered privilege model in computing systems (Ring 0 through Ring 3) where e
 
 ### R-ABUSE (Function Misuse Determination) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its substance is carried unchanged by the #1 cluster definition and boundary tests (core paper §4). The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry. Its substance is carried unchanged by the #1 cluster definition and boundary tests (core paper §4). The ID keeps this original meaning and is never reused.*
 
 Original statement: If the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as `#1 Abuse of Functions`.
 
@@ -1391,41 +1400,61 @@ Global mapping rule: Whenever Foreign Executable Content (FEC) is interpreted, l
 
 
 
-### R-FLOOD (Capacity Exhaustion vs Implementation Defect)
+### R-FLOOD (Capacity Exhaustion vs Implementation Defect) **(Retired alias)**
 
-Global mapping rule: If the primary mechanism is volume or intensity exhausting finite resources, classify as `#6 Flooding Attack`. If the primary mechanism is an implementation defect that causes crash/hang/degradation (including algorithmic complexity), classify as `#2` or `#3` per R-ROLE.
+*Retired v2.5 rule ID; since v2.6 the **capacity** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
 
-**Reference:** Handbook §4.2.5 (R-FLOOD); Core paper §6.1
+Original statement (v2.5): If the primary mechanism is volume or intensity exhausting finite resources, classify as `#6 Flooding Attack`. If the primary mechanism is an implementation defect that causes crash/hang/degradation (including algorithmic complexity), classify as `#2` or `#3` per R-ROLE.
 
-### R-CHANNEL (Channel Control vs Code Flaw)
+**Reference:** Handbook §4.2.5 (R-FLOOD); Core paper §6.1 (R-SPECIFIC)
 
-Global mapping rule (v2.5): If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as `#5 Man in the Middle`, not as `#2` or `#3` under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it (for example, memory corruption in a TLS parser).
+### R-CHANNEL (Channel Control vs Code Flaw) **(Retired alias)**
+
+*Retired v2.5 rule ID; since v2.6 the **channel** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
+
+Original statement (v2.5): If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as `#5 Man in the Middle`, not as `#2` or `#3` under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it (for example, memory corruption in a TLS parser).
 
 R-CHANNEL classifies the *weakness*; R-MITM sequences the *attack path* (position acquisition versus action). The two do not conflict.
 
-**Reference:** Handbook §6.1 (R-CHANNEL); Core paper §3.4
+**Reference:** Handbook §6.1 (R-CHANNEL); Core paper §6.1 (R-SPECIFIC)
 
 ### R-SCOPE (Entitlement Scope Boundary) *(v2.5)*
 
-Admission rule for the whole registry: a step is classified under a cluster only where the action fell **outside the entitlement envelope** an accountable grantor actually conferred for it. Cause-side classification asks three questions in strict order — is there an actor; did they intend the outcome; did an accountable grantor confer an entitlement covering *this* action — and only an intended, unentitled action enters the Attack row where the clusters apply (implementation flaw required → `#2/#3` per R-ROLE; otherwise `#1`). No actor is failure or external event; an unintended outcome is Error in Use; an intended in-grant action is **Abuse of Rights** — operational risk, no cluster, no System Risk Event, the consequence chain starting at the DRE. Entitlement means entitled, not permitted, and attaches to the person, not the token: credential use by anyone other than the grantee is never inside an envelope (`#4` per R-CRED, subsequent function use `#1`), and exploiting an implementation flaw is never inside any grant. Not an actor test (Axiom IV). Entitlement is tested after intent and before the code-flaw test because an entitled actor exploiting a code flaw is an attack.
+Admission rule for the whole registry: a step is classified under a cluster only where the action fell **outside the entitlement envelope** an accountable grantor actually conferred for it. Cause-side classification asks three questions in strict order — is there an actor; did they intend the outcome; did an accountable grantor confer an entitlement covering *this* action — and only an intended, unentitled action enters the Attack row, where it is classified under the cluster rules (for example `#2/#3` per R-ROLE where an implementation flaw was required, `#1` where a designed function was used outside the envelope). No actor is failure or external event; an unintended outcome is Error in Use; an intended in-grant action is **Abuse of Rights** — operational risk, no cluster, no System Risk Event, the consequence chain starting at the DRE. Entitlement means entitled, not permitted, and attaches to the person, not the token: credential use by anyone other than the grantee is never inside an envelope (`#4` per R-CRED, subsequent function use `#1`), and exploiting an implementation flaw is never inside any grant. Not an actor test (Axiom IV). Entitlement is tested after intent and before any cluster test because an entitled actor exploiting a code flaw is an attack.
 
 **Reference:** Core paper §3.5, §6.1; dictionary `rules[R-SCOPE]`, `cause_side_partition`
 
 See also: Cause-Side Partition, Abuse of Rights, Entitlement, Error in Use, R-CRED
 
-### R-SUBSTRATE (Physical Property vs Implemented Logic)
+### R-SPECIFIC (Specific Generic Vulnerability over Residual Test) *(v2.6)*
 
-Global mapping rule (v2.5): Classify as `#8 Physical Attack` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (`#2` or `#3` per R-ROLE). Attacker proximity or possession is **not** the test.
+Global mapping rule (v2.6): where one weakness is describable both as a specific generic vulnerability and as a residual one, classify it under the specific. The residual tests — designed functionality (`#1`) and implementation flaw (`#2`/`#3` per R-ROLE) — apply only where no specific generic vulnerability is the one exploited. Three clauses decide the recurring cases:
+
+- **capacity** — volume or intensity exhausting finite resources → `#6`; an implementation defect causing crash, hang or degradation (including algorithmic complexity) → `#2`/`#3`.
+- **channel** — defective logic that is itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry or revocation checking, channel encryption, algorithm negotiation) → `#5`; a defect incidental to that control (memory corruption in a TLS parser) → `#2`/`#3`.
+- **substrate** — a physical-layer property of the substrate (charge, voltage, emission, temperature, emission-borne timing, wear, material state) as the exploited generic vulnerability → `#8`, whether or not the attacker has physical access; the physical layer as mere readout of a logic defect → classify by that defect (Rowhammer `#8`, Spectre `#2`, power analysis `#8`).
+
+Each clause keeps the proposition of the v2.5 rule it replaces; R-FLOOD, R-CHANNEL and R-SUBSTRATE are retired aliases of the capacity, channel and substrate clauses. Cited as "R-SPECIFIC (capacity)", or inside parentheses as "R-SPECIFIC, capacity".
+
+**Reference:** Core paper §6.1; dictionary `rules[R-SPECIFIC]`
+
+See also: R-ROLE, Generic Vulnerability, Flooding Attack (#6), Man in the Middle (#5), Physical Attack (#8)
+
+### R-SUBSTRATE (Physical Property vs Implemented Logic) **(Retired alias)**
+
+*Retired v2.5 rule ID; since v2.6 the **substrate** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
+
+Original statement (v2.5): Classify as `#8 Physical Attack` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (`#2` or `#3` per R-ROLE). Attacker proximity or possession is **not** the test.
 
 The discriminating question is whether the attack is against the *implemented logic* or against the *physical representation* that logic runs on. Rowhammer is `#8` (charge migration between adjacent DRAM cells is the vulnerability; nothing logical fails) even though it can be mounted from JavaScript. Spectre is `#2` (speculation crosses an isolation boundary the design was meant to enforce; cache timing is only the readout). Power side-channel analysis is `#8`, because the cryptography is correct and the emission itself is the vulnerability.
 
 R-SUBSTRATE is the *admission* test — whether a weakness qualifies as `#8` at all. The sequencing principle formerly stated as R-PHYSICAL (now a deprecated alias) still holds — a qualifying physical step is `#8` and subsequent technical steps are classified separately. They are complementary.
 
-**Reference:** Handbook §6.1 (R-SUBSTRATE); Core paper §3.4
+**Reference:** Handbook §6.1 (R-SUBSTRATE); Core paper §6.1 (R-SPECIFIC)
 
 ### R-HUMAN (Human Manipulation Isolation) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its substance is carried unchanged by the #9 cluster definition and boundary tests (core paper §4) together with Axiom VI. The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry. Its substance is carried unchanged by the #9 cluster definition and boundary tests (core paper §4) together with Axiom VI. The ID keeps this original meaning and is never reused.*
 
 Original statement: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as `#9 Social Engineering`, and any subsequent technical steps MUST be classified separately.
 
@@ -1433,7 +1462,7 @@ Original statement: If the attacker's advantage comes from psychological manipul
 
 ### R-INTRA (Intra-System Boundary Rules) *(V2.1)*
 
-The v2.5 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
+The v2.6 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
 
 | Rule | Summary |
 |---|---|
@@ -1454,11 +1483,11 @@ Global mapping rule: The method of gaining a privileged communication-path posit
 
 ### R-PHYSICAL (Physical Domain Isolation) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its sequencing substance is carried by the #8 cluster definition and boundary tests (core paper §4); its admission question is now settled normatively by R-SUBSTRATE. The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry. Its sequencing substance is carried by the #8 cluster definition and boundary tests (core paper §4); its admission question is now settled normatively by R-SPECIFIC, substrate clause. The ID keeps this original meaning and is never reused.*
 
-Original statement: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately. Note that R-SUBSTRATE corrects a latent misreading of this phrasing: attacker physical access or proximity is NOT required for `#8`.
+Original statement: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately. Note that the substrate clause of R-SPECIFIC corrects a latent misreading of this phrasing: attacker physical access or proximity is NOT required for `#8`.
 
-**Reference:** Handbook §4.2.5 (R-PHYSICAL); superseded by core paper §4 (#8 boundary tests) and R-SUBSTRATE (core §6.1)
+**Reference:** Handbook §4.2.5 (R-PHYSICAL); superseded by core paper §4 (#8 boundary tests) and R-SPECIFIC, substrate clause (core §6.1)
 
 ### R-ROLE (Server vs Client Determination)
 
@@ -1485,7 +1514,7 @@ The complete transit boundary rule set governing use of the transit operator (`�
 |---|---|---|
 | **R-TRANSIT-3** | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R-ROLE |
 
-Only **R-TRANSIT-3** is part of the v2.5 normative registry. The remaining v2.1 drafting guidance is non-normative notation practice: a transit party must be distinct from source and target and actually sit between them in the delivery path; the annotation is optional (recommended where the intermediary has meaningful control responsibility, omittable for pure conduits); compromise or coercion of the intermediary must be modeled as its own preceding cluster step; transit annotations never change cluster classification (see SG-2); and chained transit may be used when each party has independent analytical relevance. The withdrawn draft IDs R-TRANSIT-1, -2, -4, -5, -6, -7, -8 are not to be cited.
+Only **R-TRANSIT-3** is part of the v2.6 normative registry. The remaining v2.1 drafting guidance is non-normative notation practice: a transit party must be distinct from source and target and actually sit between them in the delivery path; the annotation is optional (recommended where the intermediary has meaningful control responsibility, omittable for pure conduits); compromise or coercion of the intermediary must be modeled as its own preceding cluster step; transit annotations never change cluster classification (see SG-2); and chained transit may be used when each party has independent analytical relevance. The withdrawn draft IDs R-TRANSIT-1, -2, -4, -5, -6, -7, -8 are not to be cited.
 
 **Reference:** core paper §6.2 (R-TRANSIT-3), §11.3.5 (Transit Boundary Operator)
 
@@ -1695,7 +1724,7 @@ See also: Fast Velocity Class, EDR, SIEM
 
 ### System Failure *(v2.5)*
 
-The standing example of a **system-altitude event outside the ten clusters**: loss of function with no actor holding capability — software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, or an unintended act (Error in Use) that breaks the system. It sits at the same altitude as System Compromise and passes through the same conditional gate ("only if data is affected") into the data layer, so it shares the consequence chain while having no cause-side classification. Operational risk; no cluster. The framework names it to place the boundary of the clusters, not to classify it (core §3.4).
+The standing example of a **system-altitude event outside the ten clusters**: loss of function that serves no attacker's objective — software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, or an unintended act (Error in Use) that breaks the system. It sits at the same altitude as System Compromise and passes through the same conditional gate ("only if data is affected") into the data layer, so it shares the consequence chain while having no cause-side classification. Operational risk; no cluster. The framework names it to place the boundary of the clusters, not to classify it (core §3.4).
 
 **Reference:** Core paper §3.4; dictionary `system_risk_event.other_system_altitude_events.examples[failure]`
 
@@ -1703,7 +1732,7 @@ See also: System Risk Event (SRE), Loss of Control / System Compromise, Error in
 
 ### System Risk Event (SRE)
 
-Any risk event at the **system altitude** — the point at which a system's behavior, privileges, data, or trust relationships depart from what its owner controls — and the central event in the TLCTC Cyber Bow-Tie model. The SRE the framework defines is **System Compromise / Loss of Control**: an actor holds capability over the system sufficient to pursue objectives; reached only through cluster steps; the pivot of the bow-tie. Other events at the same altitude with no actor holding capability — **System Failure / Loss of Function** foremost — are operational risk, no cluster; the framework names them to place its boundary, not to classify them. Abuse of Rights produces no SRE at all — the system was obeyed, not compromised, and did not fail — so its chain begins at the DRE. One SRE is recorded **per cluster step**: the thought experiment derives each cluster as a generic vulnerability by which control departs from the owner, so every step the framework classifies takes behavior, privileges, data, or trust relationships outside what their owner controls — whether it reaches the system directly (hardware and OT included, under #8) or through a person (#9). A path of *n* cluster steps records *n* SREs, each admitting a DRE, a chained SRE against the same or another system, or both. Compromise is not confined to code execution or persistence: what makes a step a compromise is that the system's behavior passed out of its owner's control, not that the attacker acquired anything — a server-role flaw yielding an arbitrary file read has already made the system serve what its owner never authorized it to serve. The data that comes back is the DRE, on the consequence side; judging the compromise by what was obtained would let an outcome settle a cause-side question, which Axiom III forbids. The SRE is the pivot point between the cause side (threat clusters exploiting generic vulnerabilities) and the consequence side (data and business risk events); the bow-tie is a structure applied *at* an SRE, not a claim that an incident holds only one. It is the first event in the consequence chain **SRE → DRE → BRE\***, where each transition has its own Δt representing a detection and intervention window. Not every SRE leads to a DRE — detection and containment at the central event can break the chain before data-level consequences materialize.
+Any risk event at the **system altitude** — the point at which a system's behavior, privileges, data, or trust relationships depart from what its owner controls — and the central event in the TLCTC Cyber Bow-Tie model. The SRE the framework defines is **System Compromise / Loss of Control**: the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective; reached only through cluster steps; the pivot of the bow-tie. Other events at the same altitude that serve no attacker's objective — **System Failure / Loss of Function** foremost — are operational risk, no cluster; the framework names them to place its boundary, not to classify them. Abuse of Rights produces no SRE at all — the system was obeyed, not compromised, and did not fail — so its chain begins at the DRE. One SRE is recorded **per cluster step**: the thought experiment derives each cluster as a generic vulnerability by which control departs from the owner, so every step the framework classifies takes behavior, privileges, data, or trust relationships outside what their owner controls — whether it reaches the system directly (hardware and OT included, under #8) or through a person (#9). A path of *n* cluster steps records *n* SREs, each admitting a DRE, a chained SRE against the same or another system, or both. Compromise is not confined to code execution or persistence: what makes a step a compromise is that the system's behavior passed out of its owner's control, not that the attacker acquired anything — a server-role flaw yielding an arbitrary file read has already made the system serve what its owner never authorized it to serve. The data that comes back is the DRE, on the consequence side; judging the compromise by what was obtained would let an outcome settle a cause-side question, which Axiom III forbids. The SRE is the pivot point between the cause side (threat clusters exploiting generic vulnerabilities) and the consequence side (data and business risk events); the bow-tie is a structure applied *at* an SRE, not a claim that an incident holds only one. It is the first event in the consequence chain **SRE → DRE → BRE\***, where each transition has its own Δt representing a detection and intervention window. Not every SRE leads to a DRE — detection and containment at the central event can break the chain before data-level consequences materialize.
 
 > **Disambiguation:** "Loss of Control" is always abbreviated **SRE**, never "LoC". The abbreviation **LoC** is reserved exclusively for Loss of Confidentiality, a *consequence*-side Data Risk Event. See **Loss of Confidentiality (LoC)**.
 
@@ -1823,7 +1852,7 @@ Specific, detailed attack techniques or methods that fall within a broader Top L
 
 ### Supply Chain Attack (#10)
 
-A top-level threat cluster on the cause side of the bow-tie, where an attacker compromises systems by abusing the trust relationship within an organization's supply chain. The attacker targets vulnerabilities in third-party software components, hardware, services, or distribution/update mechanisms that are **trusted and integrated** into the organization's own environment or products. The generic vulnerability is the necessary reliance on, and implicit trust placed in, external suppliers, vendors, components, and their associated development or distribution processes.
+A top-level threat cluster on the cause side of the bow-tie, where an attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain. The generic vulnerability is that trust in third-party components and update channels can be subverted. A defect in a legitimately supplied component is **not** `#10`: it is classified where it is exploited, by R-ROLE or R-SPECIFIC (Log4Shell is `#2`), because where flawed code came from is location, not generic vulnerability. Falsifier: remove the attacker's subversion of the third party, not the third party itself; if the step still succeeds, it was never `#10`.
 
 **Supply Chain as "Bridge Not Bucket":** #10 is a *bridge* threat cluster that marks the use of a trusted supply-chain channel as an attack vector to cross from one domain/trust boundary into another (e.g. @Vendor → @Org). It does *not* absorb the semantics of other clusters (#1–#9).
 
@@ -1980,9 +2009,17 @@ This provides machine readability, consistent sorting, and extensibility for sub
 
 **Related reading:** [Dual-layer notation — TLCTC-XX.YY enumeration](https://www.tlctc.net/tlctc-enumeration.html)
 
+### Time to Detect (TTD) / Time to Contain (TTC) *(v2.6)*
+
+The distributions of elapsed time from an attack step to its detection (TTD) and to its containment (TTC) at a given edge of an attack path. The Detection Coverage Score reads them at the 90th percentile — `DCS_d = TTD_P90 / Δt`, `DCS_c = TTC_P90 / Δt` — so that the score describes the slow tail an attacker can count on rather than an average that hides it. MTTD is the mean of TTD.
+
+**Reference:** Core paper §7.2; application paper §10
+
+See also: Detection Coverage Score (DCS), Attack Velocity (Δt), KCI (Key Control Indicator)
+
 ### Trust Acceptance Event (TAE)
 
-The moment your domain **honors** the Third-Party Trust Link and treats a Trust Artifact/Decision as authoritative. Actions at TAE include: validate, accept, install, apply, execute, attach privileges. `#10 Supply Chain Attack` is placed at the TAE.
+The moment your domain **honors** the Third-Party Trust Link and treats a Trust Artifact/Decision as authoritative. Actions at TAE include: validate, accept, install, apply, execute, attach privileges. `#10 Supply Chain Attack` is placed at the TAE. `#10` requires the accepted artifact, or the third party issuing it, to have been subverted before acceptance (subversion test, core §4). In federation, presenting an assertion as another identity is `#4`; a service provider honouring an assertion from an identity provider that was not subverted is not a step; `#10` applies only where the identity provider or its federation trust material was itself subverted (`#10 → #4`).
 
 **Reference:** Handbook §4.2.2 (Global Definitions), R-SUPPLY (§4.2.5), §4.1 (#10 Definition); Core paper §9, §6.1, §4
 
@@ -2209,19 +2246,17 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 
 ### R-* Rules Quick Reference
 
-The v2.5 normative registry contains exactly **19 rules**: nine core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.5.json`); summaries are condensed, the dictionary statement governs.
+The v2.6 normative registry contains exactly **17 rules**: seven core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.6.json`); summaries are condensed, the dictionary statement governs.
 
-**Core rules (9):**
+**Core rules (7):**
 
 | Rule | Distinguishes | Key Decision |
 | --- | --- | --- |
 | **R-EXEC** | FEC Execution | If FEC executes → `#7` MUST be recorded (plus enabling cluster) |
 | **R-ROLE** | `#2` vs `#3` | Server-role (accepts inbound) → `#2`; Client-role (consumes external) → `#3`; roles set by call direction at any interface, network not required |
-| **R-FLOOD** | Capacity vs Defect | Volume exhaustion → `#6`; Implementation defect → `#2/#3` per R-ROLE |
+| **R-SPECIFIC** *(v2.6)* | Specific vs Residual | Capacity: volume exhaustion → `#6`, defect → `#2/#3`; Channel: defective channel control → `#5`, incidental defect → `#2/#3`; Substrate: physical property exploited → `#8`, readout only → `#2/#3` |
 | **R-SUPPLY** | TAE Placement | `#10` at Trust Acceptance Event where third-party trust is honored |
 | **R-MITM** | Position vs Action | Gaining position → enabling cluster; Interception/modification/relay → `#5` |
-| **R-CHANNEL** *(v2.5)* | Control vs Code Flaw | Defective logic constitutive of channel control → `#5`; Incidental defect → `#2/#3` |
-| **R-SUBSTRATE** *(v2.5)* | Property vs Logic | Physical property exploited → `#8`; Physical layer as readout only → `#2/#3` |
 | **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` (unless the identity is the presenter's own — self-issued enrolment is `#1`); separate steps |
 | **R-SCOPE** *(v2.5)* | Attack vs Abuse of Rights | Actor? Intent? Entitlement covering this action? → in-grant intended action = Abuse of Rights (OpRisk, no cluster, no SRE); unentitled → Attack row, clusters apply |
 
@@ -2246,7 +2281,10 @@ The v2.5 normative registry contains exactly **19 rules**: nine core rules and t
 | --- | --- | --- |
 | **R-ABUSE** | Deprecated v2.0 alias | #1 cluster definition and boundary tests (core §4) |
 | **R-HUMAN** | Deprecated v2.0 alias | #9 cluster definition and boundary tests (core §4) |
-| **R-PHYSICAL** | Deprecated v2.0 alias | #8 boundary tests (core §4) + R-SUBSTRATE (admission) |
+| **R-PHYSICAL** | Deprecated v2.0 alias | #8 boundary tests (core §4) + R-SPECIFIC, substrate clause (admission) |
+| **R-FLOOD** | Retired v2.5 rule (v2.6) | R-SPECIFIC, capacity clause |
+| **R-CHANNEL** | Retired v2.5 rule (v2.6) | R-SPECIFIC, channel clause |
+| **R-SUBSTRATE** | Retired v2.5 rule (v2.6) | R-SPECIFIC, substrate clause |
 | **R-TRANSIT-1/2/4/5/6/7/8** | Withdrawn v2.1 draft series | Non-normative transit notation practice (see R-TRANSIT entry); cluster independence is SG-2 |
 | **R-INTRA-1…6, -8** | Withdrawn v2.1 draft series | Non-normative intra-system notation practice (see R-INTRA entry) |
 | **R-UNRES-1, -4** | Consolidated during v2.1 finalization | R-UNRES-1 → R-UNRES-2; draft R-UNRES-4's threshold → canonical R-UNRES-9 |

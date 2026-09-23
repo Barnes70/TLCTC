@@ -26,8 +26,10 @@ topology: "internal"
 
 **Boundary Tests (normative):**
 
-- Gaining the privileged position maps to another cluster; **#5 begins once the position is controlled** (**R-MITM**).
-- If the primary act is credential use after capture → **#4** for the use step.
+- Gaining the privileged position maps to another cluster; #5 begins once the position is controlled (R-MITM).
+- If the primary act is credential use after capture → #4 for the use step.
+- If the defective logic is itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry or revocation checking, channel encryption, algorithm negotiation) → #5, not #2/#3 (R-SPECIFIC, channel).
+- If the defect is incidental to that control rather than constitutive of it (e.g. memory corruption in a TLS parser) → #2/#3 per R-ROLE.
 
 **Examples (position acquisition, non-normative):**
 

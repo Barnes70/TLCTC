@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/Barnes70/TLCTC/main/integrations/attack-flow/stix/tlctc-attack-flow-extension-schema-1.0.0.json",
   "title": "TLCTC for Attack Flow — property extension 1.0.0",
-  "description": "Properties that the extension-definition--69b4eaba-45a8-4101-b935-3a7ae2cb3a1a adds to Attack Flow objects. On attack-action: the TLCTC v2.5 cause cluster of the step, its operational sub-cluster, attack velocity to the next step, responsibility-sphere and intra-system boundaries, Data Risk Events, foreign-code execution, and the unresolved state (R-UNRES). On attack-flow: the path-level metadata. On attack-operator: parallel-group metadata. Every value follows json-schemas/layer-3/tlctc-attack-path.schema.json and the dictionary json-schemas/layer-1/tlctc-framework.v2.5.json.",
+  "description": "Properties that the extension-definition--69b4eaba-45a8-4101-b935-3a7ae2cb3a1a adds to Attack Flow objects. On attack-action: the TLCTC v2.6 cause cluster of the step, its operational sub-cluster, attack velocity to the next step, responsibility-sphere and intra-system boundaries, Data Risk Events, foreign-code execution, and the unresolved state (R-UNRES). On attack-flow: the path-level metadata. On attack-operator: parallel-group metadata. Every value follows json-schemas/layer-3/tlctc-attack-path.schema.json and the dictionary json-schemas/layer-1/tlctc-framework.v2.6.json.",
   "definitions": {
     "cluster": { "type": "string", "pattern": "^#(10|[1-9])$" },
     "sub_cluster": { "type": "string", "pattern": "^TLCTC-(0[1-9]|10)\\.[0-9]{2}$" },

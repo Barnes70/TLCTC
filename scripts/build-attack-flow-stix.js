@@ -9,7 +9,7 @@
  *                      sub-cluster of the operational enumeration, kill_chain_phases -> its cluster
  *   identity           TLCTC Project (fixed id); marking-definition TLP:CLEAR (the standard object)
  *
- * Names, definitions and generic vulnerabilities are copied verbatim from the v2.5 dictionary and
+ * Names, definitions and generic vulnerabilities are copied verbatim from the dictionary and
  * the operational enumeration. Every generated id is uuid v5 over NAMESPACE_URL and a
  * https://www.tlctc.net/stix/... name, so the file regenerates byte-identical.
  *
@@ -21,7 +21,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..');
-const DICTIONARY = path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.5.json');
+const DICTIONARY = path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.6.json');
 const ENUMERATION = path.join(ROOT, 'json-schemas/operational/tlctc-operational-enumeration.json');
 const OUT = path.join(ROOT, 'integrations/attack-flow/stix/tlctc-stix-bundle.json');
 

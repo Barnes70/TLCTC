@@ -128,12 +128,12 @@
       ]
     }
   },
-  "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.5.",
+  "description": "One step of a TLCTC attack path: exactly one cause cluster (Axiom VI) or an unresolved step (? / …) whose cluster cannot yet be defended on the evidence. Steps reference their successor with \"followed-by\"; the reference comment carries the attack velocity Δt. TLCTC v2.6.",
   "meta-category": "misc",
   "name": "tlctc-attack-step",
   "required": [
     "step-id"
   ],
   "uuid": "b28f2295-ec5b-4bd8-95dc-a7965b8a1df5",
-  "version": 1
+  "version": 2
 }

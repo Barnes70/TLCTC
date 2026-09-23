@@ -1,9 +1,9 @@
 {
   "metadata": {
     "title": "TLCTC ATLAS Mapping",
-    "description": "Maps MITRE ATLAS techniques (adversarial threats to AI-enabled systems) to TLCTC v2.5 threat clusters with rationale and attack-path notation, in the same record shape as the ATT&CK Enterprise mapping. Covers the current atlas-data release and the STIX distribution the Attack Flow Builder consumes.",
-    "tlctc_version": "2.5",
-    "framework_ref": "json-schemas/layer-1/tlctc-framework.v2.5.json",
+    "description": "Maps MITRE ATLAS techniques (adversarial threats to AI-enabled systems) to TLCTC v2.6 threat clusters with rationale and attack-path notation, in the same record shape as the ATT&CK Enterprise mapping. Covers the current atlas-data release and the STIX distribution the Attack Flow Builder consumes.",
+    "tlctc_version": "2.6",
+    "framework_ref": "json-schemas/layer-1/tlctc-framework.v2.6.json",
     "atlas_source": {
       "atlas_data": {
         "repo": "mitre-atlas/atlas-data",
@@ -38,10 +38,10 @@
       "OSINT reconnaissance, resource development and AI attack staging are attacker-side (N/A); the step is recorded when the prepared artefact meets a victim system. Reconnaissance that touches the victim classifies like any other step: probing its services is #1 with a DRE C (Active Scanning and sub-techniques), eliciting from a person is #9; umbrella techniques spanning both modes stay N/A and name the branches in their rationale.",
       "Supply-chain techniques are #10 at the Trust Acceptance Event (R-SUPPLY); code that then executes adds #7 (R-EXEC).",
       "Model, data and context degradation are Data Risk Events (Ii, If, Av, C) produced by a #1 or #10 step, never clusters (Axiom III); External Harms are Business Risk Events.",
-      "Denial of AI service and cost harvesting follow R-FLOOD: volume or intensity exhausting finite capacity is #6, a designed function driven against its purpose below that point is #1."
+      "Denial of AI service and cost harvesting follow R-SPECIFIC (capacity): volume or intensity exhausting finite capacity is #6, a designed function driven against its purpose below that point is #1."
     ],
     "created": "2026-09-18",
-    "updated": "2026-09-18",
+    "updated": "2026-09-22",
     "coverage": "208 techniques of ATLAS v2026.09 plus 3 ids retired in that release but still present in the STIX distribution"
   },
   "mappings": [
@@ -1273,7 +1273,7 @@
       "techniqueName": "Denial of AI Service",
       "tlctcMapping": "#6 | #1",
       "tlctcMappingName": "Flooding Attack (#6) | Abuse of Functions (#1)",
-      "mappingRationale": "Denial of an AI service by volume or by resource-intensive inputs exhausts finite capacity (#6, R-FLOOD); a single designed function that the attacker can switch off or misconfigure is #1. A crash from a code defect would be #2 (R-ROLE). The unavailability is a Data Risk Event Av/A.",
+      "mappingRationale": "Denial of an AI service by volume or by resource-intensive inputs exhausts finite capacity (#6, R-SPECIFIC, capacity); a single designed function that the attacker can switch off or misconfigure is #1. A crash from a code defect would be #2 (R-ROLE). The unavailability is a Data Risk Event Av/A.",
       "techniqueDescription": "Adversaries may target AI-enabled systems with a flood of requests for the purpose of degrading or shutting down the service.\nSince many AI systems require significant amounts of specialized compute, they are often expensive bottlenecks that can become overloaded.\nAdversaries can intentionally craft inputs that require heavy amounts of useless compute from the AI system.",
       "tactics": [
         "AML.TA0011"
@@ -1309,7 +1309,7 @@
       "techniqueName": "Cost Harvesting",
       "tlctcMapping": "#1 | #6",
       "tlctcMappingName": "Abuse of Functions (#1) | Flooding Attack (#6)",
-      "mappingRationale": "Driving up the victim's AI operating cost uses the metered function as designed (#1); where the volume also degrades the service it is #6 (R-FLOOD).",
+      "mappingRationale": "Driving up the victim's AI operating cost uses the metered function as designed (#1); where the volume also degrades the service it is #6 (R-SPECIFIC, capacity).",
       "techniqueDescription": "Adversaries may deliberately drive a victim's AI services beyond normal operating capacity with the intent of increasing the cost of services. This may be achieved via high-volume, low-complexity queries ([Excessive Queries](/techniques/AML.T0034.000)) or low-volume, high-complexity queries ([Resource-Intensive Queries](/techniques/AML.T0034.001)). In Generative AI or Agentic AI systems, adversarial prompts may be introduced into the model's context to cause ([Agentic Resource Consumption](/techniques/AML.T0034.002)).\n\nUnlike resource hijacking, where adversaries may leverage AI resources such as computational, memory, or storage for their own purposes, cost harvesting focuses on resource-centric pressure to a service to ultimately cause financial harm to the victim.\n\nCost Harvesting is especially relevant for cloud-hosted, pay-per-use AI/ML platforms (e.g., LLM APIs, generative image services, vision-language pipelines). By manipulating request volume or request complexity, an attacker can:\n- Inflate the victim's compute or storage consumption, leading to higher operational costs.\n- Trigger autoscaling mechanisms that provision additional resources, further amplifying cost and exposure.\n- Saturate internal queues or GPU/TPU pipelines, causing latency spikes, request throttling, or outright service unavailability for legitimate users.",
       "tactics": [
         "AML.TA0011"
@@ -1327,7 +1327,7 @@
       "techniqueName": "Excessive Queries",
       "tlctcMapping": "#1 | #6",
       "tlctcMappingName": "Abuse of Functions (#1) | Flooding Attack (#6)",
-      "mappingRationale": "Excessive but valid queries against a metered API are function abuse (#1) until they exhaust capacity, when the same traffic is #6 (R-FLOOD).",
+      "mappingRationale": "Excessive but valid queries against a metered API are function abuse (#1) until they exhaust capacity, when the same traffic is #6 (R-SPECIFIC, capacity).",
       "techniqueDescription": "Adversaries may send an excessive number of otherwise normal or low-complexity queries to an AI system with the goal of overwhelming its capacity and increasing operating costs.\n\nThe attacker can automate high-volume request generation, exploiting rate limits, autoscaling policies, and pay-per-use billing models to drive sustained resource consumption without relying on specially crafted, computationally expensive inputs. This behavior can also lead to increased latency, request queuing, and service degradation or unavailability for legitimate users, as the system struggles to process the inflated traffic.",
       "tactics": [
         "AML.TA0011"
@@ -1345,7 +1345,7 @@
       "techniqueName": "Resource-Intensive Queries",
       "tlctcMapping": "#6 | #1",
       "tlctcMappingName": "Flooding Attack (#6) | Abuse of Functions (#1)",
-      "mappingRationale": "Inputs crafted to be expensive to process exhaust finite compute (#6, R-FLOOD, intensity rather than volume); below the point of denial they are cost abuse of a designed function (#1).",
+      "mappingRationale": "Inputs crafted to be expensive to process exhaust finite compute (#6, R-SPECIFIC (capacity), intensity rather than volume); below the point of denial they are cost abuse of a designed function (#1).",
       "techniqueDescription": "Adversaries may craft inputs specifically designed to increase the compute resources required for processing.\n\nFor generative AI models, adversaries may use long input sequences, requests for extremely long outputs, or prompts that require complex reasoning as strategies for increasing compute costs [\\[1\\]][1]. For vision and language models, \"sponge examples\" [\\[2\\]][2] can be used to maximize energy consumption and decision latency.\nUtilizing fewer resource-intensive queries instead of simply flooding the model with excessive queries may be more difficult to detect and block or limit.\n\n[1]: https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/\n[2]: https://arxiv.org/abs/2006.03463",
       "tactics": [
         "AML.TA0011"
@@ -1453,7 +1453,7 @@
       "techniqueName": "Physical Environment Access",
       "tlctcMapping": "#1 | #8",
       "tlctcMappingName": "Abuse of Functions (#1) | Physical Attack (#8)",
-      "mappingRationale": "Presenting a crafted physical input (a sticker, a printed pattern, an object) to a sensor exploits the model's designed perception function, #1: the sensor and the model behave as designed. Only where the attacker physically manipulates the system's own hardware or sensors is the physical layer the exploited generic vulnerability (#8, R-SUBSTRATE).",
+      "mappingRationale": "Presenting a crafted physical input (a sticker, a printed pattern, an object) to a sensor exploits the model's designed perception function, #1: the sensor and the model behave as designed. Only where the attacker physically manipulates the system's own hardware or sensors is the physical layer the exploited generic vulnerability (#8, R-SPECIFIC, substrate).",
       "techniqueDescription": "In addition to the attacks that take place purely in the digital domain, adversaries may also exploit the physical environment for their attacks.\nIf the model is interacting with data collected from the real world in some way, the adversary can influence the model through access to wherever the data is being collected.\nBy modifying the data in the collection process, the adversary can perform modified versions of attacks designed for digital access.",
       "tactics": [
         "AML.TA0000"
@@ -1615,7 +1615,7 @@
       "techniqueName": "Spamming AI System with Chaff Data",
       "tlctcMapping": "#1 | #6",
       "tlctcMappingName": "Abuse of Functions (#1) | Flooding Attack (#6)",
-      "mappingRationale": "Chaff data submitted through designed ingestion paths abuses those functions (#1); at a volume that exhausts the system or its analysts' capacity it is #6 (R-FLOOD).",
+      "mappingRationale": "Chaff data submitted through designed ingestion paths abuses those functions (#1); at a volume that exhausts the system or its analysts' capacity it is #6 (R-SPECIFIC, capacity).",
       "techniqueDescription": "Adversaries may spam the AI system with chaff data that causes increase in the number of detections.\nThis can cause analysts at the victim organization to waste time reviewing and correcting incorrect inferences.\n\nAdversaries may also spam AI agents with excessive low-severity auditable events or agentic actions that require a human-in-the-loop, wasting time for the victim organization in human review of the agentic AI system.",
       "tactics": [
         "AML.TA0011"

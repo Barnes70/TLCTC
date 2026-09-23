@@ -1,6 +1,6 @@
 # Attack Flow corpus study results
 
-Generated 2026-09-18T19:17:03Z from center-for-threat-informed-defense/attack-flow commit `0bd4a2d45dceacce499d7e94b85f7966e70f5399` (41 flows), ATT&CK→TLCTC mapping with 909 techniques.
+Generated 2026-09-23T09:02:03Z from center-for-threat-informed-defense/attack-flow commit `0bd4a2d45dceacce499d7e94b85f7966e70f5399` (41 flows), ATT&CK→TLCTC mapping with 909 techniques.
 
 ### All corpus flows
 
@@ -20,15 +20,15 @@ Generated 2026-09-18T19:17:03Z from center-for-threat-informed-defense/attack-fl
 
 | Action classification outcome | n (% of actions) |
 |---|---|
-| resolved | 668 (70.2%) |
-| rule_dependent | 124 (13.0%) |
+| resolved | 670 (70.4%) |
+| rule_dependent | 122 (12.8%) |
 | preparation | 28 (2.9%) |
 | unmapped | 7 (0.7%) |
 | no_technique | 125 (13.1%) |
 
 | Cluster | actions certain | actions upper | flows certain | flows upper |
 |---|---|---|---|---|
-| #1 | 511 (53.7%) | 624 (65.5%) | 40 (97.6%) | 40 (97.6%) |
+| #1 | 513 (53.9%) | 624 (65.5%) | 40 (97.6%) | 40 (97.6%) |
 | #2 | 13 (1.4%) | 20 (2.1%) | 10 (24.4%) | 15 (36.6%) |
 | #3 | 11 (1.2%) | 22 (2.3%) | 11 (26.8%) | 16 (39.0%) |
 | #4 | 92 (9.7%) | 104 (10.9%) | 27 (65.9%) | 28 (68.3%) |
@@ -37,7 +37,7 @@ Generated 2026-09-18T19:17:03Z from center-for-threat-informed-defense/attack-fl
 | #7 | 263 (27.6%) | 380 (39.9%) | 37 (90.2%) | 40 (97.6%) |
 | #8 | 0 (0.0%) | 0 (0.0%) | 0 (0.0%) | 0 (0.0%) |
 | #9 | 31 (3.3%) | 35 (3.7%) | 19 (46.3%) | 19 (46.3%) |
-| #10 | 5 (0.5%) | 9 (0.9%) | 3 (7.3%) | 5 (12.2%) |
+| #10 | 5 (0.5%) | 7 (0.7%) | 3 (7.3%) | 4 (9.8%) |
 
 | Entry cluster | flows |
 |---|---|
@@ -52,8 +52,8 @@ Generated 2026-09-18T19:17:03Z from center-for-threat-informed-defense/attack-fl
 
 | Transition | n |
 |---|---|
-| #1 → #7 | 179 |
-| #7 → #1 | 144 |
+| #1 → #7 | 180 |
+| #7 → #1 | 145 |
 | #4 → #1 | 69 |
 | #1 → #4 | 43 |
 | #9 → #7 | 26 |
@@ -62,13 +62,13 @@ Generated 2026-09-18T19:17:03Z from center-for-threat-informed-defense/attack-fl
 | #3 → #7 | 11 |
 | #2 → #1 | 6 |
 | #1 → #2 | 4 |
+| #1 → #5 | 4 |
 | #10 → #7 | 4 |
-| #1 → #5 | 3 |
 | #7 → #3 | 2 |
 | #7 → #2 | 2 |
 | #7 → #10 | 2 |
 
-Compression: 952 actions → 853 steps (1.12 actions per step); flows fully classified: 0 (0.0%)
+Compression: 952 actions → 852 steps (1.12 actions per step); flows fully classified: 0 (0.0%)
 
 | Flow | scope | actions | steps | ? | entry | derived path (compressed) |
 |---|---|---|---|---|---|---|
@@ -101,7 +101,7 @@ Compression: 952 actions → 853 steps (1.12 actions per step); flows fully clas
 | OpenClaw Command & Control via Prompt Injection (with Mitigations/Detections) | incident | 18 | 6 | 1 | #1 | `? → #1 → #3 → #7 → #1 → #7` |
 | Ragnar Locker | threat-actor | 19 | 16 | 3 | #4 | `#4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → … → #1 → ? → #1 → #7 → #1 → … → #7` |
 | REvil | malware | 25 | 23 | 3 | #3 | `#3 → #7 → #9 → #7 → #9 → #7 → ? → #7 → #1 → #4 → #1 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → …` |
-| SearchAwesome Adware | malware | 11 | 13 | 3 | #9 | `#9 → #7 → #1 → ? → #5 → ? → #1 → ? → #1 → #7 → #1 → #4 → #1` |
+| SearchAwesome Adware | malware | 11 | 12 | 2 | #9 | `#9 → #7 → #1 → #5 → ? → #1 → ? → #1 → #7 → #1 → #4 → #1` |
 | Shamoon | malware | 23 | 22 | 1 | #1 | `#1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #4 → #1 → #7 → ?` |
 | SolarWinds | incident | 33 | 25 | 7 | #10 | `? → #10 → #7 → #1 → #7 → ? → #1 → #7 → ? → #7 → ? → #1 → #7 → #1 → ? → #1 → #4 → #1 → #7 → #4 → ? → #1 → #7 → #1 → ?` |
 | Sony Malware | malware | 18 | 20 | 6 | #1 | `#1 → #7 → ? → #1 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → ? → #7 → ? → #7 → ? → ? → #7` |
@@ -110,7 +110,7 @@ Compression: 952 actions → 853 steps (1.12 actions per step); flows fully clas
 | Tesla Kubernetes Breach | incident | 9 | 9 | 2 | #4 | `… → #4 → #1 → #4 → #1 → #7 → #4 → #1 → ?` |
 | ToolShell Vulnerability in Sharepoint | campaign | 15 | 18 | 4 | #2 | `#2 → #1 → #7 → #1 → #7 → #1 → ? → #1 → #7 → #1 → #7 → #1 → #4 → ? → #1 → #4 → … → ?` |
 | Turla - Carbon Emulation Plan | emulation-plan | 81 | 73 | 15 | #9 | `? → #9 → #7 → #1 → #7 → #1 → #7 → ? → ? → #1 → #7 → #1 → #7 → #1 → … → #1 → #7 → #1 → #7 → ? → #1 → ? → ? → #1 → #7 → #1 → #7 → #1 → #7 → … → #1 → … → #1 → #7 → #4 → #1 → #4 → #1 → #7 → #1 → #7 → ? → #1 → #7 → ? → #1 → #7 → #4 → #1 → #7 → #1 → ? → #1 → #4 → #1 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → ? → #1 → #7 → ? → #3 → #7` |
-| Turla - Snake Emulation Plan | emulation-plan | 74 | 72 | 9 | #3 | `#3 → #7 → #1 → #7 → #9 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #7 → #1 → #7 → ? → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #1 → #4 → #1 → #4 → #1 → #7 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #4 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → … → #1 → … → #7 → ?` |
+| Turla - Snake Emulation Plan | emulation-plan | 74 | 72 | 8 | #3 | `#3 → #7 → #1 → #7 → #9 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #1 → #7 → #1 → #4 → #1 → #4 → #1 → #7 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → ? → #4 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #4 → #1 → … → #1 → … → #7 → ?` |
 | Uber Breach | incident | 8 | 8 | 2 | #4 | `#4 → #1 → #9 → #4 → #1 → #4 → ? → ?` |
 | WhisperGate | campaign | 19 | 21 | 3 | #4 | `#4 → #1 → ? → #1 → #7 → #1 → … → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → #7 → #1 → ?` |
 

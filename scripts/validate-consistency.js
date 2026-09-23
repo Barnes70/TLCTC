@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
  * validate-consistency.js — Cross-artifact drift checks against the canonical
- * dictionary (json-schemas/layer-1/tlctc-framework.v2.5.json). Part of `npm run validate`.
+ * dictionary (json-schemas/layer-1/tlctc-framework.v2.6.json). Part of `npm run validate`.
  *
  * The dictionary is the single source of truth; several derived artifacts repeat
  * its facts (rule count, DRE code list, cluster strings). This script fails when
@@ -28,7 +28,7 @@ const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
 const readJSON = (rel) => JSON.parse(read(rel));
 const exists = (rel) => fs.existsSync(path.join(ROOT, rel));
 
-const fw = readJSON('json-schemas/layer-1/tlctc-framework.v2.5.json');
+const fw = readJSON('json-schemas/layer-1/tlctc-framework.v2.6.json');
 const findings = [];
 const note = (s) => findings.push(s);
 const sameSet = (a, b) => a.length === b.length && [...a].sort().join('|') === [...b].sort().join('|');
@@ -102,8 +102,9 @@ const em = /extension rules \((\d+)\):\*\*/.exec(glossary);
 if (em && Number(em[1]) !== X) note(`glossary: "extension rules (${em[1]})", registry has ${X}`);
 for (const id of ruleIds) if (!new RegExp(`\\*\\*${id}\\*\\*`).test(glossary)) note(`glossary quick reference: ${id} missing`);
 
-const core = read('documentation/tlctc-v2.5-core.md');
+const core = read('documentation/tlctc-v2.6-core.md');
 for (const id of ruleIds) if (!new RegExp(`\\*\\*${id}\\*\\*`).test(core)) note(`core paper: rule ${id} not defined in bold`);
+for (const r of fw.rules) if (!core.includes(r.statement)) note(`core paper: rule ${r.rule_id} statement not reproduced verbatim`);
 const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
 const wm = /the (\w+) core rules \(([^)]+)\)/.exec(core);
 if (!wm) note('core paper: "the N core rules (...)" sentence not found');

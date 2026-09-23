@@ -21,7 +21,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const DIR = path.join(ROOT, 'mappings/veris');
 const MAPPING = path.join(DIR, 'tlctc-veris.json');
-const DICTIONARY = path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.5.json');
+const DICTIONARY = path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.6.json');
 
 const HEADER = [
   '', 'mapping_framework', 'mapping_framework_version', 'capability_group', 'capability_id',

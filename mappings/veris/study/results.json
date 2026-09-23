@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T17:23:17Z",
+  "generated": "2026-09-22T22:48:06Z",
   "vcdb": {
     "commit": "230cf22b56a481dd1a994b21e4d94c59e2bccea9",
     "url": "https://raw.githubusercontent.com/vz-risk/VCDB/230cf22b56a481dd1a994b21e4d94c59e2bccea9/data/joined/vcdb.json.zip",
@@ -14,9 +14,9 @@
     },
     "note": "joined dataset; VCDB's packaging excludes the web-skimmer batch"
   },
-  "mapping_updated": "2026-09-18",
+  "mapping_updated": "2026-09-22",
   "mapping_veris_version": "1.4.1",
-  "mapping_tlctc_version": "2.5",
+  "mapping_tlctc_version": "2.6",
   "strata": {
     "all": {
       "records": 10047,

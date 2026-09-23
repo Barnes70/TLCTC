@@ -87,12 +87,12 @@
       "ui-priority": 0
     }
   },
-  "description": "A TLCTC (Top Level Cyber Threat Clusters) attack path: the ordered sequence of cause clusters observed in one incident, with attack velocity, boundary crossings and Data Risk Events. References each tlctc-attack-step object with \"includes\". TLCTC v2.5, https://www.tlctc.net",
+  "description": "A TLCTC (Top Level Cyber Threat Clusters) attack path: the ordered sequence of cause clusters observed in one incident, with attack velocity, boundary crossings and Data Risk Events. References each tlctc-attack-step object with \"includes\". TLCTC v2.6, https://www.tlctc.net",
   "meta-category": "misc",
   "name": "tlctc-attack-path",
   "required": [
     "notation"
   ],
   "uuid": "7bda2ebc-9447-4273-a491-b7bd7a0715db",
-  "version": 1
+  "version": 2
 }

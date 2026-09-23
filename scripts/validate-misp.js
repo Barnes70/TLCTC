@@ -5,7 +5,7 @@
  *  1. taxonomies/tlctc/machinetag.json validates against the pinned misp-taxonomies schema
  *     and is byte-identical to the generator output (build-misp-taxonomy.js).
  *  2. Exactly two predicates (cluster, entry-cluster), entry-cluster exclusive, 10 entries each.
- *  3. Entry descriptions / expanded / numerical_value equal the v2.5 dictionary byte for byte.
+ *  3. Entry descriptions / expanded / numerical_value equal the dictionary byte for byte.
  *  4. Every predicate and entry carries a uuid.
  *  5. Both object templates validate against the pinned misp-objects schema, are in
  *     `jq -S -j .` format, and their values_lists match the dictionary and Layer 3 enums.

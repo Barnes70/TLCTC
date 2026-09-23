@@ -21,7 +21,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const MAPPING = path.join(ROOT, 'mappings/mitre-atlas/tlctc-atlas.json');
 const PINNED = path.join(ROOT, 'mappings/mitre-atlas/pinned/stix-atlas.json');
-const DICTIONARY = path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.5.json');
+const DICTIONARY = path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.6.json');
 
 const failures = [];
 const fail = (m) => failures.push(m);

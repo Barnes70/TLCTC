@@ -1,9 +1,9 @@
 {
   "bundle": "tlctc-okf",
   "okf_spec_version": "0.1",
-  "tlctc_version": "2.5",
+  "tlctc_version": "2.6",
   "generator": "scripts/build-okf.js",
-  "document_count": 438,
+  "document_count": 439,
   "type_counts": {
     "attack-path": 59,
     "axiom": 10,
@@ -17,10 +17,10 @@
     "intra-boundary-type": 4,
     "mapping-set": 30,
     "partition": 1,
-    "rule": 19,
+    "rule": 17,
     "sphere": 9,
     "sre": 1,
-    "term": 259
+    "term": 262
   },
   "documents": [
     {
@@ -994,7 +994,7 @@
       "path": "/clusters/cluster-10.md",
       "type": "cluster",
       "title": "#10 Supply Chain Attack",
-      "description": "An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.",
+      "description": "An attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain.",
       "resource": "tlctc:cluster:#10",
       "tags": [
         "taxonomy",
@@ -1961,7 +1961,7 @@
       "path": "/glossary/central-event.md",
       "type": "term",
       "title": "Central Event",
-      "description": "In the TLCTC Bow Tie model: the System Risk Event (SRE) — and the SRE the framework defines is System Compromise / Loss of Control , the point at which an actor achieves unauthorized control over the system's behavior, privileges, data, or trust relationships, sufficient to pursue attack objectives; it is the only event the ten clusters reach, and one is recorded per cluster step.",
+      "description": "In the TLCTC Bow Tie model: the System Risk Event (SRE) — and the SRE the framework defines is System Compromise / Loss of Control , the point at which the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective; it is the only event the ten clusters reach, and one is recorded per cluster step.",
       "resource": "tlctc:term:central-event",
       "tags": [
         "glossary"
@@ -2281,7 +2281,7 @@
       "path": "/glossary/detection-coverage-score-dcs.md",
       "type": "term",
       "title": "Detection Coverage Score (DCS)",
-      "description": "A strategic Key Performance Indicator (KPI) measuring detection timing adequacy relative to Attack Velocity.",
+      "description": "A strategic indicator measuring the defender's timing adequacy relative to Attack Velocity, in two forms read on distributions rather than means (v2.6) : detection DCS d = TTD P90 / Δt and containment DCS c = TTC P90 / Δt , where TTD and TTC are the defender's time to detect and time to contain distributions at an edge, read at the 90th percentile.",
       "resource": "tlctc:term:detection-coverage-score-dcs",
       "tags": [
         "glossary"
@@ -2421,7 +2421,7 @@
       "path": "/glossary/entitlement.md",
       "type": "term",
       "title": "Entitlement",
-      "description": "What an accountable grantor actually conferred on a person for an action: an access right, a role, or a mandate, held genuinely and bounded by its purpose and scope.",
+      "description": "What an accountable grantor actually conferred on a person for an action: an access right, a role, or a mandate, held genuinely.",
       "resource": "tlctc:term:entitlement",
       "tags": [
         "glossary"
@@ -2621,7 +2621,7 @@
       "path": "/glossary/implementation-flaw.md",
       "type": "term",
       "title": "Implementation Flaw",
-      "description": "A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate neutral per R SUBSTRATE).",
+      "description": "A defect in implemented logic (logic, parsing, memory handling, resource handling) enabling unintended behavior when triggered — whether that logic is realized in application source code, firmware, microcode, or hardware description logic (substrate neutral per the substrate clause of R SPECIFIC).",
       "resource": "tlctc:term:implementation-flaw",
       "tags": [
         "glossary"
@@ -2821,7 +2821,7 @@
       "path": "/glossary/loss-of-control-system-compromise.md",
       "type": "term",
       "title": "Loss of Control / System Compromise",
-      "description": "The System Risk Event (SRE) the framework defines — the central event in the Cyber Bow Tie model — representing the point at which an actor achieves unauthorized control over a system's behavior, privileges, data, or trust relationships.",
+      "description": "The System Risk Event (SRE) the framework defines — the central event in the Cyber Bow Tie model — representing the point at which the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective.",
       "resource": "tlctc:term:loss-of-control-system-compromise",
       "tags": [
         "glossary"
@@ -3198,6 +3198,16 @@
       ]
     },
     {
+      "path": "/glossary/prompt-injection.md",
+      "type": "term",
+      "title": "Prompt Injection",
+      "description": "Instructions placed in the input of a language model or agent — directly by the user, or indirectly in content the agent reads (web pages, documents, tool output) — so that the model acts on them.",
+      "resource": "tlctc:term:prompt-injection",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
       "path": "/glossary/propagated-pr.md",
       "type": "term",
       "title": "Propagated PR",
@@ -3221,7 +3231,7 @@
       "path": "/glossary/r-abuse-function-misuse-determination.md",
       "type": "term",
       "title": "R-ABUSE (Function Misuse Determination) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
       "resource": "tlctc:term:r-abuse-function-misuse-determination",
       "tags": [
         "glossary"
@@ -3230,8 +3240,8 @@
     {
       "path": "/glossary/r-channel-channel-control-vs-code-flaw.md",
       "type": "term",
-      "title": "R-CHANNEL (Channel Control vs Code Flaw)",
-      "description": "Global mapping rule (v2.5): If the defective logic is itself a communication path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as 5 Man in the Middle , not as 2 or 3 under R ROLE.",
+      "title": "R-CHANNEL (Channel Control vs Code Flaw) **",
+      "description": "Retired v2.5 rule ID; since v2.6 the channel clause of R SPECIFIC, with its proposition unchanged.",
       "resource": "tlctc:term:r-channel-channel-control-vs-code-flaw",
       "tags": [
         "glossary"
@@ -3260,8 +3270,8 @@
     {
       "path": "/glossary/r-flood-capacity-exhaustion-vs-implementation-defect.md",
       "type": "term",
-      "title": "R-FLOOD (Capacity Exhaustion vs Implementation Defect)",
-      "description": "Global mapping rule: If the primary mechanism is volume or intensity exhausting finite resources, classify as 6 Flooding Attack .",
+      "title": "R-FLOOD (Capacity Exhaustion vs Implementation Defect) **",
+      "description": "Retired v2.5 rule ID; since v2.6 the capacity clause of R SPECIFIC, with its proposition unchanged.",
       "resource": "tlctc:term:r-flood-capacity-exhaustion-vs-implementation-defect",
       "tags": [
         "glossary"
@@ -3271,7 +3281,7 @@
       "path": "/glossary/r-human-human-manipulation-isolation.md",
       "type": "term",
       "title": "R-HUMAN (Human Manipulation Isolation) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
       "resource": "tlctc:term:r-human-human-manipulation-isolation",
       "tags": [
         "glossary"
@@ -3281,7 +3291,7 @@
       "path": "/glossary/r-intra-intra-system-boundary-rules.md",
       "type": "term",
       "title": "R-INTRA (Intra-System Boundary Rules)",
-      "description": "The v2.5 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification.",
+      "description": "The v2.6 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification.",
       "resource": "tlctc:term:r-intra-intra-system-boundary-rules",
       "tags": [
         "glossary"
@@ -3301,7 +3311,7 @@
       "path": "/glossary/r-physical-physical-domain-isolation.md",
       "type": "term",
       "title": "R-PHYSICAL (Physical Domain Isolation) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
       "resource": "tlctc:term:r-physical-physical-domain-isolation",
       "tags": [
         "glossary"
@@ -3321,7 +3331,7 @@
       "path": "/glossary/r-rules-quick-reference.md",
       "type": "term",
       "title": "R-* Rules Quick Reference",
-      "description": "The v2.5 normative registry contains exactly 19 rules : nine core rules and ten v2.1 extension rules.",
+      "description": "The v2.6 normative registry contains exactly 17 rules : seven core rules and ten v2.1 extension rules.",
       "resource": "tlctc:term:r-rules-quick-reference",
       "tags": [
         "glossary"
@@ -3338,10 +3348,20 @@
       ]
     },
     {
+      "path": "/glossary/r-specific-specific-generic-vulnerability-over-residual-test.md",
+      "type": "term",
+      "title": "R-SPECIFIC (Specific Generic Vulnerability over Residual Test)",
+      "description": "Global mapping rule (v2.6): where one weakness is describable both as a specific generic vulnerability and as a residual one, classify it under the specific.",
+      "resource": "tlctc:term:r-specific-specific-generic-vulnerability-over-residual-test",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
       "path": "/glossary/r-substrate-physical-property-vs-implemented-logic.md",
       "type": "term",
-      "title": "R-SUBSTRATE (Physical Property vs Implemented Logic)",
-      "description": "Global mapping rule (v2.5): Classify as 8 Physical Attack only where a physical layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission borne timing, wear, or material state — is itself the exploited generic vulnerability.",
+      "title": "R-SUBSTRATE (Physical Property vs Implemented Logic) **",
+      "description": "Retired v2.5 rule ID; since v2.6 the substrate clause of R SPECIFIC, with its proposition unchanged.",
       "resource": "tlctc:term:r-substrate-physical-property-vs-implemented-logic",
       "tags": [
         "glossary"
@@ -3361,7 +3381,7 @@
       "path": "/glossary/r-transit-transit-boundary-rules.md",
       "type": "term",
       "title": "R-TRANSIT (Transit Boundary Rules)",
-      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | Only R TRANSIT 3 is part of the v2.5 normative registry.",
+      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | Only R TRANSIT 3 is part of the v2.6 normative registry.",
       "resource": "tlctc:term:r-transit-transit-boundary-rules",
       "tags": [
         "glossary"
@@ -3761,7 +3781,7 @@
       "path": "/glossary/supply-chain-attack-10.md",
       "type": "term",
       "title": "Supply Chain Attack (#10)",
-      "description": "A top level threat cluster on the cause side of the bow tie, where an attacker compromises systems by abusing the trust relationship within an organization's supply chain.",
+      "description": "A top level threat cluster on the cause side of the bow tie, where an attacker compromises systems by subverting third party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain.",
       "resource": "tlctc:term:supply-chain-attack-10",
       "tags": [
         "glossary"
@@ -3791,7 +3811,7 @@
       "path": "/glossary/system-failure.md",
       "type": "term",
       "title": "System Failure",
-      "description": "The standing example of a system altitude event outside the ten clusters : loss of function with no actor holding capability — software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, or an unintended act (Error in Use) that breaks the system.",
+      "description": "The standing example of a system altitude event outside the ten clusters : loss of function that serves no attacker's objective — software or hardware failure, misconfiguration, capacity exhaustion without an attacker, an external event, or an unintended act (Error in Use) that breaks the system.",
       "resource": "tlctc:term:system-failure",
       "tags": [
         "glossary"
@@ -3913,6 +3933,16 @@
       "title": "Tie-Breaker Rules",
       "description": "Precedence rules applied when a step appears to fit multiple clusters.",
       "resource": "tlctc:term:tie-breaker-rules",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/time-to-detect-ttd-time-to-contain-ttc.md",
+      "type": "term",
+      "title": "Time to Detect (TTD) / Time to Contain (TTC)",
+      "description": "The distributions of elapsed time from an attack step to its detection (TTD) and to its containment (TTC) at a given edge of an attack path.",
+      "resource": "tlctc:term:time-to-detect-ttd-time-to-contain-ttc",
       "tags": [
         "glossary"
       ]
@@ -4311,7 +4341,7 @@
       "path": "/mappings/cwe/cluster-1.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #1 Abuse of Functions",
-      "description": "166 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions.",
+      "description": "171 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions.",
       "resource": "tlctc:mapping:cwe:cluster-1",
       "tags": [
         "mapping",
@@ -4323,7 +4353,7 @@
       "path": "/mappings/cwe/cluster-10.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #10 Supply Chain Attack",
-      "description": "18 CWE weaknesses entries mapped to TLCTC #10 Supply Chain Attack.",
+      "description": "11 CWE weaknesses entries mapped to TLCTC #10 Supply Chain Attack.",
       "resource": "tlctc:mapping:cwe:cluster-10",
       "tags": [
         "mapping",
@@ -4335,7 +4365,7 @@
       "path": "/mappings/cwe/cluster-2.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #2 Exploiting Server",
-      "description": "476 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
+      "description": "477 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
       "resource": "tlctc:mapping:cwe:cluster-2",
       "tags": [
         "mapping",
@@ -4359,7 +4389,7 @@
       "path": "/mappings/cwe/cluster-4.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #4 Identity Theft",
-      "description": "30 CWE weaknesses entries mapped to TLCTC #4 Identity Theft.",
+      "description": "31 CWE weaknesses entries mapped to TLCTC #4 Identity Theft.",
       "resource": "tlctc:mapping:cwe:cluster-4",
       "tags": [
         "mapping",
@@ -4548,18 +4578,6 @@
       ]
     },
     {
-      "path": "/rules/r-channel.md",
-      "type": "rule",
-      "title": "R-CHANNEL",
-      "description": "If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as #5, not as #2 or #3 under R-ROLE.",
-      "resource": "tlctc:rule:R-CHANNEL",
-      "tags": [
-        "taxonomy",
-        "rule",
-        "must"
-      ]
-    },
-    {
       "path": "/rules/r-cred.md",
       "type": "rule",
       "title": "R-CRED",
@@ -4577,18 +4595,6 @@
       "title": "R-EXEC",
       "description": "If Foreign Executable Content executes, a #7 step MUST be recorded at the execution moment.",
       "resource": "tlctc:rule:R-EXEC",
-      "tags": [
-        "taxonomy",
-        "rule",
-        "must"
-      ]
-    },
-    {
-      "path": "/rules/r-flood.md",
-      "type": "rule",
-      "title": "R-FLOOD",
-      "description": "If the primary mechanism is volume or intensity exhausting finite resources, classify as #6.",
-      "resource": "tlctc:rule:R-FLOOD",
       "tags": [
         "taxonomy",
         "rule",
@@ -4656,11 +4662,11 @@
       ]
     },
     {
-      "path": "/rules/r-substrate.md",
+      "path": "/rules/r-specific.md",
       "type": "rule",
-      "title": "R-SUBSTRATE",
-      "description": "Classify as #8 only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability.",
-      "resource": "tlctc:rule:R-SUBSTRATE",
+      "title": "R-SPECIFIC",
+      "description": "Where one weakness is describable both as a specific generic vulnerability and as a residual one, classify it under the specific.",
+      "resource": "tlctc:rule:R-SPECIFIC",
       "tags": [
         "taxonomy",
         "rule",

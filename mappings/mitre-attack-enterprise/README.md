@@ -112,14 +112,14 @@ Most Resource Development techniques (and pure-OSINT Reconnaissance techniques) 
 | `#6` | 8 | Flooding attack |
 | `(#1 \| #7) → #4` | 7 | Credential extraction (either mode) then application |
 | `#9 → #7` | 7 | Social engineering enabling malware |
-| `#1 \| #10` | 6 | Function abuse or supply chain |
+| `#1 \| #10` | 3 | Function abuse or subverted third-party signing trust (T1553, .001, .002) |
 
 ## Key Mapping Rules
 
 1. **R-EXEC**: If foreign code executes, record a `#7` step — never absorb execution into the enabling cluster
 2. **R-CRED**: Credential acquisition maps to the enabling cluster; credential *use* is always `#4`
 3. **R-ROLE**: Server-side flaw = `#2`; client-side flaw = `#3`
-4. **R-SUPPLY**: `#10` is placed at the Trust Acceptance Event, not at the upstream compromise
+4. **R-SUPPLY**: `#10` is placed at the Trust Acceptance Event, not at the upstream compromise — and only where the trust artifact, or the third party issuing it, was subverted (v2.6 subversion test). A flaw in a legitimately supplied component is `#2`/`#3`; presenting a partner's or IdP-issued credential is `#4`
 
 See [`decision-tree.md`](decision-tree.md) for the full classification methodology.
 
