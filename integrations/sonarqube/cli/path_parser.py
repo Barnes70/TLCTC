@@ -13,6 +13,7 @@ from typing import Union
 ARROW_UNICODE = "→"
 ARROW_ASCII = "->"
 UNMAPPED_LITERAL = "N/A"
+ENABLING_CONDITION_LITERAL = "enabling-condition"
 
 
 class PathParseError(ValueError):
@@ -56,10 +57,16 @@ class Alternation:
 
 @dataclass(frozen=True)
 class Unmapped:
-    """Sentinel for tlctcMapping == 'N/A'."""
+    """Sentinel for a mapping that assigns no cluster: 'N/A' or 'enabling-condition'.
+
+    'enabling-condition' (R-CRED) marks a weakness that is not a step of its own:
+    it enables acquisition, which is classified at the enabling cluster's step.
+    """
+
+    literal: str = UNMAPPED_LITERAL
 
     def __str__(self) -> str:
-        return UNMAPPED_LITERAL
+        return self.literal
 
 
 PathNode = Union[Cluster, Sequence, Alternation, Unmapped]
@@ -77,6 +84,8 @@ def parse(mapping: str) -> PathNode:
         raise PathParseError("mapping is empty")
     if text == UNMAPPED_LITERAL:
         return Unmapped()
+    if text == ENABLING_CONDITION_LITERAL:
+        return Unmapped(ENABLING_CONDITION_LITERAL)
 
     normalized = text.replace(ARROW_ASCII, ARROW_UNICODE)
     branches = [b.strip() for b in normalized.split("|")]
