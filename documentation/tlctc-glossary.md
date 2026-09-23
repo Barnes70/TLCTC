@@ -5,7 +5,7 @@
 
 ---
 
-**Implements:** TLCTC framework specification **v2.6** (working version — not deposited; the citable version is v2.5.1). The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`, reproduced and derived in the v2.6 core paper (`documentation/tlctc-v2.6-core.md`); where an entry here and the canon differ, the canon governs.
+**Implements:** TLCTC framework specification **v2.6**. The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`, reproduced and derived in the v2.6 core paper (`documentation/tlctc-v2.6-core.md`); where an entry here and the canon differ, the canon governs.
 
 > Reference lines cite the v2.6 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
 

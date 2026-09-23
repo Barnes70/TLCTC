@@ -4,8 +4,8 @@
 **Version:** 2.6
 **Date:** 2026-09-23
 **License:** CC BY 4.0
-**Companion to:** *A Cause-Oriented Cyber Threat Taxonomy: The TLCTC Framework* (the v2.6 core paper, `documentation/tlctc-v2.6-core.md`)
-**Status:** Working version — not deposited. Cite v2.5.1: [10.5281/zenodo.22697637](https://doi.org/10.5281/zenodo.22697637).
+**Companion to:** *A Cause-Oriented Cyber Threat Taxonomy: The TLCTC Framework* (the v2.6 core paper) — DOI [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176)
+**DOI:** [10.5281/zenodo.22697636](https://doi.org/10.5281/zenodo.22697636) (concept DOI — always resolves to the latest version)
 **Implements:** TLCTC framework specification v2.6 (canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`); this paper is the v2.6-compatible application profile and introduces no normative content of its own.
 
 ## Abstract
@@ -472,7 +472,7 @@ This glossary defines only the application- and governance-layer terms used in t
 
 ## 19. References
 
-1. Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.6, working version, not deposited; `documentation/tlctc-v2.6-core.md`) — the core paper this document accompanies. The deposited version is 2.5.1: https://doi.org/10.5281/zenodo.22697432
+1. Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.6). 2026. DOI: 10.5281/zenodo.20633176. https://doi.org/10.5281/zenodo.20633176 — the core paper this document accompanies.
 2. National Institute of Standards and Technology. *The NIST Cybersecurity Framework (CSF) 2.0.* NIST Cybersecurity White Paper NIST CSWP 29, 2024. https://doi.org/10.6028/NIST.CSWP.29
 3. MITRE Corporation. *MITRE ATT&CK: Adversarial Tactics, Techniques, and Common Knowledge.* https://attack.mitre.org/
 4. MITRE Corporation. *Common Weakness Enumeration (CWE).* https://cwe.mitre.org/

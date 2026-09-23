@@ -12,7 +12,7 @@
 
 &nbsp;
 
-> **Cluster definitions current as of framework v2.6 (working version, 2026-09-23).** This
+> **Cluster definitions current as of framework v2.6 (2026-09-23).** This
 > paper's structure and argument remain those of Version 2.1. The ten generic
 > vulnerability statements are kept harmonized with the framework dictionary,
 > so errata issued after 2.1 — such as the v2.3.1 retightening of #4 and the
@@ -36,9 +36,8 @@
 > deprecated aliases under v2.6; the normative rule registry is the 17-rule
 > set of the canonical dictionary (see the core paper §6, its Appendix A for
 > every v2.6 change, and the glossary). Where this paper's body differs from
-> the v2.6 core, the core governs. v2.6 is a working version and is not
-> deposited; the citable version is v2.5.1:
-> [10.5281/zenodo.22697432](https://doi.org/10.5281/zenodo.22697432).
+> the v2.6 core, the core governs. Cite the core paper:
+> [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) (concept DOI).
 
 &nbsp;
 
@@ -6585,7 +6584,7 @@ Each example is written as:
   - **Classification impact:** unlike V2.4, this release **alters decisions**. Records classified under 2.4 SHOULD be re-checked against both rules. The CWE mapping was re-adjudicated accordingly: the certificate/peer-authenticity family moved to `#5`, and the `#8` bucket was re-audited from 81 entries to 16, the remainder resolving to `#2`, `#2 | #3`, `#2 | #8` or `#1` on the property test.
   - **No change** to cluster identity, IDs, definitions, attacker's view, generic vulnerability statements, topology, or the axiom set (count or numbering).
 
-- Changes from V2.5 to V2.6 *(working version, not deposited — normative, NOT classification-preserving)*
+- Changes from V2.5 to V2.6 *(released 2026-09-23 — normative, NOT classification-preserving)*
   - **Dictionary artifact:** `json-schemas/layer-1/tlctc-framework.v2.6.json` (new file; `tlctc-framework.v2.5.json` retained unchanged). The registry closed v2.5 at 19 rules (R-SCOPE added) and is **17** in v2.6: R-FLOOD, R-CHANNEL and R-SUBSTRATE are folded into **R-SPECIFIC** (capacity, channel and substrate clauses; propositions unchanged; the three IDs are retired aliases, marked as such in Section 4.2.5 and the rule tables).
   - **#10:** definition amended to name subversion of the trusted third party; a subversion test and a reworded falsifier (a flaw in a legitimately supplied component is classified where it is exploited); federation is `#4` unless the identity provider itself was subverted (`#10 → #4`). Section 4.2 (R-SUPPLY clarifications), Section 11 and Appendix B19 are updated accordingly.
   - **Boundary tests** are canonical in the core paper §4; §4.1 of this paper mirrors them verbatim under a build check.

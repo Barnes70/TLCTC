@@ -36,7 +36,7 @@
       "external_references": [
         { "source_name": "Documentation", "description": "TLCTC framework and the Attack Flow integration", "url": "https://github.com/Barnes70/TLCTC/tree/main/integrations/attack-flow" },
         { "source_name": "TLCTC", "description": "Top Level Cyber Threat Clusters", "url": "https://www.tlctc.net" },
-        { "source_name": "DOI", "description": "TLCTC core paper (v2.5.1 deposit; v2.6 is not deposited)", "url": "https://doi.org/10.5281/zenodo.20633176" }
+        { "source_name": "DOI", "description": "TLCTC core paper (concept DOI; resolves to the latest version)", "url": "https://doi.org/10.5281/zenodo.20633176" }
       ]
     }
   ]

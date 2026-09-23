@@ -4,7 +4,7 @@
 **Version:** 2.6
 **Date:** 2026-09-23
 **License:** CC BY 4.0
-**Status:** Working version — not deposited. Cite v2.5.1: [10.5281/zenodo.22697432](https://doi.org/10.5281/zenodo.22697432).
+**DOI:** [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) (concept DOI — always resolves to the latest version)
 
 > **Canonical version declaration.** The TLCTC framework specification is **v2.6**. The normative authority for cluster definitions, axioms, and classification rules is exactly one artifact: the machine-readable framework dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`; this paper reproduces those verbatim and supplies the derivation, notation, and per-cluster boundary tests around them. The boundary tests are normative and are homed in this paper (Section 4) by design — the dictionary deliberately carries no boundary-test field. Companion documents (application paper, glossary, mappings, tools) declare which canonical version they implement. Retired rule aliases from earlier versions (R-ABUSE, R-HUMAN, R-PHYSICAL from v2.0; R-FLOOD, R-CHANNEL, R-SUBSTRATE from v2.5) are enumerated in Section 6 and are never reused with a different meaning.
 

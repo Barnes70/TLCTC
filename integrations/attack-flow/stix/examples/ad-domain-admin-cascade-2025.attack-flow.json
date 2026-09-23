@@ -103,7 +103,7 @@
         },
         {
           "source_name": "DOI",
-          "description": "TLCTC core paper (v2.5.1 deposit; v2.6 is not deposited)",
+          "description": "TLCTC core paper (concept DOI; resolves to the latest version)",
           "url": "https://doi.org/10.5281/zenodo.20633176"
         }
       ]
