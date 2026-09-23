@@ -770,7 +770,7 @@ The following adjacent frameworks are referenced in this paper for positioning. 
 
 ## Appendix A. Changes from v2.5
 
-v2.6 answers an external review of v2.5. Each change item is traced to the review point it answers and recorded identically in the dictionary's `changes_from_v2_5` section.
+v2.6 answers an external review of v2.5. Each change item is traced to the review point it answers and recorded under the same ID in the dictionary's `changes_from_v2_5` section.
 
 | ID | Review point | Change | Affects |
 | --- | --- | --- | --- |

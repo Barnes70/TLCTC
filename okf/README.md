@@ -28,8 +28,9 @@ controls, mappings).
 ## Provenance notes
 
 - Cluster bodies render the whitepaper §4.1 seven-field definitions (Definition, Generic
-  Vulnerability, and Attacker's View verbatim from `tlctc-framework.v2.6.json`; Scope,
-  Developer's View, and Boundary Tests canonical in the whitepaper).
+  Vulnerability, and Attacker's View verbatim from `tlctc-framework.v2.6.json`; Scope and
+  Developer's View canonical in the whitepaper; Boundary Tests canonical in core §4 and
+  mirrored into whitepaper §4.1 under a build check).
 - Control docs combine NIST CSF objectives (normative) with ISO 27001:2022 Annex A *starter*
   controls (AI-assisted, from `tools/`) — guidance, not a certified control set.
 - CWE mappings are AI-generated and experimental.

@@ -3231,7 +3231,7 @@
       "path": "/glossary/r-abuse-function-misuse-determination.md",
       "type": "term",
       "title": "R-ABUSE (Function Misuse Determination) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
       "resource": "tlctc:term:r-abuse-function-misuse-determination",
       "tags": [
         "glossary"
@@ -3281,7 +3281,7 @@
       "path": "/glossary/r-human-human-manipulation-isolation.md",
       "type": "term",
       "title": "R-HUMAN (Human Manipulation Isolation) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
       "resource": "tlctc:term:r-human-human-manipulation-isolation",
       "tags": [
         "glossary"
@@ -3291,7 +3291,7 @@
       "path": "/glossary/r-intra-intra-system-boundary-rules.md",
       "type": "term",
       "title": "R-INTRA (Intra-System Boundary Rules)",
-      "description": "The v2.5 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification.",
+      "description": "The v2.6 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification.",
       "resource": "tlctc:term:r-intra-intra-system-boundary-rules",
       "tags": [
         "glossary"
@@ -3311,7 +3311,7 @@
       "path": "/glossary/r-physical-physical-domain-isolation.md",
       "type": "term",
       "title": "R-PHYSICAL (Physical Domain Isolation) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
       "resource": "tlctc:term:r-physical-physical-domain-isolation",
       "tags": [
         "glossary"
@@ -3381,7 +3381,7 @@
       "path": "/glossary/r-transit-transit-boundary-rules.md",
       "type": "term",
       "title": "R-TRANSIT (Transit Boundary Rules)",
-      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | Only R TRANSIT 3 is part of the v2.5 normative registry.",
+      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | Only R TRANSIT 3 is part of the v2.6 normative registry.",
       "resource": "tlctc:term:r-transit-transit-boundary-rules",
       "tags": [
         "glossary"

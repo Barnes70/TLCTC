@@ -1,13 +1,13 @@
-# TLCTC Framework Glossary — Version 2.5.1
+# TLCTC Framework Glossary — Version 2.6
 
 *Comprehensive definitions and concepts for the Top Level Cyber Threat Clusters framework.*
-*Author: Bernhard Kreinz | Last Updated: 10 Sep 2026*
+*Author: Bernhard Kreinz | Last Updated: 23 Sep 2026*
 
 ---
 
-**Implements:** TLCTC framework specification **v2.5**. The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.5.json`, reproduced and derived in the v2.5 core paper (`documentation/tlctc-v2.5-core.md`); where an entry here and the canon differ, the canon governs.
+**Implements:** TLCTC framework specification **v2.6** (working version — not deposited; the citable version is v2.5.1). The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`, reproduced and derived in the v2.6 core paper (`documentation/tlctc-v2.6-core.md`); where an entry here and the canon differ, the canon governs.
 
-> Reference lines cite the v2.5 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
+> Reference lines cite the v2.6 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
 
 This glossary contains all defined terms of the TLCTC framework, organized alphabetically, including the v2.1 boundary extensions, the v2.6 consolidation rule R-SPECIFIC (which folds the v2.5 rules R-FLOOD, R-CHANNEL and R-SUBSTRATE), and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Entries carried over from the V2.0/V2.1 whitepaper keep their whitepaper section cross-references. V2.1 additions are marked with *(V2.1)*; v2.5 additions with *(v2.5)*, v2.6 additions with *(v2.6)*. Industry terms commonly used in the field are marked with *(Industry Term)*. Rule IDs that are no longer part of the v2.6 normative registry are explicitly marked **(Deprecated alias)** or **(Retired alias)** — a retired ID keeps its original meaning and is never reused for a different proposition; the sole historical exception (the v2.1 draft R-INTRA numbering) is documented in the R-INTRA entry.
 
@@ -333,7 +333,7 @@ See also: CWE, CVE, MITRE ATT&CK, Techniques (TTPs)
 
 Degradation or denial of service caused **primarily** by volume or intensity exceeding finite resources. Resources include: bandwidth, CPU cycles, memory, storage, database connections, API quotas, thread/process pools, file handles. Maps to `#6 Flooding Attack`.
 
-**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1
+**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1 (R-SPECIFIC, capacity)
 
 ### Cause-Side Partition *(v2.5)*
 
@@ -875,7 +875,7 @@ Non-Overlap Rule: Credential acquisition maps to the enabling threat cluster; cr
 
 A flaw in code logic, parsing, memory handling, or resource handling that causes crash, hang, or degradation when triggered—**without** requiring volume/intensity to exceed normal capacity. Includes algorithmic complexity weaknesses (e.g., ReDoS). Maps to `#2` or `#3` per R-ROLE, not `#6`.
 
-**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1
+**Reference:** Handbook §4.2.2 (Global Definitions), R-FLOOD (§4.2.5); Core paper §9, §6.1 (R-SPECIFIC, capacity)
 
 ### Implementation Flaw
 
@@ -1370,7 +1370,7 @@ The layered privilege model in computing systems (Ring 0 through Ring 3) where e
 
 ### R-ABUSE (Function Misuse Determination) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its substance is carried unchanged by the #1 cluster definition and boundary tests (core paper §4). The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry. Its substance is carried unchanged by the #1 cluster definition and boundary tests (core paper §4). The ID keeps this original meaning and is never reused.*
 
 Original statement: If the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as `#1 Abuse of Functions`.
 
@@ -1454,7 +1454,7 @@ R-SUBSTRATE is the *admission* test — whether a weakness qualifies as `#8` at 
 
 ### R-HUMAN (Human Manipulation Isolation) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its substance is carried unchanged by the #9 cluster definition and boundary tests (core paper §4) together with Axiom VI. The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry. Its substance is carried unchanged by the #9 cluster definition and boundary tests (core paper §4) together with Axiom VI. The ID keeps this original meaning and is never reused.*
 
 Original statement: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as `#9 Social Engineering`, and any subsequent technical steps MUST be classified separately.
 
@@ -1462,7 +1462,7 @@ Original statement: If the attacker's advantage comes from psychological manipul
 
 ### R-INTRA (Intra-System Boundary Rules) *(V2.1)*
 
-The v2.5 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
+The v2.6 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
 
 | Rule | Summary |
 |---|---|
@@ -1483,7 +1483,7 @@ Global mapping rule: The method of gaining a privileged communication-path posit
 
 ### R-PHYSICAL (Physical Domain Isolation) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.5 normative registry. Its sequencing substance is carried by the #8 cluster definition and boundary tests (core paper §4); its admission question is now settled normatively by R-SPECIFIC, substrate clause. The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry. Its sequencing substance is carried by the #8 cluster definition and boundary tests (core paper §4); its admission question is now settled normatively by R-SPECIFIC, substrate clause. The ID keeps this original meaning and is never reused.*
 
 Original statement: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately. Note that the substrate clause of R-SPECIFIC corrects a latent misreading of this phrasing: attacker physical access or proximity is NOT required for `#8`.
 
@@ -1514,7 +1514,7 @@ The complete transit boundary rule set governing use of the transit operator (`�
 |---|---|---|
 | **R-TRANSIT-3** | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R-ROLE |
 
-Only **R-TRANSIT-3** is part of the v2.5 normative registry. The remaining v2.1 drafting guidance is non-normative notation practice: a transit party must be distinct from source and target and actually sit between them in the delivery path; the annotation is optional (recommended where the intermediary has meaningful control responsibility, omittable for pure conduits); compromise or coercion of the intermediary must be modeled as its own preceding cluster step; transit annotations never change cluster classification (see SG-2); and chained transit may be used when each party has independent analytical relevance. The withdrawn draft IDs R-TRANSIT-1, -2, -4, -5, -6, -7, -8 are not to be cited.
+Only **R-TRANSIT-3** is part of the v2.6 normative registry. The remaining v2.1 drafting guidance is non-normative notation practice: a transit party must be distinct from source and target and actually sit between them in the delivery path; the annotation is optional (recommended where the intermediary has meaningful control responsibility, omittable for pure conduits); compromise or coercion of the intermediary must be modeled as its own preceding cluster step; transit annotations never change cluster classification (see SG-2); and chained transit may be used when each party has independent analytical relevance. The withdrawn draft IDs R-TRANSIT-1, -2, -4, -5, -6, -7, -8 are not to be cited.
 
 **Reference:** core paper §6.2 (R-TRANSIT-3), §11.3.5 (Transit Boundary Operator)
 
@@ -1852,7 +1852,7 @@ Specific, detailed attack techniques or methods that fall within a broader Top L
 
 ### Supply Chain Attack (#10)
 
-A top-level threat cluster on the cause side of the bow-tie, where an attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain. The generic vulnerability is that trust in third-party components and update channels can be subverted. A defect in a legitimately supplied component is **not** `#10`: it is classified where it is exploited (`#2`/`#3` per R-ROLE — Log4Shell is `#2`), because where flawed code came from is location, not generic vulnerability. Falsifier: remove the attacker's subversion of the third party, not the third party itself; if the step still succeeds, it was never `#10`.
+A top-level threat cluster on the cause side of the bow-tie, where an attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain. The generic vulnerability is that trust in third-party components and update channels can be subverted. A defect in a legitimately supplied component is **not** `#10`: it is classified where it is exploited, by R-ROLE or R-SPECIFIC (Log4Shell is `#2`), because where flawed code came from is location, not generic vulnerability. Falsifier: remove the attacker's subversion of the third party, not the third party itself; if the step still succeeds, it was never `#10`.
 
 **Supply Chain as "Bridge Not Bucket":** #10 is a *bridge* threat cluster that marks the use of a trusted supply-chain channel as an attack vector to cross from one domain/trust boundary into another (e.g. @Vendor → @Org). It does *not* absorb the semantics of other clusters (#1–#9).
 

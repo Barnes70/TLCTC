@@ -39,6 +39,9 @@ function findList(lines, from, to) {
     while (j < to && lines[j].trim() === '') j++;
     const first = j;
     while (j < to && /^- /.test(lines[j])) j++;
+    if (j < to && /^\s+\S/.test(lines[j])) {
+      throw new Error(`boundary-tests: multi-line bullet at line ${j + 1} is not supported; keep each boundary test on one line`);
+    }
     return j > first ? { first, last: j - 1 } : null;
   }
   return null;

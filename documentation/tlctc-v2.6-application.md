@@ -40,7 +40,7 @@ Classification operates on **attack steps**, not on incidents as a whole. An inc
 - **R-MITM** — communication-path position? Gaining position maps to the enabling cluster; interception/modification/relay is #5.
 - **R-SPECIFIC** — can the weakness be described both as a specific generic vulnerability and as a residual one? Classify under the specific; the residual tests (#1 no flaw, #2/#3 flaw per R-ROLE) apply only when no specific one is exploited. *Capacity:* volume or intensity exhausting finite capacity = #6; an implementation defect causing crash/hang = #2 or #3. *Channel:* is the defective logic itself a communication-path control (certificate validation, chain of trust, hostname matching, expiry/revocation, channel encryption, algorithm negotiation)? Then #5; incidental defects in the same code (e.g. memory corruption in a TLS parser) stay #2/#3. *Substrate:* is a physical-layer property of the substrate (charge, voltage, emission, temperature, wear) the exploited vulnerability, or only the readout channel? Apply the removal test: if the property behaved ideally, would a flaw remain? Yes = #2/#3; no = #8. Attacker proximity is not the test.
 - **R-EXEC** — does Foreign Executable Content execute here? If yes, a #7 step **must** be recorded at the execution moment (in addition to the enabling cluster). Domain-specific expression languages (SQL, LDAP, XPath, template syntax) are data unless they reach a general-purpose engine; natural-language instructions to a model are not FEC.
-- **R-SUPPLY** — third-party trust link? Place #10 at the Trust Acceptance Event — the moment the trust artifact becomes authoritative inside the target domain. #10 needs the trust artifact, or its issuer, to have been subverted before acceptance; a flaw in a legitimately supplied component is #2/#3 where it is exploited.
+- **R-SUPPLY** — third-party trust link? Place #10 at the Trust Acceptance Event — the moment the trust artifact becomes authoritative inside the target domain. #10 needs the trust artifact, or its issuer, to have been subverted before acceptance; a flaw in a legitimately supplied component is classified where it is exploited, by R-ROLE or R-SPECIFIC.
 
 **Step 4 — Apply tie-breakers if needed.** If more than one cluster still seems plausible, select the cluster matching the **initial** generic vulnerability — the weakness that made the step possible, not a downstream effect. If genuine ambiguity remains, assign the best-supported cluster and record the rationale; use the epistemic-state annotations (`#X [conf=low]`, `?`) from core §6/§7 only when no cluster can be defended.
 
@@ -81,7 +81,8 @@ Q7  Is FOREIGN CODE executing? (if launched via a legitimate tool, #1 → #7)
 Q8  Requires physical interaction with hardware/signals?
                                                       → #8 Physical Attack
 Q9  Psychologically manipulating a human?             → #9 Social Engineering
-Q10 Exploiting trust in a third-party component/service/update (placed at the
+Q10 Exploiting subverted trust in a third-party
+    component/service/update (placed at the
     Trust Acceptance Event)?                          → #10 Supply Chain Attack
     └─ no match → re-examine; one of the above must apply.
 ```
@@ -96,7 +97,7 @@ The cause–event–consequence model (core §3.4) places the ten clusters on th
 
 **Tagging Data Risk Events.** A DRE is recorded as a tag appended to a classified step: `#X + [DRE: C]`, `#X + [DRE: I]`, `#X + [DRE: A]`. The letters are the impacted property — Confidentiality, Integrity, Availability/Accessibility (general) — and form the refinement tree of core §7.6. When the distinction matters operationally and can be evidenced, use the refinements: for Integrity, `Ii` for an *incorrect state* (correspondence or completeness fails — the content is wrong) and `If` for a *misattributed state* (provenance or attribution fails — the record claims an origin it does not have, and its content may be perfectly accurate); for Availability, `Av` (data gone or unreachable — wiped, deleted) and `Ac` (data present but unusable — encrypted, locked behind a disabled account). Both distinctions are load-bearing for response: `Ac` (ransomware) leaves recovery options that `Av` (wiper) destroys, and `Ii` is answered by validation and reconciliation where `If` is answered by segregation of duties and provenance logging. Refinements are read off the record, never off the actor; the parent code stays legal when the refinement is unknown. Tags may be combined (`+ [DRE: C, I]`). A DRE is recorded at the step where the impact *first occurs* — confidentiality is breached at the read/collection step, not re-cited at every later staging or exfiltration step that handles the same data.
 
-**The SRE pivot, in practice.** The SRE marks the moment the attacker holds control sufficient to pursue objectives. It is not a tag on a step; it is a position in the path. Recording it matters because it opens the detection window: compromise can exist for weeks before any DRE, so naming the SRE tells responders where "we are compromised" began even when no data has yet moved. In some paths the DRE coincides with the SRE (a SQL injection that reads data the instant it succeeds); in others the SRE precedes the first DRE by days. Both are accommodated — the SRE is the pivot regardless of whether consequences are simultaneous or delayed.
+**The SRE pivot, in practice.** The SRE marks the moment the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective (core §3.4). It is not a tag on a step; it is a position in the path. Recording it matters because it opens the detection window: compromise can exist for weeks before any DRE, so naming the SRE tells responders where "we are compromised" began even when no data has yet moved. In some paths the DRE coincides with the SRE (a SQL injection that reads data the instant it succeeds); in others the SRE precedes the first DRE by days. Both are accommodated — the SRE is the pivot regardless of whether consequences are simultaneous or delayed.
 
 **BRE chaining for reporting.** Beyond the DRE, business-level effects are recorded as Business Risk Events (`SRE → DRE → BRE₁ → … → BREₙ`): a regulatory notification, a declared outage, an imposed fine. These chain for reporting and governance (Part B), and the chain can break at any point — not every SRE yields a DRE, and not every DRE yields a BRE. In Layer-3 attack-path notation, BREs are generally narrated in prose rather than appended to steps; the notation carries the cause-side path and the DRE tags, and the business chain is reconstructed from them.
 
@@ -306,9 +307,9 @@ DCS_c = TTC_P90 / Δt      (containment)
 
 The core establishes DCS as a velocity relationship; here it is operationalized as a *control-effectiveness KCI* — the full control-indicator treatment deferred from the core. As a KCI, DCS sits between the control-objectives layer and the risk-event layer: it contextualizes raw time-to-detect and time-to-contain (procedural KCIs) by the threat reality (Δt), turning "how fast do we detect and contain?" into "do we act fast *enough* to matter?" Interpretation, for either form:
 
-- **DCS < 1.0** — detection completes before the attacker completes the transition; the defender is ahead; the control is effective.
+- **DCS < 1.0** — detection (DCS_d) or containment (DCS_c) completes before the attacker completes the transition; the defender is ahead; the control is effective.
 - **DCS = 1.0** — detection matches attack speed; marginal, with no buffer.
-- **DCS > 1.0** — the transition completes before detection fires; the attacker wins the transition; the control is ineffective at that edge.
+- **DCS > 1.0** — the transition completes before detection or containment; the attacker wins the transition; the control is ineffective at that edge.
 
 Detection alone does not stop a transition: `DCS_d < 1` with `DCS_c > 1` means the step was seen but completed anyway, so the containment form decides whether the control prevents the next step.
 
@@ -424,7 +425,7 @@ AI meets TLCTC from two directions, and the framework's answer to both is the sa
 | Direct prompt injection | Abuse of the model's designed instruction-following → #1 | Scope |
 | Indirect / poisoned-content injection | Designed ingestion of untrusted content → #1; #3 only on a genuine parser/handler flaw (R-ROLE) | Scope |
 | Tool / function misuse by the agent | Abuse of a designed tool API → #1 | Autonomy |
-| Model, weights, or plugin supply | Trust acceptance of a third-party artifact → #10 | Scope |
+| Model, weights, or plugin supply | Trust acceptance of a subverted third-party artifact → #10 | Scope |
 | Excessive agency / autonomous action | *Not a cause* — compresses the SRE → BRE window | Velocity |
 
 The right-hand column is the load-bearing point: an autonomous agent does not invent a new generic vulnerability, it shortens the time and widens the blast radius between loss of control and business impact. That is a consequence-side phenomenon (§11), measured with the same velocity and DCS apparatus of §10, not a new entry on the cause side.
@@ -439,7 +440,7 @@ The second direction is the **Open Knowledge Format (OKF) view**. The `okf/` bun
 
 This paper *applies* the TLCTC framework; it does not *validate* it. Empirical validation — inter-rater agreement on classification and large-scale mapping studies against incident corpora — is the subject of separate work.
 
-The control placements, NIST CSF mapping, and indicator targets in Part B are guidance, not prescriptions: they show how to position controls and measure effectiveness against each cluster, but concrete control selection, thresholds, and risk-appetite boundaries are organization-specific. The DCS and velocity-adjusted targets assume an organization can measure attack velocity (Δt) and mean time to detect (MTTD) with reasonable accuracy — instrumentation many organizations still lack.
+The control placements, NIST CSF mapping, and indicator targets in Part B are guidance, not prescriptions: they show how to position controls and measure effectiveness against each cluster, but concrete control selection, thresholds, and risk-appetite boundaries are organization-specific. The DCS and velocity-adjusted targets assume an organization can measure attack velocity (Δt) and time to detect and to contain (TTD/TTC, read at P90) with reasonable accuracy — instrumentation many organizations still lack.
 
 The ATT&CK→TLCTC and CWE→TLCTC mappings are reference aids for translating operational artifacts to causes; the CWE mapping in particular is AI-generated and experimental. The cross-domain treatments of Part C are likewise illustrative rather than exhaustive: the method, regulatory, and tooling mappings (§12–§14) show how the cause layer attaches to each domain without claiming to be complete crosswalks, the tooling projections inherit the limits of the upstream maps they ride on (§14), and the TLCTC+ reporting profile (§13) is a proposal, not part of the frozen core. Finally, the taxonomy itself — the ten clusters, the axioms, the rules, and the notation — is defined and bounded by the core paper; this paper neither extends nor alters it.
 
