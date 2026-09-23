@@ -4,8 +4,8 @@
   "version": "2.3-agentic-20260225",
   "license": "CC BY 4.0 — Bernhard Kreinz / tlctc.net",
   "metadata": {
-    "framework_ref": "tlctc-framework.v2.3.json",
-    "tlctc_version": "2.3",
+    "framework_ref": "tlctc-framework.v2.6.json",
+    "tlctc_version": "2.6",
     "source_paper": "The Consequence Amplifier — Agentic AI on the Right Side of the Bow-Tie",
     "author": "Bernhard Kreinz",
     "date": "2026-02-25",
@@ -43,7 +43,7 @@
       ".audit": "Audit manipulation — monitoring or logging integrity compromised",
       ".evidence": "Forensic degradation — evidence quality reduced for post-incident analysis"
     },
-    "example": "C: [C]→[LoC.ext]→[I.audit]→[I.ext]→[I.evidence]",
+    "example": "C: [C]→[C.ext]→[I.audit]→[I.ext]→[I.evidence]",
     "domain_boundary_notation": {
       "format": "C: ||[api][@OrgA→@OrgB]||",
       "description": "Consequence-side boundary crossing through authorised integration channels. NOT a supply chain attack (#10) — this is damage propagation, not trust exploitation.",
@@ -61,7 +61,7 @@
         "scenario": "LegitimateAgentCompromised",
         "notes": "Single cause-side event (indirect prompt injection, #1 Abuse of Functions). All subsequent activity is consequence-side."
       },
-      "notation": "C: [C]→[LoC.ext]→[I.audit]→[I.ext]→[I.evidence]",
+      "notation": "C: [C]→[C.ext]→[I.audit]→[I.ext]→[I.evidence]",
       "amplifications": ["Velocity", "Scope", "Autonomy"],
       "max_velocity": "VC-4",
       "steps": [
@@ -144,7 +144,7 @@
         "attack_path_id": "agentic-path-A",
         "scenario": "LegitimateAgentCompromised"
       },
-      "notation": "C: [I.financial]→[I.financial]→[I.audit]→[LoC.ext]",
+      "notation": "C: [I.financial]→[I.financial]→[I.audit]→[C.ext]",
       "amplifications": ["Velocity", "Scope"],
       "max_velocity": "VC-4",
       "steps": [

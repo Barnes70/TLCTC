@@ -1,6 +1,6 @@
 {
   "$schema": "tlctc-threat-identification-v2",
-  "tlctc_version": "2.3",
+  "tlctc_version": "2.6",
   "metadata": {
     "name": "YOUR PROJECT NAME",
     "version": "1.0.0",
