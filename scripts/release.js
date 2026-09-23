@@ -7,7 +7,7 @@
  *                                         uncommitted; with --go they are committed for you)
  *   npm run release -- --go               act: retarget the tag, push it, refresh GitHub
  *                                         release assets, patch the Zenodo checklist
- *   options: --tag v2.5.0 (default: v<version> from the dictionary's tlctc_version + ".0")
+ *   options: --tag v2.6.0 (default: v<X.Y>.0 from the newest layer-1 dictionary)
  *            --build      rebuild PDFs (PDF output is not byte-deterministic, so this
  *                         always changes the checksums — only do it when sources changed)
  *            --no-assets  skip GitHub release asset upload
@@ -18,8 +18,8 @@
  *   2. npm run validate
  *   3. with --build: rebuilds the PDFs and commits them ("docs: rebuild PDFs for <tag>")
  *   4. git tag -f <tag> HEAD && git push -f origin <tag>
- *   5. gh release upload <tag> tlctc-v2.5-core.pdf tlctc-framework.v2.5.json tlctc-cwe.json --clobber
- *   6. rewrites the checksum/size/tag lines in input4new/zenodo-v2.5-core-metadata.md
+ *   5. gh release upload <tag> <core pdf> <application pdf> <dictionary> tlctc-cwe.json --clobber
+ *   6. rewrites the checksum/size/tag lines in input4new/zenodo-v<V>-{core,application}-metadata.md
  *   7. prints the md5 / sha256 / size / pages the Zenodo form must show
  *
  * The tag retarget is a force-push of a public tag; that is why it needs --go.
@@ -35,8 +35,15 @@ const args = process.argv.slice(2);
 const flag = (f) => args.includes(f);
 const opt = (f, d) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] : d; };
 const GO = flag('--go');
-const fw = JSON.parse(fs.readFileSync(path.join(ROOT, 'json-schemas/layer-1/tlctc-framework.v2.5.json'), 'utf8'));
-const TAG = opt('--tag', `v${fw.metadata.tlctc_version}.0`);
+// The release version follows the newest canonical dictionary in layer-1 (tlctc-framework.vX.Y.json);
+// older dictionaries stay in the tree as frozen records.
+const DICTS = fs.readdirSync(path.join(ROOT, 'json-schemas/layer-1')).map((f) => /^tlctc-framework\.v(\d+)\.(\d+)\.json$/.exec(f)).filter(Boolean)
+  .sort((a, b) => (+a[1] - +b[1]) || (+a[2] - +b[2]));
+const V = `${DICTS[DICTS.length - 1][1]}.${DICTS[DICTS.length - 1][2]}`;
+const DICT = `json-schemas/layer-1/tlctc-framework.v${V}.json`;
+const fw = JSON.parse(fs.readFileSync(path.join(ROOT, DICT), 'utf8'));
+if (fw.metadata.tlctc_version !== V) { console.error(`! ${DICT} declares tlctc_version ${fw.metadata.tlctc_version}`); process.exit(1); }
+const TAG = opt('--tag', `v${V}.0`);
 const sh = (cmd, opts = {}) => execSync(cmd, { cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'], ...opts }).toString().trim();
 // No shell anywhere: node/git/gh are real executables; npm is bypassed by calling the scripts directly.
 const run = (cmd, cmdArgs) => { const r = spawnSync(cmd, cmdArgs, { cwd: ROOT, stdio: 'inherit' }); if (r.status !== 0) { console.error(`! ${cmd} ${cmdArgs.join(' ')} failed`); process.exit(1); } };
@@ -44,11 +51,12 @@ const node = (script, ...a) => run(process.execPath, [path.join(ROOT, 'scripts',
 const dirty = () => sh('git status --porcelain').split('\n').filter((l) => l && !l.includes(' okf/')).join('\n');
 
 const PDFS = {
-  core: 'documentation/tlctc-v2.5-core.pdf',
-  application: 'documentation/tlctc-v2.5-application.pdf',
+  core: `documentation/tlctc-v${V}-core.pdf`,
+  application: `documentation/tlctc-v${V}-application.pdf`,
   glossary: 'documentation/tlctc-glossary.pdf',
 };
-const ASSETS = ['documentation/tlctc-v2.5-core.pdf', 'json-schemas/layer-1/tlctc-framework.v2.5.json', 'mappings/mitre-cwe/tlctc-cwe.json'];
+// Both papers are Zenodo deposits (core concept 10.5281/zenodo.20633176, application concept 10.5281/zenodo.22697636).
+const ASSETS = [PDFS.core, PDFS.application, DICT, 'mappings/mitre-cwe/tlctc-cwe.json'];
 
 console.log(`release ${TAG}${GO ? '' : ' (dry run — add --go to act)'}`);
 
@@ -58,7 +66,7 @@ if (d0) { console.error('! working tree is dirty; commit first:\n' + d0); if (GO
 
 // 2. validate
 console.log('\n== validate');
-node('validate-framework.js', 'json-schemas/layer-1/tlctc-framework.schema.json', 'json-schemas/layer-1/tlctc-framework.v2.5.json');
+node('validate-framework.js', 'json-schemas/layer-1/tlctc-framework.schema.json', DICT);
 node('validate-attack-paths.js');
 node('validate-consistency.js');
 node('build-okf.js');
@@ -109,20 +117,23 @@ if (!flag('--no-tag')) {
 if (!flag('--no-assets')) {
   console.log(`\n== GitHub release assets for ${TAG}`);
   const exists = spawnSync('gh', ['release', 'view', TAG], { cwd: ROOT, stdio: 'ignore' }).status === 0;
-  if (!exists) run('gh', ['release', 'create', TAG, '--title', `TLCTC ${TAG}`, '--notes', `TLCTC ${fw.metadata.tlctc_version} — see documentation/tlctc-v2.5-core.md`, '--verify-tag']);
+  if (!exists) run('gh', ['release', 'create', TAG, '--title', `TLCTC ${TAG}`, '--notes', `TLCTC ${fw.metadata.tlctc_version} — see documentation/tlctc-v${V}-core.md`, '--verify-tag']);
   run('gh', ['release', 'upload', TAG, ...ASSETS, '--clobber']);
 }
 
-// 6. checklist
-const ck = path.join(ROOT, 'input4new/zenodo-v2.5-core-metadata.md');
-if (fs.existsSync(ck)) {
-  console.log('\n== patch Zenodo checklist');
+// 6. checklists — one per deposit (core, application). Each checklist carries an
+//    "| **UPLOAD THIS** → `<pdf>` | `<md5>` | <size> | <pages> |" row, a "compare the md5 … against"
+//    line, a sha256 line and optionally the tag line.
+const fmt = (n) => n.toLocaleString('en-US');
+const esc = (s) => s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
+for (const k of ['core', 'application']) {
+  const ck = path.join(ROOT, `input4new/zenodo-v${V}-${k}-metadata.md`);
+  if (!fs.existsSync(ck)) { console.log(`\n! no checklist ${path.relative(ROOT, ck)} — skipped`); continue; }
+  console.log(`\n== patch Zenodo checklist (${k})`);
   let t = fs.readFileSync(ck, 'utf8');
-  const fmt = (n) => n.toLocaleString('en-US');
-  const c = info.core, a = info.application;
+  const c = info[k];
   const subs = [
-    [/\| \*\*UPLOAD THIS\*\* → `documentation\/tlctc-v2\.5-core\.pdf` \| `[0-9a-f]{32}` \| [\d,]+ B \(\d+ KB\) \| \d+ \|/, `| **UPLOAD THIS** → \`documentation/tlctc-v2.5-core.pdf\` | \`${c.md5}\` | ${fmt(c.size)} B (${Math.round(c.size / 1024)} KB) | ${c.pages} |`],
-    [/\| NOT this → `documentation\/tlctc-v2\.5-application\.pdf` \| `[0-9a-f]{32}` \| [\d,]+ B \(\d+ KB\) \| \d+ \|/, `| NOT this → \`documentation/tlctc-v2.5-application.pdf\` | \`${a.md5}\` | ${fmt(a.size)} B (${Math.round(a.size / 1024)} KB) | ${a.pages} |`],
+    [new RegExp('\\| \\*\\*UPLOAD THIS\\*\\* → `' + esc(c.rel) + '` \\| `[0-9a-f]{32}` \\| [\\d,]+ B \\(\\d+ KB\\) \\| \\d+ \\|'), `| **UPLOAD THIS** → \`${c.rel}\` | \`${c.md5}\` | ${fmt(c.size)} B (${Math.round(c.size / 1024)} KB) | ${c.pages} |`],
     [/compare the md5 Zenodo shows against `[0-9a-f]{32}`/, `compare the md5 Zenodo shows against \`${c.md5}\``],
     [/`[0-9a-f]{64}`\.\)/, `\`${c.sha256}\`.)`],
     ...(flag('--no-tag') ? [] : [[/currently points at `[0-9a-f]{7,}`; \*\*retarget to `[0-9a-f]{7,}` before depositing\*\*/, `points at \`${head}\` (retargeted by scripts/release.js); **nothing to do**`]]),
@@ -134,4 +145,5 @@ if (fs.existsSync(ck)) {
 
 // 7. summary
 console.log(`\nRelease ${TAG} prepared at ${head}.`);
-console.log(`Zenodo form: upload ${PDFS.core}, verify md5 ${info.core.md5}, Version ${fw.metadata.tlctc_version}.`);
+console.log(`Zenodo core form:        upload ${PDFS.core}, verify md5 ${info.core.md5}, Version ${fw.metadata.tlctc_version}.`);
+console.log(`Zenodo application form: upload ${PDFS.application}, verify md5 ${info.application.md5}, Version ${fw.metadata.tlctc_version}.`);
