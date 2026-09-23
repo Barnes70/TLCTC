@@ -105,12 +105,24 @@ def primary_from_expression(expr):
 
 
 def has_ambiguous_role(expr):
-    """True if the expression contains '#2 | #3' (the R-ROLE alternation)."""
+    """True if the expression carries the R-ROLE alternation between #2 and #3.
+
+    Matches the literal '#2 | #3' and path forms whose alternatives START with
+    #2 and #3 respectively, e.g. '#2 -> #7 | #3 -> #7' (CWE-94, CWE-502): the
+    alternatives differ only in the role of the exploited component.
+    """
     if not expr:
         return False
     normalised = re.sub(r"\s+", "", expr)
     # Accept '#2|#3' or '#3|#2' (order-insensitive per pair)
-    return "#2|#3" in normalised or "#3|#2" in normalised
+    if "#2|#3" in normalised or "#3|#2" in normalised:
+        return True
+    heads = set()
+    for alt in normalised.replace("(", "").replace(")", "").split("|"):
+        m = CLUSTER_RE.match(alt)
+        if m:
+            heads.add(m.group(1))
+    return {"2", "3"} <= heads
 
 
 def apply_heuristic(vendor, product, heuristic_rules):
@@ -395,7 +407,7 @@ def main():
         "metadata": {
             "title": "TLCTC KEV Mapping (CISA Known Exploited Vulnerabilities -> TLCTC)",
             "description": "Per-CVE TLCTC cluster derivation from CISA KEV, via CVE -> CWE -> TLCTC traversal with R-ROLE disambiguation.",
-            "tlctc_version": "2.3",
+            "tlctc_version": "2.6",
             "source_catalog_version": kev.get("catalogVersion"),
             "source_date_released": kev.get("dateReleased"),
             "total_entries": len(records),

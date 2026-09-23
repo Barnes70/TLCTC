@@ -59,21 +59,21 @@ The exposure concentrates in `#2`. Two things this tells you:
   "product": "Secure Firewall Management Center (FMC)",
   "dateAdded": "2026-03-19",
   "sourceCwes": ["CWE-502"],
-  "derivedMappingExpression": "#2 | #3",
+  "derivedMappingExpression": "#2 → #7 | #3 → #7",
   "primaryCluster": "#2",
-  "clusterSet": ["#2", "#3"],
+  "clusterSet": ["#2", "#7", "#3"],
   "confidence": "Allowed",
   "derivationStatus": "ok",
   "contextResolvedBy": "product-heuristic",
-  "contextHeuristicNotes": "FMC is a management server — server role."
+  "contextHeuristicNotes": "Cisco firewall."
 }
 ```
 
 **Reading this row, left to right:**
 
-- CWE-502 (Deserialization of Untrusted Data) maps to `#2 | #3` in TLCTC because deserialization flaws are role-dependent.
-- The product-role heuristic saw `Cisco :: Secure Firewall Management Center (FMC)` and fired the "FMC is a management server" rule → `primaryCluster = #2`.
-- `clusterSet` still reports `["#2", "#3"]` — useful if you want to ask "which clusters does this CVE *touch*?", but the canonical answer is `#2`.
+- CWE-502 (Deserialization of Untrusted Data) maps to `#2 → #7 | #3 → #7` in TLCTC: the flaw is role-dependent (`#2` or `#3`), and the gadget chain that runs afterwards is foreign executable content (`#7`, R-EXEC).
+- The product-role heuristic saw `Cisco :: Secure Firewall Management Center (FMC)` and fired its `Secure Firewall` rule (server role) → `primaryCluster = #2`.
+- `clusterSet` still reports `["#2", "#7", "#3"]` — useful if you want to ask "which clusters does this CVE *touch*?", but the primary cluster is `#2` (followed by `#7` at execution).
 
 ## Step 5 — Translate to action
 
@@ -91,7 +91,7 @@ The 6 "derivation-pending" entries need CVE-level analysis before they slot into
 low_conf = [e for e in q1_2026 if e.get("confidence") == "Allowed-with-Review"]
 ```
 
-`Allowed-with-Review` means the source CWE's TLCTC mapping was flagged as context-dependent. If you're making a prioritisation call on a specific `Allowed-with-Review` row (e.g., Cisco SD-WAN CVE-2022-20775), re-read the source CWE's `mappingRationale` in [`mappings/mitre-cwe/tlctc-cwe.json`](../../mitre-cwe/tlctc-cwe.json) and confirm the chosen cluster matches the actual exploitation pattern described in the CVE advisory.
+`Allowed-with-Review` means the source CWE's TLCTC mapping was flagged as context-dependent. In this quarter's slice the list is empty. Across the catalog, if you're making a prioritisation call on a specific `Allowed-with-Review` row (e.g., Microsoft Visual Basic for Applications CVE-2012-1854, CWE-426), re-read the source CWE's `mappingRationale` in [`mappings/mitre-cwe/tlctc-cwe.json`](../../mitre-cwe/tlctc-cwe.json) and confirm the chosen cluster matches the actual exploitation pattern described in the CVE advisory.
 
 ## Summary
 
