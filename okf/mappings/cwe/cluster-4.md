@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "CWE weaknesses → #4 Identity Theft"
-description: "30 CWE weaknesses entries mapped to TLCTC #4 Identity Theft."
+description: "31 CWE weaknesses entries mapped to TLCTC #4 Identity Theft."
 resource: "tlctc:mapping:cwe:cluster-4"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE CWE → TLCTC mapping (`mappings/mitre-cwe/`). AI-generated, human-reviewed; experimental.
 
-Mapped entries: **30**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
+Mapped entries: **31**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
@@ -42,6 +42,7 @@ Mapped entries: **30**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
 | CWE-798 | Use of Hard-coded Credentials | #4 | Allowed | Hard-coded credentials baked into the product (passwords, API keys, cryptographic keys) — once extracted from binaries/firmware, every deployment becomes impersonable. Decision tree Q3 -> #4. |
 | CWE-799 | Improper Control of Interaction Frequency | #4 \| #6 | Allowed-with-Review | Missing rate-limiting / lockout permits unbounded interaction. Authentication endpoints → #4 (credential brute force / impersonation); resource endpoints → #6 (flooding / DoS). Per ruling-2 enabling-condition policy. |
 | CWE-1241 | Use of Predictable Algorithm in Random Number Generator | #4 \| #5 | Allowed | Predictable algorithm in an RNG produces guessable outputs. Token/identifier use -> #4 (impersonation); key/IV use -> #5 (channel decryption). Per ruling-2; consistent with CWE-331-339 PRNG family. |
+| CWE-1273 | Device Unlock Credential Sharing | #4 | Allowed | Device unlock credential shared across many devices (a master unlock key). Obtaining the credential maps to the enabling cluster; presenting it to unlock a device is credential use — #4 (R-CRED). Nothing third-party was subverted, so v2.6 does not place this at #10. Decision tree Q3 -> #4. |
 | CWE-1391 | Use of Weak Credentials | #4 | Allowed | The product uses weak credentials (e.g., default keys, hard-coded / easily guessable passwords) that an attacker can calculate, derive, reuse, or guess and then use to authenticate. In TLCTC this is #4 Identity Theft: the generic vulnerability is that the system accepts credentials that can be trivially created/guessed and used to impersonate a legitimate identity. No separate harvesting step (#3/#5/#7/#8) is implied by the CWE itself. |
 | CWE-1392 | Use of Default Credentials | #4 | Allowed | Default credentials shipped with the product (passwords or cryptographic keys) — any attacker who knows the defaults can authenticate. Decision tree Q3 -> #4. |
 | CWE-1393 | Use of Default Password | #4 | Allowed | The product uses default passwords for potentially critical functionality. Real-world exploits use these known passwords to bypass authentication and gain administrative/DBA access. This matches TLCTC #4 Identity Theft: the attacker possesses a known default password and uses it as a credential to operate under a legitimate identity. There is no requirement in the CWE text that the password be first harvested via another cluster, so it is not just an enabling condition. |

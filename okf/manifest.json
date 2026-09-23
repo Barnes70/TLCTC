@@ -4341,7 +4341,7 @@
       "path": "/mappings/cwe/cluster-1.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #1 Abuse of Functions",
-      "description": "166 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions.",
+      "description": "171 CWE weaknesses entries mapped to TLCTC #1 Abuse of Functions.",
       "resource": "tlctc:mapping:cwe:cluster-1",
       "tags": [
         "mapping",
@@ -4353,7 +4353,7 @@
       "path": "/mappings/cwe/cluster-10.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #10 Supply Chain Attack",
-      "description": "18 CWE weaknesses entries mapped to TLCTC #10 Supply Chain Attack.",
+      "description": "11 CWE weaknesses entries mapped to TLCTC #10 Supply Chain Attack.",
       "resource": "tlctc:mapping:cwe:cluster-10",
       "tags": [
         "mapping",
@@ -4365,7 +4365,7 @@
       "path": "/mappings/cwe/cluster-2.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #2 Exploiting Server",
-      "description": "476 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
+      "description": "477 CWE weaknesses entries mapped to TLCTC #2 Exploiting Server.",
       "resource": "tlctc:mapping:cwe:cluster-2",
       "tags": [
         "mapping",
@@ -4389,7 +4389,7 @@
       "path": "/mappings/cwe/cluster-4.md",
       "type": "mapping-set",
       "title": "CWE weaknesses → #4 Identity Theft",
-      "description": "30 CWE weaknesses entries mapped to TLCTC #4 Identity Theft.",
+      "description": "31 CWE weaknesses entries mapped to TLCTC #4 Identity Theft.",
       "resource": "tlctc:mapping:cwe:cluster-4",
       "tags": [
         "mapping",
