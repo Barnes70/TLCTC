@@ -12,7 +12,7 @@
 
 &nbsp;
 
-> **Cluster definitions current as of framework v2.5 (2026-08-08).** This
+> **Cluster definitions current as of framework v2.6 (working version, 2026-09-23).** This
 > paper's structure and argument remain those of Version 2.1. The ten generic
 > vulnerability statements are kept harmonized with the framework dictionary,
 > so errata issued after 2.1 — such as the v2.3.1 retightening of #4 and the
@@ -25,12 +25,20 @@
 > #2/#3 on the physical-property test) — and retightened the #2/#3
 > definition and attacker's-view strings to the substrate-neutral
 > "implementation flaws within a component acting in a server/client role".
-> Rule IDs stated in this paper's §4.2.4–§4.2.5 (R-ABUSE, R-HUMAN,
-> R-PHYSICAL, and the draft R-TRANSIT/R-INTRA series) are deprecated
-> aliases under v2.5; the normative rule registry is the 18-rule set of the
-> canonical dictionary (see the core paper §6 and the glossary). For the current citable
-> definition of the framework, see the core paper:
-> [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176).
+> v2.6 folded R-FLOOD, R-CHANNEL and R-SUBSTRATE into one rule, R-SPECIFIC
+> (capacity, channel and substrate clauses, propositions unchanged), amended
+> the #10 definition to name subversion of the trusted third party (a flaw in
+> a legitimately supplied component is classified where it is exploited), and
+> made the core paper §4 canonical for boundary tests: the §4.1 boundary tests
+> below are mirrored from it verbatim. Rule IDs stated in this paper's
+> §4.2.4–§4.2.5 (R-ABUSE, R-HUMAN, R-PHYSICAL, R-FLOOD, R-CHANNEL,
+> R-SUBSTRATE, and the draft R-TRANSIT/R-INTRA series) are retired or
+> deprecated aliases under v2.6; the normative rule registry is the 17-rule
+> set of the canonical dictionary (see the core paper §6, its Appendix A for
+> every v2.6 change, and the glossary). Where this paper's body differs from
+> the v2.6 core, the core governs. v2.6 is a working version and is not
+> deposited; the citable version is v2.5.1:
+> [10.5281/zenodo.22697432](https://doi.org/10.5281/zenodo.22697432).
 
 &nbsp;
 
@@ -186,6 +194,8 @@ When both occur in a scenario, express as a sequence: `(enabling cluster) → #4
 ## 3. The Thought Experiment
 
 > Deriving the 10 Clusters Through Systematic Decomposition: The 10 TLCTC clusters aren't an arbitrary enumeration or industry convention—they are derived by systematically decomposing the IT-landscape object along its generic vulnerabilities. The decomposition delivers **mutual exclusivity by construction**: each generic vulnerability is assigned to exactly one cluster. **Collective exhaustiveness, by contrast, is not a deductive guarantee**—it rests on the claim that the enumeration of attack surfaces below is itself complete, which is an ontological commitment about the object, not a proof. That commitment is deliberately **falsifiable**: if ten is the wrong number, the test is to exhibit a generic vulnerability that fits none of the ten clusters, or a cluster that must split into two. Until such a counterexample is produced, ten stands.
+
+> *v2.6 note:* the core paper (§2, §3.2) states the criterion behind this decomposition explicitly — a cluster exists where a generic vulnerability has its own control lever and owner — names #1 and #2/#3 as the residual clusters, and credits exclusivity to the precedence rule R-SPECIFIC together with the boundary tests rather than to the decomposition alone. Completeness remains a falsifiable hypothesis.
 
 Imagine the complex world of information technology as a single object. This object, although robust and seemingly closed, has various attack surfaces – the generic vulnerabilities (**root weaknesses**).
 
@@ -740,7 +750,7 @@ Notation:
 Example usage: `#2 + [DRE: C]`
 
 **Loss of Control / System Compromise**
-The central event in the Bow-Tie model: the point at which the attacker achieves unauthorized control over the system's behavior, privileges, data, or trust relationships. This is the pivot between cause-side (threats) and effect-side (consequences).
+The central event in the Bow-Tie model: the point at which the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective. This is the pivot between cause-side (threats) and effect-side (consequences).
 
 ##### Execution Terms
 
@@ -1076,7 +1086,7 @@ These rules are **global**: they apply across all clusters and are **normative**
 
 ---
 
-##### R-FLOOD — Capacity Exhaustion vs Implementation Defect
+##### R-FLOOD — Capacity Exhaustion vs Implementation Defect *(retired in v2.6 — now the capacity clause of R-SPECIFIC; proposition unchanged)*
 
 **Rule (Normative):**
 
@@ -1181,7 +1191,7 @@ This distinction is critical: the binary itself is legitimate (`#1` abuse), but 
 
 **Clarifications (Normative):**
 
-1. **Falsifiability test:** If removing the third-party trust link would stop this step from succeeding → `#10` belongs here.
+1. **Falsifiability test (v2.6):** Remove the attacker's subversion of the third party — not the third party itself. If the step still succeeds, it was never `#10`. `#10` requires that the trust artifact, or the third party issuing it, was subverted before acceptance; a flaw in a legitimately supplied component is classified where it is exploited (`#2`/`#3` per R-ROLE, or R-SPECIFIC) — Log4Shell is `#2`.
 2. `#10` marks the boundary crossing, not the upstream compromise:
 
    - Attacker activities at the vendor are classified by their own clusters
@@ -1191,10 +1201,11 @@ This distinction is critical: the binary itself is legitimate (`#1` abuse), but 
    - `#10 → #7` — accepted artifact leads to FEC execution
    - `#10 → #1` — accepted entitlement enables function abuse
    - `#10 → #4` — accepted identity assertion enables impersonation
-4. Federation clarity:
+4. Federation clarity (v2.6):
 
-   - Credential use at IdP by attacker → `#4` (in the IdP domain)
-   - SP accepts assertion/token as authoritative → `#10` (at SP, TAE)
+   - Presenting a credential or assertion to authenticate as another identity → `#4`, wherever it is presented and however it was obtained (R-CRED)
+   - SP accepts an assertion from an IdP that was not subverted → no step (the trust link working as designed)
+   - The IdP or its federation trust material was itself subverted → the SP's acceptance of that authority is the TAE (`#10`); each impersonating assertion presented through it is `#4`
    - Attacker uses granted access → `#1` or subsequent clusters
 
 **Common Patterns:**
@@ -1202,7 +1213,8 @@ This distinction is critical: the binary itself is legitimate (`#1` abuse), but 
 ```
 #10 → #7                     (trusted update delivers malware)
 #10 → #1                     (trusted entitlement enables abuse)
-#4 → #10 → #1                (credential use at IdP → federation acceptance → function abuse)
+#10 → #4 → #1                (subverted IdP accepted at SP → impersonating assertion → function abuse)
+#4 → #1                      (credential use at an IdP that was not subverted → function abuse)
 ```
 
 **Boundary Notation (Normative):**
@@ -1270,7 +1282,7 @@ If the attacker's advantage in the step comes from **unauthorized physical inter
 
 ---
 
-##### R-CHANNEL — Channel Control vs Code Flaw *(V2.4)*
+##### R-CHANNEL — Channel Control vs Code Flaw *(V2.4; retired in v2.6 — now the channel clause of R-SPECIFIC; proposition unchanged)*
 
 **Rule (Normative):**
 If the defective logic is itself a **communication-path control** — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness **MUST** be classified as **`#5 Man in the Middle`**, not as `#2` or `#3` under R-ROLE.
@@ -1283,7 +1295,7 @@ If the defective logic is itself a **communication-path control** — peer authe
 
 ---
 
-##### R-SUBSTRATE — Physical Property vs Implemented Logic *(V2.4)*
+##### R-SUBSTRATE — Physical Property vs Implemented Logic *(V2.4; retired in v2.6 — now the substrate clause of R-SPECIFIC; proposition unchanged)*
 
 **Rule (Normative):**
 A weakness **MUST** be classified as **`#8 Physical Attack`** only where a **physical-layer property of the substrate** — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the **readout channel** for a defect in implemented logic, the weakness **MUST** be classified by that defect (`#2` or `#3` per R-ROLE).
@@ -1493,7 +1505,7 @@ If the action being classified is **"operate as identity by presenting/using an 
 ##### Precedence 5: Flooding Is About Capacity; Defects Are #2/#3
 
 - If the **primary mechanism** is capacity exhaustion by volume/intensity, it **MUST** be `#6`.
-- If the **primary mechanism** is a defect-triggered crash/degradation (including algorithmic complexity), it **MUST** be `#2` or `#3` (per R-FLOOD + R-ROLE).
+- If the **primary mechanism** is a defect-triggered crash/degradation (including algorithmic complexity), it **MUST** be `#2` or `#3` (per R-SPECIFIC, capacity + R-ROLE).
 
 ---
 
@@ -1627,13 +1639,13 @@ Check each R-\* rule for applicability:
 | **R-ROLE** | Is an implementation flaw involved? If yes, is the component in server-role or client-role? |
 | **R-CRED** | Are credentials involved? Is this acquisition or application? |
 | **R-MITM** | Is a communication path position involved? Is this gaining or exploiting the position? |
-| **R-FLOOD** | Is availability impacted? Is it capacity exhaustion or implementation defect? |
+| **R-FLOOD** *(retired v2.6 → R-SPECIFIC, capacity)* | Is availability impacted? Is it capacity exhaustion or implementation defect? |
 | **R-EXEC** | Does FEC execute? If yes, `#7` must be recorded (plus enabling cluster). |
 | **R-SUPPLY** | Is a third-party trust link involved? Is this the TAE? |
 | **R-HUMAN** | Is human psychological manipulation the mechanism? |
 | **R-PHYSICAL** | Is physical access/interference the mechanism? |
-| **R-CHANNEL** *(V2.4)* | Is the defective logic itself a communication-path control? If yes, `#5`, not `#2`/`#3`. |
-| **R-SUBSTRATE** *(V2.4)* | Is a physical property the vulnerability, or only the readout channel? Removal test decides. |
+| **R-CHANNEL** *(V2.4; retired v2.6 → R-SPECIFIC, channel)* | Is the defective logic itself a communication-path control? If yes, `#5`, not `#2`/`#3`. |
+| **R-SUBSTRATE** *(V2.4; retired v2.6 → R-SPECIFIC, substrate)* | Is a physical property the vulnerability, or only the readout channel? Removal test decides. |
 | **R-ABUSE** | Is legitimate functionality being misused with no flaw required? |
 
 ##### Step 4: Apply Tie-Breakers If Needed
@@ -1757,13 +1769,13 @@ Record:
 | **R-ROLE** | `#2` vs `#3` | Server-role (accepts inbound) → `#2`; Client-role (consumes external) → `#3` |
 | **R-CRED** | Acquisition vs Use | Acquisition → enabling cluster; Use → always `#4` (unless authenticating as the presenter's own system-issued identity — self-issued enrolment is `#1`) |
 | **R-MITM** | Gaining vs Exploiting | Gaining position → enabling cluster; Exploiting position → `#5` |
-| **R-FLOOD** | Capacity vs Defect | Volume exhaustion → `#6`; Implementation defect → `#2/#3` |
+| **R-FLOOD** *(retired v2.6 → R-SPECIFIC, capacity)* | Capacity vs Defect | Volume exhaustion → `#6`; Implementation defect → `#2/#3` |
 | **R-EXEC** | FEC Execution | If FEC executes → `#7` MUST be recorded (plus enabling cluster) |
 | **R-SUPPLY** | TAE Placement | `#10` at Trust Acceptance Event where third-party trust is honored |
 | **R-HUMAN** | Human Manipulation | Psychological manipulation → `#9`; subsequent tech steps separate |
 | **R-PHYSICAL** | Physical Access | Physical interaction → `#8`; subsequent tech steps separate |
-| **R-CHANNEL** *(V2.4)* | Control vs Code Flaw | Defective channel control → `#5`; incidental defect → `#2/#3` |
-| **R-SUBSTRATE** *(V2.4)* | Property vs Logic | Physical property exploited → `#8`; physical layer as readout only → `#2/#3` |
+| **R-CHANNEL** *(V2.4; retired v2.6 → R-SPECIFIC, channel)* | Control vs Code Flaw | Defective channel control → `#5`; incidental defect → `#2/#3` |
+| **R-SUBSTRATE** *(V2.4; retired v2.6 → R-SPECIFIC, substrate)* | Property vs Logic | Physical property exploited → `#8`; physical layer as readout only → `#2/#3` |
 | **R-ABUSE** | Function Misuse | No flaw required, legitimate capability abused → `#1` |
 | **R-TRANSIT-1–8** *(V2.1)* | Transit Boundaries | Distinct parties, true intermediary topology, vendor code exclusion, cluster independence |
 | **R-INTRA-1–9** *(V2.1)* | Intra-System Boundaries | Single-system scope, cluster attachment, no cluster change, compressed form, anti-effect |
@@ -2180,7 +2192,7 @@ This section operationalizes **Axiom III** (Threats Are Causes, Not Outcomes). T
 The **central event** in the TLCTC Bow-Tie is:
 
 > **Loss of Control / System Compromise:**
-> The point at which the attacker achieves unauthorized control over the system's behavior, privileges, data, or trust relationships—sufficient to pursue attack objectives.
+> The point at which the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective. *(v2.6 wording, core §3.4: it covers a flood taking a service's capacity out of its owner's control and passive interception taking a communication relationship out of it; only steps that succeeded are classified.)*
 
 This central event is intentionally positioned **before** outcomes for two reasons:
 
@@ -2851,6 +2863,8 @@ INTEGRATED KxI HIERARCHY WITH VELOCITY CONTEXT
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
+> *v2.6 note:* the core paper (§7.2) reads DCS on distributions rather than means, in two forms — detection `DCS_d = TTD_P90 / Δt` and containment `DCS_c = TTC_P90 / Δt` — and only `DCS_c < 1` means the transition is stopped. `MTTD / Δt`, as drawn above, is the mean-based special case of `DCS_d`.
+
 ### 10.8 Axiom Compliance
 
 **Axiom Reminder:** Control failure is not a threat. Indicators MUST NOT redefine or conflate threats with control gaps.
@@ -3124,10 +3138,10 @@ Absence of a boundary operator implies **no explicit responsibility-sphere trans
   ```
   #10 ||[update][@Vendor→@Org]|| → #7
   ```
-- Federated access accepted at SP:
+- Assertions from a subverted IdP accepted at SP (v2.6; with an IdP that was not subverted the path is `#4 → #1`):
 
   ```
-  #4 → #10 ||[auth][@Vendor(IdP)→@Org(SP)]|| → #1
+  #10 ||[auth][@Vendor(IdP)→@Org(SP)]|| → #4 → #1
   ```
 - Physical access enables interception (two bridge steps in one chain, separated by a concrete step):
 
@@ -5012,7 +5026,7 @@ The cluster entries below are reproduced verbatim from the canonical framework d
       "strategic_id": "#10",
       "operational_root_id": "TLCTC-10.00",
       "name": "Supply Chain Attack",
-      "definition": "An attacker compromises systems by targeting vulnerabilities within third-party software, hardware, services, or update mechanisms that are trusted and integrated by the target.",
+      "definition": "An attacker compromises systems by subverting third-party software, hardware, services, or update mechanisms that the target trusts and integrates, so that the subverted artifact is accepted as authoritative inside the target's domain.",
       "attackers_view": "I abuse the trust in third-party components.",
       "generic_vulnerability": "Trust in third-party components and update channels can be subverted.",
       "topology": "bridge"
@@ -5925,7 +5939,7 @@ This section provides a **cluster-indexed checklist** for development teams. It 
 - validate all untrusted inputs at trust boundaries; encode outputs for the target context
 - avoid unsafe parsing/deserialization patterns; handle errors without leaking secrets
 - prevent memory-safety issues (where applicable) and manage resources defensively
-- ensure “availability by design”: avoid algorithmic-complexity pitfalls (see R-FLOOD)
+- ensure “availability by design”: avoid algorithmic-complexity pitfalls (see R-SPECIFIC, capacity)
 
 **Verification (recommended):**
 
@@ -5981,7 +5995,7 @@ This section provides a **cluster-indexed checklist** for development teams. It 
 **Verification (recommended):**
 
 - load tests against quotas/limits; “abuse load” tests (intended high-cost endpoints)
-- differentiate capacity exhaustion (`#6`) from defect-triggered DoS (`#2/#3`) per R-FLOOD
+- differentiate capacity exhaustion (`#6`) from defect-triggered DoS (`#2/#3`) per R-SPECIFIC (capacity)
 
 #### 16.3.6 `#7 Malware` — foreign executable content (FEC) control
 
@@ -6472,7 +6486,7 @@ Each example is written as:
 - **Scenario:** Crafted input causes catastrophic backtracking and CPU exhaustion.
 - **Attack Path:** `#2` (server) **or** `#3` (client), depending on vulnerable component role
 - **Outcomes:** `[Data Risk Event: A]`
-- **Notes:** Although it looks like “flooding,” the primary mechanism is an implementation defect (R-FLOOD).
+- **Notes:** Although it looks like “flooding,” the primary mechanism is an implementation defect (R-SPECIFIC, capacity).
 
 ### B16 — USB drop leading to execution (#8 → #7)
 
@@ -6495,12 +6509,12 @@ Each example is written as:
 - **Outcomes:** Varies
 - **Notes:** #10 is the trust-transfer; downstream execution is #7.
 
-### B19 — Runtime IdP federation accepted at SP (#4 → #10 → #1)
+### B19 — Assertions from a subverted IdP accepted at SP (#10 → #4 → #1)
 
-- **Scenario:** Attacker uses stolen identity artifacts at an external IdP; the org SP accepts the assertion/token; attacker then abuses legitimate functions.
-- **Attack Path:** `#4 → #10 ||[auth][@Vendor(IdP)→@Org(SP)]|| → #1`
+- **Scenario:** The external identity provider itself (or its federation trust material, e.g. signing configuration or metadata) is subverted; the org SP honours the subverted authority; the attacker presents assertions for users it is not, then abuses legitimate functions.
+- **Attack Path:** `#10 ||[auth][@Vendor(IdP)→@Org(SP)]|| → #4 → #1`
 - **Outcomes:** Varies
-- **Notes:** Credential use is #4; **TAE** (acceptance of IdP assertion/token) is #10; feature abuse is #1.
+- **Notes:** v2.6 federation rule: the SP's acceptance of the subverted IdP's authority is the **TAE** (#10); each impersonating assertion presented through it is #4 (R-CRED); feature abuse is #1. Where the attacker merely uses stolen credentials at an IdP that was **not** subverted, the SP's acceptance is the trust link working as designed and is not a step: the path is `#4 → #1`.
 
 ### B20 — Parallel execution example (illustrative)
 
@@ -6561,6 +6575,12 @@ Each example is written as:
   - **R-PHYSICAL Clarification 4 added:** R-PHYSICAL governs *sequencing*, not *admission*. Whether a weakness qualifies as `#8` at all is decided by R-SUBSTRATE, and "unauthorized physical interaction" must not be read as requiring the attacker to be physically present.
   - **Classification impact:** unlike V2.4, this release **alters decisions**. Records classified under 2.4 SHOULD be re-checked against both rules. The CWE mapping was re-adjudicated accordingly: the certificate/peer-authenticity family moved to `#5`, and the `#8` bucket was re-audited from 81 entries to 16, the remainder resolving to `#2`, `#2 | #3`, `#2 | #8` or `#1` on the property test.
   - **No change** to cluster identity, IDs, definitions, attacker's view, generic vulnerability statements, topology, or the axiom set (count or numbering).
+
+- Changes from V2.5 to V2.6 *(working version, not deposited — normative, NOT classification-preserving)*
+  - **Dictionary artifact:** `json-schemas/layer-1/tlctc-framework.v2.6.json` (new file; `tlctc-framework.v2.5.json` retained unchanged). The registry closed v2.5 at 19 rules (R-SCOPE added) and is **17** in v2.6: R-FLOOD, R-CHANNEL and R-SUBSTRATE are folded into **R-SPECIFIC** (capacity, channel and substrate clauses; propositions unchanged; the three IDs are retired aliases, marked as such in Section 4.2.5 and the rule tables).
+  - **#10:** definition amended to name subversion of the trusted third party; a subversion test and a reworded falsifier (a flaw in a legitimately supplied component is classified where it is exploited); federation is `#4` unless the identity provider itself was subverted (`#10 → #4`). Section 4.2 (R-SUPPLY clarifications), Section 11 and Appendix B19 are updated accordingly.
+  - **Boundary tests** are canonical in the core paper §4; §4.1 of this paper mirrors them verbatim under a build check.
+  - **Other v2.6 changes** — the stated derivation criterion, the entitlement envelope as scope, R-SCOPE step 4, the data-vs-code boundary and prompt injection (`#1`), the SRE wording and success-only scope, VERIS/CAPEC positioning, DCS on P90 distributions, and a naming note — are recorded in the core paper's Appendix A (C1–C19). This paper's body is otherwise unchanged; short *v2.6 notes* point to the core where its argument moved.
 
 ---
 
