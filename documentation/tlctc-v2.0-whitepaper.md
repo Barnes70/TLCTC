@@ -1236,7 +1236,9 @@ If the attacker's advantage in the step comes from **psychological manipulation 
 
 ---
 
-##### R-PHYSICAL — Physical Domain Isolation *(deprecated rule ID since v2.5 — sequencing now carried by the #8 boundary tests, admission by R-SUBSTRATE; "facilities" dropped from #8 in the v2.5.1 erratum)*
+##### R-PHYSICAL — Physical Domain Isolation
+
+*(deprecated rule ID since v2.5 — sequencing now carried by the #8 boundary tests, admission by R-SUBSTRATE; "facilities" dropped from #8 in the v2.5.1 erratum)*
 
 **Rule (Normative):**
 If the attacker's advantage in the step comes from **unauthorized physical interaction or interference** with hardware, media, interfaces, or signals, that physical step **MUST** be classified as **`#8 Physical Attack`**, and subsequent technical steps **MUST** be classified separately.
