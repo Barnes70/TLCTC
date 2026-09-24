@@ -191,3 +191,5 @@ v2.6 answers an external review of v2.5 with change items C1–C19. The full tab
 **Re-qualification.** All 73 Layer-3 records were re-checked against v2.6 and declare 2.6: two blocked attempts left their paths (cozy-bear-oauth-ngo-2025, openai-hf-artifactory-2026) and one path was re-sequenced `#10 → #4` (mandiant-saas-cascade-2025). The CWE mapping was re-audited, the ATT&CK mapping spot-checked, the KEV and Sigma snapshots regenerated, the Mandiant M-Trends mapping aligned with the canonical ATT&CK mapping, and the integrations (MISP, VERIS, ATLAS, Attack Flow, SARIF, SonarQube) migrated.
 
 **Artifacts.** `tlctc-framework.v2.6.json` (new; `tlctc-framework.v2.5.json` retained unchanged), `tlctc-v2.6-core.md`, `tlctc-v2.6-application.md`, glossary v2.6.
+
+**Deposit.** Released as tag `v2.6.0`; both PDFs deposited as new versions of their Zenodo records, published 2026-09-24: core version DOI 10.5281/zenodo.22943490 (concept 10.5281/zenodo.20633176), application version DOI 10.5281/zenodo.22943516 (concept 10.5281/zenodo.22697636).
