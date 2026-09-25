@@ -18,6 +18,9 @@
  *   6. views    copy generated html back into documentation/ (gitignored local views)
  *   7. images   documentation/images/*.svg → site images/
  *   8. okf      repo okf/ → site okf/ (adds, updates, removes)
+ *   8b. tools   repo tools/*.html → site tools/, CDN libraries rewritten to /vendor/
+ *               (scripts/lib/tool-vendor-map.js; an unmapped library stops the build);
+ *               tools/*.json + tools/examples/*.json copied (adds, updates; never removes)
  *   9. figures  re-inline <svg> blocks in index.html from their source files
  *               (markers: <!-- INLINE-SVG src="…" … --> … <!-- /INLINE-SVG -->)
  *  10. sitemap  bump <lastmod> for every deployable file whose content changed
@@ -65,6 +68,15 @@ function copyIfChanged(src, dst, label) {
   fs.writeFileSync(dst, data);
   changed.add(rel(dst));
   log(`  ${label || 'copy'}  ${rel(dst)}`);
+  return true;
+}
+function writeIfChanged(dst, text, label) {
+  const data = Buffer.from(text, 'utf8');
+  if (fs.existsSync(dst) && textHash(dst) === sha(normBuf(data, dst))) return false;
+  fs.mkdirSync(path.dirname(dst), { recursive: true });
+  fs.writeFileSync(dst, data);
+  changed.add(rel(dst));
+  log(`  ${label || 'write'}  ${rel(dst)}`);
   return true;
 }
 function run(cmd, cmdArgs, cwd, env) {
@@ -173,6 +185,25 @@ if (!NO_OKF) {
   for (const f of dstFiles) if (!srcFiles.includes(f)) { fs.unlinkSync(path.join(dst, f)); removedOkf.push('okf/' + f); log(`  remove okf/${f} (gone from repo)`); }
 }
 
+// ───────────────────────── 8b. tools ─────────────────────────────────────────
+// tools/ is the single source for the site's tools/ (tools/README.md). The repo copy loads
+// its libraries from CDNs so a clone runs from disk; the site copy self-hosts them.
+log('8b. tools');
+{
+  const { toSite, unmappedAssets } = require('./lib/tool-vendor-map');
+  const src = path.join(ROOT, 'tools'), dst = path.join(SITE, 'tools');
+  for (const f of fs.readdirSync(src).filter((x) => x.endsWith('.html'))) {
+    const html = toSite(fs.readFileSync(path.join(src, f), 'utf8'));
+    const left = unmappedAssets(html);
+    if (left.length) { console.error(`  ! tools/${f} still loads ${left.join(', ')} — add it to scripts/lib/tool-vendor-map.js`); process.exit(1); }
+    writeIfChanged(path.join(dst, f), html, 'tool ');
+  }
+  // the data the tools load (starter matrices, examples); site-only files are left alone
+  const data = fs.readdirSync(src).filter((x) => x.endsWith('.json'))
+    .concat(fs.readdirSync(path.join(src, 'examples')).filter((x) => x.endsWith('.json')).map((x) => `examples/${x}`));
+  for (const f of data) copyIfChanged(path.join(src, f), path.join(dst, f), 'tool ');
+}
+
 // ───────────────────────── 9. inline figures in index.html ───────────────────
 log('9. inline figures (index.html)');
 {
@@ -261,7 +292,7 @@ for (const p of PAPERS.slice(0, 2)) {
 // ───────────────────────── state + summary ───────────────────────────────────
 const hashes = {};
 const collect = (dir, base) => { for (const n of fs.readdirSync(dir)) { const p = path.join(dir, n); if (fs.statSync(p).isDirectory()) { if (!['.git', 'node_modules', '__pycache__'].includes(n)) collect(p, base); } else hashes[rel(p)] = fileHash(p); } };
-for (const top of ['okf', 'images']) if (fs.existsSync(path.join(SITE, top))) collect(path.join(SITE, top), SITE);
+for (const top of ['okf', 'images', 'tools']) if (fs.existsSync(path.join(SITE, top))) collect(path.join(SITE, top), SITE);
 for (const f of fs.readdirSync(SITE)) { const p = path.join(SITE, f); if (fs.statSync(p).isFile() && /\.(html|pdf|xml|json|md|txt)$/.test(f) && !f.startsWith('.')) hashes[f] = fileHash(p); }
 fs.writeFileSync(STATE_FILE, JSON.stringify({ built_at: new Date().toISOString(), hashes, mdHashes }, null, 1));
 log(`\nBuild done. ${changed.size} site file(s) changed:`);

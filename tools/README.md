@@ -12,13 +12,31 @@ Standalone, self-contained HTML applications that implement the TLCTC framework.
 | **Threat Radar** | [`radar-tlctc-app.html`](radar-tlctc-app.html) | Direct-manipulation threat radar for CISO reporting: radius encodes the threat value (thresholds sit on the ring lines), drag a bubble radially to assess, click it to edit in place, hover for details. Sector chips with visibility toggles and spotlight, one-click label declutter, trend tracking (old vs current values), report/tolerance flags, undo/redo, report title block, presentation mode, and PNG / SVG / clipboard export with optional legend |
 | **Control Matrix** | [`control-matrix.html`](control-matrix.html) | NIST CSF 2.0 × TLCTC control matrix for mapping controls across all 10 clusters and 6 CSF functions, with maturity scoring, three-layer control effectiveness model (CDE_max, CDE_fitness, COE → ECR), cell-level aggregation (essential floor + complementary ceiling raise), DCS integration for DETECT cells, residual ceiling gap tracking, multi-environment support, shared controls library, and reporting |
 | **CBP** | [`cbp-app.html`](cbp-app.html) | Capability-Based Planning — map organizational capabilities across 10 TLCTC clusters × 6 CSF functions, with maturity at capability and component level, three dimensions (Controls, Workforce, Data Level), control effectiveness model (role, CDE_max, CDE_fitness, COE metrics → ECR), cell-level aggregation with DCS for DETECT cells, shared controls library, gap analysis, and multi-environment support |
+| **Actor Story Designer** | [`actor-story-designer.html`](actor-story-designer.html) | Turn an actor capability profile into a Diamond Model-framed story (adversary, capability, infrastructure, victim) with an auto-generated narrative assessment. Shares its actor library with the Actor Profile Designer |
+| **Tech Enablers Radar** | [`tech-enablers-radar.html`](tech-enablers-radar.html) | Monitor emerging technology enablers (AI, agentic AI, quantum, …) across the 10 clusters, by adoption level and actor archetype (Nation State, Extortion, Fraud, Hacktivist, Amateur), with trend markers |
+| **ATT&CK Explorer** | [`attck-explorer.html`](attck-explorer.html) | Browse the MITRE ATT&CK Enterprise → TLCTC mapping ([`mappings/mitre-attack-enterprise/`](../mappings/mitre-attack-enterprise/)) with multi-select cluster filtering, search by technique ID, name or mapping argument, and the per-technique mapping rationale |
+| **CWE Explorer** | [`cwe-explorer.html`](cwe-explorer.html) | Browse the MITRE CWE → TLCTC mapping ([`mappings/mitre-cwe/`](../mappings/mitre-cwe/)) with multi-select cluster filtering, search by CWE ID, name, mapping argument or CVE, and the per-weakness mapping rationale |
+| **ATT&CK Phase Heatmap** | [`attck-phase-heatmap.html`](attck-phase-heatmap.html) | Heatmap of a report's ATT&CK techniques per attack phase and TLCTC cluster; loads a phase-mapping JSON with a top-level `phases` array (default: the Mandiant M-Trends 2026 mapping in `mappings/mandiant-2026/`) |
 
 ## How to Use
 
 1. Open the HTML file in any modern browser
-2. No installation, no server, no API keys required
+2. No installation, no server, no API keys required (the libraries load from public CDNs)
 3. Models persist in browser `localStorage`
 4. Export/import models as JSON for sharing
+
+Buttons that load a bundled example or default file (Tech Enablers Radar, ATT&CK Phase Heatmap, the Control Matrix and CBP starters) fetch it over HTTP, which browsers block for a page opened from disk. Serve the folder instead (for example `npx serve .` in the repo root, then open `/tools/…`), or use the tool's Import button with the JSON file.
+
+## Repo copy vs. tlctc.net copy
+
+These files are the single source for the tools published at `https://www.tlctc.net/tools/`. `npm run site` copies them to the site tree and rewrites every CDN library to its self-hosted `/vendor/` copy (table: [`scripts/lib/tool-vendor-map.js`](../scripts/lib/tool-vendor-map.js)), so the site makes no third-party requests. Edit the tool here, never the site copy.
+
+`npm run validate` runs [`scripts/validate-tools.js`](../scripts/validate-tools.js), which fails when:
+
+- an embedded generic vulnerability, attacker's view or definition is not verbatim the current dictionary (`json-schemas/layer-1/`),
+- a cluster's short gloss still uses wording an erratum retired (#8 "facilities", #2/#3 "source code"),
+- a tool loads a `/vendor/` path (only the site has those) or a library the vendor map does not cover,
+- a tool is missing from the table above.
 
 ## Template Files
 
@@ -563,8 +581,9 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
 ## Technology
 
 All tools are single-file HTML applications using:
-- React (via CDN)
+- React with in-browser Babel (Threat Modeling, Threat Radar, Control Matrix, CBP, Tech Enablers Radar); the others are plain JavaScript
 - Tailwind CSS
+- Libraries from public CDNs in the repo copy, self-hosted under `/vendor/` on tlctc.net
 - SVG rendering
 - Browser localStorage for persistence
 
