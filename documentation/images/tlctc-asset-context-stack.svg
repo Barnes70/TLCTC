@@ -61,14 +61,17 @@
     <text x="100" y="39" text-anchor="middle" font-size="9" fill="#6b7280">apply threats — never classify them</text>
     <line x1="16" y1="48" x2="184" y2="48" stroke="#e5e7eb" stroke-width="1"/>
     <g font-size="10.5" fill="#4b5563">
-      <text x="16" y="68">Nation-state / state-sponsored</text>
-      <text x="16" y="86">Cybercriminal groups</text>
-      <text x="16" y="104">Insiders acting outside their grant</text>
-      <text x="16" y="122">Hacktivists / extremists</text>
-      <text x="16" y="140">Competitors</text>
-      <text x="16" y="158">Opportunistic individuals</text>
-      <text x="16" y="176">Third-party / supply-chain parties</text>
-      <text x="16" y="194">AI agents</text>
+      <text x="16" y="68">Nation-State</text>
+      <text x="16" y="86">Cybercriminal (Ransomware)</text>
+      <text x="16" y="104">Cybercriminal (General)</text>
+      <text x="16" y="122">Hacktivist</text>
+      <text x="16" y="140">Insider (outside their grant)</text>
+      <text x="16" y="158">Amateur (Script-Kiddie)</text>
+    </g>
+    <line x1="16" y1="170" x2="184" y2="170" stroke="#e5e7eb" stroke-width="1"/>
+    <g font-size="9" font-style="italic" fill="#6b7280">
+      <text x="16" y="186">Any actor can use AI agents —</text>
+      <text x="16" y="199">a capability, not an actor.</text>
     </g>
   </g>
 
