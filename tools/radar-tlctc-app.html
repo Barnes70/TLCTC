@@ -4,28 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TLCTC Threat Radar - Interactive Assessment Tool V5",
+  "description": "Visualize and assess your cyber risk posture with the interactive TLCTC Threat Radar. Direct-manipulation editing, trend tracking, and slide-ready exports across the 10 universal clusters.",
+  "url": "https://www.tlctc.net/tools/radar-tlctc-app.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.tlctc.net/tools/radar-tlctc-app.html"
+  },
+  "inLanguage": "en",
+  "image": "https://www.tlctc.net/images/og-image.png",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Person",
+    "@id": "https://orcid.org/0009-0005-2148-9903",
+    "sameAs": "https://orcid.org/0009-0005-2148-9903",
+    "name": "Bernhard Kreinz"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TLCTC",
+    "url": "https://www.tlctc.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.tlctc.net/images/logo-middle.png"
+    }
+  },
+  "keywords": "TLCTC, Cyber Radar, Threat Assessment, Risk Management, Cyber Threat Clusters, Interactive Tool, CISO Dashboard, Threat Visualization, JSON Import"
+}
+    </script>
     <title>TLCTC Threat Radar - Interactive Assessment Tool V5</title>
     <meta name="description" content="Visualize and assess your cyber risk posture with the interactive TLCTC Threat Radar. Direct-manipulation editing, trend tracking, and slide-ready exports across the 10 universal clusters.">
     <meta name="keywords" content="TLCTC, Cyber Radar, Threat Assessment, Risk Management, Cyber Threat Clusters, Interactive Tool, CISO Dashboard, Threat Visualization, JSON Import">
     <meta name="author" content="TLCTC Framework">
-    <meta property="og:title" content="TLCTC Threat Radar App">
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tlctc.net/tools/radar-tlctc-app.html">
+    <meta property="og:title" content="TLCTC Threat Radar App">
+    <meta property="og:description" content="Visualize and assess your cyber risk posture with the interactive TLCTC Threat Radar. Direct-manipulation editing, trend tracking, and slide-ready exports across the 10 universal clusters.">
+    <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+    <meta property="og:site_name" content="TLCTC">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@fr33thought">
+    <meta name="twitter:creator" content="@fr33thought">
+    <meta name="twitter:url" content="https://www.tlctc.net/tools/radar-tlctc-app.html">
+    <meta name="twitter:title" content="TLCTC Threat Radar App">
+    <meta name="twitter:description" content="Visualize and assess your cyber risk posture with the interactive TLCTC Threat Radar. Direct-manipulation editing, trend tracking, and slide-ready exports across the 10 universal clusters.">
+    <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+
 
     <link rel="canonical" href="https://www.tlctc.net/tools/radar-tlctc-app.html" />
 
-    <script src="/vendor/react/18.3.1/react.development.js"></script>
-    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
-    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
     
-    <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
-    <script src="/vendor/lucide/0.469.0/lucide.min.js"></script>
-    <script src="/vendor/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     
-    <link rel="stylesheet" href="/vendor/pickr/1.9.1/monolith.min.css"/>
-    <script src="/vendor/pickr/1.9.1/pickr.min.js"></script>
-    <link href="/vendor/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.9.1/dist/themes/monolith.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.9.1/dist/pickr.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
-    <link href="/vendor/fonts/google-fonts.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -293,7 +351,7 @@ const ORIGINAL_THREAT_CLUSTERS = [
     { id: 5, name: 'Man in the Middle', shortName: 'MitM', description: 'Interception or modification of communication between parties.' },
     { id: 6, name: 'Flooding Attack', shortName: 'Flooding (DDOS)', description: 'Overwhelming system resources or capacity limits.' },
     { id: 7, name: 'Malware', shortName: 'Malware', description: 'Execution of foreign malicious code, scripts, or binaries.' },
-    { id: 8, name: 'Physical Attack', shortName: 'Physical', description: 'Unauthorized physical interaction with hardware or facilities.' },
+    { id: 8, name: 'Physical Attack', shortName: 'Physical', description: 'Unauthorized physical interaction with or interference to hardware, media, interfaces, or signals.' },
     { id: 9, name: 'Social Engineering', shortName: 'Social Engineering', description: 'Psychological manipulation of humans into unsafe actions.' },
     { id: 10, name: 'Supply Chain Attack', shortName: 'Supply Chain', description: 'Compromise via trusted third-party components or updates.' },
 ];

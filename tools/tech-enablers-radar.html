@@ -8,15 +8,34 @@
     <meta name="description" content="Monitor emerging technology enablers across TLCTC cyber threat clusters, mapped by adoption level and actor archetype (Nation State, Extortion, Fraud, Hacktivist, Amateur).">
     <meta name="keywords" content="TLCTC, Tech Enablers, Technology Radar, Emerging Tech, AI, Agentic AI, Quantum, Cyber Threat Intelligence">
     <meta name="author" content="TLCTC Framework">
-    <meta property="og:title" content="TLCTC Tech Enablers Radar">
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tlctc.net/tools/tech-enablers-radar.html">
+    <meta property="og:title" content="TLCTC Tech Enablers Radar">
+    <meta property="og:description" content="Monitor emerging technology enablers across TLCTC cyber threat clusters, mapped by adoption level and actor archetype (Nation State, Extortion, Fraud, Hacktivist, Amateur).">
+    <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+    <meta property="og:site_name" content="TLCTC">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@fr33thought">
+    <meta name="twitter:creator" content="@fr33thought">
+    <meta name="twitter:url" content="https://www.tlctc.net/tools/tech-enablers-radar.html">
+    <meta name="twitter:title" content="TLCTC Tech Enablers Radar">
+    <meta name="twitter:description" content="Monitor emerging technology enablers across TLCTC cyber threat clusters, mapped by adoption level and actor archetype (Nation State, Extortion, Fraud, Hacktivist, Amateur).">
+    <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+
 
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script src="/vendor/react/18.3.1/react.development.js"></script>
-    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
-    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 
@@ -1069,9 +1088,15 @@
         }
 
         window._mountEnablerApp = function() {
-            const root = ReactDOM.createRoot(document.getElementById('enablerReactRoot'));
-            root.render(<EnablerApp />);
+            const el = document.getElementById('enablerReactRoot');
+            if (!el || el._enablerMounted) return;   // remountEnablerApp() swaps in a fresh node
+            el._enablerMounted = true;
+            ReactDOM.createRoot(el).render(<EnablerApp />);
         };
+        // Babel compiles this block only after DOMContentLoaded, so the mount call in the
+        // DOMContentLoaded handler finds no _mountEnablerApp yet and the radar stayed empty
+        // until a data action remounted it. Mount here; the guard makes a second call a no-op.
+        window._mountEnablerApp();
     </script>
 
     <div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">

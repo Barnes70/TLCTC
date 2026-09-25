@@ -6,10 +6,31 @@
   <title>TLCTC & MITRE ATT&CK Mapping: Advanced Explorer</title>
   <meta name="description" content="Advanced interactive explorer for TLCTC and MITRE ATT&CK mapping with multi-select filtering and comprehensive data views." />
   
-  <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
-  <link rel="stylesheet" href="/vendor/font-awesome/6.5.2/css/all.min.css" />
-  <link href="/vendor/fonts/google-fonts.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.tlctc.net/tools/attck-explorer.html" />
+  <meta property="og:title" content="TLCTC & MITRE ATT&CK Mapping: Advanced Explorer" />
+  <meta property="og:description" content="Advanced interactive explorer for TLCTC and MITRE ATT&CK mapping with multi-select filtering and comprehensive data views." />
+  <meta property="og:image" content="https://www.tlctc.net/images/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster." />
+  <meta property="og:site_name" content="TLCTC" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@fr33thought" />
+  <meta name="twitter:creator" content="@fr33thought" />
+  <meta name="twitter:url" content="https://www.tlctc.net/tools/attck-explorer.html" />
+  <meta name="twitter:title" content="TLCTC & MITRE ATT&CK Mapping: Advanced Explorer" />
+  <meta name="twitter:description" content="Advanced interactive explorer for TLCTC and MITRE ATT&CK mapping with multi-select filtering and comprehensive data views." />
+  <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png" />
+  <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster." />
 
   <script>
     tailwind.config = {
@@ -267,6 +288,44 @@
     .ai-disclaimer button { background: transparent; border: none; cursor: pointer; color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin-left: 0.5rem; opacity: 0.6; vertical-align: middle; }
     .ai-disclaimer button:hover { opacity: 1; }
   </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TLCTC \u0026 MITRE ATT\u0026CK Mapping: Advanced Explorer",
+  "description": "Advanced interactive explorer for TLCTC and MITRE ATT\u0026CK mapping with multi-select filtering and comprehensive data views.",
+  "url": "https://www.tlctc.net/tools/attck-explorer.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.tlctc.net/tools/attck-explorer.html"
+  },
+  "inLanguage": "en",
+  "image": "https://www.tlctc.net/images/og-image.png",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Person",
+    "@id": "https://orcid.org/0009-0005-2148-9903",
+    "sameAs": "https://orcid.org/0009-0005-2148-9903",
+    "name": "Bernhard Kreinz"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TLCTC",
+    "url": "https://www.tlctc.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.tlctc.net/images/logo-middle.png"
+    }
+  }
+}
+    </script>
 </head>
 <body class="min-h-screen bg-background text-foreground font-sans antialiased">
 

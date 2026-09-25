@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TLCTC Threat Identification Tool</title>
+  <meta name="description" content="Interactive TLCTC threat modeling tool: drag-and-drop architecture canvas, smart client-server role detection, attack-path analysis, and threat examples across the 10 clusters.">
   <link rel="canonical" href="https://www.tlctc.net/tools/threat-modeling.html" />
-  <script src="/vendor/react/18.3.1/react.production.min.js"></script>
-  <script src="/vendor/react/18.3.1/react-dom.production.min.js"></script>
-  <script src="/vendor/babel/7.26.4/babel.min.js"></script>
-  <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
   <script>
@@ -33,6 +34,26 @@
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; transition: background-color 0.2s, color 0.2s; }
 
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.tlctc.net/tools/threat-modeling.html">
+  <meta property="og:title" content="TLCTC Threat Identification Tool">
+  <meta property="og:description" content="Interactive TLCTC threat modeling tool: drag-and-drop architecture canvas, smart client-server role detection, attack-path analysis, and threat examples across the 10 clusters.">
+  <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+  <meta property="og:site_name" content="TLCTC">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@fr33thought">
+  <meta name="twitter:creator" content="@fr33thought">
+  <meta name="twitter:url" content="https://www.tlctc.net/tools/threat-modeling.html">
+  <meta name="twitter:title" content="TLCTC Threat Identification Tool">
+  <meta name="twitter:description" content="Interactive TLCTC threat modeling tool: drag-and-drop architecture canvas, smart client-server role detection, attack-path analysis, and threat examples across the 10 clusters.">
+  <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png">
+  <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
     /* Nav bar HSL variables (matching TLCTC app ecosystem) */
     :root {
       --nav-background: 210 40% 98%;
@@ -99,6 +120,44 @@
     .dark ::-webkit-scrollbar-thumb { background: #475569; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
   </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TLCTC Threat Identification Tool",
+  "description": "Interactive TLCTC threat modeling tool: drag-and-drop architecture canvas, smart client-server role detection, attack-path analysis, and threat examples across the 10 clusters.",
+  "url": "https://www.tlctc.net/tools/threat-modeling.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.tlctc.net/tools/threat-modeling.html"
+  },
+  "inLanguage": "en",
+  "image": "https://www.tlctc.net/images/og-image.png",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Person",
+    "@id": "https://orcid.org/0009-0005-2148-9903",
+    "sameAs": "https://orcid.org/0009-0005-2148-9903",
+    "name": "Bernhard Kreinz"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TLCTC",
+    "url": "https://www.tlctc.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.tlctc.net/images/logo-middle.png"
+    }
+  }
+}
+    </script>
 </head>
 <body class="flex flex-col h-screen overflow-hidden">
 
