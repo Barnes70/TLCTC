@@ -18,7 +18,7 @@ Cause: [#10 Supply Chain Attack](/clusters/cluster-10.md). Functions: [GOVERN](/
 
 ## GOVERN
 
-*cross-cutting.* **Objective:** Establish ownership, policy, and risk-appetite for #10 Supply Chain Attack.
+*steering (spans the whole chain).* **Objective:** Govern the strategy, ownership, and risk appetite for the #10 Supply Chain Attack cluster.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -35,7 +35,7 @@ Cause: [#10 Supply Chain Attack](/clusters/cluster-10.md). Functions: [GOVERN](/
 
 ## IDENTIFY
 
-*preventive (left).* **Objective:** Identify the weaknesses and exposure enabling #10 Supply Chain Attack.
+*preventive (cause side).* **Objective:** Identify weaknesses enabling a #10 Supply Chain Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -49,7 +49,7 @@ Cause: [#10 Supply Chain Attack](/clusters/cluster-10.md). Functions: [GOVERN](/
 
 ## PROTECT
 
-*preventive (left).* **Objective:** Prevent or reduce the likelihood of the #10 Supply Chain Attack step.
+*preventive (cause side).* **Objective:** Protect from a #10 Supply Chain Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -64,7 +64,7 @@ Cause: [#10 Supply Chain Attack](/clusters/cluster-10.md). Functions: [GOVERN](/
 
 ## DETECT
 
-*mitigating (right).* **Objective:** Detect #10 Supply Chain Attack activity within its Δt window, before it enables the next step.
+*central event (detects the loss of control).* **Objective:** Detect a #10 Supply Chain Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -78,7 +78,7 @@ Cause: [#10 Supply Chain Attack](/clusters/cluster-10.md). Functions: [GOVERN](/
 
 ## RESPOND
 
-*mitigating (right).* **Objective:** Contain and eradicate #10 Supply Chain Attack once detected.
+*central event → consequence side (contains).* **Objective:** Respond to a #10 Supply Chain Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -92,7 +92,7 @@ Cause: [#10 Supply Chain Attack](/clusters/cluster-10.md). Functions: [GOVERN](/
 
 ## RECOVER
 
-*mitigating (right).* **Objective:** Restore trustworthy capability after #10 Supply Chain Attack.
+*mitigating (consequence side).* **Objective:** Recover from a #10 Supply Chain Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 

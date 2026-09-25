@@ -18,7 +18,7 @@ Cause: [#6 Flooding Attack](/clusters/cluster-6.md). Functions: [GOVERN](/contro
 
 ## GOVERN
 
-*cross-cutting.* **Objective:** Establish ownership, policy, and risk-appetite for #6 Flooding Attack.
+*steering (spans the whole chain).* **Objective:** Govern the strategy, ownership, and risk appetite for the #6 Flooding Attack cluster.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -33,7 +33,7 @@ Cause: [#6 Flooding Attack](/clusters/cluster-6.md). Functions: [GOVERN](/contro
 
 ## IDENTIFY
 
-*preventive (left).* **Objective:** Identify the weaknesses and exposure enabling #6 Flooding Attack.
+*preventive (cause side).* **Objective:** Identify weaknesses enabling a #6 Flooding Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -47,7 +47,7 @@ Cause: [#6 Flooding Attack](/clusters/cluster-6.md). Functions: [GOVERN](/contro
 
 ## PROTECT
 
-*preventive (left).* **Objective:** Prevent or reduce the likelihood of the #6 Flooding Attack step.
+*preventive (cause side).* **Objective:** Protect from a #6 Flooding Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -63,7 +63,7 @@ Cause: [#6 Flooding Attack](/clusters/cluster-6.md). Functions: [GOVERN](/contro
 
 ## DETECT
 
-*mitigating (right).* **Objective:** Detect #6 Flooding Attack activity within its Δt window, before it enables the next step.
+*central event (detects the loss of control).* **Objective:** Detect a #6 Flooding Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -77,7 +77,7 @@ Cause: [#6 Flooding Attack](/clusters/cluster-6.md). Functions: [GOVERN](/contro
 
 ## RESPOND
 
-*mitigating (right).* **Objective:** Contain and eradicate #6 Flooding Attack once detected.
+*central event → consequence side (contains).* **Objective:** Respond to a #6 Flooding Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -91,7 +91,7 @@ Cause: [#6 Flooding Attack](/clusters/cluster-6.md). Functions: [GOVERN](/contro
 
 ## RECOVER
 
-*mitigating (right).* **Objective:** Restore trustworthy capability after #6 Flooding Attack.
+*mitigating (consequence side).* **Objective:** Recover from a #6 Flooding Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 

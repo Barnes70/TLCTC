@@ -1488,7 +1488,7 @@
       "path": "/controls/functions/govern.md",
       "type": "csf-function",
       "title": "GOVERN",
-      "description": "Set direction, accountability and ownership, risk appetite, and assurance so all clusters are managed consistently.",
+      "description": "Govern the strategy, ownership, and risk appetite for each cluster — the management-system layer that connects each cluster to the ISMS (ISO/IEC 27001 clauses 4–10) and the NIST RMF.",
       "resource": "tlctc:csf-function:GV",
       "tags": [
         "controls",
@@ -1536,7 +1536,7 @@
       "path": "/controls/functions/respond.md",
       "type": "csf-function",
       "title": "RESPOND",
-      "description": "Contain and eradicate the realized step before a Data Risk Event matures into a Business Risk Event.",
+      "description": "Contain and eradicate the realized step before the next step or before a Data Risk Event matures into a Business Risk Event.",
       "resource": "tlctc:csf-function:RS",
       "tags": [
         "controls",

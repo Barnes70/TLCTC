@@ -36,13 +36,23 @@ ECR = COE × CDE_max × fitness_factor
 - **Residual ceiling gap = 1.0 − cell CDE_max composite** — risk that operations cannot
   close, only new control *types* or explicit acceptance can.
 
-## Detection Coverage Score (DETECT cells)
+## Detection Coverage Score (DETECT and RESPOND cells)
+
+Two forms, read at the 90th percentile against the attacker's transition time Δt at the edge
+being defended (application paper §10.2):
 
 ```
-DCS = MTTD / Δt
+DCS_d = TTD_P90 / Δt      (detection — DETECT cells)
+DCS_c = TTC_P90 / Δt      (containment — RESPOND cells)
 ```
 
-| DCS | Verdict |
+**DCS < 1.0** — the defender completes first (effective); **= 1.0** — marginal, no buffer;
+**> 1.0** — the attacker wins the transition (ineffective). `DCS_d < 1` with `DCS_c > 1` means
+the step was seen but completed anyway. The mean-based `MTTD / Δt` is the special case.
+
+The Control Matrix tool displays finer bands; every band below 1.0 means the defender is ahead:
+
+| DCS | Tool band |
 |---|---|
 | < 0.5 | effective |
 | 0.5–0.8 | adequate |
@@ -50,8 +60,8 @@ DCS = MTTD / Δt
 | 1.0–2.0 | ineffective |
 | > 2.0 | structurally failed |
 
-The same MTTD can be effective or ineffective depending on the Δt of the transition being
-defended — see [/controls/indicators.md](/controls/indicators.md) and
+The same detection time can be effective or ineffective depending on the Δt of the transition
+being defended — see [/controls/indicators.md](/controls/indicators.md) and
 [velocity classes](/glossary/velocity-class.md).
 
 ## Worked example (DETECT × #7 Malware)

@@ -18,7 +18,7 @@ Cause: [#1 Abuse of Functions](/clusters/cluster-1.md). Functions: [GOVERN](/con
 
 ## GOVERN
 
-*cross-cutting.* **Objective:** Establish ownership, policy, and risk-appetite for #1 Abuse of Functions.
+*steering (spans the whole chain).* **Objective:** Govern the strategy, ownership, and risk appetite for the #1 Abuse of Functions cluster.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -35,7 +35,7 @@ Cause: [#1 Abuse of Functions](/clusters/cluster-1.md). Functions: [GOVERN](/con
 
 ## IDENTIFY
 
-*preventive (left).* **Objective:** Identify the weaknesses and exposure enabling #1 Abuse of Functions.
+*preventive (cause side).* **Objective:** Identify weaknesses enabling a #1 Abuse of Functions event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -49,7 +49,7 @@ Cause: [#1 Abuse of Functions](/clusters/cluster-1.md). Functions: [GOVERN](/con
 
 ## PROTECT
 
-*preventive (left).* **Objective:** Prevent or reduce the likelihood of the #1 Abuse of Functions step.
+*preventive (cause side).* **Objective:** Protect from a #1 Abuse of Functions event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -64,7 +64,7 @@ Cause: [#1 Abuse of Functions](/clusters/cluster-1.md). Functions: [GOVERN](/con
 
 ## DETECT
 
-*mitigating (right).* **Objective:** Detect #1 Abuse of Functions activity within its Δt window, before it enables the next step.
+*central event (detects the loss of control).* **Objective:** Detect a #1 Abuse of Functions event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -79,7 +79,7 @@ Cause: [#1 Abuse of Functions](/clusters/cluster-1.md). Functions: [GOVERN](/con
 
 ## RESPOND
 
-*mitigating (right).* **Objective:** Contain and eradicate #1 Abuse of Functions once detected.
+*central event → consequence side (contains).* **Objective:** Respond to a #1 Abuse of Functions event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -93,7 +93,7 @@ Cause: [#1 Abuse of Functions](/clusters/cluster-1.md). Functions: [GOVERN](/con
 
 ## RECOVER
 
-*mitigating (right).* **Objective:** Restore trustworthy capability after #1 Abuse of Functions.
+*mitigating (consequence side).* **Objective:** Recover from a #1 Abuse of Functions event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 

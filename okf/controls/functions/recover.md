@@ -15,6 +15,6 @@ Restore trustworthy capability and limit the consequence chain after the central
 # Schema
 
 - **CSF function:** RECOVER (RC)
-- **Bow-tie position:** mitigating (right)
+- **Bow-tie position:** mitigating (consequence side)
 
 Applies across all ten clusters; see each [control-objective set](/controls/index.md).

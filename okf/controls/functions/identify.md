@@ -15,6 +15,6 @@ Find the weaknesses and exposure that enable the cluster step. Left (cause) side
 # Schema
 
 - **CSF function:** IDENTIFY (ID)
-- **Bow-tie position:** preventive (left)
+- **Bow-tie position:** preventive (cause side)
 
 Applies across all ten clusters; see each [control-objective set](/controls/index.md).

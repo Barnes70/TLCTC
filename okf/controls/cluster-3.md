@@ -18,7 +18,7 @@ Cause: [#3 Exploiting Client](/clusters/cluster-3.md). Functions: [GOVERN](/cont
 
 ## GOVERN
 
-*cross-cutting.* **Objective:** Establish ownership, policy, and risk-appetite for #3 Exploiting Client.
+*steering (spans the whole chain).* **Objective:** Govern the strategy, ownership, and risk appetite for the #3 Exploiting Client cluster.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -32,7 +32,7 @@ Cause: [#3 Exploiting Client](/clusters/cluster-3.md). Functions: [GOVERN](/cont
 
 ## IDENTIFY
 
-*preventive (left).* **Objective:** Identify the weaknesses and exposure enabling #3 Exploiting Client.
+*preventive (cause side).* **Objective:** Identify weaknesses enabling a #3 Exploiting Client event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -46,7 +46,7 @@ Cause: [#3 Exploiting Client](/clusters/cluster-3.md). Functions: [GOVERN](/cont
 
 ## PROTECT
 
-*preventive (left).* **Objective:** Prevent or reduce the likelihood of the #3 Exploiting Client step.
+*preventive (cause side).* **Objective:** Protect from a #3 Exploiting Client event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -61,7 +61,7 @@ Cause: [#3 Exploiting Client](/clusters/cluster-3.md). Functions: [GOVERN](/cont
 
 ## DETECT
 
-*mitigating (right).* **Objective:** Detect #3 Exploiting Client activity within its Δt window, before it enables the next step.
+*central event (detects the loss of control).* **Objective:** Detect a #3 Exploiting Client event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -75,7 +75,7 @@ Cause: [#3 Exploiting Client](/clusters/cluster-3.md). Functions: [GOVERN](/cont
 
 ## RESPOND
 
-*mitigating (right).* **Objective:** Contain and eradicate #3 Exploiting Client once detected.
+*central event → consequence side (contains).* **Objective:** Respond to a #3 Exploiting Client event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -89,7 +89,7 @@ Cause: [#3 Exploiting Client](/clusters/cluster-3.md). Functions: [GOVERN](/cont
 
 ## RECOVER
 
-*mitigating (right).* **Objective:** Restore trustworthy capability after #3 Exploiting Client.
+*mitigating (consequence side).* **Objective:** Recover from a #3 Exploiting Client event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 

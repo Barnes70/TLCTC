@@ -16,11 +16,11 @@ cluster: "#2"
 
 Cause: [#2 Exploiting Server](/clusters/cluster-2.md). Functions: [GOVERN](/controls/functions/govern.md) · [IDENTIFY](/controls/functions/identify.md) · [PROTECT](/controls/functions/protect.md) · [DETECT](/controls/functions/detect.md) · [RESPOND](/controls/functions/respond.md) · [RECOVER](/controls/functions/recover.md). Effectiveness: [/controls/effectiveness-model.md](/controls/effectiveness-model.md).
 
-> The whitepaper provides a normative worked example for #2 (§8.1.5); the ISO 27001 Annex A controls below are the operational starter layer.
+> The application paper provides the normative worked example for #2 (§8.1; also Handbook §8.1.5); the ISO 27001 Annex A controls below are the operational starter layer.
 
 ## GOVERN
 
-*cross-cutting.* **Objective:** Establish ownership, policy, and risk-appetite for #2 Exploiting Server.
+*steering (spans the whole chain).* **Objective:** Govern the strategy, ownership, and risk appetite for the #2 Exploiting Server cluster.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -37,7 +37,7 @@ Cause: [#2 Exploiting Server](/clusters/cluster-2.md). Functions: [GOVERN](/cont
 
 ## IDENTIFY
 
-*preventive (left).* **Objective:** Identify the weaknesses and exposure enabling #2 Exploiting Server.
+*preventive (cause side).* **Objective:** Identify weaknesses enabling a #2 Exploiting Server event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -53,7 +53,7 @@ Cause: [#2 Exploiting Server](/clusters/cluster-2.md). Functions: [GOVERN](/cont
 
 ## PROTECT
 
-*preventive (left).* **Objective:** Prevent or reduce the likelihood of the #2 Exploiting Server step.
+*preventive (cause side).* **Objective:** Protect from a #2 Exploiting Server event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -70,7 +70,7 @@ Cause: [#2 Exploiting Server](/clusters/cluster-2.md). Functions: [GOVERN](/cont
 
 ## DETECT
 
-*mitigating (right).* **Objective:** Detect #2 Exploiting Server activity within its Δt window, before it enables the next step.
+*central event (detects the loss of control).* **Objective:** Detect a #2 Exploiting Server event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -84,7 +84,7 @@ Cause: [#2 Exploiting Server](/clusters/cluster-2.md). Functions: [GOVERN](/cont
 
 ## RESPOND
 
-*mitigating (right).* **Objective:** Contain and eradicate #2 Exploiting Server once detected.
+*central event → consequence side (contains).* **Objective:** Respond to a #2 Exploiting Server event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -98,7 +98,7 @@ Cause: [#2 Exploiting Server](/clusters/cluster-2.md). Functions: [GOVERN](/cont
 
 ## RECOVER
 
-*mitigating (right).* **Objective:** Restore trustworthy capability after #2 Exploiting Server.
+*mitigating (consequence side).* **Objective:** Recover from a #2 Exploiting Server event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 

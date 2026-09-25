@@ -15,6 +15,6 @@ Recognize the cluster step / loss of control within its Δt window. Straddles th
 # Schema
 
 - **CSF function:** DETECT (DE)
-- **Bow-tie position:** mitigating (right)
+- **Bow-tie position:** central event (detects the loss of control)
 
 Applies across all ten clusters; see each [control-objective set](/controls/index.md).

@@ -18,7 +18,7 @@ Cause: [#8 Physical Attack](/clusters/cluster-8.md). Functions: [GOVERN](/contro
 
 ## GOVERN
 
-*cross-cutting.* **Objective:** Establish ownership, policy, and risk-appetite for #8 Physical Attack.
+*steering (spans the whole chain).* **Objective:** Govern the strategy, ownership, and risk appetite for the #8 Physical Attack cluster.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -33,7 +33,7 @@ Cause: [#8 Physical Attack](/clusters/cluster-8.md). Functions: [GOVERN](/contro
 
 ## IDENTIFY
 
-*preventive (left).* **Objective:** Identify the weaknesses and exposure enabling #8 Physical Attack.
+*preventive (cause side).* **Objective:** Identify weaknesses enabling a #8 Physical Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -47,7 +47,7 @@ Cause: [#8 Physical Attack](/clusters/cluster-8.md). Functions: [GOVERN](/contro
 
 ## PROTECT
 
-*preventive (left).* **Objective:** Prevent or reduce the likelihood of the #8 Physical Attack step.
+*preventive (cause side).* **Objective:** Protect from a #8 Physical Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -64,7 +64,7 @@ Cause: [#8 Physical Attack](/clusters/cluster-8.md). Functions: [GOVERN](/contro
 
 ## DETECT
 
-*mitigating (right).* **Objective:** Detect #8 Physical Attack activity within its Δt window, before it enables the next step.
+*central event (detects the loss of control).* **Objective:** Detect a #8 Physical Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -78,7 +78,7 @@ Cause: [#8 Physical Attack](/clusters/cluster-8.md). Functions: [GOVERN](/contro
 
 ## RESPOND
 
-*mitigating (right).* **Objective:** Contain and eradicate #8 Physical Attack once detected.
+*central event → consequence side (contains).* **Objective:** Respond to a #8 Physical Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -92,7 +92,7 @@ Cause: [#8 Physical Attack](/clusters/cluster-8.md). Functions: [GOVERN](/contro
 
 ## RECOVER
 
-*mitigating (right).* **Objective:** Restore trustworthy capability after #8 Physical Attack.
+*mitigating (consequence side).* **Objective:** Recover from a #8 Physical Attack event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 

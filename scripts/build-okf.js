@@ -605,29 +605,30 @@ function buildMappings() {
 
 // ═════════════════════════ CONTROLS ══════════════════════════════════════════
 const CSF = [
-  { key: 'GV', name: 'GOVERN', side: 'cross-cutting' },
-  { key: 'ID', name: 'IDENTIFY', side: 'preventive (left)' },
-  { key: 'PR', name: 'PROTECT', side: 'preventive (left)' },
-  { key: 'DE', name: 'DETECT', side: 'mitigating (right)' },
-  { key: 'RS', name: 'RESPOND', side: 'mitigating (right)' },
-  { key: 'RC', name: 'RECOVER', side: 'mitigating (right)' },
+  { key: 'GV', name: 'GOVERN', side: 'steering (spans the whole chain)' },
+  { key: 'ID', name: 'IDENTIFY', side: 'preventive (cause side)' },
+  { key: 'PR', name: 'PROTECT', side: 'preventive (cause side)' },
+  { key: 'DE', name: 'DETECT', side: 'central event (detects the loss of control)' },
+  { key: 'RS', name: 'RESPOND', side: 'central event → consequence side (contains)' },
+  { key: 'RC', name: 'RECOVER', side: 'mitigating (consequence side)' },
 ];
 const CSF_DESC = {
-  GOVERN: 'Set direction, accountability and ownership, risk appetite, and assurance so all clusters are managed consistently. Cross-cutting — does not counter a single cluster.',
+  GOVERN: 'Govern the strategy, ownership, and risk appetite for each cluster — the management-system layer that connects each cluster to the ISMS (ISO/IEC 27001 clauses 4–10) and the NIST RMF. Only the GOV-umbrella cells are cross-cutting (the integration layer to enterprise risk management); GOV-local cells stay cluster-specific. Spans the whole chain and decides which controls in the other five functions are prioritized, funded, and reviewed.',
   IDENTIFY: 'Find the weaknesses and exposure that enable the cluster step. Left (cause) side of the bow-tie.',
   PROTECT: 'Prevent or reduce the likelihood of the cluster step succeeding. Left (cause) side of the bow-tie.',
   DETECT: 'Recognize the cluster step / loss of control within its Δt window. Straddles the central event.',
-  RESPOND: 'Contain and eradicate the realized step before a Data Risk Event matures into a Business Risk Event. Right (consequence) side.',
+  RESPOND: 'Contain and eradicate the realized step before the next step or before a Data Risk Event matures into a Business Risk Event. Straddles the central event with DETECT, then acts on the consequence side.',
   RECOVER: 'Restore trustworthy capability and limit the consequence chain after the central event. Right (consequence) side.',
 };
 function objectiveLine(funcName, id, name) {
   switch (funcName) {
-    case 'GOVERN': return `Establish ownership, policy, and risk-appetite for ${id} ${name}.`;
-    case 'IDENTIFY': return `Identify the weaknesses and exposure enabling ${id} ${name}.`;
-    case 'PROTECT': return `Prevent or reduce the likelihood of the ${id} ${name} step.`;
-    case 'DETECT': return `Detect ${id} ${name} activity within its Δt window, before it enables the next step.`;
-    case 'RESPOND': return `Contain and eradicate ${id} ${name} once detected.`;
-    case 'RECOVER': return `Restore trustworthy capability after ${id} ${name}.`;
+    // application paper §8.1 objective template — verbatim wording, cluster substituted
+    case 'GOVERN': return `Govern the strategy, ownership, and risk appetite for the ${id} ${name} cluster.`;
+    case 'IDENTIFY': return `Identify weaknesses enabling a ${id} ${name} event.`;
+    case 'PROTECT': return `Protect from a ${id} ${name} event.`;
+    case 'DETECT': return `Detect a ${id} ${name} event.`;
+    case 'RESPOND': return `Respond to a ${id} ${name} event.`;
+    case 'RECOVER': return `Recover from a ${id} ${name} event.`;
     default: return '';
   }
 }
@@ -664,8 +665,10 @@ function buildControlClusters() {
     body.push(`# Controls → ${id} ${c.name}`, '');
     body.push(PROVENANCE_ISO, '');
     body.push(`Cause: [${id} ${c.name}](/clusters/cluster-${n}.md). Functions: [GOVERN](/controls/functions/govern.md) · [IDENTIFY](/controls/functions/identify.md) · [PROTECT](/controls/functions/protect.md) · [DETECT](/controls/functions/detect.md) · [RESPOND](/controls/functions/respond.md) · [RECOVER](/controls/functions/recover.md). Effectiveness: [/controls/effectiveness-model.md](/controls/effectiveness-model.md).`, '');
-    if (n === 2 || n === 4) {
-      body.push(`> The whitepaper provides a normative worked example for ${id} (§8.1.${n === 2 ? '5' : '6'}); the ISO 27001 Annex A controls below are the operational starter layer.`, '');
+    if (n === 2) {
+      body.push('> The application paper provides the normative worked example for #2 (§8.1; also Handbook §8.1.5); the ISO 27001 Annex A controls below are the operational starter layer.', '');
+    } else if (n === 4) {
+      body.push('> The Handbook provides a worked example for #4 (§8.1.6); the ISO 27001 Annex A controls below are the operational starter layer.', '');
     }
     for (const fnc of CSF) {
       const cell = isoCells[`${n}-${fnc.key}`] || {};
@@ -719,13 +722,23 @@ ECR = COE × CDE_max × fitness_factor
 - **Residual ceiling gap = 1.0 − cell CDE_max composite** — risk that operations cannot
   close, only new control *types* or explicit acceptance can.
 
-## Detection Coverage Score (DETECT cells)
+## Detection Coverage Score (DETECT and RESPOND cells)
+
+Two forms, read at the 90th percentile against the attacker's transition time Δt at the edge
+being defended (application paper §10.2):
 
 \`\`\`
-DCS = MTTD / Δt
+DCS_d = TTD_P90 / Δt      (detection — DETECT cells)
+DCS_c = TTC_P90 / Δt      (containment — RESPOND cells)
 \`\`\`
 
-| DCS | Verdict |
+**DCS < 1.0** — the defender completes first (effective); **= 1.0** — marginal, no buffer;
+**> 1.0** — the attacker wins the transition (ineffective). \`DCS_d < 1\` with \`DCS_c > 1\` means
+the step was seen but completed anyway. The mean-based \`MTTD / Δt\` is the special case.
+
+The Control Matrix tool displays finer bands; every band below 1.0 means the defender is ahead:
+
+| DCS | Tool band |
 |---|---|
 | < 0.5 | effective |
 | 0.5–0.8 | adequate |
@@ -733,8 +746,8 @@ DCS = MTTD / Δt
 | 1.0–2.0 | ineffective |
 | > 2.0 | structurally failed |
 
-The same MTTD can be effective or ineffective depending on the Δt of the transition being
-defended — see [/controls/indicators.md](/controls/indicators.md) and
+The same detection time can be effective or ineffective depending on the Δt of the transition
+being defended — see [/controls/indicators.md](/controls/indicators.md) and
 [velocity classes](/glossary/velocity-class.md).
 
 ## Worked example (DETECT × #7 Malware)
@@ -779,7 +792,11 @@ not a separate fourth type. The strategic three-way split is: risk exposure (KRI
 (technical KCI), control performance (procedural KCI/KPI).
 
 ## DCS — Detection Coverage Score
-\`DCS = MTTD / Δt\`. A control's performance is only sufficient *relative to attacker speed*. See
+\`DCS_d = TTD_P90 / Δt\` (detection) and \`DCS_c = TTC_P90 / Δt\` (containment), where Δt is the
+attacker's transition time at the edge being defended. A control's performance is only sufficient
+*relative to attacker speed*: below 1.0 the defender completes first, above 1.0 the attacker wins
+the transition. Risk appetite sets a DCS target per velocity class (application paper §10.3);
+below roughly one minute of Δt (VC-4) the rational target is prevention, not faster detection. See
 [/controls/effectiveness-model.md](/controls/effectiveness-model.md).
 `;
   writeDoc('controls/indicators.md', {

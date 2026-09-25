@@ -15,6 +15,6 @@ Prevent or reduce the likelihood of the cluster step succeeding. Left (cause) si
 # Schema
 
 - **CSF function:** PROTECT (PR)
-- **Bow-tie position:** preventive (left)
+- **Bow-tie position:** preventive (cause side)
 
 Applies across all ten clusters; see each [control-objective set](/controls/index.md).

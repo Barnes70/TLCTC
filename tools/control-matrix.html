@@ -130,25 +130,26 @@ const { useState, useEffect, useRef, useCallback, useMemo } = React;
 // ═══════════════════════════════════════════════════════════════════
 
 const CLUSTERS = [
-    { id: 1,  opId: 'TLCTC-01.00', name: 'Abuse of Functions',  abbr: 'AoF', topology: 'internal', genericVuln: 'The inherent trust, scope, and complexity designed into software functionality and configuration' },
-    { id: 2,  opId: 'TLCTC-02.00', name: 'Exploiting Server',   abbr: 'ExS', topology: 'internal', genericVuln: 'Server-side implementation flaws enable unintended behavior' },
-    { id: 3,  opId: 'TLCTC-03.00', name: 'Exploiting Client',   abbr: 'ExC', topology: 'internal', genericVuln: 'Client-side implementation flaws enable unintended behavior' },
-    { id: 4,  opId: 'TLCTC-04.00', name: 'Identity Theft',      abbr: 'IdT', topology: 'internal', genericVuln: 'Insufficient identity-artifact binding at the point of authentication' },
-    { id: 5,  opId: 'TLCTC-05.00', name: 'Man in the Middle',   abbr: 'MitM', topology: 'internal', genericVuln: 'The lack of sufficient control over the communication path' },
-    { id: 6,  opId: 'TLCTC-06.00', name: 'Flooding Attack',     abbr: 'Fld', topology: 'internal', genericVuln: 'Finite capacity limitations inherent in any system component' },
-    { id: 7,  opId: 'TLCTC-07.00', name: 'Malware',             abbr: 'Mlw', topology: 'internal', genericVuln: "The software environment's designed capability to execute potentially untrusted foreign code" },
-    { id: 8,  opId: 'TLCTC-08.00', name: 'Physical Attack',     abbr: 'Phy', topology: 'bridge',   genericVuln: 'Physical accessibility of infrastructure and exploitability of physical-layer properties' },
-    { id: 9,  opId: 'TLCTC-09.00', name: 'Social Engineering',  abbr: 'SE',  topology: 'bridge',   genericVuln: 'Humans can be influenced into unsafe actions or decisions' },
-    { id: 10, opId: 'TLCTC-10.00', name: 'Supply Chain Attack', abbr: 'SCA', topology: 'bridge',   genericVuln: 'Trust in third-party components and update channels can be subverted' },
+    { id: 1,  opId: 'TLCTC-01.00', name: 'Abuse of Functions',  abbr: 'AoF', topology: 'internal', genericVuln: "The inherent trust, scope, and complexity designed into software functionality and configuration." },
+    { id: 2,  opId: 'TLCTC-02.00', name: 'Exploiting Server',   abbr: 'ExS', topology: 'internal', genericVuln: "Server-side implementation flaws enable unintended behavior." },
+    { id: 3,  opId: 'TLCTC-03.00', name: 'Exploiting Client',   abbr: 'ExC', topology: 'internal', genericVuln: "Client-side implementation flaws enable unintended behavior." },
+    { id: 4,  opId: 'TLCTC-04.00', name: 'Identity Theft',      abbr: 'IdT', topology: 'internal', genericVuln: "Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims." },
+    { id: 5,  opId: 'TLCTC-05.00', name: 'Man in the Middle',   abbr: 'MitM', topology: 'internal', genericVuln: "The lack of sufficient control over the communication path." },
+    { id: 6,  opId: 'TLCTC-06.00', name: 'Flooding Attack',     abbr: 'Fld', topology: 'internal', genericVuln: "Finite capacity limitations inherent in any system component." },
+    { id: 7,  opId: 'TLCTC-07.00', name: 'Malware',             abbr: 'Mlw', topology: 'internal', genericVuln: "The software environment's designed capability to execute potentially untrusted foreign code." },
+    { id: 8,  opId: 'TLCTC-08.00', name: 'Physical Attack',     abbr: 'Phy', topology: 'bridge',   genericVuln: "Physical accessibility of infrastructure and the exploitability of physical-layer properties." },
+    { id: 9,  opId: 'TLCTC-09.00', name: 'Social Engineering',  abbr: 'SE',  topology: 'bridge',   genericVuln: "Humans can be influenced into unsafe actions or decisions." },
+    { id: 10, opId: 'TLCTC-10.00', name: 'Supply Chain Attack', abbr: 'SCA', topology: 'bridge',   genericVuln: "Trust in third-party components and update channels can be subverted." },
 ];
 
 const CSF_FUNCTIONS = [
-    { id: 'GV', name: 'GOVERN',   color: '#8b5cf6', desc: 'Set direction, accountability, ownership, risk appetite, assurance' },
-    { id: 'ID', name: 'IDENTIFY', color: '#3b82f6', desc: 'Find weaknesses and exposure enabling the threat' },
-    { id: 'PR', name: 'PROTECT',  color: '#22c55e', desc: 'Prevent or reduce likelihood of the threat step' },
-    { id: 'DE', name: 'DETECT',   color: '#eab308', desc: 'Detect the threat step or loss-of-control condition early' },
-    { id: 'RS', name: 'RESPOND',  color: '#f97316', desc: 'Contain and eradicate the realized threat step' },
-    { id: 'RC', name: 'RECOVER',  color: '#06b6d4', desc: 'Restore capability and reduce recurrence' },
+    // objective = application paper §8.1 template ('#X' is replaced by the cluster id); position = §7 / §8.1
+    { id: 'GV', name: 'GOVERN',   color: '#8b5cf6', objective: 'Govern the strategy, ownership, and risk appetite for the #X cluster', position: 'Steering layer — spans the whole chain', desc: 'Govern the strategy, ownership, and risk appetite per cluster (steering layer across the whole chain)' },
+    { id: 'ID', name: 'IDENTIFY', color: '#3b82f6', objective: 'Identify weaknesses enabling a #X event', position: 'Cause side — preventive', desc: 'Identify weaknesses enabling the cluster step (cause side)' },
+    { id: 'PR', name: 'PROTECT',  color: '#22c55e', objective: 'Protect from a #X event', position: 'Cause side — preventive', desc: 'Protect from the cluster step: lower the likelihood that it reaches the central event (cause side)' },
+    { id: 'DE', name: 'DETECT',   color: '#eab308', objective: 'Detect a #X event', position: 'Central event — detects the loss of control', desc: 'Detect the cluster step / loss of control (SRE) within its Δt window (straddles the central event)' },
+    { id: 'RS', name: 'RESPOND',  color: '#f97316', objective: 'Respond to a #X event', position: 'Central event → consequence side — contains', desc: 'Respond: contain the loss of control before the next step or the DRE (straddles the central event)' },
+    { id: 'RC', name: 'RECOVER',  color: '#06b6d4', objective: 'Recover from a #X event', position: 'Consequence side — mitigating', desc: 'Recover: restore trustworthy capability and limit the consequence chain (consequence side)' },
 ];
 
 const CONTROL_TYPES = [
@@ -401,10 +402,12 @@ function parseDuration(iso) {
     return (parseInt(m[1]||0))*86400 + (parseInt(m[2]||0))*3600 + (parseInt(m[3]||0))*60 + parseFloat(m[4]||0);
 }
 
-function calcDcs(mttdIso, deltaIso) {
-    const mttd = parseDuration(mttdIso), dt = parseDuration(deltaIso);
-    if (mttd == null || dt == null || dt === 0) return null;
-    const score = mttd / dt;
+// DCS_d = TTD_P90 / Δt (DETECT), DCS_c = TTC_P90 / Δt (RESPOND) — application paper §10.2.
+// A mean (MTTD / MTTC) is accepted as the special case; < 1.0 = defender ahead, > 1.0 = attacker wins the transition.
+function calcDcs(timeIso, deltaIso) {
+    const t = parseDuration(timeIso), dt = parseDuration(deltaIso);
+    if (t == null || dt == null || dt === 0) return null;
+    const score = t / dt;
     const verdict = DCS_VERDICTS.find(v => score <= v.max) || DCS_VERDICTS[4];
     return { score: Math.round(score * 100) / 100, verdict: verdict.id, verdictLabel: verdict.label, verdictColor: verdict.color };
 }
@@ -2022,7 +2025,7 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
                         <span className="text-lg font-light text-muted-foreground">×</span>
                         <span className="font-bold" style={{ color: func.color }}>{func.name}</span>
                     </div>
-                    <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{func.desc} — for threats caused by: {cluster.genericVuln.toLowerCase()}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 leading-snug"><span className="font-semibold text-foreground">Objective:</span> {func.objective.replace('#X', '#' + clusterId)} · <span className="italic">{func.position}</span><br/>Generic vulnerability: {cluster.genericVuln}</p>
                 </div>
                 <button onClick={onClose} className="px-3 py-1.5 text-sm font-semibold text-foreground hover:bg-destructive/10 hover:text-destructive rounded-lg flex-shrink-0 border border-border inline-flex items-center gap-1.5" title="Close panel">
                     <Icon name="x" size={16} /> Close
@@ -2082,7 +2085,9 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
                     const updateVc = (field, val) => onUpdateCellMeta(env.id, ck, { velocity_context: { ...vc, [field]: val } });
                     const updateCm = (field, val) => onUpdateCellMeta(env.id, ck, { controls_meta: { ...cm, [field]: val } });
 
+                    const isRs = funcId === 'RS';
                     const dcs = isDe && vc.delta_t && cell.dcs_mttd ? calcDcs(cell.dcs_mttd, vc.delta_t) : null;
+                    const dcsC = isRs && vc.delta_t && cell.dcs_ttc ? calcDcs(cell.dcs_ttc, vc.delta_t) : null;
 
                     return (
                         <div key={'eff-' + env.id} className="mb-4 p-3 bg-muted/50 rounded-lg border border-border space-y-3">
@@ -2141,19 +2146,38 @@ function CellDetailPanel({ selectedCell, environments, activeEnvId, targetMaturi
                                 </div>
                             </div>
 
-                            {/* DCS (DE cells only) */}
+                            {/* DCS_d (DE cells) — the stored field keeps its historical name dcs_mttd */}
                             {isDe && (
                                 <div className="grid grid-cols-2 gap-2">
                                     <div>
-                                        <label className="text-[10px] text-muted-foreground block">MTTD (ISO duration)</label>
+                                        <label className="text-[10px] text-muted-foreground block" title="Time to detect at the 90th percentile; a mean MTTD is accepted as the special case">TTD P90 (ISO duration)</label>
                                         <input type="text" value={cell.dcs_mttd || ''} onChange={e => onUpdateCellMeta(env.id, ck, { dcs_mttd: e.target.value })}
                                                className="input-ctrl py-0.5 text-[11px]" placeholder="PT8M, PT2H..." />
                                     </div>
                                     <div className="text-[11px]">
-                                        <label className="text-[10px] text-muted-foreground block">DCS</label>
+                                        <label className="text-[10px] text-muted-foreground block" title="DCS_d = TTD_P90 / Δt">DCS_d (detection)</label>
                                         {dcs ? (
                                             <span className="font-bold px-1.5 py-0.5 rounded-full text-[10px]" style={{ backgroundColor: dcs.verdictColor + '22', color: dcs.verdictColor }}>
                                                 {dcs.score.toFixed(2)} — {dcs.verdictLabel}
+                                            </span>
+                                        ) : <span className="text-muted-foreground">—</span>}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* DCS_c (RS cells) */}
+                            {isRs && (
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label className="text-[10px] text-muted-foreground block" title="Time to contain at the 90th percentile; a mean MTTC is accepted as the special case">TTC P90 (ISO duration)</label>
+                                        <input type="text" value={cell.dcs_ttc || ''} onChange={e => onUpdateCellMeta(env.id, ck, { dcs_ttc: e.target.value })}
+                                               className="input-ctrl py-0.5 text-[11px]" placeholder="PT8M, PT2H..." />
+                                    </div>
+                                    <div className="text-[11px]">
+                                        <label className="text-[10px] text-muted-foreground block" title="DCS_c = TTC_P90 / Δt">DCS_c (containment)</label>
+                                        {dcsC ? (
+                                            <span className="font-bold px-1.5 py-0.5 rounded-full text-[10px]" style={{ backgroundColor: dcsC.verdictColor + '22', color: dcsC.verdictColor }}>
+                                                {dcsC.score.toFixed(2)} — {dcsC.verdictLabel}
                                             </span>
                                         ) : <span className="text-muted-foreground">—</span>}
                                     </div>

@@ -36,5 +36,9 @@ not a separate fourth type. The strategic three-way split is: risk exposure (KRI
 (technical KCI), control performance (procedural KCI/KPI).
 
 ## DCS — Detection Coverage Score
-`DCS = MTTD / Δt`. A control's performance is only sufficient *relative to attacker speed*. See
+`DCS_d = TTD_P90 / Δt` (detection) and `DCS_c = TTC_P90 / Δt` (containment), where Δt is the
+attacker's transition time at the edge being defended. A control's performance is only sufficient
+*relative to attacker speed*: below 1.0 the defender completes first, above 1.0 the attacker wins
+the transition. Risk appetite sets a DCS target per velocity class (application paper §10.3);
+below roughly one minute of Δt (VC-4) the rational target is prevention, not faster detection. See
 [/controls/effectiveness-model.md](/controls/effectiveness-model.md).

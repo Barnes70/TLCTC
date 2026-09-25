@@ -16,11 +16,11 @@ cluster: "#4"
 
 Cause: [#4 Identity Theft](/clusters/cluster-4.md). Functions: [GOVERN](/controls/functions/govern.md) · [IDENTIFY](/controls/functions/identify.md) · [PROTECT](/controls/functions/protect.md) · [DETECT](/controls/functions/detect.md) · [RESPOND](/controls/functions/respond.md) · [RECOVER](/controls/functions/recover.md). Effectiveness: [/controls/effectiveness-model.md](/controls/effectiveness-model.md).
 
-> The whitepaper provides a normative worked example for #4 (§8.1.6); the ISO 27001 Annex A controls below are the operational starter layer.
+> The Handbook provides a worked example for #4 (§8.1.6); the ISO 27001 Annex A controls below are the operational starter layer.
 
 ## GOVERN
 
-*cross-cutting.* **Objective:** Establish ownership, policy, and risk-appetite for #4 Identity Theft.
+*steering (spans the whole chain).* **Objective:** Govern the strategy, ownership, and risk appetite for the #4 Identity Theft cluster.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -35,7 +35,7 @@ Cause: [#4 Identity Theft](/clusters/cluster-4.md). Functions: [GOVERN](/control
 
 ## IDENTIFY
 
-*preventive (left).* **Objective:** Identify the weaknesses and exposure enabling #4 Identity Theft.
+*preventive (cause side).* **Objective:** Identify weaknesses enabling a #4 Identity Theft event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -49,7 +49,7 @@ Cause: [#4 Identity Theft](/clusters/cluster-4.md). Functions: [GOVERN](/control
 
 ## PROTECT
 
-*preventive (left).* **Objective:** Prevent or reduce the likelihood of the #4 Identity Theft step.
+*preventive (cause side).* **Objective:** Protect from a #4 Identity Theft event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -66,7 +66,7 @@ Cause: [#4 Identity Theft](/clusters/cluster-4.md). Functions: [GOVERN](/control
 
 ## DETECT
 
-*mitigating (right).* **Objective:** Detect #4 Identity Theft activity within its Δt window, before it enables the next step.
+*central event (detects the loss of control).* **Objective:** Detect a #4 Identity Theft event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -80,7 +80,7 @@ Cause: [#4 Identity Theft](/clusters/cluster-4.md). Functions: [GOVERN](/control
 
 ## RESPOND
 
-*mitigating (right).* **Objective:** Contain and eradicate #4 Identity Theft once detected.
+*central event → consequence side (contains).* **Objective:** Respond to a #4 Identity Theft event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -94,7 +94,7 @@ Cause: [#4 Identity Theft](/clusters/cluster-4.md). Functions: [GOVERN](/control
 
 ## RECOVER
 
-*mitigating (right).* **Objective:** Restore trustworthy capability after #4 Identity Theft.
+*mitigating (consequence side).* **Objective:** Recover from a #4 Identity Theft event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 

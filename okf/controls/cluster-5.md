@@ -18,7 +18,7 @@ Cause: [#5 Man in the Middle](/clusters/cluster-5.md). Functions: [GOVERN](/cont
 
 ## GOVERN
 
-*cross-cutting.* **Objective:** Establish ownership, policy, and risk-appetite for #5 Man in the Middle.
+*steering (spans the whole chain).* **Objective:** Govern the strategy, ownership, and risk appetite for the #5 Man in the Middle cluster.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -33,7 +33,7 @@ Cause: [#5 Man in the Middle](/clusters/cluster-5.md). Functions: [GOVERN](/cont
 
 ## IDENTIFY
 
-*preventive (left).* **Objective:** Identify the weaknesses and exposure enabling #5 Man in the Middle.
+*preventive (cause side).* **Objective:** Identify weaknesses enabling a #5 Man in the Middle event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -47,7 +47,7 @@ Cause: [#5 Man in the Middle](/clusters/cluster-5.md). Functions: [GOVERN](/cont
 
 ## PROTECT
 
-*preventive (left).* **Objective:** Prevent or reduce the likelihood of the #5 Man in the Middle step.
+*preventive (cause side).* **Objective:** Protect from a #5 Man in the Middle event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -62,7 +62,7 @@ Cause: [#5 Man in the Middle](/clusters/cluster-5.md). Functions: [GOVERN](/cont
 
 ## DETECT
 
-*mitigating (right).* **Objective:** Detect #5 Man in the Middle activity within its Δt window, before it enables the next step.
+*central event (detects the loss of control).* **Objective:** Detect a #5 Man in the Middle event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -76,7 +76,7 @@ Cause: [#5 Man in the Middle](/clusters/cluster-5.md). Functions: [GOVERN](/cont
 
 ## RESPOND
 
-*mitigating (right).* **Objective:** Contain and eradicate #5 Man in the Middle once detected.
+*central event → consequence side (contains).* **Objective:** Respond to a #5 Man in the Middle event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
@@ -90,7 +90,7 @@ Cause: [#5 Man in the Middle](/clusters/cluster-5.md). Functions: [GOVERN](/cont
 
 ## RECOVER
 
-*mitigating (right).* **Objective:** Restore trustworthy capability after #5 Man in the Middle.
+*mitigating (consequence side).* **Objective:** Recover from a #5 Man in the Middle event.
 
 **Local controls (ISO 27001:2022 Annex A):**
 
