@@ -20,7 +20,8 @@
  *   8. okf      repo okf/ → site okf/ (adds, updates, removes)
  *   8b. tools   repo tools/*.html → site tools/, CDN libraries rewritten to /vendor/
  *               (scripts/lib/tool-vendor-map.js; an unmapped library stops the build);
- *               tools/*.json + tools/examples/*.json copied (adds, updates; never removes)
+ *               tools/*.json, tools/examples/*.json, tools/data/*.js, tools/lib/*.js copied
+ *               (adds, updates; never removes)
  *   9. figures  re-inline <svg> blocks in index.html from their source files
  *               (markers: <!-- INLINE-SVG src="…" … --> … <!-- /INLINE-SVG -->)
  *  10. sitemap  bump <lastmod> for every deployable file whose content changed
@@ -198,9 +199,11 @@ log('8b. tools');
     if (left.length) { console.error(`  ! tools/${f} still loads ${left.join(', ')} — add it to scripts/lib/tool-vendor-map.js`); process.exit(1); }
     writeIfChanged(path.join(dst, f), html, 'tool ');
   }
-  // the data the tools load (starter matrices, examples); site-only files are left alone
+  // the data the tools load (starter matrices, examples, the bundled path corpus) and the shared
+  // counting rules in lib/; site-only files are left alone
   const data = fs.readdirSync(src).filter((x) => x.endsWith('.json'))
-    .concat(fs.readdirSync(path.join(src, 'examples')).filter((x) => x.endsWith('.json')).map((x) => `examples/${x}`));
+    .concat(fs.readdirSync(path.join(src, 'examples')).filter((x) => x.endsWith('.json')).map((x) => `examples/${x}`))
+    .concat(['data', 'lib'].flatMap((d) => (fs.existsSync(path.join(src, d)) ? fs.readdirSync(path.join(src, d)).filter((x) => x.endsWith('.js')).map((x) => `${d}/${x}`) : [])));
   for (const f of data) copyIfChanged(path.join(src, f), path.join(dst, f), 'tool ');
 }
 
