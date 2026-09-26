@@ -8,17 +8,40 @@ Standalone, self-contained HTML applications that implement the TLCTC framework.
 |------|------|-------------|
 | **Threat Modeling** | [`threat-modeling.html`](threat-modeling.html) | Design threat models by placing components on a canvas, define interfaces, auto-assign threat clusters, generate threat registers and attack chain analysis |
 | **Attack Path Architect** | [`attack-path-architect.html`](attack-path-architect.html) | Document cyber incidents as TLCTC attack paths with velocity analysis, MITRE/CVE references, DRE outcomes, and compliant JSON export for CTI exchange |
+| **Path Atlas** | [`path-atlas.html`](path-atlas.html) | Corpus statistics over TLCTC attack paths: 10×10 cluster transition matrix, attack velocity per transition (VC-1…VC-4, min/median/max Δt), entry and exit clusters, and Data Risk Events by cluster — every number drills down to the steps behind it. Default dataset: the `attack-paths/` records; import your own Layer-3 files or a folder (kept in memory only). Counts per transition or per incident; exports CSV and `path-atlas-stats.json` |
+| **Classification Trainer** | [`classification-trainer.html`](classification-trainer.html) | Classify real attack-path steps into the ten clusters. **Practice**: scenarios drawn evenly across clusters, instant feedback with the record's original analysis, the canonical definition and generic vulnerability, and the rules it cites. **Study**: every rater enters the same study code and gets the same fixed, cluster-stratified scenario set without feedback, then downloads a rating sheet. **Results**: pools rating sheets — Fleiss' κ overall and per cluster, each rater's match and Cohen's κ against the record key, a key × answer confusion matrix, and the scenarios with split answers |
 | **Actor Profile Designer** | [`actor-profile-designer.html`](actor-profile-designer.html) | Build threat actor capability profiles scored across all 10 TLCTC clusters, link observed incidents, compare actors side-by-side, and export for CTI sharing. Includes 59 expert-scored profiles (Google/Mandiant, CrowdStrike) and 514 heuristic-scored profiles from ETDA ThaiCERT Threat Group Cards |
 | **Threat Radar** | [`radar-tlctc-app.html`](radar-tlctc-app.html) | Direct-manipulation threat radar for CISO reporting: radius encodes the threat value (thresholds sit on the ring lines), drag a bubble radially to assess, click it to edit in place, hover for details. Sector chips with visibility toggles and spotlight, one-click label declutter, trend tracking (old vs current values), report/tolerance flags, undo/redo, report title block, presentation mode, and PNG / SVG / clipboard export with optional legend |
 | **Control Matrix** | [`control-matrix.html`](control-matrix.html) | NIST CSF 2.0 × TLCTC control matrix for mapping controls across all 10 clusters and 6 CSF functions, with maturity scoring, three-layer control effectiveness model (CDE_max, CDE_fitness, COE → ECR), cell-level aggregation (essential floor + complementary ceiling raise), DCS integration for DETECT cells, residual ceiling gap tracking, multi-environment support, shared controls library, and reporting |
+| **Δt Race** | [`delta-t-race.html`](delta-t-race.html) | Race an attack path's transitions against your detection and containment times: per transition `DCS_d = TTD_P90 / Δt` and `DCS_c = TTC_P90 / Δt` (core §7.2), read as contained / seen but not stopped / attacker first, real-time transitions (VC-4) flagged prevention-only, targets per velocity class (application §10.3 examples, editable), and the first transition you would contain. Δt from the path itself or the corpus P10 of that transition (the Path Atlas corpus); defender times typed per cluster or imported from a Control Matrix export (DETECT `dcs_mttd`, RESPOND `dcs_ttc`); CSV / JSON export |
 | **CBP** | [`cbp-app.html`](cbp-app.html) | Capability-Based Planning — map organizational capabilities across 10 TLCTC clusters × 6 CSF functions, with maturity at capability and component level, three dimensions (Controls, Workforce, Data Level), control effectiveness model (role, CDE_max, CDE_fitness, COE metrics → ECR), cell-level aggregation with DCS for DETECT cells, shared controls library, gap analysis, and multi-environment support |
+| **Actor Story Designer** | [`actor-story-designer.html`](actor-story-designer.html) | Turn an actor capability profile into a Diamond Model-framed story (adversary, capability, infrastructure, victim) with an auto-generated narrative assessment. Shares its actor library with the Actor Profile Designer |
+| **Tech Enablers Radar** | [`tech-enablers-radar.html`](tech-enablers-radar.html) | Monitor emerging technology enablers (AI, agentic AI, quantum, …) across the 10 clusters, by adoption level and actor archetype (Nation State, Extortion, Fraud, Hacktivist, Amateur), with trend markers |
+| **ATT&CK Explorer** | [`attck-explorer.html`](attck-explorer.html) | Browse the MITRE ATT&CK Enterprise → TLCTC mapping ([`mappings/mitre-attack-enterprise/`](../mappings/mitre-attack-enterprise/)) with multi-select cluster filtering, search by technique ID, name or mapping argument, and the per-technique mapping rationale |
+| **CWE Explorer** | [`cwe-explorer.html`](cwe-explorer.html) | Browse the MITRE CWE → TLCTC mapping ([`mappings/mitre-cwe/`](../mappings/mitre-cwe/)) with multi-select cluster filtering, search by CWE ID, name, mapping argument or CVE, and the per-weakness mapping rationale |
+| **ATT&CK Phase Heatmap** | [`attck-phase-heatmap.html`](attck-phase-heatmap.html) | Heatmap of a report's ATT&CK techniques per attack phase and TLCTC cluster; loads a phase-mapping JSON with a top-level `phases` array (default: the Mandiant M-Trends 2026 mapping in `mappings/mandiant-2026/`) |
 
 ## How to Use
 
 1. Open the HTML file in any modern browser
-2. No installation, no server, no API keys required
+2. No installation, no server, no API keys required (the libraries load from public CDNs)
 3. Models persist in browser `localStorage`
 4. Export/import models as JSON for sharing
+
+Buttons that load a bundled example or default file (Tech Enablers Radar, ATT&CK Phase Heatmap, the Control Matrix and CBP starters) fetch it over HTTP, which browsers block for a page opened from disk. Serve the folder instead (for example `npx serve .` in the repo root, then open `/tools/…`), or use the tool's Import button with the JSON file.
+
+The Path Atlas, the Classification Trainer and the Δt Race are not single files: they load `data/path-corpus.js` (the bundled records, generated by `npm run build-path-corpus`), `data/tlctc-canon.js` (cluster canon and rule statements verbatim from the dictionary, generated by `npm run build-tool-canon`), `lib/path-stats.js`, `lib/trainer-core.js` and `lib/race-core.js` (the counting, agreement and DCS logic, tested in Node by `scripts/test-path-stats.js`, `scripts/test-trainer-core.js` and `scripts/test-race-core.js`) as relative `<script src>` files, so copy the `data/` and `lib/` folders along with them. Both load from disk without a server.
+
+## Repo copy vs. tlctc.net copy
+
+These files are the single source for the tools published at `https://www.tlctc.net/tools/`. `npm run site` copies them to the site tree and rewrites every CDN library to its self-hosted `/vendor/` copy (table: [`scripts/lib/tool-vendor-map.js`](../scripts/lib/tool-vendor-map.js)), so the site makes no third-party requests. Edit the tool here, never the site copy.
+
+`npm run validate` runs [`scripts/validate-tools.js`](../scripts/validate-tools.js), which fails when:
+
+- an embedded generic vulnerability, attacker's view or definition is not verbatim the current dictionary (`json-schemas/layer-1/`),
+- a cluster's short gloss still uses wording an erratum retired (#8 "facilities", #2/#3 "source code"),
+- a tool loads a `/vendor/` path (only the site has those) or a library the vendor map does not cover,
+- a tool is missing from the table above.
 
 ## Template Files
 
@@ -119,6 +142,71 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
 - Credential use is always `cluster: 4` regardless of acquisition method (R-CRED).
 - FEC execution requires a `cluster: 7` step at the execution moment (R-EXEC).
 - Bridge clusters (#8, #9, #10) require a `boundary` object.
+
+### Path Atlas
+
+**Input:** any Layer-3 attack-path record (`json-schemas/layer-3/tlctc-attack-path.schema.json`) — an object with a `path_sequence` array. Other JSON is skipped and listed.
+
+**Counting rules** (`tools/lib/path-stats.js`, pinned by `scripts/test-path-stats.js`):
+- A transition is an ordered pair of *adjacent* positions in `path_sequence`. A parallel group fans out from the position before it and in to the position after it; there are no transitions inside a group (`(#X + #Y)` asserts no order).
+- Unresolved items (`?`/`…`) never form transitions (R-UNRES-3); each break is counted in `dropped_transitions`.
+- Δt = `delta_t_to_next` of the earlier position (a group's own value, else its first member's). `~7d` approximate, `<10m` upper bound, `~hours` qualitative (class only), `instant` = 0 s, `?` unknown.
+- Velocity classes are binned by the tool at <60 s VC-4, <60 min VC-3, <24 h VC-2, else VC-1 — a tool convention; the core paper defines the classes by scale only.
+- DRE refinements also count to their parent (`Ii`, `If` → `I`; `Av`, `Ac` → `A`).
+- Unit `incidents`: records whose `metadata.incident_id` differs only by a trailing `-AP<n>` form one incident; each (from, to) pair counts once per incident.
+
+**Export — `path-atlas-stats.json`** (the interface for tools built on the Atlas):
+
+```jsonc
+{
+  "schema": "tlctc-path-atlas-stats.v1",
+  "corpus_hash": "dbeea95f…",          // sha256 of the bundled records; null for an imported corpus
+  "unit": "transitions | incidents",
+  "filters": { "corpus": "repo", "sources": ["repo"], "confidence": ["high", "medium", "low", "unspecified"] },
+  "velocity_binning": "tool convention: <60s VC-4, <60min VC-3, <24h VC-2, else VC-1",
+  "records": 59, "steps": 331, "total_transitions": 273, "dropped_transitions": 1,
+  "transitions": [{
+    "from": "#4", "to": "#1", "count": 59,
+    "delta_t": { "n": 59, "n_numeric": 51, "min_s": 0, "median_s": 300, "max_s": 2592000,
+                 "vc": { "VC-1": 7, "VC-2": 10, "VC-3": 14, "VC-4": 23 }, "n_upper": 0, "n_qualitative": 3, "n_unknown": 5 }
+  }],
+  "entry": { "#1": 6, "#4": 13, "#9": 24, "none": 1, … },   // one key per cluster + "none"
+  "exit":  { "#1": 39, "#7": 12, "none": 0, … },
+  "dre":   { "#1": { "C": 62, "I": 15, "Ii": 1, "If": 1, "A": 8, "Av": 1, "Ac": 2 }, … }
+}
+```
+
+(Values: the 59 `attack-paths/` records, per transition, at corpus hash `dbeea95f`; `…` marks omitted keys — every cluster appears in `entry`, `exit` and `dre`.)
+
+### Classification Trainer
+
+**Scenarios** are the classified steps of the `attack-paths/` records. Their notes were written as analyses and usually state the answer, so each scenario keeps only the sentences that describe what happened: a sentence is dropped when it names a cluster (`#4`, "Identity Theft"), cites a rule or axiom (`R-CRED`, "Axiom X"), uses boundary/sphere notation, or argues the classification ("a designed function", "this step"). Steps with fewer than 80 characters left are not used. The full notes are shown after the answer. The redaction patterns live in `tools/lib/trainer-core.js`; `scripts/test-trainer-core.js` checks that no scenario in the corpus still contains one.
+
+**The key** is the record's classification — one analyst's reviewed reading, not ground truth. Agreement *between raters* (Fleiss' κ) is the reproducibility measure; match with the key is a prompt for discussion.
+
+**Study sets** are deterministic: the study code (seed), the size and the corpus hash select the same scenarios in the same order for every rater, round-robin across the ten clusters so rare clusters are present. A sheet from a different corpus version gets a different `study_id` and is not pooled.
+
+**Rating sheet** (`rating-sheet-<study_id>-<rater>.json`):
+
+```jsonc
+{
+  "schema": "tlctc-rating-sheet.v1",
+  "study_id": "tlctc-study-1-20-dbeea95f",   // seed-size-corpus hash
+  "seed": "tlctc-study-1", "n": 20, "corpus_hash": "dbeea95f…", "tlctc_version": "2.6",
+  "rater": "analyst-3", "started": "ISO-8601", "finished": "ISO-8601",
+  "answers": [ { "item": "attack-paths/capital-one-2019.json#s2-iam-credential-use", "answer": "#4", "ms": 18250 } ]
+}
+```
+
+**Results export** (`agreement-<study_id>.json`, schema `tlctc-agreement-results.v1`): raters (match with key, Cohen's κ vs key), `fleiss_kappa`, per-cluster share and κ, the key × answer confusion matrix, and per-scenario answer counts and pairwise agreement. Readings follow Landis & Koch (1977) — a convention, not a test.
+
+### Δt Race
+
+**Canon** (core §7.2, application §10.2–10.3): `DCS_d = TTD_P90 / Δt`, `DCS_c = TTC_P90 / Δt`. Below 1 the defender acts before the attacker completes the transition; 1 is marginal; above 1 the step completes first. Only `DCS_c < 1` stops a transition — `DCS_d < 1` with `DCS_c > 1` is *seen but not stopped*. A Δt distribution is read at P10. Below about a minute (VC-4) the target is prevention, not a faster DCS. A mean (MTTD/MTTC) is the special case where no P90 exists.
+
+**Tool conventions** (shown in the UI): a transition X → Y is measured against the defender times for X, the step the attacker is leaving; VC binning as in the Path Atlas; a Δt recorded as an upper bound (`<10m`) makes the scores lower bounds; unresolved steps break the chain; corpus P10 needs at least 3 measured values of that transition, otherwise the path's own Δt is used. The Control Matrix's five-band DCS labels are not used here — only the canonical reading.
+
+**Export** (`dt-race.json`, schema `tlctc-dt-race.v1`): the path file, Δt source, corpus hash, the defender profile in seconds, the targets, a summary (`counts` per outcome, `interception` = index of the first contained transition) and one entry per transition (`from`, `to`, steps, `dt`, `ttd_s`, `ttc_s`, `dcs_d`, `dcs_c`, `outcome`, target checks). Outcomes: `contained`, `seen`, `missed`, `prevention-only`, `no-data`, `unknown-dt`.
 
 ### Threat Modeling
 
@@ -563,8 +651,9 @@ Each tool uses a distinct JSON schema. Below are the key structures for programm
 ## Technology
 
 All tools are single-file HTML applications using:
-- React (via CDN)
+- React with in-browser Babel (Threat Modeling, Threat Radar, Control Matrix, CBP, Tech Enablers Radar); the others are plain JavaScript
 - Tailwind CSS
+- Libraries from public CDNs in the repo copy, self-hosted under `/vendor/` on tlctc.net
 - SVG rendering
 - Browser localStorage for persistence
 

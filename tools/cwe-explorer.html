@@ -6,10 +6,10 @@
   <title>TLCTC & CWE Mapping: Advanced Explorer</title>
   <meta name="description" content="Advanced interactive explorer for TLCTC and CWE mapping with multi-select filtering and comprehensive data views." />
   
-  <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
-  <link rel="stylesheet" href="/vendor/font-awesome/6.5.2/css/all.min.css" />
-  <link href="/vendor/fonts/google-fonts.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <script>
     tailwind.config = {
@@ -740,6 +740,44 @@
     .ai-disclaimer button { background: transparent; border: none; cursor: pointer; color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin-left: 0.5rem; opacity: 0.6; vertical-align: middle; }
     .ai-disclaimer button:hover { opacity: 1; }
   </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TLCTC \u0026 CWE Mapping: Advanced Explorer",
+  "description": "Advanced interactive explorer for TLCTC and CWE mapping with multi-select filtering and comprehensive data views.",
+  "url": "https://www.tlctc.net/tools/cwe-explorer.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.tlctc.net/tools/cwe-explorer.html"
+  },
+  "inLanguage": "en",
+  "image": "https://www.tlctc.net/images/logo-middle.png",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Person",
+    "@id": "https://orcid.org/0009-0005-2148-9903",
+    "sameAs": "https://orcid.org/0009-0005-2148-9903",
+    "name": "Bernhard Kreinz"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TLCTC",
+    "url": "https://www.tlctc.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.tlctc.net/images/logo-middle.png"
+    }
+  }
+}
+    </script>
 </head>
 <body class="min-h-screen bg-background text-foreground font-sans antialiased">
 
@@ -764,6 +802,8 @@
             <div id="nav-dd-analysis-panel" class="nav-dd-panel hidden">
                 <a href="threat-modeling.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="file-search" class="h-4 w-4"></i> Threat Modeling</a>
                 <a href="attack-path-architect.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="route" class="h-4 w-4"></i> Attack Path Architect</a>
+                <a href="path-atlas.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="waypoints" class="h-4 w-4"></i> Path Atlas</a>
+                <a href="classification-trainer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="graduation-cap" class="h-4 w-4"></i> Classification Trainer</a>
                 <a href="attck-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="swords" class="h-4 w-4"></i> ATT&CK Explorer</a>
                 <a href="cwe-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground font-semibold bg-accent/50"><i data-lucide="bug" class="h-4 w-4"></i> CWE Explorer</a>
             </div>
@@ -785,6 +825,7 @@
                 <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
                 <a href="tech-enablers-radar.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="cpu" class="h-4 w-4"></i> Tech Enablers Radar</a>
                 <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
+                <a href="delta-t-race.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="timer" class="h-4 w-4"></i> Δt Race</a>
                 <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
             </div>
         </div>
@@ -816,6 +857,8 @@
         <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1.5"><i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis</span>
         <a href="threat-modeling.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Modeling</a>
         <a href="attack-path-architect.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Attack Path Architect</a>
+        <a href="path-atlas.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Path Atlas</a>
+        <a href="classification-trainer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Classification Trainer</a>
         <a href="attck-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">ATT&CK Explorer</a>
         <a href="cwe-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-foreground font-semibold">CWE Explorer</a>
         <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors</span>
@@ -825,6 +868,7 @@
         <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Radar</a>
         <a href="tech-enablers-radar.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Tech Enablers Radar</a>
         <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
+        <a href="delta-t-race.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Δt Race</a>
         <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
         <div class="border-t border-border mt-4 pt-4 flex flex-col gap-2">
             <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <i data-lucide="external-link" class="h-3.5 w-3.5"></i></a>

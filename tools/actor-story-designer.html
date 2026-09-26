@@ -8,17 +8,34 @@
     <meta name="description" content="Design threat actor stories combining TLCTC capability profiles and Diamond Model-framed narrative intelligence.">
     <meta name="keywords" content="TLCTC, Threat Actor Profiling, Diamond Model, Cyber Threat Intelligence, CTI, Capability Matrix, Actor Stories">
     <meta name="author" content="TLCTC Framework">
-    <meta property="og:title" content="TLCTC Actor Story Designer">
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tlctc.net/tools/actor-story-designer.html">
+    <meta property="og:title" content="TLCTC Actor Story Designer">
+    <meta property="og:description" content="Design threat actor stories combining TLCTC capability profiles and Diamond Model-framed narrative intelligence.">
+    <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+    <meta property="og:site_name" content="TLCTC">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@fr33thought">
+    <meta name="twitter:creator" content="@fr33thought">
+    <meta name="twitter:url" content="https://www.tlctc.net/tools/actor-story-designer.html">
+    <meta name="twitter:title" content="TLCTC Actor Story Designer">
+    <meta name="twitter:description" content="Design threat actor stories combining TLCTC capability profiles and Diamond Model-framed narrative intelligence.">
+    <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+
 
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script src="/vendor/react/18.3.1/react.development.js"></script>
-    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
-    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 
@@ -564,6 +581,8 @@
                         <div id="nav-dd-analysis-panel" class="nav-dd-panel hidden absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
                             <a href="threat-modeling.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="file-search" class="h-4 w-4"></i> Threat Modeling</a>
                             <a href="attack-path-architect.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="route" class="h-4 w-4"></i> Attack Path Architect</a>
+                            <a href="path-atlas.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="waypoints" class="h-4 w-4"></i> Path Atlas</a>
+                            <a href="classification-trainer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="graduation-cap" class="h-4 w-4"></i> Classification Trainer</a>
                             <a href="attck-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="swords" class="h-4 w-4"></i> ATT&CK Explorer</a>
                             <a href="cwe-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="bug" class="h-4 w-4"></i> CWE Explorer</a>
                         </div>
@@ -585,6 +604,7 @@
                             <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
                             <a href="tech-enablers-radar.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="cpu" class="h-4 w-4"></i> Tech Enablers Radar</a>
                             <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
+                            <a href="delta-t-race.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="timer" class="h-4 w-4"></i> Δt Race</a>
                             <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
                         </div>
                     </div>
@@ -617,6 +637,8 @@
             <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1.5"><i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis</span>
             <a href="threat-modeling.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Modeling</a>
             <a href="attack-path-architect.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Attack Path Architect</a>
+            <a href="path-atlas.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Path Atlas</a>
+            <a href="classification-trainer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Classification Trainer</a>
             <a href="attck-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">ATT&CK Explorer</a>
             <a href="cwe-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CWE Explorer</a>
             <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors</span>
@@ -626,6 +648,7 @@
             <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Radar</a>
             <a href="tech-enablers-radar.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Tech Enablers Radar</a>
             <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
+            <a href="delta-t-race.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Δt Race</a>
             <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
             <div class="border-t border-border mt-4 pt-4 flex flex-col gap-2">
                 <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <i data-lucide="external-link" class="h-3.5 w-3.5"></i></a>

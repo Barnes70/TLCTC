@@ -6,13 +6,34 @@
     <title>TLCTC CBP — Capability-Based Planning</title>
     <meta name="description" content="Capability-Based Planning for cyber security. Map organizational capabilities across the 10 TLCTC clusters and 6 NIST CSF functions. Assess maturity at the capability level.">
 
-    <script src="/vendor/react/18.3.1/react.development.js"></script>
-    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
-    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
-    <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
-    <script src="/vendor/lucide/0.469.0/lucide.min.js"></script>
-    <script src="/vendor/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="/vendor/fonts/google-fonts.css" rel="stylesheet">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tlctc.net/tools/cbp-app.html">
+    <meta property="og:title" content="TLCTC CBP — Capability-Based Planning">
+    <meta property="og:description" content="Capability-Based Planning for cyber security. Map organizational capabilities across the 10 TLCTC clusters and 6 NIST CSF functions. Assess maturity at the capability level.">
+    <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+    <meta property="og:site_name" content="TLCTC">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@fr33thought">
+    <meta name="twitter:creator" content="@fr33thought">
+    <meta name="twitter:url" content="https://www.tlctc.net/tools/cbp-app.html">
+    <meta name="twitter:title" content="TLCTC CBP — Capability-Based Planning">
+    <meta name="twitter:description" content="Capability-Based Planning for cyber security. Map organizational capabilities across the 10 TLCTC clusters and 6 NIST CSF functions. Assess maturity at the capability level.">
+    <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -131,16 +152,16 @@ const { useState, useEffect, useRef, useCallback, useMemo } = React;
 // ═══════════════════════════════════════════════════════════════════
 
 const CLUSTERS = [
-    { id: 1,  opId: 'TLCTC-01.00', name: 'Abuse of Functions',  abbr: 'AoF', topology: 'internal', genericVuln: 'The inherent trust, scope, and complexity designed into software functionality and configuration' },
-    { id: 2,  opId: 'TLCTC-02.00', name: 'Exploiting Server',   abbr: 'ExS', topology: 'internal', genericVuln: 'Server-side implementation flaws enable unintended behavior' },
-    { id: 3,  opId: 'TLCTC-03.00', name: 'Exploiting Client',   abbr: 'ExC', topology: 'internal', genericVuln: 'Client-side implementation flaws enable unintended behavior' },
-    { id: 4,  opId: 'TLCTC-04.00', name: 'Identity Theft',      abbr: 'IdT', topology: 'internal', genericVuln: 'Insufficient identity-artifact binding at the point of authentication' },
-    { id: 5,  opId: 'TLCTC-05.00', name: 'Man in the Middle',   abbr: 'MitM', topology: 'internal', genericVuln: 'The lack of sufficient control over the communication path' },
-    { id: 6,  opId: 'TLCTC-06.00', name: 'Flooding Attack',     abbr: 'Fld', topology: 'internal', genericVuln: 'Finite capacity limitations inherent in any system component' },
-    { id: 7,  opId: 'TLCTC-07.00', name: 'Malware',             abbr: 'Mlw', topology: 'internal', genericVuln: "The software environment's designed capability to execute potentially untrusted foreign code" },
-    { id: 8,  opId: 'TLCTC-08.00', name: 'Physical Attack',     abbr: 'Phy', topology: 'bridge',   genericVuln: 'Physical accessibility of infrastructure and exploitability of physical-layer properties' },
-    { id: 9,  opId: 'TLCTC-09.00', name: 'Social Engineering',  abbr: 'SE',  topology: 'bridge',   genericVuln: 'Humans can be influenced into unsafe actions or decisions' },
-    { id: 10, opId: 'TLCTC-10.00', name: 'Supply Chain Attack', abbr: 'SCA', topology: 'bridge',   genericVuln: 'Trust in third-party components and update channels can be subverted' },
+    { id: 1,  opId: 'TLCTC-01.00', name: 'Abuse of Functions',  abbr: 'AoF', topology: 'internal', genericVuln: "The inherent trust, scope, and complexity designed into software functionality and configuration." },
+    { id: 2,  opId: 'TLCTC-02.00', name: 'Exploiting Server',   abbr: 'ExS', topology: 'internal', genericVuln: "Server-side implementation flaws enable unintended behavior." },
+    { id: 3,  opId: 'TLCTC-03.00', name: 'Exploiting Client',   abbr: 'ExC', topology: 'internal', genericVuln: "Client-side implementation flaws enable unintended behavior." },
+    { id: 4,  opId: 'TLCTC-04.00', name: 'Identity Theft',      abbr: 'IdT', topology: 'internal', genericVuln: "Insufficient binding, at the point of authentication, between a presented credential and the authentic holder of the identity it claims." },
+    { id: 5,  opId: 'TLCTC-05.00', name: 'Man in the Middle',   abbr: 'MitM', topology: 'internal', genericVuln: "The lack of sufficient control over the communication path." },
+    { id: 6,  opId: 'TLCTC-06.00', name: 'Flooding Attack',     abbr: 'Fld', topology: 'internal', genericVuln: "Finite capacity limitations inherent in any system component." },
+    { id: 7,  opId: 'TLCTC-07.00', name: 'Malware',             abbr: 'Mlw', topology: 'internal', genericVuln: "The software environment's designed capability to execute potentially untrusted foreign code." },
+    { id: 8,  opId: 'TLCTC-08.00', name: 'Physical Attack',     abbr: 'Phy', topology: 'bridge',   genericVuln: "Physical accessibility of infrastructure and the exploitability of physical-layer properties." },
+    { id: 9,  opId: 'TLCTC-09.00', name: 'Social Engineering',  abbr: 'SE',  topology: 'bridge',   genericVuln: "Humans can be influenced into unsafe actions or decisions." },
+    { id: 10, opId: 'TLCTC-10.00', name: 'Supply Chain Attack', abbr: 'SCA', topology: 'bridge',   genericVuln: "Trust in third-party components and update channels can be subverted." },
 ];
 
 const CSF_FUNCTIONS = [

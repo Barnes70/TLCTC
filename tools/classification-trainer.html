@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TLCTC Classification Trainer</title>
+  <meta name="description" content="Practise classifying real attack-path steps into the ten TLCTC clusters, and run inter-rater agreement studies (Fleiss' kappa) on a shared, fixed scenario set." />
+  <link rel="canonical" href="https://www.tlctc.net/tools/classification-trainer.html" />
+  <link rel="icon" href="/images/logo-small.png" type="image/png">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.tlctc.net/tools/classification-trainer.html">
+  <meta property="og:title" content="TLCTC Classification Trainer">
+  <meta property="og:description" content="Practise classifying real attack-path steps into the ten TLCTC clusters, and measure how reproducibly analysts classify with an inter-rater agreement study.">
+  <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+  <meta property="og:site_name" content="TLCTC">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@fr33thought">
+  <meta name="twitter:creator" content="@fr33thought">
+  <meta name="twitter:url" content="https://www.tlctc.net/tools/classification-trainer.html">
+  <meta name="twitter:title" content="TLCTC Classification Trainer">
+  <meta name="twitter:description" content="Practise classifying real attack-path steps into the ten TLCTC clusters, and measure how reproducibly analysts classify with an inter-rater agreement study.">
+  <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png">
+  <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- scenarios come from the bundled attack paths; canon quoted verbatim from the dictionary -->
+  <script src="data/path-corpus.js"></script>
+  <script src="data/tlctc-canon.js"></script>
+  <script src="lib/trainer-core.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: {
+            border: "hsl(var(--border))", input: "hsl(var(--input))", ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))", foreground: "hsl(var(--foreground))",
+            primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+            secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+            destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
+            muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+            accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+            card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+          },
+          borderRadius: { lg: "var(--radius)", md: "calc(var(--radius) - 2px)", sm: "calc(var(--radius) - 4px)" },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --radius: 0.5rem;
+      --background: 0 0% 100%; --foreground: 240 10% 3.9%;
+      --card: 0 0% 100%; --card-foreground: 240 10% 3.9%;
+      --primary: 240 5.9% 10%; --primary-foreground: 0 0% 98%;
+      --secondary: 240 4.8% 95.9%; --secondary-foreground: 240 5.9% 10%;
+      --muted: 240 4.8% 95.9%; --muted-foreground: 240 3.8% 46.1%;
+      --accent: 240 4.8% 95.9%; --accent-foreground: 240 5.9% 10%;
+      --destructive: 0 84.2% 60.2%; --destructive-foreground: 0 0% 98%;
+      --border: 240 5.9% 90%; --input: 240 5.9% 90%; --ring: 240 5.9% 10%;
+      /* status: good / critical (reference palette status steps), always with icon + label */
+      --good: #0b7a4b; --good-bg: #e3f4ec; --bad: #b42318; --bad-bg: #fdecea;
+      --chart-empty: #f1f1ef; --chart-bar: #2a78d6;
+    }
+    .dark {
+      --background: 240 10% 3.9%; --foreground: 0 0% 98%;
+      --card: 240 10% 3.9%; --card-foreground: 0 0% 98%;
+      --primary: 0 0% 98%; --primary-foreground: 240 5.9% 10%;
+      --secondary: 240 3.7% 15.9%; --secondary-foreground: 0 0% 98%;
+      --muted: 240 3.7% 15.9%; --muted-foreground: 240 5% 64.9%;
+      --accent: 240 3.7% 15.9%; --accent-foreground: 0 0% 98%;
+      --destructive: 0 62.8% 30.6%; --destructive-foreground: 0 0% 98%;
+      --border: 240 3.7% 15.9%; --input: 240 3.7% 15.9%; --ring: 240 4.9% 83.9%;
+      --good: #4cc38a; --good-bg: #10261c; --bad: #f97066; --bad-bg: #2d1412;
+      --chart-empty: #242423; --chart-bar: #3987e5;
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: hsl(var(--background)); }
+    ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 4px; }
+    .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+    .glass-header { background: hsl(var(--background) / 0.8); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid hsl(var(--border)); position: sticky; top: 0; z-index: 30; }
+    .nav-dd-panel { position: absolute; left: 0; top: 100%; margin-top: 0.25rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 0.5rem; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); z-index: 50; padding: 0.25rem 0; min-width: 14rem; }
+    .ai-disclaimer { background: hsl(var(--muted) / 0.5); color: hsl(var(--muted-foreground)); font-size: 11px; line-height: 1.4; padding: 0.375rem 1rem; text-align: center; border-bottom: 1px solid hsl(var(--border)); }
+    .ai-disclaimer button { background: transparent; border: none; cursor: pointer; color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin-left: 0.5rem; opacity: 0.6; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.45rem 0.8rem; border-radius: 0.375rem; font-size: 0.8rem; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: background-color .15s, color .15s; white-space: nowrap; }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+    .btn-primary { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+    .btn-outline { border-color: hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); }
+    .btn-outline:hover:not(:disabled) { background: hsl(var(--accent)); }
+    .btn-ghost { background: transparent; color: hsl(var(--muted-foreground)); }
+    .btn-ghost:hover { background: hsl(var(--accent)); color: hsl(var(--foreground)); }
+    .card { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    .seg { display: inline-flex; border: 1px solid hsl(var(--input)); border-radius: 0.5rem; overflow: hidden; }
+    .seg button { padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 500; color: hsl(var(--muted-foreground)); background: hsl(var(--background)); display: inline-flex; align-items: center; gap: .4rem; }
+    .seg button + button { border-left: 1px solid hsl(var(--input)); }
+    .seg button.active { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+    .field { height: 2.4rem; padding: 0 .7rem; border-radius: .375rem; border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: .85rem; }
+    .lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: .05em; color: hsl(var(--muted-foreground)); font-weight: 600; }
+    .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; padding: 0.05rem 0.35rem; border-radius: 0.25rem; background: hsl(var(--muted)); }
+    .answer { display: flex; align-items: center; gap: .5rem; text-align: left; padding: .6rem .7rem; border-radius: .5rem; border: 1px solid hsl(var(--input)); background: hsl(var(--background)); font-size: .85rem; transition: background-color .12s, border-color .12s; }
+    .answer:hover:not(:disabled) { background: hsl(var(--accent)); }
+    .answer:disabled { cursor: default; }
+    .answer .kbd { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: hsl(var(--muted-foreground)); border: 1px solid hsl(var(--border)); border-radius: .25rem; padding: 0 .3rem; }
+    .answer.chosen { border-color: hsl(var(--primary)); box-shadow: 0 0 0 1px hsl(var(--primary)); }
+    .answer.is-key { border-color: var(--good); background: var(--good-bg); }
+    .answer.is-wrong { border-color: var(--bad); background: var(--bad-bg); }
+    .scenario { font-size: 1.02rem; line-height: 1.65; }
+    .status-good { color: var(--good); } .status-bad { color: var(--bad); }
+    table.tt { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    table.tt th { text-align: left; font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: .04em; color: hsl(var(--muted-foreground)); padding: 0.5rem; border-bottom: 1px solid hsl(var(--border)); }
+    table.tt td { padding: 0.45rem 0.5rem; border-bottom: 1px solid hsl(var(--border)); vertical-align: top; }
+    .num { font-variant-numeric: tabular-nums; }
+    .progress { height: 6px; border-radius: 3px; background: var(--chart-empty); overflow: hidden; }
+    .progress > span { display: block; height: 6px; background: var(--chart-bar); border-radius: 0 3px 3px 0; }
+    details > summary { cursor: pointer; list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground font-sans antialiased">
+
+  <header class="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0">
+    <div class="flex items-center gap-3">
+        <a href="/index.html" class="flex items-center gap-2 group">
+            <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
+                <img src="/images/logo-small.png" alt="Logo" class="h-full w-full object-contain p-1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <i data-lucide="shield" class="h-5 w-5 hidden"></i>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-display font-bold text-lg leading-tight">TLCTC</span>
+                <span class="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+            </div>
+        </a>
+    </div>
+    <nav class="hidden md:flex items-center gap-1">
+        <div class="nav-dd relative">
+            <button onclick="toggleNavDd('analysis')" class="text-sm font-semibold text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                <i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+            </button>
+            <div id="nav-dd-analysis-panel" class="nav-dd-panel hidden">
+                <a href="threat-modeling.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="file-search" class="h-4 w-4"></i> Threat Modeling</a>
+                <a href="attack-path-architect.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="route" class="h-4 w-4"></i> Attack Path Architect</a>
+                <a href="path-atlas.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="waypoints" class="h-4 w-4"></i> Path Atlas</a>
+                <a href="classification-trainer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground font-semibold bg-accent/50"><i data-lucide="graduation-cap" class="h-4 w-4"></i> Classification Trainer</a>
+                <a href="attck-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="swords" class="h-4 w-4"></i> ATT&CK Explorer</a>
+                <a href="cwe-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="bug" class="h-4 w-4"></i> CWE Explorer</a>
+            </div>
+        </div>
+        <div class="nav-dd relative">
+            <button onclick="toggleNavDd('actors')" class="text-sm font-medium text-muted-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                <i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+            </button>
+            <div id="nav-dd-actors-panel" class="nav-dd-panel hidden">
+                <a href="actor-profile-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="fingerprint" class="h-4 w-4"></i> Actor Profiler</a>
+                <a href="actor-story-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="book-open" class="h-4 w-4"></i> Actor Story</a>
+            </div>
+        </div>
+        <div class="nav-dd relative">
+            <button onclick="toggleNavDd('defense')" class="text-sm font-medium text-muted-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                <i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+            </button>
+            <div id="nav-dd-defense-panel" class="nav-dd-panel hidden">
+                <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
+                <a href="tech-enablers-radar.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="cpu" class="h-4 w-4"></i> Tech Enablers Radar</a>
+                <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
+                <a href="delta-t-race.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="timer" class="h-4 w-4"></i> Δt Race</a>
+                <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
+            </div>
+        </div>
+        <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+        <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><i data-lucide="github" class="h-4 w-4"></i></a>
+    </nav>
+    <div class="flex items-center gap-3">
+        <button onclick="toggleTheme()" class="btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Toggle theme">
+            <i data-lucide="sun" class="h-4 w-4 hidden dark:block"></i>
+            <i data-lucide="moon" class="h-4 w-4 block dark:hidden"></i>
+        </button>
+        <button onclick="toggleMenu()" class="md:hidden btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Menu"><i data-lucide="menu" class="h-5 w-5"></i></button>
+    </div>
+  </header>
+  <div class="ai-disclaimer" id="ai-disclaimer">&#9432; The scenarios come from AI-assisted analyses of public threat reporting. Quality improves with evolving AI capabilities. They illustrate the practical application of the TLCTC framework.<button onclick="document.getElementById('ai-disclaimer').remove();try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){}" title="Dismiss">&times;</button></div>
+  <script>try { if (localStorage.getItem('tlctc-dismiss-disclaimer') === '1') { var d = document.getElementById('ai-disclaimer'); if (d) d.remove(); }} catch(e) {}</script>
+
+  <!-- Mobile Navigation Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden hidden transition-all duration-300 opacity-0">
+    <div class="flex h-14 items-center justify-between px-6 border-b border-border">
+        <span class="font-display font-bold text-lg">TLCTC</span>
+        <button onclick="toggleMenu()" class="btn h-10 w-10 p-0 rounded-full hover:bg-secondary" aria-label="Close menu"><i data-lucide="x" class="h-6 w-6"></i></button>
+    </div>
+    <nav class="flex flex-col p-8 gap-2 text-base font-medium">
+        <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1.5"><i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis</span>
+        <a href="threat-modeling.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Modeling</a>
+        <a href="attack-path-architect.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Attack Path Architect</a>
+        <a href="path-atlas.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Path Atlas</a>
+        <a href="classification-trainer.html" onclick="toggleMenu()" class="pl-5 py-1 text-foreground font-semibold">Classification Trainer</a>
+        <a href="attck-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">ATT&CK Explorer</a>
+        <a href="cwe-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CWE Explorer</a>
+        <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors</span>
+        <a href="actor-profile-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Profiler</a>
+        <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Story</a>
+        <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense</span>
+        <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Radar</a>
+        <a href="tech-enablers-radar.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Tech Enablers Radar</a>
+        <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
+        <a href="delta-t-race.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Δt Race</a>
+        <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
+        <div class="border-t border-border mt-4 pt-4 flex flex-col gap-2">
+            <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <i data-lucide="external-link" class="h-3.5 w-3.5"></i></a>
+            <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5"><i data-lucide="github" class="h-4 w-4"></i> GitHub</a>
+        </div>
+    </nav>
+  </div>
+
+  <main class="mx-auto max-w-5xl px-4 sm:px-6 py-8">
+    <div class="mb-6">
+      <div class="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground mb-3"><i data-lucide="graduation-cap" class="h-3.5 w-3.5"></i> Classification practice &amp; agreement studies</div>
+      <h1 class="font-display text-3xl font-bold tracking-tight">Classification Trainer</h1>
+      <p class="text-muted-foreground mt-2 max-w-3xl text-sm">Classify real attack-path steps into one of the ten clusters. <strong class="text-foreground">Practice</strong> gives instant feedback with the original analysis and the canonical wording. A <strong class="text-foreground">Study</strong> gives several analysts the same fixed set without feedback; <strong class="text-foreground">Results</strong> pools their rating sheets and measures how reproducibly they classify.</p>
+    </div>
+
+    <div class="seg mb-6" role="tablist" aria-label="Mode">
+      <button data-tab="practice" role="tab"><i data-lucide="target" class="h-4 w-4"></i> Practice</button>
+      <button data-tab="study" role="tab"><i data-lucide="clipboard-check" class="h-4 w-4"></i> Study</button>
+      <button data-tab="results" role="tab"><i data-lucide="sigma" class="h-4 w-4"></i> Results</button>
+    </div>
+
+    <!-- ============================== PRACTICE ============================== -->
+    <section id="tab-practice" role="tabpanel" aria-label="Practice">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+        <p class="text-xs text-muted-foreground">Scenarios are drawn evenly across the ten clusters, so rare clusters come up as often as common ones.</p>
+        <span id="p-score" class="text-sm font-medium num"></span>
+      </div>
+      <div id="p-card"></div>
+    </section>
+
+    <!-- ============================== STUDY ============================== -->
+    <section id="tab-study" role="tabpanel" aria-label="Study" class="hidden">
+      <div id="s-setup" class="card p-5 sm:p-6">
+        <h2 class="font-display text-lg font-bold mb-1">Start a study</h2>
+        <p class="text-sm text-muted-foreground mb-5">Everyone in a study enters the same <strong class="text-foreground">study code</strong> and <strong class="text-foreground">size</strong> and gets the same scenarios in the same order. There is no feedback until the end. When you finish, download your rating sheet and send it to whoever runs the study; they load all sheets under <em>Results</em>.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+          <label class="flex flex-col gap-1.5"><span class="lbl">Your name or alias</span><input id="s-rater" class="field" maxlength="60" placeholder="e.g. analyst-3"></label>
+          <label class="flex flex-col gap-1.5"><span class="lbl">Study code</span><input id="s-seed" class="field font-mono" maxlength="60" value="tlctc-study-1"></label>
+          <label class="flex flex-col gap-1.5"><span class="lbl">Scenarios</span><select id="s-n" class="field"><option>10</option><option selected>20</option><option>30</option><option>40</option></select></label>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <button class="btn btn-primary" id="s-start"><i data-lucide="play" class="h-4 w-4"></i> Start</button>
+          <span id="s-resume-note" class="text-xs text-muted-foreground"></span>
+        </div>
+      </div>
+      <div id="s-run" class="hidden"></div>
+      <div id="s-done" class="hidden"></div>
+    </section>
+
+    <!-- ============================== RESULTS ============================== -->
+    <section id="tab-results" role="tabpanel" aria-label="Results" class="hidden">
+      <div class="card p-5 sm:p-6 mb-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="font-display text-lg font-bold">Pool rating sheets</h2>
+            <p class="text-sm text-muted-foreground">Load the <span class="font-mono text-xs">tlctc-rating-sheet</span> files of one study (two or more raters for inter-rater agreement).</p>
+          </div>
+          <div class="flex gap-2">
+            <input type="file" id="r-files" accept=".json,application/json" multiple class="hidden">
+            <button class="btn btn-outline" id="r-load"><i data-lucide="upload" class="h-4 w-4"></i> Load sheets</button>
+            <button class="btn btn-ghost hidden" id="r-clear"><i data-lucide="x" class="h-4 w-4"></i> Clear</button>
+            <button class="btn btn-outline hidden" id="r-export"><i data-lucide="file-down" class="h-4 w-4"></i> Results JSON</button>
+          </div>
+        </div>
+        <div id="r-sheets" class="mt-3 text-xs"></div>
+      </div>
+      <div id="r-out"></div>
+    </section>
+  </main>
+
+  <footer class="border-t border-border py-8 text-center text-xs opacity-70 mt-10">
+    <div class="mx-auto max-w-7xl px-4">
+      <p>© <span id="footer-year"></span> TLCTC — Top Level Cyber Threat Clusters</p>
+      <p class="mt-1">Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" class="underline">CC BY 4.0</a></p>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+    const T = window.TLCTCTrainer;
+    const CORPUS = window.TLCTC_PATH_CORPUS;
+    const CANON = window.TLCTC_CANON;
+    const IDS = T.CLUSTER_IDS;
+    const STUDY_KEY = 'tlctc-trainer-study';      // an unfinished study (the rater's own answers)
+    const TAB_KEY = 'tlctc-trainer-tab';
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const cname = (c) => (CANON.clusters[c] ? `${c} ${CANON.clusters[c].name}` : c);
+    const pct = (x) => (x == null ? '—' : `${Math.round(x * 100)}%`);
+    const k3 = (x) => (x == null ? '—' : x.toFixed(2));
+    const store = { get(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* optional */ } }, del(k) { try { localStorage.removeItem(k); } catch (e) { /* optional */ } } };
+
+    const ITEMS = T.buildItems(CORPUS.records.filter((r) => r.source === 'repo'));
+    const BY_ID = Object.fromEntries(ITEMS.map((it) => [it.id, it]));
+
+    // ------------------------------------------------------------ shared pieces
+    function contextBox(it, reveal) {
+      const where = `<span class="text-muted-foreground">Step ${it.position} of ${it.of}${reveal ? ` · <span class="text-foreground font-medium">${esc(it.title)}</span>` : ''}</span>`;
+      let prev = '';
+      if (it.prev) {
+        const txt = it.prev.text ? esc(it.prev.text.length > 320 ? `${it.prev.text.slice(0, 320)}…` : it.prev.text)
+          : '<em>(description withheld — the original text names the answer)</em>';
+        prev = `<div class="rounded-lg border border-border bg-muted/40 p-3 mb-4 text-sm">
+          <div class="lbl mb-1">Previous step — classified ${it.prev.cluster === '?' ? 'as unresolved (?)' : `as <span class="pill">${esc(it.prev.cluster)}</span>`}</div>
+          <p class="text-muted-foreground">${txt}</p></div>`;
+      } else {
+        prev = '<p class="text-xs text-muted-foreground mb-3">This is the first step of its path.</p>';
+      }
+      return `<div class="text-xs mb-2">${where}</div>${prev}`;
+    }
+    function answerGrid(prefix, chosen, key, locked) {
+      return `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2" role="group" aria-label="Clusters">` + IDS.map((c, i) => {
+        const cls = ['answer'];
+        if (chosen === c) cls.push('chosen');
+        if (locked && key === c) cls.push('is-key');
+        if (locked && chosen === c && key !== c) cls.push('is-wrong');
+        return `<button class="${cls.join(' ')}" data-${prefix}="${c}"${locked ? ' disabled' : ''}><span class="pill">${c}</span><span>${esc(CANON.clusters[c].name)}</span><span class="kbd">${i === 9 ? '0' : i + 1}</span></button>`;
+      }).join('') + '</div>';
+    }
+    const gvList = () => `<ol class="space-y-1.5 text-sm">${IDS.map((c) => `<li><span class="pill">${c}</span> <span class="font-medium">${esc(CANON.clusters[c].name)}</span> — <span class="text-muted-foreground">${esc(CANON.clusters[c].generic_vulnerability)}</span></li>`).join('')}</ol>`;
+    function canonBlock(c, label) {
+      const k = CANON.clusters[c];
+      return `<div class="rounded-lg border border-border p-3"><div class="lbl mb-1">${label}</div>
+        <div class="font-medium mb-1"><span class="pill">${c}</span> ${esc(k.name)}</div>
+        <p class="text-sm mb-1"><span class="text-muted-foreground">Definition:</span> ${esc(k.definition)}</p>
+        <p class="text-sm"><span class="text-muted-foreground">Generic vulnerability:</span> ${esc(k.generic_vulnerability)}</p></div>`;
+    }
+    const keyFor = (e) => { if (/^[0-9]$/.test(e.key)) return IDS[e.key === '0' ? 9 : +e.key - 1]; return null; };
+
+    // ------------------------------------------------------------ PRACTICE
+    const practice = { item: null, answer: null, recent: [], score: { right: 0, total: 0, byKey: {} }, hint: false };
+    function nextPractice() {
+      practice.item = T.pickBalanced(ITEMS, Math.random, new Set(practice.recent));
+      practice.recent = practice.recent.concat(practice.item.id).slice(-30);
+      practice.answer = null; practice.hint = false;
+      renderPractice();
+    }
+    function answerPractice(c) {
+      if (practice.answer) return;
+      practice.answer = c;
+      const it = practice.item, ok = c === it.key;
+      practice.score.total++; if (ok) practice.score.right++;
+      const b = practice.score.byKey[it.key] = practice.score.byKey[it.key] || { right: 0, total: 0 };
+      b.total++; if (ok) b.right++;
+      renderPractice();
+    }
+    function renderPractice() {
+      const it = practice.item, a = practice.answer, s = practice.score;
+      $('p-score').textContent = s.total ? `Session: ${s.right} of ${s.total} correct` : '';
+      let h = `<div class="card p-5 sm:p-6">${contextBox(it, !!a)}
+        <div class="lbl mb-1">This step</div>
+        <p class="scenario mb-5" id="p-text">${esc(it.text)}</p>
+        <p class="font-medium text-sm mb-2">Which cluster does this step belong to?</p>
+        ${answerGrid('p', a, it.key, !!a)}`;
+      if (!a) {
+        h += `<details class="mt-4" ${practice.hint ? 'open' : ''} id="p-hint"><summary class="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5"><i data-lucide="lightbulb" class="h-4 w-4"></i> Show the ten generic vulnerabilities</summary>
+          <div class="mt-3 rounded-lg border border-border p-4">${gvList()}<p class="text-xs text-muted-foreground mt-3">Classify by the generic vulnerability the step exploits, not by its outcome. Every scenario here is an Attack-row step, so each has exactly one cluster.</p></div></details>`;
+      } else {
+        const ok = a === it.key;
+        const rules = T.ruleIdsIn(it.notes);
+        h += `<div class="mt-5 rounded-lg border ${ok ? 'border-[color:var(--good)]' : 'border-[color:var(--bad)]'} p-4" role="status">
+            <p class="font-semibold flex items-center gap-2 ${ok ? 'status-good' : 'status-bad'}"><i data-lucide="${ok ? 'check' : 'x'}" class="h-5 w-5"></i>${ok ? 'Correct' : `Not quite — the record classifies this step as ${esc(cname(it.key))}`}</p>
+            <p class="text-xs text-muted-foreground mt-1">The key is the classification in <span class="font-mono">${esc(it.file)}</span> (step <span class="font-mono">${esc(it.step_id)}</span>) — one analyst's reading, reviewed but not infallible.</p>
+          </div>
+          <div class="grid grid-cols-1 ${ok ? '' : 'md:grid-cols-2'} gap-3 mt-3">${canonBlock(it.key, 'The record’s cluster')}${ok ? '' : canonBlock(a, 'Your answer')}</div>
+          <div class="mt-3 rounded-lg border border-border p-4"><div class="lbl mb-1">Original analysis</div><p class="text-sm whitespace-pre-line">${esc(it.notes)}</p></div>
+          ${rules.length ? `<div class="mt-3 rounded-lg border border-border p-4"><div class="lbl mb-2">Rules cited in the analysis</div><ul class="space-y-1.5 text-sm">${rules.map((r) => `<li><span class="pill">${esc(r)}</span> ${CANON.rules[r] ? esc(CANON.rules[r]) : `<span class="text-muted-foreground">(not a rule id in ${esc(CANON.dictionary)})</span>`}</li>`).join('')}</ul></div>` : ''}
+          <div class="mt-4 flex justify-end"><button class="btn btn-primary" id="p-next">Next scenario <i data-lucide="chevron-right" class="h-4 w-4"></i></button></div>`;
+      }
+      h += '</div>';
+      const tally = IDS.filter((c) => s.byKey[c]).map((c) => `<span class="pill" title="${esc(cname(c))}">${c} ${s.byKey[c].right}/${s.byKey[c].total}</span>`).join(' ');
+      if (tally) h += `<p class="text-xs text-muted-foreground mt-3">By the record's cluster: ${tally}</p>`;
+      $('p-card').innerHTML = h;
+      $('p-card').querySelectorAll('[data-p]').forEach((b) => b.addEventListener('click', () => answerPractice(b.dataset.p)));
+      const nx = $('p-next'); if (nx) { nx.addEventListener('click', nextPractice); nx.focus(); }
+      const hint = $('p-hint'); if (hint) hint.addEventListener('toggle', () => { practice.hint = hint.open; });
+      lucide.createIcons();
+    }
+
+    // ------------------------------------------------------------ STUDY
+    let study = store.get(STUDY_KEY);   // { rater, seed, n, study_id, ids, answers:{id:{answer,ms}}, i, started, finished }
+    if (study && (!Array.isArray(study.ids) || study.study_id !== T.studyId({ seed: study.seed, n: study.n, corpus_hash: CORPUS.corpus_hash }))) study = null; // corpus changed
+    let shownAt = 0;
+    function startStudy() {
+      const rater = $('s-rater').value.trim() || 'anonymous';
+      const seed = $('s-seed').value.trim() || 'tlctc-study-1';
+      const n = +$('s-n').value;
+      const set = T.studySet(ITEMS, { seed, n });
+      study = { rater, seed, n: set.length, study_id: T.studyId({ seed, n: set.length, corpus_hash: CORPUS.corpus_hash }), ids: set.map((x) => x.id), answers: {}, i: 0, started: new Date().toISOString(), finished: null };
+      store.set(STUDY_KEY, study);
+      renderStudy();
+    }
+    function answerStudy(c) {
+      const id = study.ids[study.i];
+      study.answers[id] = { answer: c, ms: Date.now() - shownAt };
+      if (study.i < study.ids.length - 1) study.i++;
+      store.set(STUDY_KEY, study);
+      renderStudy();
+    }
+    function renderStudy() {
+      const setup = $('s-setup'), run = $('s-run'), done = $('s-done');
+      if (!study) {
+        setup.classList.remove('hidden'); run.classList.add('hidden'); done.classList.add('hidden');
+        $('s-resume-note').textContent = `${ITEMS.length} scenarios available · corpus ${CORPUS.corpus_hash.slice(0, 8)}`;
+        return;
+      }
+      setup.classList.add('hidden');
+      if (study.finished) { run.classList.add('hidden'); done.classList.remove('hidden'); renderStudyDone(); return; }
+      done.classList.add('hidden'); run.classList.remove('hidden');
+      const it = BY_ID[study.ids[study.i]], answered = Object.keys(study.answers).length, cur = study.answers[it.id];
+      const all = answered === study.ids.length;
+      run.innerHTML = `<div class="card p-5 sm:p-6">
+        <div class="flex items-center justify-between gap-3 mb-2 text-sm"><span class="font-medium">Scenario ${study.i + 1} of ${study.ids.length}</span><span class="text-muted-foreground text-xs">${esc(study.rater)} · <span class="font-mono">${esc(study.study_id)}</span></span></div>
+        <div class="progress mb-5" aria-hidden="true"><span style="width:${(answered / study.ids.length) * 100}%"></span></div>
+        ${contextBox(it, false)}
+        <div class="lbl mb-1">This step</div>
+        <p class="scenario mb-5" id="s-text">${esc(it.text)}</p>
+        <p class="font-medium text-sm mb-2">Which cluster does this step belong to?</p>
+        ${answerGrid('s', cur && cur.answer, null, false)}
+        <div class="flex flex-wrap items-center justify-between gap-2 mt-5">
+          <div class="flex gap-2"><button class="btn btn-outline" id="s-prev"${study.i ? '' : ' disabled'}><i data-lucide="chevron-left" class="h-4 w-4"></i> Back</button>
+          <button class="btn btn-outline" id="s-fwd"${study.i < study.ids.length - 1 && cur ? '' : ' disabled'}>Forward <i data-lucide="chevron-right" class="h-4 w-4"></i></button></div>
+          <div class="flex gap-2"><button class="btn btn-ghost" id="s-abort">Abandon study</button>
+          <button class="btn btn-primary" id="s-finish"${all ? '' : ' disabled'}><i data-lucide="check" class="h-4 w-4"></i> Finish (${answered}/${study.ids.length})</button></div>
+        </div></div>`;
+      shownAt = Date.now();
+      run.querySelectorAll('[data-s]').forEach((b) => b.addEventListener('click', () => answerStudy(b.dataset.s)));
+      $('s-prev').addEventListener('click', () => { study.i--; store.set(STUDY_KEY, study); renderStudy(); });
+      $('s-fwd').addEventListener('click', () => { study.i++; store.set(STUDY_KEY, study); renderStudy(); });
+      $('s-finish').addEventListener('click', () => { study.finished = new Date().toISOString(); store.set(STUDY_KEY, study); renderStudy(); });
+      $('s-abort').addEventListener('click', () => { study = null; store.del(STUDY_KEY); renderStudy(); });
+      lucide.createIcons();
+    }
+    function ratingSheet() {
+      return {
+        schema: 'tlctc-rating-sheet.v1', study_id: study.study_id, seed: study.seed, n: study.n,
+        corpus_hash: CORPUS.corpus_hash, tlctc_version: CANON.tlctc_version, rater: study.rater,
+        started: study.started, finished: study.finished,
+        answers: study.ids.map((id) => ({ item: id, answer: study.answers[id] ? study.answers[id].answer : null, ms: study.answers[id] ? study.answers[id].ms : null })),
+      };
+    }
+    function renderStudyDone() {
+      const sheet = ratingSheet();
+      const right = sheet.answers.filter((a) => BY_ID[a.item] && BY_ID[a.item].key === a.answer).length;
+      $('s-done').innerHTML = `<div class="card p-5 sm:p-6">
+        <h2 class="font-display text-lg font-bold mb-1 flex items-center gap-2"><i data-lucide="check" class="h-5 w-5 status-good"></i> Study complete</h2>
+        <p class="text-sm text-muted-foreground mb-4">${sheet.answers.length} scenarios rated by <strong class="text-foreground">${esc(study.rater)}</strong> in study <span class="font-mono">${esc(study.study_id)}</span>. Download the rating sheet and send it to whoever runs the study.</p>
+        <div class="flex flex-wrap gap-2 mb-2">
+          <button class="btn btn-primary" id="s-download"><i data-lucide="file-down" class="h-4 w-4"></i> Download rating sheet</button>
+          <button class="btn btn-outline" id="s-reveal"><i data-lucide="circle-help" class="h-4 w-4"></i> Compare my answers with the record key</button>
+          <button class="btn btn-ghost" id="s-new">Start another study</button>
+        </div>
+        <div id="s-key" class="hidden mt-4">
+          <p class="text-sm mb-3"><strong>${right} of ${sheet.answers.length}</strong> match the record's classification. The key is one analyst's reading; disagreement with it is a finding to discuss, not automatically an error.</p>
+          <table class="tt"><thead><tr><th>#</th><th>Scenario</th><th>You</th><th>Record</th></tr></thead><tbody>
+          ${sheet.answers.map((a, i) => { const it = BY_ID[a.item]; const ok = it && it.key === a.answer; return `<tr><td class="num">${i + 1}</td><td class="text-xs text-muted-foreground">${esc(it ? (it.text.length > 140 ? `${it.text.slice(0, 140)}…` : it.text) : a.item)}</td><td><span class="pill">${esc(a.answer || '—')}</span></td><td class="whitespace-nowrap"><span class="pill">${esc(it ? it.key : '?')}</span> <i data-lucide="${ok ? 'check' : 'x'}" class="h-3.5 w-3.5 inline ${ok ? 'status-good' : 'status-bad'}" aria-label="${ok ? 'match' : 'differs'}"></i></td></tr>`; }).join('')}
+          </tbody></table></div></div>`;
+      $('s-download').addEventListener('click', () => download(`rating-sheet-${study.study_id}-${study.rater.replace(/[^\w-]+/g, '_')}.json`, JSON.stringify(sheet, null, 2) + '\n'));
+      $('s-reveal').addEventListener('click', () => $('s-key').classList.toggle('hidden'));
+      $('s-new').addEventListener('click', () => { study = null; store.del(STUDY_KEY); renderStudy(); });
+      lucide.createIcons();
+    }
+    $('s-start').addEventListener('click', startStudy);
+
+    // ------------------------------------------------------------ RESULTS
+    let sheets = [], analysis = null;
+    async function loadSheets(files) {
+      const bad = [];
+      for (const f of [...files]) {
+        try {
+          const j = JSON.parse(await f.text());
+          if (j && j.schema === 'tlctc-rating-sheet.v1' && Array.isArray(j.answers)) sheets.push({ ...j, _file: f.name });
+          else bad.push(`${f.name} (not a rating sheet)`);
+        } catch (e) { bad.push(`${f.name} (not valid JSON)`); }
+      }
+      renderResults(bad);
+    }
+    function heat(v, max) {
+      if (!v) return 'var(--chart-empty)';
+      const ramp = document.documentElement.classList.contains('dark')
+        ? ['#0d366b', '#104281', '#184f95', '#1c5cab', '#256abf', '#2a78d6', '#3987e5', '#5598e7', '#6da7ec', '#86b6ef']
+        : ['#cde2fb', '#b7d3f6', '#9ec5f4', '#86b6ef', '#6da7ec', '#5598e7', '#3987e5', '#2a78d6', '#256abf', '#1c5cab'];
+      return ramp[Math.min(ramp.length - 1, Math.round((v / max) * (ramp.length - 1)))];
+    }
+    const inkOn = (hex) => { if (!hex || hex[0] !== '#') return 'inherit'; const n = parseInt(hex.slice(1), 16); const L = (0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255; return L > 0.55 ? '#111827' : '#ffffff'; };
+    function renderResults(bad = []) {
+      $('r-clear').classList.toggle('hidden', !sheets.length);
+      $('r-sheets').innerHTML = (sheets.length ? `<p class="mb-1"><strong>${sheets.length}</strong> sheet(s): ${sheets.map((s) => `<span class="pill">${esc(s.rater)}</span>`).join(' ')}</p>` : '')
+        + (bad.length ? `<p class="status-bad">Skipped: ${bad.map(esc).join(', ')}</p>` : '');
+      analysis = sheets.length ? T.analyzeSheets(sheets, ITEMS) : null;
+      $('r-export').classList.toggle('hidden', !analysis);
+      if (!analysis) {
+        $('r-out').innerHTML = `<div class="card p-6 text-sm text-muted-foreground">No sheets loaded yet. Run a study (or several raters run it on their own machines), then load the downloaded rating sheets here.</div>`;
+        return;
+      }
+      const a = analysis, f = a.fleiss;
+      const meanAcc = a.raters.length ? a.raters.reduce((s, r) => s + (r.accuracy || 0), 0) / a.raters.length : null;
+      const full = a.items.filter((it) => Object.keys(it.counts).length === 1).length;
+      const tile = (v, l, sub) => `<div class="card px-4 py-3"><div class="text-2xl font-bold num" data-tile="${esc(l)}">${v}</div><div class="lbl mt-1">${esc(l)}</div>${sub ? `<div class="text-xs text-muted-foreground mt-0.5">${sub}</div>` : ''}</div>`;
+      let h = '';
+      if (a.rejected.length) h += `<div class="card p-4 mb-4 text-sm status-bad">Not pooled — different study: ${a.rejected.map((r) => `${esc(r.rater)} (<span class="font-mono">${esc(r.study_id)}</span>)`).join(', ')}</div>`;
+      if (a.unknown_items) h += `<div class="card p-4 mb-4 text-sm">${a.unknown_items} scenario(s) are not in the current corpus (it changed since the study ran); they count for agreement between raters but not against the key.</div>`;
+      h += `<p class="text-sm mb-3">Study <span class="font-mono">${esc(a.study_id)}</span></p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+          ${tile(a.raters.length, 'raters')}${tile(a.complete_items, 'scenarios rated by all')}
+          ${tile(f ? k3(f.kappa) : '—', "Fleiss' κ", f ? `${T.landisKoch(f.kappa)} agreement` : 'needs 2+ raters')}
+          ${tile(pct(meanAcc), 'mean match with key')}
+        </div>`;
+      if (f) {
+        h += `<div class="card p-5 mb-5"><h3 class="font-display font-bold mb-1">Agreement by cluster</h3>
+          <p class="text-xs text-muted-foreground mb-3">Per-category Fleiss' κ: how consistently raters use each cluster. Share = the cluster's share of all ratings. ${full} of ${a.complete_items} scenarios had unanimous answers.</p>
+          <div class="overflow-x-auto"><table class="tt"><thead><tr><th>Cluster</th><th class="text-right">Share of ratings</th><th class="text-right">κ</th><th>Reading</th></tr></thead><tbody>
+          ${IDS.map((c, j) => { const pc = f.per_category[j]; return `<tr><td><span class="pill">${c}</span> ${esc(CANON.clusters[c].name)}</td><td class="text-right num">${pct(pc.p)}</td><td class="text-right num">${k3(pc.kappa)}</td><td class="text-muted-foreground">${pc.kappa == null ? 'not used' : T.landisKoch(pc.kappa)}</td></tr>`; }).join('')}
+          </tbody></table></div></div>`;
+      }
+      h += `<div class="card p-5 mb-5"><h3 class="font-display font-bold mb-3">Raters</h3><div class="overflow-x-auto"><table class="tt"><thead><tr><th>Rater</th><th class="text-right">Match with key</th><th class="text-right">Cohen's κ vs key</th></tr></thead><tbody>
+        ${a.raters.map((r) => `<tr><td>${esc(r.rater)}</td><td class="text-right num">${pct(r.accuracy)}</td><td class="text-right num">${k3(r.cohen_vs_key)}</td></tr>`).join('')}</tbody></table></div></div>`;
+      let max = 0; for (const k of IDS) for (const x of IDS) max = Math.max(max, a.confusion[k][x]);
+      const usedRows = IDS.filter((k) => IDS.some((x) => a.confusion[k][x]));
+      h += `<div class="card p-5 mb-5"><h3 class="font-display font-bold mb-1">Answers against the key</h3><p class="text-xs text-muted-foreground mb-3">Rows: the record's cluster. Columns: what raters answered (all raters pooled). Off-diagonal cells are the boundaries raters find hard.</p>
+        <div class="overflow-x-auto"><table class="tt" style="width:auto"><thead><tr><th>Key ↓ / answer →</th>${IDS.map((c) => `<th class="text-center" style="min-width:2.4rem;text-transform:none">${c}</th>`).join('')}</tr></thead><tbody>
+        ${usedRows.map((k) => `<tr><td class="whitespace-nowrap"><span class="pill">${k}</span> ${esc(CANON.clusters[k].name)}</td>${IDS.map((x) => { const v = a.confusion[k][x], bg = heat(v, max); return `<td class="text-center p-1"><span class="block rounded num text-xs font-semibold py-1.5" style="background:${bg};color:${inkOn(bg)};${k === x ? 'outline:1px dashed currentColor;outline-offset:-3px' : ''}" title="${esc(cname(k))} answered as ${esc(cname(x))}: ${v}">${v || ''}</span></td>`; }).join('')}</tr>`).join('')}
+        </tbody></table></div></div>`;
+      if (a.raters.length >= 2) {
+        const hard = a.items.filter((it) => it.agreement != null && it.agreement < 1);
+        h += `<div class="card p-5"><h3 class="font-display font-bold mb-1">Scenarios with split answers</h3><p class="text-xs text-muted-foreground mb-3">Lowest pairwise agreement first — the cases worth discussing (or where the record's classification deserves a second look).</p>
+          ${hard.length ? `<ul class="divide-y divide-border">${hard.map((it) => `<li class="py-3"><details><summary class="text-sm"><span class="num font-semibold">${Math.round(it.agreement * 100)}%</span> agreement · key <span class="pill">${esc(it.key || '?')}</span> · answers ${Object.entries(it.counts).map(([c, v]) => `<span class="pill">${esc(c)}×${v}</span>`).join(' ')}<span class="block text-xs text-muted-foreground mt-1">${esc(it.item ? (it.item.text.length > 160 ? `${it.item.text.slice(0, 160)}…` : it.item.text) : it.id)}</span></summary>
+            ${it.item ? `<div class="mt-2 text-xs"><p class="font-mono text-muted-foreground">${esc(it.item.file)} · ${esc(it.item.step_id)}</p><p class="mt-1 whitespace-pre-line">${esc(it.item.notes)}</p></div>` : ''}</details></li>`).join('')}</ul>` : '<p class="text-sm text-muted-foreground">Every scenario had a unanimous answer.</p>'}</div>`;
+      }
+      h += `<p class="text-xs text-muted-foreground mt-4">κ measures agreement among these raters on these scenarios, corrected for chance. Agreement with the key is agreement with the record's author, not with ground truth. The Landis &amp; Koch readings (slight, fair, moderate, substantial, almost perfect) are a convention, not a test.</p>`;
+      $('r-out').innerHTML = h;
+    }
+    $('r-load').addEventListener('click', () => $('r-files').click());
+    $('r-files').addEventListener('change', (e) => { loadSheets(e.target.files); e.target.value = ''; });
+    $('r-clear').addEventListener('click', () => { sheets = []; renderResults(); });
+    $('r-export').addEventListener('click', () => {
+      if (!analysis) return;
+      const a = analysis;
+      download(`agreement-${a.study_id}.json`, JSON.stringify({
+        schema: 'tlctc-agreement-results.v1', study_id: a.study_id, corpus_hash: CORPUS.corpus_hash, raters: a.raters,
+        complete_items: a.complete_items, fleiss_kappa: a.fleiss ? a.fleiss.kappa : null,
+        per_cluster: a.fleiss ? Object.fromEntries(IDS.map((c, j) => [c, { share: a.fleiss.per_category[j].p, kappa: a.fleiss.per_category[j].kappa }])) : null,
+        confusion: a.confusion, items: a.items.map((it) => ({ id: it.id, key: it.key, counts: it.counts, agreement: it.agreement })),
+      }, null, 2) + '\n');
+    });
+
+    // ------------------------------------------------------------ tabs, keys, misc
+    function download(name, text) {
+      const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+      const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    let tab = 'practice';
+    function showTab(t) {
+      tab = t; store.set(TAB_KEY, t);
+      document.querySelectorAll('[data-tab]').forEach((b) => { b.classList.toggle('active', b.dataset.tab === t); b.setAttribute('aria-selected', b.dataset.tab === t); });
+      for (const x of ['practice', 'study', 'results']) $(`tab-${x}`).classList.toggle('hidden', x !== t);
+    }
+    document.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
+    document.addEventListener('keydown', (e) => {
+      if (e.target.closest('input, select, textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
+      const c = keyFor(e);
+      if (tab === 'practice') {
+        if (c && !practice.answer) answerPractice(c);
+        else if (e.key === 'Enter' && practice.answer && document.activeElement && document.activeElement.id !== 'p-next') nextPractice();
+      } else if (tab === 'study' && c && study && !study.finished) answerStudy(c);
+    });
+    window.addEventListener('tlctc-theme', () => { if (analysis) renderResults(); });
+
+    $('footer-year').textContent = new Date().getFullYear();
+    window.Trainer = { items: ITEMS, practice, get study() { return study; }, showTab, loadSheets, answerPractice, nextPractice };
+    nextPractice();
+    renderStudy();
+    renderResults();
+    showTab(store.get(TAB_KEY) || 'practice');
+  })();
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      try { localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'; } catch (e) {}
+      window.dispatchEvent(new Event('tlctc-theme'));
+      lucide.createIcons();
+    }
+    function toggleNavDd(id) {
+      document.querySelectorAll('.nav-dd-panel').forEach(function (p) { if (p.id !== 'nav-dd-' + id + '-panel') p.classList.add('hidden'); });
+      var panel = document.getElementById('nav-dd-' + id + '-panel');
+      if (panel) panel.classList.toggle('hidden');
+    }
+    document.addEventListener('mousedown', function (e) {
+      if (!e.target.closest('.nav-dd')) document.querySelectorAll('.nav-dd-panel').forEach(function (p) { p.classList.add('hidden'); });
+    });
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        requestAnimationFrame(() => menu.classList.add('opacity-100'));
+        menu.classList.remove('opacity-0');
+      } else {
+        menu.classList.add('opacity-0'); menu.classList.remove('opacity-100');
+        setTimeout(() => menu.classList.add('hidden'), 300);
+      }
+    }
+  </script>
+  <script>
+    try { if (localStorage.theme === 'dark') { document.documentElement.classList.add('dark'); window.dispatchEvent(new Event('tlctc-theme')); } } catch (e) {}
+    lucide.createIcons();
+  </script>
+<div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+  <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. An unfinished study is kept in your <strong>browser's local storage</strong> so a reload does not lose it; nothing is sent to a server. Rating sheets leave this browser only when you download them.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+</div>
+<script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
+</body>
+</html>

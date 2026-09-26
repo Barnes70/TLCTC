@@ -6,13 +6,34 @@
     <title>TLCTC Control Matrix Manager</title>
     <meta name="description" content="Manage your cyber security control maturity across the 10 TLCTC clusters and 6 NIST CSF functions. Document Local and Umbrella controls per environment.">
 
-    <script src="/vendor/react/18.3.1/react.development.js"></script>
-    <script src="/vendor/react/18.3.1/react-dom.development.js"></script>
-    <script src="/vendor/babel/7.26.4/babel.min.js"></script>
-    <script src="/vendor/tailwindcss/3.4.17/tailwind.js"></script>
-    <script src="/vendor/lucide/0.469.0/lucide.min.js"></script>
-    <script src="/vendor/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="/vendor/fonts/google-fonts.css" rel="stylesheet">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tlctc.net/tools/control-matrix.html">
+    <meta property="og:title" content="TLCTC Control Matrix Manager">
+    <meta property="og:description" content="Manage your cyber security control maturity across the 10 TLCTC clusters and 6 NIST CSF functions. Document Local and Umbrella controls per environment.">
+    <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+    <meta property="og:site_name" content="TLCTC">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@fr33thought">
+    <meta name="twitter:creator" content="@fr33thought">
+    <meta name="twitter:url" content="https://www.tlctc.net/tools/control-matrix.html">
+    <meta name="twitter:title" content="TLCTC Control Matrix Manager">
+    <meta name="twitter:description" content="Manage your cyber security control maturity across the 10 TLCTC clusters and 6 NIST CSF functions. Document Local and Umbrella controls per environment.">
+    <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -104,6 +125,44 @@
             .tooltip-wrap:hover .tip { @apply visible opacity-100; }
         }
     </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TLCTC Control Matrix Manager",
+  "description": "Manage your cyber security control maturity across the 10 TLCTC clusters and 6 NIST CSF functions. Document Local and Umbrella controls per environment.",
+  "url": "https://www.tlctc.net/tools/control-matrix.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.tlctc.net/tools/control-matrix.html"
+  },
+  "inLanguage": "en",
+  "image": "https://www.tlctc.net/images/og-image.png",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Person",
+    "@id": "https://orcid.org/0009-0005-2148-9903",
+    "sameAs": "https://orcid.org/0009-0005-2148-9903",
+    "name": "Bernhard Kreinz"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TLCTC",
+    "url": "https://www.tlctc.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.tlctc.net/images/logo-middle.png"
+    }
+  }
+}
+    </script>
 
     <style>
         .matrix-cell { transition: transform 0.1s, box-shadow 0.15s; cursor: pointer; }
