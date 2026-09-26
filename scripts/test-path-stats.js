@@ -171,6 +171,21 @@ test('summarizeDeltas and exports', () => {
   assert.equal(csv.length, 5);
 });
 
+test('quantile and P10 (the fast tail core §7.2 reads a Δt distribution at)', () => {
+  assert.equal(S.quantile([], 0.1), null);
+  assert.equal(S.quantile([42], 0.1), 42);
+  assert.equal(S.quantile([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], 0.1), 19, 'linear interpolation between order statistics');
+  assert.equal(S.quantile([100, 10, 50], 0.5), 50, 'unsorted input is sorted');
+  const r = rec('q.json', [
+    step('a', '#4', { delta_t_to_next: '10m' }), step('b', '#1', { delta_t_to_next: '1m' }), step('c', '#4', { delta_t_to_next: '<5m' }),
+    step('d', '#1', { delta_t_to_next: '~hours' }), step('e', '#4', { delta_t_to_next: '30m' }), step('f', '#1'),
+  ]);
+  const cell = S.aggregate([r], { unit: 'transitions' }).cells['#4>#1'];
+  const d = S.summarizeDeltas(cell.items);
+  assert.equal(d.p10_s, 600 + 0.1 * (1800 - 600) * 1, 'P10 over exact/approx/instant values only — bounds and qualitative values excluded');
+  assert.equal(d.n_p10, 2);
+});
+
 test('formatSeconds', () => {
   assert.equal(S.formatSeconds(0), '0s');
   assert.equal(S.formatSeconds(90), '1.5m');

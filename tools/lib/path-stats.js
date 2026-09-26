@@ -175,8 +175,19 @@
     return agg;
   }
 
+  // Linear interpolation between order statistics (the common "type 7" definition).
+  function quantile(values, q) {
+    if (!values || !values.length) return null;
+    const x = values.slice().sort((a, b) => a - b);
+    const h = (x.length - 1) * q, lo = Math.floor(h);
+    return lo + 1 < x.length ? x[lo] + (h - lo) * (x[lo + 1] - x[lo]) : x[lo];
+  }
+
   function summarizeDeltas(items) {
     const numeric = items.map((t) => t.dt).filter((d) => d.seconds != null).map((d) => d.seconds).sort((a, b) => a - b);
+    // Core §7.2 reads a Δt distribution at its fast tail (P10). Only measured values enter it:
+    // an upper bound (<10m) says the transition took at most that long, not how long.
+    const measured = items.map((t) => t.dt).filter((d) => d.kind === 'exact' || d.kind === 'approx' || d.kind === 'instant').map((d) => d.seconds);
     const mid = numeric.length >> 1;
     const median = !numeric.length ? null : numeric.length % 2 ? numeric[mid] : (numeric[mid - 1] + numeric[mid]) / 2;
     const vc = Object.fromEntries(VC_CLASSES.map((v) => [v, 0]));
@@ -185,6 +196,7 @@
     return {
       n: items.length, n_numeric: numeric.length,
       min_s: numeric.length ? numeric[0] : null, median_s: median, max_s: numeric.length ? numeric[numeric.length - 1] : null,
+      p10_s: quantile(measured, 0.1), n_p10: measured.length,
       vc, n_upper: kind('upper'), n_qualitative: kind('qualitative'), n_unknown: kind('unknown'),
     };
   }
@@ -218,7 +230,7 @@
 
   return {
     CLUSTER_IDS, DRE_CODES, VC_CLASSES,
-    normCluster, vcOf, parseDelta, formatSeconds, incidentKey, positions, recordTransitions, entryExit,
+    normCluster, vcOf, parseDelta, formatSeconds, quantile, incidentKey, positions, recordTransitions, entryExit,
     dreCodes, classifiedSteps, filterRecords, aggregate, summarizeDeltas, sortedCells, toStatsJson, toTransitionsCsv,
   };
 }));

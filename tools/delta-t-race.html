@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TLCTC Δt Race</title>
+  <meta name="description" content="Race an attack path's transitions against your detection and containment times: DCS_d = TTD_P90 / Δt and DCS_c = TTC_P90 / Δt per step, and the first step you would stop." />
+  <link rel="canonical" href="https://www.tlctc.net/tools/delta-t-race.html" />
+  <link rel="icon" href="/images/logo-small.png" type="image/png">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.tlctc.net/tools/delta-t-race.html">
+  <meta property="og:title" content="TLCTC Δt Race">
+  <meta property="og:description" content="Race an attack path's transitions against your detection and containment times, and see the first step you would stop.">
+  <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+  <meta property="og:site_name" content="TLCTC">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@fr33thought">
+  <meta name="twitter:creator" content="@fr33thought">
+  <meta name="twitter:url" content="https://www.tlctc.net/tools/delta-t-race.html">
+  <meta name="twitter:title" content="TLCTC Δt Race">
+  <meta name="twitter:description" content="Race an attack path's transitions against your detection and containment times, and see the first step you would stop.">
+  <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png">
+  <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- attack paths, their Δt statistics, and the DCS race -->
+  <script src="data/path-corpus.js"></script>
+  <script src="lib/path-stats.js"></script>
+  <script src="lib/race-core.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: {
+            border: "hsl(var(--border))", input: "hsl(var(--input))", ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))", foreground: "hsl(var(--foreground))",
+            primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+            secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+            destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
+            muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+            accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+            card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+          },
+          borderRadius: { lg: "var(--radius)", md: "calc(var(--radius) - 2px)", sm: "calc(var(--radius) - 4px)" },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --radius: 0.5rem;
+      --background: 0 0% 100%; --foreground: 240 10% 3.9%;
+      --card: 0 0% 100%; --card-foreground: 240 10% 3.9%;
+      --primary: 240 5.9% 10%; --primary-foreground: 0 0% 98%;
+      --secondary: 240 4.8% 95.9%; --secondary-foreground: 240 5.9% 10%;
+      --muted: 240 4.8% 95.9%; --muted-foreground: 240 3.8% 46.1%;
+      --accent: 240 4.8% 95.9%; --accent-foreground: 240 5.9% 10%;
+      --destructive: 0 84.2% 60.2%; --destructive-foreground: 0 0% 98%;
+      --border: 240 5.9% 90%; --input: 240 5.9% 90%; --ring: 240 5.9% 10%;
+      /* series (validated: reference palette slots 1–2) + neutral attacker bar; status steps are fixed */
+      --s-attacker: #6b6b66; --s-ttd: #2a78d6; --s-ttc: #eb6834; --grid: #e7e7e3;
+      --st-good: #0ca30c; --st-warn: #fab219; --st-crit: #d03b3b;
+    }
+    .dark {
+      --background: 240 10% 3.9%; --foreground: 0 0% 98%;
+      --card: 240 10% 3.9%; --card-foreground: 0 0% 98%;
+      --primary: 0 0% 98%; --primary-foreground: 240 5.9% 10%;
+      --secondary: 240 3.7% 15.9%; --secondary-foreground: 0 0% 98%;
+      --muted: 240 3.7% 15.9%; --muted-foreground: 240 5% 64.9%;
+      --accent: 240 3.7% 15.9%; --accent-foreground: 0 0% 98%;
+      --destructive: 0 62.8% 30.6%; --destructive-foreground: 0 0% 98%;
+      --border: 240 3.7% 15.9%; --input: 240 3.7% 15.9%; --ring: 240 4.9% 83.9%;
+      --s-attacker: #a3a39e; --s-ttd: #3987e5; --s-ttc: #d95926; --grid: #2e2e2c;
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: hsl(var(--background)); }
+    ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 4px; }
+    .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+    .glass-header { background: hsl(var(--background) / 0.8); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid hsl(var(--border)); position: sticky; top: 0; z-index: 30; }
+    .nav-dd-panel { position: absolute; left: 0; top: 100%; margin-top: 0.25rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 0.5rem; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); z-index: 50; padding: 0.25rem 0; min-width: 14rem; }
+    .ai-disclaimer { background: hsl(var(--muted) / 0.5); color: hsl(var(--muted-foreground)); font-size: 11px; line-height: 1.4; padding: 0.375rem 1rem; text-align: center; border-bottom: 1px solid hsl(var(--border)); }
+    .ai-disclaimer button { background: transparent; border: none; cursor: pointer; color: hsl(var(--muted-foreground)); font-size: 0.875rem; margin-left: 0.5rem; opacity: 0.6; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.45rem 0.8rem; border-radius: 0.375rem; font-size: 0.8rem; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: background-color .15s, color .15s; white-space: nowrap; }
+    .btn-primary { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+    .btn-outline { border-color: hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); }
+    .btn-outline:hover { background: hsl(var(--accent)); }
+    .btn-ghost { background: transparent; color: hsl(var(--muted-foreground)); }
+    .btn-ghost:hover { background: hsl(var(--accent)); color: hsl(var(--foreground)); }
+    .card { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    .seg { display: inline-flex; border: 1px solid hsl(var(--input)); border-radius: 0.375rem; overflow: hidden; }
+    .seg button { padding: 0.35rem 0.7rem; font-size: 0.78rem; color: hsl(var(--muted-foreground)); background: hsl(var(--background)); }
+    .seg button + button { border-left: 1px solid hsl(var(--input)); }
+    .seg button.active { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+    .field { height: 2.1rem; padding: 0 .55rem; border-radius: .375rem; border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: .8rem; width: 100%; }
+    .field.bad { border-color: var(--st-crit); }
+    .lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: .05em; color: hsl(var(--muted-foreground)); font-weight: 600; }
+    .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; padding: 0.05rem 0.35rem; border-radius: 0.25rem; background: hsl(var(--muted)); }
+    .num { font-variant-numeric: tabular-nums; }
+    /* race rows */
+    .race-row { display: grid; grid-template-columns: minmax(11rem, 15rem) 1fr minmax(12rem, 15rem); gap: 1rem; align-items: center; padding: .75rem 0; border-top: 1px solid hsl(var(--border)); }
+    .plot { position: relative; height: 46px; }
+    .plot .gridline { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--grid); }
+    .plot .bar { position: absolute; left: 0; height: 8px; border-radius: 0 4px 4px 0; }
+    .plot .bar.zero { width: 3px !important; border-radius: 2px; }
+    .plot .bar.bound { background-image: repeating-linear-gradient(90deg, transparent 0 4px, hsl(var(--card)) 4px 6px) !important; }
+    .plot .val { position: absolute; font-size: 10.5px; line-height: 10px; color: hsl(var(--muted-foreground)); white-space: nowrap; transform: translateX(4px); }
+    .plot .deadline { position: absolute; top: -4px; bottom: -4px; border-left: 1.5px dashed hsl(var(--foreground) / .55); }
+    .axis { position: relative; height: 18px; }
+    .axis span { position: absolute; transform: translateX(-50%); font-size: 10.5px; color: hsl(var(--muted-foreground)); }
+    .badge { display: inline-flex; align-items: center; gap: .35rem; font-size: .78rem; font-weight: 600; }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+    #tooltip { position: fixed; pointer-events: none; z-index: 80; background: hsl(var(--card)); color: hsl(var(--foreground)); border: 1px solid hsl(var(--border)); border-radius: 0.5rem; box-shadow: 0 10px 25px -5px rgb(0 0 0 / .15); padding: 0.5rem 0.65rem; font-size: 0.75rem; max-width: 22rem; display: none; }
+    @media (max-width: 900px) { .race-row { grid-template-columns: 1fr; gap: .4rem; } }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground font-sans antialiased">
+
+  <header class="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0">
+    <div class="flex items-center gap-3">
+        <a href="/index.html" class="flex items-center gap-2 group">
+            <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
+                <img src="/images/logo-small.png" alt="Logo" class="h-full w-full object-contain p-1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <i data-lucide="shield" class="h-5 w-5 hidden"></i>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-display font-bold text-lg leading-tight">TLCTC</span>
+                <span class="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+            </div>
+        </a>
+    </div>
+    <nav class="hidden md:flex items-center gap-1">
+        <div class="nav-dd relative">
+            <button onclick="toggleNavDd('analysis')" class="text-sm font-medium text-muted-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                <i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+            </button>
+            <div id="nav-dd-analysis-panel" class="nav-dd-panel hidden">
+                <a href="threat-modeling.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="file-search" class="h-4 w-4"></i> Threat Modeling</a>
+                <a href="attack-path-architect.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="route" class="h-4 w-4"></i> Attack Path Architect</a>
+                <a href="path-atlas.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="waypoints" class="h-4 w-4"></i> Path Atlas</a>
+                <a href="classification-trainer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="graduation-cap" class="h-4 w-4"></i> Classification Trainer</a>
+                <a href="attck-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="swords" class="h-4 w-4"></i> ATT&CK Explorer</a>
+                <a href="cwe-explorer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="bug" class="h-4 w-4"></i> CWE Explorer</a>
+            </div>
+        </div>
+        <div class="nav-dd relative">
+            <button onclick="toggleNavDd('actors')" class="text-sm font-medium text-muted-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                <i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+            </button>
+            <div id="nav-dd-actors-panel" class="nav-dd-panel hidden">
+                <a href="actor-profile-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="fingerprint" class="h-4 w-4"></i> Actor Profiler</a>
+                <a href="actor-story-designer.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="book-open" class="h-4 w-4"></i> Actor Story</a>
+            </div>
+        </div>
+        <div class="nav-dd relative">
+            <button onclick="toggleNavDd('defense')" class="text-sm font-semibold text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">
+                <i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense <i data-lucide="chevron-down" class="h-3 w-3 opacity-50"></i>
+            </button>
+            <div id="nav-dd-defense-panel" class="nav-dd-panel hidden">
+                <a href="radar-tlctc-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="radar" class="h-4 w-4"></i> Threat Radar</a>
+                <a href="tech-enablers-radar.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="cpu" class="h-4 w-4"></i> Tech Enablers Radar</a>
+                <a href="control-matrix.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Control Matrix</a>
+                <a href="delta-t-race.html" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground font-semibold bg-accent/50"><i data-lucide="timer" class="h-4 w-4"></i> Δt Race</a>
+                <a href="cbp-app.html" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"><i data-lucide="building-2" class="h-4 w-4"></i> CBP</a>
+            </div>
+        </div>
+        <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <i data-lucide="external-link" class="h-3 w-3"></i></a>
+        <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><i data-lucide="github" class="h-4 w-4"></i></a>
+    </nav>
+    <div class="flex items-center gap-3">
+        <button onclick="toggleTheme()" class="btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Toggle theme">
+            <i data-lucide="sun" class="h-4 w-4 hidden dark:block"></i>
+            <i data-lucide="moon" class="h-4 w-4 block dark:hidden"></i>
+        </button>
+        <button onclick="toggleMenu()" class="md:hidden btn h-9 w-9 p-0 rounded-full hover:bg-secondary" aria-label="Menu"><i data-lucide="menu" class="h-5 w-5"></i></button>
+    </div>
+  </header>
+  <div class="ai-disclaimer" id="ai-disclaimer">&#9432; The bundled attack paths are AI-assisted analyses of public threat reporting; their Δt values are estimates from that reporting. They illustrate the practical application of the TLCTC framework.<button onclick="document.getElementById('ai-disclaimer').remove();try{localStorage.setItem('tlctc-dismiss-disclaimer','1')}catch(e){}" title="Dismiss">&times;</button></div>
+  <script>try { if (localStorage.getItem('tlctc-dismiss-disclaimer') === '1') { var d = document.getElementById('ai-disclaimer'); if (d) d.remove(); }} catch(e) {}</script>
+
+  <!-- Mobile Navigation Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden hidden transition-all duration-300 opacity-0">
+    <div class="flex h-14 items-center justify-between px-6 border-b border-border">
+        <span class="font-display font-bold text-lg">TLCTC</span>
+        <button onclick="toggleMenu()" class="btn h-10 w-10 p-0 rounded-full hover:bg-secondary" aria-label="Close menu"><i data-lucide="x" class="h-6 w-6"></i></button>
+    </div>
+    <nav class="flex flex-col p-8 gap-2 text-base font-medium">
+        <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1.5"><i data-lucide="scan-search" class="h-3.5 w-3.5"></i> Analysis</span>
+        <a href="threat-modeling.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Modeling</a>
+        <a href="attack-path-architect.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Attack Path Architect</a>
+        <a href="path-atlas.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Path Atlas</a>
+        <a href="classification-trainer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Classification Trainer</a>
+        <a href="attck-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">ATT&CK Explorer</a>
+        <a href="cwe-explorer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CWE Explorer</a>
+        <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="user-search" class="h-3.5 w-3.5"></i> Actors</span>
+        <a href="actor-profile-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Profiler</a>
+        <a href="actor-story-designer.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Actor Story</a>
+        <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-1 flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5"></i> Defense</span>
+        <a href="radar-tlctc-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Threat Radar</a>
+        <a href="tech-enablers-radar.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Tech Enablers Radar</a>
+        <a href="control-matrix.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">Control Matrix</a>
+        <a href="delta-t-race.html" onclick="toggleMenu()" class="pl-5 py-1 text-foreground font-semibold">Δt Race</a>
+        <a href="cbp-app.html" onclick="toggleMenu()" class="pl-5 py-1 text-muted-foreground hover:text-foreground">CBP</a>
+        <div class="border-t border-border mt-4 pt-4 flex flex-col gap-2">
+            <a href="/" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <i data-lucide="external-link" class="h-3.5 w-3.5"></i></a>
+            <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" onclick="toggleMenu()" class="text-muted-foreground hover:text-foreground flex items-center gap-1.5"><i data-lucide="github" class="h-4 w-4"></i> GitHub</a>
+        </div>
+    </nav>
+  </div>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+    <div class="mb-6">
+      <div class="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground mb-3"><i data-lucide="timer" class="h-3.5 w-3.5"></i> Attack velocity vs. defender time</div>
+      <h1 class="font-display text-3xl font-bold tracking-tight">Δt Race</h1>
+      <p class="text-muted-foreground mt-2 max-w-3xl text-sm">Pick an attack path and enter how long you take to <strong class="text-foreground">detect</strong> and to <strong class="text-foreground">contain</strong> each cluster at the 90th percentile. For every transition the Race computes <span class="font-mono text-foreground">DCS_d = TTD_P90 / Δt</span> and <span class="font-mono text-foreground">DCS_c = TTC_P90 / Δt</span> (core §7.2): below 1 you act before the attacker completes the step, above 1 the step completes first — and only containment stops it.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <!-- inputs -->
+      <div class="lg:col-span-4 space-y-5">
+        <section class="card p-4 sm:p-5" aria-labelledby="path-title">
+          <h2 id="path-title" class="font-display text-base font-bold mb-3">Attack path</h2>
+          <select id="path-select" class="field mb-2" aria-label="Attack path"></select>
+          <input type="file" id="path-file" accept=".json,application/json" class="hidden">
+          <button class="btn btn-ghost text-xs px-2 mb-3" id="path-import"><i data-lucide="upload" class="h-3.5 w-3.5"></i> Import a Layer-3 attack path</button>
+          <p id="path-error" class="text-xs hidden" style="color:var(--st-crit)"></p>
+          <p id="path-chain" class="font-mono text-[11px] leading-5 break-words text-muted-foreground mb-4"></p>
+          <div class="lbl mb-1.5">Δt per transition</div>
+          <div class="seg mb-2" role="group" aria-label="Δt source">
+            <button data-dt="incident">Recorded in this path</button>
+            <button data-dt="corpus">Corpus P10</button>
+          </div>
+          <p class="text-[11px] text-muted-foreground">Corpus P10: the fast tail of that transition across all bundled attack paths (core §7.2 reads a Δt distribution at P10). Needs at least 3 measured values; otherwise the path's own Δt is used.</p>
+        </section>
+
+        <section class="card p-4 sm:p-5" aria-labelledby="def-title">
+          <div class="flex items-baseline justify-between gap-2 mb-1">
+            <h2 id="def-title" class="font-display text-base font-bold">Your times (P90)</h2>
+            <button class="btn btn-ghost text-xs px-2" id="def-clear">Clear</button>
+          </div>
+          <p class="text-[11px] text-muted-foreground mb-3">Time to detect and time to contain activity of each cluster, at the 90th percentile. <span class="font-mono">15m</span>, <span class="font-mono">2h</span>, <span class="font-mono">1d</span> or ISO 8601 (<span class="font-mono">PT15M</span>). A mean (MTTD, MTTC) is the special case where no P90 exists.</p>
+          <p id="def-illustrative" class="text-[11px] rounded-md border border-border bg-muted/50 px-2 py-1.5 mb-3 hidden"><i data-lucide="info" class="h-3 w-3 inline"></i> Illustrative times — replace them with your own.</p>
+          <table class="w-full text-xs" id="def-table"></table>
+          <div class="grid grid-cols-[1fr_1fr_auto] gap-2 items-end mt-3 pt-3 border-t border-border">
+            <label class="flex flex-col gap-1"><span class="lbl">All TTD</span><input class="field" id="fill-ttd" value="1h"></label>
+            <label class="flex flex-col gap-1"><span class="lbl">All TTC</span><input class="field" id="fill-ttc" value="8h"></label>
+            <button class="btn btn-outline" id="fill-apply">Fill</button>
+          </div>
+          <div class="mt-3 pt-3 border-t border-border">
+            <input type="file" id="cm-file" accept=".json,application/json" class="hidden">
+            <button class="btn btn-outline w-full" id="cm-import"><i data-lucide="grid-3x3" class="h-4 w-4"></i> Import from a Control Matrix export</button>
+            <select id="cm-env" class="field mt-2 hidden" aria-label="Control Matrix environment"></select>
+            <p id="cm-msg" class="text-[11px] text-muted-foreground mt-2"></p>
+          </div>
+        </section>
+
+        <section class="card p-4 sm:p-5" aria-labelledby="tgt-title">
+          <h2 id="tgt-title" class="font-display text-base font-bold mb-1">DCS targets</h2>
+          <p class="text-[11px] text-muted-foreground mb-3">Per velocity class, set from risk appetite. Defaults are the example values of application §10.3.</p>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="flex flex-col gap-1"><span class="lbl">VC-1</span><input class="field num" data-target="VC-1"></label>
+            <label class="flex flex-col gap-1"><span class="lbl">VC-2</span><input class="field num" data-target="VC-2"></label>
+            <label class="flex flex-col gap-1"><span class="lbl">VC-3</span><input class="field num" data-target="VC-3"></label>
+          </div>
+          <p class="text-[11px] text-muted-foreground mt-2">VC-4 (under a minute): no target — detection and response are structurally too slow; prevention only.</p>
+        </section>
+      </div>
+
+      <!-- results -->
+      <div class="lg:col-span-8 space-y-5">
+        <section class="card p-4 sm:p-5" aria-labelledby="sum-title">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+            <h2 id="sum-title" class="font-display text-lg font-bold">Where you stop the attacker</h2>
+            <div class="flex gap-2">
+              <button class="btn btn-outline" id="exp-csv"><i data-lucide="file-spreadsheet" class="h-4 w-4"></i> CSV</button>
+              <button class="btn btn-outline" id="exp-json"><i data-lucide="download" class="h-4 w-4"></i> JSON</button>
+            </div>
+          </div>
+          <p id="sum-line" class="text-sm mb-4"></p>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="sum-tiles"></div>
+        </section>
+
+        <section class="card p-4 sm:p-5" aria-labelledby="race-title">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h2 id="race-title" class="font-display text-lg font-bold">The race, transition by transition</h2>
+            <div class="flex flex-wrap items-center gap-3 text-xs" id="legend">
+              <span class="inline-flex items-center gap-1.5"><span class="dot" style="background:var(--s-attacker)"></span> Attacker Δt</span>
+              <span class="inline-flex items-center gap-1.5"><span class="dot" style="background:var(--s-ttd)"></span> Your TTD (P90)</span>
+              <span class="inline-flex items-center gap-1.5"><span class="dot" style="background:var(--s-ttc)"></span> Your TTC (P90)</span>
+              <span class="inline-flex items-center gap-1.5"><span style="display:inline-block;height:12px;border-left:1.5px dashed hsl(var(--foreground)/.55)"></span> deadline</span>
+            </div>
+          </div>
+          <p class="text-xs text-muted-foreground mb-2">Log time scale. A defender bar that ends left of the dashed deadline beats the attacker to the next step. Each transition is measured against your times for the step the attacker is leaving.</p>
+          <div class="race-row" style="border-top:none;padding-bottom:0"><div></div><div class="axis" id="axis"></div><div></div></div>
+          <div id="race"></div>
+        </section>
+
+        <section class="card p-4 sm:p-5 text-xs text-muted-foreground space-y-1.5" aria-label="How to read">
+          <p><strong class="text-foreground">Reading (core §7.2, application §10.2).</strong> DCS &lt; 1: you act before the attacker completes the transition. DCS = 1: marginal, no buffer. DCS &gt; 1: the step completes first. Only DCS_c &lt; 1 stops a transition; DCS_d &lt; 1 with DCS_c &gt; 1 means the step was seen but completed anyway.</p>
+          <p><strong class="text-foreground">This tool's conventions.</strong> A transition X → Y is measured against your times for X. Velocity classes are binned at &lt;60 s (VC-4), &lt;60 min (VC-3), &lt;24 h (VC-2), otherwise VC-1; the core defines the classes by scale only. A Δt recorded as an upper bound (<span class="font-mono">&lt;10m</span>) makes every score a lower bound. Unresolved steps (<span class="font-mono">?</span>, <span class="font-mono">…</span>) form no transitions (R-UNRES-3).</p>
+        </section>
+      </div>
+    </div>
+  </main>
+  <div id="tooltip" role="tooltip"></div>
+
+  <footer class="border-t border-border py-8 text-center text-xs opacity-70 mt-10">
+    <div class="mx-auto max-w-7xl px-4">
+      <p>© <span id="footer-year"></span> TLCTC — Top Level Cyber Threat Clusters</p>
+      <p class="mt-1">Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" class="underline">CC BY 4.0</a></p>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+    const S = window.TLCTCPathStats, R = window.TLCTCRace, CORPUS = window.TLCTC_PATH_CORPUS;
+    const NAMES = CORPUS.clusters, IDS = S.CLUSTER_IDS;
+    const KEY = 'tlctc-dt-race';
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const fmt = (s) => (s == null ? '—' : s === 0 ? 'instant' : S.formatSeconds(s));
+    const fmtDcs = (x) => (x == null ? '—' : x === Infinity ? '∞' : x >= 100 ? Math.round(x).toString() : x.toFixed(2));
+    const OUT = {
+      'contained':       { label: 'Contained in time', icon: 'shield-check', color: 'var(--st-good)' },
+      'seen':            { label: 'Seen, not stopped', icon: 'eye', color: 'var(--st-warn)' },
+      'missed':          { label: 'Attacker first', icon: 'circle-x', color: 'var(--st-crit)' },
+      'prevention-only': { label: 'Real-time: prevention only', icon: 'zap', color: 'hsl(var(--muted-foreground))' },
+      'no-data':         { label: 'No times for this cluster', icon: 'minus', color: 'hsl(var(--muted-foreground))' },
+      'unknown-dt':      { label: 'Δt not measured', icon: 'circle-help', color: 'hsl(var(--muted-foreground))' },
+    };
+
+    // ---------------------------------------------------------------- state (defender times persist; imported paths do not)
+    const saved = (() => { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } })();
+    const state = {
+      path: saved && saved.path, dtSource: (saved && saved.dtSource) || 'incident',
+      times: (saved && saved.times) || null,     // { '#1': { ttd: '1h', ttc: '8h' } } raw strings as typed
+      targets: (saved && saved.targets) || { 'VC-1': '0.5', 'VC-2': '0.8', 'VC-3': '0.8' },
+      illustrative: !(saved && saved.times),
+      imported: [],                              // [{ file, record }] — memory only
+      result: null,
+    };
+    if (!state.times) state.times = Object.fromEntries(IDS.map((c) => [c, { ttd: '1h', ttc: '8h' }]));
+    const persist = () => { try { localStorage.setItem(KEY, JSON.stringify({ path: state.path && !state.path.startsWith('import:') ? state.path : null, dtSource: state.dtSource, times: state.illustrative ? null : state.times, targets: state.targets })); } catch (e) { /* optional */ } };
+
+    const ALL = CORPUS.records;
+    const corpusCells = S.aggregate(S.filterRecords(ALL, { sources: ['repo'] }), { unit: 'transitions' }).cells;
+    const recordFor = (key) => (key && key.startsWith('import:') ? (state.imported.find((x) => `import:${x.file}` === key) || {}).record : ALL.find((r) => r.file === key));
+
+    // ---------------------------------------------------------------- inputs
+    function renderPathSelect() {
+      const opt = (r, label) => `<option value="${esc(r)}"${state.path === r ? ' selected' : ''}>${esc(label)}</option>`;
+      const title = (f) => f.split('/').pop().replace(/\.json$/, '');
+      let h = `<optgroup label="attack-paths/">${ALL.filter((r) => r.source === 'repo').map((r) => opt(r.file, title(r.file))).join('')}</optgroup>`;
+      h += `<optgroup label="schema examples">${ALL.filter((r) => r.source === 'example').map((r) => opt(r.file, title(r.file))).join('')}</optgroup>`;
+      if (state.imported.length) h += `<optgroup label="imported">${state.imported.map((x) => opt(`import:${x.file}`, x.file)).join('')}</optgroup>`;
+      $('path-select').innerHTML = h;
+    }
+    function chainOf(record) {
+      return (record.path_sequence || []).map((it, i, arr) => {
+        let s;
+        if (!it || it.status === 'unresolved') s = it && it.unresolved_type === 'gap' ? '…' : '?';
+        else if (Array.isArray(it.steps)) s = `(${it.steps.map((x) => S.normCluster(x.cluster) || '?').join(' + ')})`;
+        else s = S.normCluster(it.cluster) || '?';
+        if (i === arr.length - 1) return s;
+        const dt = it && (it.delta_t_to_next != null ? it.delta_t_to_next : (Array.isArray(it.steps) ? (it.steps.find((x) => x.delta_t_to_next != null) || {}).delta_t_to_next : null));
+        return `${s} ${dt != null ? `→[${dt}]` : '→'} `;
+      }).join('');
+    }
+    function renderTimes() {
+      $('def-table').innerHTML = `<thead><tr><th class="lbl text-left pb-1.5">Cluster</th><th class="lbl text-left pb-1.5 pl-2">TTD</th><th class="lbl text-left pb-1.5 pl-2">TTC</th></tr></thead><tbody>` +
+        IDS.map((c) => `<tr><td class="py-1 pr-1 whitespace-nowrap" title="${esc(NAMES[c])}"><span class="pill">${c}</span> <span class="text-muted-foreground">${esc(NAMES[c])}</span></td>
+          <td class="py-1 pl-2 w-[4.5rem]"><input class="field" data-c="${c}" data-k="ttd" value="${esc(state.times[c].ttd)}" aria-label="${esc(NAMES[c])} time to detect"></td>
+          <td class="py-1 pl-2 w-[4.5rem]"><input class="field" data-c="${c}" data-k="ttc" value="${esc(state.times[c].ttc)}" aria-label="${esc(NAMES[c])} time to contain"></td></tr>`).join('') + '</tbody>';
+      $('def-illustrative').classList.toggle('hidden', !state.illustrative);
+      $('def-table').querySelectorAll('input').forEach((inp) => {
+        inp.classList.toggle('bad', !!inp.value.trim() && R.parseDuration(inp.value) == null);
+        inp.addEventListener('input', () => {
+          state.times[inp.dataset.c][inp.dataset.k] = inp.value;
+          state.illustrative = false; $('def-illustrative').classList.add('hidden');
+          inp.classList.toggle('bad', !!inp.value.trim() && R.parseDuration(inp.value) == null);
+          persist(); run();
+        });
+      });
+    }
+    function renderTargets() {
+      document.querySelectorAll('[data-target]').forEach((inp) => { inp.value = state.targets[inp.dataset.target]; });
+    }
+    const profile = () => Object.fromEntries(IDS.map((c) => [c, { ttd: R.parseDuration(state.times[c].ttd), ttc: R.parseDuration(state.times[c].ttc) }]));
+    const targets = () => { const t = { 'VC-4': null }; for (const vc of ['VC-1', 'VC-2', 'VC-3']) { const v = parseFloat(state.targets[vc]); t[vc] = Number.isFinite(v) && v > 0 ? v : null; } return t; };
+
+    // ---------------------------------------------------------------- race
+    const MAX_S = 31536000;            // 1 year
+    const xOf = (s) => (s == null ? null : s <= 1 ? 0 : Math.min(100, (Math.log10(s) / Math.log10(MAX_S)) * 100));
+    const TICKS = [[1, '1s'], [60, '1m'], [3600, '1h'], [86400, '1d'], [604800, '1w'], [2592000, '30d'], [MAX_S, '1y']];
+    const tip = $('tooltip');
+    const showTip = (e, html) => { tip.innerHTML = html; tip.style.display = 'block'; const w = tip.offsetWidth, h = tip.offsetHeight; let x = e.clientX + 14, y = e.clientY + 14; if (x + w > innerWidth - 8) x = e.clientX - w - 14; if (y + h > innerHeight - 8) y = e.clientY - h - 14; tip.style.left = `${x}px`; tip.style.top = `${y}px`; };
+    const hideTip = () => { tip.style.display = 'none'; };
+
+    function run() {
+      const record = recordFor(state.path) || ALL.find((r) => r.source === 'repo');
+      state.path = record.file && recordFor(state.path) ? state.path : record.file;
+      $('path-chain').textContent = chainOf(record);
+      document.querySelectorAll('[data-dt]').forEach((b) => b.classList.toggle('active', b.dataset.dt === state.dtSource));
+      const res = R.analyzePath(record, profile(), { dtSource: state.dtSource, corpusCells, targets: targets() });
+      state.result = { record, res };
+      renderSummary(res); renderRace(res);
+      lucide.createIcons();
+    }
+    // DCS exactly 1 is "marginal, no buffer" (application §10.2), not a clear attacker win
+    function badge(o, e) { const b = o === 'missed' && e && (e.reading_c === 'marginal' || (e.reading_c == null && e.reading_d === 'marginal')) ? { ...OUT.missed, label: 'Tie — no buffer', color: 'var(--st-warn)' } : OUT[o]; return `<span class="badge"><i data-lucide="${b.icon}" class="h-4 w-4" style="color:${b.color}"></i>${esc(b.label)}</span>`; }
+    function renderSummary(res) {
+      const c = res.summary.counts, e = res.edges;
+      let line;
+      if (!e.length) line = 'This path has no transitions between evidenced steps.';
+      else if (res.summary.interception != null) {
+        const x = e[res.summary.interception];
+        const before = e.slice(0, x.index).filter((y) => y.outcome !== 'contained').length;
+        line = `<strong>First transition you contain: #${x.index + 1} of ${e.length}</strong> — <span class="pill">${esc(x.from)}</span> ${esc(NAMES[x.from])} → <span class="pill">${esc(x.to)}</span> ${esc(NAMES[x.to])}. ${before ? `The attacker completes ${before} transition${before === 1 ? '' : 's'} before that.` : 'That is the first transition of the path.'}`;
+      } else line = `<strong>No transition is contained before the attacker completes it</strong> with these times.`;
+      if (res.breaks) line += ` <span class="text-muted-foreground">${res.breaks} link${res.breaks === 1 ? '' : 's'} broken by unresolved steps.</span>`;
+      $('sum-line').innerHTML = line;
+      const tiles = [['contained', c.contained], ['seen', c.seen], ['missed', c.missed], ['prevention-only', c['prevention-only']], ['no-data', c['no-data'] + c['unknown-dt']]];
+      $('sum-tiles').innerHTML = tiles.map(([o, n]) => `<div class="rounded-lg border border-border px-3 py-2"><div class="text-xl font-bold num" data-tile="${o}">${n}</div><div class="text-[11px] text-muted-foreground flex items-center gap-1 mt-0.5"><i data-lucide="${OUT[o].icon}" class="h-3.5 w-3.5" style="color:${OUT[o].color}"></i>${o === 'no-data' ? 'No data / Δt' : esc(OUT[o].label)}</div></div>`).join('');
+    }
+    function renderRace(res) {
+      $('axis').innerHTML = TICKS.map(([s, l]) => `<span style="left:${xOf(s)}%">${l}</span>`).join('');
+      const grid = TICKS.map(([s]) => `<span class="gridline" style="left:${xOf(s)}%"></span>`).join('');
+      $('race').innerHTML = res.edges.map((e) => {
+        const bar = (s, top, color, extra = '') => (s == null ? `<span class="val" style="top:${top - 1}px;left:0">—</span>` :
+          `<span class="bar${s === 0 || xOf(s) === 0 ? ' zero' : ''}${extra}" style="top:${top}px;width:${xOf(s)}%;background:${color}"></span><span class="val num" style="top:${top - 1}px;left:${xOf(s)}%">${fmt(s)}</span>`);
+        const dtLbl = e.dt.seconds == null ? `<span class="val" style="top:1px;left:0">${esc(e.dt.raw == null ? 'no Δt' : e.dt.raw)}${e.dt.vc ? ` · ${e.dt.vc}` : ''}</span>` : '';
+        const plot = `<div class="plot">${grid}
+          ${e.dt.seconds == null ? dtLbl : bar(e.dt.seconds, 2, 'var(--s-attacker)', e.dt.bound ? ' bound' : '')}
+          ${bar(e.ttd, 19, 'var(--s-ttd)')}${bar(e.ttc, 36, 'var(--s-ttc)')}
+          ${e.dt.seconds != null ? `<span class="deadline" style="left:${xOf(e.dt.seconds)}%"></span>` : ''}</div>`;
+        const tgt = e.target == null ? '' : `<div class="text-[11px] text-muted-foreground">target ≤ ${e.target}: detection ${e.meets_target_d == null ? '—' : e.meets_target_d ? 'met' : 'not met'}, containment ${e.meets_target_c == null ? '—' : e.meets_target_c ? 'met' : 'not met'}</div>`;
+        return `<div class="race-row" data-edge="${e.index}" tabindex="0">
+          <div class="min-w-0"><div class="text-sm"><span class="text-muted-foreground num">${e.index + 1}.</span> <span class="pill">${esc(e.from)}</span> → <span class="pill">${esc(e.to)}</span></div>
+            <div class="text-[11px] text-muted-foreground truncate" title="${esc(NAMES[e.from])} → ${esc(NAMES[e.to])}">${esc(NAMES[e.from])} → ${esc(NAMES[e.to])}</div>
+            <div class="text-[11px] text-muted-foreground">Δt ${esc(e.dt.source === 'corpus-p10' ? `corpus ${e.dt.raw} (${fmt(e.dt.seconds)}; path: ${e.dt.incident_raw == null ? '—' : e.dt.incident_raw})` : (e.dt.raw == null ? '—' : e.dt.raw))}${e.dt.vc ? ` · ${e.dt.vc}` : ''}</div></div>
+          ${plot}
+          <div><div class="text-xs num mb-1">DCS_d <strong>${e.dt.bound && e.dcs_d != null ? '≥ ' : ''}${fmtDcs(e.dcs_d)}</strong> · DCS_c <strong>${e.dt.bound && e.dcs_c != null ? '≥ ' : ''}${fmtDcs(e.dcs_c)}</strong></div>${badge(e.outcome, e)}${tgt}</div>
+        </div>`;
+      }).join('') || '<p class="text-sm text-muted-foreground py-4">No transitions to race.</p>';
+      $('race').querySelectorAll('[data-edge]').forEach((row) => {
+        const e = res.edges[+row.dataset.edge];
+        row.addEventListener('pointermove', (ev) => showTip(ev, `<strong>${esc(e.from)} ${esc(NAMES[e.from])} → ${esc(e.to)} ${esc(NAMES[e.to])}</strong><br><span class="font-mono">${esc(e.fromStep)} → ${esc(e.toStep)}</span><br>Δt ${fmt(e.dt.seconds)}${e.dt.bound ? ' (upper bound)' : ''} · TTD ${fmt(e.ttd)} · TTC ${fmt(e.ttc)}<br>DCS_d ${fmtDcs(e.dcs_d)} (${e.reading_d || '—'}) · DCS_c ${fmtDcs(e.dcs_c)} (${e.reading_c || '—'})${e.caveat ? `<br><em>${esc(e.caveat)}</em>` : ''}`));
+        row.addEventListener('pointerleave', hideTip);
+      });
+    }
+
+    // ---------------------------------------------------------------- events
+    $('path-select').addEventListener('change', (e) => { state.path = e.target.value; persist(); run(); });
+    document.querySelectorAll('[data-dt]').forEach((b) => b.addEventListener('click', () => { state.dtSource = b.dataset.dt; persist(); run(); }));
+    document.querySelectorAll('[data-target]').forEach((inp) => inp.addEventListener('input', () => { state.targets[inp.dataset.target] = inp.value; persist(); run(); }));
+    $('fill-apply').addEventListener('click', () => {
+      for (const c of IDS) state.times[c] = { ttd: $('fill-ttd').value, ttc: $('fill-ttc').value };
+      state.illustrative = false; persist(); renderTimes(); run();
+    });
+    $('def-clear').addEventListener('click', () => { for (const c of IDS) state.times[c] = { ttd: '', ttc: '' }; state.illustrative = false; persist(); renderTimes(); run(); });
+    $('path-import').addEventListener('click', () => $('path-file').click());
+    $('path-file').addEventListener('change', async (e) => {
+      const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+      $('path-error').classList.add('hidden');
+      try {
+        const j = JSON.parse(await f.text());
+        if (!j || !Array.isArray(j.path_sequence)) throw new Error('no path_sequence — not a Layer-3 attack path');
+        state.imported = state.imported.filter((x) => x.file !== f.name).concat({ file: f.name, record: { file: f.name, source: 'import', metadata: j.metadata || {}, path_sequence: j.path_sequence } });
+        state.path = `import:${f.name}`; renderPathSelect(); run();
+      } catch (err) { $('path-error').textContent = `${f.name}: ${err.message}`; $('path-error').classList.remove('hidden'); }
+    });
+    let cmJson = null;
+    function applyCm(envId) {
+      const r = R.profileFromControlMatrix(cmJson, envId);
+      if (!r) { $('cm-msg').textContent = 'Not a Control Matrix export (no environments).'; return; }
+      $('cm-env').classList.toggle('hidden', r.environments.length < 2);
+      $('cm-env').innerHTML = r.environments.map((e) => `<option value="${esc(e.id)}"${e.id === r.env.id ? ' selected' : ''}>${esc(e.name)}</option>`).join('');
+      if (!r.found) { $('cm-msg').textContent = `No detection or containment times in "${r.env.name}" — the matrix records them in the DETECT (TTD) and RESPOND (TTC) cells. Your times were left unchanged.`; return; }
+      for (const c of IDS) {
+        if (r.profile[c].ttd != null) state.times[c].ttd = S.formatSeconds(r.profile[c].ttd);
+        if (r.profile[c].ttc != null) state.times[c].ttc = S.formatSeconds(r.profile[c].ttc);
+      }
+      state.illustrative = false; persist(); renderTimes(); run();
+      $('cm-msg').textContent = `Imported ${r.found} time${r.found === 1 ? '' : 's'} from "${r.env.name}"; clusters without a value kept their previous times.`;
+    }
+    $('cm-import').addEventListener('click', () => $('cm-file').click());
+    $('cm-file').addEventListener('change', async (e) => {
+      const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+      try { cmJson = JSON.parse(await f.text()); applyCm(); } catch (err) { $('cm-msg').textContent = `${f.name}: not valid JSON.`; }
+    });
+    $('cm-env').addEventListener('change', (e) => applyCm(e.target.value));
+
+    function download(name, text, type) {
+      const url = URL.createObjectURL(new Blob([text], { type }));
+      const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    const slim = (e) => ({ from: e.from, to: e.to, from_step: e.fromStep, to_step: e.toStep, dt: { raw: e.dt.raw, seconds: e.dt.seconds, source: e.dt.source, vc: e.dt.vc, upper_bound: e.dt.bound }, ttd_s: e.ttd, ttc_s: e.ttc, dcs_d: e.dcs_d === Infinity ? 'Infinity' : e.dcs_d, dcs_c: e.dcs_c === Infinity ? 'Infinity' : e.dcs_c, outcome: e.outcome, target: e.target, meets_target_d: e.meets_target_d, meets_target_c: e.meets_target_c });
+    $('exp-json').addEventListener('click', () => {
+      const { record, res } = state.result;
+      download('dt-race.json', JSON.stringify({ schema: 'tlctc-dt-race.v1', path: record.file, dt_source: state.dtSource, corpus_hash: CORPUS.corpus_hash, profile_s: profile(), targets: targets(), summary: res.summary, broken_links: res.breaks, edges: res.edges.map(slim) }, null, 2) + '\n', 'application/json');
+    });
+    $('exp-csv').addEventListener('click', () => {
+      const rows = ['n,from,to,from_step,to_step,dt_raw,dt_seconds,dt_source,vc,ttd_seconds,ttc_seconds,dcs_d,dcs_c,outcome'];
+      for (const e of state.result.res.edges) rows.push([e.index + 1, e.from, e.to, e.fromStep, e.toStep, JSON.stringify(e.dt.raw == null ? '' : e.dt.raw), e.dt.seconds == null ? '' : e.dt.seconds, e.dt.source, e.dt.vc || '', e.ttd == null ? '' : e.ttd, e.ttc == null ? '' : e.ttc, e.dcs_d == null ? '' : e.dcs_d, e.dcs_c == null ? '' : e.dcs_c, e.outcome].join(','));
+      download('dt-race.csv', rows.join('\n') + '\n', 'text/csv');
+    });
+    window.addEventListener('tlctc-theme', () => { if (state.result) renderRace(state.result.res); lucide.createIcons(); });
+
+    $('footer-year').textContent = new Date().getFullYear();
+    if (!state.path || !recordFor(state.path)) state.path = (ALL.find((r) => r.file === 'attack-paths/ad-domain-admin-cascade-2025.json') || ALL[0]).file;
+    renderPathSelect(); renderTimes(); renderTargets(); run();
+    window.DtRace = { state, run };
+  })();
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      try { localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'; } catch (e) {}
+      window.dispatchEvent(new Event('tlctc-theme'));
+      lucide.createIcons();
+    }
+    function toggleNavDd(id) {
+      document.querySelectorAll('.nav-dd-panel').forEach(function (p) { if (p.id !== 'nav-dd-' + id + '-panel') p.classList.add('hidden'); });
+      var panel = document.getElementById('nav-dd-' + id + '-panel');
+      if (panel) panel.classList.toggle('hidden');
+    }
+    document.addEventListener('mousedown', function (e) {
+      if (!e.target.closest('.nav-dd')) document.querySelectorAll('.nav-dd-panel').forEach(function (p) { p.classList.add('hidden'); });
+    });
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        requestAnimationFrame(() => menu.classList.add('opacity-100'));
+        menu.classList.remove('opacity-0');
+      } else {
+        menu.classList.add('opacity-0'); menu.classList.remove('opacity-100');
+        setTimeout(() => menu.classList.add('hidden'), 300);
+      }
+    }
+  </script>
+  <script>
+    try { if (localStorage.theme === 'dark') { document.documentElement.classList.add('dark'); window.dispatchEvent(new Event('tlctc-theme')); } } catch (e) {}
+    lucide.createIcons();
+  </script>
+<div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+  <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. Your detection and containment times are kept in your <strong>browser's local storage</strong>; imported attack paths and Control Matrix files stay in this tab only. Nothing is sent to a server.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+</div>
+<script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
+</body>
+</html>
