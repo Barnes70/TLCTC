@@ -36,6 +36,10 @@ const PLUGIN = path.join(ROOT, 'plugins/tlctc/.claude-plugin/plugin.json');
 const HOMEPAGE = 'https://www.tlctc.net';
 const REPO = 'https://github.com/Barnes70/TLCTC';
 const AUTHOR = 'Bernhard Kreinz';
+// Line endings are normalised when comparing: git's autocrlf checks generated files out as CRLF
+// on Windows while the generator may write LF, and that difference is not drift.
+const sameText = (a, b) => a.replace(/\r\n/g, '\n') === b.replace(/\r\n/g, '\n');
+
 const ATTRIBUTION =
   `> **TLCTC — Top Level Cyber Threat Clusters**, created by ${AUTHOR} ` +
   '([ORCID 0009-0005-2148-9903](https://orcid.org/0009-0005-2148-9903)). ' +
@@ -106,7 +110,7 @@ if (require.main === module) {
       const relp = path.relative(ROOT, file);
       if (check) {
         const cur = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
-        if (cur !== text) { console.error(`✗ ${relp} is stale — run: npm run build-skills`); stale++; }
+        if (!sameText(cur, text)) { console.error(`✗ ${relp} is stale — run: npm run build-skills`); stale++; }
       } else {
         fs.mkdirSync(path.dirname(file), { recursive: true });
         fs.writeFileSync(file, text);
@@ -117,4 +121,4 @@ if (require.main === module) {
   if (check) { if (stale) process.exit(1); console.log('✓ skill editions are up to date'); }
 }
 
-module.exports = { render, EDITIONS, SRC, PLUGIN, ATTRIBUTION, AUTHOR };
+module.exports = { render, sameText, EDITIONS, SRC, PLUGIN, ATTRIBUTION, AUTHOR };

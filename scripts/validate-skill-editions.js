@@ -21,7 +21,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { render, EDITIONS, PLUGIN, ATTRIBUTION } = require('./build-skill-editions');
+const { render, sameText, EDITIONS, PLUGIN, ATTRIBUTION } = require('./build-skill-editions');
 
 const errors = [];
 const pv = JSON.parse(fs.readFileSync(PLUGIN, 'utf8')).version;
@@ -68,7 +68,7 @@ for (const [name, ed] of Object.entries(EDITIONS)) {
 
   for (const [file, want] of Object.entries(render(name))) {
     const cur = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
-    if (cur !== want) fail(`${path.relative(path.resolve(__dirname, '..'), file)} differs from a fresh render — run: npm run build-skills`);
+    if (cur === null || !sameText(cur, want)) fail(`${path.relative(path.resolve(__dirname, '..'), file)} differs from a fresh render — run: npm run build-skills`);
   }
   if (!errors.some(e => e.startsWith(`[${name}]`))) console.log(`✓ ${name} edition: ${fm.name}@${fm.version}, ${Buffer.byteLength(text)} bytes, in sync with the plugin skill`);
 }
