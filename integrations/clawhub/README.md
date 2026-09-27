@@ -1,0 +1,81 @@
+# ClawHub — the tlctc-classify skill for OpenClaw
+
+[ClawHub](https://github.com/openclaw/clawhub) is the public skill registry for
+[OpenClaw](https://docs.openclaw.ai). This folder holds the ClawHub edition of the
+`tlctc-classify` skill: the complete TLCTC v2.6 analysis system (10 axioms, 10 clusters,
+17 R-* rules, SRE doctrine, DRE refinement tree, attack-path notation) as one `SKILL.md`.
+
+```
+integrations/clawhub/
+├── README.md                  this runbook (not published)
+└── tlctc-classify/
+    └── SKILL.md               generated — the published skill folder
+```
+
+## Licence
+
+ClawHub publishes every skill under **MIT-0** and does not allow per-skill licence
+overrides or conflicting licence terms inside `SKILL.md`
+([skill format](https://github.com/openclaw/clawhub/blob/main/docs/skill-format.md)).
+The author chose to publish the skill there on those terms (2026-09-27). The copy
+distributed through ClawHub is therefore MIT-0; this repository and everything in it,
+including this folder, remain under CC BY 4.0.
+
+The edition carries an attribution line (author, ORCID, tlctc.net, the Zenodo concept DOI,
+the GitHub repository). It is a citation, not a licence term.
+
+## How the edition is made
+
+`SKILL.md` is generated from the Claude Code plugin skill
+[`plugins/tlctc/skills/tlctc-classify/SKILL.md`](../../plugins/tlctc/skills/tlctc-classify/SKILL.md),
+the single source of the skill text. Never edit the generated file.
+
+```
+npm run build-clawhub       # regenerate
+npm run validate-clawhub    # also part of npm run validate
+```
+
+The build changes three things and nothing else:
+
+1. Frontmatter: `license` is dropped; `version` (required by ClawHub, taken from
+   `plugins/tlctc/.claude-plugin/plugin.json`) and `homepage` are added.
+2. The attribution line is inserted after the frontmatter.
+3. The one body reference to "the surrounding TLCTC repository" becomes absolute GitHub
+   links, because a ClawHub install has no repository around it.
+
+The validator checks ClawHub's rules (the folder contains `SKILL.md` only, name is 1–64 of
+`[a-z0-9-]`, semver version, no licence terms anywhere, bundle under 50 MB) and the project's
+(version equals the plugin version, attribution present, byte-identical to a fresh render).
+
+## Publishing (owner)
+
+Nothing in this repository publishes to ClawHub; the owner runs these commands.
+Publishing needs a GitHub account old enough to pass ClawHub's upload gate.
+
+```
+npm i -g clawhub                     # or prefix every command with: npx -y clawhub@latest
+clawhub login                        # prints a one-time code + URL; approve with GitHub
+clawhub whoami
+
+npm run validate-clawhub
+clawhub skill publish integrations/clawhub/tlctc-classify --version 2.6.0 --dry-run
+clawhub skill publish integrations/clawhub/tlctc-classify --version 2.6.0 \
+  --changelog "TLCTC v2.6 (2026-09-23): 10 clusters, 10 axioms, 17 R-* rules incl. R-SCOPE and R-SPECIFIC, SRE doctrine, DRE refinement tree, attack-path notation."
+```
+
+Checked 2026-09-27 with clawhub CLI 0.23.3: the dry run reports
+`Would publish tlctc-classify@2.6.0`, and a registry search for `tlctc` returned no
+existing skill.
+
+After publishing, confirm what the registry holds and read its security-scan summary on the
+skill page (a scan-held release stays visible to its owner in `/dashboard` only):
+
+```
+clawhub inspect <your-handle>/tlctc-classify --files
+```
+
+## Releasing a new version
+
+1. Update the plugin skill and bump `version` in `plugins/tlctc/.claude-plugin/plugin.json`.
+2. `npm run build-clawhub && npm run validate-clawhub`, commit.
+3. `clawhub skill publish integrations/clawhub/tlctc-classify --version <new> --changelog "…"`.
