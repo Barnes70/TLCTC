@@ -12,6 +12,7 @@ your platform; behaviour is identical across builds.
 | [`misp/`](misp/) | **MISP** (any 2.4/2.5 instance) | Taxonomy (`machinetag.json`) + 2 object templates + Python 3.10+ CLI (stdlib only) | Copy taxonomy/templates into the instance (see [`misp/README.md`](misp/README.md)); `python -m cli convert attack-paths/*.json --out-dir out/` |
 | [`attack-flow/`](attack-flow/) | **MITRE Attack Flow** (Builder 4.0, STIX 2.1) | TLCTC framework source bundle + STIX property extension + Python 3.10+ CLI (stdlib only) | `python -m cli classify flow.afb` / `python -m cli export path.json` (see [`attack-flow/README.md`](attack-flow/README.md)); Builder framework PR per [`attack-flow/upstream-pr.md`](attack-flow/upstream-pr.md) |
 | [`clawhub/`](clawhub/) | **OpenClaw** agents via the **ClawHub** skill registry | Agent skill (`SKILL.md`), generated from the Claude Code plugin skill; published there under MIT-0 | `clawhub install tlctc-classify` once published; owner publishing runbook in [`clawhub/README.md`](clawhub/README.md) |
+| [`well-known/`](well-known/) | **Hermes Agent** and any client of the Agent Skills discovery endpoint (`/.well-known/skills/`) | CC BY 4.0 web edition of the same skill, served by tlctc.net | `hermes skills install well-known:https://www.tlctc.net/.well-known/skills/tlctc-classify` (see [`well-known/README.md`](well-known/README.md)) |
 
 The two Cortex builds:
 

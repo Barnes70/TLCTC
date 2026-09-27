@@ -22,6 +22,7 @@
  *               (scripts/lib/tool-vendor-map.js; an unmapped library stops the build);
  *               tools/*.json, tools/examples/*.json, tools/data/*.js, tools/lib/*.js copied
  *               (adds, updates; never removes)
+ *   8c. skills  repo integrations/well-known/skills/ → site .well-known/skills/ (adds, updates, removes)
  *   9. figures  re-inline <svg> blocks in index.html from their source files
  *               (markers: <!-- INLINE-SVG src="…" … --> … <!-- /INLINE-SVG -->)
  *  10. sitemap  bump <lastmod> for every deployable file whose content changed
@@ -205,6 +206,18 @@ log('8b. tools');
     .concat(fs.readdirSync(path.join(src, 'examples')).filter((x) => x.endsWith('.json')).map((x) => `examples/${x}`))
     .concat(['data', 'lib'].flatMap((d) => (fs.existsSync(path.join(src, d)) ? fs.readdirSync(path.join(src, d)).filter((x) => x.endsWith('.js')).map((x) => `${d}/${x}`) : [])));
   for (const f of data) copyIfChanged(path.join(src, f), path.join(dst, f), 'tool ');
+}
+
+// ───────────────────────── 8c. agent skills ──────────────────────────────────
+// integrations/well-known/skills/ (built by build-skill-editions.js, CC BY web edition) is the
+// single source of the site's /.well-known/skills/ Agent Skills discovery endpoint.
+log('8c. agent skills (.well-known/skills)');
+{
+  const src = path.join(ROOT, 'integrations/well-known/skills'), dst = path.join(SITE, '.well-known/skills');
+  const walk = (d, base, acc) => { for (const n of fs.readdirSync(d)) { const p = path.join(d, n); if (fs.statSync(p).isDirectory()) walk(p, base, acc); else acc.push(path.relative(base, p).split(path.sep).join('/')); } return acc; };
+  const srcFiles = walk(src, src, []), dstFiles = fs.existsSync(dst) ? walk(dst, dst, []) : [];
+  for (const f of srcFiles) copyIfChanged(path.join(src, f), path.join(dst, f), 'skill');
+  for (const f of dstFiles) if (!srcFiles.includes(f)) { fs.unlinkSync(path.join(dst, f)); log(`  remove .well-known/skills/${f} (gone from repo)`); }
 }
 
 // ───────────────────────── 9. inline figures in index.html ───────────────────
