@@ -399,6 +399,22 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 
 ---
 
+## Use TLCTC in an AI Agent
+
+The `tlctc-classify` agent skill gives an AI agent the complete TLCTC v2.6 analysis system — axioms, the ten clusters, the R-* rules, the SRE doctrine, the DRE refinement tree and the attack-path notation — loaded whenever you ask it to classify an incident, a CVE or a threat report. Nothing to paste.
+
+| Agent | Install | Copy (licence) |
+|---|---|---|
+| Claude Code (plugin) | `/plugin marketplace add Barnes70/TLCTC`, then `/plugin install tlctc@tlctc` | this repository (CC BY 4.0) |
+| Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot and the other agents the [`skills`](https://skills.sh) CLI supports | `npx skills add Barnes70/TLCTC` | this repository (CC BY 4.0) |
+| Hermes Agent | `hermes skills install well-known:https://www.tlctc.net/.well-known/skills/tlctc-classify` | tlctc.net (CC BY 4.0) |
+| OpenClaw | `openclaw skills install @barnes70/tlctc-classify` | [ClawHub](https://clawhub.ai/barnes70/skills/tlctc-classify) (MIT-0) |
+| Hermes Agent, from ClawHub | `hermes skills install clawhub/@barnes70/tlctc-classify` | ClawHub (MIT-0) |
+
+The skill's source is [`plugins/tlctc/skills/tlctc-classify/SKILL.md`](plugins/tlctc/skills/tlctc-classify/SKILL.md); the ClawHub and tlctc.net editions are generated from it (`npm run build-skills`, see [`integrations/clawhub/`](integrations/clawhub/) and [`integrations/well-known/`](integrations/well-known/)). Without an agent harness, paste one of the audience-shaped [monster prompts](https://www.tlctc.net/tlctc-prompt-index.html) instead.
+
+---
+
 ## Agent-Consumable Knowledge: the OKF Bundle
 
 The [`okf/`](okf/) directory packages the entire taxonomy as an [Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) bundle (OKF v0.1) — a tree of markdown files with YAML frontmatter, built so LLM agents and RAG pipelines can consume TLCTC directly. It is a **rendered view** generated from the canonical JSON schemas, whitepaper, and tools; those remain the single source of truth.
@@ -715,7 +731,7 @@ tlctc/
 14. **Learn the boundary and epistemic operators** — The [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) covers transit boundaries, intra-system boundaries, unresolved-step operators, and the epistemic state hierarchy.
 15. **Read the extension proposals** — TLCTC+ has two paired documents: [`tlctc-plus-ncsc-proposal.md`](documentation/tlctc-plus-ncsc-proposal.md) (v0.8 policy proposal — the *why*) and [`tlctc-plus-specification.md`](documentation/tlctc-plus-specification.md) (v0.8 implementation spec — the *how*: grammar, conformance, BRE/PATTERN/IMPACT/REPORT catalogues, JSON formats). For other framework extensions, see [`tlctc-cve-extension-proposal.md`](documentation/tlctc-cve-extension-proposal.md) (CVE enrichment), [`tlctc-fair-integration-proposal.md`](documentation/tlctc-fair-integration-proposal.md) (FAIR risk quantification), and [`tlctc-replication-notation-proposal.md`](documentation/tlctc-replication-notation-proposal.md) (replication notation — ×N fan-out / ×* self-propagation, conceptual).
 16. **Deploy an integration** — See [`integrations/`](integrations/) to operationalise TLCTC inside the tools your team already runs. Available packs: Cortex XSOAR 6.2.x and 8.x / XSIAM (incident triage + Layer 3 emission), SonarQube + SonarCloud (SAST findings → cluster tags via a Python sidecar against the canonical CWE→TLCTC mapping), and the generic SARIF classifier (any SARIF 2.1.0 producer → TLCTC clusters; CWE-first with CVE→KEV fallback; stdlib-only).
-17. **Feed an LLM agent** — Point a RAG pipeline or agent at the [`okf/`](okf/) Open Knowledge Format bundle (markdown + YAML frontmatter) rendering the whole taxonomy — clusters, axioms, rules, glossary, attack paths, controls, and mappings — for machine consumption. Regenerate with `npm run validate`.
+17. **Feed an LLM agent** — Install the `tlctc-classify` agent skill ([Use TLCTC in an AI Agent](#use-tlctc-in-an-ai-agent)), or point a RAG pipeline or agent at the [`okf/`](okf/) Open Knowledge Format bundle (markdown + YAML frontmatter) rendering the whole taxonomy — clusters, axioms, rules, glossary, attack paths, controls, and mappings — for machine consumption. Regenerate with `npm run validate`.
 
 ## Contributing
 
