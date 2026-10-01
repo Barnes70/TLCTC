@@ -803,26 +803,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-1",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-1",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-1",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-1",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-1",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -840,11 +820,6 @@
             {
               "id": "cis-4.5-1",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-1",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -1797,26 +1772,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-2",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-2",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-2",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-2",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-2",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -1834,11 +1789,6 @@
             {
               "id": "cis-4.5-2",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-2",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -2823,26 +2773,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-3",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-3",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-3",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-3",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-3",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -2860,11 +2790,6 @@
             {
               "id": "cis-4.5-3",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-3",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -4106,26 +4031,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-4",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-4",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-4",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-4",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-4",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -4143,11 +4048,6 @@
             {
               "id": "cis-4.5-4",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-4",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -4810,26 +4710,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-5",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-5",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-5",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-5",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-5",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -4847,11 +4727,6 @@
             {
               "id": "cis-4.5-5",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-5",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -5160,26 +5035,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-6",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-6",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-6",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-6",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-6",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -5197,11 +5052,6 @@
             {
               "id": "cis-4.5-6",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-6",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -5959,26 +5809,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-7",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-7",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-7",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-7",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-7",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -5996,11 +5826,6 @@
             {
               "id": "cis-4.5-7",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-7",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -6561,9 +6386,169 @@
         "8-PR": {
           "local": [
             {
+              "id": "cis-3.5-8",
+              "name": "CIS 3.5 — Secure data disposal",
+              "description": "CIS Control 3, IG1, Data. TLCTC: Discarded media can be recovered by whoever gets hold of it (#8); disposal keeps that System Risk Event from becoming a [DRE: C]. PROTECT at the data-layer gate.",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "org",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            },
+            {
+              "id": "cis-3.6-8",
+              "name": "CIS 3.6 — Disk encryption on end-user devices",
+              "description": "CIS Control 3, IG1, Data, hardening. TLCTC: Acts after #8 (the device is in other hands): keeps that System Risk Event from becoming a [DRE: C]. PROTECT at the data-layer gate (owner ruling 2026-10-01).",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "tech",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            },
+            {
+              "id": "cis-3.9-8",
+              "name": "CIS 3.9 — Encryption of removable media",
+              "description": "CIS Control 3, IG2, Data, hardening. TLCTC: Acts after #8 (the medium is lost or taken): keeps that System Risk Event from becoming a [DRE: C]. PROTECT at the data-layer gate.",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "tech",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            },
+            {
+              "id": "cis-3.11-8",
+              "name": "CIS 3.11 — Server-side encryption of stored sensitive data",
+              "description": "CIS Control 3, IG2, Data, hardening. TLCTC: Storage-layer encryption is transparent to the running system and only helps once the media leaves it (#8): PROTECT at the data-layer gate.",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "tech",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            },
+            {
               "id": "cis-4.3-8",
               "name": "CIS 4.3 — Automatic session lock on idle devices",
               "description": "CIS Control 4, IG1, Devices, hardening. TLCTC: An unlocked, unattended device is usable by whoever is physically at it (#8).",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "tech",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            },
+            {
+              "id": "cis-4.11-8",
+              "name": "CIS 4.11 — Remote wipe of portable devices",
+              "description": "CIS Control 4, IG2, Data. TLCTC: Acts after #8 (a lost or stolen device): removes enterprise data before the System Risk Event becomes a [DRE: C]. PROTECT at the data-layer gate.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6664,26 +6649,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-8",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-8",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-8",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-8",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-8",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -6701,11 +6666,6 @@
             {
               "id": "cis-4.5-8",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-8",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -7273,26 +7233,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-9",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-9",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-9",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-9",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-9",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -7310,11 +7250,6 @@
             {
               "id": "cis-4.5-9",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-9",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -7946,26 +7881,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.5-10",
-              "sharedControlId": "cis-3.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.6-10",
-              "sharedControlId": "cis-3.6",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.9-10",
-              "sharedControlId": "cis-3.9",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.11-10",
-              "sharedControlId": "cis-3.11",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-10",
               "sharedControlId": "cis-3.12",
               "maturity": 0
@@ -7983,11 +7898,6 @@
             {
               "id": "cis-4.5-10",
               "sharedControlId": "cis-4.5",
-              "maturity": 0
-            },
-            {
-              "id": "cis-4.11-10",
-              "sharedControlId": "cis-4.11",
               "maturity": 0
             },
             {
@@ -8377,42 +8287,6 @@
       }
     },
     {
-      "id": "cis-3.5",
-      "name": "CIS 3.5 — Secure data disposal",
-      "description": "CIS Control 3, IG1, Data. TLCTC: Limits what a later compromise or a recovered medium can disclose; consequence side.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-3.6",
-      "name": "CIS 3.6 — Disk encryption on end-user devices",
-      "description": "CIS Control 3, IG1, Data, hardening. TLCTC: Data-at-rest protection limits the Data Risk Event whichever cluster reached the data (CSF PR.DS-01 precedent).",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
       "id": "cis-3.7",
       "name": "CIS 3.7 — Data classification scheme",
       "description": "CIS Control 3, IG2, Data. TLCTC: Sensitivity labels steer the controls of every row; enabler.",
@@ -8438,42 +8312,6 @@
       "ownerName": "",
       "ownerOrgChart": "",
       "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-3.9",
-      "name": "CIS 3.9 — Encryption of removable media",
-      "description": "CIS Control 3, IG2, Data, hardening. TLCTC: Data-at-rest protection on portable media; consequence side.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-3.11",
-      "name": "CIS 3.11 — Server-side encryption of stored sensitive data",
-      "description": "CIS Control 3, IG2, Data, hardening. TLCTC: Data-at-rest protection; consequence side (CSF PR.DS-01 precedent).",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
       "scope": "all",
       "linkJira": "",
       "cde_max": {
@@ -8560,24 +8398,6 @@
       "id": "cis-4.5",
       "name": "CIS 4.5 — Default-deny host firewall on end-user devices",
       "description": "CIS Control 4, IG1, Devices, hardening. TLCTC: Reachability filtering; cause-neutral.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-4.11",
-      "name": "CIS 4.11 — Remote wipe of portable devices",
-      "description": "CIS Control 4, IG2, Data. TLCTC: Limits the Data Risk Event after loss or theft; consequence side.",
       "linkMore": "https://www.cisecurity.org/controls/v8-1",
       "ownerName": "",
       "ownerOrgChart": "",

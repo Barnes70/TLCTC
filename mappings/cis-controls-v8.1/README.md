@@ -12,10 +12,10 @@ The 153 Safeguards of the CIS Critical Security Controls v8.1.2 (March 2025), ea
 
 | Measure | June 2026 | Rebuild |
 |---|---|---|
-| Cause-acting Safeguards | 105 | 88 |
-| Enablers / cluster-neutral | 48 | 65 (64 `"all"`, 1 `"none"`) |
+| Cause-acting Safeguards | 105 | 93 |
+| Enablers / cluster-neutral | 48 | 60 (59 `"all"`, 1 `"none"`) |
 | Multi-cluster (umbrella) Safeguards | 34 | 42 |
-| Cluster placements, total | 143 fragments | 146 |
+| Cluster placements, total | 143 fragments | 151 |
 
 | Cluster | June prevention / detection-response | Rebuild (by CIS function: GV·ID·PR / DE·RS·RC) |
 |---|---|---|
@@ -26,11 +26,11 @@ The 153 Safeguards of the CIS Critical Security Controls v8.1.2 (March 2025), ea
 | #5 | 5 / 2 | 8 / 0 |
 | #6 | 1 / 2 | 0 / 0 |
 | #7 | 12 / 11 | 14 / 8 |
-| #8 | 8 / 1 | 3 / 1 |
+| #8 | 8 / 1 | 8 / 1 |
 | #9 | 9 / 2 | 7 / 0 |
 | #10 | 7 / 3 | 10 / 1 |
 
-Most of the gap comes from two doctrine choices: consequence-side protection (device encryption, remote wipe) placed on the cluster whose step it follows (June, e.g. #8) or on every row (`"all"`, CSF PR.DS-01 precedent, rebuild); and the Bow-Tie side judged per Safeguard (June) or proxied by the CIS security function (rebuild). Owner decision pending.
+One doctrine question is decided (owner ruling, 2026-10-01): **protection that only helps once a specific cluster's step has happened belongs in that cluster's row, PROTECT column** — it sits after the System Risk Event, at the gate to the Data Risk Event. Disk encryption follows #8 and keeps a stolen device from becoming a `[DRE: C]`; so do removable-media encryption, storage-layer encryption, secure disposal and remote wipe (3.5, 3.6, 3.9, 3.11, 4.11). With that ruling the #8 row matches June exactly (8 / 1). Protection that limits the Data Risk Event whichever cluster led there (retention, DLP, backups) stays `"all"`. Still open: the Bow-Tie side is judged per Safeguard in June and proxied by the CIS security function here, and June places three fragments on #6 where the rebuild finds no capacity Safeguard.
 
 ## Configuration is a cause-side surface
 
@@ -39,8 +39,8 @@ The TLCTC v2.6 dictionary defines the #1 generic vulnerability as *"The inherent
 | | Safeguards |
 |---|---|
 | Hardening, total | **58 of 153** (48 PROTECT, 8 DETECT, 2 GOVERN) |
-| … cluster-neutral (logging, encryption at rest, firewalls) | 16 |
-| … in cluster rows (placements) | #1 17 · #4 16 · #7 12 · #5 6 · #3 5 · #2 3 · #8 3 · #9 3 · #10 0 · #6 0 |
+| … cluster-neutral (logging, firewalls, time sync) | 13 |
+| … in cluster rows (placements) | #1 17 · #4 16 · #7 12 · #5 6 · #8 6 · #3 5 · #2 3 · #9 3 · #10 0 · #6 0 |
 
 Configuration's home is #1, with #4 second and #7 third; it barely touches #2/#3, whose implementation flaws are closed by patching (Control 7), not by settings. A misconfiguration with no attacker is a System Failure (operational risk, no cluster) and is never a mapping target. The same shape appears in the NIST CCE list; see [CCE Is Not the CWE of Configuration](https://www.tlctc.net/cce-is-not-the-cwe-of-configuration.html).
 
@@ -49,7 +49,7 @@ Configuration's home is #1, with #4 second and #7 third; it barely touches #2/#3
 | Value | Meaning | In the matrix |
 |---|---|---|
 | `["#4"]`, `["#1", "#7"]`, … | The Safeguard acts on the generic vulnerability of those clusters | **Local** control in each named row of its function column |
-| `"all"` | Cluster-neutral: inventories, governance, logging, consequence-side data protection, response and recovery | One **shared Umbrella** control, linked into all ten rows of its function column |
+| `"all"` | Cluster-neutral: inventories, governance, logging, data protection that serves every row (retention, DLP, backups), response and recovery | One **shared Umbrella** control, linked into all ten rows of its function column |
 | `"none"` | Outside the threat axis (14.5: accidental exposure without an attacker) | No cell |
 
 Every entry also carries `asset_class`, `function` (GV/ID/PR/DE/RS/RC), `ig` (lowest implementation group), `kind` (`tech`/`org`), `hardening`, a TLCTC `topic` (≤ 60 characters) and a one-line `rationale`.
