@@ -12,6 +12,8 @@
     "test-path-stats": "node --test scripts/test-path-stats.js",
     "build-tool-canon": "node scripts/build-tool-canon.js",
     "build-csf2": "node scripts/build-csf2.js",
+    "build-cis": "node scripts/build-cis.js",
+    "test-build-cis": "node --test scripts/test-build-cis.js",
     "test-trainer-core": "node --test scripts/test-trainer-core.js",
     "test-race-core": "node --test scripts/test-race-core.js",
     "sync-boundary-tests": "node scripts/sync-boundary-tests.js",
