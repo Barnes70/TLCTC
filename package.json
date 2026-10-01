@@ -23,6 +23,7 @@
     "build-veris": "node scripts/build-veris-mapping.js",
     "validate-veris": "node scripts/validate-veris.js",
     "test-veris": "cd mappings/veris && python -m unittest discover tests",
+    "test-cis": "cd mappings/cis-controls-v8.1 && python -m unittest discover tests",
     "validate-atlas-mapping": "node scripts/validate-atlas-mapping.js",
     "build-attack-flow": "node scripts/build-attack-flow-stix.js",
     "validate-attack-flow": "node scripts/validate-attack-flow.js",
