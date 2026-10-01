@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 // Validate mappings/cis-controls-v8.1/cis-v8.1-tlctc-mapping.json and generate from it:
-//   tools/control-matrix-starter-cis-v8.1.json — Control Matrix starter (all 60 cells)
+//   tools/control-matrix-starter-cis-v8.1.json      — Control Matrix starter (all 60 cells, system-risk layer)
+//   mappings/cis-controls-v8.1/cis-v8.1-dre-matrix.json — data-risk layer matrix (DRE rows C·Ii·If·Av·Ac × 6 functions)
+//
+// Two layers: a Safeguard that acts on a cluster step up to the System Risk Event carries `clusters`
+// (system-risk layer, the 10 × 6 control matrix); one that acts after it, at the Data Risk Event, carries
+// `dre` instead (`clusters: null`) and lands in the separate DRE matrix (owner ruling 2026-10-01).
 //
 // Same placement rules as scripts/build-csf2.js: a cluster array becomes Local controls in those
 // rows of the Safeguard's security-function column; "all" becomes one shared control linked into
@@ -16,9 +21,11 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const SRC = 'mappings/cis-controls-v8.1/cis-v8.1-tlctc-mapping.json';
 const OUT_STARTER = 'tools/control-matrix-starter-cis-v8.1.json';
+const OUT_DRE = 'mappings/cis-controls-v8.1/cis-v8.1-dre-matrix.json';
 const FUNCS = ['GV', 'ID', 'PR', 'DE', 'RS', 'RC'];
 const CLUSTERS = Array.from({ length: 10 }, (_, i) => `#${i + 1}`);
 const KINDS = ['tech', 'org'];
+const DRE = ['C', 'Ii', 'If', 'Av', 'Ac']; // DRE refinement-tree leaves (core §7.6)
 const EXPECT = { controls: 18, safeguards: 153 }; // CIS Controls v8.1 / v8.1.2
 const LINK = 'https://www.cisecurity.org/controls/v8-1';
 
@@ -45,6 +52,16 @@ function validate(m, { draft = false } = {}) {
     if (!KINDS.includes(s.kind)) errors.push(`${where}: kind must be ${KINDS.join(' or ')}`);
     if (typeof s.hardening !== 'boolean') errors.push(`${where}: hardening must be boolean`);
     if (!s.rationale) errors.push(`${where}: rationale required`);
+    if (s.dre !== undefined && s.dre !== null) { // data-risk layer
+      if (s.clusters !== null) errors.push(`${where}: either clusters or dre, not both (set clusters to null)`);
+      if (Array.isArray(s.dre)) {
+        if (!s.dre.length) errors.push(`${where}: empty dre array (use "all")`);
+        const bad = s.dre.filter((c) => !DRE.includes(c));
+        if (bad.length) errors.push(`${where}: unknown DRE codes ${bad.join(', ')} (rows are ${DRE.join(', ')})`);
+        if (new Set(s.dre).size !== s.dre.length) errors.push(`${where}: duplicate DRE codes`);
+      } else if (s.dre !== 'all') errors.push(`${where}: dre must be an array or "all"`);
+      continue;
+    }
     if (Array.isArray(s.clusters)) {
       if (!s.clusters.length) errors.push(`${where}: empty clusters array (use "all" or "none")`);
       const bad = s.clusters.filter((c) => !CLUSTERS.includes(c));
@@ -87,20 +104,32 @@ function buildStarter(m) {
   };
 }
 
+function dreMatrix(m) {
+  const cells = {};
+  for (const r of DRE) for (const f of FUNCS) cells[`${r}-${f}`] = [];
+  for (const s of m.safeguards) {
+    if (s.dre === undefined || s.dre === null) continue;
+    for (const r of s.dre === 'all' ? DRE : s.dre) cells[`${r}-${s.function}`].push(s.id);
+  }
+  return { rows: DRE, columns: FUNCS, cells };
+}
+
 function stats(m) {
   const byCluster = Object.fromEntries(CLUSTERS.map((c) => [c, 0]));
   const hardeningByCluster = Object.fromEntries(CLUSTERS.map((c) => [c, 0]));
-  let neutral = 0, none = 0, hardening = 0;
+  const byDre = Object.fromEntries(DRE.map((c) => [c, 0]));
+  let neutral = 0, none = 0, hardening = 0, dataLayer = 0;
   for (const s of m.safeguards) {
     if (s.hardening === true) hardening++;
+    if (s.dre !== undefined && s.dre !== null) { dataLayer++; for (const r of s.dre === 'all' ? DRE : s.dre) byDre[r]++; continue; }
     if (Array.isArray(s.clusters)) for (const c of s.clusters) { byCluster[c]++; if (s.hardening) hardeningByCluster[c]++; }
     else if (s.clusters === 'all') neutral++;
     else if (s.clusters === 'none') none++;
   }
-  return { byCluster, hardeningByCluster, neutral, none, hardening };
+  return { byCluster, hardeningByCluster, neutral, none, hardening, dataLayer, byDre };
 }
 
-module.exports = { validate, buildStarter, stats };
+module.exports = { validate, buildStarter, dreMatrix, stats };
 
 if (require.main === module) {
   const draft = process.argv.includes('--draft');
@@ -115,12 +144,20 @@ if (require.main === module) {
     console.log(`build-cis: ${m.safeguards.length} safeguards valid (draft, ${open} unmapped; nothing written)`);
     process.exit(0);
   }
-  const file = path.join(ROOT, OUT_STARTER);
-  const text = JSON.stringify(buildStarter(m), null, 2) + '\n';
-  const prev = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
-  if (prev !== text) fs.writeFileSync(file, text, 'utf8');
+  const write = (rel, text) => {
+    const file = path.join(ROOT, rel);
+    const prev = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
+    if (prev !== text) fs.writeFileSync(file, text, 'utf8');
+    return `${prev === text ? 'unchanged' : 'wrote'} ${rel}`;
+  };
+  const d = dreMatrix(m);
+  const w1 = write(OUT_STARTER, JSON.stringify(buildStarter(m), null, 2) + '\n');
+  const w2 = write(OUT_DRE, JSON.stringify({ schema: 'tlctc-cis-v8.1-dre-matrix.v1', generated_from: SRC, ...d }, null, 2) + '\n');
   const s = stats(m);
-  console.log(`build-cis: ${m.safeguards.length} safeguards — ${s.hardening} hardening, ${s.neutral} cluster-neutral, ${s.none} outside the threat axis`);
+  console.log(`build-cis: ${m.safeguards.length} safeguards — system-risk layer ${m.safeguards.length - s.dataLayer} (${s.neutral} cluster-neutral, ${s.none} outside the threat axis), data-risk layer ${s.dataLayer}; ${s.hardening} hardening`);
   for (const c of CLUSTERS) console.log(`  ${c.padEnd(4)} Local ${String(s.byCluster[c]).padStart(3)}  (hardening ${s.hardeningByCluster[c]})`);
-  console.log(`  ${prev === text ? 'unchanged' : 'wrote'} ${OUT_STARTER}`);
+  const width = Object.fromEntries(FUNCS.map((f) => [f, Math.max(4, ...DRE.map((r) => d.cells[`${r}-${f}`].join(',').length)) + 2]));
+  console.log('  DRE   ' + FUNCS.map((f) => f.padEnd(width[f])).join(''));
+  for (const r of DRE) console.log('  ' + r.padEnd(5) + ' ' + FUNCS.map((f) => (d.cells[`${r}-${f}`].join(',') || '-').padEnd(width[f])).join(''));
+  console.log(`  ${w1}\n  ${w2}`);
 }

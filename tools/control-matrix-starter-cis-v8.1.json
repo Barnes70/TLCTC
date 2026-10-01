@@ -142,11 +142,6 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.1-1",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-1",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -159,11 +154,6 @@
             {
               "id": "cis-8.1-1",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-1",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -289,21 +279,6 @@
             {
               "id": "cis-2.1-1",
               "sharedControlId": "cis-2.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.2-1",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-1",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-1",
-              "sharedControlId": "cis-3.8",
               "maturity": 0
             },
             {
@@ -798,18 +773,8 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.4-1",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-1",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-1",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -838,11 +803,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-1",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-1",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -850,11 +810,6 @@
             {
               "id": "cis-13.4-1",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-1",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -1064,11 +1019,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.14-1",
-              "sharedControlId": "cis-3.14",
-              "maturity": 0
-            },
-            {
               "id": "cis-8.2-1",
               "sharedControlId": "cis-8.2",
               "maturity": 0
@@ -1172,21 +1122,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-11.2-1",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-1",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-1",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
-            {
               "id": "cis-17.7-1",
               "sharedControlId": "cis-17.7",
               "maturity": 0
@@ -1207,11 +1142,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-3.1-2",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-2",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -1224,11 +1154,6 @@
             {
               "id": "cis-8.1-2",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-2",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -1386,21 +1311,6 @@
             {
               "id": "cis-2.1-2",
               "sharedControlId": "cis-2.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.2-2",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-2",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-2",
-              "sharedControlId": "cis-3.8",
               "maturity": 0
             },
             {
@@ -1767,18 +1677,8 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.4-2",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-2",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-2",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -1807,11 +1707,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-2",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-2",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -1819,11 +1714,6 @@
             {
               "id": "cis-13.4-2",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-2",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -2033,11 +1923,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.14-2",
-              "sharedControlId": "cis-3.14",
-              "maturity": 0
-            },
-            {
               "id": "cis-8.2-2",
               "sharedControlId": "cis-8.2",
               "maturity": 0
@@ -2141,21 +2026,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-11.2-2",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-2",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-2",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
-            {
               "id": "cis-17.7-2",
               "sharedControlId": "cis-17.7",
               "maturity": 0
@@ -2176,11 +2046,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-3.1-3",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-3",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -2193,11 +2058,6 @@
             {
               "id": "cis-8.1-3",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-3",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -2323,21 +2183,6 @@
             {
               "id": "cis-2.1-3",
               "sharedControlId": "cis-2.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.2-3",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-3",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-3",
-              "sharedControlId": "cis-3.8",
               "maturity": 0
             },
             {
@@ -2768,18 +2613,8 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.4-3",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-3",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-3",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -2808,11 +2643,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-3",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-3",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -2820,11 +2650,6 @@
             {
               "id": "cis-13.4-3",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-3",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -3002,11 +2827,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.14-3",
-              "sharedControlId": "cis-3.14",
-              "maturity": 0
-            },
-            {
               "id": "cis-8.2-3",
               "sharedControlId": "cis-8.2",
               "maturity": 0
@@ -3109,21 +2929,6 @@
         "3-RC": {
           "local": [],
           "umbrella": [
-            {
-              "id": "cis-11.2-3",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-3",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-3",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
             {
               "id": "cis-17.7-3",
               "sharedControlId": "cis-17.7",
@@ -3242,11 +3047,6 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.1-4",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-4",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -3259,11 +3059,6 @@
             {
               "id": "cis-8.1-4",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-4",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -3389,21 +3184,6 @@
             {
               "id": "cis-2.1-4",
               "sharedControlId": "cis-2.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.2-4",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-4",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-4",
-              "sharedControlId": "cis-3.8",
               "maturity": 0
             },
             {
@@ -4026,18 +3806,8 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.4-4",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-4",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-4",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -4066,11 +3836,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-4",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-4",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -4078,11 +3843,6 @@
             {
               "id": "cis-13.4-4",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-4",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -4228,11 +3988,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.14-4",
-              "sharedControlId": "cis-3.14",
-              "maturity": 0
-            },
-            {
               "id": "cis-8.2-4",
               "sharedControlId": "cis-8.2",
               "maturity": 0
@@ -4303,21 +4058,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-11.2-4",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-4",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-4",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
-            {
               "id": "cis-17.7-4",
               "sharedControlId": "cis-17.7",
               "maturity": 0
@@ -4338,11 +4078,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-3.1-5",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-5",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -4355,11 +4090,6 @@
             {
               "id": "cis-8.1-5",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-5",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -4420,21 +4150,6 @@
             {
               "id": "cis-2.1-5",
               "sharedControlId": "cis-2.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.2-5",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-5",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-5",
-              "sharedControlId": "cis-3.8",
               "maturity": 0
             },
             {
@@ -4705,18 +4420,8 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.4-5",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-5",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-5",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -4745,11 +4450,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-5",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-5",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -4757,11 +4457,6 @@
             {
               "id": "cis-13.4-5",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-5",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -4807,11 +4502,6 @@
             {
               "id": "cis-2.4-5",
               "sharedControlId": "cis-2.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.14-5",
-              "sharedControlId": "cis-3.14",
               "maturity": 0
             },
             {
@@ -4885,21 +4575,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-11.2-5",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-5",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-5",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
-            {
               "id": "cis-17.7-5",
               "sharedControlId": "cis-17.7",
               "maturity": 0
@@ -4920,11 +4595,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-3.1-6",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-6",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -4937,11 +4607,6 @@
             {
               "id": "cis-8.1-6",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-6",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -5005,21 +4670,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.2-6",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-6",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-6",
-              "sharedControlId": "cis-3.8",
-              "maturity": 0
-            },
-            {
               "id": "cis-5.1-6",
               "sharedControlId": "cis-5.1",
               "maturity": 0
@@ -5030,18 +4680,8 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-3.4-6",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-6",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-6",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -5070,11 +4710,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-6",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-6",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -5082,11 +4717,6 @@
             {
               "id": "cis-13.4-6",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-6",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -5132,11 +4762,6 @@
             {
               "id": "cis-2.4-6",
               "sharedControlId": "cis-2.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.14-6",
-              "sharedControlId": "cis-3.14",
               "maturity": 0
             },
             {
@@ -5210,21 +4835,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-11.2-6",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-6",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-6",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
-            {
               "id": "cis-17.7-6",
               "sharedControlId": "cis-17.7",
               "maturity": 0
@@ -5245,11 +4855,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-3.1-7",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-7",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -5262,11 +4867,6 @@
             {
               "id": "cis-8.1-7",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-7",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -5327,21 +4927,6 @@
             {
               "id": "cis-2.1-7",
               "sharedControlId": "cis-2.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.2-7",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-7",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-7",
-              "sharedControlId": "cis-3.8",
               "maturity": 0
             },
             {
@@ -5804,18 +5389,8 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.4-7",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-7",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-7",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -5844,11 +5419,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-7",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-7",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -5856,11 +5426,6 @@
             {
               "id": "cis-13.4-7",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-7",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -6134,11 +5699,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.14-7",
-              "sharedControlId": "cis-3.14",
-              "maturity": 0
-            },
-            {
               "id": "cis-8.2-7",
               "sharedControlId": "cis-8.2",
               "maturity": 0
@@ -6242,21 +5802,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-11.2-7",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-7",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-7",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
-            {
               "id": "cis-17.7-7",
               "sharedControlId": "cis-17.7",
               "maturity": 0
@@ -6277,11 +5822,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-3.1-8",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-8",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -6294,11 +5834,6 @@
             {
               "id": "cis-8.1-8",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-8",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -6362,21 +5897,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.2-8",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-8",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-8",
-              "sharedControlId": "cis-3.8",
-              "maturity": 0
-            },
-            {
               "id": "cis-5.1-8",
               "sharedControlId": "cis-5.1",
               "maturity": 0
@@ -6386,169 +5906,9 @@
         "8-PR": {
           "local": [
             {
-              "id": "cis-3.5-8",
-              "name": "CIS 3.5 — Secure data disposal",
-              "description": "CIS Control 3, IG1, Data. TLCTC: Discarded media can be recovered by whoever gets hold of it (#8); disposal keeps that System Risk Event from becoming a [DRE: C]. PROTECT at the data-layer gate.",
-              "linkMore": "https://www.cisecurity.org/controls/v8-1",
-              "ownerName": "",
-              "ownerOrgChart": "",
-              "kind": "org",
-              "maturity": 0,
-              "linkJira": "",
-              "role": "",
-              "cde_max": {
-                "value": null,
-                "rationale": "",
-                "set_by": "",
-                "last_reviewed": "",
-                "review_trigger": ""
-              },
-              "cde_fitness": {
-                "target_velocity_class": "",
-                "fit": null,
-                "factor": null,
-                "rationale": ""
-              },
-              "coe": {
-                "metrics": [],
-                "aggregation_method": "weighted_mean",
-                "weights": {},
-                "composite_coe": null
-              },
-              "ecr": null
-            },
-            {
-              "id": "cis-3.6-8",
-              "name": "CIS 3.6 — Disk encryption on end-user devices",
-              "description": "CIS Control 3, IG1, Data, hardening. TLCTC: Acts after #8 (the device is in other hands): keeps that System Risk Event from becoming a [DRE: C]. PROTECT at the data-layer gate (owner ruling 2026-10-01).",
-              "linkMore": "https://www.cisecurity.org/controls/v8-1",
-              "ownerName": "",
-              "ownerOrgChart": "",
-              "kind": "tech",
-              "maturity": 0,
-              "linkJira": "",
-              "role": "",
-              "cde_max": {
-                "value": null,
-                "rationale": "",
-                "set_by": "",
-                "last_reviewed": "",
-                "review_trigger": ""
-              },
-              "cde_fitness": {
-                "target_velocity_class": "",
-                "fit": null,
-                "factor": null,
-                "rationale": ""
-              },
-              "coe": {
-                "metrics": [],
-                "aggregation_method": "weighted_mean",
-                "weights": {},
-                "composite_coe": null
-              },
-              "ecr": null
-            },
-            {
-              "id": "cis-3.9-8",
-              "name": "CIS 3.9 — Encryption of removable media",
-              "description": "CIS Control 3, IG2, Data, hardening. TLCTC: Acts after #8 (the medium is lost or taken): keeps that System Risk Event from becoming a [DRE: C]. PROTECT at the data-layer gate.",
-              "linkMore": "https://www.cisecurity.org/controls/v8-1",
-              "ownerName": "",
-              "ownerOrgChart": "",
-              "kind": "tech",
-              "maturity": 0,
-              "linkJira": "",
-              "role": "",
-              "cde_max": {
-                "value": null,
-                "rationale": "",
-                "set_by": "",
-                "last_reviewed": "",
-                "review_trigger": ""
-              },
-              "cde_fitness": {
-                "target_velocity_class": "",
-                "fit": null,
-                "factor": null,
-                "rationale": ""
-              },
-              "coe": {
-                "metrics": [],
-                "aggregation_method": "weighted_mean",
-                "weights": {},
-                "composite_coe": null
-              },
-              "ecr": null
-            },
-            {
-              "id": "cis-3.11-8",
-              "name": "CIS 3.11 — Server-side encryption of stored sensitive data",
-              "description": "CIS Control 3, IG2, Data, hardening. TLCTC: Storage-layer encryption is transparent to the running system and only helps once the media leaves it (#8): PROTECT at the data-layer gate.",
-              "linkMore": "https://www.cisecurity.org/controls/v8-1",
-              "ownerName": "",
-              "ownerOrgChart": "",
-              "kind": "tech",
-              "maturity": 0,
-              "linkJira": "",
-              "role": "",
-              "cde_max": {
-                "value": null,
-                "rationale": "",
-                "set_by": "",
-                "last_reviewed": "",
-                "review_trigger": ""
-              },
-              "cde_fitness": {
-                "target_velocity_class": "",
-                "fit": null,
-                "factor": null,
-                "rationale": ""
-              },
-              "coe": {
-                "metrics": [],
-                "aggregation_method": "weighted_mean",
-                "weights": {},
-                "composite_coe": null
-              },
-              "ecr": null
-            },
-            {
               "id": "cis-4.3-8",
               "name": "CIS 4.3 — Automatic session lock on idle devices",
               "description": "CIS Control 4, IG1, Devices, hardening. TLCTC: An unlocked, unattended device is usable by whoever is physically at it (#8).",
-              "linkMore": "https://www.cisecurity.org/controls/v8-1",
-              "ownerName": "",
-              "ownerOrgChart": "",
-              "kind": "tech",
-              "maturity": 0,
-              "linkJira": "",
-              "role": "",
-              "cde_max": {
-                "value": null,
-                "rationale": "",
-                "set_by": "",
-                "last_reviewed": "",
-                "review_trigger": ""
-              },
-              "cde_fitness": {
-                "target_velocity_class": "",
-                "fit": null,
-                "factor": null,
-                "rationale": ""
-              },
-              "coe": {
-                "metrics": [],
-                "aggregation_method": "weighted_mean",
-                "weights": {},
-                "composite_coe": null
-              },
-              "ecr": null
-            },
-            {
-              "id": "cis-4.11-8",
-              "name": "CIS 4.11 — Remote wipe of portable devices",
-              "description": "CIS Control 4, IG2, Data. TLCTC: Acts after #8 (a lost or stolen device): removes enterprise data before the System Risk Event becomes a [DRE: C]. PROTECT at the data-layer gate.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6644,18 +6004,8 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.4-8",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-8",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-8",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -6684,11 +6034,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-8",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-8",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -6696,11 +6041,6 @@
             {
               "id": "cis-13.4-8",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-8",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -6746,11 +6086,6 @@
             {
               "id": "cis-2.4-8",
               "sharedControlId": "cis-2.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.14-8",
-              "sharedControlId": "cis-3.14",
               "maturity": 0
             },
             {
@@ -6857,21 +6192,6 @@
           "local": [],
           "umbrella": [
             {
-              "id": "cis-11.2-8",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-8",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-8",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
-            {
               "id": "cis-17.7-8",
               "sharedControlId": "cis-17.7",
               "maturity": 0
@@ -6925,11 +6245,6 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.1-9",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-9",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -6942,11 +6257,6 @@
             {
               "id": "cis-8.1-9",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-9",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -7007,21 +6317,6 @@
             {
               "id": "cis-2.1-9",
               "sharedControlId": "cis-2.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.2-9",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-9",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-9",
-              "sharedControlId": "cis-3.8",
               "maturity": 0
             },
             {
@@ -7228,18 +6523,8 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.4-9",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-9",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-9",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -7268,11 +6553,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-9",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-9",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -7280,11 +6560,6 @@
             {
               "id": "cis-13.4-9",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-9",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -7330,11 +6605,6 @@
             {
               "id": "cis-2.4-9",
               "sharedControlId": "cis-2.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.14-9",
-              "sharedControlId": "cis-3.14",
               "maturity": 0
             },
             {
@@ -7407,21 +6677,6 @@
         "9-RC": {
           "local": [],
           "umbrella": [
-            {
-              "id": "cis-11.2-9",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-9",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-9",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
             {
               "id": "cis-17.7-9",
               "sharedControlId": "cis-17.7",
@@ -7604,11 +6859,6 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.1-10",
-              "sharedControlId": "cis-3.1",
-              "maturity": 0
-            },
-            {
               "id": "cis-7.1-10",
               "sharedControlId": "cis-7.1",
               "maturity": 0
@@ -7621,11 +6871,6 @@
             {
               "id": "cis-8.1-10",
               "sharedControlId": "cis-8.1",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.1-10",
-              "sharedControlId": "cis-11.1",
               "maturity": 0
             },
             {
@@ -7754,21 +6999,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.2-10",
-              "sharedControlId": "cis-3.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.7-10",
-              "sharedControlId": "cis-3.7",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.8-10",
-              "sharedControlId": "cis-3.8",
-              "maturity": 0
-            },
-            {
               "id": "cis-5.1-10",
               "sharedControlId": "cis-5.1",
               "maturity": 0
@@ -7876,18 +7106,8 @@
           ],
           "umbrella": [
             {
-              "id": "cis-3.4-10",
-              "sharedControlId": "cis-3.4",
-              "maturity": 0
-            },
-            {
               "id": "cis-3.12-10",
               "sharedControlId": "cis-3.12",
-              "maturity": 0
-            },
-            {
-              "id": "cis-3.13-10",
-              "sharedControlId": "cis-3.13",
               "maturity": 0
             },
             {
@@ -7916,11 +7136,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-11.3-10",
-              "sharedControlId": "cis-11.3",
-              "maturity": 0
-            },
-            {
               "id": "cis-12.2-10",
               "sharedControlId": "cis-12.2",
               "maturity": 0
@@ -7928,11 +7143,6 @@
             {
               "id": "cis-13.4-10",
               "sharedControlId": "cis-13.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-14.4-10",
-              "sharedControlId": "cis-14.4",
               "maturity": 0
             },
             {
@@ -8014,11 +7224,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-3.14-10",
-              "sharedControlId": "cis-3.14",
-              "maturity": 0
-            },
-            {
               "id": "cis-8.2-10",
               "sharedControlId": "cis-8.2",
               "maturity": 0
@@ -8088,21 +7293,6 @@
         "10-RC": {
           "local": [],
           "umbrella": [
-            {
-              "id": "cis-11.2-10",
-              "sharedControlId": "cis-11.2",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.4-10",
-              "sharedControlId": "cis-11.4",
-              "maturity": 0
-            },
-            {
-              "id": "cis-11.5-10",
-              "sharedControlId": "cis-11.5",
-              "maturity": 0
-            },
             {
               "id": "cis-17.7-10",
               "sharedControlId": "cis-17.7",
@@ -8233,135 +7423,9 @@
       }
     },
     {
-      "id": "cis-3.1",
-      "name": "CIS 3.1 — Data management process",
-      "description": "CIS Control 3, IG1, Data. TLCTC: Governance of data handling; acts on no generic vulnerability (June: enabler).",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-3.2",
-      "name": "CIS 3.2 — Data inventory",
-      "description": "CIS Control 3, IG1, Data. TLCTC: The data at stake in any Data Risk Event; cause-neutral enabler.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-3.4",
-      "name": "CIS 3.4 — Data retention limits",
-      "description": "CIS Control 3, IG1, Data. TLCTC: Less retained data means a smaller Data Risk Event whichever cluster reached it; consequence side.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-3.7",
-      "name": "CIS 3.7 — Data classification scheme",
-      "description": "CIS Control 3, IG2, Data. TLCTC: Sensitivity labels steer the controls of every row; enabler.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-3.8",
-      "name": "CIS 3.8 — Data flow documentation",
-      "description": "CIS Control 3, IG2, Data. TLCTC: Shows where data travels, providers included; enabler.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
       "id": "cis-3.12",
       "name": "CIS 3.12 — Separate processing by data sensitivity",
       "description": "CIS Control 3, IG2, Data. TLCTC: Segmentation limits reach for several rows; cause-neutral (CSF PR.IR-01 precedent).",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-3.13",
-      "name": "CIS 3.13 — Data loss prevention tooling",
-      "description": "CIS Control 3, IG3, Data. TLCTC: Watches data leaving, whichever cluster set it in motion; consequence side.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-3.14",
-      "name": "CIS 3.14 — Log access to sensitive data",
-      "description": "CIS Control 3, IG3, Data, hardening. TLCTC: Detection input for every row; cause-neutral.",
       "linkMore": "https://www.cisecurity.org/controls/v8-1",
       "ownerName": "",
       "ownerOrgChart": "",
@@ -8629,96 +7693,6 @@
       }
     },
     {
-      "id": "cis-11.1",
-      "name": "CIS 11.1 — Data recovery process",
-      "description": "CIS Control 11, IG1, Documentation. TLCTC: Recovery governance; consequence side.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-11.2",
-      "name": "CIS 11.2 — Automated backups",
-      "description": "CIS Control 11, IG1, Data. TLCTC: Restores availability after any cluster (CSF PR.DS-11 precedent).",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-11.3",
-      "name": "CIS 11.3 — Protect backup data like the original",
-      "description": "CIS Control 11, IG1, Data, hardening. TLCTC: Consequence side; cause-neutral.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-11.4",
-      "name": "CIS 11.4 — Isolated copy of recovery data",
-      "description": "CIS Control 11, IG1, Data. TLCTC: Survives a compromise of the primary environment; consequence side.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-11.5",
-      "name": "CIS 11.5 — Test restores",
-      "description": "CIS Control 11, IG2, Data. TLCTC: Verifies recovery; consequence side.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
       "id": "cis-12.2",
       "name": "CIS 12.2 — Secure network architecture",
       "description": "CIS Control 12, IG2, Network. TLCTC: Segmentation and least privilege at network level reduce reach for several rows; cause-neutral.",
@@ -8812,24 +7786,6 @@
       "id": "cis-13.11",
       "name": "CIS 13.11 — Tune alert thresholds",
       "description": "CIS Control 13, IG3, Network. TLCTC: Detection quality for every row.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-14.4",
-      "name": "CIS 14.4 — Data handling training",
-      "description": "CIS Control 14, IG1, Users. TLCTC: Careful handling limits exposure whichever cluster is involved; consequence side.",
       "linkMore": "https://www.cisecurity.org/controls/v8-1",
       "ownerName": "",
       "ownerOrgChart": "",

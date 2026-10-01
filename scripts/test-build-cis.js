@@ -76,3 +76,38 @@ test('stats count hardening per cluster', () => {
   assert.equal(s.neutral, 1);
   assert.equal(s.none, 0);
 });
+
+const { dreMatrix } = require('./build-cis.js');
+
+test('data-layer entries: dre codes instead of clusters', () => {
+  const ok = full(); Object.assign(ok.safeguards[5], { clusters: null, dre: ['C'], function: 'PR' });
+  assert.deepEqual(validate(ok), []);
+  const cases = [
+    [{ clusters: ['#8'], dre: ['C'] }, /either clusters or dre/],
+    [{ clusters: null, dre: [] }, /empty dre/],
+    [{ clusters: null, dre: ['I'] }, /unknown DRE codes I/],
+    [{ clusters: null, dre: ['C', 'C'] }, /duplicate DRE codes/],
+    [{ clusters: null, dre: 'some' }, /dre must be an array or "all"/],
+  ];
+  for (const [patch, re] of cases) {
+    const m = full(); Object.assign(m.safeguards[5], patch);
+    assert.match(validate(m).join('\n'), re, JSON.stringify(patch));
+  }
+});
+
+test('data-layer entries stay out of the cluster starter and fill the DRE matrix', () => {
+  const m = full();
+  Object.assign(m.safeguards[5], { clusters: null, dre: ['C'], function: 'PR' });
+  Object.assign(m.safeguards[6], { clusters: null, dre: ['Ii', 'Av', 'Ac'], function: 'RC' });
+  Object.assign(m.safeguards[7], { clusters: null, dre: 'all', function: 'ID' });
+  assert.ok(!JSON.stringify(buildStarter(m)).includes('"cis-1.6'));
+  const d = dreMatrix(m);
+  assert.deepEqual(d.rows, ['C', 'Ii', 'If', 'Av', 'Ac']);
+  assert.deepEqual(d.cells['C-PR'], ['1.6']);
+  assert.deepEqual(d.cells['Ac-RC'], ['1.7']);
+  for (const r of d.rows) assert.ok(d.cells[`${r}-ID`].includes('1.8'));
+  assert.equal(Object.keys(d.cells).length, 30);
+  const s = stats(m);
+  assert.equal(s.dataLayer, 3);
+  assert.equal(s.byDre.C, 2);
+});

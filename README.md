@@ -376,7 +376,7 @@ Controls are organized in a cluster × function matrix. NIST CSF 2.0 defines **6
 
 ### CIS Controls v8.1 → TLCTC
 
-The [`mappings/cis-controls-v8.1/`](mappings/cis-controls-v8.1/) directory places all **153 Safeguards of the CIS Critical Security Controls v8.1.2** in the same cluster × function matrix, with a `hardening` flag for Safeguards that set, restrict or verify configuration: 58 of 153 are hardening, landing mostly on #1, #4 and #7 and barely on #2/#3. The CIS text is CC BY-NC-ND 4.0, so the mapping holds ids and facts plus TLCTC wording only; a checker rejects any six-word overlap with the CIS spreadsheet. It is a rebuild of the June 2026 mapping published at tlctc.net, whose data file was lost, and its README reports where the rebuild and the published counts differ. A generated Control Matrix starter is included.
+The [`mappings/cis-controls-v8.1/`](mappings/cis-controls-v8.1/) directory places all **153 Safeguards of the CIS Critical Security Controls v8.1.2** on two layers: 135 that act on cluster steps go in the same cluster × function matrix, 18 that act after the System Risk Event (encryption at rest, backups) go in a separate Data Risk Event matrix with rows C, Ii, If, Av, Ac. A `hardening` flag for Safeguards that set, restrict or verify configuration: 58 of 153 are hardening, landing mostly on #1, #4 and #7 and barely on #2/#3. The CIS text is CC BY-NC-ND 4.0, so the mapping holds ids and facts plus TLCTC wording only; a checker rejects any six-word overlap with the CIS spreadsheet. It is a rebuild of the June 2026 mapping published at tlctc.net, whose data file was lost, and its README reports where the rebuild and the published counts differ. A generated Control Matrix starter is included.
 
 ---
 
