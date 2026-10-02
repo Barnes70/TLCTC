@@ -29,43 +29,43 @@ Like most control standards, the CIS Controls mix two kinds of control without s
 
 ### The cluster matrix (system-risk layer, 135 Safeguards)
 
-88 act on specific clusters (146 Local placements, 42 of them on more than one cluster), 46 are cluster-neutral (inventories, governance, logging, network reach, response and recovery processes) and one is outside the threat axis (14.5: accidental exposure without an attacker).
+89 act on specific clusters (151 Local placements, 43 of them on more than one cluster), 45 are cluster-neutral (inventories, governance, logging, network reach, response and recovery processes) and one is outside the threat axis (14.5: accidental exposure without an attacker).
 
 | Cluster | Local placements (GV·ID·PR / DE·RS·RC) | of which hardening |
 |---|---|---|
-| #1 Abuse of Functions | 21 / 6 | 17 |
+| #1 Abuse of Functions | 22 / 6 | 17 |
 | #2 Exploiting Server | 14 / 6 | 3 |
 | #3 Exploiting Client | 15 / 5 | 5 |
 | #4 Identity Theft | 24 / 3 | 16 |
 | #5 Man in the Middle | 8 / 0 | 6 |
-| #6 Flooding Attack | 0 / 0 | 0 |
+| #6 Flooding Attack | 3 / 1 | 1 |
 | #7 Malware | 14 / 8 | 12 |
 | #8 Physical Attack | 3 / 1 | 3 |
 | #9 Social Engineering | 7 / 0 | 3 |
 | #10 Supply Chain Attack | 10 / 1 | 0 |
 
-No Safeguard addresses `#6`: capacity against flooding is absent from the CIS Controls.
+No Safeguard is written for `#6`: "denial of service", "rate limiting", "capacity" and "bandwidth" appear nowhere in the 153 Safeguards, and only 12.2 asks for availability. Flooding coverage is incidental — four Safeguards act on finite capacity as a side effect: availability in the network architecture (12.2), intrusion prevention and application-layer filtering (13.8, 13.10), and intrusion detection (13.3). The cause-neutral network controls (segmentation, flow logs, host firewalls) reach the `#6` row only as Umbrella controls.
 
 ## Configuration is a cause-side surface
 
-The TLCTC v2.6 dictionary defines the #1 generic vulnerability as *"The inherent trust, scope, and complexity designed into software functionality and configuration."* 58 of 153 Safeguards are hardening (48 PROTECT, 8 DETECT, 2 GOVERN): 42 sit in cluster rows (placements: #1 17 · #4 16 · #7 12 · #5 6 · #3 5 · #2 3 · #8 3 · #9 3 · #10 0 · #6 0), 11 are cluster-neutral system configuration (logging, firewalls, time sync) and 5 are data-layer configuration (encryption at rest, sensitive-data access logging, backup protection). Configuration's home is #1, with #4 second and #7 third; it barely touches #2/#3, whose implementation flaws are closed by patching (Control 7), not by settings. A misconfiguration with no attacker is a System Failure (operational risk, no cluster) and is never a mapping target. The same shape appears in the NIST CCE list; see [CCE Is Not the CWE of Configuration](https://www.tlctc.net/cce-is-not-the-cwe-of-configuration.html).
+The TLCTC v2.6 dictionary defines the #1 generic vulnerability as *"The inherent trust, scope, and complexity designed into software functionality and configuration."* 58 of 153 Safeguards are hardening (48 PROTECT, 8 DETECT, 2 GOVERN): 42 sit in cluster rows (placements: #1 17 · #4 16 · #7 12 · #5 6 · #3 5 · #2 3 · #8 3 · #9 3 · #6 1 · #10 0), 11 are cluster-neutral system configuration (logging, firewalls, time sync) and 5 are data-layer configuration (encryption at rest, sensitive-data access logging, backup protection). Configuration's home is #1, with #4 second and #7 third; it barely touches #2/#3, whose implementation flaws are closed by patching (Control 7), not by settings. A misconfiguration with no attacker is a System Failure (operational risk, no cluster) and is never a mapping target. The same shape appears in the NIST CCE list; see [CCE Is Not the CWE of Configuration](https://www.tlctc.net/cce-is-not-the-cwe-of-configuration.html).
 
 ## Relation to the June 2026 mapping
 
 [`cis-v81-mapping.html`](https://www.tlctc.net/cis-v81-mapping.html) (2026-06-06) published a cell-by-cell mapping of v8.1 (153 Safeguards → 74 cell-pure objectives; 48 enablers, 34 umbrellas). Its per-Safeguard data file was never published and could not be recovered, so this file is a **rebuild**: the 34 Safeguards that page names are kept as published, the rest follow the NIST CSF 2.0 mapping's precedents. Three differences are structural, not disagreements over single rows:
 
-- **Two layers.** June placed data-layer protection in cluster rows (its `#8` prevention count of 8 is reproduced exactly when the five post-`#8` protections — 3.5, 3.6, 3.9, 3.11, 4.11 — are put there). Under the two-matrix ruling they move to the DRE matrix, so the cluster matrix here is smaller (135 Safeguards, 146 placements against June's 143 fragments).
+- **Two layers.** June placed data-layer protection in cluster rows (its `#8` prevention count of 8 is reproduced exactly when the five post-`#8` protections — 3.5, 3.6, 3.9, 3.11, 4.11 — are put there). Under the two-matrix ruling they move to the DRE matrix, so the cluster matrix here is smaller (135 Safeguards, 151 placements against June's 143 fragments).
 - **The Bow-Tie side** is judged per Safeguard in June and proxied by the CIS security function here (GV·ID·PR / DE·RS·RC), which explains most of the smaller detection-response column (30 against 44).
-- **`#6`:** June places three fragments there; the rebuild finds no capacity Safeguard.
+- **`#6`:** no Safeguard is written for flooding; both mappings place Safeguards there by their effect on capacity (June 1 / 2, rebuild 3 / 1: 12.2, 13.8, 13.10 / 13.3).
 
 | Cluster | June prevention / detection-response | Rebuild, cluster matrix |
 |---|---|---|
-| #1 | 12 / 8 | 21 / 6 |
+| #1 | 12 / 8 | 22 / 6 |
 | #2 | 19 / 7 | 14 / 6 |
 | #3 | 9 / 4 | 15 / 5 |
 | #4 | 17 / 4 | 24 / 3 |
 | #5 | 5 / 2 | 8 / 0 |
-| #6 | 1 / 2 | 0 / 0 |
+| #6 | 1 / 2 | 3 / 1 |
 | #7 | 12 / 11 | 14 / 8 |
 | #8 | 8 / 1 | 3 / 1 |
 | #9 | 9 / 2 | 7 / 0 |

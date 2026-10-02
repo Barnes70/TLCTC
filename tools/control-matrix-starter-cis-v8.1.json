@@ -579,6 +579,38 @@
               "ecr": null
             },
             {
+              "id": "cis-12.2-1",
+              "name": "CIS 12.2 — Secure network architecture",
+              "description": "CIS Control 12, IG2, Network. TLCTC: Least privilege bounds designed scope (#1); designing for availability (capacity, redundancy) answers finite capacity (#6). Segmentation, the cause-neutral part, is also carried by 13.4.",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "org",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            },
+            {
               "id": "cis-12.3-1",
               "name": "CIS 12.3 — Managed network configuration over secure protocols",
               "description": "CIS Control 12, IG2, Network, hardening. TLCTC: Device configuration under control (#1) and management traffic protected (#5).",
@@ -645,7 +677,7 @@
             {
               "id": "cis-13.10-1",
               "name": "CIS 13.10 — Application-layer filtering",
-              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Filters requests to server-role applications: exploitation (#2) and abuse of exposed functions (#1).",
+              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Filters requests to server-role applications: exploitation (#2), abuse of exposed functions (#1) and request floods absorbed by rate limits (#6).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -800,11 +832,6 @@
             {
               "id": "cis-8.10-1",
               "sharedControlId": "cis-8.10",
-              "maturity": 0
-            },
-            {
-              "id": "cis-12.2-1",
-              "sharedControlId": "cis-12.2",
               "maturity": 0
             },
             {
@@ -1517,7 +1544,7 @@
             {
               "id": "cis-13.8-2",
               "name": "CIS 13.8 — Network intrusion prevention",
-              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit and malware traffic on the wire (#2/#3, #7).",
+              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1549,7 +1576,7 @@
             {
               "id": "cis-13.10-2",
               "name": "CIS 13.10 — Application-layer filtering",
-              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Filters requests to server-role applications: exploitation (#2) and abuse of exposed functions (#1).",
+              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Filters requests to server-role applications: exploitation (#2), abuse of exposed functions (#1) and request floods absorbed by rate limits (#6).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1707,11 +1734,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-12.2-2",
-              "sharedControlId": "cis-12.2",
-              "maturity": 0
-            },
-            {
               "id": "cis-13.4-2",
               "sharedControlId": "cis-13.4",
               "maturity": 0
@@ -1780,7 +1802,7 @@
             {
               "id": "cis-13.3-2",
               "name": "CIS 13.3 — Network intrusion detection",
-              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit and malware traffic on the wire (#2/#3, #7).",
+              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2453,7 +2475,7 @@
             {
               "id": "cis-13.8-3",
               "name": "CIS 13.8 — Network intrusion prevention",
-              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit and malware traffic on the wire (#2/#3, #7).",
+              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2643,11 +2665,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-12.2-3",
-              "sharedControlId": "cis-12.2",
-              "maturity": 0
-            },
-            {
               "id": "cis-13.4-3",
               "sharedControlId": "cis-13.4",
               "maturity": 0
@@ -2716,7 +2733,7 @@
             {
               "id": "cis-13.3-3",
               "name": "CIS 13.3 — Network intrusion detection",
-              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit and malware traffic on the wire (#2/#3, #7).",
+              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3836,11 +3853,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-12.2-4",
-              "sharedControlId": "cis-12.2",
-              "maturity": 0
-            },
-            {
               "id": "cis-13.4-4",
               "sharedControlId": "cis-13.4",
               "maturity": 0
@@ -4450,11 +4462,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-12.2-5",
-              "sharedControlId": "cis-12.2",
-              "maturity": 0
-            },
-            {
               "id": "cis-13.4-5",
               "sharedControlId": "cis-13.4",
               "maturity": 0
@@ -4677,7 +4684,104 @@
           ]
         },
         "6-PR": {
-          "local": [],
+          "local": [
+            {
+              "id": "cis-12.2-6",
+              "name": "CIS 12.2 — Secure network architecture",
+              "description": "CIS Control 12, IG2, Network. TLCTC: Least privilege bounds designed scope (#1); designing for availability (capacity, redundancy) answers finite capacity (#6). Segmentation, the cause-neutral part, is also carried by 13.4.",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "org",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            },
+            {
+              "id": "cis-13.8-6",
+              "name": "CIS 13.8 — Network intrusion prevention",
+              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "tech",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            },
+            {
+              "id": "cis-13.10-6",
+              "name": "CIS 13.10 — Application-layer filtering",
+              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Filters requests to server-role applications: exploitation (#2), abuse of exposed functions (#1) and request floods absorbed by rate limits (#6).",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "tech",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            }
+          ],
           "umbrella": [
             {
               "id": "cis-3.12-6",
@@ -4707,11 +4811,6 @@
             {
               "id": "cis-8.10-6",
               "sharedControlId": "cis-8.10",
-              "maturity": 0
-            },
-            {
-              "id": "cis-12.2-6",
-              "sharedControlId": "cis-12.2",
               "maturity": 0
             },
             {
@@ -4747,7 +4846,40 @@
           ]
         },
         "6-DE": {
-          "local": [],
+          "local": [
+            {
+              "id": "cis-13.3-6",
+              "name": "CIS 13.3 — Network intrusion detection",
+              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "linkMore": "https://www.cisecurity.org/controls/v8-1",
+              "ownerName": "",
+              "ownerOrgChart": "",
+              "kind": "tech",
+              "maturity": 0,
+              "linkJira": "",
+              "role": "",
+              "cde_max": {
+                "value": null,
+                "rationale": "",
+                "set_by": "",
+                "last_reviewed": "",
+                "review_trigger": ""
+              },
+              "cde_fitness": {
+                "target_velocity_class": "",
+                "fit": null,
+                "factor": null,
+                "rationale": ""
+              },
+              "coe": {
+                "metrics": [],
+                "aggregation_method": "weighted_mean",
+                "weights": {},
+                "composite_coe": null
+              },
+              "ecr": null
+            }
+          ],
           "umbrella": [
             {
               "id": "cis-1.3-6",
@@ -5357,7 +5489,7 @@
             {
               "id": "cis-13.8-7",
               "name": "CIS 13.8 — Network intrusion prevention",
-              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit and malware traffic on the wire (#2/#3, #7).",
+              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5416,11 +5548,6 @@
             {
               "id": "cis-8.10-7",
               "sharedControlId": "cis-8.10",
-              "maturity": 0
-            },
-            {
-              "id": "cis-12.2-7",
-              "sharedControlId": "cis-12.2",
               "maturity": 0
             },
             {
@@ -5652,7 +5779,7 @@
             {
               "id": "cis-13.3-7",
               "name": "CIS 13.3 — Network intrusion detection",
-              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit and malware traffic on the wire (#2/#3, #7).",
+              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6031,11 +6158,6 @@
             {
               "id": "cis-8.10-8",
               "sharedControlId": "cis-8.10",
-              "maturity": 0
-            },
-            {
-              "id": "cis-12.2-8",
-              "sharedControlId": "cis-12.2",
               "maturity": 0
             },
             {
@@ -6550,11 +6672,6 @@
             {
               "id": "cis-8.10-9",
               "sharedControlId": "cis-8.10",
-              "maturity": 0
-            },
-            {
-              "id": "cis-12.2-9",
-              "sharedControlId": "cis-12.2",
               "maturity": 0
             },
             {
@@ -7136,11 +7253,6 @@
               "maturity": 0
             },
             {
-              "id": "cis-12.2-10",
-              "sharedControlId": "cis-12.2",
-              "maturity": 0
-            },
-            {
               "id": "cis-13.4-10",
               "sharedControlId": "cis-13.4",
               "maturity": 0
@@ -7682,24 +7794,6 @@
       "ownerName": "",
       "ownerOrgChart": "",
       "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "cis-12.2",
-      "name": "CIS 12.2 — Secure network architecture",
-      "description": "CIS Control 12, IG2, Network. TLCTC: Segmentation and least privilege at network level reduce reach for several rows; cause-neutral.",
-      "linkMore": "https://www.cisecurity.org/controls/v8-1",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "org",
       "scope": "all",
       "linkJira": "",
       "cde_max": {
