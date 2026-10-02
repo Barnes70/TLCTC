@@ -121,8 +121,11 @@
             .modal-overlay { @apply fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm; }
             .modal-content { @apply bg-card rounded-xl shadow-2xl w-full max-w-2xl p-6 max-h-[85vh] overflow-y-auto; }
             .tooltip-wrap { @apply relative; }
-            .tooltip-wrap .tip { @apply invisible opacity-0 absolute z-50 bg-foreground text-background text-xs px-2 py-1 rounded whitespace-nowrap bottom-full left-1/2 -translate-x-1/2 mb-1 transition-all duration-150 pointer-events-none; }
-            .tooltip-wrap:hover .tip { @apply visible opacity-100; }
+            /* hidden tips take no layout space (an invisible tip at the right edge used to widen the page) */
+            .tooltip-wrap .tip { @apply hidden absolute z-50 bg-foreground text-background text-xs px-2 py-1 rounded whitespace-nowrap bottom-full left-1/2 -translate-x-1/2 mb-1 pointer-events-none; }
+            .tooltip-wrap:hover .tip, .tooltip-wrap:focus-within .tip { @apply block; }
+            /* tips in a right-aligned group open leftward so they stay on screen */
+            .ml-auto .tooltip-wrap .tip { @apply left-auto right-0 translate-x-0; }
         }
     </style>
     <script type="application/ld+json">
@@ -644,7 +647,7 @@ function NavDropdown({ group }) {
 function MobileNavMenu({ open, onClose }) {
     if (!open) return null;
     return (
-        <div className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden" onClick={onClose}>
+        <div className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm lg:hidden" onClick={onClose}>
             <div className="flex h-14 items-center justify-between px-6 border-b border-border" onClick={e => e.stopPropagation()}>
                 <span className="font-display font-bold text-lg">TLCTC</span>
                 <button onClick={onClose} className="app-btn h-10 w-10 p-0 rounded-full hover:bg-secondary">
@@ -695,8 +698,8 @@ function HeaderDropdown({ label, icon, items }) {
     }, [open]);
     return (
         <div className="relative" ref={ref}>
-            <button onClick={() => setOpen(o => !o)} className="app-btn app-btn-outline app-btn-sm gap-1">
-                <Icon name={icon} size={14} /> <span className="hidden sm:inline">{label}</span>
+            <button onClick={() => setOpen(o => !o)} className="app-btn app-btn-outline app-btn-sm gap-1" title={label}>
+                <Icon name={icon} size={14} /> <span className="hidden xl:inline">{label}</span>
                 <Icon name="chevron-down" size={12} />
             </button>
             {open && (
@@ -735,14 +738,29 @@ function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON
                     </div>
                 </a>
             </div>
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden lg:flex items-center gap-1">
                 {NAV_GROUPS.map(g => <NavDropdown key={g.id} group={g} />)}
                 <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <Icon name="external-link" size={12} /></a>
                 <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><Icon name="github" size={16} /></a>
             </nav>
             <div className="flex items-center gap-2">
+                <div className="sm:hidden">
+                    <HeaderDropdown label="Actions" icon="more-horizontal" items={[
+                        { label: `Shared controls${sharedControlCount > 0 ? ` (${sharedControlCount})` : ''}`, icon: 'link', action: onShowSharedControls },
+                        { label: 'Maturity Report', icon: 'bar-chart-3', action: () => onReport('maturity') },
+                        { label: 'Task Report', icon: 'list-checks', action: () => onReport('tasks') },
+                        { label: 'Export PNG', icon: 'image', action: onExportPNG },
+                        { divider: true },
+                        { label: 'Export JSON', icon: 'download', action: onExportJSON },
+                        { label: 'Import JSON', icon: 'upload', action: onImportJSON },
+                        { label: 'Import format', icon: 'info', action: onShowSchema },
+                        { divider: true },
+                        { label: 'Reset all data', icon: 'trash-2', action: onResetState },
+                    ]} />
+                </div>
+                <div className="hidden sm:flex items-center gap-2">
                 <button onClick={onShowSharedControls} className="app-btn app-btn-outline app-btn-sm gap-1" title="Shared Controls Library — define and link controls across clusters">
-                    <Icon name="link" size={14} /> <span className="hidden sm:inline">Shared</span>
+                    <Icon name="link" size={14} /> <span className="hidden xl:inline">Shared</span>
                     {sharedControlCount > 0 && <span className="bg-amber-500 text-white text-[10px] px-1.5 rounded-full font-bold">{sharedControlCount}</span>}
                 </button>
                 <HeaderDropdown label="Reports" icon="file-text" items={[
@@ -752,21 +770,22 @@ function Header({ orgName, onOrgNameChange, darkMode, onToggleDark, onExportJSON
                     { label: 'Export PNG', icon: 'image', action: onExportPNG },
                 ]} />
                 <button onClick={onExportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Export JSON">
-                    <Icon name="download" size={14} /> <span className="hidden sm:inline">Export</span>
+                    <Icon name="download" size={14} /> <span className="hidden xl:inline">Export</span>
                 </button>
                 <button onClick={onImportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON">
-                    <Icon name="upload" size={14} /> <span className="hidden sm:inline">Import</span>
+                    <Icon name="upload" size={14} /> <span className="hidden xl:inline">Import</span>
                 </button>
                 <button onClick={onShowSchema} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON Format">
-                    <Icon name="info" size={14} /> <span className="hidden sm:inline">Schema</span>
+                    <Icon name="info" size={14} /> <span className="hidden xl:inline">Schema</span>
                 </button>
                 <button onClick={onResetState} className="app-btn app-btn-outline app-btn-sm gap-1 !text-red-600 dark:!text-red-400 hover:bg-red-500/10" title="Reset — clear all data and start from scratch">
-                    <Icon name="trash-2" size={14} /> <span className="hidden sm:inline">Reset</span>
+                    <Icon name="trash-2" size={14} /> <span className="hidden xl:inline">Reset</span>
                 </button>
+                </div>
                 <button onClick={onToggleDark} className="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Toggle theme">
                     <Icon name={darkMode ? 'sun' : 'moon'} size={16} />
                 </button>
-                <button onClick={onToggleMobileMenu} className="md:hidden app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary">
+                <button onClick={onToggleMobileMenu} className="lg:hidden app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Menu">
                     <Icon name="menu" size={20} />
                 </button>
             </div>
