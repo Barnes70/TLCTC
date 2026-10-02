@@ -527,8 +527,10 @@ function migrateState(st) {
 function Icon({ name, size = 16, className = '' }) {
     const ref = useRef(null);
     useEffect(() => {
-        if (ref.current && lucide?.icons?.[name]) {
-            const [tag, attrs, children] = lucide.icons[name];
+        // lucide 0.469 keys icons PascalCase ("Database"); accept the kebab-case names used here
+        const node = lucide?.icons?.[name] || lucide?.icons?.[name.replace(/(^|-)([a-z0-9])/g, (m, d, c) => c.toUpperCase())];
+        if (ref.current && node) {
+            const [tag, attrs, children] = node;
             const svg = document.createElementNS('http://www.w3.org/2000/svg', tag);
             Object.entries({ ...attrs, width: size, height: size, class: className }).forEach(([k, v]) => svg.setAttribute(k, v));
             children.forEach(([cTag, cAttrs]) => {
@@ -600,6 +602,7 @@ const NAV_GROUPS = [
         { href: 'radar-tlctc-app.html', label: 'Threat Radar', icon: 'radar' },
         { href: 'tech-enablers-radar.html', label: 'Tech Enablers Radar', icon: 'cpu' },
         { href: 'control-matrix.html', label: 'Control Matrix', icon: 'grid-3x3' },
+        { href: 'dre-matrix.html', label: 'DRE Matrix', icon: 'database' },
         { href: 'cbp-app.html', label: 'CBP', icon: 'building-2' },
     ]},
 ];
@@ -2520,6 +2523,9 @@ function MaturityLegend({ targetMaturity }) {
                 <span className="text-[9px] px-1 rounded bg-purple-500/15 text-purple-600 font-bold ml-1">U</span>
                 <span className="text-muted-foreground">Umbrella</span>
             </div>
+            <a href="dre-matrix.html" className="flex items-center gap-1 ml-auto text-primary hover:underline" title="Controls that act after the System Risk Event (encryption at rest, backups) belong in the separate DRE matrix">
+                <Icon name="database" size={12} /> Data-layer controls: DRE Matrix
+            </a>
         </div>
     );
 }

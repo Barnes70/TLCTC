@@ -584,6 +584,7 @@ tlctc/
 │   ├── radar-tlctc-app.html                  # Interactive threat radar visualization & assessment
 │   ├── tech-enablers-radar.html              # Technology enabler radar for emerging threat vectors
 │   ├── control-matrix.html                   # NIST CSF 2.0 × TLCTC control matrix with maturity scoring
+│   ├── dre-matrix.html                       # Data Risk Event control matrix (C · Ii · If · Av · Ac × CSF functions)
 │   ├── attck-explorer.html                   # MITRE ATT&CK technique explorer with TLCTC mapping
 │   ├── attck-phase-heatmap.html              # ATT&CK phase heatmap visualization
 │   ├── cwe-explorer.html                     # CWE weakness explorer with TLCTC mapping
