@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLCTC DRE Control Matrix</title>
+    <meta name="description" content="Manage data-layer controls across the five TLCTC Data Risk Event codes (C, Ii, If, Av, Ac) and the six NIST CSF functions — the controls that act after a system is compromised, before data is lost, altered, misattributed or made unusable.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tlctc.net/tools/dre-matrix.html">
+    <meta property="og:title" content="TLCTC DRE Control Matrix">
+    <meta property="og:description" content="Data-layer controls across the five Data Risk Event codes and six CSF functions: the controls that act after the System Risk Event.">
+    <meta property="og:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+    <meta property="og:site_name" content="TLCTC">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@fr33thought">
+    <meta name="twitter:creator" content="@fr33thought">
+    <meta name="twitter:url" content="https://www.tlctc.net/tools/dre-matrix.html">
+    <meta name="twitter:title" content="TLCTC DRE Control Matrix">
+    <meta name="twitter:description" content="Data-layer controls across the five Data Risk Event codes and six CSF functions: the controls that act after the System Risk Event.">
+    <meta name="twitter:image" content="https://www.tlctc.net/images/og-image.png">
+    <meta name="twitter:image:alt" content="TLCTC logo — a decagon of ten interconnected, lock-guarded nodes, one per Top Level Cyber Threat Cluster.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+                        secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+                        muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+                        accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+                        card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+                        destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
+                    },
+                },
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --radius: 0.75rem;
+                --background: 210 40% 98%;
+                --foreground: 222 47% 11%;
+                --card: 0 0% 100%;
+                --card-foreground: 222 47% 11%;
+                --primary: 221 83% 53%;
+                --primary-foreground: 210 40% 98%;
+                --secondary: 210 40% 96.1%;
+                --secondary-foreground: 222 47% 11%;
+                --muted: 210 40% 96.1%;
+                --muted-foreground: 215.4 16.3% 46.9%;
+                --accent: 210 40% 96.1%;
+                --accent-foreground: 222 47% 11%;
+                --destructive: 0 84.2% 60.2%;
+                --destructive-foreground: 210 40% 98%;
+                --border: 214.3 31.8% 91.4%;
+                --input: 214.3 31.8% 91.4%;
+                --ring: 221 83% 53%;
+            }
+            .dark {
+                --background: 222 47% 11%;
+                --foreground: 210 40% 98%;
+                --card: 217 33% 17%;
+                --card-foreground: 210 40% 98%;
+                --primary: 217 91% 60%;
+                --primary-foreground: 222 47% 11%;
+                --secondary: 217 33% 17%;
+                --secondary-foreground: 210 40% 98%;
+                --muted: 217 33% 17%;
+                --muted-foreground: 215 20.2% 65.1%;
+                --accent: 217 33% 17%;
+                --accent-foreground: 210 40% 98%;
+                --destructive: 0 63% 31%;
+                --destructive-foreground: 210 40% 98%;
+                --border: 217 33% 17%;
+                --input: 217 33% 17%;
+                --ring: 224 76% 48%;
+            }
+        }
+        @layer components {
+            .glass-header { @apply bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-40; }
+            .card { @apply bg-card text-card-foreground rounded-xl border border-border shadow-lg; }
+            .input-ctrl { @apply w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring text-foreground; }
+            .ai-disclaimer { @apply bg-muted/50 text-muted-foreground text-[11px] leading-snug py-1.5 px-4 text-center border-b border-border flex-shrink-0; }
+            .ai-disclaimer button { @apply bg-transparent border-none cursor-pointer text-muted-foreground text-sm ml-2 opacity-60 align-middle; }
+            .ai-disclaimer button:hover { @apply opacity-100; }
+            .app-btn { @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg px-4 py-2 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background text-sm; }
+            .app-btn-primary { @apply bg-primary text-primary-foreground hover:opacity-90; }
+            .app-btn-outline { @apply border border-border text-foreground hover:bg-accent; }
+            .app-btn-sm { @apply text-xs px-2.5 py-1.5 rounded-md; }
+        }
+    </style>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TLCTC DRE Control Matrix",
+  "description": "Manage data-layer controls across the five TLCTC Data Risk Event codes (C, Ii, If, Av, Ac) and the six NIST CSF functions.",
+  "url": "https://www.tlctc.net/tools/dre-matrix.html",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.tlctc.net/tools/dre-matrix.html" },
+  "inLanguage": "en",
+  "image": "https://www.tlctc.net/images/og-image.png",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "isAccessibleForFree": true,
+  "author": { "@type": "Person", "@id": "https://orcid.org/0009-0005-2148-9903", "sameAs": "https://orcid.org/0009-0005-2148-9903", "name": "Bernhard Kreinz" },
+  "publisher": { "@type": "Organization", "name": "TLCTC", "url": "https://www.tlctc.net/", "logo": { "@type": "ImageObject", "url": "https://www.tlctc.net/images/logo-middle.png" } }
+}
+    </script>
+
+    <style>
+        .matrix-cell { transition: transform 0.1s, box-shadow 0.15s; cursor: pointer; }
+        .matrix-cell:hover { transform: scale(1.04); box-shadow: 0 0 0 2px hsl(var(--primary)); z-index: 5; position: relative; }
+        .matrix-cell.active-cell { box-shadow: 0 0 0 3px hsl(var(--primary)); z-index: 6; position: relative; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground min-h-screen font-sans antialiased flex flex-col">
+    <div id="root"></div>
+
+    <script type="text/babel">
+const { useState, useEffect, useRef, useMemo } = React;
+
+// ═══════════════════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════════════════
+
+// The five DRE leaf codes (core §7.6). Names and definitions verbatim from the v2.6 dictionary (data_risk_events).
+const DRE_ROWS = [
+    { code: 'C',  parent: null, name: 'Loss of Confidentiality', property: 'disclosure', color: '#ef4444',
+      definition: "Data has been disclosed to a party not entitled to it. No refinement: disclosed data is disclosed, and the record's standing is identical however it leaked." },
+    { code: 'Ii', parent: 'I', name: 'Incorrect state', property: 'correspondence, completeness', color: '#f59e0b',
+      definition: "The record no longer corresponds to what it represents, or is no longer complete; read off the record, the content is wrong. Answered by validation, reconciliation and four-eyes controls." },
+    { code: 'If', parent: 'I', name: 'Misattributed state', property: 'provenance, attribution', color: '#d97706',
+      definition: "The record claims an origin, author or authority it does not have; read off the record, provenance fails while the content may be perfectly accurate. Answered by segregation of duties, provenance logging and behavioural monitoring." },
+    { code: 'Av', parent: 'A', name: 'Unavailable state', property: 'operational presence', color: '#3b82f6',
+      definition: "Data is gone or unreachable — the resource no longer exists or cannot be technically reached by the infrastructure (deletion, wiper, storage loss, system offline)." },
+    { code: 'Ac', parent: 'A', name: 'Inaccessible state', property: 'retrievability', color: '#6366f1',
+      definition: "Data is present and reachable but cannot be used for its intended purpose by authorised processes (ransomware encryption, corruption of the container, permission lockout)." },
+];
+
+const FUNCTIONS = [
+    { id: 'GV', name: 'GOVERN',   color: '#8b5cf6', objective: 'Govern ownership and risk appetite for [DRE: X]' },
+    { id: 'ID', name: 'IDENTIFY', color: '#3b82f6', objective: 'Identify the data whose X is at stake' },
+    { id: 'PR', name: 'PROTECT',  color: '#22c55e', objective: 'Keep a compromised system from becoming a [DRE: X]' },
+    { id: 'DE', name: 'DETECT',   color: '#eab308', objective: 'Detect a [DRE: X]' },
+    { id: 'RS', name: 'RESPOND',  color: '#f97316', objective: 'Contain a [DRE: X]' },
+    { id: 'RC', name: 'RECOVER',  color: '#06b6d4', objective: 'Recover from a [DRE: X]' },
+];
+
+const MATURITY_LEVELS = [
+    { value: 0, label: 'Not Implemented', abbr: 'N/I', color: '#ef4444', bg: '#fef2f2', darkBg: '#450a0a' },
+    { value: 1, label: 'Initial',         abbr: 'Ini', color: '#f97316', bg: '#fff7ed', darkBg: '#431407' },
+    { value: 2, label: 'Developing',      abbr: 'Dev', color: '#eab308', bg: '#fefce8', darkBg: '#422006' },
+    { value: 3, label: 'Defined',         abbr: 'Def', color: '#84cc16', bg: '#f7fee7', darkBg: '#1a2e05' },
+    { value: 4, label: 'Managed',         abbr: 'Mgd', color: '#22c55e', bg: '#f0fdf4', darkBg: '#052e16' },
+    { value: 5, label: 'Optimizing',      abbr: 'Opt', color: '#059669', bg: '#ecfdf5', darkBg: '#022c22' },
+];
+
+const STARTERS = [
+    { id: 'empty', label: 'Empty matrix', file: null, desc: 'All 30 cells empty — start from scratch.' },
+    { id: 'cis81', label: 'CIS Controls v8.1.2 (18 data-layer Safeguards)', file: 'dre-matrix-starter-cis-v8.1.json',
+      desc: 'Encryption at rest, retention, disposal, DLP, remote wipe, backups and data governance, placed by DRE code. Ids and TLCTC topics only (no CIS text).' },
+];
+
+const STORAGE_KEY = 'tlctc-dre-matrix-v1';
+const cellKey = (code, fn) => `${code}-${fn}`;
+const newId = () => 'c-' + Math.random().toString(36).slice(2, 9);
+
+function emptyState() {
+    const cells = {};
+    DRE_ROWS.forEach(r => FUNCTIONS.forEach(f => { cells[cellKey(r.code, f.id)] = []; }));
+    return { version: '1.0.0', tool: 'TLCTC DRE Matrix', orgName: 'My Organization', targetMaturity: 3, cells };
+}
+
+// Accept anything shaped like a DRE Matrix export; unknown cells are dropped, missing ones created.
+function normalise(data) {
+    const base = emptyState();
+    if (!data || typeof data !== 'object' || !data.cells || typeof data.cells !== 'object') throw new Error('not a DRE Matrix file (no "cells" object)');
+    Object.keys(base.cells).forEach(k => {
+        const list = Array.isArray(data.cells[k]) ? data.cells[k] : [];
+        base.cells[k] = list.filter(c => c && typeof c.name === 'string').map(c => ({
+            id: c.id || newId(), name: c.name, description: c.description || '', owner: c.owner || '',
+            kind: c.kind === 'org' ? 'org' : 'tech', scope: c.scope === 'umbrella' ? 'umbrella' : 'local',
+            maturity: Number.isInteger(c.maturity) && c.maturity >= 0 && c.maturity <= 5 ? c.maturity : 0,
+            linkMore: c.linkMore || '',
+        }));
+    });
+    if (typeof data.orgName === 'string') base.orgName = data.orgName;
+    if ([1, 2, 3, 4, 5].includes(data.targetMaturity)) base.targetMaturity = data.targetMaturity;
+    return base;
+}
+
+function loadState() {
+    try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) return normalise(JSON.parse(raw)); } catch (e) { /* fall through */ }
+    return emptyState();
+}
+function saveState(state) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { console.warn('Failed to save', e); } }
+
+// A cell is as strong as its best control: one effective control meets the cell's objective.
+const cellMaturity = (list) => list.length ? Math.max(...list.map(c => c.maturity)) : null;
+
+// ═══════════════════════════════════════════════════════════════════
+// SMALL COMPONENTS
+// ═══════════════════════════════════════════════════════════════════
+
+function Icon({ name, size = 16, className = '' }) {
+    const ref = useRef(null);
+    useEffect(() => {
+        // lucide 0.469 keys icons PascalCase ("Database"); accept the kebab-case names used here
+        const node = lucide?.icons?.[name] || lucide?.icons?.[name.replace(/(^|-)([a-z0-9])/g, (m, d, c) => c.toUpperCase())];
+        if (ref.current && node) {
+            const [tag, attrs, children] = node;
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', tag);
+            Object.entries({ ...attrs, width: size, height: size, class: className }).forEach(([k, v]) => svg.setAttribute(k, v));
+            children.forEach(([cTag, cAttrs]) => {
+                const el = document.createElementNS('http://www.w3.org/2000/svg', cTag);
+                Object.entries(cAttrs).forEach(([k, v]) => el.setAttribute(k, v));
+                svg.appendChild(el);
+            });
+            ref.current.innerHTML = '';
+            ref.current.appendChild(svg);
+        }
+    }, [name, size, className]);
+    return <span ref={ref} className="inline-flex items-center justify-center" style={{ width: size, height: size }} />;
+}
+
+const NAV_GROUPS = [
+    { id: 'analysis', label: 'Analysis', icon: 'scan-search', links: [
+        { href: 'threat-modeling.html', label: 'Threat Modeling', icon: 'file-search' },
+        { href: 'attack-path-architect.html', label: 'Attack Path Architect', icon: 'route' },
+        { href: 'attck-explorer.html', label: 'ATT&CK Explorer', icon: 'swords' },
+        { href: 'cwe-explorer.html', label: 'CWE Explorer', icon: 'bug' },
+    ]},
+    { id: 'actors', label: 'Actors', icon: 'user-search', links: [
+        { href: 'actor-profile-designer.html', label: 'Actor Profiler', icon: 'fingerprint' },
+        { href: 'actor-story-designer.html', label: 'Actor Story', icon: 'book-open' },
+    ]},
+    { id: 'defense', label: 'Defense', icon: 'shield-check', links: [
+        { href: 'radar-tlctc-app.html', label: 'Threat Radar', icon: 'radar' },
+        { href: 'tech-enablers-radar.html', label: 'Tech Enablers Radar', icon: 'cpu' },
+        { href: 'control-matrix.html', label: 'Control Matrix', icon: 'grid-3x3' },
+        { href: 'dre-matrix.html', label: 'DRE Matrix', icon: 'database' },
+        { href: 'cbp-app.html', label: 'CBP', icon: 'building-2' },
+    ]},
+];
+
+function useOutsideClose(open, setOpen) {
+    const ref = useRef(null);
+    useEffect(() => {
+        if (!open) return;
+        const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, [open]);
+    return ref;
+}
+
+function NavDropdown({ group }) {
+    const [open, setOpen] = useState(false);
+    const ref = useOutsideClose(open, setOpen);
+    const currentPath = window.location.pathname.split('/').pop() || '';
+    const isActive = group.links.some(l => currentPath === l.href);
+    return (
+        <div className="relative" ref={ref}>
+            <button onClick={() => setOpen(o => !o)}
+                    className={`text-sm font-medium flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors ${isActive ? 'text-foreground font-semibold' : 'text-muted-foreground'}`}>
+                <Icon name={group.icon} size={14} /> {group.label} <Icon name="chevron-down" size={12} className="opacity-50" />
+            </button>
+            {open && (
+                <div className="absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 min-w-[210px]">
+                    {group.links.map((link, i) => (
+                        <a key={i} href={link.href}
+                           className={`flex items-center gap-2 px-3 py-2 text-sm transition-colors ${currentPath === link.href ? 'text-foreground font-semibold bg-accent/50' : 'text-muted-foreground hover:text-foreground hover:bg-accent'}`}>
+                            <Icon name={link.icon} size={16} /> {link.label}
+                        </a>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+function MobileNavMenu({ open, onClose }) {
+    if (!open) return null;
+    const currentPath = window.location.pathname.split('/').pop() || '';
+    return (
+        <div className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden" onClick={onClose}>
+            <div className="flex h-14 items-center justify-between px-6 border-b border-border" onClick={e => e.stopPropagation()}>
+                <span className="font-display font-bold text-lg">TLCTC</span>
+                <button onClick={onClose} className="app-btn h-10 w-10 p-0 rounded-full hover:bg-secondary"><Icon name="x" size={24} /></button>
+            </div>
+            <nav className="flex flex-col p-8 gap-2 text-base font-medium" onClick={e => e.stopPropagation()}>
+                {NAV_GROUPS.map(group => (
+                    <React.Fragment key={group.id}>
+                        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4 first:mt-0 mb-1 flex items-center gap-1.5">
+                            <Icon name={group.icon} size={14} /> {group.label}
+                        </span>
+                        {group.links.map((link, i) => (
+                            <a key={i} href={link.href} className={`pl-5 py-1 ${currentPath === link.href ? 'text-foreground font-semibold' : 'text-muted-foreground hover:text-foreground'}`}>{link.label}</a>
+                        ))}
+                    </React.Fragment>
+                ))}
+                <div className="border-t border-border mt-4 pt-4 flex flex-col gap-2">
+                    <a href="/" className="text-muted-foreground hover:text-foreground flex items-center gap-1.5">TLCTC.net <Icon name="external-link" size={14} /></a>
+                    <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground flex items-center gap-1.5"><Icon name="github" size={16} /> GitHub</a>
+                </div>
+            </nav>
+        </div>
+    );
+}
+
+function StarterDropdown({ onLoad }) {
+    const [open, setOpen] = useState(false);
+    const ref = useOutsideClose(open, setOpen);
+    return (
+        <div className="relative" ref={ref}>
+            <button onClick={() => setOpen(o => !o)} className="app-btn app-btn-outline app-btn-sm gap-1" title="Load a starter template (replaces current data)">
+                <Icon name="rocket" size={13} /> Templates <Icon name="chevron-down" size={12} />
+            </button>
+            {open && (
+                <div className="absolute left-0 top-full mt-1 bg-card border border-border rounded-lg shadow-xl z-50 py-1 w-80">
+                    <div className="px-2 py-1 text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">Starter Templates</div>
+                    {STARTERS.map(t => (
+                        <button key={t.id} onClick={() => { setOpen(false); onLoad(t); }} className="w-full text-left px-3 py-2 hover:bg-accent">
+                            <div className="text-sm font-medium">{t.label}</div>
+                            <div className="text-[11px] text-muted-foreground">{t.desc}</div>
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATRIX
+// ═══════════════════════════════════════════════════════════════════
+
+function Matrix({ state, selected, onSelect, darkMode }) {
+    return (
+        <div className="overflow-x-auto">
+            <table className="border-separate" style={{ borderSpacing: 4 }}>
+                <thead>
+                    <tr>
+                        <th className="text-left text-xs text-muted-foreground font-semibold px-2 align-bottom">Data Risk Event</th>
+                        {FUNCTIONS.map(f => (
+                            <th key={f.id} className="text-center px-1 align-bottom" title={f.objective.replace('X', '…')}>
+                                <div className="text-xs font-bold tracking-wide" style={{ color: f.color }}>{f.name}</div>
+                                <div className="text-[10px] text-muted-foreground font-mono">{f.id}</div>
+                            </th>
+                        ))}
+                        <th className="text-center text-[10px] text-muted-foreground font-semibold px-1 align-bottom">ROW</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {DRE_ROWS.map(r => {
+                        const rowVals = FUNCTIONS.map(f => cellMaturity(state.cells[cellKey(r.code, f.id)]));
+                        const rowMin = rowVals.some(v => v === null) ? null : Math.min(...rowVals);
+                        return (
+                            <tr key={r.code}>
+                                <td className="pr-2" title={r.definition}>
+                                    <div className="flex items-center gap-2 min-w-[190px]">
+                                        <span className="font-mono text-xs font-bold rounded px-1.5 py-0.5 text-white" style={{ backgroundColor: r.color }}>{r.code}</span>
+                                        <div className="leading-tight">
+                                            <div className="text-sm font-semibold">{r.name}</div>
+                                            <div className="text-[10px] text-muted-foreground">{r.parent ? `${r.parent} → ${r.code} · ` : ''}{r.property}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                {FUNCTIONS.map(f => {
+                                    const k = cellKey(r.code, f.id);
+                                    const list = state.cells[k];
+                                    const v = cellMaturity(list);
+                                    const ml = v === null ? null : MATURITY_LEVELS[v];
+                                    const below = v !== null && v < state.targetMaturity;
+                                    return (
+                                        <td key={f.id}>
+                                            <button onClick={() => onSelect(k)}
+                                                    className={`matrix-cell w-[92px] h-[58px] rounded-lg flex flex-col items-center justify-center border ${selected === k ? 'active-cell' : ''}`}
+                                                    style={{ backgroundColor: ml ? ml.color : (darkMode ? '#334155' : '#e2e8f0'), borderColor: below ? '#ef4444' : 'transparent' }}
+                                                    title={`${r.code} × ${f.name}: ${list.length} control(s)${v !== null ? `, best maturity ${v} (${ml.label})` : ' — gap'}`}>
+                                                <span className={`text-lg font-bold leading-none ${ml ? 'text-white' : 'text-muted-foreground'}`}>{v === null ? '—' : v}</span>
+                                                <span className={`text-[10px] mt-1 ${ml ? 'text-white/90' : 'text-muted-foreground'}`}>{list.length} ctrl</span>
+                                            </button>
+                                        </td>
+                                    );
+                                })}
+                                <td className="text-center">
+                                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold border"
+                                          style={{ borderColor: rowMin === null ? '#94a3b8' : MATURITY_LEVELS[rowMin].color, color: rowMin === null ? '#94a3b8' : MATURITY_LEVELS[rowMin].color }}
+                                          title="Row minimum: the weakest function for this DRE">{rowMin === null ? '—' : rowMin}</span>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DETAIL PANEL
+// ═══════════════════════════════════════════════════════════════════
+
+function ControlEditor({ control, onChange, onDelete }) {
+    const set = (field, value) => onChange({ ...control, [field]: value });
+    return (
+        <div className="border border-border rounded-lg p-3 space-y-2 bg-background/50">
+            <div className="flex gap-2 items-start">
+                <input className="input-ctrl font-semibold" value={control.name} placeholder="Control name" onChange={e => set('name', e.target.value)} />
+                <button onClick={onDelete} className="app-btn app-btn-outline app-btn-sm !text-red-600 dark:!text-red-400" title="Remove control"><Icon name="trash-2" size={14} /></button>
+            </div>
+            <textarea className="input-ctrl text-xs" rows={2} value={control.description} placeholder="What it does at the data layer" onChange={e => set('description', e.target.value)} />
+            <div className="grid grid-cols-2 gap-2">
+                <label className="text-[11px] text-muted-foreground">Maturity
+                    <select className="input-ctrl py-1 mt-0.5" value={control.maturity} onChange={e => set('maturity', Number(e.target.value))}>
+                        {MATURITY_LEVELS.map(m => <option key={m.value} value={m.value}>{m.value} — {m.label}</option>)}
+                    </select>
+                </label>
+                <label className="text-[11px] text-muted-foreground">Owner
+                    <input className="input-ctrl py-1 mt-0.5" value={control.owner} placeholder="Name or role" onChange={e => set('owner', e.target.value)} />
+                </label>
+                <label className="text-[11px] text-muted-foreground">Scope
+                    <select className="input-ctrl py-1 mt-0.5" value={control.scope} onChange={e => set('scope', e.target.value)}>
+                        <option value="local">Local — one system or data store</option>
+                        <option value="umbrella">Umbrella — enterprise-wide</option>
+                    </select>
+                </label>
+                <label className="text-[11px] text-muted-foreground">Kind
+                    <select className="input-ctrl py-1 mt-0.5" value={control.kind} onChange={e => set('kind', e.target.value)}>
+                        <option value="tech">Technical</option>
+                        <option value="org">Organisational</option>
+                    </select>
+                </label>
+            </div>
+            {control.linkMore && <a href={control.linkMore} target="_blank" rel="noopener noreferrer" className="text-[11px] text-primary underline">Reference</a>}
+        </div>
+    );
+}
+
+function DetailPanel({ cell, state, onUpdate, onClose }) {
+    const [code, fn] = cell.split('-');
+    const row = DRE_ROWS.find(r => r.code === code);
+    const func = FUNCTIONS.find(f => f.id === fn);
+    const list = state.cells[cell];
+    const update = (next) => onUpdate(cell, next);
+    return (
+        <aside className="w-full lg:w-[420px] flex-shrink-0 card p-4 space-y-3 self-start lg:sticky lg:top-20 max-h-[calc(100vh-6rem)] overflow-y-auto">
+            <div className="flex items-start justify-between gap-2">
+                <div>
+                    <div className="text-xs font-bold tracking-wide" style={{ color: func.color }}>{func.name}</div>
+                    <h2 className="font-display text-lg font-bold leading-tight">
+                        <span className="font-mono text-sm rounded px-1.5 py-0.5 text-white mr-1.5 align-middle" style={{ backgroundColor: row.color }}>{row.code}</span>{row.name}
+                    </h2>
+                    <div className="text-sm text-muted-foreground mt-1">{func.objective.replace('X', row.code)}</div>
+                </div>
+                <button onClick={onClose} className="app-btn h-8 w-8 p-0 rounded-full hover:bg-secondary" title="Close"><Icon name="x" size={18} /></button>
+            </div>
+            <p className="text-xs text-muted-foreground border-l-2 pl-2" style={{ borderColor: row.color }}>{row.definition}</p>
+            <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold">{list.length} control{list.length === 1 ? '' : 's'}</span>
+                <button onClick={() => update([...list, { id: newId(), name: 'New control', description: '', owner: '', kind: 'tech', scope: 'local', maturity: 0, linkMore: '' }])}
+                        className="app-btn app-btn-primary app-btn-sm"><Icon name="plus" size={14} /> Add control</button>
+            </div>
+            {list.length === 0 && <div className="text-sm text-muted-foreground italic">No control yet — this cell is a gap.</div>}
+            {list.map((c, i) => (
+                <ControlEditor key={c.id} control={c}
+                               onChange={(nc) => update(list.map((x, j) => (j === i ? nc : x)))}
+                               onDelete={() => update(list.filter((_, j) => j !== i))} />
+            ))}
+        </aside>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// APP
+// ═══════════════════════════════════════════════════════════════════
+
+function App() {
+    const [state, setState] = useState(loadState);
+    const [selected, setSelected] = useState(null);
+    const [mobileMenu, setMobileMenu] = useState(false);
+    const [disclaimerDismissed, setDisclaimerDismissed] = useState(() => { try { return localStorage.getItem('tlctc-dismiss-disclaimer') === '1'; } catch (e) { return false; } });
+    const [darkMode, setDarkMode] = useState(() => { try { return localStorage.getItem('tlctc-cm-dark') === 'true'; } catch (e) { return false; } });
+    const fileRef = useRef(null);
+
+    useEffect(() => { saveState(state); }, [state]);
+    useEffect(() => {
+        document.documentElement.classList.toggle('dark', darkMode);
+        try { localStorage.setItem('tlctc-cm-dark', darkMode); } catch (e) { /* ignore */ }
+    }, [darkMode]);
+
+    const stats = useMemo(() => {
+        const keys = Object.keys(state.cells);
+        const vals = keys.map(k => cellMaturity(state.cells[k]));
+        const covered = vals.filter(v => v !== null).length;
+        const controls = keys.reduce((n, k) => n + state.cells[k].length, 0);
+        const scored = vals.filter(v => v !== null);
+        const belowTarget = scored.filter(v => v < state.targetMaturity).length;
+        return { total: keys.length, covered, gaps: keys.length - covered, controls, belowTarget,
+                 avg: scored.length ? (scored.reduce((a, b) => a + b, 0) / scored.length).toFixed(1) : '—' };
+    }, [state]);
+
+    const updateCell = (k, list) => setState(s => ({ ...s, cells: { ...s.cells, [k]: list } }));
+
+    const loadStarter = async (t) => {
+        if (!confirm('Load starter template? This will replace your current data.')) return;
+        if (!t.file) { setState(emptyState()); setSelected(null); return; }
+        try {
+            const resp = await fetch(t.file);
+            if (!resp.ok) throw new Error('Could not load ' + t.file);
+            setState(normalise(await resp.json())); setSelected(null);
+        } catch (e) { alert('Failed to load starter data: ' + e.message); }
+    };
+
+    const exportJSON = () => {
+        const blob = new Blob([JSON.stringify({ ...state, exportDate: new Date().toISOString() }, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `tlctc-dre-matrix-${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+    };
+
+    const importJSON = (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            try { setState(normalise(JSON.parse(reader.result))); setSelected(null); }
+            catch (err) { alert('Import failed: ' + err.message); }
+        };
+        reader.readAsText(f);
+        e.target.value = '';
+    };
+
+    const reset = () => { if (confirm('Clear all data and start from scratch?')) { setState(emptyState()); setSelected(null); } };
+
+    return (
+        <div className="flex flex-col min-h-screen">
+            <header className="glass-header px-4 sm:px-6 h-14 flex items-center justify-between flex-shrink-0 no-print">
+                <a href="/index.html" className="flex items-center gap-2 group">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform">
+                        <img src="/images/logo-small.png" alt="Logo" className="h-full w-full object-contain p-1"
+                             onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }} />
+                        <span style={{ display: 'none' }}><Icon name="shield" size={20} /></span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="font-display font-bold text-lg leading-tight">TLCTC</span>
+                        <span className="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
+                    </div>
+                </a>
+                <nav className="hidden md:flex items-center gap-1">
+                    {NAV_GROUPS.map(g => <NavDropdown key={g.id} group={g} />)}
+                    <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <Icon name="external-link" size={12} /></a>
+                    <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><Icon name="github" size={16} /></a>
+                </nav>
+                <div className="flex items-center gap-2">
+                    <button onClick={exportJSON} className="app-btn app-btn-outline app-btn-sm gap-1" title="Export JSON"><Icon name="download" size={14} /> <span className="hidden sm:inline">Export</span></button>
+                    <button onClick={() => fileRef.current && fileRef.current.click()} className="app-btn app-btn-outline app-btn-sm gap-1" title="Import JSON"><Icon name="upload" size={14} /> <span className="hidden sm:inline">Import</span></button>
+                    <input ref={fileRef} type="file" accept=".json,application/json" className="hidden" onChange={importJSON} />
+                    <button onClick={reset} className="app-btn app-btn-outline app-btn-sm gap-1 !text-red-600 dark:!text-red-400 hover:bg-red-500/10" title="Reset — clear all data"><Icon name="trash-2" size={14} /> <span className="hidden sm:inline">Reset</span></button>
+                    <button onClick={() => setDarkMode(d => !d)} className="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Toggle theme"><Icon name={darkMode ? 'sun' : 'moon'} size={16} /></button>
+                    <button onClick={() => setMobileMenu(true)} className="md:hidden app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Menu"><Icon name="menu" size={18} /></button>
+                </div>
+            </header>
+            <MobileNavMenu open={mobileMenu} onClose={() => setMobileMenu(false)} />
+
+            {!disclaimerDismissed && (
+                <div className="ai-disclaimer no-print">
+                    &#9432; Starter data in this tool is AI-assisted and pending review. It illustrates how data-layer controls sit in the TLCTC model.
+                    <button onClick={() => { setDisclaimerDismissed(true); try { localStorage.setItem('tlctc-dismiss-disclaimer', '1'); } catch (e) { /* ignore */ } }} title="Dismiss">&times;</button>
+                </div>
+            )}
+
+            <main className="flex-1 px-4 sm:px-6 py-5 space-y-4">
+                <div className="card p-4 flex flex-col md:flex-row md:items-center gap-3 shadow-none">
+                    <div className="flex items-start gap-3 flex-1">
+                        <span className="mt-0.5 text-primary"><Icon name="layers" size={20} /></span>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                            <strong className="text-foreground">Data-risk layer.</strong> The <a href="control-matrix.html" className="text-primary underline">Control Matrix</a> holds controls that stop a cluster step before the System Risk Event (10 clusters × 6 functions).
+                            This matrix holds the controls that act <em>after</em> it — keeping a compromised system from becoming a Data Risk Event: disk encryption against disclosure, backups against loss or ransomware, provenance controls against misattribution.
+                            Rows are the five DRE codes, columns the six CSF functions.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+                    <div className="flex items-center gap-2">
+                        <label className="text-muted-foreground font-medium">Organization:</label>
+                        <input type="text" value={state.orgName} onChange={e => setState(s => ({ ...s, orgName: e.target.value }))} className="input-ctrl py-1 px-2 w-56 font-semibold" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <label className="text-muted-foreground font-medium">Target Maturity:</label>
+                        <select value={state.targetMaturity} onChange={e => setState(s => ({ ...s, targetMaturity: Number(e.target.value) }))} className="input-ctrl py-1 px-2 w-auto">
+                            {MATURITY_LEVELS.filter(m => m.value > 0).map(m => <option key={m.value} value={m.value}>{m.value} — {m.label}</option>)}
+                        </select>
+                    </div>
+                    <StarterDropdown onLoad={loadStarter} />
+                    <div className="flex flex-wrap items-center gap-4 ml-auto text-xs">
+                        <span><strong>{stats.covered}/{stats.total}</strong> <span className="text-muted-foreground">cells covered</span></span>
+                        <span><strong>{stats.controls}</strong> <span className="text-muted-foreground">controls</span></span>
+                        <span><strong>{stats.avg}</strong> <span className="text-muted-foreground">avg best maturity</span></span>
+                        <span className={stats.gaps ? 'text-red-600 dark:text-red-400' : ''}><strong>{stats.gaps}</strong> gaps</span>
+                        <span className={stats.belowTarget ? 'text-amber-600 dark:text-amber-400' : ''}><strong>{stats.belowTarget}</strong> below target</span>
+                    </div>
+                </div>
+
+                <div className="flex flex-col lg:flex-row gap-4 lg:items-start">
+                    <div className="card p-4 flex-1 min-w-0 shadow-none">
+                        <div className="flex flex-wrap items-center gap-3 mb-3 text-[11px] text-muted-foreground">
+                            <span className="font-medium">Best control maturity:</span>
+                            {MATURITY_LEVELS.map(m => <span key={m.value} className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: m.color }} />{m.value} {m.label}</span>)}
+                            <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-sm bg-slate-300 dark:bg-slate-600" />— no control (gap)</span>
+                            <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-sm border-2 border-red-500" />below target</span>
+                        </div>
+                        <Matrix state={state} selected={selected} onSelect={setSelected} darkMode={darkMode} />
+                        <p className="text-[11px] text-muted-foreground mt-3">Hover a row for the DRE definition (TLCTC v2.6 dictionary). A cell shows the maturity of its best control; the row badge shows the weakest function.</p>
+                    </div>
+                    {selected && <DetailPanel cell={selected} state={state} onUpdate={updateCell} onClose={() => setSelected(null)} />}
+                </div>
+            </main>
+
+            <footer className="px-4 sm:px-6 py-3 border-t border-border text-center text-xs text-muted-foreground no-print">
+                TLCTC DRE Control Matrix — 5 Data Risk Event codes × 6 CSF Functions = 30 Control Areas — companion to the <a href="control-matrix.html" className="underline">Control Matrix</a> — Data stored in browser localStorage
+            </footer>
+        </div>
+    );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+<div id="tlctc-storage-notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:hsl(var(--nav-background,222 47% 11%)/0.95);backdrop-filter:blur(8px);border-top:1px solid hsl(var(--nav-border,217 33% 17%));padding:12px 20px;font-size:13px;color:hsl(var(--nav-foreground,210 40% 98%));line-height:1.5;text-align:center;">
+  <span style="margin-right:8px;">&#9432;</span>This is a <strong>demo / proof-of-concept</strong> for the TLCTC framework. All data is stored in your <strong>browser's local storage</strong> only &mdash; nothing is sent to a server. Use the <strong>export function</strong> to save your work if you are using real data.<button onclick="document.getElementById('tlctc-storage-notice').remove();try{localStorage.setItem('tlctc-dismiss-storage-notice','1')}catch(e){}" style="background:none;border:none;cursor:pointer;color:hsl(var(--nav-muted-foreground,215 20% 65%));font-size:18px;margin-left:12px;vertical-align:middle;opacity:0.7;" title="Dismiss">&times;</button>
+</div>
+<script>try{if(localStorage.getItem('tlctc-dismiss-storage-notice')!=='1'){document.getElementById('tlctc-storage-notice').style.display='block';}}catch(e){}</script>
+</body>
+</html>

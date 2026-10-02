@@ -490,8 +490,10 @@ function migrateState(st) {
 function Icon({ name, size = 16, className = '' }) {
     const ref = useRef(null);
     useEffect(() => {
-        if (ref.current && lucide?.icons?.[name]) {
-            const [tag, attrs, children] = lucide.icons[name];
+        // lucide 0.469 keys icons PascalCase ("Database"); accept the kebab-case names used here
+        const node = lucide?.icons?.[name] || lucide?.icons?.[name.replace(/(^|-)([a-z0-9])/g, (m, d, c) => c.toUpperCase())];
+        if (ref.current && node) {
+            const [tag, attrs, children] = node;
             const svg = document.createElementNS('http://www.w3.org/2000/svg', tag);
             Object.entries({ ...attrs, width: size, height: size, class: className }).forEach(([k, v]) => svg.setAttribute(k, v));
             children.forEach(([cTag, cAttrs]) => {
@@ -563,6 +565,7 @@ const NAV_GROUPS = [
         { href: 'radar-tlctc-app.html', label: 'Threat Radar', icon: 'radar' },
         { href: 'tech-enablers-radar.html', label: 'Tech Enablers Radar', icon: 'cpu' },
         { href: 'control-matrix.html', label: 'Control Matrix', icon: 'grid-3x3' },
+        { href: 'dre-matrix.html', label: 'DRE Matrix', icon: 'database' },
         { href: 'cbp-app.html', label: 'CBP', icon: 'building-2' },
     ]},
 ];

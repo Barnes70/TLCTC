@@ -1,0 +1,485 @@
+{
+  "version": "1.0.0",
+  "tool": "TLCTC DRE Matrix",
+  "exportDate": "2026-10-01T00:00:00.000Z",
+  "orgName": "CIS Controls v8.1.2 — data-layer Safeguards",
+  "targetMaturity": 3,
+  "cells": {
+    "C-GV": [
+      {
+        "id": "cis-3.1-C",
+        "name": "CIS 3.1 — Data management process",
+        "description": "CIS Control 3, IG1, Data. TLCTC: Data governance: enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "C-ID": [
+      {
+        "id": "cis-3.2-C",
+        "name": "CIS 3.2 — Data inventory",
+        "description": "CIS Control 3, IG1, Data. TLCTC: The data at stake in any Data Risk Event; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.7-C",
+        "name": "CIS 3.7 — Data classification scheme",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Sensitivity labels steer the controls of every DRE row; enabler.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.8-C",
+        "name": "CIS 3.8 — Data flow documentation",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Shows where data travels, providers included; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "C-PR": [
+      {
+        "id": "cis-3.4-C",
+        "name": "CIS 3.4 — Data retention limits",
+        "description": "CIS Control 3, IG1, Data. TLCTC: Data that is no longer kept cannot be disclosed after a compromise: shrinks the [DRE: C].",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.5-C",
+        "name": "CIS 3.5 — Secure data disposal",
+        "description": "CIS Control 3, IG1, Data. TLCTC: Discarded media can be recovered by whoever gets hold of them; disposal keeps that from becoming a [DRE: C].",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.6-C",
+        "name": "CIS 3.6 — Disk encryption on end-user devices",
+        "description": "CIS Control 3, IG1, Data, hardening. TLCTC: Acts after the System Risk Event (e.g. a stolen device, #8): keeps it from becoming a [DRE: C] (owner ruling 2026-10-01).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.9-C",
+        "name": "CIS 3.9 — Encryption of removable media",
+        "description": "CIS Control 3, IG2, Data, hardening. TLCTC: Acts after the System Risk Event (a lost or taken medium): keeps it from becoming a [DRE: C].",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.11-C",
+        "name": "CIS 3.11 — Server-side encryption of stored sensitive data",
+        "description": "CIS Control 3, IG2, Data, hardening. TLCTC: Storage-layer encryption is transparent to the running system and only helps once media leave it: [DRE: C] protection.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.13-C",
+        "name": "CIS 3.13 — Data loss prevention tooling",
+        "description": "CIS Control 3, IG3, Data. TLCTC: Stops sensitive data leaving, whichever cluster put it in motion: [DRE: C] protection.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-4.11-C",
+        "name": "CIS 4.11 — Remote wipe of portable devices",
+        "description": "CIS Control 4, IG2, Data. TLCTC: Removes enterprise data from a lost or stolen device before the System Risk Event becomes a [DRE: C].",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.3-C",
+        "name": "CIS 11.3 — Protect backup data like the original",
+        "description": "CIS Control 11, IG1, Data, hardening. TLCTC: Backup copies are data too: keeps them from being disclosed (C) or altered (Ii).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-14.4-C",
+        "name": "CIS 14.4 — Data handling training",
+        "description": "CIS Control 14, IG1, Users. TLCTC: People storing, sending and destroying sensitive data correctly limit the [DRE: C].",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "C-DE": [
+      {
+        "id": "cis-3.14-C",
+        "name": "CIS 3.14 — Log access to sensitive data",
+        "description": "CIS Control 3, IG3, Data, hardening. TLCTC: Records who read sensitive data: detects the [DRE: C] itself.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "C-RS": [],
+    "C-RC": [],
+    "Ii-GV": [
+      {
+        "id": "cis-3.1-Ii",
+        "name": "CIS 3.1 — Data management process",
+        "description": "CIS Control 3, IG1, Data. TLCTC: Data governance: enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.1-Ii",
+        "name": "CIS 11.1 — Data recovery process",
+        "description": "CIS Control 11, IG1, Documentation. TLCTC: Recovery governance: restores data that was altered (Ii), lost (Av) or made unusable (Ac).",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "Ii-ID": [
+      {
+        "id": "cis-3.2-Ii",
+        "name": "CIS 3.2 — Data inventory",
+        "description": "CIS Control 3, IG1, Data. TLCTC: The data at stake in any Data Risk Event; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.7-Ii",
+        "name": "CIS 3.7 — Data classification scheme",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Sensitivity labels steer the controls of every DRE row; enabler.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.8-Ii",
+        "name": "CIS 3.8 — Data flow documentation",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Shows where data travels, providers included; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "Ii-PR": [
+      {
+        "id": "cis-11.3-Ii",
+        "name": "CIS 11.3 — Protect backup data like the original",
+        "description": "CIS Control 11, IG1, Data, hardening. TLCTC: Backup copies are data too: keeps them from being disclosed (C) or altered (Ii).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "Ii-DE": [],
+    "Ii-RS": [],
+    "Ii-RC": [
+      {
+        "id": "cis-11.2-Ii",
+        "name": "CIS 11.2 — Automated backups",
+        "description": "CIS Control 11, IG1, Data. TLCTC: Backups restore altered (Ii), lost (Av) and unusable (Ac) data; they cannot repair misattribution (If).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.4-Ii",
+        "name": "CIS 11.4 — Isolated copy of recovery data",
+        "description": "CIS Control 11, IG1, Data. TLCTC: An isolated copy survives the compromise that altered (Ii), deleted (Av) or locked (Ac) the primary data.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.5-Ii",
+        "name": "CIS 11.5 — Test restores",
+        "description": "CIS Control 11, IG2, Data. TLCTC: Proves that altered (Ii), lost (Av) or unusable (Ac) data can actually be restored.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "If-GV": [
+      {
+        "id": "cis-3.1-If",
+        "name": "CIS 3.1 — Data management process",
+        "description": "CIS Control 3, IG1, Data. TLCTC: Data governance: enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "If-ID": [
+      {
+        "id": "cis-3.2-If",
+        "name": "CIS 3.2 — Data inventory",
+        "description": "CIS Control 3, IG1, Data. TLCTC: The data at stake in any Data Risk Event; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.7-If",
+        "name": "CIS 3.7 — Data classification scheme",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Sensitivity labels steer the controls of every DRE row; enabler.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.8-If",
+        "name": "CIS 3.8 — Data flow documentation",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Shows where data travels, providers included; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "If-PR": [],
+    "If-DE": [],
+    "If-RS": [],
+    "If-RC": [],
+    "Av-GV": [
+      {
+        "id": "cis-3.1-Av",
+        "name": "CIS 3.1 — Data management process",
+        "description": "CIS Control 3, IG1, Data. TLCTC: Data governance: enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.1-Av",
+        "name": "CIS 11.1 — Data recovery process",
+        "description": "CIS Control 11, IG1, Documentation. TLCTC: Recovery governance: restores data that was altered (Ii), lost (Av) or made unusable (Ac).",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "Av-ID": [
+      {
+        "id": "cis-3.2-Av",
+        "name": "CIS 3.2 — Data inventory",
+        "description": "CIS Control 3, IG1, Data. TLCTC: The data at stake in any Data Risk Event; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.7-Av",
+        "name": "CIS 3.7 — Data classification scheme",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Sensitivity labels steer the controls of every DRE row; enabler.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.8-Av",
+        "name": "CIS 3.8 — Data flow documentation",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Shows where data travels, providers included; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "Av-PR": [],
+    "Av-DE": [],
+    "Av-RS": [],
+    "Av-RC": [
+      {
+        "id": "cis-11.2-Av",
+        "name": "CIS 11.2 — Automated backups",
+        "description": "CIS Control 11, IG1, Data. TLCTC: Backups restore altered (Ii), lost (Av) and unusable (Ac) data; they cannot repair misattribution (If).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.4-Av",
+        "name": "CIS 11.4 — Isolated copy of recovery data",
+        "description": "CIS Control 11, IG1, Data. TLCTC: An isolated copy survives the compromise that altered (Ii), deleted (Av) or locked (Ac) the primary data.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.5-Av",
+        "name": "CIS 11.5 — Test restores",
+        "description": "CIS Control 11, IG2, Data. TLCTC: Proves that altered (Ii), lost (Av) or unusable (Ac) data can actually be restored.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "Ac-GV": [
+      {
+        "id": "cis-3.1-Ac",
+        "name": "CIS 3.1 — Data management process",
+        "description": "CIS Control 3, IG1, Data. TLCTC: Data governance: enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.1-Ac",
+        "name": "CIS 11.1 — Data recovery process",
+        "description": "CIS Control 11, IG1, Documentation. TLCTC: Recovery governance: restores data that was altered (Ii), lost (Av) or made unusable (Ac).",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "Ac-ID": [
+      {
+        "id": "cis-3.2-Ac",
+        "name": "CIS 3.2 — Data inventory",
+        "description": "CIS Control 3, IG1, Data. TLCTC: The data at stake in any Data Risk Event; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.7-Ac",
+        "name": "CIS 3.7 — Data classification scheme",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Sensitivity labels steer the controls of every DRE row; enabler.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-3.8-Ac",
+        "name": "CIS 3.8 — Data flow documentation",
+        "description": "CIS Control 3, IG2, Data. TLCTC: Shows where data travels, providers included; enabler for every DRE row.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ],
+    "Ac-PR": [],
+    "Ac-DE": [],
+    "Ac-RS": [],
+    "Ac-RC": [
+      {
+        "id": "cis-11.2-Ac",
+        "name": "CIS 11.2 — Automated backups",
+        "description": "CIS Control 11, IG1, Data. TLCTC: Backups restore altered (Ii), lost (Av) and unusable (Ac) data; they cannot repair misattribution (If).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.4-Ac",
+        "name": "CIS 11.4 — Isolated copy of recovery data",
+        "description": "CIS Control 11, IG1, Data. TLCTC: An isolated copy survives the compromise that altered (Ii), deleted (Av) or locked (Ac) the primary data.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      },
+      {
+        "id": "cis-11.5-Ac",
+        "name": "CIS 11.5 — Test restores",
+        "description": "CIS Control 11, IG2, Data. TLCTC: Proves that altered (Ii), lost (Av) or unusable (Ac) data can actually be restored.",
+        "kind": "org",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://www.cisecurity.org/controls/v8-1"
+      }
+    ]
+  }
+}

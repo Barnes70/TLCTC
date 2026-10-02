@@ -46,6 +46,11 @@ for (const c of Object.values(dict.clusters)) {
     if (typeof c[field] === 'string') (CANON[field] = CANON[field] || new Set()).add(c[field]);
   }
 }
+// Data Risk Event definitions are dictionary-owned too (data_risk_events.codes); a tool that
+// states one under a `definition` key (the DRE Matrix) must quote it verbatim as well.
+for (const d of (dict.data_risk_events && dict.data_risk_events.codes) || []) {
+  if (typeof d.definition === 'string') CANON.definition.add(d.definition);
+}
 const CLUSTER_NAMES = Object.entries(dict.clusters).map(([id, c]) => ({ id, name: c.name }));
 
 // Wording retired by an erratum. Checked only on a line that carries a cluster's
