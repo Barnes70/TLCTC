@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1650 900" role="img" aria-labelledby="cbtTitle" style="font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <title id="cbtTitle">The Cyber Bow-Tie: ten threat clusters on the cause side, System Risk Events at the centre, Data Risk Events and Business Risk Events on the consequence side</title>
+  <!-- Landing-page edition of tlctc-cyber-bow-tie.svg (the papers keep the original). Colours resolve
+       through the tlctc.net theme tokens so the figure follows light/dark mode; fallbacks render the
+       light edition standalone. Red marks the business-risk side, as in the original. -->
+  <style>
+    .cbt { color: hsl(var(--foreground, 240 10% 3.9%)); --cbt-red: #e5484d; }
+    .dark .cbt { --cbt-red: #ff5a5f; }
+    .cbt-head { font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif; font-weight: 700; fill: hsl(var(--foreground, 240 10% 3.9%)); letter-spacing: 0.01em; }
+    .cbt-kick { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 600; letter-spacing: 0.16em; fill: hsl(var(--muted-foreground, 240 3.8% 46.1%)); }
+    .cbt-lane { fill: currentColor; fill-opacity: 0.025; stroke: currentColor; stroke-opacity: 0.14; stroke-width: 1; stroke-dasharray: 6 6; }
+    .cbt-wire { fill: none; stroke: currentColor; stroke-opacity: 0.32; stroke-width: 1.3; }
+    .cbt-wire-red { fill: none; stroke: var(--cbt-red); stroke-width: 1.6; }
+    .cbt-arrow { fill: currentColor; fill-opacity: 0.45; }
+    .cbt-arrow-red { fill: var(--cbt-red); }
+    .cbt-node { fill: hsl(var(--background, 0 0% 100%)); stroke: currentColor; stroke-opacity: 0.4; stroke-width: 1.6; }
+    .cbt-node-strong { fill: hsl(var(--background, 0 0% 100%)); stroke: currentColor; stroke-opacity: 0.7; stroke-width: 2; }
+    .cbt-chip { fill: hsl(var(--background, 0 0% 100%)); stroke: currentColor; stroke-opacity: 0.3; stroke-width: 1; }
+    .cbt-num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 600; fill: hsl(var(--muted-foreground, 240 3.8% 46.1%)); }
+    .cbt-title { font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif; font-weight: 700; fill: hsl(var(--foreground, 240 10% 3.9%)); }
+    .cbt-text { fill: hsl(var(--foreground, 240 10% 3.9%)); }
+    .cbt-mute { fill: hsl(var(--muted-foreground, 240 3.8% 46.1%)); }
+    .cbt-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; fill: hsl(var(--muted-foreground, 240 3.8% 46.1%)); letter-spacing: 0.02em; }
+    .cbt-bre { fill: var(--cbt-red); fill-opacity: 0.07; stroke: var(--cbt-red); stroke-width: 1.8; }
+    .cbt-bre-title { font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif; font-weight: 700; fill: var(--cbt-red); }
+    .cbt-conseq { fill: hsl(var(--background, 0 0% 100%)); stroke: var(--cbt-red); stroke-opacity: 0.45; stroke-width: 1; }
+    .cbt-tag { fill: hsl(var(--background, 0 0% 100%)); stroke: currentColor; stroke-opacity: 0.18; stroke-width: 1; }
+    .cbt-tag-text { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 600; letter-spacing: 0.12em; fill: hsl(var(--muted-foreground, 240 3.8% 46.1%)); }
+    .cbt-react { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 600; letter-spacing: 0.14em; fill: hsl(var(--muted-foreground, 240 3.8% 46.1%)); }
+    .cbt-react-red { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 600; letter-spacing: 0.14em; fill: var(--cbt-red); }
+  </style>
+  <g class="cbt">
+  <defs>
+    <marker id="cbtArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon class="cbt-arrow" points="0 0, 10 3.5, 0 7"/></marker>
+    <marker id="cbtArrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon class="cbt-arrow-red" points="0 0, 10 3.5, 0 7"/></marker>
+  </defs>
+    <!-- Lane and column heads -->
+    <rect class="cbt-lane" x="410" y="20" width="700" height="830" rx="14"/>
+    <text class="cbt-head" x="50" y="60" font-size="24">Cyber Threat Clusters</text>
+    <text class="cbt-head" x="430" y="60" font-size="24">IT Risk Events</text>
+    <text class="cbt-head" x="1180" y="60" font-size="24">Business Risk Events</text>
+
+    <!-- Threats → System Risk Event -->
+    <g class="cbt-wire" marker-end="url(#cbtArrow)">
+      <path d="M 250 118 C 330 118, 370 400, 450 400"/>
+      <path d="M 250 178 C 330 178, 370 400, 450 400"/>
+      <path d="M 250 238 C 330 238, 370 400, 450 400"/>
+      <path d="M 250 298 C 330 298, 370 400, 450 400"/>
+      <path d="M 250 358 C 330 358, 370 400, 450 400"/>
+      <path d="M 250 418 C 330 418, 370 400, 450 400"/>
+      <path d="M 250 478 C 330 478, 370 400, 450 400"/>
+      <path d="M 250 538 C 330 538, 370 400, 450 400"/>
+      <path d="M 250 598 C 330 598, 370 400, 450 400"/>
+      <path d="M 250 658 C 330 658, 370 400, 450 400"/>
+    </g>
+    <g transform="translate(350, 259) rotate(54.6)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+    <g transform="translate(350, 319) rotate(39)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+    <g transform="translate(350, 379) rotate(11.8)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+    <g transform="translate(350, 439) rotate(-21.3)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+    <g transform="translate(350, 499) rotate(-44.7)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+
+    <!-- System Risk → Data Risk -->
+    <g class="cbt-wire" marker-end="url(#cbtArrow)">
+      <path d="M 650 400 C 730 400, 770 230, 850 230"/>
+      <path d="M 650 400 C 730 400, 770 430, 850 430"/>
+      <path d="M 650 400 C 730 400, 770 630, 850 630"/>
+    </g>
+    <g transform="translate(750, 315) rotate(-40.4)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+    <g transform="translate(750, 415) rotate(8.5)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+    <g transform="translate(750, 515) rotate(49)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+
+    <!-- Data Risk → Business Risk (the business side is red) -->
+    <g class="cbt-wire-red" marker-end="url(#cbtArrowRed)">
+      <path d="M 1040 230 L 1180 230"/>
+      <path d="M 1040 430 L 1180 430"/>
+      <path d="M 1040 630 L 1180 630"/>
+    </g>
+    <g transform="translate(1110, 230)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+    <g transform="translate(1110, 430)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+    <g transform="translate(1110, 630)">
+      <rect class="cbt-tag" x="-32" y="-9" width="64" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT</text>
+    </g>
+
+    <!-- Business Risk → Consequences -->
+    <g class="cbt-wire" marker-end="url(#cbtArrow)">
+      <path d="M 1390 230 C 1426 230, 1444 175, 1480 175"/>
+      <path d="M 1390 230 C 1426 230, 1444 220, 1480 220"/>
+      <path d="M 1390 230 C 1426 230, 1444 265, 1480 265"/>
+      <path d="M 1390 430 C 1426 430, 1444 375, 1480 375"/>
+      <path d="M 1390 430 C 1426 430, 1444 420, 1480 420"/>
+      <path d="M 1390 430 C 1426 430, 1444 465, 1480 465"/>
+      <path d="M 1390 630 C 1426 630, 1444 575, 1480 575"/>
+      <path d="M 1390 630 C 1426 630, 1444 620, 1480 620"/>
+      <path d="M 1390 630 C 1426 630, 1444 665, 1480 665"/>
+    </g>
+
+    <!-- Lateral movement -->
+    <path class="cbt-wire" d="M 500 460 C 440 510, 440 590, 500 635" marker-end="url(#cbtArrow)"/>
+    <text class="cbt-mute" x="445" y="545" font-size="12" text-anchor="end">Prevent from</text>
+    <text class="cbt-mute" x="445" y="560" font-size="12" text-anchor="end">lateral movement (#1-#10)</text>
+
+    <!-- React loops -->
+    <path class="cbt-wire" d="M 610 460 C 610 520, 490 520, 490 460" marker-end="url(#cbtArrow)"/>
+    <text class="cbt-react" x="550" y="517" font-size="10" text-anchor="middle">REACT</text>
+    <path class="cbt-wire" d="M 1000 660 C 1000 720, 890 720, 890 660" marker-end="url(#cbtArrow)"/>
+    <text class="cbt-react" x="945" y="717" font-size="10" text-anchor="middle">REACT</text>
+    <path class="cbt-wire-red" d="M 1350 670 C 1350 730, 1220 730, 1220 670" marker-end="url(#cbtArrowRed)"/>
+    <text class="cbt-react-red" x="1285" y="727" font-size="10" text-anchor="middle">REACT</text>
+
+    <!-- Online fraud / scam: #9 straight to the business -->
+    <path class="cbt-wire" d="M 250 598 C 450 850, 1000 850, 1180 430" marker-end="url(#cbtArrow)"/>
+    <g transform="translate(722, 766) rotate(-5)">
+      <rect class="cbt-tag" x="-100" y="-9" width="200" height="18" rx="3"/>
+      <text class="cbt-tag-text" x="0" y="3.5" text-anchor="middle" font-size="9">PREVENT (ONLINE FRAUD/SCAM)</text>
+    </g>
+
+    <!-- Nodes (drawn last, above the wires) -->
+    <g transform="translate(30, 100)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#1</tspan><tspan class="cbt-text" font-weight="500" dx="7">Abuse of Functions</tspan></text>
+    </g>
+    <g transform="translate(30, 160)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#2</tspan><tspan class="cbt-text" font-weight="500" dx="7">Exploiting Server</tspan></text>
+    </g>
+    <g transform="translate(30, 220)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#3</tspan><tspan class="cbt-text" font-weight="500" dx="7">Exploiting Client</tspan></text>
+    </g>
+    <g transform="translate(30, 280)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#4</tspan><tspan class="cbt-text" font-weight="500" dx="7">Identity Theft</tspan></text>
+    </g>
+    <g transform="translate(30, 340)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#5</tspan><tspan class="cbt-text" font-weight="500" dx="7">Man in the Middle</tspan></text>
+    </g>
+    <g transform="translate(30, 400)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#6</tspan><tspan class="cbt-text" font-weight="500" dx="7">Flooding Attack</tspan></text>
+    </g>
+    <g transform="translate(30, 460)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#7</tspan><tspan class="cbt-text" font-weight="500" dx="7">Malware</tspan></text>
+    </g>
+    <g transform="translate(30, 520)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#8</tspan><tspan class="cbt-text" font-weight="500" dx="7">Physical Attack</tspan></text>
+    </g>
+    <g transform="translate(30, 580)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#9</tspan><tspan class="cbt-text" font-weight="500" dx="7">Social Engineering</tspan></text>
+    </g>
+    <g transform="translate(30, 640)">
+      <rect class="cbt-node" width="220" height="36" rx="6"/>
+      <text x="14" y="23" font-size="13"><tspan class="cbt-num" font-size="12">#10</tspan><tspan class="cbt-text" font-weight="500" dx="7">Supply Chain Attack</tspan></text>
+    </g>
+    <g transform="translate(450, 340)">
+      <rect class="cbt-node-strong" width="200" height="120" rx="8"/>
+      <text class="cbt-title" x="100" y="28" text-anchor="middle" font-size="15">System Risk Event</text>
+      <text class="cbt-text" x="100" y="49" text-anchor="middle" font-size="12">System Compromise</text>
+      <text class="cbt-text" x="100" y="64" text-anchor="middle" font-size="12">"Loss of Control"</text>
+      <text class="cbt-mono" x="100" y="86" text-anchor="middle" font-size="10.5">Asset: IT system</text>
+    </g>
+    <g transform="translate(470, 640)">
+      <rect class="cbt-node-strong" width="160" height="60" rx="8"/>
+      <text class="cbt-title" x="80" y="26" text-anchor="middle" font-size="14">System Risk Event</text>
+      <text class="cbt-text" x="80" y="46" text-anchor="middle" font-size="12">System Compromise</text>
+    </g>
+    <g transform="translate(850, 200)">
+      <rect class="cbt-node" width="190" height="60" rx="8"/>
+      <text class="cbt-title" x="95" y="26" text-anchor="middle" font-size="14">Data Risk Event</text>
+      <text class="cbt-mute" x="95" y="46" text-anchor="middle" font-size="11.5">Loss of Confidentiality</text>
+    </g>
+    <g transform="translate(850, 400)">
+      <rect class="cbt-node" width="190" height="60" rx="8"/>
+      <text class="cbt-title" x="95" y="26" text-anchor="middle" font-size="14">Data Risk Event</text>
+      <text class="cbt-mute" x="95" y="46" text-anchor="middle" font-size="11.5">Loss of Integrity</text>
+    </g>
+    <g transform="translate(850, 600)">
+      <rect class="cbt-node" width="190" height="60" rx="8"/>
+      <text class="cbt-title" x="95" y="26" text-anchor="middle" font-size="14">Data Risk Event</text>
+      <text class="cbt-mute" x="95" y="46" text-anchor="middle" font-size="11.5">Loss of Availability / Accessibility</text>
+    </g>
+    <g transform="translate(1180, 190)">
+      <rect class="cbt-bre" width="210" height="80" rx="8"/>
+      <text class="cbt-bre-title" x="105" y="30" text-anchor="middle" font-size="14">Business Risk Events:</text>
+      <text class="cbt-text" x="105" y="50" text-anchor="middle" font-size="12">Consequences =</text>
+      <text class="cbt-text" x="105" y="65" text-anchor="middle" font-size="12">e.g. Databreach PID</text>
+    </g>
+    <g transform="translate(1180, 390)">
+      <rect class="cbt-bre" width="210" height="80" rx="8"/>
+      <text class="cbt-bre-title" x="105" y="30" text-anchor="middle" font-size="14">Business Risk Events:</text>
+      <text class="cbt-text" x="105" y="50" text-anchor="middle" font-size="12">Consequences =</text>
+      <text class="cbt-text" x="105" y="65" text-anchor="middle" font-size="12">e.g. Money Out</text>
+    </g>
+    <g transform="translate(1180, 590)">
+      <rect class="cbt-bre" width="210" height="80" rx="8"/>
+      <text class="cbt-bre-title" x="105" y="30" text-anchor="middle" font-size="14">Business Risk Events:</text>
+      <text class="cbt-text" x="105" y="50" text-anchor="middle" font-size="12">Consequences =</text>
+      <text class="cbt-text" x="105" y="65" text-anchor="middle" font-size="12">e.g. payment interruption</text>
+    </g>
+    <g transform="translate(1480, 160)">
+      <rect class="cbt-conseq" width="120" height="30" rx="6"/>
+      <text class="cbt-text" x="60" y="20" text-anchor="middle" font-size="12.5" font-weight="500">Consequence 1</text>
+    </g>
+    <g transform="translate(1480, 205)">
+      <rect class="cbt-conseq" width="120" height="30" rx="6"/>
+      <text class="cbt-text" x="60" y="20" text-anchor="middle" font-size="12.5" font-weight="500">Consequence 2</text>
+    </g>
+    <g transform="translate(1480, 250)">
+      <rect class="cbt-conseq" width="120" height="30" rx="6"/>
+      <text class="cbt-text" x="60" y="20" text-anchor="middle" font-size="12.5" font-weight="500">Consequence 3</text>
+    </g>
+    <g transform="translate(1480, 360)">
+      <rect class="cbt-conseq" width="120" height="30" rx="6"/>
+      <text class="cbt-text" x="60" y="20" text-anchor="middle" font-size="12.5" font-weight="500">Consequence 1</text>
+    </g>
+    <g transform="translate(1480, 405)">
+      <rect class="cbt-conseq" width="120" height="30" rx="6"/>
+      <text class="cbt-text" x="60" y="20" text-anchor="middle" font-size="12.5" font-weight="500">Consequence 2</text>
+    </g>
+    <g transform="translate(1480, 450)">
+      <rect class="cbt-conseq" width="120" height="30" rx="6"/>
+      <text class="cbt-text" x="60" y="20" text-anchor="middle" font-size="12.5" font-weight="500">Consequence 3</text>
+    </g>
+    <g transform="translate(1480, 560)">
+      <rect class="cbt-conseq" width="120" height="30" rx="6"/>
+      <text class="cbt-text" x="60" y="20" text-anchor="middle" font-size="12.5" font-weight="500">Consequence 1</text>
+    </g>
+    <g transform="translate(1480, 605)">
+      <rect class="cbt-conseq" width="120" height="30" rx="6"/>
+      <text class="cbt-text" x="60" y="20" text-anchor="middle" font-size="12.5" font-weight="500">Consequence 2</text>
+    </g>
+    <g transform="translate(1480, 650)">
+      <rect class="cbt-conseq" width="120" height="30" rx="6"/>
+      <text class="cbt-text" x="60" y="20" text-anchor="middle" font-size="12.5" font-weight="500">Consequence 3</text>
+    </g>
+  </g>
+</svg>
