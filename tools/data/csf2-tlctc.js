@@ -17,6 +17,7 @@ window.TLCTC_CSF2 = {
   "text_policy": "Function, category and subcategory text is verbatim from CSWP 29 Appendix A (a U.S. Government work).",
   "mapping_date": "2026-09-26",
   "status": "AI-assisted starter guidance; owner review pending. Not a NIST product.",
+  "layers": "System-risk layer: clusters set, placed in the 10 x 6 control matrix. Data-risk layer: clusters null and dre set (C, Ii, If, Av, Ac or \"all\"), placed in the separate DRE matrix (owner ruling 2026-10-01; tools/dre-matrix.html).",
   "clusters_field": "An array of cluster ids = the outcome addresses those rows (Local). \"all\" = cluster-neutral, applies to every row of its function column (Umbrella). \"none\" = outside the threat axis, placed in no cell."
  },
  "functions": [
@@ -441,9 +442,10 @@ window.TLCTC_CSF2 = {
   {
    "id": "ID.AM-07",
    "text": "Inventories of data and corresponding metadata for designated data types are maintained",
-   "clusters": "all",
+   "clusters": null,
+   "dre": "all",
    "kind": "tech",
-   "rationale": "Data inventory; the data at risk in any DRE, cause-neutral."
+   "rationale": "Data inventory: the data at stake in any Data Risk Event; data-layer enabler for every DRE row (as CIS 3.2)."
   },
   {
    "id": "ID.AM-08",
@@ -635,9 +637,10 @@ window.TLCTC_CSF2 = {
   {
    "id": "PR.DS-01",
    "text": "The confidentiality, integrity, and availability of data-at-rest are protected",
-   "clusters": "all",
+   "clusters": null,
+   "dre": "all",
    "kind": "tech",
-   "rationale": "Data-at-rest protection limits the DRE whichever cluster reached the data; consequence side."
+   "rationale": "Data-at-rest protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row."
   },
   {
    "id": "PR.DS-02",
@@ -651,16 +654,22 @@ window.TLCTC_CSF2 = {
   {
    "id": "PR.DS-10",
    "text": "The confidentiality, integrity, and availability of data-in-use are protected",
-   "clusters": "all",
+   "clusters": null,
+   "dre": "all",
    "kind": "tech",
-   "rationale": "Data-in-use protection limits the DRE whichever cluster reached the data; consequence side."
+   "rationale": "Data-in-use protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row."
   },
   {
    "id": "PR.DS-11",
    "text": "Backups of data are created, protected, maintained, and tested",
-   "clusters": "all",
+   "clusters": null,
+   "dre": [
+    "Ii",
+    "Av",
+    "Ac"
+   ],
    "kind": "tech",
-   "rationale": "Backups restore availability after any cluster; consequence side."
+   "rationale": "Backups restore altered (Ii), lost (Av) and unusable (Ac) data; they cannot repair misattribution (If). Data layer, as CIS 11.2."
   },
   {
    "id": "PR.PS-01",
@@ -941,9 +950,14 @@ window.TLCTC_CSF2 = {
   {
    "id": "RC.RP-03",
    "text": "The integrity of backups and other restoration assets is verified before using them for restoration",
-   "clusters": "all",
+   "clusters": null,
+   "dre": [
+    "Ii",
+    "Av",
+    "Ac"
+   ],
    "kind": "tech",
-   "rationale": "Backup integrity verification; consequence side."
+   "rationale": "Verifying backups before restoring keeps altered data from coming back (Ii) and proves lost or unusable data can be restored (Av, Ac)."
   },
   {
    "id": "RC.RP-04",
