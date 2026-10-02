@@ -31,15 +31,15 @@ Like most control standards, the CIS Controls mix two kinds of control without s
 
 89 act on specific clusters (151 Local placements, 43 of them on more than one cluster), 45 are cluster-neutral (inventories, governance, logging, network reach, response and recovery processes) and one is outside the threat axis (14.5: accidental exposure without an attacker).
 
-| Cluster | Local placements (GV·ID·PR / DE·RS·RC) | of which hardening |
+| Cluster | Local placements: prevention / detection-response (judged per Safeguard) | of which hardening |
 |---|---|---|
-| #1 Abuse of Functions | 22 / 6 | 17 |
-| #2 Exploiting Server | 14 / 6 | 3 |
-| #3 Exploiting Client | 15 / 5 | 5 |
-| #4 Identity Theft | 24 / 3 | 16 |
+| #1 Abuse of Functions | 26 / 2 | 17 |
+| #2 Exploiting Server | 18 / 2 | 3 |
+| #3 Exploiting Client | 18 / 2 | 5 |
+| #4 Identity Theft | 26 / 1 | 16 |
 | #5 Man in the Middle | 8 / 0 | 6 |
 | #6 Flooding Attack | 3 / 1 | 1 |
-| #7 Malware | 14 / 8 | 12 |
+| #7 Malware | 16 / 6 | 12 |
 | #8 Physical Attack | 3 / 1 | 3 |
 | #9 Social Engineering | 7 / 0 | 3 |
 | #10 Supply Chain Attack | 10 / 1 | 0 |
@@ -55,18 +55,18 @@ The TLCTC v2.6 dictionary defines the #1 generic vulnerability as *"The inherent
 [`cis-v81-mapping.html`](https://www.tlctc.net/cis-v81-mapping.html) (2026-06-06) published a cell-by-cell mapping of v8.1 (153 Safeguards → 74 cell-pure objectives; 48 enablers, 34 umbrellas). Its per-Safeguard data file was never published and could not be recovered, so this file is a **rebuild**: the 34 Safeguards that page names are kept as published, the rest follow the NIST CSF 2.0 mapping's precedents. Three differences are structural, not disagreements over single rows:
 
 - **Two layers.** June placed data-layer protection in cluster rows (its `#8` prevention count of 8 is reproduced exactly when the five post-`#8` protections — 3.5, 3.6, 3.9, 3.11, 4.11 — are put there). Under the two-matrix ruling they move to the DRE matrix, so the cluster matrix here is smaller (135 Safeguards, 151 placements against June's 143 fragments).
-- **The Bow-Tie side** is judged per Safeguard in June and proxied by the CIS security function here (GV·ID·PR / DE·RS·RC), which explains most of the smaller detection-response column (30 against 44).
+- **The Bow-Tie side** is judged per Safeguard in both (owner decision, 2026-10-02; the matrix column stays the CIS security function). It differs from the CIS function in six cases — 7.7 remediation, 10.1 anti-malware, 10.4 removable-media scanning and the penetration tests 16.13, 18.2, 18.5 stop steps before they succeed. The detection-response column is still far smaller (16 against 44) because the rebuild keeps general detection — audit logging, SIEM, flow logs, alert tuning — cluster-neutral, as Umbrella controls in every row, where June assigned it to clusters.
 - **`#6`:** no Safeguard is written for flooding; both mappings place Safeguards there by their effect on capacity (June 1 / 2, rebuild 3 / 1: 12.2, 13.8, 13.10 / 13.3).
 
 | Cluster | June prevention / detection-response | Rebuild, cluster matrix |
 |---|---|---|
-| #1 | 12 / 8 | 22 / 6 |
-| #2 | 19 / 7 | 14 / 6 |
-| #3 | 9 / 4 | 15 / 5 |
-| #4 | 17 / 4 | 24 / 3 |
+| #1 | 12 / 8 | 26 / 2 |
+| #2 | 19 / 7 | 18 / 2 |
+| #3 | 9 / 4 | 18 / 2 |
+| #4 | 17 / 4 | 26 / 1 |
 | #5 | 5 / 2 | 8 / 0 |
 | #6 | 1 / 2 | 3 / 1 |
-| #7 | 12 / 11 | 14 / 8 |
+| #7 | 12 / 11 | 16 / 6 |
 | #8 | 8 / 1 | 3 / 1 |
 | #9 | 9 / 2 | 7 / 0 |
 | #10 | 7 / 3 | 10 / 1 |
@@ -76,6 +76,7 @@ The TLCTC v2.6 dictionary defines the #1 generic vulnerability as *"The inherent
 | Field | Meaning |
 |---|---|
 | `clusters` | System-risk layer. `["#4"]`, `["#1", "#7"]`, … = Local control in each named row of its function column; `"all"` = cluster-neutral, one shared Umbrella control in all ten rows; `"none"` = outside the threat axis, no cell. `null` on data-layer entries. |
+| `side` | Cluster-acting Safeguards only: Bow-Tie side judged per Safeguard, `P` (keeps the step from succeeding) or `DR` (finds or contains it afterwards). |
 | `dre` | Data-risk layer only. `["C"]`, `["Ii", "Av", "Ac"]`, … = DRE matrix rows; `"all"` = data-layer enabler in all five rows. |
 | `function` | CIS security function, the matrix column (GV/ID/PR/DE/RS/RC). |
 | `asset_class`, `ig` | CIS asset class and lowest implementation group. |
@@ -89,6 +90,7 @@ The TLCTC v2.6 dictionary defines the #1 generic vulnerability as *"The inherent
 | [`cis-v8.1-tlctc-mapping.json`](cis-v8.1-tlctc-mapping.json) | Single source. Hand-formatted, one Safeguard per line, CRLF. Edit as text. |
 | [`cis-v8.1-dre-matrix.json`](cis-v8.1-dre-matrix.json) | Generated DRE matrix (rows C·Ii·If·Av·Ac × six functions → Safeguard ids) |
 | [`../../tools/control-matrix-starter-cis-v8.1.json`](../../tools/control-matrix-starter-cis-v8.1.json) | Generated Control Matrix starter (system-risk layer only) |
+| [`../../tools/dre-matrix-starter-cis-v8.1.json`](../../tools/dre-matrix-starter-cis-v8.1.json) | Generated starter for the [DRE Matrix](../../tools/dre-matrix.html) tool (data-risk layer) |
 | [`tools/extract_skeleton.py`](tools/extract_skeleton.py) | Builds the factual skeleton from the CIS spreadsheet (ids are recovered by position: the release stores them as numbers, so 4.10 reads as 4.1) |
 | [`tools/check_no_cis_text.py`](tools/check_no_cis_text.py) | Fails if a topic or rationale shares six consecutive words with CIS text |
 

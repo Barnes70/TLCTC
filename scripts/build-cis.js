@@ -22,6 +22,8 @@ const ROOT = path.resolve(__dirname, '..');
 const SRC = 'mappings/cis-controls-v8.1/cis-v8.1-tlctc-mapping.json';
 const OUT_STARTER = 'tools/control-matrix-starter-cis-v8.1.json';
 const OUT_DRE = 'mappings/cis-controls-v8.1/cis-v8.1-dre-matrix.json';
+const OUT_DRE_STARTER = 'tools/dre-matrix-starter-cis-v8.1.json';
+const SIDES = ['P', 'DR']; // Bow-Tie side, judged per Safeguard: P = stops the step, DR = finds/contains it afterwards
 const FUNCS = ['GV', 'ID', 'PR', 'DE', 'RS', 'RC'];
 const CLUSTERS = Array.from({ length: 10 }, (_, i) => `#${i + 1}`);
 const KINDS = ['tech', 'org'];
@@ -60,6 +62,7 @@ function validate(m, { draft = false } = {}) {
         if (bad.length) errors.push(`${where}: unknown DRE codes ${bad.join(', ')} (rows are ${DRE.join(', ')})`);
         if (new Set(s.dre).size !== s.dre.length) errors.push(`${where}: duplicate DRE codes`);
       } else if (s.dre !== 'all') errors.push(`${where}: dre must be an array or "all"`);
+      if (s.side !== undefined) errors.push(`${where}: side only on cluster-acting Safeguards`);
       continue;
     }
     if (Array.isArray(s.clusters)) {
@@ -67,7 +70,11 @@ function validate(m, { draft = false } = {}) {
       const bad = s.clusters.filter((c) => !CLUSTERS.includes(c));
       if (bad.length) errors.push(`${where}: unknown clusters ${bad.join(', ')}`);
       if (new Set(s.clusters).size !== s.clusters.length) errors.push(`${where}: duplicate clusters`);
-    } else if (s.clusters !== 'all' && s.clusters !== 'none') errors.push(`${where}: clusters must be an array, "all" or "none"`);
+      if (!SIDES.includes(s.side)) errors.push(`${where}: side must be P or DR`);
+    } else {
+      if (s.clusters !== 'all' && s.clusters !== 'none') errors.push(`${where}: clusters must be an array, "all" or "none"`);
+      if (s.side !== undefined) errors.push(`${where}: side only on cluster-acting Safeguards`);
+    }
     if (s.hardening === true && s.clusters === 'none') errors.push(`${where}: hardening Safeguard cannot be outside the threat axis ("none")`);
   }
   return errors;
@@ -75,7 +82,7 @@ function validate(m, { draft = false } = {}) {
 
 const emptyCde = () => ({ value: null, rationale: '', set_by: '', last_reviewed: '', review_trigger: '' });
 const nameOf = (s) => `CIS ${s.id} — ${s.topic}`;
-const descOf = (s) => `CIS Control ${s.control}, IG${s.ig}, ${s.asset_class}${s.hardening ? ', hardening' : ''}. TLCTC: ${s.rationale}`;
+const descOf = (s) => `CIS Control ${s.control}, IG${s.ig}, ${s.asset_class}${s.hardening ? ', hardening' : ''}${s.side ? `, ${s.side === 'P' ? 'prevention' : 'detection-response'}` : ''}. TLCTC: ${s.rationale}`;
 
 function buildStarter(m) {
   const cells = {};
@@ -114,22 +121,38 @@ function dreMatrix(m) {
   return { rows: DRE, columns: FUNCS, cells };
 }
 
+// Starter for tools/dre-matrix.html: one control per (DRE row, Safeguard); "all" = an umbrella control in every row.
+function buildDreStarter(m) {
+  const cells = {};
+  for (const r of DRE) for (const f of FUNCS) cells[`${r}-${f}`] = [];
+  for (const s of m.safeguards) {
+    if (s.dre === undefined || s.dre === null) continue;
+    for (const r of s.dre === 'all' ? DRE : s.dre) cells[`${r}-${s.function}`].push({
+      id: `cis-${s.id}-${r}`, name: nameOf(s), description: descOf(s), kind: s.kind, maturity: 0, owner: '',
+      scope: s.dre === 'all' ? 'umbrella' : 'local', linkMore: LINK,
+    });
+  }
+  return { version: '1.0.0', tool: 'TLCTC DRE Matrix', exportDate: `${m.meta.mapping_date}T00:00:00.000Z`,
+    orgName: 'CIS Controls v8.1.2 — data-layer Safeguards', targetMaturity: 3, cells };
+}
+
 function stats(m) {
   const byCluster = Object.fromEntries(CLUSTERS.map((c) => [c, 0]));
   const hardeningByCluster = Object.fromEntries(CLUSTERS.map((c) => [c, 0]));
   const byDre = Object.fromEntries(DRE.map((c) => [c, 0]));
+  const bySide = Object.fromEntries(CLUSTERS.map((c) => [c, { P: 0, DR: 0 }]));
   let neutral = 0, none = 0, hardening = 0, dataLayer = 0;
   for (const s of m.safeguards) {
     if (s.hardening === true) hardening++;
     if (s.dre !== undefined && s.dre !== null) { dataLayer++; for (const r of s.dre === 'all' ? DRE : s.dre) byDre[r]++; continue; }
-    if (Array.isArray(s.clusters)) for (const c of s.clusters) { byCluster[c]++; if (s.hardening) hardeningByCluster[c]++; }
+    if (Array.isArray(s.clusters)) for (const c of s.clusters) { byCluster[c]++; if (s.hardening) hardeningByCluster[c]++; if (SIDES.includes(s.side)) bySide[c][s.side]++; }
     else if (s.clusters === 'all') neutral++;
     else if (s.clusters === 'none') none++;
   }
-  return { byCluster, hardeningByCluster, neutral, none, hardening, dataLayer, byDre };
+  return { byCluster, hardeningByCluster, bySide, neutral, none, hardening, dataLayer, byDre };
 }
 
-module.exports = { validate, buildStarter, dreMatrix, stats };
+module.exports = { validate, buildStarter, buildDreStarter, dreMatrix, stats };
 
 if (require.main === module) {
   const draft = process.argv.includes('--draft');
@@ -152,12 +175,13 @@ if (require.main === module) {
   };
   const d = dreMatrix(m);
   const w1 = write(OUT_STARTER, JSON.stringify(buildStarter(m), null, 2) + '\n');
+  const w3 = write(OUT_DRE_STARTER, JSON.stringify(buildDreStarter(m), null, 2) + '\n');
   const w2 = write(OUT_DRE, JSON.stringify({ schema: 'tlctc-cis-v8.1-dre-matrix.v1', generated_from: SRC, ...d }, null, 2) + '\n');
   const s = stats(m);
   console.log(`build-cis: ${m.safeguards.length} safeguards — system-risk layer ${m.safeguards.length - s.dataLayer} (${s.neutral} cluster-neutral, ${s.none} outside the threat axis), data-risk layer ${s.dataLayer}; ${s.hardening} hardening`);
-  for (const c of CLUSTERS) console.log(`  ${c.padEnd(4)} Local ${String(s.byCluster[c]).padStart(3)}  (hardening ${s.hardeningByCluster[c]})`);
+  for (const c of CLUSTERS) console.log(`  ${c.padEnd(4)} Local ${String(s.byCluster[c]).padStart(3)}  P/DR ${s.bySide[c].P}/${s.bySide[c].DR}  (hardening ${s.hardeningByCluster[c]})`);
   const width = Object.fromEntries(FUNCS.map((f) => [f, Math.max(4, ...DRE.map((r) => d.cells[`${r}-${f}`].join(',').length)) + 2]));
   console.log('  DRE   ' + FUNCS.map((f) => f.padEnd(width[f])).join(''));
   for (const r of DRE) console.log('  ' + r.padEnd(5) + ' ' + FUNCS.map((f) => (d.cells[`${r}-${f}`].join(',') || '-').padEnd(width[f])).join(''));
-  console.log(`  ${w1}\n  ${w2}`);
+  console.log(`  ${w1}\n  ${w2}\n  ${w3}`);
 }

@@ -14,7 +14,7 @@
             {
               "id": "cis-4.1-1",
               "name": "CIS 4.1 — Baseline governance for hosts and software",
-              "description": "CIS Control 4, IG1, Documentation, hardening. TLCTC: Governs the configured scope of functionality, the #1 generic vulnerability (CSF PR.PS-01 precedent).",
+              "description": "CIS Control 4, IG1, Documentation, hardening, prevention. TLCTC: Governs the configured scope of functionality, the #1 generic vulnerability (CSF PR.PS-01 precedent).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -46,7 +46,7 @@
             {
               "id": "cis-4.2-1",
               "name": "CIS 4.2 — Baseline governance for network gear",
-              "description": "CIS Control 4, IG1, Documentation, hardening. TLCTC: The same for network infrastructure: configured scope of designed functions (#1).",
+              "description": "CIS Control 4, IG1, Documentation, hardening, prevention. TLCTC: The same for network infrastructure: configured scope of designed functions (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -78,7 +78,7 @@
             {
               "id": "cis-6.1-1",
               "name": "CIS 6.1 — Documented access granting",
-              "description": "CIS Control 6, IG1, Documentation. TLCTC: Defines entitlements, the boundary between designed scope and its abuse (#1, R-SCOPE).",
+              "description": "CIS Control 6, IG1, Documentation, prevention. TLCTC: Defines entitlements, the boundary between designed scope and its abuse (#1, R-SCOPE).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -110,7 +110,7 @@
             {
               "id": "cis-6.8-1",
               "name": "CIS 6.8 — Role-based access definitions and reviews",
-              "description": "CIS Control 6, IG3, Users. TLCTC: Bounds the functions each role may invoke (#1) and what a misused identity reaches (#4) (June umbrella).",
+              "description": "CIS Control 6, IG3, Users, prevention. TLCTC: Bounds the functions each role may invoke (#1) and what a misused identity reaches (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -203,7 +203,7 @@
             {
               "id": "cis-7.5-1",
               "name": "CIS 7.5 — Internal vulnerability scanning",
-              "description": "CIS Control 7, IG2, Software. TLCTC: Finds implementation flaws by role and exploitable configuration (#1; CSF ID.RA-01 precedent).",
+              "description": "CIS Control 7, IG2, Software, prevention. TLCTC: Finds implementation flaws by role and exploitable configuration (#1; CSF ID.RA-01 precedent).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -235,7 +235,7 @@
             {
               "id": "cis-7.6-1",
               "name": "CIS 7.6 — External vulnerability scanning",
-              "description": "CIS Control 7, IG2, Software. TLCTC: Internet-facing assets are mostly server-role: flaws (#2) and exposed configuration (#1).",
+              "description": "CIS Control 7, IG2, Software, prevention. TLCTC: Internet-facing assets are mostly server-role: flaws (#2) and exposed configuration (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -293,7 +293,7 @@
             {
               "id": "cis-2.5-1",
               "name": "CIS 2.5 — Application allowlisting",
-              "description": "CIS Control 2, IG2, Software, hardening. TLCTC: Execution policy: denies foreign code (#7) and narrows which designed programs may run at all (#1) (June umbrella).",
+              "description": "CIS Control 2, IG2, Software, hardening, prevention. TLCTC: Execution policy: denies foreign code (#7) and narrows which designed programs may run at all (#1) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -325,7 +325,7 @@
             {
               "id": "cis-2.6-1",
               "name": "CIS 2.6 — Library load allowlisting",
-              "description": "CIS Control 2, IG2, Software, hardening. TLCTC: Module load policy: blocks injected foreign code (#7) and narrows the loadable function set (#1) (June umbrella).",
+              "description": "CIS Control 2, IG2, Software, hardening, prevention. TLCTC: Module load policy: blocks injected foreign code (#7) and narrows the loadable function set (#1) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -357,7 +357,7 @@
             {
               "id": "cis-2.7-1",
               "name": "CIS 2.7 — Script execution allowlisting",
-              "description": "CIS Control 2, IG3, Software, hardening. TLCTC: Interpreter policy: blocks unapproved scripts (#7) and limits scripting as a designed function (#1) (June umbrella).",
+              "description": "CIS Control 2, IG3, Software, hardening, prevention. TLCTC: Interpreter policy: blocks unapproved scripts (#7) and limits scripting as a designed function (#1) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -389,7 +389,7 @@
             {
               "id": "cis-3.3-1",
               "name": "CIS 3.3 — Need-to-know permissions on data",
-              "description": "CIS Control 3, IG1, Data, hardening. TLCTC: Permission configuration bounds what a granted function reaches (#1) and what a misused identity opens (#4) (June umbrella).",
+              "description": "CIS Control 3, IG1, Data, hardening, prevention. TLCTC: Permission configuration bounds what a granted function reaches (#1) and what a misused identity opens (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -421,7 +421,7 @@
             {
               "id": "cis-4.6-1",
               "name": "CIS 4.6 — Managed configuration and protected admin channels",
-              "description": "CIS Control 4, IG1, Devices, hardening. TLCTC: Configuration under change control (#1) and administration over protected channels (#5).",
+              "description": "CIS Control 4, IG1, Devices, hardening, prevention. TLCTC: Configuration under change control (#1) and administration over protected channels (#5).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -453,7 +453,7 @@
             {
               "id": "cis-4.8-1",
               "name": "CIS 4.8 — Remove or disable unneeded services",
-              "description": "CIS Control 4, IG2, Devices, hardening. TLCTC: Shrinks designed function scope (#1) and removes code whose flaws could be exploited by role (#2/#3).",
+              "description": "CIS Control 4, IG2, Devices, hardening, prevention. TLCTC: Shrinks designed function scope (#1) and removes code whose flaws could be exploited by role (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -485,7 +485,7 @@
             {
               "id": "cis-4.12-1",
               "name": "CIS 4.12 — Separate work profile on mobile devices",
-              "description": "CIS Control 4, IG3, Data, hardening. TLCTC: Partitions enterprise apps and data from personal apps; bounds what cross-app functions can reach (#1).",
+              "description": "CIS Control 4, IG3, Data, hardening, prevention. TLCTC: Partitions enterprise apps and data from personal apps; bounds what cross-app functions can reach (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -517,7 +517,7 @@
             {
               "id": "cis-5.4-1",
               "name": "CIS 5.4 — Dedicated administrator accounts",
-              "description": "CIS Control 5, IG1, Users, hardening. TLCTC: Keeps privileged functions out of daily use (#1) and limits what an everyday credential opens (#4) (June umbrella).",
+              "description": "CIS Control 5, IG1, Users, hardening, prevention. TLCTC: Keeps privileged functions out of daily use (#1) and limits what an everyday credential opens (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -549,7 +549,7 @@
             {
               "id": "cis-9.4-1",
               "name": "CIS 9.4 — Restrict browser and mail extensions",
-              "description": "CIS Control 9, IG2, Software, hardening. TLCTC: Extensions are third-party code with designed reach into the client: limits foreign code (#7) and client function scope (#1).",
+              "description": "CIS Control 9, IG2, Software, hardening, prevention. TLCTC: Extensions are third-party code with designed reach into the client: limits foreign code (#7) and client function scope (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -581,7 +581,7 @@
             {
               "id": "cis-12.2-1",
               "name": "CIS 12.2 — Secure network architecture",
-              "description": "CIS Control 12, IG2, Network. TLCTC: Least privilege bounds designed scope (#1); designing for availability (capacity, redundancy) answers finite capacity (#6). Segmentation, the cause-neutral part, is also carried by 13.4.",
+              "description": "CIS Control 12, IG2, Network, prevention. TLCTC: Least privilege bounds designed scope (#1); designing for availability (capacity, redundancy) answers finite capacity (#6). Segmentation, the cause-neutral part, is also carried by 13.4.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -613,7 +613,7 @@
             {
               "id": "cis-12.3-1",
               "name": "CIS 12.3 — Managed network configuration over secure protocols",
-              "description": "CIS Control 12, IG2, Network, hardening. TLCTC: Device configuration under control (#1) and management traffic protected (#5).",
+              "description": "CIS Control 12, IG2, Network, hardening, prevention. TLCTC: Device configuration under control (#1) and management traffic protected (#5).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -645,7 +645,7 @@
             {
               "id": "cis-12.8-1",
               "name": "CIS 12.8 — Dedicated admin workstations",
-              "description": "CIS Control 12, IG3, Devices, hardening. TLCTC: Keeps privileged functions (#1) and admin credentials (#4) away from browsing and mail.",
+              "description": "CIS Control 12, IG3, Devices, hardening, prevention. TLCTC: Keeps privileged functions (#1) and admin credentials (#4) away from browsing and mail.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -677,7 +677,7 @@
             {
               "id": "cis-13.10-1",
               "name": "CIS 13.10 — Application-layer filtering",
-              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Filters requests to server-role applications: exploitation (#2), abuse of exposed functions (#1) and request floods absorbed by rate limits (#6).",
+              "description": "CIS Control 13, IG3, Network, hardening, prevention. TLCTC: Filters requests to server-role applications: exploitation (#2), abuse of exposed functions (#1) and request floods absorbed by rate limits (#6).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -709,7 +709,7 @@
             {
               "id": "cis-16.7-1",
               "name": "CIS 16.7 — Hardening templates for application infrastructure",
-              "description": "CIS Control 16, IG2, Software, hardening. TLCTC: Narrows the configured function scope of servers, databases and web stacks (#1).",
+              "description": "CIS Control 16, IG2, Software, hardening, prevention. TLCTC: Narrows the configured function scope of servers, databases and web stacks (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -741,7 +741,7 @@
             {
               "id": "cis-16.8-1",
               "name": "CIS 16.8 — Separate production from non-production",
-              "description": "CIS Control 16, IG2, Network, hardening. TLCTC: Test functions and test data stay out of production (#1).",
+              "description": "CIS Control 16, IG2, Network, hardening, prevention. TLCTC: Test functions and test data stay out of production (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -773,7 +773,7 @@
             {
               "id": "cis-16.10-1",
               "name": "CIS 16.10 — Secure design principles in architecture",
-              "description": "CIS Control 16, IG2, Software. TLCTC: Least privilege and complete mediation bound the designed function scope (#1).",
+              "description": "CIS Control 16, IG2, Software, prevention. TLCTC: Least privilege and complete mediation bound the designed function scope (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -871,7 +871,7 @@
             {
               "id": "cis-8.8-1",
               "name": "CIS 8.8 — Command-line logging",
-              "description": "CIS Control 8, IG2, Data, hardening. TLCTC: Records interpreter use: foreign code running (#7) and designed admin tools misused (#1).",
+              "description": "CIS Control 8, IG2, Data, hardening, detection-response. TLCTC: Records interpreter use: foreign code running (#7) and designed admin tools misused (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -903,7 +903,7 @@
             {
               "id": "cis-8.11-1",
               "name": "CIS 8.11 — Regular audit log review",
-              "description": "CIS Control 8, IG2, Data. TLCTC: Review looks for function misuse (#1), anomalous credential use (#4) and malicious code (#7) (June umbrella).",
+              "description": "CIS Control 8, IG2, Data, detection-response. TLCTC: Review looks for function misuse (#1), anomalous credential use (#4) and malicious code (#7) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -935,7 +935,7 @@
             {
               "id": "cis-16.13-1",
               "name": "CIS 16.13 — Application penetration testing",
-              "description": "CIS Control 16, IG3, Software. TLCTC: Finds implementation flaws by role and business-logic abuse (#1).",
+              "description": "CIS Control 16, IG3, Software, prevention. TLCTC: Finds implementation flaws by role and business-logic abuse (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -967,7 +967,7 @@
             {
               "id": "cis-18.2-1",
               "name": "CIS 18.2 — External penetration tests",
-              "description": "CIS Control 18, IG2, Network. TLCTC: Tests the outside: exposed functions (#1), server-role flaws (#2) and authentication (#4).",
+              "description": "CIS Control 18, IG2, Network, prevention. TLCTC: Tests the outside: exposed functions (#1), server-role flaws (#2) and authentication (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -999,7 +999,7 @@
             {
               "id": "cis-18.5-1",
               "name": "CIS 18.5 — Internal penetration tests",
-              "description": "CIS Control 18, IG3, Network. TLCTC: Tests the inside: functions (#1), flaws by role (#2/#3) and credential use (#4).",
+              "description": "CIS Control 18, IG3, Network, prevention. TLCTC: Tests the inside: functions (#1), flaws by role (#2/#3) and credential use (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1097,7 +1097,7 @@
             {
               "id": "cis-7.7-1",
               "name": "CIS 7.7 — Remediate found vulnerabilities",
-              "description": "CIS Control 7, IG2, Software. TLCTC: Fixes what scanning found: flaws by role and configuration (#1).",
+              "description": "CIS Control 7, IG2, Software, prevention. TLCTC: Fixes what scanning found: flaws by role and configuration (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1230,7 +1230,7 @@
             {
               "id": "cis-2.2-2",
               "name": "CIS 2.2 — Only vendor-supported software authorised",
-              "description": "CIS Control 2, IG1, Software. TLCTC: Unsupported software stops receiving fixes for implementation flaws, server- and client-role alike.",
+              "description": "CIS Control 2, IG1, Software, prevention. TLCTC: Unsupported software stops receiving fixes for implementation flaws, server- and client-role alike.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1262,7 +1262,7 @@
             {
               "id": "cis-7.5-2",
               "name": "CIS 7.5 — Internal vulnerability scanning",
-              "description": "CIS Control 7, IG2, Software. TLCTC: Finds implementation flaws by role and exploitable configuration (#1; CSF ID.RA-01 precedent).",
+              "description": "CIS Control 7, IG2, Software, prevention. TLCTC: Finds implementation flaws by role and exploitable configuration (#1; CSF ID.RA-01 precedent).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1294,7 +1294,7 @@
             {
               "id": "cis-7.6-2",
               "name": "CIS 7.6 — External vulnerability scanning",
-              "description": "CIS Control 7, IG2, Software. TLCTC: Internet-facing assets are mostly server-role: flaws (#2) and exposed configuration (#1).",
+              "description": "CIS Control 7, IG2, Software, prevention. TLCTC: Internet-facing assets are mostly server-role: flaws (#2) and exposed configuration (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1352,7 +1352,7 @@
             {
               "id": "cis-4.8-2",
               "name": "CIS 4.8 — Remove or disable unneeded services",
-              "description": "CIS Control 4, IG2, Devices, hardening. TLCTC: Shrinks designed function scope (#1) and removes code whose flaws could be exploited by role (#2/#3).",
+              "description": "CIS Control 4, IG2, Devices, hardening, prevention. TLCTC: Shrinks designed function scope (#1) and removes code whose flaws could be exploited by role (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1384,7 +1384,7 @@
             {
               "id": "cis-7.3-2",
               "name": "CIS 7.3 — Automated operating system patching",
-              "description": "CIS Control 7, IG1, Software. TLCTC: Closes known implementation flaws in operating systems, server- and client-role.",
+              "description": "CIS Control 7, IG1, Software, prevention. TLCTC: Closes known implementation flaws in operating systems, server- and client-role.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1416,7 +1416,7 @@
             {
               "id": "cis-7.4-2",
               "name": "CIS 7.4 — Automated application patching",
-              "description": "CIS Control 7, IG1, Software. TLCTC: Spans server-role and client-role flaws and third-party components (#10) (June umbrella).",
+              "description": "CIS Control 7, IG1, Software, prevention. TLCTC: Spans server-role and client-role flaws and third-party components (#10) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1448,7 +1448,7 @@
             {
               "id": "cis-10.5-2",
               "name": "CIS 10.5 — Exploit mitigations (DEP, ASLR and similar)",
-              "description": "CIS Control 10, IG2, Devices, hardening. TLCTC: Raises the cost of exploiting implementation flaws by role (#2/#3); no new cause.",
+              "description": "CIS Control 10, IG2, Devices, hardening, prevention. TLCTC: Raises the cost of exploiting implementation flaws by role (#2/#3); no new cause.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1480,7 +1480,7 @@
             {
               "id": "cis-12.1-2",
               "name": "CIS 12.1 — Current software on network devices",
-              "description": "CIS Control 12, IG1, Network. TLCTC: Network devices are server-role targets; fixes close their implementation flaws (#2).",
+              "description": "CIS Control 12, IG1, Network, prevention. TLCTC: Network devices are server-role targets; fixes close their implementation flaws (#2).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1512,7 +1512,7 @@
             {
               "id": "cis-13.7-2",
               "name": "CIS 13.7 — Host intrusion prevention / EDR",
-              "description": "CIS Control 13, IG3, Devices. TLCTC: Blocks exploitation by role and malicious code on hosts (June umbrella).",
+              "description": "CIS Control 13, IG3, Devices, prevention. TLCTC: Blocks exploitation by role and malicious code on hosts (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1544,7 +1544,7 @@
             {
               "id": "cis-13.8-2",
               "name": "CIS 13.8 — Network intrusion prevention",
-              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "description": "CIS Control 13, IG3, Network, prevention. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1576,7 +1576,7 @@
             {
               "id": "cis-13.10-2",
               "name": "CIS 13.10 — Application-layer filtering",
-              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Filters requests to server-role applications: exploitation (#2), abuse of exposed functions (#1) and request floods absorbed by rate limits (#6).",
+              "description": "CIS Control 13, IG3, Network, hardening, prevention. TLCTC: Filters requests to server-role applications: exploitation (#2), abuse of exposed functions (#1) and request floods absorbed by rate limits (#6).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1608,7 +1608,7 @@
             {
               "id": "cis-16.5-2",
               "name": "CIS 16.5 — Current, trusted third-party components",
-              "description": "CIS Control 16, IG2, Software. TLCTC: Vetted sources (#10) and patched component flaws by role (#2/#3).",
+              "description": "CIS Control 16, IG2, Software, prevention. TLCTC: Vetted sources (#10) and patched component flaws by role (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1640,7 +1640,7 @@
             {
               "id": "cis-16.9-2",
               "name": "CIS 16.9 — Secure coding training for developers",
-              "description": "CIS Control 16, IG2, Users. TLCTC: Keeps implementation flaws from being written (#2/#3).",
+              "description": "CIS Control 16, IG2, Users, prevention. TLCTC: Keeps implementation flaws from being written (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1672,7 +1672,7 @@
             {
               "id": "cis-16.12-2",
               "name": "CIS 16.12 — Static and dynamic code analysis",
-              "description": "CIS Control 16, IG3, Software. TLCTC: Finds implementation flaws before release (#2/#3).",
+              "description": "CIS Control 16, IG3, Software, prevention. TLCTC: Finds implementation flaws before release (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1770,7 +1770,7 @@
             {
               "id": "cis-13.2-2",
               "name": "CIS 13.2 — Host intrusion detection",
-              "description": "CIS Control 13, IG2, Devices. TLCTC: Sees exploitation by role and malicious code on hosts (June umbrella).",
+              "description": "CIS Control 13, IG2, Devices, detection-response. TLCTC: Sees exploitation by role and malicious code on hosts (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1802,7 +1802,7 @@
             {
               "id": "cis-13.3-2",
               "name": "CIS 13.3 — Network intrusion detection",
-              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "description": "CIS Control 13, IG2, Network, detection-response. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1834,7 +1834,7 @@
             {
               "id": "cis-16.13-2",
               "name": "CIS 16.13 — Application penetration testing",
-              "description": "CIS Control 16, IG3, Software. TLCTC: Finds implementation flaws by role and business-logic abuse (#1).",
+              "description": "CIS Control 16, IG3, Software, prevention. TLCTC: Finds implementation flaws by role and business-logic abuse (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1866,7 +1866,7 @@
             {
               "id": "cis-18.2-2",
               "name": "CIS 18.2 — External penetration tests",
-              "description": "CIS Control 18, IG2, Network. TLCTC: Tests the outside: exposed functions (#1), server-role flaws (#2) and authentication (#4).",
+              "description": "CIS Control 18, IG2, Network, prevention. TLCTC: Tests the outside: exposed functions (#1), server-role flaws (#2) and authentication (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1898,7 +1898,7 @@
             {
               "id": "cis-18.5-2",
               "name": "CIS 18.5 — Internal penetration tests",
-              "description": "CIS Control 18, IG3, Network. TLCTC: Tests the inside: functions (#1), flaws by role (#2/#3) and credential use (#4).",
+              "description": "CIS Control 18, IG3, Network, prevention. TLCTC: Tests the inside: functions (#1), flaws by role (#2/#3) and credential use (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -1996,7 +1996,7 @@
             {
               "id": "cis-7.7-2",
               "name": "CIS 7.7 — Remediate found vulnerabilities",
-              "description": "CIS Control 7, IG2, Software. TLCTC: Fixes what scanning found: flaws by role and configuration (#1).",
+              "description": "CIS Control 7, IG2, Software, prevention. TLCTC: Fixes what scanning found: flaws by role and configuration (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2129,7 +2129,7 @@
             {
               "id": "cis-2.2-3",
               "name": "CIS 2.2 — Only vendor-supported software authorised",
-              "description": "CIS Control 2, IG1, Software. TLCTC: Unsupported software stops receiving fixes for implementation flaws, server- and client-role alike.",
+              "description": "CIS Control 2, IG1, Software, prevention. TLCTC: Unsupported software stops receiving fixes for implementation flaws, server- and client-role alike.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2161,7 +2161,7 @@
             {
               "id": "cis-7.5-3",
               "name": "CIS 7.5 — Internal vulnerability scanning",
-              "description": "CIS Control 7, IG2, Software. TLCTC: Finds implementation flaws by role and exploitable configuration (#1; CSF ID.RA-01 precedent).",
+              "description": "CIS Control 7, IG2, Software, prevention. TLCTC: Finds implementation flaws by role and exploitable configuration (#1; CSF ID.RA-01 precedent).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2219,7 +2219,7 @@
             {
               "id": "cis-4.8-3",
               "name": "CIS 4.8 — Remove or disable unneeded services",
-              "description": "CIS Control 4, IG2, Devices, hardening. TLCTC: Shrinks designed function scope (#1) and removes code whose flaws could be exploited by role (#2/#3).",
+              "description": "CIS Control 4, IG2, Devices, hardening, prevention. TLCTC: Shrinks designed function scope (#1) and removes code whose flaws could be exploited by role (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2251,7 +2251,7 @@
             {
               "id": "cis-7.3-3",
               "name": "CIS 7.3 — Automated operating system patching",
-              "description": "CIS Control 7, IG1, Software. TLCTC: Closes known implementation flaws in operating systems, server- and client-role.",
+              "description": "CIS Control 7, IG1, Software, prevention. TLCTC: Closes known implementation flaws in operating systems, server- and client-role.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2283,7 +2283,7 @@
             {
               "id": "cis-7.4-3",
               "name": "CIS 7.4 — Automated application patching",
-              "description": "CIS Control 7, IG1, Software. TLCTC: Spans server-role and client-role flaws and third-party components (#10) (June umbrella).",
+              "description": "CIS Control 7, IG1, Software, prevention. TLCTC: Spans server-role and client-role flaws and third-party components (#10) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2315,7 +2315,7 @@
             {
               "id": "cis-9.1-3",
               "name": "CIS 9.1 — Only supported browsers and mail clients",
-              "description": "CIS Control 9, IG1, Software, hardening. TLCTC: Client-role software with current fixes for its implementation flaws (#3).",
+              "description": "CIS Control 9, IG1, Software, hardening, prevention. TLCTC: Client-role software with current fixes for its implementation flaws (#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2347,7 +2347,7 @@
             {
               "id": "cis-9.2-3",
               "name": "CIS 9.2 — DNS filtering on end-user devices",
-              "description": "CIS Control 9, IG1, Devices, hardening. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
+              "description": "CIS Control 9, IG1, Devices, hardening, prevention. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2379,7 +2379,7 @@
             {
               "id": "cis-9.3-3",
               "name": "CIS 9.3 — Network URL filtering",
-              "description": "CIS Control 9, IG2, Network, hardening. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
+              "description": "CIS Control 9, IG2, Network, hardening, prevention. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2411,7 +2411,7 @@
             {
               "id": "cis-10.5-3",
               "name": "CIS 10.5 — Exploit mitigations (DEP, ASLR and similar)",
-              "description": "CIS Control 10, IG2, Devices, hardening. TLCTC: Raises the cost of exploiting implementation flaws by role (#2/#3); no new cause.",
+              "description": "CIS Control 10, IG2, Devices, hardening, prevention. TLCTC: Raises the cost of exploiting implementation flaws by role (#2/#3); no new cause.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2443,7 +2443,7 @@
             {
               "id": "cis-13.7-3",
               "name": "CIS 13.7 — Host intrusion prevention / EDR",
-              "description": "CIS Control 13, IG3, Devices. TLCTC: Blocks exploitation by role and malicious code on hosts (June umbrella).",
+              "description": "CIS Control 13, IG3, Devices, prevention. TLCTC: Blocks exploitation by role and malicious code on hosts (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2475,7 +2475,7 @@
             {
               "id": "cis-13.8-3",
               "name": "CIS 13.8 — Network intrusion prevention",
-              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "description": "CIS Control 13, IG3, Network, prevention. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2507,7 +2507,7 @@
             {
               "id": "cis-14.7-3",
               "name": "CIS 14.7 — Report missing updates",
-              "description": "CIS Control 14, IG1, Users. TLCTC: Users flag unpatched client-role software on their devices (#3).",
+              "description": "CIS Control 14, IG1, Users, prevention. TLCTC: Users flag unpatched client-role software on their devices (#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2539,7 +2539,7 @@
             {
               "id": "cis-16.5-3",
               "name": "CIS 16.5 — Current, trusted third-party components",
-              "description": "CIS Control 16, IG2, Software. TLCTC: Vetted sources (#10) and patched component flaws by role (#2/#3).",
+              "description": "CIS Control 16, IG2, Software, prevention. TLCTC: Vetted sources (#10) and patched component flaws by role (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2571,7 +2571,7 @@
             {
               "id": "cis-16.9-3",
               "name": "CIS 16.9 — Secure coding training for developers",
-              "description": "CIS Control 16, IG2, Users. TLCTC: Keeps implementation flaws from being written (#2/#3).",
+              "description": "CIS Control 16, IG2, Users, prevention. TLCTC: Keeps implementation flaws from being written (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2603,7 +2603,7 @@
             {
               "id": "cis-16.12-3",
               "name": "CIS 16.12 — Static and dynamic code analysis",
-              "description": "CIS Control 16, IG3, Software. TLCTC: Finds implementation flaws before release (#2/#3).",
+              "description": "CIS Control 16, IG3, Software, prevention. TLCTC: Finds implementation flaws before release (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2701,7 +2701,7 @@
             {
               "id": "cis-13.2-3",
               "name": "CIS 13.2 — Host intrusion detection",
-              "description": "CIS Control 13, IG2, Devices. TLCTC: Sees exploitation by role and malicious code on hosts (June umbrella).",
+              "description": "CIS Control 13, IG2, Devices, detection-response. TLCTC: Sees exploitation by role and malicious code on hosts (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2733,7 +2733,7 @@
             {
               "id": "cis-13.3-3",
               "name": "CIS 13.3 — Network intrusion detection",
-              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "description": "CIS Control 13, IG2, Network, detection-response. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2765,7 +2765,7 @@
             {
               "id": "cis-16.13-3",
               "name": "CIS 16.13 — Application penetration testing",
-              "description": "CIS Control 16, IG3, Software. TLCTC: Finds implementation flaws by role and business-logic abuse (#1).",
+              "description": "CIS Control 16, IG3, Software, prevention. TLCTC: Finds implementation flaws by role and business-logic abuse (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2797,7 +2797,7 @@
             {
               "id": "cis-18.5-3",
               "name": "CIS 18.5 — Internal penetration tests",
-              "description": "CIS Control 18, IG3, Network. TLCTC: Tests the inside: functions (#1), flaws by role (#2/#3) and credential use (#4).",
+              "description": "CIS Control 18, IG3, Network, prevention. TLCTC: Tests the inside: functions (#1), flaws by role (#2/#3) and credential use (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2895,7 +2895,7 @@
             {
               "id": "cis-7.7-3",
               "name": "CIS 7.7 — Remediate found vulnerabilities",
-              "description": "CIS Control 7, IG2, Software. TLCTC: Fixes what scanning found: flaws by role and configuration (#1).",
+              "description": "CIS Control 7, IG2, Software, prevention. TLCTC: Fixes what scanning found: flaws by role and configuration (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -2968,7 +2968,7 @@
             {
               "id": "cis-5.6-4",
               "name": "CIS 5.6 — Central account directory",
-              "description": "CIS Control 5, IG2, Users. TLCTC: One identity source makes binding, review and revocation enforceable (#4).",
+              "description": "CIS Control 5, IG2, Users, prevention. TLCTC: One identity source makes binding, review and revocation enforceable (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3000,7 +3000,7 @@
             {
               "id": "cis-6.2-4",
               "name": "CIS 6.2 — Prompt access revocation",
-              "description": "CIS Control 6, IG1, Documentation. TLCTC: Credentials that outlive their holder's role stay usable by others (#4).",
+              "description": "CIS Control 6, IG1, Documentation, prevention. TLCTC: Credentials that outlive their holder's role stay usable by others (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3032,7 +3032,7 @@
             {
               "id": "cis-6.8-4",
               "name": "CIS 6.8 — Role-based access definitions and reviews",
-              "description": "CIS Control 6, IG3, Users. TLCTC: Bounds the functions each role may invoke (#1) and what a misused identity reaches (#4) (June umbrella).",
+              "description": "CIS Control 6, IG3, Users, prevention. TLCTC: Bounds the functions each role may invoke (#1) and what a misused identity reaches (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3125,7 +3125,7 @@
             {
               "id": "cis-5.5-4",
               "name": "CIS 5.5 — Service account inventory and review",
-              "description": "CIS Control 5, IG2, Users. TLCTC: Service credentials without an owner are identities nobody binds or revokes (#4).",
+              "description": "CIS Control 5, IG2, Users, prevention. TLCTC: Service credentials without an owner are identities nobody binds or revokes (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3157,7 +3157,7 @@
             {
               "id": "cis-6.6-4",
               "name": "CIS 6.6 — Inventory of authentication systems",
-              "description": "CIS Control 6, IG2, Software. TLCTC: Knows every point of authentication where #4 can occur.",
+              "description": "CIS Control 6, IG2, Software, prevention. TLCTC: Knows every point of authentication where #4 can occur.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3215,7 +3215,7 @@
             {
               "id": "cis-3.3-4",
               "name": "CIS 3.3 — Need-to-know permissions on data",
-              "description": "CIS Control 3, IG1, Data, hardening. TLCTC: Permission configuration bounds what a granted function reaches (#1) and what a misused identity opens (#4) (June umbrella).",
+              "description": "CIS Control 3, IG1, Data, hardening, prevention. TLCTC: Permission configuration bounds what a granted function reaches (#1) and what a misused identity opens (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3247,7 +3247,7 @@
             {
               "id": "cis-4.7-4",
               "name": "CIS 4.7 — Neutralise vendor default accounts",
-              "description": "CIS Control 4, IG1, Users, hardening. TLCTC: A publicly known default credential needs no acquisition; its use is #4 (CWE-1393, ATT&CK T1078.001).",
+              "description": "CIS Control 4, IG1, Users, hardening, prevention. TLCTC: A publicly known default credential needs no acquisition; its use is #4 (CWE-1393, ATT&CK T1078.001).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3279,7 +3279,7 @@
             {
               "id": "cis-4.10-4",
               "name": "CIS 4.10 — Device lockout after repeated failed logins",
-              "description": "CIS Control 4, IG2, Devices, hardening. TLCTC: Limits guessing at the local point of authentication (#4; CWE-307).",
+              "description": "CIS Control 4, IG2, Devices, hardening, prevention. TLCTC: Limits guessing at the local point of authentication (#4; CWE-307).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3311,7 +3311,7 @@
             {
               "id": "cis-5.2-4",
               "name": "CIS 5.2 — Unique, sufficiently long passwords",
-              "description": "CIS Control 5, IG1, Users, hardening. TLCTC: Strength and non-reuse decide how well a password binds to its holder (#4; CWE-521).",
+              "description": "CIS Control 5, IG1, Users, hardening, prevention. TLCTC: Strength and non-reuse decide how well a password binds to its holder (#4; CWE-521).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3343,7 +3343,7 @@
             {
               "id": "cis-5.3-4",
               "name": "CIS 5.3 — Disable dormant accounts",
-              "description": "CIS Control 5, IG1, Users, hardening. TLCTC: An unused account is a credential no holder watches (#4).",
+              "description": "CIS Control 5, IG1, Users, hardening, prevention. TLCTC: An unused account is a credential no holder watches (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3375,7 +3375,7 @@
             {
               "id": "cis-5.4-4",
               "name": "CIS 5.4 — Dedicated administrator accounts",
-              "description": "CIS Control 5, IG1, Users, hardening. TLCTC: Keeps privileged functions out of daily use (#1) and limits what an everyday credential opens (#4) (June umbrella).",
+              "description": "CIS Control 5, IG1, Users, hardening, prevention. TLCTC: Keeps privileged functions out of daily use (#1) and limits what an everyday credential opens (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3407,7 +3407,7 @@
             {
               "id": "cis-6.3-4",
               "name": "CIS 6.3 — MFA on internet-facing applications",
-              "description": "CIS Control 6, IG1, Users, hardening. TLCTC: Stronger binding at the point of authentication (#4).",
+              "description": "CIS Control 6, IG1, Users, hardening, prevention. TLCTC: Stronger binding at the point of authentication (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3439,7 +3439,7 @@
             {
               "id": "cis-6.4-4",
               "name": "CIS 6.4 — MFA for remote network access",
-              "description": "CIS Control 6, IG1, Users, hardening. TLCTC: Stronger binding at the point of authentication (#4).",
+              "description": "CIS Control 6, IG1, Users, hardening, prevention. TLCTC: Stronger binding at the point of authentication (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3471,7 +3471,7 @@
             {
               "id": "cis-6.5-4",
               "name": "CIS 6.5 — MFA for administrative access",
-              "description": "CIS Control 6, IG1, Users, hardening. TLCTC: Stronger binding where privileged identities authenticate (#4).",
+              "description": "CIS Control 6, IG1, Users, hardening, prevention. TLCTC: Stronger binding where privileged identities authenticate (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3503,7 +3503,7 @@
             {
               "id": "cis-6.7-4",
               "name": "CIS 6.7 — Central access control via directory or SSO",
-              "description": "CIS Control 6, IG2, Users, hardening. TLCTC: One enforced point of authentication and authorisation (#4).",
+              "description": "CIS Control 6, IG2, Users, hardening, prevention. TLCTC: One enforced point of authentication and authorisation (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3535,7 +3535,7 @@
             {
               "id": "cis-12.5-4",
               "name": "CIS 12.5 — Central network AAA",
-              "description": "CIS Control 12, IG2, Network, hardening. TLCTC: One enforced point of authentication for network access (#4).",
+              "description": "CIS Control 12, IG2, Network, hardening, prevention. TLCTC: One enforced point of authentication for network access (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3567,7 +3567,7 @@
             {
               "id": "cis-12.6-4",
               "name": "CIS 12.6 — Secure network management and Wi-Fi protocols",
-              "description": "CIS Control 12, IG2, Network, hardening. TLCTC: Port and wireless authentication (#4) and protected links (#5).",
+              "description": "CIS Control 12, IG2, Network, hardening, prevention. TLCTC: Port and wireless authentication (#4) and protected links (#5).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3599,7 +3599,7 @@
             {
               "id": "cis-12.7-4",
               "name": "CIS 12.7 — Remote devices via VPN and enterprise AAA",
-              "description": "CIS Control 12, IG2, Devices, hardening. TLCTC: Protected transit (#5) and authenticated access (#4) (June umbrella).",
+              "description": "CIS Control 12, IG2, Devices, hardening, prevention. TLCTC: Protected transit (#5) and authenticated access (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3631,7 +3631,7 @@
             {
               "id": "cis-12.8-4",
               "name": "CIS 12.8 — Dedicated admin workstations",
-              "description": "CIS Control 12, IG3, Devices, hardening. TLCTC: Keeps privileged functions (#1) and admin credentials (#4) away from browsing and mail.",
+              "description": "CIS Control 12, IG3, Devices, hardening, prevention. TLCTC: Keeps privileged functions (#1) and admin credentials (#4) away from browsing and mail.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3663,7 +3663,7 @@
             {
               "id": "cis-13.5-4",
               "name": "CIS 13.5 — Posture-based access for remote assets",
-              "description": "CIS Control 13, IG2, Devices, hardening. TLCTC: Admits remote devices by identity (#4) and by malware-protection posture (#7).",
+              "description": "CIS Control 13, IG2, Devices, hardening, prevention. TLCTC: Admits remote devices by identity (#4) and by malware-protection posture (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3695,7 +3695,7 @@
             {
               "id": "cis-13.9-4",
               "name": "CIS 13.9 — Port-level network access control (802.1X)",
-              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Physical port use (#8) bound to a device or user identity (#4) (June umbrella).",
+              "description": "CIS Control 13, IG3, Network, hardening, prevention. TLCTC: Physical port use (#8) bound to a device or user identity (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3727,7 +3727,7 @@
             {
               "id": "cis-14.3-4",
               "name": "CIS 14.3 — Authentication hygiene training",
-              "description": "CIS Control 14, IG1, Users. TLCTC: People handling credentials: manipulation (#9) and credential binding (#4) (June umbrella).",
+              "description": "CIS Control 14, IG1, Users, prevention. TLCTC: People handling credentials: manipulation (#9) and credential binding (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3759,7 +3759,7 @@
             {
               "id": "cis-15.7-4",
               "name": "CIS 15.7 — Secure provider offboarding",
-              "description": "CIS Control 15, IG3, Data. TLCTC: Ends leftover access: provider credentials (#4) and trust paths (#10).",
+              "description": "CIS Control 15, IG3, Data, prevention. TLCTC: Ends leftover access: provider credentials (#4) and trust paths (#10).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3791,7 +3791,7 @@
             {
               "id": "cis-16.11-4",
               "name": "CIS 16.11 — Vetted identity, crypto and logging components",
-              "description": "CIS Control 16, IG2, Software. TLCTC: Proven modules for authentication binding (#4) and channel protection (#5).",
+              "description": "CIS Control 16, IG2, Software, prevention. TLCTC: Proven modules for authentication binding (#4) and channel protection (#5).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3889,7 +3889,7 @@
             {
               "id": "cis-8.11-4",
               "name": "CIS 8.11 — Regular audit log review",
-              "description": "CIS Control 8, IG2, Data. TLCTC: Review looks for function misuse (#1), anomalous credential use (#4) and malicious code (#7) (June umbrella).",
+              "description": "CIS Control 8, IG2, Data, detection-response. TLCTC: Review looks for function misuse (#1), anomalous credential use (#4) and malicious code (#7) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3921,7 +3921,7 @@
             {
               "id": "cis-18.2-4",
               "name": "CIS 18.2 — External penetration tests",
-              "description": "CIS Control 18, IG2, Network. TLCTC: Tests the outside: exposed functions (#1), server-role flaws (#2) and authentication (#4).",
+              "description": "CIS Control 18, IG2, Network, prevention. TLCTC: Tests the outside: exposed functions (#1), server-role flaws (#2) and authentication (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -3953,7 +3953,7 @@
             {
               "id": "cis-18.5-4",
               "name": "CIS 18.5 — Internal penetration tests",
-              "description": "CIS Control 18, IG3, Network. TLCTC: Tests the inside: functions (#1), flaws by role (#2/#3) and credential use (#4).",
+              "description": "CIS Control 18, IG3, Network, prevention. TLCTC: Tests the inside: functions (#1), flaws by role (#2/#3) and credential use (#4).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4176,7 +4176,7 @@
             {
               "id": "cis-3.10-5",
               "name": "CIS 3.10 — Encryption of sensitive data in transit",
-              "description": "CIS Control 3, IG2, Data, hardening. TLCTC: Protects the communication path (#5; CSF PR.DS-02 precedent).",
+              "description": "CIS Control 3, IG2, Data, hardening, prevention. TLCTC: Protects the communication path (#5; CSF PR.DS-02 precedent).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4208,7 +4208,7 @@
             {
               "id": "cis-4.6-5",
               "name": "CIS 4.6 — Managed configuration and protected admin channels",
-              "description": "CIS Control 4, IG1, Devices, hardening. TLCTC: Configuration under change control (#1) and administration over protected channels (#5).",
+              "description": "CIS Control 4, IG1, Devices, hardening, prevention. TLCTC: Configuration under change control (#1) and administration over protected channels (#5).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4240,7 +4240,7 @@
             {
               "id": "cis-4.9-5",
               "name": "CIS 4.9 — Trusted DNS resolvers",
-              "description": "CIS Control 4, IG2, Devices, hardening. TLCTC: Name resolution decides the communication path; a rogue resolver redirects it (#5).",
+              "description": "CIS Control 4, IG2, Devices, hardening, prevention. TLCTC: Name resolution decides the communication path; a rogue resolver redirects it (#5).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4272,7 +4272,7 @@
             {
               "id": "cis-12.3-5",
               "name": "CIS 12.3 — Managed network configuration over secure protocols",
-              "description": "CIS Control 12, IG2, Network, hardening. TLCTC: Device configuration under control (#1) and management traffic protected (#5).",
+              "description": "CIS Control 12, IG2, Network, hardening, prevention. TLCTC: Device configuration under control (#1) and management traffic protected (#5).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4304,7 +4304,7 @@
             {
               "id": "cis-12.6-5",
               "name": "CIS 12.6 — Secure network management and Wi-Fi protocols",
-              "description": "CIS Control 12, IG2, Network, hardening. TLCTC: Port and wireless authentication (#4) and protected links (#5).",
+              "description": "CIS Control 12, IG2, Network, hardening, prevention. TLCTC: Port and wireless authentication (#4) and protected links (#5).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4336,7 +4336,7 @@
             {
               "id": "cis-12.7-5",
               "name": "CIS 12.7 — Remote devices via VPN and enterprise AAA",
-              "description": "CIS Control 12, IG2, Devices, hardening. TLCTC: Protected transit (#5) and authenticated access (#4) (June umbrella).",
+              "description": "CIS Control 12, IG2, Devices, hardening, prevention. TLCTC: Protected transit (#5) and authenticated access (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4368,7 +4368,7 @@
             {
               "id": "cis-14.8-5",
               "name": "CIS 14.8 — Insecure network awareness",
-              "description": "CIS Control 14, IG1, Users. TLCTC: Avoids untrusted paths (#5) and the lures that lead onto them (#9) (June umbrella).",
+              "description": "CIS Control 14, IG1, Users, prevention. TLCTC: Avoids untrusted paths (#5) and the lures that lead onto them (#9) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4400,7 +4400,7 @@
             {
               "id": "cis-16.11-5",
               "name": "CIS 16.11 — Vetted identity, crypto and logging components",
-              "description": "CIS Control 16, IG2, Software. TLCTC: Proven modules for authentication binding (#4) and channel protection (#5).",
+              "description": "CIS Control 16, IG2, Software, prevention. TLCTC: Proven modules for authentication binding (#4) and channel protection (#5).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4688,7 +4688,7 @@
             {
               "id": "cis-12.2-6",
               "name": "CIS 12.2 — Secure network architecture",
-              "description": "CIS Control 12, IG2, Network. TLCTC: Least privilege bounds designed scope (#1); designing for availability (capacity, redundancy) answers finite capacity (#6). Segmentation, the cause-neutral part, is also carried by 13.4.",
+              "description": "CIS Control 12, IG2, Network, prevention. TLCTC: Least privilege bounds designed scope (#1); designing for availability (capacity, redundancy) answers finite capacity (#6). Segmentation, the cause-neutral part, is also carried by 13.4.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4720,7 +4720,7 @@
             {
               "id": "cis-13.8-6",
               "name": "CIS 13.8 — Network intrusion prevention",
-              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "description": "CIS Control 13, IG3, Network, prevention. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4752,7 +4752,7 @@
             {
               "id": "cis-13.10-6",
               "name": "CIS 13.10 — Application-layer filtering",
-              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Filters requests to server-role applications: exploitation (#2), abuse of exposed functions (#1) and request floods absorbed by rate limits (#6).",
+              "description": "CIS Control 13, IG3, Network, hardening, prevention. TLCTC: Filters requests to server-role applications: exploitation (#2), abuse of exposed functions (#1) and request floods absorbed by rate limits (#6).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -4850,7 +4850,7 @@
             {
               "id": "cis-13.3-6",
               "name": "CIS 13.3 — Network intrusion detection",
-              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "description": "CIS Control 13, IG2, Network, detection-response. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5073,7 +5073,7 @@
             {
               "id": "cis-2.5-7",
               "name": "CIS 2.5 — Application allowlisting",
-              "description": "CIS Control 2, IG2, Software, hardening. TLCTC: Execution policy: denies foreign code (#7) and narrows which designed programs may run at all (#1) (June umbrella).",
+              "description": "CIS Control 2, IG2, Software, hardening, prevention. TLCTC: Execution policy: denies foreign code (#7) and narrows which designed programs may run at all (#1) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5105,7 +5105,7 @@
             {
               "id": "cis-2.6-7",
               "name": "CIS 2.6 — Library load allowlisting",
-              "description": "CIS Control 2, IG2, Software, hardening. TLCTC: Module load policy: blocks injected foreign code (#7) and narrows the loadable function set (#1) (June umbrella).",
+              "description": "CIS Control 2, IG2, Software, hardening, prevention. TLCTC: Module load policy: blocks injected foreign code (#7) and narrows the loadable function set (#1) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5137,7 +5137,7 @@
             {
               "id": "cis-2.7-7",
               "name": "CIS 2.7 — Script execution allowlisting",
-              "description": "CIS Control 2, IG3, Software, hardening. TLCTC: Interpreter policy: blocks unapproved scripts (#7) and limits scripting as a designed function (#1) (June umbrella).",
+              "description": "CIS Control 2, IG3, Software, hardening, prevention. TLCTC: Interpreter policy: blocks unapproved scripts (#7) and limits scripting as a designed function (#1) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5169,7 +5169,7 @@
             {
               "id": "cis-9.2-7",
               "name": "CIS 9.2 — DNS filtering on end-user devices",
-              "description": "CIS Control 9, IG1, Devices, hardening. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
+              "description": "CIS Control 9, IG1, Devices, hardening, prevention. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5201,7 +5201,7 @@
             {
               "id": "cis-9.3-7",
               "name": "CIS 9.3 — Network URL filtering",
-              "description": "CIS Control 9, IG2, Network, hardening. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
+              "description": "CIS Control 9, IG2, Network, hardening, prevention. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5233,7 +5233,7 @@
             {
               "id": "cis-9.4-7",
               "name": "CIS 9.4 — Restrict browser and mail extensions",
-              "description": "CIS Control 9, IG2, Software, hardening. TLCTC: Extensions are third-party code with designed reach into the client: limits foreign code (#7) and client function scope (#1).",
+              "description": "CIS Control 9, IG2, Software, hardening, prevention. TLCTC: Extensions are third-party code with designed reach into the client: limits foreign code (#7) and client function scope (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5265,7 +5265,7 @@
             {
               "id": "cis-9.6-7",
               "name": "CIS 9.6 — Block unneeded attachment file types",
-              "description": "CIS Control 9, IG2, Network, hardening. TLCTC: Stops foreign executable content at the mail gateway (#7).",
+              "description": "CIS Control 9, IG2, Network, hardening, prevention. TLCTC: Stops foreign executable content at the mail gateway (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5297,7 +5297,7 @@
             {
               "id": "cis-9.7-7",
               "name": "CIS 9.7 — Mail gateway anti-malware and sandboxing",
-              "description": "CIS Control 9, IG3, Network. TLCTC: Detects foreign code before delivery (#7).",
+              "description": "CIS Control 9, IG3, Network, prevention. TLCTC: Detects foreign code before delivery (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5329,7 +5329,7 @@
             {
               "id": "cis-10.2-7",
               "name": "CIS 10.2 — Automatic anti-malware signature updates",
-              "description": "CIS Control 10, IG1, Devices, hardening. TLCTC: Keeps #7 detection current.",
+              "description": "CIS Control 10, IG1, Devices, hardening, prevention. TLCTC: Keeps #7 detection current.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5361,7 +5361,7 @@
             {
               "id": "cis-10.3-7",
               "name": "CIS 10.3 — Autorun off for removable media",
-              "description": "CIS Control 10, IG1, Devices, hardening. TLCTC: Removes automatic execution of code carried in on physical media (#8 then #7, ATT&CK T1091).",
+              "description": "CIS Control 10, IG1, Devices, hardening, prevention. TLCTC: Removes automatic execution of code carried in on physical media (#8 then #7, ATT&CK T1091).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5393,7 +5393,7 @@
             {
               "id": "cis-10.6-7",
               "name": "CIS 10.6 — Central anti-malware management",
-              "description": "CIS Control 10, IG2, Devices. TLCTC: Keeps #7 controls deployed and current.",
+              "description": "CIS Control 10, IG2, Devices, prevention. TLCTC: Keeps #7 controls deployed and current.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5425,7 +5425,7 @@
             {
               "id": "cis-13.5-7",
               "name": "CIS 13.5 — Posture-based access for remote assets",
-              "description": "CIS Control 13, IG2, Devices, hardening. TLCTC: Admits remote devices by identity (#4) and by malware-protection posture (#7).",
+              "description": "CIS Control 13, IG2, Devices, hardening, prevention. TLCTC: Admits remote devices by identity (#4) and by malware-protection posture (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5457,7 +5457,7 @@
             {
               "id": "cis-13.7-7",
               "name": "CIS 13.7 — Host intrusion prevention / EDR",
-              "description": "CIS Control 13, IG3, Devices. TLCTC: Blocks exploitation by role and malicious code on hosts (June umbrella).",
+              "description": "CIS Control 13, IG3, Devices, prevention. TLCTC: Blocks exploitation by role and malicious code on hosts (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5489,7 +5489,7 @@
             {
               "id": "cis-13.8-7",
               "name": "CIS 13.8 — Network intrusion prevention",
-              "description": "CIS Control 13, IG3, Network. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "description": "CIS Control 13, IG3, Network, prevention. TLCTC: Blocks exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5587,7 +5587,7 @@
             {
               "id": "cis-8.8-7",
               "name": "CIS 8.8 — Command-line logging",
-              "description": "CIS Control 8, IG2, Data, hardening. TLCTC: Records interpreter use: foreign code running (#7) and designed admin tools misused (#1).",
+              "description": "CIS Control 8, IG2, Data, hardening, detection-response. TLCTC: Records interpreter use: foreign code running (#7) and designed admin tools misused (#1).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5619,7 +5619,7 @@
             {
               "id": "cis-8.11-7",
               "name": "CIS 8.11 — Regular audit log review",
-              "description": "CIS Control 8, IG2, Data. TLCTC: Review looks for function misuse (#1), anomalous credential use (#4) and malicious code (#7) (June umbrella).",
+              "description": "CIS Control 8, IG2, Data, detection-response. TLCTC: Review looks for function misuse (#1), anomalous credential use (#4) and malicious code (#7) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5651,7 +5651,7 @@
             {
               "id": "cis-10.1-7",
               "name": "CIS 10.1 — Anti-malware on all assets",
-              "description": "CIS Control 10, IG1, Devices. TLCTC: Detects and blocks foreign executable content (#7).",
+              "description": "CIS Control 10, IG1, Devices, prevention. TLCTC: Detects and blocks foreign executable content (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5683,7 +5683,7 @@
             {
               "id": "cis-10.4-7",
               "name": "CIS 10.4 — Automatic scan of removable media",
-              "description": "CIS Control 10, IG2, Devices, hardening. TLCTC: Detects foreign code arriving on physical media (#7).",
+              "description": "CIS Control 10, IG2, Devices, hardening, prevention. TLCTC: Detects foreign code arriving on physical media (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5715,7 +5715,7 @@
             {
               "id": "cis-10.7-7",
               "name": "CIS 10.7 — Behaviour-based anti-malware",
-              "description": "CIS Control 10, IG2, Devices. TLCTC: Detects foreign code by what it does (#7).",
+              "description": "CIS Control 10, IG2, Devices, detection-response. TLCTC: Detects foreign code by what it does (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5747,7 +5747,7 @@
             {
               "id": "cis-13.2-7",
               "name": "CIS 13.2 — Host intrusion detection",
-              "description": "CIS Control 13, IG2, Devices. TLCTC: Sees exploitation by role and malicious code on hosts (June umbrella).",
+              "description": "CIS Control 13, IG2, Devices, detection-response. TLCTC: Sees exploitation by role and malicious code on hosts (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5779,7 +5779,7 @@
             {
               "id": "cis-13.3-7",
               "name": "CIS 13.3 — Network intrusion detection",
-              "description": "CIS Control 13, IG2, Network. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
+              "description": "CIS Control 13, IG2, Network, detection-response. TLCTC: Sees exploit, flood and malware traffic on the wire (#2/#3, #6, #7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -5877,7 +5877,7 @@
             {
               "id": "cis-2.3-7",
               "name": "CIS 2.3 — Remove or formally except unauthorised software",
-              "description": "CIS Control 2, IG1, Software. TLCTC: Unauthorised software is foreign code that got to run (#7); removing it is the response.",
+              "description": "CIS Control 2, IG1, Software, detection-response. TLCTC: Unauthorised software is foreign code that got to run (#7); removing it is the response.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6035,7 +6035,7 @@
             {
               "id": "cis-4.3-8",
               "name": "CIS 4.3 — Automatic session lock on idle devices",
-              "description": "CIS Control 4, IG1, Devices, hardening. TLCTC: An unlocked, unattended device is usable by whoever is physically at it (#8).",
+              "description": "CIS Control 4, IG1, Devices, hardening, prevention. TLCTC: An unlocked, unattended device is usable by whoever is physically at it (#8).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6067,7 +6067,7 @@
             {
               "id": "cis-10.3-8",
               "name": "CIS 10.3 — Autorun off for removable media",
-              "description": "CIS Control 10, IG1, Devices, hardening. TLCTC: Removes automatic execution of code carried in on physical media (#8 then #7, ATT&CK T1091).",
+              "description": "CIS Control 10, IG1, Devices, hardening, prevention. TLCTC: Removes automatic execution of code carried in on physical media (#8 then #7, ATT&CK T1091).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6099,7 +6099,7 @@
             {
               "id": "cis-13.9-8",
               "name": "CIS 13.9 — Port-level network access control (802.1X)",
-              "description": "CIS Control 13, IG3, Network, hardening. TLCTC: Physical port use (#8) bound to a device or user identity (#4) (June umbrella).",
+              "description": "CIS Control 13, IG3, Network, hardening, prevention. TLCTC: Physical port use (#8) bound to a device or user identity (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6262,7 +6262,7 @@
             {
               "id": "cis-1.2-8",
               "name": "CIS 1.2 — Remove or quarantine unknown devices",
-              "description": "CIS Control 1, IG1, Devices. TLCTC: An unknown device on the network is an unaccounted physical addition (#8); removing it is the response.",
+              "description": "CIS Control 1, IG1, Devices, detection-response. TLCTC: An unknown device on the network is an unaccounted physical addition (#8); removing it is the response.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6335,7 +6335,7 @@
             {
               "id": "cis-14.1-9",
               "name": "CIS 14.1 — Security awareness programme",
-              "description": "CIS Control 14, IG1, Documentation. TLCTC: Programme against human manipulation (#9; CSF PR.AT-01 precedent).",
+              "description": "CIS Control 14, IG1, Documentation, prevention. TLCTC: Programme against human manipulation (#9; CSF PR.AT-01 precedent).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6453,7 +6453,7 @@
             {
               "id": "cis-9.2-9",
               "name": "CIS 9.2 — DNS filtering on end-user devices",
-              "description": "CIS Control 9, IG1, Devices, hardening. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
+              "description": "CIS Control 9, IG1, Devices, hardening, prevention. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6485,7 +6485,7 @@
             {
               "id": "cis-9.3-9",
               "name": "CIS 9.3 — Network URL filtering",
-              "description": "CIS Control 9, IG2, Network, hardening. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
+              "description": "CIS Control 9, IG2, Network, hardening, prevention. TLCTC: Blocks known-bad destinations: lure pages (#9), exploit delivery (#3) and malware download or command channels (#7).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6517,7 +6517,7 @@
             {
               "id": "cis-9.5-9",
               "name": "CIS 9.5 — Sender authentication for mail domains (DMARC)",
-              "description": "CIS Control 9, IG2, Network, hardening. TLCTC: A spoofed sender is the pretext lever of mail-borne manipulation (#9).",
+              "description": "CIS Control 9, IG2, Network, hardening, prevention. TLCTC: A spoofed sender is the pretext lever of mail-borne manipulation (#9).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6549,7 +6549,7 @@
             {
               "id": "cis-14.2-9",
               "name": "CIS 14.2 — Recognise social engineering",
-              "description": "CIS Control 14, IG1, Users. TLCTC: Targets the #9 generic vulnerability directly.",
+              "description": "CIS Control 14, IG1, Users, prevention. TLCTC: Targets the #9 generic vulnerability directly.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6581,7 +6581,7 @@
             {
               "id": "cis-14.3-9",
               "name": "CIS 14.3 — Authentication hygiene training",
-              "description": "CIS Control 14, IG1, Users. TLCTC: People handling credentials: manipulation (#9) and credential binding (#4) (June umbrella).",
+              "description": "CIS Control 14, IG1, Users, prevention. TLCTC: People handling credentials: manipulation (#9) and credential binding (#4) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6613,7 +6613,7 @@
             {
               "id": "cis-14.8-9",
               "name": "CIS 14.8 — Insecure network awareness",
-              "description": "CIS Control 14, IG1, Users. TLCTC: Avoids untrusted paths (#5) and the lures that lead onto them (#9) (June umbrella).",
+              "description": "CIS Control 14, IG1, Users, prevention. TLCTC: Avoids untrusted paths (#5) and the lures that lead onto them (#9) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6816,7 +6816,7 @@
             {
               "id": "cis-15.2-10",
               "name": "CIS 15.2 — Service provider management policy",
-              "description": "CIS Control 15, IG2, Documentation. TLCTC: Governs third-party trust (#10).",
+              "description": "CIS Control 15, IG2, Documentation, prevention. TLCTC: Governs third-party trust (#10).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6848,7 +6848,7 @@
             {
               "id": "cis-15.3-10",
               "name": "CIS 15.3 — Classify service providers",
-              "description": "CIS Control 15, IG2, Users. TLCTC: Prioritises the #10 trust surface.",
+              "description": "CIS Control 15, IG2, Users, prevention. TLCTC: Prioritises the #10 trust surface.",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6880,7 +6880,7 @@
             {
               "id": "cis-15.4-10",
               "name": "CIS 15.4 — Security terms in provider contracts",
-              "description": "CIS Control 15, IG2, Documentation. TLCTC: Contractual conditions on trust (#10; CSF GV.SC-05 precedent).",
+              "description": "CIS Control 15, IG2, Documentation, prevention. TLCTC: Contractual conditions on trust (#10; CSF GV.SC-05 precedent).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6912,7 +6912,7 @@
             {
               "id": "cis-15.5-10",
               "name": "CIS 15.5 — Assess service providers",
-              "description": "CIS Control 15, IG3, Users. TLCTC: Due diligence before and during trust (#10).",
+              "description": "CIS Control 15, IG3, Users, prevention. TLCTC: Due diligence before and during trust (#10).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -6944,7 +6944,7 @@
             {
               "id": "cis-15.6-10",
               "name": "CIS 15.6 — Monitor service providers",
-              "description": "CIS Control 15, IG3, Data. TLCTC: Ongoing check on trusted parties (#10).",
+              "description": "CIS Control 15, IG3, Data, prevention. TLCTC: Ongoing check on trusted parties (#10).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -7037,7 +7037,7 @@
             {
               "id": "cis-15.1-10",
               "name": "CIS 15.1 — Service provider inventory",
-              "description": "CIS Control 15, IG1, Users. TLCTC: The trust relationships #10 can subvert (CSF ID.AM-04 precedent).",
+              "description": "CIS Control 15, IG1, Users, prevention. TLCTC: The trust relationships #10 can subvert (CSF ID.AM-04 precedent).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -7069,7 +7069,7 @@
             {
               "id": "cis-16.4-10",
               "name": "CIS 16.4 — Bill of materials for third-party components",
-              "description": "CIS Control 16, IG2, Software. TLCTC: Knows which third-party code the product trusts (#10).",
+              "description": "CIS Control 16, IG2, Software, prevention. TLCTC: Knows which third-party code the product trusts (#10).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -7127,7 +7127,7 @@
             {
               "id": "cis-7.4-10",
               "name": "CIS 7.4 — Automated application patching",
-              "description": "CIS Control 7, IG1, Software. TLCTC: Spans server-role and client-role flaws and third-party components (#10) (June umbrella).",
+              "description": "CIS Control 7, IG1, Software, prevention. TLCTC: Spans server-role and client-role flaws and third-party components (#10) (June umbrella).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -7159,7 +7159,7 @@
             {
               "id": "cis-15.7-10",
               "name": "CIS 15.7 — Secure provider offboarding",
-              "description": "CIS Control 15, IG3, Data. TLCTC: Ends leftover access: provider credentials (#4) and trust paths (#10).",
+              "description": "CIS Control 15, IG3, Data, prevention. TLCTC: Ends leftover access: provider credentials (#4) and trust paths (#10).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -7191,7 +7191,7 @@
             {
               "id": "cis-16.5-10",
               "name": "CIS 16.5 — Current, trusted third-party components",
-              "description": "CIS Control 16, IG2, Software. TLCTC: Vetted sources (#10) and patched component flaws by role (#2/#3).",
+              "description": "CIS Control 16, IG2, Software, prevention. TLCTC: Vetted sources (#10) and patched component flaws by role (#2/#3).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",
@@ -7289,7 +7289,7 @@
             {
               "id": "cis-8.12-10",
               "name": "CIS 8.12 — Service provider logs collected",
-              "description": "CIS Control 8, IG3, Data. TLCTC: Visibility into what trusted third parties do (#10; CSF DE.CM-06 precedent).",
+              "description": "CIS Control 8, IG3, Data, detection-response. TLCTC: Visibility into what trusted third parties do (#10; CSF DE.CM-06 precedent).",
               "linkMore": "https://www.cisecurity.org/controls/v8-1",
               "ownerName": "",
               "ownerOrgChart": "",

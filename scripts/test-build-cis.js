@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 const { validate, buildStarter, stats } = require('./build-cis.js');
 
 const sg = (id, extra = {}) => ({ id, control: +id.split('.')[0], asset_class: 'Software', function: 'PR', ig: 1,
-  topic: 'unused services off', clusters: ['#1'], kind: 'tech', hardening: true, rationale: 'Narrows the configured surface (#1).', ...extra });
+  topic: 'unused services off', clusters: ['#1'], side: 'P', kind: 'tech', hardening: true, rationale: 'Narrows the configured surface (#1).', ...extra });
 const doc = (safeguards) => ({ meta: { mapping_date: '2026-10-01' }, safeguards });
 // 9 Safeguards for Controls 1–9, 8 for 10–18 = 153 (only the totals are checked, not CIS's real per-control counts)
 const full = () => doc(Array.from({ length: 18 }, (_, c) => Array.from({ length: c < 9 ? 9 : 8 }, (_, s) => sg(`${c + 1}.${s + 1}`))).flat());
@@ -50,8 +50,8 @@ test('duplicate ids are reported', () => {
 test('starter places Local, shared Umbrella and nothing for "none"', () => {
   const m = full();
   Object.assign(m.safeguards[0], { function: 'PR', clusters: ['#1', '#4'] });
-  Object.assign(m.safeguards[1], { function: 'DE', clusters: 'all', hardening: false });
-  Object.assign(m.safeguards[2], { function: 'GV', clusters: 'none', hardening: false });
+  Object.assign(m.safeguards[1], { function: 'DE', clusters: 'all', side: undefined, hardening: false });
+  Object.assign(m.safeguards[2], { function: 'GV', clusters: 'none', side: undefined, hardening: false });
   const st = buildStarter(m);
   const cells = st.environments[0].cells;
   assert.equal(Object.keys(cells).length, 60);
@@ -67,7 +67,7 @@ test('starter places Local, shared Umbrella and nothing for "none"', () => {
 test('stats count hardening per cluster', () => {
   const m = full(); // every row: ['#1'], hardening true
   Object.assign(m.safeguards[0], { clusters: ['#4', '#5'] });
-  Object.assign(m.safeguards[1], { clusters: 'all', hardening: false });
+  Object.assign(m.safeguards[1], { clusters: 'all', side: undefined, hardening: false });
   const s = stats(m);
   assert.equal(s.hardening, 152);
   assert.equal(s.hardeningByCluster['#1'], 151);
@@ -80,7 +80,7 @@ test('stats count hardening per cluster', () => {
 const { dreMatrix } = require('./build-cis.js');
 
 test('data-layer entries: dre codes instead of clusters', () => {
-  const ok = full(); Object.assign(ok.safeguards[5], { clusters: null, dre: ['C'], function: 'PR' });
+  const ok = full(); Object.assign(ok.safeguards[5], { clusters: null, dre: ['C'], function: 'PR', side: undefined });
   assert.deepEqual(validate(ok), []);
   const cases = [
     [{ clusters: ['#8'], dre: ['C'] }, /either clusters or dre/],
@@ -90,16 +90,16 @@ test('data-layer entries: dre codes instead of clusters', () => {
     [{ clusters: null, dre: 'some' }, /dre must be an array or "all"/],
   ];
   for (const [patch, re] of cases) {
-    const m = full(); Object.assign(m.safeguards[5], patch);
+    const m = full(); Object.assign(m.safeguards[5], { side: undefined }, patch);
     assert.match(validate(m).join('\n'), re, JSON.stringify(patch));
   }
 });
 
 test('data-layer entries stay out of the cluster starter and fill the DRE matrix', () => {
   const m = full();
-  Object.assign(m.safeguards[5], { clusters: null, dre: ['C'], function: 'PR' });
-  Object.assign(m.safeguards[6], { clusters: null, dre: ['Ii', 'Av', 'Ac'], function: 'RC' });
-  Object.assign(m.safeguards[7], { clusters: null, dre: 'all', function: 'ID' });
+  Object.assign(m.safeguards[5], { clusters: null, dre: ['C'], function: 'PR', side: undefined });
+  Object.assign(m.safeguards[6], { clusters: null, dre: ['Ii', 'Av', 'Ac'], function: 'RC', side: undefined });
+  Object.assign(m.safeguards[7], { clusters: null, dre: 'all', function: 'ID', side: undefined });
   assert.ok(!JSON.stringify(buildStarter(m)).includes('"cis-1.6'));
   const d = dreMatrix(m);
   assert.deepEqual(d.rows, ['C', 'Ii', 'If', 'Av', 'Ac']);
@@ -110,4 +110,31 @@ test('data-layer entries stay out of the cluster starter and fill the DRE matrix
   const s = stats(m);
   assert.equal(s.dataLayer, 3);
   assert.equal(s.byDre.C, 2);
+});
+
+test('Bow-Tie side is judged per cluster-acting Safeguard', () => {
+  const withSide = () => { const m = full(); m.safeguards.forEach((s) => { s.side = 'P'; }); return m; };
+  assert.deepEqual(validate(withSide()), []);
+  const missing = withSide(); delete missing.safeguards[3].side;
+  assert.match(validate(missing).join('\n'), /1\.4: side must be P or DR/);
+  const stray = withSide(); Object.assign(stray.safeguards[4], { clusters: 'all' });
+  assert.match(validate(stray).join('\n'), /1\.5: side only on cluster-acting/);
+  const m = withSide(); m.safeguards[0].side = 'DR'; m.safeguards[0].clusters = ['#4', '#7'];
+  const s = stats(m);
+  assert.deepEqual(s.bySide['#4'], { P: 0, DR: 1 });
+  assert.equal(s.bySide['#1'].P, 152);
+});
+
+test('DRE starter for the DRE Matrix tool', () => {
+  const { buildDreStarter } = require('./build-cis.js');
+  const m = full(); m.safeguards.forEach((s) => { s.side = 'P'; });
+  Object.assign(m.safeguards[5], { clusters: null, dre: ['C'], function: 'PR', side: undefined });
+  Object.assign(m.safeguards[6], { clusters: null, dre: 'all', function: 'ID', side: undefined });
+  const st = buildDreStarter(m);
+  assert.equal(st.tool, 'TLCTC DRE Matrix');
+  assert.equal(Object.keys(st.cells).length, 30);
+  assert.equal(st.cells['C-PR'][0].id, 'cis-1.6-C');
+  assert.equal(st.cells['C-PR'][0].name, 'CIS 1.6 — unused services off');
+  assert.equal(st.cells['Ac-ID'][0].scope, 'umbrella');
+  assert.equal(st.cells['C-PR'][0].scope, 'local');
 });
