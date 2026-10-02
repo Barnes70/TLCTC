@@ -1,0 +1,262 @@
+{
+  "version": "1.0.0",
+  "tool": "TLCTC DRE Matrix",
+  "exportDate": "2026-09-26T00:00:00.000Z",
+  "orgName": "NIST CSF 2.0 Core — data-layer outcomes",
+  "targetMaturity": 3,
+  "cells": {
+    "C-GV": [],
+    "C-ID": [
+      {
+        "id": "csf-ID.AM-07-C",
+        "name": "ID.AM-07 — Inventories of data and corresponding metadata for designated data types are maintained",
+        "description": "Asset Management (ID.AM). TLCTC: Data inventory: the data at stake in any Data Risk Event; data-layer enabler for every DRE row (as CIS 3.2).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "C-PR": [
+      {
+        "id": "csf-PR.DS-01-C",
+        "name": "PR.DS-01 — The confidentiality, integrity, and availability of data-at-rest are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-at-rest protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      },
+      {
+        "id": "csf-PR.DS-10-C",
+        "name": "PR.DS-10 — The confidentiality, integrity, and availability of data-in-use are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-in-use protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "C-DE": [],
+    "C-RS": [],
+    "C-RC": [],
+    "Ii-GV": [],
+    "Ii-ID": [
+      {
+        "id": "csf-ID.AM-07-Ii",
+        "name": "ID.AM-07 — Inventories of data and corresponding metadata for designated data types are maintained",
+        "description": "Asset Management (ID.AM). TLCTC: Data inventory: the data at stake in any Data Risk Event; data-layer enabler for every DRE row (as CIS 3.2).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "Ii-PR": [
+      {
+        "id": "csf-PR.DS-01-Ii",
+        "name": "PR.DS-01 — The confidentiality, integrity, and availability of data-at-rest are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-at-rest protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      },
+      {
+        "id": "csf-PR.DS-10-Ii",
+        "name": "PR.DS-10 — The confidentiality, integrity, and availability of data-in-use are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-in-use protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      },
+      {
+        "id": "csf-PR.DS-11-Ii",
+        "name": "PR.DS-11 — Backups of data are created, protected, maintained, and tested",
+        "description": "Data Security (PR.DS). TLCTC: Backups restore altered (Ii), lost (Av) and unusable (Ac) data; they cannot repair misattribution (If). Data layer, as CIS 11.2.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "Ii-DE": [],
+    "Ii-RS": [],
+    "Ii-RC": [
+      {
+        "id": "csf-RC.RP-03-Ii",
+        "name": "RC.RP-03 — The integrity of backups and other restoration assets is verified before using them for restoration",
+        "description": "Incident Recovery Plan Execution (RC.RP). TLCTC: Verifying backups before restoring keeps altered data from coming back (Ii) and proves lost or unusable data can be restored (Av, Ac).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "If-GV": [],
+    "If-ID": [
+      {
+        "id": "csf-ID.AM-07-If",
+        "name": "ID.AM-07 — Inventories of data and corresponding metadata for designated data types are maintained",
+        "description": "Asset Management (ID.AM). TLCTC: Data inventory: the data at stake in any Data Risk Event; data-layer enabler for every DRE row (as CIS 3.2).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "If-PR": [
+      {
+        "id": "csf-PR.DS-01-If",
+        "name": "PR.DS-01 — The confidentiality, integrity, and availability of data-at-rest are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-at-rest protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      },
+      {
+        "id": "csf-PR.DS-10-If",
+        "name": "PR.DS-10 — The confidentiality, integrity, and availability of data-in-use are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-in-use protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "If-DE": [],
+    "If-RS": [],
+    "If-RC": [],
+    "Av-GV": [],
+    "Av-ID": [
+      {
+        "id": "csf-ID.AM-07-Av",
+        "name": "ID.AM-07 — Inventories of data and corresponding metadata for designated data types are maintained",
+        "description": "Asset Management (ID.AM). TLCTC: Data inventory: the data at stake in any Data Risk Event; data-layer enabler for every DRE row (as CIS 3.2).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "Av-PR": [
+      {
+        "id": "csf-PR.DS-01-Av",
+        "name": "PR.DS-01 — The confidentiality, integrity, and availability of data-at-rest are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-at-rest protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      },
+      {
+        "id": "csf-PR.DS-10-Av",
+        "name": "PR.DS-10 — The confidentiality, integrity, and availability of data-in-use are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-in-use protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      },
+      {
+        "id": "csf-PR.DS-11-Av",
+        "name": "PR.DS-11 — Backups of data are created, protected, maintained, and tested",
+        "description": "Data Security (PR.DS). TLCTC: Backups restore altered (Ii), lost (Av) and unusable (Ac) data; they cannot repair misattribution (If). Data layer, as CIS 11.2.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "Av-DE": [],
+    "Av-RS": [],
+    "Av-RC": [
+      {
+        "id": "csf-RC.RP-03-Av",
+        "name": "RC.RP-03 — The integrity of backups and other restoration assets is verified before using them for restoration",
+        "description": "Incident Recovery Plan Execution (RC.RP). TLCTC: Verifying backups before restoring keeps altered data from coming back (Ii) and proves lost or unusable data can be restored (Av, Ac).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "Ac-GV": [],
+    "Ac-ID": [
+      {
+        "id": "csf-ID.AM-07-Ac",
+        "name": "ID.AM-07 — Inventories of data and corresponding metadata for designated data types are maintained",
+        "description": "Asset Management (ID.AM). TLCTC: Data inventory: the data at stake in any Data Risk Event; data-layer enabler for every DRE row (as CIS 3.2).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "Ac-PR": [
+      {
+        "id": "csf-PR.DS-01-Ac",
+        "name": "PR.DS-01 — The confidentiality, integrity, and availability of data-at-rest are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-at-rest protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      },
+      {
+        "id": "csf-PR.DS-10-Ac",
+        "name": "PR.DS-10 — The confidentiality, integrity, and availability of data-in-use are protected",
+        "description": "Data Security (PR.DS). TLCTC: Data-in-use protection acts after the System Risk Event, at the Data Risk Event; CSF names confidentiality, integrity and availability, so every DRE row.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "umbrella",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      },
+      {
+        "id": "csf-PR.DS-11-Ac",
+        "name": "PR.DS-11 — Backups of data are created, protected, maintained, and tested",
+        "description": "Data Security (PR.DS). TLCTC: Backups restore altered (Ii), lost (Av) and unusable (Ac) data; they cannot repair misattribution (If). Data layer, as CIS 11.2.",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ],
+    "Ac-DE": [],
+    "Ac-RS": [],
+    "Ac-RC": [
+      {
+        "id": "csf-RC.RP-03-Ac",
+        "name": "RC.RP-03 — The integrity of backups and other restoration assets is verified before using them for restoration",
+        "description": "Incident Recovery Plan Execution (RC.RP). TLCTC: Verifying backups before restoring keeps altered data from coming back (Ii) and proves lost or unusable data can be restored (Av, Ac).",
+        "kind": "tech",
+        "maturity": 0,
+        "owner": "",
+        "scope": "local",
+        "linkMore": "https://doi.org/10.6028/NIST.CSWP.29"
+      }
+    ]
+  }
+}

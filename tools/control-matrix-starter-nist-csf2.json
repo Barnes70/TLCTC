@@ -171,11 +171,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-ID.AM-07-1",
-              "sharedControlId": "csf-ID.AM-07",
-              "maturity": 0
-            },
-            {
               "id": "csf-ID.AM-08-1",
               "sharedControlId": "csf-ID.AM-08",
               "maturity": 0
@@ -335,21 +330,6 @@
             {
               "id": "csf-PR.AT-02-1",
               "sharedControlId": "csf-PR.AT-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-01-1",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-1",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-1",
-              "sharedControlId": "csf-PR.DS-11",
               "maturity": 0
             },
             {
@@ -528,11 +508,6 @@
             {
               "id": "csf-RC.RP-02-1",
               "sharedControlId": "csf-RC.RP-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-RC.RP-03-1",
-              "sharedControlId": "csf-RC.RP-03",
               "maturity": 0
             },
             {
@@ -756,11 +731,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-ID.AM-07-2",
-              "sharedControlId": "csf-ID.AM-07",
-              "maturity": 0
-            },
-            {
               "id": "csf-ID.AM-08-2",
               "sharedControlId": "csf-ID.AM-08",
               "maturity": 0
@@ -888,21 +858,6 @@
             {
               "id": "csf-PR.AT-02-2",
               "sharedControlId": "csf-PR.AT-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-01-2",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-2",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-2",
-              "sharedControlId": "csf-PR.DS-11",
               "maturity": 0
             },
             {
@@ -1081,11 +1036,6 @@
             {
               "id": "csf-RC.RP-02-2",
               "sharedControlId": "csf-RC.RP-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-RC.RP-03-2",
-              "sharedControlId": "csf-RC.RP-03",
               "maturity": 0
             },
             {
@@ -1309,11 +1259,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-ID.AM-07-3",
-              "sharedControlId": "csf-ID.AM-07",
-              "maturity": 0
-            },
-            {
               "id": "csf-ID.AM-08-3",
               "sharedControlId": "csf-ID.AM-08",
               "maturity": 0
@@ -1441,21 +1386,6 @@
             {
               "id": "csf-PR.AT-02-3",
               "sharedControlId": "csf-PR.AT-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-01-3",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-3",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-3",
-              "sharedControlId": "csf-PR.DS-11",
               "maturity": 0
             },
             {
@@ -1637,11 +1567,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-RC.RP-03-3",
-              "sharedControlId": "csf-RC.RP-03",
-              "maturity": 0
-            },
-            {
               "id": "csf-RC.RP-04-3",
               "sharedControlId": "csf-RC.RP-04",
               "maturity": 0
@@ -1794,11 +1719,6 @@
             {
               "id": "csf-ID.AM-05-4",
               "sharedControlId": "csf-ID.AM-05",
-              "maturity": 0
-            },
-            {
-              "id": "csf-ID.AM-07-4",
-              "sharedControlId": "csf-ID.AM-07",
               "maturity": 0
             },
             {
@@ -1996,21 +1916,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-PR.DS-01-4",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-4",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-4",
-              "sharedControlId": "csf-PR.DS-11",
-              "maturity": 0
-            },
-            {
               "id": "csf-PR.PS-03-4",
               "sharedControlId": "csf-PR.PS-03",
               "maturity": 0
@@ -2189,11 +2094,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-RC.RP-03-4",
-              "sharedControlId": "csf-RC.RP-03",
-              "maturity": 0
-            },
-            {
               "id": "csf-RC.RP-04-4",
               "sharedControlId": "csf-RC.RP-04",
               "maturity": 0
@@ -2349,11 +2249,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-ID.AM-07-5",
-              "sharedControlId": "csf-ID.AM-07",
-              "maturity": 0
-            },
-            {
               "id": "csf-ID.AM-08-5",
               "sharedControlId": "csf-ID.AM-08",
               "maturity": 0
@@ -2481,21 +2376,6 @@
             {
               "id": "csf-PR.AT-02-5",
               "sharedControlId": "csf-PR.AT-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-01-5",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-5",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-5",
-              "sharedControlId": "csf-PR.DS-11",
               "maturity": 0
             },
             {
@@ -2641,11 +2521,6 @@
             {
               "id": "csf-RC.RP-02-5",
               "sharedControlId": "csf-RC.RP-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-RC.RP-03-5",
-              "sharedControlId": "csf-RC.RP-03",
               "maturity": 0
             },
             {
@@ -2804,11 +2679,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-ID.AM-07-6",
-              "sharedControlId": "csf-ID.AM-07",
-              "maturity": 0
-            },
-            {
               "id": "csf-ID.AM-08-6",
               "sharedControlId": "csf-ID.AM-08",
               "maturity": 0
@@ -2904,21 +2774,6 @@
             {
               "id": "csf-PR.AT-02-6",
               "sharedControlId": "csf-PR.AT-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-01-6",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-6",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-6",
-              "sharedControlId": "csf-PR.DS-11",
               "maturity": 0
             },
             {
@@ -3064,11 +2919,6 @@
             {
               "id": "csf-RC.RP-02-6",
               "sharedControlId": "csf-RC.RP-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-RC.RP-03-6",
-              "sharedControlId": "csf-RC.RP-03",
               "maturity": 0
             },
             {
@@ -3227,11 +3077,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-ID.AM-07-7",
-              "sharedControlId": "csf-ID.AM-07",
-              "maturity": 0
-            },
-            {
               "id": "csf-ID.AM-08-7",
               "sharedControlId": "csf-ID.AM-08",
               "maturity": 0
@@ -3327,21 +3172,6 @@
             {
               "id": "csf-PR.AT-02-7",
               "sharedControlId": "csf-PR.AT-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-01-7",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-7",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-7",
-              "sharedControlId": "csf-PR.DS-11",
               "maturity": 0
             },
             {
@@ -3523,11 +3353,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-RC.RP-03-7",
-              "sharedControlId": "csf-RC.RP-03",
-              "maturity": 0
-            },
-            {
               "id": "csf-RC.RP-04-7",
               "sharedControlId": "csf-RC.RP-04",
               "maturity": 0
@@ -3683,11 +3508,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-ID.AM-07-8",
-              "sharedControlId": "csf-ID.AM-07",
-              "maturity": 0
-            },
-            {
               "id": "csf-ID.AM-08-8",
               "sharedControlId": "csf-ID.AM-08",
               "maturity": 0
@@ -3783,21 +3603,6 @@
             {
               "id": "csf-PR.AT-02-8",
               "sharedControlId": "csf-PR.AT-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-01-8",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-8",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-8",
-              "sharedControlId": "csf-PR.DS-11",
               "maturity": 0
             },
             {
@@ -3979,11 +3784,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-RC.RP-03-8",
-              "sharedControlId": "csf-RC.RP-03",
-              "maturity": 0
-            },
-            {
               "id": "csf-RC.RP-04-8",
               "sharedControlId": "csf-RC.RP-04",
               "maturity": 0
@@ -4139,11 +3939,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-ID.AM-07-9",
-              "sharedControlId": "csf-ID.AM-07",
-              "maturity": 0
-            },
-            {
               "id": "csf-ID.AM-08-9",
               "sharedControlId": "csf-ID.AM-08",
               "maturity": 0
@@ -4239,21 +4034,6 @@
             {
               "id": "csf-PR.AT-02-9",
               "sharedControlId": "csf-PR.AT-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-01-9",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-9",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-9",
-              "sharedControlId": "csf-PR.DS-11",
               "maturity": 0
             },
             {
@@ -4399,11 +4179,6 @@
             {
               "id": "csf-RC.RP-02-9",
               "sharedControlId": "csf-RC.RP-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-RC.RP-03-9",
-              "sharedControlId": "csf-RC.RP-03",
               "maturity": 0
             },
             {
@@ -4980,11 +4755,6 @@
               "maturity": 0
             },
             {
-              "id": "csf-ID.AM-07-10",
-              "sharedControlId": "csf-ID.AM-07",
-              "maturity": 0
-            },
-            {
               "id": "csf-ID.AM-08-10",
               "sharedControlId": "csf-ID.AM-08",
               "maturity": 0
@@ -5047,21 +4817,6 @@
             {
               "id": "csf-PR.AT-02-10",
               "sharedControlId": "csf-PR.AT-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-01-10",
-              "sharedControlId": "csf-PR.DS-01",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-10-10",
-              "sharedControlId": "csf-PR.DS-10",
-              "maturity": 0
-            },
-            {
-              "id": "csf-PR.DS-11-10",
-              "sharedControlId": "csf-PR.DS-11",
               "maturity": 0
             },
             {
@@ -5240,11 +4995,6 @@
             {
               "id": "csf-RC.RP-02-10",
               "sharedControlId": "csf-RC.RP-02",
-              "maturity": 0
-            },
-            {
-              "id": "csf-RC.RP-03-10",
-              "sharedControlId": "csf-RC.RP-03",
               "maturity": 0
             },
             {
@@ -5711,24 +5461,6 @@
       }
     },
     {
-      "id": "csf-ID.AM-07",
-      "name": "ID.AM-07 — Inventories of data and corresponding metadata for designated data types are maintained",
-      "description": "Asset Management (ID.AM). TLCTC: Data inventory; the data at risk in any DRE, cause-neutral.",
-      "linkMore": "https://doi.org/10.6028/NIST.CSWP.29",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
       "id": "csf-ID.AM-08",
       "name": "ID.AM-08 — Systems, hardware, software, services, and data are managed throughout their life cycles",
       "description": "Asset Management (ID.AM). TLCTC: Life-cycle management; cause-neutral.",
@@ -5934,60 +5666,6 @@
       "ownerName": "",
       "ownerOrgChart": "",
       "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "csf-PR.DS-01",
-      "name": "PR.DS-01 — The confidentiality, integrity, and availability of data-at-rest are protected",
-      "description": "Data Security (PR.DS). TLCTC: Data-at-rest protection limits the DRE whichever cluster reached the data; consequence side.",
-      "linkMore": "https://doi.org/10.6028/NIST.CSWP.29",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "csf-PR.DS-10",
-      "name": "PR.DS-10 — The confidentiality, integrity, and availability of data-in-use are protected",
-      "description": "Data Security (PR.DS). TLCTC: Data-in-use protection limits the DRE whichever cluster reached the data; consequence side.",
-      "linkMore": "https://doi.org/10.6028/NIST.CSWP.29",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "csf-PR.DS-11",
-      "name": "PR.DS-11 — Backups of data are created, protected, maintained, and tested",
-      "description": "Data Security (PR.DS). TLCTC: Backups restore availability after any cluster; consequence side.",
-      "linkMore": "https://doi.org/10.6028/NIST.CSWP.29",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
       "scope": "all",
       "linkJira": "",
       "cde_max": {
@@ -6456,24 +6134,6 @@
       "ownerName": "",
       "ownerOrgChart": "",
       "kind": "org",
-      "scope": "all",
-      "linkJira": "",
-      "cde_max": {
-        "value": null,
-        "rationale": "",
-        "set_by": "",
-        "last_reviewed": "",
-        "review_trigger": ""
-      }
-    },
-    {
-      "id": "csf-RC.RP-03",
-      "name": "RC.RP-03 — The integrity of backups and other restoration assets is verified before using them for restoration",
-      "description": "Incident Recovery Plan Execution (RC.RP). TLCTC: Backup integrity verification; consequence side.",
-      "linkMore": "https://doi.org/10.6028/NIST.CSWP.29",
-      "ownerName": "",
-      "ownerOrgChart": "",
-      "kind": "tech",
       "scope": "all",
       "linkJira": "",
       "cde_max": {

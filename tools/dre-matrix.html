@@ -192,6 +192,8 @@ const STARTERS = [
     { id: 'empty', label: 'Empty matrix', file: null, desc: 'All 30 cells empty — start from scratch.' },
     { id: 'cis81', label: 'CIS Controls v8.1.2 (18 data-layer Safeguards)', file: 'dre-matrix-starter-cis-v8.1.json',
       desc: 'Encryption at rest, retention, disposal, DLP, remote wipe, backups and data governance, placed by DRE code. Ids and TLCTC topics only (no CIS text).' },
+    { id: 'nistcsf2', label: 'NIST CSF 2.0 Core (5 data-layer outcomes)', file: 'dre-matrix-starter-nist-csf2.json',
+      desc: 'Data-at-rest and data-in-use protection, backups, backup verification and data inventories (PR.DS-01, PR.DS-10, PR.DS-11, RC.RP-03, ID.AM-07), verbatim from CSWP 29.' },
 ];
 
 const STORAGE_KEY = 'tlctc-dre-matrix-v1';
@@ -316,7 +318,7 @@ function MobileNavMenu({ open, onClose }) {
     if (!open) return null;
     const currentPath = window.location.pathname.split('/').pop() || '';
     return (
-        <div className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden" onClick={onClose}>
+        <div className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm lg:hidden" onClick={onClose}>
             <div className="flex h-14 items-center justify-between px-6 border-b border-border" onClick={e => e.stopPropagation()}>
                 <span className="font-display font-bold text-lg">TLCTC</span>
                 <button onClick={onClose} className="app-btn h-10 w-10 p-0 rounded-full hover:bg-secondary"><Icon name="x" size={24} /></button>
@@ -583,7 +585,7 @@ function App() {
                         <span className="text-[10px] text-muted-foreground font-medium hidden sm:block uppercase tracking-wider">Apps</span>
                     </div>
                 </a>
-                <nav className="hidden md:flex items-center gap-1">
+                <nav className="hidden lg:flex items-center gap-1">
                     {NAV_GROUPS.map(g => <NavDropdown key={g.id} group={g} />)}
                     <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors">TLCTC.net <Icon name="external-link" size={12} /></a>
                     <a href="https://github.com/Barnes70/TLCTC" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:bg-secondary transition-colors"><Icon name="github" size={16} /></a>
@@ -594,7 +596,7 @@ function App() {
                     <input ref={fileRef} type="file" accept=".json,application/json" className="hidden" onChange={importJSON} />
                     <button onClick={reset} className="app-btn app-btn-outline app-btn-sm gap-1 !text-red-600 dark:!text-red-400 hover:bg-red-500/10" title="Reset — clear all data"><Icon name="trash-2" size={14} /> <span className="hidden sm:inline">Reset</span></button>
                     <button onClick={() => setDarkMode(d => !d)} className="app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Toggle theme"><Icon name={darkMode ? 'sun' : 'moon'} size={16} /></button>
-                    <button onClick={() => setMobileMenu(true)} className="md:hidden app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Menu"><Icon name="menu" size={18} /></button>
+                    <button onClick={() => setMobileMenu(true)} className="lg:hidden app-btn h-9 w-9 p-0 rounded-full hover:bg-secondary" title="Menu"><Icon name="menu" size={18} /></button>
                 </div>
             </header>
             <MobileNavMenu open={mobileMenu} onClose={() => setMobileMenu(false)} />
