@@ -1,5 +1,5 @@
 # Changelog
 
-## 2026-09-25
+## 2026-10-04
 
-- Initial OKF bundle generated from TLCTC v2.6 sources (439 documents).
+- Initial OKF bundle generated from TLCTC v2.6 sources (440 documents).
