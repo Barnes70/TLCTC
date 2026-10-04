@@ -1,6 +1,6 @@
 # attack paths
 
-59 document(s).
+60 document(s).
 
 - [AD-DOMAIN-ADMIN-CASCADE-2025](/attack-paths/ad-domain-admin-cascade-2025.md) — `attack-path`
 - [AGENT-BTZ-USB-2008](/attack-paths/agent-btz-usb-2008.md) — `attack-path`
@@ -60,4 +60,5 @@
 - [UBER-BREACH-2016](/attack-paths/uber-breach-2016.md) — `attack-path`
 - [UBIQUITI-BEC-2015](/attack-paths/ubiquiti-bec-2015.md) — `attack-path`
 - [UKRAINE-POWER-GRID-2015](/attack-paths/ukraine-power-grid-2015.md) — `attack-path`
+- [WARLOCK-LONGLEGS-SHAREPOINT-2026](/attack-paths/warlock-longlegs-sharepoint-2026.md) — `attack-path`
 - [WATERING-HOLE-IPHONEDEVSDK-2013](/attack-paths/watering-hole-iphonedevsdk-2013.md) — `attack-path`

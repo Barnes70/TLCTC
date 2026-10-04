@@ -3,9 +3,9 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.6",
   "generator": "scripts/build-okf.js",
-  "document_count": 439,
+  "document_count": 440,
   "type_counts": {
-    "attack-path": 59,
+    "attack-path": 60,
     "axiom": 10,
     "boundary-context": 17,
     "cluster": 10,
@@ -344,8 +344,8 @@
         "attack-path",
         "cluster-4",
         "cluster-1",
-        "cluster-3",
         "cluster-7",
+        "cluster-2",
         "confidence-high"
       ]
     },
@@ -851,6 +851,21 @@
         "cluster-4",
         "cluster-1",
         "confidence-high"
+      ]
+    },
+    {
+      "path": "/attack-paths/warlock-longlegs-sharepoint-2026.md",
+      "type": "attack-path",
+      "title": "WARLOCK-LONGLEGS-SHAREPOINT-2026",
+      "description": "Warlock ransomware intrusion by the China-nexus group Symantec tracks as Longlegs (also Storm-2603, Gold Salem) against a critical-infrastructure operator in a Portuguese- or Spanish-speaking country, 22-31 July 2026; one of at least four victims in two months (a water utility, a telecommunications provider, a regional government body, a university).",
+      "resource": "tlctc:attack-path:warlock-longlegs-sharepoint-2026",
+      "tags": [
+        "attack-path",
+        "cluster-2",
+        "cluster-7",
+        "cluster-4",
+        "cluster-1",
+        "confidence-medium"
       ]
     },
     {

@@ -1,0 +1,72 @@
+---
+type: "attack-path"
+title: "WARLOCK-LONGLEGS-SHAREPOINT-2026"
+description: "Warlock ransomware intrusion by the China-nexus group Symantec tracks as Longlegs (also Storm-2603, Gold Salem) against a critical-infrastructure operator in a Portuguese- or Spanish-speaking country, 22-31 July 2026; one of at least four victims in two months (a water utility, a telecommunications provider, a regional government body, a university)."
+resource: "tlctc:attack-path:warlock-longlegs-sharepoint-2026"
+tags:
+  - "attack-path"
+  - "cluster-2"
+  - "cluster-7"
+  - "cluster-4"
+  - "cluster-1"
+  - "confidence-medium"
+timestamp: "2026-10-04T00:00:00Z"
+tlctc_version: "2.6"
+---
+# WARLOCK-LONGLEGS-SHAREPOINT-2026
+
+## Attack path
+
+```
+||[prod][@External→@Org]|| #2 →[Δt=instant] #7 (FEC) + [DRE: C] →[Δt=<=6d] #4 →[Δt=instant] #7 (FEC) →[Δt=~days] #1 →[Δt=~hours] #1 →[Δt=~minutes] #7 (FEC) →[Δt=~1d] #4 →[Δt=~minutes] #1 →[Δt=~hours] ||[cloud][@Microsoft⇒@External→@Org]|| #1 →[Δt=~1d] #7 (FEC) →[Δt=~minutes] #1 →[Δt=?] … →[Δt=?] #4 →[Δt=~seconds] #1 →[Δt=~seconds] #7 (FEC) →[Δt=~seconds] #2 →[Δt=<2h] #1 →[Δt=~hours] #7 (FEC) + [DRE: Ac]
+```
+
+# Schema
+
+| Step | Cluster | Boundary | Δt→next | DRE |
+|---|---|---|---|---|
+| s1-toolshell-exploit | [#2](/clusters/cluster-2.md) | \|\|[prod][@External→@Org]\|\| | instant |  |
+| s2-webshell-machine-keys | [#7](/clusters/cluster-7.md) (FEC) |  | <=6d | C |
+| s3-forged-viewstate | [#4](/clusters/cluster-4.md) |  | instant |  |
+| s4-viewstate-gadget-exec | [#7](/clusters/cluster-7.md) (FEC) |  | ~days |  |
+| s5-lotl-discovery | [#1](/clusters/cluster-1.md) |  | ~hours |  |
+| s6-msiexec-remote-install | [#1](/clusters/cluster-1.md) |  | ~minutes |  |
+| s7-dll-sideloading | [#7](/clusters/cluster-7.md) (FEC) |  | ~1d |  |
+| s8-admin-session-hosts-3-5 | [#4](/clusters/cluster-4.md) |  | ~minutes |  |
+| s9-local-admin-membership | [#1](/clusters/cluster-1.md) |  | ~hours |  |
+| s10-vscode-tunnel | [#1](/clusters/cluster-1.md) | \|\|[cloud][@Microsoft⇒@External→@Org]\|\| | ~1d |  |
+| s11-netexec-exec | [#7](/clusters/cluster-7.md) (FEC) |  | ~minutes |  |
+| s12-ad-enum-remote-exec | [#1](/clusters/cluster-1.md) |  | ? |  |
+| s13-domain-credential-acquisition | … (unresolved) |  | ? | |
+| s14-tool-share-auth | [#4](/clusters/cluster-4.md) |  | ~seconds |  |
+| s15-copy-and-start-killer | [#1](/clusters/cluster-1.md) |  | ~seconds |  |
+| s16-av-edr-killer-exec | [#7](/clusters/cluster-7.md) (FEC) |  | ~seconds |  |
+| s17-k7rkscan-byovd | [#2](/clusters/cluster-2.md) |  | <2h |  |
+| s18-sysvol-staging | [#1](/clusters/cluster-1.md) |  | ~hours |  |
+| s19-warlock-encryption | [#7](/clusters/cluster-7.md) (FEC) |  |  | Ac |
+
+## Step notes
+
+- **s1-toolshell-exploit:** 2026-07-22. Exploitation of the on-premises SharePoint "ToolShell" chain: CVE-2025-49706 (authentication bypass on the ToolPane endpoint) with CVE-2025-49704 / CVE-2025-53770 (deserialization of untrusted data) and CVE-2025-53771. R-ROLE: SharePoint serves the attacker's HTTP requests, so it holds the server role -> #2. The authentication bypass is an implementation flaw in the server's request handling; no credential is presented, so it is part of the #2 step and not #4. One step: both flaws sit in the same server component and are processed in the same request chain (Axiom VI - one generic vulnerability, implementation flaws in server-role software).
+- **s2-webshell-machine-keys:** 2026-07-22. The exploit runs a PowerShell one-liner that writes the webshell layout2sp.aspx into the SharePoint LAYOUTS directory of several SharePoint versions at once; the webshell harvests the farm's ASP.NET machine keys (ValidationKey / DecryptionKey). R-EXEC: attacker-supplied executable content runs (the dropper command and the webshell) -> #7. DRE: C on credential material - the machine keys are signing secrets, and Axiom X / R-CRED put the acquisition (and its DRE) at the enabling step, here the #7.
+- **s3-forged-viewstate:** Up to 2026-07-28. A __VIEWSTATE payload signed with the stolen machine key is accepted by SharePoint as authentic. Axiom X / R-CRED: applying a stolen secret so that the system accepts the attacker's input as authentic is credential application -> #4, separate from the acquisition in s2. No DRE on a #4 step. This is the step that survives patching: until the machine keys are rotated, the attacker can re-enter here without the ToolShell flaws.
+- **s4-viewstate-gadget-exec:** 2026-07-28 (first logged instance). The forged ViewState carries a deserialization gadget (the attacker loads System.Workflow.ComponentModel, whose types provide the gadget) that runs the attacker's commands inside the SharePoint application pool. R-EXEC -> #7. No separate #2: once the MAC is valid, deserializing the ViewState is the designed behaviour of ASP.NET; the flaw that let the attacker reach it without the key was exploited in s1. The reconnaissance in s5 is dated from 24 July, so this access channel was most likely in use before the first logged instance; the order s3/s4 -> s5 follows the mechanism, not the log timestamps.
+- **s5-lotl-discovery:** 2026-07-24 to 2026-07-28. whoami, net user /domain, nltest /domain_trusts run on the SharePoint hosts. Built-in commands used as designed -> #1 (they would work against a perfect implementation).
+- **s6-msiexec-remote-install:** 2026-07-28. msiexec /q /i installs three MSI packages straight from public hosting (litter.catbox.moe, s3.wasabisys.com, xn8xyt-drop.s3.wasabisys.com) within about ninety minutes. msiexec downloading and installing a package from a URL is a designed function -> #1. The packages' content executing is recorded in s7.
+- **s7-dll-sideloading:** 2026-07-28. Signed executables load the attacker's DLLs placed beside them (ssvagent.exe + gsdll64.dll.tmp, logger.exe + doexeloc.dll.tmp, doexe.exe + doexeloc.dll). R-EXEC: the attacker's code executes -> #7. Side-loading is the loading technique of the FEC, not a separate step (the search order works as designed).
+- **s8-admin-session-hosts-3-5:** [inferred] 2026-07-28/29. Running net localgroup administrators on Computers 3, 4 and 5 requires an authenticated administrative session on each host; the report shows the result, not the logon. The account involved, SPSEPRDSetup, has the shape of a SharePoint setup/farm service account. Credential application -> #4 (R-CRED). The acquisition of this credential is not described in the source (plausibly from the SharePoint compromise in s2-s4); it is not recorded as a separate step.
+- **s9-local-admin-membership:** 2026-07-28/29. net localgroup administrators SPSEPRDSetup /add on Computers 3, 4 and 5. Group-membership change is a designed privileged function -> #1.
+- **s10-vscode-tunnel:** 2026-07-28/29. On Computer 4: code-insiders.exe tunnel service install --accept-server-license-terms, run from C:\Windows\debug. VS Code Insiders is Microsoft-signed software and the tunnel is a designed remote-development feature -> #1, not #7 (legitimate tooling is not FEC, like 7-Zip in the AD cascade). Boundary: the tunnel relays through Microsoft's infrastructure, which carries the attacker's connection without being its source or target -> transit (⇒), not #10 (nothing becomes authoritative through a trust artifact).
+- **s11-netexec-exec:** 2026-07-30/31. NetExec (the open-source CrackMapExec successor) runs. An attacker-supplied offensive tool executes -> #7 (R-EXEC). The source also reports credential spraying with it; no successful logon is reported, so spraying is not recorded as a step (successes only).
+- **s12-ad-enum-remote-exec:** 2026-07-30/31. Active Directory enumeration and remote command execution through NetExec over designed LDAP/SMB/remote-administration functions -> #1.
+- **s13-domain-credential-acquisition:** Unresolved (R-UNRES-8). By 31 July the attacker holds credentials that reach almost every host (s14 onwards) and allow writing to SYSVOL (s18). The source does not say how they were obtained. Candidates: a successful spray (#4), a credential dump with built-in tools (#1 + [DRE: C]) or with attacker tooling (#7 + [DRE: C]). None can be defended on the published evidence, so the gap stays open (R-UNRES-9 binary rule) and carries no DRE (R-UNRES-5).
+- **s14-tool-share-auth:** 2026-07-31, early morning. net use \\[IP] [password] /user:[account] - each host authenticates to the attacker's tool share with explicit domain credentials. Credential application -> #4.
+- **s15-copy-and-start-killer:** 2026-07-31. copy \\[IP]\av\* to C:\Users\Public and start a.exe - designed file-copy and process-start functions -> #1. How the command line itself was launched on each host is not shown in the source.
+- **s16-av-edr-killer-exec:** 2026-07-31. The AV/EDR killer a.exe executes; its execution is recorded on at least 40 hosts within about two hours. R-EXEC -> #7. Strategic notation compresses the per-host repetition (×40) into one step.
+- **s17-k7rkscan-byovd:** 2026-07-31. The killer abuses K7RKScan.sys, a signed but vulnerable driver (CVE-2025-1055), to terminate protected security processes from kernel mode. R-ROLE: the driver services IOCTL requests from the killer process, so it holds the server role -> #2 (same reasoning as the CVE-2025-21333 ruling; the BYOVD precedent in lockbit-byovd-2023 was corrected to #2 on 2026-10-04). Loading the signed driver is part of the killer's capability in s16 (FEC feature, no separate step is evidenced). R-INTRA-7: the admin->kernel crossing is an observability annotation.
+- **s18-sysvol-staging:** 2026-07-31. Warlock (run.exe, rune.exe) staged in \\[domain]\SYSVOL\[domain]\scripts\run; the DFS Replication service (dfsrs.exe) is the parent that delivered the files on three hosts, confirming ordinary SYSVOL replication. Writing to SYSVOL with privileged rights and DFSR replication are designed functions -> #1. Pushing the payload (#1) and running it (#7, s19) are separate steps. The execution trigger - a logon script or a GPO - is the source's inference and is not recorded as a step.
+- **s19-warlock-encryption:** 2026-07-31. Each host copies run.exe and rune.exe from SYSVOL to C:\Users\Public and starts them; Warlock executes on at least 33 hosts and leaves "how to restore your files.txt". R-EXEC -> #7. DRE: Ac - the files are present but encrypted (Axiom III: "ransomware" is the outcome label, the cluster is the FEC execution). No exfiltration is reported, so no [DRE: C] on business data.
+
+# Citations
+
+Warlock ransomware intrusion by the China-nexus group Symantec tracks as Longlegs (also Storm-2603, Gold Salem) against a critical-infrastructure operator in a Portuguese- or Spanish-speaking country, 22-31 July 2026; one of at least four victims in two months (a water utility, a telecommunications provider, a regional government body, a university). Entry through on-premises SharePoint ("ToolShell": CVE-2025-49706, CVE-2025-49704, CVE-2025-53770, CVE-2025-53771), theft of the farm's ASP.NET machine keys, forged ViewState for repeatable code execution, LotL discovery, MSI payloads from catbox/wasabisys with DLL side-loading, VS Code tunnel persistence, NetExec, an AV/EDR killer pushed to 40+ hosts in about two hours using the vulnerable K7RKScan.sys driver (CVE-2025-1055, BYOVD), and Warlock staged in SYSVOL and executed on 33+ hosts. Attack path: #2 ||[prod][@External→@Org]|| →[Δt=instant] #7 + [DRE: C] →[Δt≤6d] #4 →[Δt=instant] #7 →[Δt=~days] #1 →[Δt=~hours] #1 →[Δt=~minutes] #7 →[Δt=~1d] #4 [inferred] →[Δt=~minutes] #1 →[Δt=~hours] #1 ||[cloud][@External⇒@Microsoft→@Org]|| →[Δt=~1d] #7 →[Δt=~minutes] #1 →[Δt=?] … →[Δt=?] #4 →[Δt=~seconds] #1 →[Δt=~seconds] #7 →[Δt=~seconds] #2 |[privilege][@admin→@kernel]| →[Δt<2h] #1 →[Δt=~hours] #7 + [DRE: Ac]. Key reading: the machine-key theft (s2) turns a patchable code flaw into a reusable credential - on a server that is patched but whose machine keys were not rotated, the path starts at s3 (#4), not at s1 (#2), which is why the source reports exploitation of "both patched and unpatched" servers. Left out on the evidenced-steps rule: NetExec credential spraying (no success reported), data exfiltration (none reported, so no [DRE: C] on business data), and the trigger that executed the SYSVOL payload (a logon script or GPO is the source's inference). Analyst confidence is medium because the domain-wide credential acquisition (s13) is unresolved and two steps are inferred. Sources: Symantec and Carbon Black Threat Hunter Team, "Warlock Ransomware Attackers Hit Water and Telecom Operators" (security.com, October 2026), primary source with commands and timestamps; The Hacker News, "Warlock Exploits SharePoint Flaws to Disable Security Tools and Deploy Ransomware" (October 2026); Broadcom protection bulletin "Longlegs group attributed to multiple campaigns delivering ransomware".
