@@ -170,6 +170,9 @@ const LEM_FORBIDDEN = [
   'authorised agent',
   'authorised control envelope',
   'Fraud / integrity',
+  'facility risk event',
+  'Facility risk event',
+  'A future revision should',
 ];
 const LEM_REQUIRED = [
   '**Version:** 1.0',
@@ -180,6 +183,9 @@ const LEM_REQUIRED = [
   '## Declarations',
   '### 9.4 A worked case: possession',
   'DCS_d = TTD_P90 / Δt',
+  'This is not a further stipulation; it follows from what a path is.',
+  'A rack loses power',
+  '11. Further S2 levels',
 ];
 if (!exists(LEM_PATH)) note(`${LEM_PATH}: missing`);
 else {

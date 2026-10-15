@@ -112,7 +112,7 @@ Layered models in this area typically fuse several structurally different hierar
 
 **S1 — Substrate (containment) hierarchy.** Orders entities by physical, organisational and computational locality: sites contain hardware; hardware hosts execution environments; environments run processes; organisations control personnel and third parties. Its relations are mereological and custodial. Effects propagate along it by physical and computational mechanism.
 
-**S2 — Event-abstraction hierarchy.** Orders *events* by the description under which they are individuated: facility risk events, system risk events, data risk events, business risk events. This is the operative structure for risk modelling, and it is *not* identical to S1.
+**S2 — Event-abstraction hierarchy.** Orders *events* by the description under which they are individuated. In the instantiation used throughout this paper, the TLCTC framework [28], it has three levels: system risk events (SRE), data risk events (DRE) and business risk events (BRE), linked in the consequence chain SRE → DRE → BRE*. Further levels are possible; §12 names the candidates. This is the operative structure for risk modelling, and it is *not* identical to S1.
 
 **S3 — Representation hierarchy.** Orders descriptions by their relation to what they describe: a world state is recorded as data; data are interpreted as information under a schema and purpose; information supports a decision. Its relations are semantic. A representation can misrepresent, which has no analogue in S1 — a server cannot be *wrong about* a rack.
 
@@ -170,7 +170,7 @@ Threshold definitions are classificatory, not constitutive: "more than 5% failed
 
 **Evidential.** An observation supports an inference about a state. These belong to S4, run from world to observer, and describe access to the model rather than mechanism within it. Treating an evidential edge as causal is a recurrent error in incident reconstruction.
 
-**Δt is defined only for causal edges.** Attaching a duration to a constitutive, classificatory or normative relation asserts a propagation delay where no propagation occurs. Where an analysis appears to need one, the interval being measured is normally a separate causal process — typically detection and response latency, which is an S4 phenomenon with its own edges.
+**Δt is defined only for causal edges.** This is not a further stipulation; it follows from what a path is. A risk path is a chain of events, and only causal connection makes a chain: where one event does not bring about another, the two are not successive links, and there is no transition whose duration could be measured. Attaching a duration to a constitutive, classificatory or normative relation therefore asserts a propagation delay where no propagation occurs. Where an analysis appears to need one, the interval being measured is normally a separate causal process — typically detection and response latency, which is an S4 phenomenon with its own edges.
 
 Deadlines are the instructive case. A statutory notification window — 72 hours under Article 33 GDPR [29] — looks like a Δt on a normative edge. It is not. The norm sets a bound on a separate response process, and the clock starts when the controller becomes aware of the breach, an S4 event, not when the breach occurs. The interval that matters is causal and runs from awareness to notification; the norm fixes how long it may be, and the violation edge holds or not depending on how long it was. The normative edge itself has no duration. In the TLCTC instantiation a business risk event is defined accordingly: "A discrete business-level event on the consequence side, reached from a Data Risk Event or a preceding Business Risk Event by a causal edge (it is brought about, after a Δt) or by a normative edge (a duty arises or a norm is violated, with no Δt of its own). BREs may chain; an organization's risk appetite designates the terminal BRE as its Business Impact, a role a BRE can hold rather than a separate event type." [28] The notification duty is such an event, reached by a normative edge; the filing of the notification is a separate causal act, and only the second carries a Δt.
 
@@ -213,6 +213,8 @@ Applied to a candidate edge e between relata a and b.
 **E4 — Scheme dependence.** Would e cease to hold if a declared classification scheme, service definition or threshold were altered, with the world unchanged? If so, e is classificatory — or normative, where the altered scheme is a norm in S5 (a statute, a regulation, a contract, a policy) rather than a counting or reporting scheme.
 
 E1 and E2 separate causal from non-causal; E3 and E4 separate constitutive from classificatory and normative, and the kind of scheme named in E4 separates the last two.
+
+A test case shows the procedure where intuition is unreliable. A rack loses power and the systems on it go down. Between the loss of power and the halting of the hosts, E1 finds an interval, however short, and E2 finds interventions that break the edge without altering either relatum: an uninterruptible supply, a second feed. That edge is causal and carries a Δt. Between the halting of the hosts and the outage of a service declared to run on exactly those hosts, E1 finds no coherent interval and E3 finds a redescription: given the declared service topology, the outage is what the halted hosts amount to. That edge is constitutive. Had the outage been declared by a criterion — a share of failed requests over a window — E4 would make it classificatory. One incident thus carries three edge types, and the diagnostics assign them edge by edge once the relata are declared. Note N3 records the harder case, in which a single occurrence under two admissible descriptions receives two different types.
 
 ---
 
@@ -274,7 +276,7 @@ Parker's hexad adds *possession* to the classical triad because one case defeats
 
 **Cause-based threat clusters.** A disjoint cause-based threat taxonomy, such as TLCTC [28], operationalises semantic separation *within the system risk event layer*: each attack step is classified by the generic vulnerability causally exercised at that step, preventing multiple mechanism labels from attaching to one transition without decomposition. The claim should be scoped to that layer rather than to the substrate hierarchy, since several clusters act through human vulnerability, third-party relationships or physical access — which is one reason S1 must include organisationally controlled and human assets.
 
-**Entitlement.** The TLCTC cause-side partition shows S5 at work on the cause side. Its third question — did an accountable grantor confer an entitlement covering this action? — is a query against S5, not against the access-control state in S1: the framework separates *permission*, what the access-control system returns, from *entitlement*, what a grantor conferred, and notes that the two frequently diverge [28]. By P1 the unqualified predicate *authorised* would fuse them. Where an entitled actor acts inside the grant but against its purpose (Abuse of Rights), no system risk event occurs: the system was obeyed, not compromised, and the consequence chain begins at the data risk event. The chain then has no SRE above its first node — an instance of the rule of §4 that what an edge connects, and where a chain enters, is determined per case, not by the layer pair.
+**Entitlement.** The TLCTC cause-side partition shows S5 at work on the cause side. Its third question — did an accountable grantor confer an entitlement covering this action? — is a query against S5, not against the access-control state in S1: the framework separates *permission*, what the access-control system returns, from *entitlement*, what a grantor conferred, and notes that the two frequently diverge [28]. By P1 the unqualified predicate *authorised* would fuse them. Where an entitled actor acts inside the grant but against its purpose (Abuse of Rights), no system risk event occurs: the system was obeyed, not compromised, and the consequence chain begins at the data risk event. The chain then has no SRE above its first node — an extension of the rule of §4 that edge type is determined per edge, not by the layer pair: where a chain enters is likewise settled per case.
 
 **Attack paths.** Horizontal causal chains within a layer, with the well-known difficulty of bounding a path corresponding to the crossings identified in §4.
 
@@ -333,7 +335,9 @@ which is not an edge and carries no dynamics. The dependency stratum of §6.1 is
 
 ## 12. Limitations
 
-The layer sets are not argued to be complete. There is no principled derivation of the number of layers within any structure, nor of the number of structures. The normative structure S5 is developed only as far as the edge taxonomy needs it; its internal structure is taken from [19] and not re-argued here.
+The layer sets are not argued to be complete. There is no principled derivation of the number of layers within any structure, nor of the number of structures. In particular, the event-abstraction hierarchy is instantiated here with the three levels of the TLCTC consequence chain. Events whose bearers are sites and building plant — loss of power, cooling or access, a cordon, a flood — and events whose bearers are people, such as the unavailability of a key person, are candidates for further S2 levels below or beside the system level. They are not developed here, and three questions would have to be settled first: whether site and plant form one level or two, whether such a level divides into attacks and failure modes in the way the cause-side partition divides the system level, and whether the edge from such an event to a system risk event is always causal or, at some granularities, constitutive (§8).
+
+The normative structure S5 is developed only as far as the edge taxonomy needs it. What the taxonomy needs — the three object-level elements, the meta-layer, and the diagnostic reason for keeping prohibition distinct — is stated in full in §§3.2 and 4; the shell structure, jurisdictional multiplication and temporal change of norms are taken from [19] and not re-argued here.
 
 The edge taxonomy is not argued to be exhaustive. Six types suffice for the cases examined here — the payment chain (§4), the rack-power case (§8), the deadline and compliance cases (§§6, 10), the possession case (§9.4) and the asset-based test case (§10); further omissions remain possible.
 
@@ -359,6 +363,7 @@ Finally, the framework's relation to causal emergence [7] is unresolved. If high
 8. Application of P1–P4 to established consequence-side vocabularies — asset-based assessment under ISO/IEC 27005, operational loss-event taxonomies, and loss definitions in cyber-insurance wordings — to test whether the predicted fusion of S1–S4 is observed.
 9. A comparison with UFO-B and COVER in their own terms, to determine whether S2–S4 can be stated as an extension of COVER rather than as an alternative to it.
 10. Development of S5 beyond the needs of the edge taxonomy: whether the shell structure, jurisdictional multiplication and temporal change of [19] can be stated in the formalisation of §11, and an inter-rater test of the normative–classificatory distinction under E4.
+11. Further S2 levels below and beside the system level — events borne by sites and building plant, and by people — developed against the diagnostics of §§7–8, with the three questions of §12 settled first.
 
 ---
 
@@ -412,7 +417,7 @@ Drafts v0.3 to v0.6 were published on tlctc.net between August and October 2026.
 
 [18] von Wright, G. H. (1951). Deontic logic. *Mind*, 60(237), 1–15.
 
-[19] Kreinz, B. (2026). *Rechte, Pflichten, Verbote: Compliance als Ontologieproblem*. Barnes Projects, May 2026. https://barnes.ch/BP-Compliance-Ontologie
+[19] Kreinz, B. (2026). *Rechte, Pflichten, Verbote: Compliance als Ontologieproblem*. Barnes Projects, May 2026. https://barnes.ch/BP-Compliance-Ontologie Accessed 2026-10-15.
 
 [20] Freund, J., & Jones, J. (2014). *Measuring and Managing Information Risk: A FAIR Approach*. Waltham, MA: Butterworth-Heinemann.
 
@@ -452,7 +457,7 @@ This is the same shape as $\Delta t : E_{\text{causal}} \rightarrow \mathbb{R}_{
 
 The finite invariant speed of relativity is often presented as a limit on the propagation of light. The more accurate reading is that it is the maximum speed of causation, and hence the condition under which a chain of events can be defined at all.
 
-Transposed, this supplies the ground for §6 that the section currently states as a stipulation. A risk path *is* a chain of events. Only causal connection makes a chain. Where one event does not bring about another, the two are not successive links in any sequence, and no duration can be the duration of a transition that does not exist. The constraint on Δt is thus not an additional rule imposed on the edge taxonomy but a consequence of what a path is. A future revision should state §6 in this form.
+Transposed, this is the ground §6 gives for its constraint on Δt: a risk path *is* a chain of events, and only causal connection makes a chain. The note records where the formulation came from; §6 does not depend on it.
 
 ### N3 — Edge type may not be invariant under redescription (open problem)
 
