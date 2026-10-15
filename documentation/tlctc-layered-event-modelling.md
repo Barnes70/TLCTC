@@ -112,7 +112,7 @@ Layered models in this area typically fuse several structurally different hierar
 
 **S1 — Substrate (containment) hierarchy.** Orders entities by physical, organisational and computational locality: sites contain hardware; hardware hosts execution environments; environments run processes; organisations control personnel and third parties. Its relations are mereological and custodial. Effects propagate along it by physical and computational mechanism.
 
-**S2 — Event-abstraction hierarchy.** Orders *events* by the description under which they are individuated. In the instantiation used throughout this paper, the TLCTC framework [28], it has three levels: system risk events (SRE), data risk events (DRE) and business risk events (BRE), linked in the consequence chain SRE → DRE → BRE*. Further levels are possible; §12 names the candidates. This is the operative structure for risk modelling, and it is *not* identical to S1.
+**S2 — Event-abstraction hierarchy.** Orders *events* by the description under which they are individuated. In the instantiation used throughout this paper, the TLCTC framework [28], it has three levels: system risk events (SRE), data risk events (DRE) and business risk events (BRE), linked in the consequence chain SRE → DRE → BRE\*. Further levels are possible; §12 names the candidates. This is the operative structure for risk modelling, and it is *not* identical to S1.
 
 **S3 — Representation hierarchy.** Orders descriptions by their relation to what they describe: a world state is recorded as data; data are interpreted as information under a schema and purpose; information supports a decision. Its relations are semantic. A representation can misrepresent, which has no analogue in S1 — a server cannot be *wrong about* a rack.
 
