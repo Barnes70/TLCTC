@@ -152,6 +152,35 @@ const cc = fw.consequence_chain;
 if (!cc) note('dictionary: consequence_chain section missing (v2.7 C3)');
 else if (!core.includes(cc.business_risk_event.definition)) note('core paper: BRE definition not reproduced verbatim from consequence_chain');
 
+// ───────────────────────── 8. Layered Event Modelling paper ──────────────────
+// The LEM paper is the method; TLCTC is its instance. It quotes the canon
+// verbatim and carries no draft residue. Tasks append to both lists.
+const LEM_PATH = 'documentation/tlctc-layered-event-modelling.md';
+const LEM_FORBIDDEN = [
+  'Changes in v0.',
+  'Draft v0.',
+  'Earlier drafts',
+  'An earlier version of this framework',
+  'P4 replaces a weaker earlier test',
+  'because v0.5 named it',
+  '## 11. A conjecture',
+  'Generality beyond it ',
+];
+const LEM_REQUIRED = [
+  '**Version:** 1.0',
+  '**License:** CC BY 4.0',
+  'orcid.org/0009-0005-2148-9903',
+  '### N6 — A conjecture beyond risk modelling',
+  '## Development history',
+  '## Declarations',
+];
+if (!exists(LEM_PATH)) note(`${LEM_PATH}: missing`);
+else {
+  const lem = read(LEM_PATH);
+  for (const p of LEM_FORBIDDEN) if (lem.includes(p)) note(`LEM paper: forbidden text "${p}"`);
+  for (const p of LEM_REQUIRED) if (!lem.includes(p)) note(`LEM paper: required text missing "${p}"`);
+}
+
 // ───────────────────────── report ────────────────────────────────────────────
 console.log(`Consistency: ${clusterIds.length} clusters, ${fw.axioms.length} axioms, ${N} rules (${K} core + ${X} extension), DRE codes [${dre || '-'}]`);
 if (findings.length) {
