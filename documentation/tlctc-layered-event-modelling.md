@@ -172,7 +172,7 @@ Threshold definitions are classificatory, not constitutive: "more than 5% failed
 
 **Δt is defined only for causal edges.** Attaching a duration to a constitutive, classificatory or normative relation asserts a propagation delay where no propagation occurs. Where an analysis appears to need one, the interval being measured is normally a separate causal process — typically detection and response latency, which is an S4 phenomenon with its own edges.
 
-Deadlines are the instructive case. A statutory notification window — 72 hours under Article 33 GDPR [29] — looks like a Δt on a normative edge. It is not. The norm sets a bound on a separate response process, and the clock starts when the controller becomes aware of the breach, an S4 event, not when the breach occurs. The interval that matters is causal and runs from awareness to notification; the norm fixes how long it may be, and the violation edge holds or not depending on how long it was. The normative edge itself has no duration.
+Deadlines are the instructive case. A statutory notification window — 72 hours under Article 33 GDPR [29] — looks like a Δt on a normative edge. It is not. The norm sets a bound on a separate response process, and the clock starts when the controller becomes aware of the breach, an S4 event, not when the breach occurs. The interval that matters is causal and runs from awareness to notification; the norm fixes how long it may be, and the violation edge holds or not depending on how long it was. The normative edge itself has no duration. In the TLCTC instantiation a business risk event is defined accordingly: "A discrete business-level event on the consequence side, reached from a Data Risk Event or a preceding Business Risk Event by a causal edge (it is brought about, after a Δt) or by a normative edge (a duty arises or a norm is violated, with no Δt of its own). BREs may chain; an organization's risk appetite designates the terminal BRE as its Business Impact, a role a BRE can hold rather than a separate event type." [28] The notification duty is such an event, reached by a normative edge; the filing of the notification is a separate causal act, and only the second carries a Δt.
 
 ### 6.1 The dependency stratum
 
@@ -220,15 +220,17 @@ E1 and E2 separate causal from non-causal; E3 and E4 separate constitutive from 
 
 ### 9.1 System compromise
 
-A system, considered within S1 and S2, admits of a control-oriented state. The obvious definition — whether an unauthorised party can influence system behaviour — is too narrow, since it excludes passive compromise: credential extraction, memory disclosure, covert replication of state, unauthorised observation without modification.
+A system, considered within S1 and S2, admits of a control-oriented state. A definition in terms of an actor holding a capability — whether a party without entitlement can influence system behaviour — is too narrow: it strains to cover passive compromise (credential extraction, memory disclosure, covert replication of state, observation without modification) and the exhaustion of a system's capacity by a flood.
 
-We propose instead: *a system is compromised when an unauthorised actor holds a capability over its execution, state, interfaces, resources or protected information that lies outside the authorised control envelope.*
+The instantiation therefore adopts the TLCTC definition of System Compromise, which is stated around behaviour leaving owner control rather than around an actor's capability [28]:
 
-By P4, this should not be treated as binary. At least six capability dimensions can hold independently: execution control, state modification, unauthorised observation, identity or trust misuse, resource consumption, interface manipulation. System compromise remains the central system-layer risk event; its underlying state is multidimensional.
+> The behaviour, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective. Reached only through cluster steps (the Attack row). This is the pivot of the Cyber Bow-Tie: everything the ten clusters classify converges on it, and the interval in which compromise detection can act before any Data Risk Event, bounded by the causal Δt of that transition, exists only for this type.
+
+By P4, the state should not be treated as binary. At least six capability dimensions can hold independently: execution control, state modification, observation without entitlement, identity or trust misuse, resource consumption, interface manipulation. They illustrate that the state is multidimensional; they are not a refinement of the TLCTC definition. No stopping rule admits them (contrast §9.3), and several track individual clusters closely — resource consumption, for instance, the flooding cluster — so codifying them as compromise types would let a consequence inherit the classification of its cause, which the framework excludes.
 
 ### 9.2 Representation states
 
-Representation states are likewise several orthogonal dimensions, not one enumeration:
+Representation states are likewise several orthogonal dimensions, not one enumeration. They coincide with the properties on which the TLCTC dictionary defines its data risk event codes [28]; §9.3 gives the correspondence.
 
 | Dimension | Question | Argument structure |
 |---|---|---|
@@ -237,26 +239,32 @@ Representation states are likewise several orthogonal dimensions, not one enumer
 | Provenance | What is the origin and transformation history? | one-place, historical |
 | Attribution | Is the claimed origin the actual origin? | one-place |
 | Operational presence | Does the representation exist and function in the required medium? | one-place |
-| Retrievability | Can a given authorised agent obtain and use it? | relational, agent-indexed |
-| Disclosure | Has an unauthorised agent obtained it? | relational, agent-indexed |
+| Retrievability | Can a given entitled agent obtain and use it? | relational, agent-indexed |
+| Disclosure | Has a party not entitled to it obtained it? | relational, agent-indexed |
 
-Three consequences. Attribution is independent of correspondence: a forged record may be accurate. Provenance is a factual history; whether the transformations it records were *authorised* is a separate normative evaluation applied to that history, not part of its definition. And the final three rows are relational — they fail P3 if collapsed into a single "access" state, which is why operational presence (availability) and agent-indexed retrievability (accessibility) must remain distinct.
+Three consequences. Attribution is independent of correspondence: a forged record may be accurate. Provenance is a factual history; whether the transformations it records were covered by an entitlement is a separate evaluation against S5, applied to that history, not part of its definition. And the final three rows are relational — they fail P3 if collapsed into a single "access" state, which is why operational presence (availability) and agent-indexed retrievability (accessibility) must remain distinct.
 
-### 9.3 Relation to established categories
+### 9.3 Relation to the TLCTC data risk event codes
 
-This decomposition supports rather than replaces conventional data-risk categories; the mapping is:
+In the TLCTC framework the dimensions are codified as data risk event codes arranged in a refinement tree [28]:
 
-| Conventional category | Dimensions above |
-|---|---|
-| Incorrect data | correspondence, completeness |
-| Fraud / integrity | provenance, attribution |
-| Confidentiality | disclosure |
-| Availability | operational presence |
-| Accessibility | retrievability |
+| TLCTC code | Name | Dimensions above |
+|---|---|---|
+| C | Loss of Confidentiality | disclosure |
+| I → Ii | Incorrect state | correspondence, completeness |
+| I → If | Misattributed state | provenance, attribution |
+| A → Av | Unavailable state | operational presence |
+| A → Ac | Inaccessible state | retrievability |
 
-That *fraud/integrity* maps to two independent dimensions, and *incorrect data* to two more, is not an artefact of the mapping. It illustrates the paper's thesis: long-standing composite terms are compressions of several orthogonal dimensions plus an implicit layer assignment.
+The parent codes I and A remain legal where the refinement is unknown. The framework admits these splits, and no others, by a stopping rule: a property is split only where the resulting states are distinguishable by inspecting the record itself, never by the story of how it got there. That rule is the instance of P2 and P4 for representations. It refuses a "manipulated" state, which names the actor's intent rather than a record state, and it refuses to split disclosure by cause or extent.
+
+That the conventional *integrity* divides into two independent dimensions, and *availability* into two more, is not an artefact of the mapping. It illustrates the paper's thesis: long-standing composite terms are compressions of several orthogonal dimensions plus an implicit layer assignment.
 
 The corresponding claim about integrity should be stated narrowly. It is not that "system integrity" is incoherent — it can be defined as conformance of actual configuration and execution to an authorised specification. It is that **the unqualified predicate *integrity* must not be reused for both systems and representations within one model**, because its truth conditions differ between them and the reuse conceals the boundary.
+
+### 9.4 A worked case: possession
+
+Parker's hexad adds *possession* to the classical triad because one case defeats it: a stolen copy of an encrypted backup is not disclosed, not incorrect, not gone and not unusable, so on a flat list of data properties nothing has happened [30]. The layered reading needs no sixth property. Taking the medium is an attack step that reaches the substrate physically — in TLCTC terms the physical attack cluster, whose scope includes media — and it records a system risk event: data have been brought outside what their owner controls. Whether a data risk event follows is a separate question, answered by a separate edge. With encryption at rest, the causal edge from the system risk event to a confidentiality DRE does not fire unless the key is also obtained; encryption acts as a circuit breaker on that edge (§10). The puzzle arose because a flat scheme had to file a change of custody under data, having no system level and no typed edge on which to place it.
 
 ---
 
@@ -264,7 +272,9 @@ The corresponding claim about integrity should be stated narrowly. It is not tha
 
 **Division of labour in the bow-tie.** A bow-tie places a central event between its causes and its consequences. A cause-based cluster taxonomy disciplines the left side: it names the generic vulnerability exercised at each step that leads to the central event. The present framework disciplines the right side — the propagation from a system risk event through data risk events to business risk events. The two sides need different instruments. On the left the characteristic error is a misnamed cause, and the remedy is a partition of causes. On the right it is an untyped crossing, and the remedy is predicate locality and edge typing.
 
-**Cause-based threat clusters.** A disjoint cause-based threat taxonomy operationalises semantic separation *within the system risk event layer*: each attack step is classified by the generic vulnerability causally exercised at that step, preventing multiple mechanism labels from attaching to one transition without decomposition. The claim should be scoped to that layer rather than to the substrate hierarchy, since several clusters act through human vulnerability, third-party relationships or physical access — which is one reason S1 must include organisationally controlled and human assets.
+**Cause-based threat clusters.** A disjoint cause-based threat taxonomy, such as TLCTC [28], operationalises semantic separation *within the system risk event layer*: each attack step is classified by the generic vulnerability causally exercised at that step, preventing multiple mechanism labels from attaching to one transition without decomposition. The claim should be scoped to that layer rather than to the substrate hierarchy, since several clusters act through human vulnerability, third-party relationships or physical access — which is one reason S1 must include organisationally controlled and human assets.
+
+**Entitlement.** The TLCTC cause-side partition shows S5 at work on the cause side. Its third question — did an accountable grantor confer an entitlement covering this action? — is a query against S5, not against the access-control state in S1: the framework separates *permission*, what the access-control system returns, from *entitlement*, what a grantor conferred, and notes that the two frequently diverge [28]. By P1 the unqualified predicate *authorised* would fuse them. Where an entitled actor acts inside the grant but against its purpose (Abuse of Rights), no system risk event occurs: the system was obeyed, not compromised, and the consequence chain begins at the data risk event. The chain then has no SRE above its first node — an instance of the rule of §4 that what an edge connects, and where a chain enters, is determined per case, not by the layer pair.
 
 **Attack paths.** Horizontal causal chains within a layer, with the well-known difficulty of bounding a path corresponding to the crossings identified in §4.
 
@@ -281,15 +291,13 @@ Detection is thereby distinguished from mitigation at the level of edge type, no
 
 **Regulatory classification.** A cause-based event taxonomy and a regulatory loss-event taxonomy are related by *classificatory* edges under a declared scheme, not by causal or constitutive ones. Attempting to unify them into one taxonomy is a predictable source of the ambiguity described in §1, because it forces a single node to serve two schemes.
 
-**Compliance.** Compliance risk is the instantiation S5 adds, and its characteristic failure is not a causal transition. A process that has not changed in S1–S3 becomes non-compliant when the norm in S5 is amended: a revised circular, a new reporting duty, a scope extended to a new jurisdiction. By E4 the edge from the process to the violation is normative; no causal chain links them, and no Δt can be measured along it. The control that acts here is therefore neither preventive nor a circuit breaker. It is regulatory horizon scanning — evidential access (S4) to S5 itself — followed by a change to the process before the amendment takes effect. Where a causal chain does exist — a system compromise leading to a data risk event and then to a reportable breach — the causal edges carry Δt, the reporting duty is a normative edge, and its deadline bounds a response process as described in §6.
+**Compliance.** Compliance risk is the instantiation S5 adds, and its characteristic failure is not a causal transition. A process that has not changed in S1–S3 becomes non-compliant when the norm in S5 is amended: a revised circular, a new reporting duty, a scope extended to a new jurisdiction. By E4 the edge from the process to the violation is normative; no causal chain links them, and no Δt can be measured along it. The control that acts here is therefore neither preventive nor a circuit breaker. It is regulatory horizon scanning — evidential access (S4) to S5 itself — followed by a change to the process before the amendment takes effect. Where a causal chain does exist — a system compromise leading to a data risk event and then to a reportable breach — the causal edges carry Δt, the reporting duty is a normative edge, and its deadline bounds a response process as described in §6. The TLCTC dictionary names the first case as an entry point into the consequence chain: a business risk event reached directly by a normative edge, with no system or data risk event before it, and outside the scope of the clusters [28].
 
 *Fig. 2 — One incident across S2, S4 and S5. Causal edges (red) carry Δt and can be interrupted: payment screening acts inside Δt₂. Detection is an evidential edge into S4; it observes and never acts. The reporting duty attaches by a normative edge that has no duration of its own: the 72-hour bound applies to the causal response process, whose clock starts at awareness, not at the breach. The loss-event type is classificatory. S1 and S3 are not drawn; they hold the bearers of the events (the process, the record). (Figure in the web edition.)*
 
 **Asset-based assessment as a test case.** The diagnostics can be run on established practice. Asset-based information-security risk assessment in the ISO/IEC 27005 tradition [16] distinguishes primary assets (information, business processes) from the supporting assets that carry them (hardware, software, networks, sites, personnel), and commonly rates the same three properties — confidentiality, integrity, availability — for both. Where it does, P1 finds the predicates applied to bearers from at least two structures (S1 for hardware and sites, S3 for information), and P2 finds that "loss of integrity of a server" and "loss of integrity of a record" do not survive substitution of one definition. The consequence §1 predicts follows: the passage from a compromised system to an incorrect record to a financial loss is carried by one word, and no Δt or point of control can be assigned to it. Whether a given assessment does this is an empirical question (§13.8); what the diagnostics add is that it becomes one.
 
-**Δt.** Intra-layer causal Δt is interpretable as propagation velocity and is a legitimate object of measurement. Inter-layer causal Δt bounds the intervention window available to circuit-breaker controls, and is therefore the quantity that determines whether such controls can exist at all. A detective control is effective against a given transition only if the S4 latency from the earlier event to its observation, plus the time needed to respond, is shorter than the S2 causal Δt to the next event. Both terms are reconstructed from evidence, and so from S4.
-
----
+**Δt.** Intra-layer causal Δt is interpretable as propagation velocity and is a legitimate object of measurement. Inter-layer causal Δt bounds the intervention window available to circuit-breaker controls, and is therefore the quantity that determines whether such controls can exist at all. A detective control is effective against a given transition only if the S4 latency from the earlier event to its observation, plus the time needed to respond, is shorter than the S2 causal Δt to the next event. Both terms are reconstructed from evidence, and so from S4. TLCTC operationalises the condition as the Detection Coverage Score, in two forms read at the 90th percentile: `DCS_d = TTD_P90 / Δt` for detection and `DCS_c = TTC_P90 / Δt` for containment [28].
 
 ---
 
@@ -422,9 +430,11 @@ Drafts v0.3 to v0.6 were published on tlctc.net between August and October 2026.
 
 [27] Chillarege, R., Bhandari, I. S., Chaar, J. K., Halliday, M. J., Moebus, D. S., Ray, B. K., & Wong, M.-Y. (1992). Orthogonal defect classification — a concept for in-process measurements. *IEEE Transactions on Software Engineering*, 18(11), 943–956.
 
-[28] Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework*, version 2.6. Zenodo. https://doi.org/10.5281/zenodo.20633176
+[28] Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework*, version 2.7. Zenodo. https://doi.org/10.5281/zenodo.20633176
 
 [29] Regulation (EU) 2016/679 of the European Parliament and of the Council (General Data Protection Regulation), Article 33. *Official Journal of the European Union*, L 119, 4 May 2016, 1–88.
+
+[30] Parker, D. B. (1998). *Fighting Computer Crime: A New Framework for Protecting Information*. New York: Wiley.
 
 ---
 

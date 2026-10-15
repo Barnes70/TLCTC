@@ -165,6 +165,11 @@ const LEM_FORBIDDEN = [
   'because v0.5 named it',
   '## 11. A conjecture',
   'Generality beyond it ',
+  'unauthorised actor',
+  'unauthorised agent',
+  'authorised agent',
+  'authorised control envelope',
+  'Fraud / integrity',
 ];
 const LEM_REQUIRED = [
   '**Version:** 1.0',
@@ -173,12 +178,21 @@ const LEM_REQUIRED = [
   '### N6 — A conjecture beyond risk modelling',
   '## Development history',
   '## Declarations',
+  '### 9.4 A worked case: possession',
+  'DCS_d = TTD_P90 / Δt',
 ];
 if (!exists(LEM_PATH)) note(`${LEM_PATH}: missing`);
 else {
   const lem = read(LEM_PATH);
   for (const p of LEM_FORBIDDEN) if (lem.includes(p)) note(`LEM paper: forbidden text "${p}"`);
   for (const p of LEM_REQUIRED) if (!lem.includes(p)) note(`LEM paper: required text missing "${p}"`);
+  const sre = fw.system_risk_event.types[0].definition;
+  if (!lem.includes(sre)) note('LEM paper: System Compromise definition not quoted verbatim from the dictionary');
+  if (fw.consequence_chain && !lem.includes(fw.consequence_chain.business_risk_event.definition)) note('LEM paper: BRE definition not quoted verbatim from consequence_chain');
+  for (const c of fw.data_risk_events.codes.filter((x) => !x.refinements || x.refinements.length === 0)) {
+    if (!lem.includes(c.name)) note(`LEM paper: DRE code ${c.code} name "${c.name}" missing`);
+    if (!lem.includes(c.property)) note(`LEM paper: DRE code ${c.code} property "${c.property}" missing`);
+  }
 }
 
 // ───────────────────────── report ────────────────────────────────────────────
