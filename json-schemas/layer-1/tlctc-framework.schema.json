@@ -105,9 +105,74 @@
         "notes": { "type": "string" }
       }
     },
+    "consequence_chain": {
+      "type": "object",
+      "description": "The consequence chain SRE -> DRE -> BRE*: the BRE definition, the edge kinds on the chain, and the entry points named to place the boundary of the clusters (v2.7).",
+      "additionalProperties": false,
+      "required": ["description", "business_risk_event", "edges", "entry_points"],
+      "properties": {
+        "description": { "type": "string" },
+        "business_risk_event": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["definition"],
+          "properties": {
+            "definition": { "type": "string" },
+            "examples": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "delta_t", "definition"],
+            "properties": {
+              "kind": { "enum": ["causal", "normative"] },
+              "delta_t": { "type": "boolean" },
+              "definition": { "type": "string" }
+            },
+            "if": { "properties": { "kind": { "const": "normative" } } },
+            "then": { "properties": { "delta_t": { "const": false } } }
+          }
+        },
+        "entry_points": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["altitude", "row", "cluster_applies", "definition"],
+            "properties": {
+              "altitude": { "enum": ["SRE", "DRE", "BRE", "any"] },
+              "row": { "enum": ["attack", "failure", "error_in_use", "abuse_of_rights", "none"] },
+              "cluster_applies": { "type": "boolean" },
+              "definition": { "type": "string" }
+            }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    },
     "changes_from_v2_5": {
       "type": "array",
       "description": "v2.6 change record: one entry per change item, traced to the review point it answers.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "review_point", "summary", "affects"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^C\\d+$" },
+          "review_point": { "type": "string" },
+          "summary": { "type": "string" },
+          "affects": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        }
+      }
+    },
+    "changes_from_v2_6": {
+      "type": "array",
+      "description": "v2.7 change record: one entry per change item, traced to its source.",
       "items": {
         "type": "object",
         "additionalProperties": false,
