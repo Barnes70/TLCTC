@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="660" viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig2-title fig2-desc">
+<style>
+  svg { color: #111111; font-family: Inter, "Segoe UI", Arial, sans-serif; }
+  .bx { fill: none; stroke: currentColor; stroke-opacity: 0.28; }
+  .hair { stroke: currentColor; stroke-opacity: 0.28; fill: none; }
+  .lbl { fill: currentColor; font-size: 11px; }
+  .mono { fill: #5f6368; font-family: Consolas, "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; letter-spacing: 0.14em; }
+  .mono.in { letter-spacing: 0.06em; }
+  .lane { fill: currentColor; fill-opacity: 0.035; stroke: none; }
+  .edge { stroke-opacity: 0.75; }
+  .dot { stroke-dasharray: 1.5 3; }
+  .dash { stroke-dasharray: 4 3; }
+  .ddot { stroke-dasharray: 7 3 1.5 3; }
+  .acc-bx { fill: none; stroke: #e5484d; stroke-opacity: 0.85; }
+  .acc-hair { stroke: #e5484d; stroke-opacity: 0.85; fill: none; }
+  .acc-txt { fill: #e5484d; }
+  .acc-fill { fill: #e5484d; }
+</style>
+                    <title id="fig2-title">One incident across S2, S4 and S5, with typed edges</title>
+                    <desc id="fig2-desc">Five lanes over time. In S2, a system compromise of the payment process leads by a causal edge with a positive duration to false payment instructions, a data risk event, and by a second causal edge, which payment screening can interrupt, to funds being transferred, a business risk event. The transfer is classified as an external-fraud loss event by a classificatory edge. In S4, an evidential edge from the data risk event yields an observation: the moment of awareness. From awareness, a causal response process leads to the authority being notified; a bracket marks the 72-hour bound that the norm sets on that process. In S5, the notification duty applies under its scope, and a normative edge without duration links the notification to the duty being fulfilled or violated.</desc>
+                    <defs>
+                        <marker id="f2-arrow-red" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path class="acc-fill" d="M0,0 L9,4.5 L0,9 Z"/></marker>
+                        <marker id="f2-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="currentColor" fill-opacity="0.55"/></marker>
+                    </defs>
+
+                    <!-- lanes -->
+                    <rect class="lane" x="10" y="20"  width="880" height="90" rx="2"/>
+                    <rect class="lane" x="10" y="125" width="880" height="90" rx="2"/>
+                    <rect class="lane" x="10" y="230" width="880" height="90" rx="2"/>
+                    <rect class="lane" x="10" y="335" width="880" height="90" rx="2"/>
+                    <rect class="lane" x="10" y="440" width="880" height="100" rx="2"/>
+
+                    <text class="mono" x="22" y="40">S5 &#183; NORMATIVE</text>
+                    <text class="lbl" x="22" y="58" font-size="10">norms</text>
+                    <text class="mono acc-txt" x="22" y="145">S2 &#183; BRE</text>
+                    <text class="lbl" x="22" y="163" font-size="10">business</text>
+                    <text class="mono acc-txt" x="22" y="250">S2 &#183; DRE</text>
+                    <text class="lbl" x="22" y="268" font-size="10">data</text>
+                    <text class="mono acc-txt" x="22" y="355">S2 &#183; SRE</text>
+                    <text class="lbl" x="22" y="373" font-size="10">system</text>
+                    <text class="mono" x="22" y="460">S4 &#183; EPISTEMIC</text>
+                    <text class="lbl" x="22" y="478" font-size="10">observation</text>
+
+                    <!-- S5: the norm and the evaluation -->
+                    <rect class="bx" x="150" y="38" width="180" height="46" rx="2"/>
+                    <text class="lbl" x="240" y="58" text-anchor="middle">Notification duty</text>
+                    <text class="mono in" x="240" y="74" text-anchor="middle">E.G. GDPR ART. 33</text>
+                    <line class="hair" x1="330" y1="61" x2="733" y2="61"/>
+                    <text class="mono" x="532" y="54" text-anchor="middle">APPLIES UNDER ITS SCOPE &#183; META-LAYER</text>
+                    <rect class="bx" x="735" y="38" width="145" height="46" rx="2"/>
+                    <text class="lbl" x="807" y="58" text-anchor="middle">&#167; Duty fulfilled</text>
+                    <text class="mono in" x="807" y="74" text-anchor="middle">OR VIOLATED</text>
+
+                    <!-- S2: the causal chain -->
+                    <rect class="acc-bx" x="150" y="357" width="150" height="46" rx="2"/>
+                    <text class="lbl acc-txt" x="225" y="377" text-anchor="middle">Payment process altered</text>
+                    <text class="mono in" x="225" y="393" text-anchor="middle">COMPROMISE &#183; IN S1</text>
+
+                    <rect class="acc-bx" x="300" y="252" width="150" height="46" rx="2"/>
+                    <text class="lbl acc-txt" x="375" y="272" text-anchor="middle">False instructions</text>
+                    <text class="mono in" x="375" y="288" text-anchor="middle">[DRE: I] &#183; IN S3</text>
+
+                    <rect class="acc-bx" x="450" y="147" width="122" height="46" rx="2"/>
+                    <text class="lbl acc-txt" x="511" y="167" text-anchor="middle">Funds transferred</text>
+                    <text class="mono in" x="511" y="183" text-anchor="middle">SETTLEMENT FINAL</text>
+
+                    <path class="acc-hair" d="M225 357 V275 H297" marker-end="url(#f2-arrow-red)"/>
+                    <text class="mono acc-txt" x="233" y="331">&#916;t&#8321; &gt; 0</text>
+                    <path class="acc-hair" d="M375 252 V170 H447" marker-end="url(#f2-arrow-red)"/>
+                    <text class="mono acc-txt" x="384" y="226">&#916;t&#8322; &gt; 0 &#183; BREAKER: PAYMENT SCREENING</text>
+
+                    <!-- classificatory: loss-event type -->
+                    <path class="hair edge dash" d="M572 170 H605" marker-end="url(#f2-arrow)"/>
+                    <rect class="bx dash" x="608" y="147" width="115" height="46" rx="2"/>
+                    <text class="lbl" x="665" y="167" text-anchor="middle">External fraud</text>
+                    <text class="mono in" x="665" y="183" text-anchor="middle">LOSS EVENT TYPE</text>
+
+                    <!-- S4: evidential edge to awareness -->
+                    <path class="hair edge dot" d="M420 298 V452" marker-end="url(#f2-arrow)"/>
+                    <text class="mono" x="428" y="372">EVIDENTIAL</text>
+                    <text class="mono" x="428" y="386">OBSERVES, NEVER ACTS</text>
+                    <rect class="bx" x="360" y="455" width="150" height="46" rx="2"/>
+                    <text class="lbl" x="435" y="475" text-anchor="middle">Anomaly observed</text>
+                    <text class="mono in" x="435" y="491" text-anchor="middle">AWARENESS &#183; t<tspan baseline-shift="sub" font-size="7">a</tspan></text>
+
+                    <!-- causal response process, bounded by the norm -->
+                    <path class="acc-hair" d="M510 478 H807 V196" marker-end="url(#f2-arrow-red)"/>
+                    <text class="mono acc-txt" x="560" y="470">RESPONSE &#183; &#916;t&#8323; (CAUSAL)</text>
+                    <rect class="acc-bx" x="735" y="147" width="145" height="46" rx="2"/>
+                    <text class="lbl acc-txt" x="807" y="167" text-anchor="middle">Authority notified</text>
+                    <text class="mono in" x="807" y="183" text-anchor="middle">t<tspan baseline-shift="sub" font-size="7">a</tspan> + &#916;t&#8323;</text>
+                    <path class="hair" d="M435 512 V522 H807 V512"/>
+                    <text class="mono" x="621" y="536" text-anchor="middle">&#8804; 72 H FROM AWARENESS &#8212; A BOUND THE NORM SETS</text>
+
+                    <!-- normative edge: no duration -->
+                    <path class="hair edge ddot" d="M807 147 V87" marker-end="url(#f2-arrow)"/>
+                    <text class="mono" x="798" y="121" text-anchor="end">&#167; NORMATIVE &#183; NO &#916;t</text>
+
+                    <!-- time axis -->
+                    <path class="hair" d="M150 562 H878" marker-end="url(#f2-arrow)"/>
+                    <text class="mono" x="878" y="577" text-anchor="end">TIME</text>
+
+                    <!-- legend -->
+                    <line class="hair" x1="10" y1="592" x2="890" y2="592"/>
+                    <path class="acc-hair" d="M22 612 H62" marker-end="url(#f2-arrow-red)"/>
+                    <text class="mono acc-txt" x="22" y="632">CAUSAL</text>
+                    <text class="mono" x="22" y="646">&#916;t &gt; 0 &#183; CAN BE CUT</text>
+                    <path class="hair edge dot" d="M198 612 H238" marker-end="url(#f2-arrow)"/>
+                    <text class="mono" x="198" y="632">EVIDENTIAL</text>
+                    <text class="mono" x="198" y="646">OBSERVES &#183; NEVER ACTS</text>
+                    <path class="hair edge ddot" d="M374 612 H414" marker-end="url(#f2-arrow)"/>
+                    <text class="mono" x="374" y="632">&#167; NORMATIVE</text>
+                    <text class="mono" x="374" y="646">UNDER A NORM &#183; NO &#916;t</text>
+                    <path class="hair edge dash" d="M550 612 H590" marker-end="url(#f2-arrow)"/>
+                    <text class="mono" x="550" y="632">CLASSIFICATORY</text>
+                    <text class="mono" x="550" y="646">UNDER A SCHEME &#183; NO &#916;t</text>
+                    <path class="hair" d="M726 606 V612 H766 V606"/>
+                    <text class="mono" x="726" y="632">BOUND</text>
+                    <text class="mono" x="726" y="646">SET BY A NORM</text>
+                </svg>

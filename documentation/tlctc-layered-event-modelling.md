@@ -122,6 +122,10 @@ Layered models in this area typically fuse several structurally different hierar
 
 Prohibition is kept as a type of its own, although deontic logic can define it as an obligation to omit (§3.2). The reason is diagnostic, not logical. With two types, the type of a norm no longer tells an analyst what an omission means: under an obligation to act, doing nothing is a violation; under an obligation to omit, it is fulfilment, and only the content of the norm says which. With three types, the type alone settles how an omission is evaluated, which is what P4 (§7) asks of a state space. The choice is a modelling convention adopted for that property; it costs no expressive power and could be revised.
 
+![Five structures drawn side by side: S1 substrate, S2 event abstraction (focal), S3 representation, S4 epistemic access, S5 normative standing](images/lem-five-structures.svg)
+
+*Figure 1 — The five structures are drawn side by side rather than stacked, because they are not levels of one ladder. S2 — the operative structure for risk modelling — is marked as focal: the transition durations that bound intervention windows are measured along it. S5 has no internal ordering among its three elements; the meta-layer above them decides whether a norm applies.*
+
 The critical point is that S2 crosses S1, S3 and S5 without being reducible to any of them. A system risk event is individuated by a change in system state; a data risk event by a change in a representation's standing; the malware that alters a payment-generation process sits in S1, the false instruction it emits sits in S3, and both are events in S2. A compliance event is individuated by a divergence between an occurrent in S1–S3 and a requirement in S5; where it is recorded as a business risk event, the edge that makes it one is normative, not causal (§6).
 
 **Vertical edges in S2 are frequently genuinely causal.** Consider: malware modifies a payment-generation process (SRE); false payment instructions are generated (DRE); funds are transferred and loss crystallises (BRE). Time elapses at each step. Payment screening can intervene between the second and third. Settlement finality bounds the intervention window. These are three distinct events with measurable Δt between them, not three descriptions of one synchronous situation.
@@ -295,7 +299,9 @@ Detection is thereby distinguished from mitigation at the level of edge type, no
 
 **Compliance.** Compliance risk is the instantiation S5 adds, and its characteristic failure is not a causal transition. A process that has not changed in S1–S3 becomes non-compliant when the norm in S5 is amended: a revised circular, a new reporting duty, a scope extended to a new jurisdiction. By E4 the edge from the process to the violation is normative; no causal chain links them, and no Δt can be measured along it. The control that acts here is therefore neither preventive nor a circuit breaker. It is regulatory horizon scanning — evidential access (S4) to S5 itself — followed by a change to the process before the amendment takes effect. Where a causal chain does exist — a system compromise leading to a data risk event and then to a reportable breach — the causal edges carry Δt, the reporting duty is a normative edge, and its deadline bounds a response process as described in §6. The TLCTC dictionary names the first case as an entry point into the consequence chain: a business risk event reached directly by a normative edge, with no system or data risk event before it, and outside the scope of the clusters [28].
 
-*Fig. 2 — One incident across S2, S4 and S5. Causal edges (red) carry Δt and can be interrupted: payment screening acts inside Δt₂. Detection is an evidential edge into S4; it observes and never acts. The reporting duty attaches by a normative edge that has no duration of its own: the 72-hour bound applies to the causal response process, whose clock starts at awareness, not at the breach. The loss-event type is classificatory. S1 and S3 are not drawn; they hold the bearers of the events (the process, the record). (Figure in the web edition.)*
+![One incident across S2, S4 and S5 with typed edges: causal edges with Δt between process altered, false instructions and funds transferred; an evidential edge to detection; a normative edge to the reporting duty; a classificatory edge to the loss-event type](images/lem-typed-incident.svg)
+
+*Figure 2 — One incident across S2, S4 and S5. Causal edges (red) carry Δt and can be interrupted: payment screening acts inside Δt₂. Detection is an evidential edge into S4; it observes and never acts. The reporting duty attaches by a normative edge that has no duration of its own: the 72-hour bound applies to the causal response process, whose clock starts at awareness, not at the breach. The loss-event type is classificatory. S1 and S3 are not drawn; they hold the bearers of the events (the process, the record).*
 
 **Asset-based assessment as a test case.** The diagnostics can be run on established practice. Asset-based information-security risk assessment in the ISO/IEC 27005 tradition [16] distinguishes primary assets (information, business processes) from the supporting assets that carry them (hardware, software, networks, sites, personnel), and commonly rates the same three properties — confidentiality, integrity, availability — for both. Where it does, P1 finds the predicates applied to bearers from at least two structures (S1 for hardware and sites, S3 for information), and P2 finds that "loss of integrity of a server" and "loss of integrity of a record" do not survive substitution of one definition. The consequence §1 predicts follows: the passage from a compromised system to an incorrect record to a financial loss is carried by one word, and no Δt or point of control can be assigned to it. Whether a given assessment does this is an empirical question (§13.8); what the diagnostics add is that it becomes one.
 
@@ -309,25 +315,25 @@ A category-theoretic reading is tempting but premature: composition of causal ed
 
 Let L be the set of layers and T the set of edge types. The node set partitions by layer, satisfying A1:
 
-$$V = \bigsqcup_{\ell \in L} V_\ell$$
+<div align="center">V = ⨆<sub>ℓ ∈ L</sub> V<sub>ℓ</sub></div>
 
 Edges are typed, satisfying A4:
 
-$$E \subseteq V \times T \times V$$
+<div align="center">E ⊆ V × T × V</div>
 
 Duration is a partial function defined only on causal edges, satisfying the constraint of §6:
 
-$$\Delta t : E_{\text{causal}} \rightarrow \mathbb{R}_{\geq 0}$$
+<div align="center">Δt : E<sub>causal</sub> → ℝ<sub>≥0</sub></div>
 
 Domain predicates are layer-local, satisfying A2:
 
-$$P_\ell : V_\ell \rightarrow \Sigma_\ell$$
+<div align="center">P<sub>ℓ</sub> : V<sub>ℓ</sub> → Σ<sub>ℓ</sub></div>
 
-where Σ_ℓ is the state space of layer ℓ, written Σ to keep it apart from the structures S1–S5.
+where Σ<sub>ℓ</sub> is the state space of layer ℓ, written Σ to keep it apart from the structures S1–S5.
 
 Cross-layer co-reference, satisfying A3, is an explicit relation on nodes:
 
-$$R_{\text{ref}} \subseteq V \times V$$
+<div align="center">R<sub>ref</sub> ⊆ V × V</div>
 
 which is not an edge and carries no dynamics. The dependency stratum of §6.1 is a separate typed graph over type-level nodes, related to E by a licensing relation whose formalisation remains open.
 
@@ -451,7 +457,7 @@ Drafts v0.3 to v0.6 were published on tlctc.net between August and October 2026.
 
 The constraint of §6 has an exact structural counterpart in relativistic kinematics. Proper time is defined along a worldline, which is to say along a timelike curve, and is therefore a partial function on pairs of events: between spacelike-separated events there is no proper time. Crucially the value is not zero but undefined, and the distinction is not a convention. It follows from the sign of the interval.
 
-This is the same shape as $\Delta t : E_{\text{causal}} \rightarrow \mathbb{R}_{\geq 0}$, and it reinforces the reading of §6 that matters operationally. An undefined duration is a stronger statement than a duration of zero. A zero duration says that no time was available; an undefined duration says there was never an interval for anything to occupy, and therefore no possible location for a control. The distinction bears directly on §10: circuit-breaker controls are possible only where an inter-layer causal Δt exists, so the difference between zero and undefined is the difference between a control that must act very fast and a control that cannot exist.
+This is the same shape as Δt : E<sub>causal</sub> → ℝ<sub>≥0</sub>, and it reinforces the reading of §6 that matters operationally. An undefined duration is a stronger statement than a duration of zero. A zero duration says that no time was available; an undefined duration says there was never an interval for anything to occupy, and therefore no possible location for a control. The distinction bears directly on §10: circuit-breaker controls are possible only where an inter-layer causal Δt exists, so the difference between zero and undefined is the difference between a control that must act very fast and a control that cannot exist.
 
 ### N2 — The relevant invariant is the condition for defining a chain of events
 

@@ -173,6 +173,9 @@ const LEM_FORBIDDEN = [
   'facility risk event',
   'Facility risk event',
   'A future revision should',
+  '$$',
+  '\\mathbb',
+  '(Figure in the web edition.)',
 ];
 const LEM_REQUIRED = [
   '**Version:** 1.0',
