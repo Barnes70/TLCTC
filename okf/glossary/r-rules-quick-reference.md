@@ -1,14 +1,14 @@
 ---
 type: "term"
 title: "R-* Rules Quick Reference"
-description: "The v2.6 normative registry contains exactly 17 rules : seven core rules and ten v2.1 extension rules."
+description: "The v2.7 normative registry contains exactly 17 rules : seven core rules and ten v2.1 extension rules."
 resource: "tlctc:term:r-rules-quick-reference"
 tags:
   - "glossary"
 ---
 # R-* Rules Quick Reference
 
-The v2.6 normative registry contains exactly **17 rules**: seven core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.6.json`); summaries are condensed, the dictionary statement governs.
+The v2.7 normative registry contains exactly **17 rules**: seven core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.7.json`); summaries are condensed, the dictionary statement governs.
 
 **Core rules (7):**
 

@@ -129,24 +129,24 @@ const CHAIN_DOCS = [
   'documentation/tlctc-v2.7-application.md',
   'documentation/tlctc-glossary.md',
   'documentation/tlctc-v2.0-whitepaper.md',
+  'documentation/tlctc-layered-event-modelling.md',
   'documentation/images/tlctc-consequence-chain.svg',
 ];
 const RETIRED_CHAIN_PHRASES = [
-  'Every transition carries its own Δt',
-  'every Δt a detection-and-intervention window',
-  'Δt detection windows at every transition',
-  'Every Δt is a detection window',
-  'triggered by a DRE',
-  'triggered by a Data Risk Event',
-  'Each BRE→BRE transition has its own Δt',
-  'with each transition having its own Δt',
-  'has its own **Δt** — a detection and intervention window',
-  'notification obligation triggered',
+  /every transition carries its own Δt/i,
+  /every Δt (is )?a detection/i,
+  /Δt detection windows at every transition/i,
+  /triggered by a (DRE|Data Risk Event)/i,
+  /each (BRE→BRE )?transition (has|carries|having) its own Δt/i,
+  /has its own \*\*Δt\*\* — a detection and intervention window/i,
+  /Δt (representing|is) a detection/i,
+  /notification obligation triggered/i,
+  /Every transition \(SRE→DRE/i,
 ];
 for (const rel of CHAIN_DOCS) {
   if (!exists(rel)) { note(`${rel}: missing`); continue; }
   const txt = read(rel);
-  for (const p of RETIRED_CHAIN_PHRASES) if (txt.includes(p)) note(`${rel}: retired consequence-chain phrase "${p}" (v2.7 C1/C2)`);
+  for (const p of RETIRED_CHAIN_PHRASES) if (p.test(txt)) note(`${rel}: retired consequence-chain phrase "${p.source}" (v2.7 C1/C2)`);
 }
 const cc = fw.consequence_chain;
 if (!cc) note('dictionary: consequence_chain section missing (v2.7 C3)');
@@ -186,7 +186,7 @@ const LEM_REQUIRED = [
   '## Declarations',
   '### 9.4 A worked case: possession',
   'DCS_d = TTD_P90 / Δt',
-  'This is not a further stipulation; it follows from what a path is.',
+  'This follows from what a transition is rather than from a further rule about edges.',
   'A rack loses power',
   '11. Further S2 levels',
 ];
@@ -202,6 +202,25 @@ else {
     if (!lem.includes(c.name)) note(`LEM paper: DRE code ${c.code} name "${c.name}" missing`);
     if (!lem.includes(c.property)) note(`LEM paper: DRE code ${c.code} property "${c.property}" missing`);
   }
+}
+
+// ───────────────────────── 9. version pins (v2.7 final review) ───────────────
+// Documents that claim to be the current version must name the dictionary's
+// version; provenance tags (*(v2.6)*, "since v2.6") are not matched here.
+const ver = fw.metadata.tlctc_version;
+const appTxt = exists('documentation/tlctc-v2.7-application.md') ? read('documentation/tlctc-v2.7-application.md') : '';
+for (const [label, txt] of [['core paper', core], ['application paper', appTxt], ['glossary', glossary]]) {
+  for (const m of txt.matchAll(/(?:v(\d+\.\d+) normative registry|normative rule registry of v(\d+\.\d+))/g)) {
+    const v = m[1] || m[2];
+    if (v !== ver) note(`${label}: registry version pin "${m[0]}" != dictionary v${ver}`);
+  }
+}
+const pin = glossary.match(/mirrors the canonical dictionary \(`tlctc-framework\.v(\d+\.\d+)\.json`\)/);
+if (!pin || pin[1] !== ver) note(`glossary: canonical-dictionary filename pin ${pin ? 'v' + pin[1] : 'missing'} != v${ver}`);
+if (exists(LEM_PATH)) {
+  const lemTxt = read(LEM_PATH);
+  if (!lemTxt.includes(`TLCTC framework specification v${ver}`)) note(`LEM paper: missing "TLCTC framework specification v${ver}"`);
+  if (!lemTxt.includes(`version ${ver}. Zenodo`)) note(`LEM paper: missing "version ${ver}. Zenodo"`);
 }
 
 // ───────────────────────── report ────────────────────────────────────────────

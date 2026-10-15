@@ -9,7 +9,7 @@
 
 > Reference lines cite the v2.7 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
 
-This glossary contains all defined terms of the TLCTC framework, organized alphabetically, including the v2.1 boundary extensions, the v2.6 consolidation rule R-SPECIFIC (which folds the v2.5 rules R-FLOOD, R-CHANNEL and R-SUBSTRATE), and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Entries carried over from the V2.0/V2.1 whitepaper keep their whitepaper section cross-references. V2.1 additions are marked with *(V2.1)*; v2.5 additions with *(v2.5)*, v2.6 additions with *(v2.6)*. Industry terms commonly used in the field are marked with *(Industry Term)*. Rule IDs that are no longer part of the v2.6 normative registry are explicitly marked **(Deprecated alias)** or **(Retired alias)** — a retired ID keeps its original meaning and is never reused for a different proposition; the sole historical exception (the v2.1 draft R-INTRA numbering) is documented in the R-INTRA entry.
+This glossary contains all defined terms of the TLCTC framework, organized alphabetically, including the v2.1 boundary extensions, the v2.6 consolidation rule R-SPECIFIC (which folds the v2.5 rules R-FLOOD, R-CHANNEL and R-SUBSTRATE), and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Entries carried over from the V2.0/V2.1 whitepaper keep their whitepaper section cross-references. V2.1 additions are marked with *(V2.1)*; v2.5 additions with *(v2.5)*, v2.6 additions with *(v2.6)*. Industry terms commonly used in the field are marked with *(Industry Term)*. Rule IDs that are no longer part of the v2.7 normative registry are explicitly marked **(Deprecated alias)** or **(Retired alias)** — a retired ID keeps its original meaning and is never reused for a different proposition; the sole historical exception (the v2.1 draft R-INTRA numbering) is documented in the R-INTRA entry.
 
 ---
 
@@ -761,7 +761,7 @@ See also: Fast Velocity Class, SIEM, SOAR
 
 ### Event Chain
 
-A sequence of risk events in which each event either brings about the next (a causal edge, with a Δt) or makes a norm apply to it (a normative edge, without one), following the consequence chain **SRE → DRE → BRE\***. The chain cascades from the System Risk Event (central event) through Data Risk Events to one or more Business Risk Events. BREs may themselves chain (`BRE₁ → BRE₂ → ... → BREₙ`), each causal transition having its own Δt, the interval that bounds the detection and intervention window in which all six NIST CSF functions apply. Example: System Compromise (SRE) → Data Breach involving PII (DRE [C]) → GDPR notification obligation (BRE₁, normative) + NIS2 incident report filed (BRE₂, a causal response bounded by the reporting deadline) → Regulatory fine (BRE₃). Understanding event chains is critical for designing Respond/Recover controls and regulatory compliance workflows.
+A sequence of risk events in which each event either brings about the next (a causal edge, with a Δt) or meets a norm's condition or violates it (a normative edge, without one), following the consequence chain **SRE → DRE → BRE\***. The chain cascades from the System Risk Event (central event) through Data Risk Events to one or more Business Risk Events. BREs may themselves chain (`BRE₁ → BRE₂ → ... → BREₙ`), each causal transition having its own Δt, the interval that bounds the detection and intervention window in which all six NIST CSF functions apply. Example: System Compromise (SRE) → Data Breach involving PII (DRE [C]) → GDPR notification obligation (BRE₁, normative) + NIS2 incident report filed (BRE₂, a causal response bounded by the reporting deadline) → Regulatory fine (BRE₃). Understanding event chains is critical for designing Respond/Recover controls and regulatory compliance workflows.
 
 **Reference:** Handbook §6.3.1 (The Consequence Chain), V1.9.1 §Data Risk Event Types, §Clarification on Central Event Position; Core paper §3.4
 
@@ -1136,7 +1136,7 @@ See also: DORA, Regulatory Trigger Point, Event Chain Length, Eₙ Event Notatio
 
 ### Normative Edge *(v2.7)*
 
-An edge on the consequence chain along which an occurrent stands as fulfilment or violation of a norm — a statute, regulation, contract or policy — and so becomes a Business Risk Event, such as a notification duty arising. Nothing propagates along it and no Δt is defined: a statutory deadline (e.g. 72 hours from awareness under GDPR Art. 33) bounds a separate causal response process, not the edge. Distinguished from a causal edge, which carries a Δt and can be interrupted.
+An edge on the consequence chain along which an occurrent meets the condition of a norm — a statute, regulation, contract or policy — so that a duty arises, or stands as its violation, and so becomes a Business Risk Event: a notification duty arising, a reporting deadline missed. Nothing propagates along it and no Δt is defined: a statutory deadline (e.g. 72 hours from awareness under GDPR Art. 33) bounds a separate causal response process, not the edge. Distinguished from a causal edge, which carries a Δt and can be interrupted.
 
 **Reference:** Core paper §3.4; dictionary `consequence_chain` (v2.7)
 
@@ -1378,7 +1378,7 @@ The layered privilege model in computing systems (Ring 0 through Ring 3) where e
 
 ### R-ABUSE (Function Misuse Determination) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry. Its substance is carried unchanged by the #1 cluster definition and boundary tests (core paper §4). The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.7 normative registry. Its substance is carried unchanged by the #1 cluster definition and boundary tests (core paper §4). The ID keeps this original meaning and is never reused.*
 
 Original statement: If the attacker's success does not require any implementation flaw and instead abuses intended functionality, scope, or configuration via standard interfaces using expected input types, the step MUST be classified as `#1 Abuse of Functions`.
 
@@ -1410,7 +1410,7 @@ Global mapping rule: Whenever Foreign Executable Content (FEC) is interpreted, l
 
 ### R-FLOOD (Capacity Exhaustion vs Implementation Defect) **(Retired alias)**
 
-*Retired v2.5 rule ID; since v2.6 the **capacity** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
+*Retired v2.5 rule ID; since v2.6 the **capacity** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.7 normative registry; the ID keeps its meaning and is never reused.*
 
 Original statement (v2.5): If the primary mechanism is volume or intensity exhausting finite resources, classify as `#6 Flooding Attack`. If the primary mechanism is an implementation defect that causes crash/hang/degradation (including algorithmic complexity), classify as `#2` or `#3` per R-ROLE.
 
@@ -1418,7 +1418,7 @@ Original statement (v2.5): If the primary mechanism is volume or intensity exhau
 
 ### R-CHANNEL (Channel Control vs Code Flaw) **(Retired alias)**
 
-*Retired v2.5 rule ID; since v2.6 the **channel** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
+*Retired v2.5 rule ID; since v2.6 the **channel** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.7 normative registry; the ID keeps its meaning and is never reused.*
 
 Original statement (v2.5): If the defective logic is itself a communication-path control — peer authenticity (certificate validation, chain of trust, hostname matching, expiry or revocation checking), channel encryption, or algorithm negotiation — the generic vulnerability is the lack of sufficient control over the communication path and the weakness classifies as `#5 Man in the Middle`, not as `#2` or `#3` under R-ROLE. R-ROLE governs only where the defect is incidental to the control rather than constitutive of it (for example, memory corruption in a TLS parser).
 
@@ -1450,7 +1450,7 @@ See also: R-ROLE, Generic Vulnerability, Flooding Attack (#6), Man in the Middle
 
 ### R-SUBSTRATE (Physical Property vs Implemented Logic) **(Retired alias)**
 
-*Retired v2.5 rule ID; since v2.6 the **substrate** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
+*Retired v2.5 rule ID; since v2.6 the **substrate** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.7 normative registry; the ID keeps its meaning and is never reused.*
 
 Original statement (v2.5): Classify as `#8 Physical Attack` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (`#2` or `#3` per R-ROLE). Attacker proximity or possession is **not** the test.
 
@@ -1462,7 +1462,7 @@ R-SUBSTRATE is the *admission* test — whether a weakness qualifies as `#8` at 
 
 ### R-HUMAN (Human Manipulation Isolation) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry. Its substance is carried unchanged by the #9 cluster definition and boundary tests (core paper §4) together with Axiom VI. The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.7 normative registry. Its substance is carried unchanged by the #9 cluster definition and boundary tests (core paper §4) together with Axiom VI. The ID keeps this original meaning and is never reused.*
 
 Original statement: If the attacker's advantage comes from psychological manipulation of a human, that manipulation step MUST be classified as `#9 Social Engineering`, and any subsequent technical steps MUST be classified separately.
 
@@ -1470,7 +1470,7 @@ Original statement: If the attacker's advantage comes from psychological manipul
 
 ### R-INTRA (Intra-System Boundary Rules) *(V2.1)*
 
-The v2.6 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
+The v2.7 normative registry carries exactly **two** R-INTRA rules governing the intra-system operator (`|...|`):
 
 | Rule | Summary |
 |---|---|
@@ -1491,7 +1491,7 @@ Global mapping rule: The method of gaining a privileged communication-path posit
 
 ### R-PHYSICAL (Physical Domain Isolation) **(Deprecated alias)**
 
-*Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry. Its sequencing substance is carried by the #8 cluster definition and boundary tests (core paper §4); its admission question is now settled normatively by R-SPECIFIC, substrate clause. The ID keeps this original meaning and is never reused.*
+*Retired v2.0 whitepaper rule ID; not part of the v2.7 normative registry. Its sequencing substance is carried by the #8 cluster definition and boundary tests (core paper §4); its admission question is now settled normatively by R-SPECIFIC, substrate clause. The ID keeps this original meaning and is never reused.*
 
 Original statement: If the attacker's advantage comes from unauthorized physical interaction or interference with hardware, facilities, media, or signals, that step MUST be classified as `#8 Physical Attack`, and subsequent technical steps MUST be classified separately. Note that the substrate clause of R-SPECIFIC corrects a latent misreading of this phrasing: attacker physical access or proximity is NOT required for `#8`.
 
@@ -1522,7 +1522,7 @@ The complete transit boundary rule set governing use of the transit operator (`�
 |---|---|---|
 | **R-TRANSIT-3** | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R-ROLE |
 
-Only **R-TRANSIT-3** is part of the v2.6 normative registry. The remaining v2.1 drafting guidance is non-normative notation practice: a transit party must be distinct from source and target and actually sit between them in the delivery path; the annotation is optional (recommended where the intermediary has meaningful control responsibility, omittable for pure conduits); compromise or coercion of the intermediary must be modeled as its own preceding cluster step; transit annotations never change cluster classification (see SG-2); and chained transit may be used when each party has independent analytical relevance. The withdrawn draft IDs R-TRANSIT-1, -2, -4, -5, -6, -7, -8 are not to be cited.
+Only **R-TRANSIT-3** is part of the v2.7 normative registry. The remaining v2.1 drafting guidance is non-normative notation practice: a transit party must be distinct from source and target and actually sit between them in the delivery path; the annotation is optional (recommended where the intermediary has meaningful control responsibility, omittable for pure conduits); compromise or coercion of the intermediary must be modeled as its own preceding cluster step; transit annotations never change cluster classification (see SG-2); and chained transit may be used when each party has independent analytical relevance. The withdrawn draft IDs R-TRANSIT-1, -2, -4, -5, -6, -7, -8 are not to be cited.
 
 **Reference:** core paper §6.2 (R-TRANSIT-3), §11.3.5 (Transit Boundary Operator)
 
@@ -1740,7 +1740,7 @@ See also: System Risk Event (SRE), Loss of Control / System Compromise, Error in
 
 ### System Risk Event (SRE)
 
-Any risk event at the **system altitude** — the point at which a system's behavior, privileges, data, or trust relationships depart from what its owner controls — and the central event in the TLCTC Cyber Bow-Tie model. The SRE the framework defines is **System Compromise / Loss of Control**: the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective; reached only through cluster steps; the pivot of the bow-tie. Other events at the same altitude that serve no attacker's objective — **System Failure / Loss of Function** foremost — are operational risk, no cluster; the framework names them to place its boundary, not to classify them. Abuse of Rights produces no SRE at all — the system was obeyed, not compromised, and did not fail — so its chain begins at the DRE. One SRE is recorded **per cluster step**: the thought experiment derives each cluster as a generic vulnerability by which control departs from the owner, so every step the framework classifies takes behavior, privileges, data, or trust relationships outside what their owner controls — whether it reaches the system directly (hardware and OT included, under #8) or through a person (#9). A path of *n* cluster steps records *n* SREs, each admitting a DRE, a chained SRE against the same or another system, or both. Compromise is not confined to code execution or persistence: what makes a step a compromise is that the system's behavior passed out of its owner's control, not that the attacker acquired anything — a server-role flaw yielding an arbitrary file read has already made the system serve what its owner never authorized it to serve. The data that comes back is the DRE, on the consequence side; judging the compromise by what was obtained would let an outcome settle a cause-side question, which Axiom III forbids. The SRE is the pivot point between the cause side (threat clusters exploiting generic vulnerabilities) and the consequence side (data and business risk events); the bow-tie is a structure applied *at* an SRE, not a claim that an incident holds only one. It is the first event in the consequence chain **SRE → DRE → BRE\***, where each transition has its own Δt representing a detection and intervention window. Not every SRE leads to a DRE — detection and containment at the central event can break the chain before data-level consequences materialize.
+Any risk event at the **system altitude** — the point at which a system's behavior, privileges, data, or trust relationships depart from what its owner controls — and the central event in the TLCTC Cyber Bow-Tie model. The SRE the framework defines is **System Compromise / Loss of Control**: the behavior, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective; reached only through cluster steps; the pivot of the bow-tie. Other events at the same altitude that serve no attacker's objective — **System Failure / Loss of Function** foremost — are operational risk, no cluster; the framework names them to place its boundary, not to classify them. Abuse of Rights produces no SRE at all — the system was obeyed, not compromised, and did not fail — so its chain begins at the DRE. One SRE is recorded **per cluster step**: the thought experiment derives each cluster as a generic vulnerability by which control departs from the owner, so every step the framework classifies takes behavior, privileges, data, or trust relationships outside what their owner controls — whether it reaches the system directly (hardware and OT included, under #8) or through a person (#9). A path of *n* cluster steps records *n* SREs, each admitting a DRE, a chained SRE against the same or another system, or both. Compromise is not confined to code execution or persistence: what makes a step a compromise is that the system's behavior passed out of its owner's control, not that the attacker acquired anything — a server-role flaw yielding an arbitrary file read has already made the system serve what its owner never authorized it to serve. The data that comes back is the DRE, on the consequence side; judging the compromise by what was obtained would let an outcome settle a cause-side question, which Axiom III forbids. The SRE is the pivot point between the cause side (threat clusters exploiting generic vulnerabilities) and the consequence side (data and business risk events); the bow-tie is a structure applied *at* an SRE, not a claim that an incident holds only one. It is the first event in the consequence chain **SRE → DRE → BRE\***, where each causal transition has its own Δt, the interval that bounds the window for detection and intervention. Not every SRE leads to a DRE — detection and containment at the central event can break the chain before data-level consequences materialize.
 
 > **Disambiguation:** "Loss of Control" is always abbreviated **SRE**, never "LoC". The abbreviation **LoC** is reserved exclusively for Loss of Confidentiality, a *consequence*-side Data Risk Event. See **Loss of Confidentiality (LoC)**.
 
@@ -2254,7 +2254,7 @@ See also: Exploiting Server (#2), SSRF, Implementation Flaw
 
 ### R-* Rules Quick Reference
 
-The v2.6 normative registry contains exactly **17 rules**: seven core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.6.json`); summaries are condensed, the dictionary statement governs.
+The v2.7 normative registry contains exactly **17 rules**: seven core rules and ten v2.1 extension rules. This table mirrors the canonical dictionary (`tlctc-framework.v2.7.json`); summaries are condensed, the dictionary statement governs.
 
 **Core rules (7):**
 

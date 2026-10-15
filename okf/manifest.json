@@ -2476,7 +2476,7 @@
       "path": "/glossary/event-chain.md",
       "type": "term",
       "title": "Event Chain",
-      "description": "A sequence of risk events in which each event either brings about the next (a causal edge, with a Δt) or makes a norm apply to it (a normative edge, without one), following the consequence chain SRE → DRE → BRE\\ .",
+      "description": "A sequence of risk events in which each event either brings about the next (a causal edge, with a Δt) or meets a norm's condition or violates it (a normative edge, without one), following the consequence chain SRE → DRE → BRE\\ .",
       "resource": "tlctc:term:event-chain",
       "tags": [
         "glossary"
@@ -2986,7 +2986,7 @@
       "path": "/glossary/normative-edge.md",
       "type": "term",
       "title": "Normative Edge",
-      "description": "An edge on the consequence chain along which an occurrent stands as fulfilment or violation of a norm — a statute, regulation, contract or policy — and so becomes a Business Risk Event, such as a notification duty arising.",
+      "description": "An edge on the consequence chain along which an occurrent meets the condition of a norm — a statute, regulation, contract or policy — so that a duty arises, or stands as its violation, and so becomes a Business Risk Event: a notification duty arising, a reporting deadline missed.",
       "resource": "tlctc:term:normative-edge",
       "tags": [
         "glossary"
@@ -3256,7 +3256,7 @@
       "path": "/glossary/r-abuse-function-misuse-determination.md",
       "type": "term",
       "title": "R-ABUSE (Function Misuse Determination) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.7 normative registry.",
       "resource": "tlctc:term:r-abuse-function-misuse-determination",
       "tags": [
         "glossary"
@@ -3306,7 +3306,7 @@
       "path": "/glossary/r-human-human-manipulation-isolation.md",
       "type": "term",
       "title": "R-HUMAN (Human Manipulation Isolation) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.7 normative registry.",
       "resource": "tlctc:term:r-human-human-manipulation-isolation",
       "tags": [
         "glossary"
@@ -3316,7 +3316,7 @@
       "path": "/glossary/r-intra-intra-system-boundary-rules.md",
       "type": "term",
       "title": "R-INTRA (Intra-System Boundary Rules)",
-      "description": "The v2.6 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification.",
+      "description": "The v2.7 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification.",
       "resource": "tlctc:term:r-intra-intra-system-boundary-rules",
       "tags": [
         "glossary"
@@ -3336,7 +3336,7 @@
       "path": "/glossary/r-physical-physical-domain-isolation.md",
       "type": "term",
       "title": "R-PHYSICAL (Physical Domain Isolation) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.7 normative registry.",
       "resource": "tlctc:term:r-physical-physical-domain-isolation",
       "tags": [
         "glossary"
@@ -3356,7 +3356,7 @@
       "path": "/glossary/r-rules-quick-reference.md",
       "type": "term",
       "title": "R-* Rules Quick Reference",
-      "description": "The v2.6 normative registry contains exactly 17 rules : seven core rules and ten v2.1 extension rules.",
+      "description": "The v2.7 normative registry contains exactly 17 rules : seven core rules and ten v2.1 extension rules.",
       "resource": "tlctc:term:r-rules-quick-reference",
       "tags": [
         "glossary"
@@ -3406,7 +3406,7 @@
       "path": "/glossary/r-transit-transit-boundary-rules.md",
       "type": "term",
       "title": "R-TRANSIT (Transit Boundary Rules)",
-      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | Only R TRANSIT 3 is part of the v2.6 normative registry.",
+      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | Only R TRANSIT 3 is part of the v2.7 normative registry.",
       "resource": "tlctc:term:r-transit-transit-boundary-rules",
       "tags": [
         "glossary"
