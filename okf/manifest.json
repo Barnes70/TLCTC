@@ -3,7 +3,7 @@
   "okf_spec_version": "0.1",
   "tlctc_version": "2.7",
   "generator": "scripts/build-okf.js",
-  "document_count": 440,
+  "document_count": 441,
   "type_counts": {
     "attack-path": 60,
     "axiom": 10,
@@ -20,7 +20,7 @@
     "rule": 17,
     "sphere": 9,
     "sre": 1,
-    "term": 262
+    "term": 263
   },
   "documents": [
     {
@@ -1916,7 +1916,7 @@
       "path": "/glossary/business-risk-event-bre.md",
       "type": "term",
       "title": "Business Risk Event (BRE)",
-      "description": "A discrete, observable business level event on the consequence side of the Bow Tie model, triggered by a Data Risk Event or by a preceding BRE.",
+      "description": "A discrete, observable business level event on the consequence side of the Bow Tie model, reached from a Data Risk Event or a preceding BRE by a causal edge (it is brought about, after a Δt) or by a normative edge (a duty arises or a norm is violated; no Δt is defined).",
       "resource": "tlctc:term:business-risk-event-bre",
       "tags": [
         "glossary"
@@ -2476,7 +2476,7 @@
       "path": "/glossary/event-chain.md",
       "type": "term",
       "title": "Event Chain",
-      "description": "A causal sequence where one outcome event triggers subsequent events, following the consequence chain SRE → DRE → BRE\\ .",
+      "description": "A sequence of risk events in which each event either brings about the next (a causal edge, with a Δt) or makes a norm apply to it (a normative edge, without one), following the consequence chain SRE → DRE → BRE\\ .",
       "resource": "tlctc:term:event-chain",
       "tags": [
         "glossary"
@@ -2978,6 +2978,16 @@
       "title": "NIST CSF (Cybersecurity Framework)",
       "description": "The National Institute of Standards and Technology Cybersecurity Framework providing guidelines for managing cybersecurity risk.",
       "resource": "tlctc:term:nist-csf-cybersecurity-framework",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/normative-edge.md",
+      "type": "term",
+      "title": "Normative Edge",
+      "description": "An edge on the consequence chain along which an occurrent stands as fulfilment or violation of a norm — a statute, regulation, contract or policy — and so becomes a Business Risk Event, such as a notification duty arising.",
+      "resource": "tlctc:term:normative-edge",
       "tags": [
         "glossary"
       ]

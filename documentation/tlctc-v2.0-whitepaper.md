@@ -2234,7 +2234,7 @@ This separation enables precise incident learning: the same outcome (e.g., "data
 ### 6.3.1 The Consequence Chain: SRE → DRE → BRE*
 
 ![The Consequence Chain](images/tlctc-consequence-chain.svg)
-*Figure 1.4.3.1 — The Consequence Chain. Every node is a risk event. Every Δt is a detection window. All 6 NIST CSF functions apply at each point. BRE chain length is organization-dependent.*
+*Figure 1.4.3.1 — The Consequence Chain. Every node is a risk event. Every Δt is a causal interval that bounds the detection window. All 6 NIST CSF functions apply at each point. BRE chain length is organization-dependent.*
 
 The consequence side of the Bow-Tie follows a structured event chain with three event types:
 
@@ -2245,7 +2245,7 @@ The consequence side of the Bow-Tie follows a structured event chain with three 
 | --- | --- | --- | --- |
 | **System Risk Event** | SRE | Loss of Control / System Compromise — the central Bow-Tie event | Attacker achieves RCE, persistent access established |
 | **Data Risk Event** | DRE | Loss of Confidentiality, Integrity, or Availability/Accessibility | Data exfiltrated `[DRE: C]`, records modified `[DRE: I]`, service encrypted `[DRE: Ac]` |
-| **Business Risk Event** | BRE | A discrete, observable business-level event triggered by a DRE or a preceding BRE | Regulatory notification triggered, service outage declared, media coverage begins, customer churn measured, fine imposed |
+| **Business Risk Event** | BRE | A discrete, observable business-level event reached from a DRE or a preceding BRE by a causal edge (with Δt) or a normative edge (without) | Notification duty arising (normative), notification filed, service outage declared, media coverage begins, customer churn measured, fine imposed |
 
 **BRE Chaining.** Business Risk Events may cascade, with each BRE triggering subsequent BREs. The chain length is organization- and incident-dependent:
 
@@ -2259,7 +2259,7 @@ Example — credential-based data breach:
 SRE (system compromise)
  → DRE [C] (customer database exfiltrated)
   → BRE₁ (data published on leak site)
-   → BRE₂ (GDPR notification obligation triggered)
+   → BRE₂ (GDPR notification obligation arises — normative edge, no Δt)
     → BRE₃ (media reports breach — reputation event)
      → BRE₄ (customer churn accelerates)
       → BRE₅ (regulatory fine imposed)
@@ -2269,7 +2269,7 @@ SRE (system compromise)
 
 **Key properties of the consequence chain:**
 
-- Every transition (SRE→DRE, DRE→BRE, BRE→BRE) has its own **Δt** — a detection and intervention window where all six NIST CSF functions (GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER) apply.
+- Every causal transition (SRE→DRE, and DRE→BRE or BRE→BRE where one event brings about the next) has its own **Δt** — the causal interval that bounds the detection and intervention window in which all six NIST CSF functions (GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER) apply. Where a BRE follows by a normative edge (a duty arises), no Δt is defined; a statutory deadline bounds the response process from awareness.
 - Not every SRE leads to a DRE (detection may intervene at the central event), and not every DRE leads to a BRE (containment may limit business impact). Controls at each transition point can break the chain.
 - The consequence chain mirrors the cause side: just as attack paths are variable-length sequences of cluster steps (`#9 → #4 → #1 → #7`), consequence chains are variable-length sequences of risk events (`SRE → DRE → BRE₁ → ... → BREₙ`).
 

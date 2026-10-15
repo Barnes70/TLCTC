@@ -121,6 +121,37 @@ for (const [id, c] of Object.entries(fw.clusters)) {
   }
 }
 
+// ───────────────────────── 7. consequence chain (v2.7 C1–C3) ─────────────────
+// A Δt exists only on causal transitions; a BRE is reached by a causal or a
+// normative edge. These phrases said otherwise and must not come back.
+const CHAIN_DOCS = [
+  'documentation/tlctc-v2.7-core.md',
+  'documentation/tlctc-v2.7-application.md',
+  'documentation/tlctc-glossary.md',
+  'documentation/tlctc-v2.0-whitepaper.md',
+  'documentation/images/tlctc-consequence-chain.svg',
+];
+const RETIRED_CHAIN_PHRASES = [
+  'Every transition carries its own Δt',
+  'every Δt a detection-and-intervention window',
+  'Δt detection windows at every transition',
+  'Every Δt is a detection window',
+  'triggered by a DRE',
+  'triggered by a Data Risk Event',
+  'Each BRE→BRE transition has its own Δt',
+  'with each transition having its own Δt',
+  'has its own **Δt** — a detection and intervention window',
+  'notification obligation triggered',
+];
+for (const rel of CHAIN_DOCS) {
+  if (!exists(rel)) { note(`${rel}: missing`); continue; }
+  const txt = read(rel);
+  for (const p of RETIRED_CHAIN_PHRASES) if (txt.includes(p)) note(`${rel}: retired consequence-chain phrase "${p}" (v2.7 C1/C2)`);
+}
+const cc = fw.consequence_chain;
+if (!cc) note('dictionary: consequence_chain section missing (v2.7 C3)');
+else if (!core.includes(cc.business_risk_event.definition)) note('core paper: BRE definition not reproduced verbatim from consequence_chain');
+
 // ───────────────────────── report ────────────────────────────────────────────
 console.log(`Consistency: ${clusterIds.length} clusters, ${fw.axioms.length} axioms, ${N} rules (${K} core + ${X} extension), DRE codes [${dre || '-'}]`);
 if (findings.length) {

@@ -148,13 +148,17 @@ Consequences follow a structured, variable-length chain:
 | --- | --- | --- |
 | **SRE** | System-altitude risk event. The framework defines System Compromise (behaviour, privileges, data or trust relationships brought outside the owner's control in service of an attacker — the cyber pivot); other events at the same altitude, System Failure foremost, are operational risk with no cluster | RCE achieved; persistent access established; arbitrary file read via a server-role flaw; (outside the clusters) storage controller fails |
 | **DRE** | Loss of Confidentiality, Integrity, or Availability/Accessibility — type codes form a refinement tree (§7.6): `C`; `I` → `Ii`/`If`; `A` → `Av`/`Ac` | data exfiltrated `[DRE: C]`; records altered `[DRE: I]`; log entry forged under another identity `[DRE: If]`; files encrypted by ransomware `[DRE: Ac]` |
-| **BRE** | A discrete business-level event triggered by a DRE or a preceding BRE | regulatory notification; outage declared; fine imposed |
+| **BRE** | A discrete business-level event reached from a DRE or a preceding BRE by a causal or a normative edge | notification filed; outage declared; fine imposed; notification duty arising (normative) |
 
-Business Risk Events may cascade (`SRE → DRE → BRE₁ → … → BREₙ`); chain length is organization-dependent. An organization's risk appetite determines at which BRE the chain reaches its terminal **Business Impact** — a role a BRE can hold, not a separate event type. Every transition carries its own Δt detection-and-intervention window, and the chain can break at any point: not every SRE leads to a DRE, and not every DRE leads to a BRE.
+Business Risk Events may cascade (`SRE → DRE → BRE₁ → … → BREₙ`); chain length is organization-dependent. An organization's risk appetite determines at which BRE the chain reaches its terminal **Business Impact** — a role a BRE can hold, not a separate event type. Every causal transition carries a Δt — the causal interval between the two events — which bounds the window in which detection and response can act (Section 7.2, DCS). A BRE can also be reached by a normative edge: a duty arises or a norm is violated, nothing propagates, and no Δt is defined; a statutory deadline bounds the separate response process, whose clock starts at awareness. The chain can break at any causal transition: not every SRE leads to a DRE, and not every DRE leads to a BRE.
 
-![The consequence chain SRE → DRE → BRE*, with Δt detection windows at every transition and the risk-appetite boundary designating the terminal BRE as Business Impact](images/tlctc-consequence-chain.svg)
+**Business Risk Event.** A discrete business-level event on the consequence side, reached from a Data Risk Event or a preceding Business Risk Event by a causal edge (it is brought about, after a Δt) or by a normative edge (a duty arises or a norm is violated, with no Δt of its own). BREs may chain; an organization's risk appetite designates the terminal BRE as its Business Impact, a role a BRE can hold rather than a separate event type.
 
-*Figure 3 — The consequence chain. Every node is a risk event and every Δt a detection-and-intervention window; the organization's risk appetite designates the terminal BRE as its Business Impact.*
+**Entry points.** Not every chain begins at a System Compromise. System Failure enters at the SRE altitude without a cluster; Abuse of Rights enters at the DRE (Section 3.5); Error in Use can enter any altitude; and a business or compliance event can be entered directly by a normative edge — a norm is amended and an unchanged process becomes non-compliant — with no SRE or DRE before it. These entry points are named to place the boundary of the clusters, not to classify (dictionary `consequence_chain`).
+
+![The consequence chain SRE → DRE → BRE*, with a causal Δt on each transition and the risk-appetite boundary designating the terminal BRE as Business Impact](images/tlctc-consequence-chain.svg)
+
+*Figure 3 — The consequence chain. Every node is a risk event; each Δt is the causal interval of a transition and bounds the window for detection and response. Where a BRE follows by a normative edge, no Δt is defined. The organization's risk appetite designates the terminal BRE as its Business Impact.*
 
 Crucially, **outcomes are never threats.** A data risk event such as "data breach" or "ransomware impact" records *what happened*; it never changes the cluster classification of the step that caused it. This is the operational form of Axiom III, and it is what allows the same outcome to be traced back to different cause-side clusters.
 
@@ -712,7 +716,7 @@ The following one-line definitions cover the terms used in this paper so that it
 - **Abuse of Rights** — an intended action inside an entitlement an accountable grantor genuinely conferred, used against its purpose; operational risk, no generic vulnerability, no cluster, no SRE — the consequence chain starts at the DRE (Section 3.5, R-SCOPE). Not an eleventh cluster: a granted entitlement is irreducible by design.
 - **Attack path** — an ordered sequence of attack steps describing a complete attack scenario, written in the attack-path notation (Section 7), where each step maps to exactly one cluster.
 - **Attack vector** — a distinct initiating method, defined by the generic vulnerability it *initially* targets (Axiom VII); the label is based on cause, not outcome.
-- **BRE (Business Risk Event)** — a business-level consequence event (e.g. regulatory notification, outage declaration, fine) triggered by a DRE or a preceding BRE; BREs may chain.
+- **BRE (Business Risk Event)** — a business-level consequence event (e.g. notification filed, outage declared, fine imposed, or a notification duty arising) reached from a DRE or a preceding BRE by a causal edge (with a Δt) or a normative edge (without); BREs may chain.
 - **Business Impact (BI)** — the role assigned to the terminal BRE in a consequence chain, set by an organization's risk appetite; not a separate event type and context-dependent (one organization's terminal BI may be another's mid-chain BRE).
 - **Cause-side partition** — the four rows of the cause side of any risk event, produced by three questions asked in order (actor? intent? entitlement?): failure or external event, Error in Use, Abuse of Rights, Attack. Only the Attack row is in TLCTC scope; the ten clusters classify its steps (Section 3.5).
 - **DCS (Detection Coverage Score)** — a time ratio comparing the defender's time at an edge to the attacker's velocity across it, in two forms read at the 90th percentile: detection `DCS_d = TTD_P90 / Δt` and containment `DCS_c = TTC_P90 / Δt`; below 1.0 the defender acts before the step completes, and only `DCS_c < 1` stops the transition. The v2.5 `MTTD / Δt` is the mean-based special case. Used operationally as a control-effectiveness KCI (developed in the application doc).
@@ -769,28 +773,12 @@ The following adjacent frameworks are referenced in this paper for positioning. 
 
 14. MITRE Corporation. *Common Attack Pattern Enumeration and Classification (CAPEC).* Version 3.9. https://capec.mitre.org/
 
-## Appendix A. Changes from v2.5
+## Appendix A. Changes from v2.6
 
-v2.6 answers an external review of v2.5. Each change item is traced to the review point it answers and recorded under the same ID in the dictionary's `changes_from_v2_5` section.
+v2.7 aligns the consequence chain with the Layered Event Modelling method, under which a transition duration is defined only on causal edges. Each change item is recorded under the same ID in the dictionary's `changes_from_v2_6` section. No cluster, axiom, rule or DRE code changes; every v2.6 classification remains valid.
 
-| ID | Review point | Change | Affects |
+| ID | Source | Change | Affects |
 | --- | --- | --- | --- |
-| C1 | 1 — partition does not follow one principle | Derivation under a stated criterion (a distinct control lever and owner); #1 and #2/#3 named as residual clusters | §2, §3.2, §8 |
-| C2 | 1 — fold the precedence rules | R-FLOOD, R-CHANNEL, R-SUBSTRATE folded into R-SPECIFIC; registry 19 → 17 | §6.1 |
-| C3 | 2 — #10 swallows most CVEs | #10 definition names subversion of the trusted third party; planting an attacker-authored artifact in a trusted channel counts as subversion | §4 #10 |
-| C4 | 2 — #10 boundary test | Subversion test; falsifier reworded (Log4Shell is #2) | §2, §4 #10 |
-| C5 | 2 — federation inflates #10 | Assertion presentation is #4; #10 → #4 only where the IdP was subverted | §4 #10 |
-| C6 | 2 — #10 at rule level | R-SUPPLY requires subversion; step 10 names it | §2, §6.1 |
-| C7 | 3 — entitlement contradicts itself | Envelope = scope (objects, actions, limits); purpose = conduct norm | §3.5 |
-| C8 | 3 — Adoboli | Adoboli removed; claims-handler pair added | §3.5 |
-| C9 | 4 — R-SCOPE step 4 | Step 4 routes to the cluster rules | §3.5, §6.1 |
-| C10 | 5 — FEC boundary | Data-vs-code boundary in the canon (`fec`) | §4 #7 |
-| C11 | 5 — prompt injection | Prompt injection is #1; #1 → #7 on attacker-controlled execution | §4 #1 |
-| C12 | 6 — SRE dilutes Compromise | Compromise = behaviour leaving owner control, including floods and passive interception | §3.4 |
-| C13 | 6 — attempts | Successes only; attempts are indicators, not steps | §3.4, §8 |
-| C14 | 7 — positioning | VERIS and CAPEC tables; CAPEC cited | §1.1, §10 |
-| C15 | smaller — DCS | DCS_d / DCS_c on P90 distributions | §7.2 |
-| C16 | smaller — names | Naming note; names unchanged | §4 |
-| C17 | all — application | Application paper aligned to v2.6 | application |
-| C18 | plan-time finding | Boundary tests canonical here, mirrored into whitepaper §4.1 under a build check | §4 |
-| C19 | plan-time finding | Rule statements verbatim from the dictionary, checked | §6 |
+| C1 | Layered Event Modelling §6 | Δt is the causal interval of a transition and bounds the detection-and-response window; the System Compromise clause claims only the window for compromise detection | §3.4, Figure 3 |
+| C2 | Layered Event Modelling §§6, 10 | A BRE is reached by a causal edge (with Δt) or a normative edge (without); statutory deadlines bound the response process from awareness | §3.4, §9 |
+| C3 | Layered Event Modelling §10 | Dictionary `consequence_chain`: BRE definition, edge kinds, entry points incl. a BRE entered directly by a normative edge | §3.4 |

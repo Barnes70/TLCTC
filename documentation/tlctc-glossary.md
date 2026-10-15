@@ -1,13 +1,13 @@
-# TLCTC Framework Glossary — Version 2.6
+# TLCTC Framework Glossary — Version 2.7
 
 *Comprehensive definitions and concepts for the Top Level Cyber Threat Clusters framework.*
-*Author: Bernhard Kreinz | Last Updated: 23 Sep 2026*
+*Author: Bernhard Kreinz | Last Updated: 15 Oct 2026*
 
 ---
 
-**Implements:** TLCTC framework specification **v2.6**. The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.6.json`, reproduced and derived in the v2.6 core paper (`documentation/tlctc-v2.6-core.md`); where an entry here and the canon differ, the canon governs.
+**Implements:** TLCTC framework specification **v2.7**. The normative authority for cluster definitions, axioms, and classification rules is the canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.7.json`, reproduced and derived in the v2.7 core paper (`documentation/tlctc-v2.7-core.md`); where an entry here and the canon differ, the canon governs.
 
-> Reference lines cite the v2.6 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
+> Reference lines cite the v2.7 core paper as *Core paper §n* and the v2.0 handbook, retained for its extended treatment, as *Handbook §n*. Where both are given, the core is authoritative and the handbook is the longer exposition.
 
 This glossary contains all defined terms of the TLCTC framework, organized alphabetically, including the v2.1 boundary extensions, the v2.6 consolidation rule R-SPECIFIC (which folds the v2.5 rules R-FLOOD, R-CHANNEL and R-SUBSTRATE), and industry terminology ("buzzwords") mapped to their correct TLCTC semantic context. Entries carried over from the V2.0/V2.1 whitepaper keep their whitepaper section cross-references. V2.1 additions are marked with *(V2.1)*; v2.5 additions with *(v2.5)*, v2.6 additions with *(v2.6)*. Industry terms commonly used in the field are marked with *(Industry Term)*. Rule IDs that are no longer part of the v2.6 normative registry are explicitly marked **(Deprecated alias)** or **(Retired alias)** — a retired ID keeps its original meaning and is never reused for a different proposition; the sole historical exception (the v2.1 draft R-INTRA numbering) is documented in the R-INTRA entry.
 
@@ -268,16 +268,16 @@ See also: Exploiting Server (#2), Exploiting Client (#3), Implementation Flaw
 
 ### Business Risk Event (BRE)
 
-A discrete, observable business-level event on the consequence side of the Bow-Tie model, triggered by a Data Risk Event or by a preceding BRE. Examples include regulatory notification obligations, service outage declarations, media coverage, customer churn, and regulatory fines. BREs may **chain**: each BRE can trigger subsequent BREs, forming a variable-length consequence sequence (`SRE → DRE → BRE₁ → BRE₂ → ... → BREₙ`). Each BRE→BRE transition has its own Δt representing a detection and intervention window. An organization's Risk Appetite determines at which point a BRE is designated as the terminal **Business Impact (BI)** — BI is a role a BRE can hold, not a separate event category.
+A discrete, observable business-level event on the consequence side of the Bow-Tie model, reached from a Data Risk Event or a preceding BRE by a **causal** edge (it is brought about, after a Δt) or by a **normative** edge (a duty arises or a norm is violated; no Δt is defined). Examples include notification obligations arising (normative), notifications filed, service outage declarations, media coverage, customer churn, and regulatory fines. BREs may **chain**, forming a variable-length consequence sequence (`SRE → DRE → BRE₁ → BRE₂ → ... → BREₙ`). Each causal transition has its own Δt, the interval that bounds the window for detection and intervention; a statutory deadline is not a Δt but bounds the response process from awareness. A BRE can also be entered directly by a normative edge, with no SRE or DRE before it — an unchanged process becomes non-compliant when a norm is amended: compliance risk, no cluster. An organization's Risk Appetite determines at which point a BRE is designated as the terminal **Business Impact (BI)** — BI is a role a BRE can hold, not a separate event category.
 
-**Reference:** Handbook §6.3.1 (The Consequence Chain), V1.9.1 §The Anatomy of Risk; Core paper §3.4
+**Reference:** Handbook §6.3.1 (The Consequence Chain), V1.9.1 §The Anatomy of Risk; Core paper §3.4; dictionary `consequence_chain` (v2.7)
 
 
 
 
 **Related reading:** [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html), [blog-cyber-bow-tie-business-risk-event-chain.html](https://www.tlctc.net/blog-cyber-bow-tie-business-risk-event-chain.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [TLCTC v2.5 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html), [TLCTC+ for NCSCs & CERTs — national reporting](https://www.tlctc.net/tlctc-plus-ncsc-proposal.html)
 
-See also: System Risk Event (SRE), Data Risk Event (DRE), Business Impact (BI), Event Chain, Consequences
+See also: System Risk Event (SRE), Data Risk Event (DRE), Business Impact (BI), Event Chain, Consequences, Normative Edge
 
 ### Business Impact (BI)
 
@@ -761,7 +761,7 @@ See also: Fast Velocity Class, SIEM, SOAR
 
 ### Event Chain
 
-A causal sequence where one outcome event triggers subsequent events, following the consequence chain **SRE → DRE → BRE\***. The chain cascades from the System Risk Event (central event) through Data Risk Events to one or more Business Risk Events. BREs may themselves chain (`BRE₁ → BRE₂ → ... → BREₙ`), with each transition having its own Δt representing a detection and intervention window where all six NIST CSF functions apply. Example: System Compromise (SRE) → Data Breach involving PII (DRE [C]) → GDPR notification obligation (BRE₁) + NIS2 incident report (BRE₂) → Regulatory fine (BRE₃). Understanding event chains is critical for designing Respond/Recover controls and regulatory compliance workflows.
+A sequence of risk events in which each event either brings about the next (a causal edge, with a Δt) or makes a norm apply to it (a normative edge, without one), following the consequence chain **SRE → DRE → BRE\***. The chain cascades from the System Risk Event (central event) through Data Risk Events to one or more Business Risk Events. BREs may themselves chain (`BRE₁ → BRE₂ → ... → BREₙ`), each causal transition having its own Δt, the interval that bounds the detection and intervention window in which all six NIST CSF functions apply. Example: System Compromise (SRE) → Data Breach involving PII (DRE [C]) → GDPR notification obligation (BRE₁, normative) + NIS2 incident report filed (BRE₂, a causal response bounded by the reporting deadline) → Regulatory fine (BRE₃). Understanding event chains is critical for designing Respond/Recover controls and regulatory compliance workflows.
 
 **Reference:** Handbook §6.3.1 (The Consequence Chain), V1.9.1 §Data Risk Event Types, §Clarification on Central Event Position; Core paper §3.4
 
@@ -1133,6 +1133,14 @@ The EU directive establishing cybersecurity risk management and incident reporti
 **Related reading:** [CVE-2020-17103 — patch closed an effect, not a cluster](https://www.tlctc.net/cve-2020-17103.html), [NIS2 Directive × TLCTC — implementation guide](https://www.tlctc.net/tlctc-NIS2.html), [NIS2 — TLCTC pain points & fixes](https://www.tlctc.net/blog-NIS2-Pain-Points.html), [EU cyber regulation needs a common taxonomy](https://www.tlctc.net/blog-eu-regulation-tlctc-taxonomy.html), [EU regulation (NIS2/DORA/CRA) vs TLCTC](https://www.tlctc.net/tlctc-eu-regulation.html), [GDPR vs NIS2 — different trigger points](https://www.tlctc.net/tlctc-gdpr-nis2-triggers.html), [TLCTC vs 30+ standards & regulations](https://www.tlctc.net/tlctc-regulatorsANDstandards.html), [Logical impossibility of control-first regulation](https://www.tlctc.net/tlctc-control-first-regulation.html), [The Commit Is the CVE — silent fixes & the patch-gap collapse](https://www.tlctc.net/silent-fix-window.html), [TLCTC v2.5 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html)
 
 See also: DORA, Regulatory Trigger Point, Event Chain Length, Eₙ Event Notation
+
+### Normative Edge *(v2.7)*
+
+An edge on the consequence chain along which an occurrent stands as fulfilment or violation of a norm — a statute, regulation, contract or policy — and so becomes a Business Risk Event, such as a notification duty arising. Nothing propagates along it and no Δt is defined: a statutory deadline (e.g. 72 hours from awareness under GDPR Art. 33) bounds a separate causal response process, not the edge. Distinguished from a causal edge, which carries a Δt and can be interrupted.
+
+**Reference:** Core paper §3.4; dictionary `consequence_chain` (v2.7)
+
+See also: Business Risk Event (BRE), Event Chain, Attack Velocity (Δt)
 
 ### Normative Keywords
 
