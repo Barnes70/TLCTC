@@ -9,6 +9,7 @@ const { execFileSync, spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const has = (cmd, args) => spawnSync(cmd, args, { encoding: 'utf8' }).status === 0;
+const HAVE_PYPDF = spawnSync('python', ['-c', 'import pypdf']).status === 0;
 const HAVE_PDFTOTEXT = has('pdftotext', ['-v']) || spawnSync('pdftotext', ['-v']).error === undefined;
 
 function build(md, extra) {
@@ -33,6 +34,6 @@ test('default footer is unchanged', { skip: !HAVE_PDFTOTEXT }, () => {
   assert.match(text(build('# Default Probe\n\nBody.\n', [])), /A Cause-Oriented Cyber Threat Taxonomy/);
 });
 
-test('PDF title metadata is the first heading', () => {
+test('PDF title metadata is the first heading', { skip: !HAVE_PYPDF }, () => {
   assert.strictEqual(title(build('# A Title With Δt\n\nBody.\n', ['--footer', 'x'])), 'A Title With Δt');
 });

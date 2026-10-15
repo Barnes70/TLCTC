@@ -41,9 +41,15 @@ test('HTML named entities become numeric references (standalone SVG is XML)', ()
   assert.throws(() => exportFigures(`${fig('0 0 9 9', '<text>&nope;</text>')}${fig('0 0 9 9', '')}`), /unknown entity &nope;/);
 });
 
+test('entity names with digits are matched, not left raw; unexpected <svg> attribute order throws', () => {
+  assert.throws(() => exportFigures(`${fig('0 0 9 9', '<text>&frac12;</text>')}${fig('0 0 9 9', '')}`), /unknown entity &frac12;/);
+  const odd = '<svg class="lem-fig" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9"></svg>';
+  assert.throws(() => exportFigures(odd + odd), /figure <svg> tag not in the expected form/);
+});
+
 test('committed figures are well-formed: only XML entities', () => {
   for (const n of ['lem-five-structures.svg', 'lem-typed-incident.svg']) {
     const s = fs.readFileSync(path.join(ROOT, 'documentation/images', n), 'utf8');
-    for (const m of s.match(/&[A-Za-z]+;/g) || []) assert.ok(['&amp;', '&lt;', '&gt;', '&quot;', '&apos;'].includes(m), `${n}: ${m}`);
+    for (const m of s.match(/&[A-Za-z][A-Za-z0-9]*;/g) || []) assert.ok(['&amp;', '&lt;', '&gt;', '&quot;', '&apos;'].includes(m), `${n}: ${m}`);
   }
 });

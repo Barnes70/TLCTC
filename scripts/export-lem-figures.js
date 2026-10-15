@@ -38,7 +38,7 @@ const STYLE = [
 const ENTITIES = { Delta: '&#916;', delta: '&#948;', mdash: '&#8212;', ndash: '&#8211;', rarr: '&#8594;', nbsp: '&#160;', le: '&#8804;', ge: '&#8805;', middot: '&#183;', hellip: '&#8230;', sect: '&#167;' };
 const XML_ENTITIES = new Set(['amp', 'lt', 'gt', 'quot', 'apos']);
 function numeric(svg) {
-  return svg.replace(/&([A-Za-z]+);/g, (m, name) => {
+  return svg.replace(/&([A-Za-z][A-Za-z0-9]*);/g, (m, name) => {
     if (XML_ENTITIES.has(name)) return m;
     if (!ENTITIES[name]) throw new Error('unknown entity ' + m);
     return ENTITIES[name];
@@ -52,6 +52,7 @@ function exportFigures(html) {
     const vb = /viewBox="0 0 (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)"/.exec(svg);
     if (!vb) throw new Error('figure without a 0-origin viewBox');
     const opened = svg.replace('<svg class="lem-fig" viewBox=', `<svg width="${vb[1]}" height="${vb[2]}" viewBox=`);
+    if (opened === svg) throw new Error('figure <svg> tag not in the expected form');
     return numeric(opened.replace(/^(<svg[^>]*>)/, `$1\n${STYLE}`));
   });
 }
