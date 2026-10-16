@@ -15,6 +15,6 @@ A causal sequence where one outcome event triggers subsequent events, following 
 
 
 
-**Related reading:** [blog-cyber-bow-tie-business-risk-event-chain.html](https://www.tlctc.net/blog-cyber-bow-tie-business-risk-event-chain.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
+**Related reading:** [The Cyber Bow-Tie — from one pivot to layered bow-ties](https://www.tlctc.net/tlctc-cyber-bow-tie.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
 
 See also: System Risk Event (SRE), Data Risk Event (DRE), Business Risk Event (BRE), Business Impact (BI), Eₙ Event Notation, RS Container, Propagated PR

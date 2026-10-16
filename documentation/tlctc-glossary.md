@@ -214,7 +214,7 @@ A risk model that represents risk as a structure with five elements: Threats (le
 
 **Reference:** Handbook §6 (The Bow-Tie Anchor), §6.1 (Structure and Vocabulary); Core paper §3.4
 
-**Related reading:** [Basel operational risk × TLCTC Bow-Tie](https://www.tlctc.net/tlctc-banks-operational-risk-basel.html), [Why ORX must rethink the "cyber event"](https://www.tlctc.net/tlctc-orx-rethink-cyber-event.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc-threat-modeling-manifesto.html), [Generic vulnerabilities — software & hardware failure](https://www.tlctc.net/tlctc-generic-vulnerabilities.html), [tlctc-bow-tie-causality.html](https://www.tlctc.net/tlctc-bow-tie-causality.html), [blog-tlctc-two-layer-framework.html](https://www.tlctc.net/blog-tlctc-two-layer-framework.html), [Why TLCTC does not need the "Hazard"](https://www.tlctc.net/tlctc-hazard-omission.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html)
+**Related reading:** [Basel operational risk × TLCTC Bow-Tie](https://www.tlctc.net/tlctc-banks-operational-risk-basel.html), [Why ORX must rethink the "cyber event"](https://www.tlctc.net/tlctc-orx-rethink-cyber-event.html), [TLCTC × Threat Modeling Manifesto](https://www.tlctc.net/tlctc-threat-modeling-manifesto.html), [Generic vulnerabilities — software & hardware failure](https://www.tlctc.net/tlctc-generic-vulnerabilities.html), [The Cyber Bow-Tie — from one pivot to layered bow-ties](https://www.tlctc.net/tlctc-cyber-bow-tie.html), [blog-tlctc-two-layer-framework.html](https://www.tlctc.net/blog-tlctc-two-layer-framework.html), [Why TLCTC does not need the "Hazard"](https://www.tlctc.net/tlctc-hazard-omission.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html)
 
 
 
@@ -275,7 +275,7 @@ A discrete, observable business-level event on the consequence side of the Bow-T
 
 
 
-**Related reading:** [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html), [blog-cyber-bow-tie-business-risk-event-chain.html](https://www.tlctc.net/blog-cyber-bow-tie-business-risk-event-chain.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [TLCTC v2.5 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html), [TLCTC+ for NCSCs & CERTs — national reporting](https://www.tlctc.net/tlctc-plus-ncsc-proposal.html)
+**Related reading:** [Evolving VERIS — replace Action axis with TLCTC](https://www.tlctc.net/tlctc-veris.html), [The Cyber Bow-Tie — from one pivot to layered bow-ties](https://www.tlctc.net/tlctc-cyber-bow-tie.html), [Agentic AI as consequence amplifier (right side of Bow-Tie)](https://www.tlctc.net/tlctc-agentic-ai-consequences.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [TLCTC v2.5 monster prompt — Regulators & Standards](https://www.tlctc.net/tlctc-prompt-regulators.html), [TLCTC+ for NCSCs & CERTs — national reporting](https://www.tlctc.net/tlctc-plus-ncsc-proposal.html)
 
 See also: System Risk Event (SRE), Data Risk Event (DRE), Business Impact (BI), Event Chain, Consequences
 
@@ -768,7 +768,7 @@ A causal sequence where one outcome event triggers subsequent events, following 
 
 
 
-**Related reading:** [blog-cyber-bow-tie-business-risk-event-chain.html](https://www.tlctc.net/blog-cyber-bow-tie-business-risk-event-chain.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
+**Related reading:** [The Cyber Bow-Tie — from one pivot to layered bow-ties](https://www.tlctc.net/tlctc-cyber-bow-tie.html), [Propagated Controls — Rule of Propagation](https://www.tlctc.net/tlctc-propagated-controls.html), [Strategic risk management implementation guide v2.1](https://www.tlctc.net/tlctc-big-picture.html)
 
 See also: System Risk Event (SRE), Data Risk Event (DRE), Business Risk Event (BRE), Business Impact (BI), Eₙ Event Notation, RS Container, Propagated PR
 
