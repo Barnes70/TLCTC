@@ -142,6 +142,8 @@ const RETIRED_CHAIN_PHRASES = [
   /Δt (representing|is) a detection/i,
   /notification obligation triggered/i,
   /Every transition \(SRE→DRE/i,
+  /distinguishable by inspecting the record itself/i, // v2.7 C4: the stopping rule reads the record's present standing
+  /Every node is a risk event/i, // Figure 3 draws the clusters, which are causes, not events
 ];
 for (const rel of CHAIN_DOCS) {
   if (!exists(rel)) { note(`${rel}: missing`); continue; }
@@ -186,7 +188,8 @@ const LEM_REQUIRED = [
   '## Declarations',
   '### 9.4 A worked case: possession',
   'DCS_d = TTD_P90 / Δt',
-  'This follows from what a transition is rather than from a further rule about edges.',
+  'Δt is the duration of a transition, carried by the causal edge along which one event brings about the next; it is not the time between any two timestamps.',
+  '**E0 — Structure routing.**',
   'A rack loses power',
   '11. Further S2 levels',
 ];

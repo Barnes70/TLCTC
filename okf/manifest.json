@@ -2466,7 +2466,7 @@
       "path": "/glossary/event-chain-length.md",
       "type": "term",
       "title": "Event Chain Length",
-      "description": "The number of causal events between the initial incident (E1) and a regulatory trigger point (E3x).",
+      "description": "The number of events between the initial incident (E1) and the event at which a regulatory duty arises (E3x).",
       "resource": "tlctc:term:event-chain-length",
       "tags": [
         "glossary"
@@ -2826,7 +2826,7 @@
       "path": "/glossary/loss-of-confidentiality-loc.md",
       "type": "term",
       "title": "Loss of Confidentiality (LoC)",
-      "description": "A Data Risk Event outcome where an attacker gains unauthorized access to data.",
+      "description": "A Data Risk Event outcome where data are disclosed to, or obtained by, a party not entitled to them — whatever the cause: an attacker's step, an error in use (a misdirected email), or an entitled actor's abuse of rights.",
       "resource": "tlctc:term:loss-of-confidentiality-loc",
       "tags": [
         "glossary"
@@ -2856,7 +2856,7 @@
       "path": "/glossary/loss-of-integrity-loi.md",
       "type": "term",
       "title": "Loss of Integrity (LoI)",
-      "description": "A Data Risk Event outcome where the standing of a record as a faithful and attributable representation has changed other than through its intended, authorised process — typically an attacker's unauthorized modification.",
+      "description": "A Data Risk Event outcome where the standing of a record as a faithful and attributable representation has changed other than through its intended, authorised process — typically an attacker's unauthorized modification, but also an error in use or an entitled actor's in grant abuse (Abuse of Rights), which uses an authorised process against its purpose.",
       "resource": "tlctc:term:loss-of-integrity-loi",
       "tags": [
         "glossary"

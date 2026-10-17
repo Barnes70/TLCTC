@@ -44,7 +44,7 @@
                         <line class="acc-hair" x1="280" y1="138" x2="280" y2="150"/>
                         <rect class="acc-bx" x="200" y="150" width="160" height="46" rx="2"/>
                         <text class="lbl acc-txt" x="280" y="177" text-anchor="middle">Business risk event</text>
-                        <text class="mono acc-txt" x="280" y="278" text-anchor="middle">&#916;t BETWEEN EVENTS</text>
+                        <text class="mono acc-txt" x="280" y="278" text-anchor="middle">&#916;t ON CAUSAL EDGES</text>
                     </g>
                     <!-- S3 -->
                     <g>
@@ -79,8 +79,9 @@
                     <g>
                         <text class="mono" x="740" y="18">S5 &#183; NORMATIVE</text>
                         <rect class="bx" x="740" y="34" width="160" height="46" rx="2"/>
-                        <text class="lbl" x="820" y="55" text-anchor="middle">Meta-layer</text>
-                        <text class="mono" x="820" y="70" text-anchor="middle">AUTHORITY &#183; SCOPE</text>
+                        <text class="lbl" x="820" y="51" text-anchor="middle">Meta-layer</text>
+                        <text class="mono" x="820" y="64" text-anchor="middle">AUTHORITY &#183; COMPETENCE</text>
+                        <text class="mono" x="820" y="75" text-anchor="middle">ENFORCEABILITY &#183; SCOPE</text>
                         <line class="hair" x1="820" y1="80" x2="820" y2="92"/>
                         <rect class="bx" x="740" y="92" width="160" height="46" rx="2"/>
                         <text class="lbl" x="820" y="119" text-anchor="middle">Rights</text>

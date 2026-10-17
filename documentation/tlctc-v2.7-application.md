@@ -312,11 +312,11 @@ DCS_c = TTC_P90 / Δt      (containment)
 
 The core establishes DCS as a velocity relationship; here it is operationalized as a *control-effectiveness KCI* — the full control-indicator treatment deferred from the core. As a KCI, DCS sits between the control-objectives layer and the risk-event layer: it contextualizes raw time-to-detect and time-to-contain (procedural KCIs) by the threat reality (Δt), turning "how fast do we detect and contain?" into "do we act fast *enough* to matter?" Interpretation, for either form:
 
-- **DCS < 1.0** — detection (DCS_d) or containment (DCS_c) completes before the attacker completes the transition; the defender is ahead; the control is effective.
+- **DCS < 1.0** — at the 90th percentile, detection (DCS_d) or containment (DCS_c) completes before the attacker's fast tail completes the transition; the defender is ahead and the control meets its target. This is a distributional statement: the slowest tenth of incidents can still lose the race.
 - **DCS = 1.0** — detection (DCS_d) or containment (DCS_c) matches attack speed; marginal, with no buffer.
 - **DCS > 1.0** — the transition completes before detection or containment; the attacker wins the transition; the control is ineffective at that edge.
 
-Detection alone does not stop a transition: `DCS_d < 1` with `DCS_c > 1` means the step was seen but completed anyway, so the containment form decides whether the control prevents the next step.
+Detection alone does not stop a transition: `DCS_d < 1` with `DCS_c > 1` means the step is typically seen but completes anyway, so the containment form decides whether the control is expected to prevent the next step. DCS is defined for Δt > 0; a transition recorded as instantaneous is prevention-only (§10.3, VC-4).
 
 The two scenarios above are DCS ≈ 0.012 (APT, highly effective) versus DCS ≈ 24 (ransomware, ineffective) for the identical MTTD — the mean-based special case (`MTTD / Δt`, core §7.2) and the quantitative form of the velocity verdict. Read at P90 and on containment the ransomware verdict only worsens: containment follows detection and takes longer still.
 
@@ -472,7 +472,7 @@ This glossary defines only the application- and governance-layer terms used in t
 
 ## 19. References
 
-1. Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.6). 2026. DOI: 10.5281/zenodo.20633176. https://doi.org/10.5281/zenodo.20633176 — the core paper this document accompanies.
+1. Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.7). 2026. DOI: 10.5281/zenodo.20633176. https://doi.org/10.5281/zenodo.20633176 — the core paper this document accompanies.
 2. National Institute of Standards and Technology. *The NIST Cybersecurity Framework (CSF) 2.0.* NIST Cybersecurity White Paper NIST CSWP 29, 2024. https://doi.org/10.6028/NIST.CSWP.29
 3. MITRE Corporation. *MITRE ATT&CK: Adversarial Tactics, Techniques, and Common Knowledge.* https://attack.mitre.org/
 4. MITRE Corporation. *Common Weakness Enumeration (CWE).* https://cwe.mitre.org/

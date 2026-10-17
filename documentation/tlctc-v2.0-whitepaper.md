@@ -2234,7 +2234,7 @@ This separation enables precise incident learning: the same outcome (e.g., "data
 ### 6.3.1 The Consequence Chain: SRE → DRE → BRE*
 
 ![The Consequence Chain](images/tlctc-consequence-chain.svg)
-*Figure 1.4.3.1 — The Consequence Chain. Every node is a risk event. Every Δt is a causal interval that bounds the detection window. All 6 NIST CSF functions apply at each point. BRE chain length is organization-dependent.*
+*Figure 1.4.3.1 — The Consequence Chain, drawn for the case in which every transition is causal. Every event in the chain is a risk event (the clusters are causes, not events). Every Δt is a causal interval that bounds the window for detection and response. All 6 NIST CSF functions apply at each point. BRE chain length is organization-dependent.*
 
 The consequence side of the Bow-Tie follows a structured event chain with three event types:
 
@@ -2871,7 +2871,7 @@ INTEGRATED KxI HIERARCHY WITH VELOCITY CONTEXT
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
-> *v2.6 note:* the core paper (§7.2) reads DCS on distributions rather than means, in two forms — detection `DCS_d = TTD_P90 / Δt` and containment `DCS_c = TTC_P90 / Δt` — and only `DCS_c < 1` means the transition is stopped. `MTTD / Δt`, as drawn above, is the mean-based special case of `DCS_d`.
+> *v2.6 note:* the core paper (§7.2) reads DCS on distributions rather than means, in two forms — detection `DCS_d = TTD_P90 / Δt` and containment `DCS_c = TTC_P90 / Δt` — and only `DCS_c < 1` targets stopping the transition. *v2.7:* the score is a distributional target, not a per-incident guarantee, and is defined for Δt > 0. `MTTD / Δt`, as drawn above, is the mean-based special case of `DCS_d`.
 
 ### 10.8 Axiom Compliance
 

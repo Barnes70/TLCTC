@@ -12,7 +12,7 @@ TLCTC provides the missing semantic foundation for cybersecurity: a stable, non-
 
 ## Framework Documents
 
-TLCTC v2.7 is the current citable version: the v2.3 consolidation freeze of the finalized v2.1 framework, plus the v2.4 interaction-model clarification, the v2.5 disambiguation and scope rules, the v2.6 answers to an external review — #10 requires subversion, R-SPECIFIC replaces three precedence rules, successes-only classification — and the v2.7 consequence chain aligned with Layered Event Modelling: Δt only on causal transitions, Business Risk Events reached by causal or normative edges (see [`tlctc-traceability.md`](documentation/tlctc-traceability.md) and the core paper's Appendix A). The documents form a deliberate hierarchy:
+TLCTC v2.7 is the current citable version: the v2.3 consolidation freeze of the finalized v2.1 framework, plus the v2.4 interaction-model clarification, the v2.5 disambiguation and scope rules, the v2.6 answers to an external review — #10 requires subversion, R-SPECIFIC replaces three precedence rules, successes-only classification — and the v2.7 consequence chain aligned with Layered Event Modelling: Δt only on causal transitions, Business Risk Events reached by causal or normative edges, the DRE stopping rule restated and DCS read as a distributional target (see [`tlctc-traceability.md`](documentation/tlctc-traceability.md) and the core paper's Appendix A). The documents form a deliberate hierarchy:
 
 | Document | Role |
 |---|---|

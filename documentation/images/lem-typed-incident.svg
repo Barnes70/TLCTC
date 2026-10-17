@@ -105,7 +105,7 @@
                     <line class="hair" x1="10" y1="592" x2="890" y2="592"/>
                     <path class="acc-hair" d="M22 612 H62" marker-end="url(#f2-arrow-red)"/>
                     <text class="mono acc-txt" x="22" y="632">CAUSAL</text>
-                    <text class="mono" x="22" y="646">&#916;t &gt; 0 &#183; CAN BE CUT</text>
+                    <text class="mono" x="22" y="646">CARRIES &#916;t &#183; CAN BE CUT</text>
                     <path class="hair edge dot" d="M198 612 H238" marker-end="url(#f2-arrow)"/>
                     <text class="mono" x="198" y="632">EVIDENTIAL</text>
                     <text class="mono" x="198" y="646">OBSERVES &#183; NEVER ACTS</text>

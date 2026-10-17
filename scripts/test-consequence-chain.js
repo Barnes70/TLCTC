@@ -58,7 +58,14 @@ test('compromise no longer claims the detection window for its type alone (C1)',
   assert.match(d, /causal Δt/);
 });
 
-test('change record is changes_from_v2_6 with C1–C3', () => {
+test('change record is changes_from_v2_6 with C1–C5', () => {
   assert.strictEqual(fw.changes_from_v2_5, undefined);
-  assert.deepStrictEqual(fw.changes_from_v2_6.map((c) => c.id), ['C1', 'C2', 'C3']);
+  assert.deepStrictEqual(fw.changes_from_v2_6.map((c) => c.id), ['C1', 'C2', 'C3', 'C4', 'C5']);
+});
+
+test('the DRE stopping rule reads the record\'s present standing, never the story (C4)', () => {
+  const r = fw.data_risk_events.stopping_rule;
+  assert.match(r, /present standing/);
+  assert.match(r, /never by the story of how it came to be in that state/);
+  assert.doesNotMatch(r, /inspecting the record itself/);
 });
