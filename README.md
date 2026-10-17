@@ -19,7 +19,7 @@ TLCTC v2.7 is the current citable version: the v2.3 consolidation freeze of the 
 | [**Core Paper**](documentation/tlctc-v2.7-core.md) ([PDF](documentation/tlctc-v2.7-core.pdf)) | **The canonical definition** of the framework: derivation, 10 clusters, 10 axioms, 17 classification rules, attack-path notation, glossary, references. Citable (see How to Cite). |
 | [**Application Paper**](documentation/tlctc-v2.7-application.md) ([PDF](documentation/tlctc-v2.7-application.pdf), [DOI](https://doi.org/10.5281/zenodo.22697636)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. Separately citable (DOI). |
 | [**White Paper**](documentation/tlctc-v2.0-whitepaper.md) ([web](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)) | The extended practitioner handbook: full notation grammar (§11), boundary catalogs, decision procedures, anti-patterns, and worked detail beyond the core. Conforms to the core; filename kept for link stability. |
-| [**Layered Event Modelling**](documentation/tlctc-layered-event-modelling.md) ([PDF](documentation/tlctc-layered-event-modelling.pdf), [web](https://www.tlctc.net/tlctc-layered-event-modelling.html), [DOI](https://doi.org/10.5281/zenodo.23438101)) | The method paper (v1.0): semantic separation across five structures, six edge types, Δt only on causal edges. TLCTC is its worked instantiation; it quotes the canon and defines no TLCTC object. Separately citable. |
+| [**Layered Event Modelling**](documentation/tlctc-layered-event-modelling.md) ([PDF](documentation/tlctc-layered-event-modelling.pdf), [web](https://www.tlctc.net/tlctc-layered-event-modelling.html), [DOI](https://doi.org/10.5281/zenodo.23438101)) | The method paper (v1.0): semantic separation across five structures, six edge types, Δt only on causal edges. TLCTC is its worked instantiation; it quotes the canon and defines no TLCTC object. Separately citable. Its home from v1.0 on is [Barnes70/layered-event-modelling](https://github.com/Barnes70/layered-event-modelling) (formalisation: [Barnes70/lem-lean](https://github.com/Barnes70/lem-lean)); the copy here is the v1.0 release that TLCTC v2.7 cites. |
 | [**Operational Enumeration**](documentation/tlctc-operational-enumeration.md) ([JSON](json-schemas/operational/tlctc-operational-enumeration.json)) | The *evolving* `TLCTC-XX.YY` sub-cluster catalogue. The strategic layer (10 clusters) is frozen; the operational layer grows by contribution. |
 
 Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.7.json`](json-schemas/layer-1/tlctc-framework.v2.7.json). The v2.3, v2.4, v2.5 and v2.6 dictionaries are retained unchanged as frozen records for classifications made under those versions.
@@ -554,7 +554,7 @@ tlctc/
 │   ├── tlctc-v2.7-core.pdf                   # PDF of the v2.7 core paper
 │   ├── tlctc-v2.7-application.md             # Application & governance companion (v2.7)
 │   ├── tlctc-v2.7-application.pdf            # PDF of the v2.7 application paper
-│   ├── tlctc-layered-event-modelling.md      # Layered Event Modelling v1.0 (method paper; TLCTC is its instantiation)
+│   ├── tlctc-layered-event-modelling.md      # Layered Event Modelling v1.0 (method paper; TLCTC is its instantiation; home: Barnes70/layered-event-modelling)
 │   ├── tlctc-layered-event-modelling.pdf     # PDF of the LEM paper
 │   ├── tlctc-v2.6-core.md                    # Core paper v2.6 (previous deposit; frozen)
 │   ├── tlctc-v2.6-core.pdf                   # PDF of the v2.6 core paper
@@ -765,7 +765,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 |---|---|
 | [Core Paper v2.7](documentation/tlctc-v2.7-core.md) ([PDF](documentation/tlctc-v2.7-core.pdf)) | The canonical definition of the framework |
 | [Application Paper v2.7](documentation/tlctc-v2.7-application.md) ([PDF](documentation/tlctc-v2.7-application.pdf)) | Classification in practice, governance, controls, and indicators |
-| [Layered Event Modelling v1.0](documentation/tlctc-layered-event-modelling.md) ([PDF](documentation/tlctc-layered-event-modelling.pdf)) | The method paper the consequence chain instantiates |
+| [Layered Event Modelling v1.0](documentation/tlctc-layered-event-modelling.md) ([PDF](documentation/tlctc-layered-event-modelling.pdf)) | The method paper the consequence chain instantiates; continued at [Barnes70/layered-event-modelling](https://github.com/Barnes70/layered-event-modelling) |
 | [tlctc.net](https://tlctc.net) | Official TLCTC website with documentation, visuals, and tools |
 | [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Extended practitioner handbook: boundary logic, epistemic operators, and complete notation specification |
 | [barnes.ch](https://barnes.ch) | Author's site with foundational analysis on cybersecurity's language problem |
