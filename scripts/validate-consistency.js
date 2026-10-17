@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
  * validate-consistency.js — Cross-artifact drift checks against the canonical
- * dictionary (json-schemas/layer-1/tlctc-framework.v2.6.json). Part of `npm run validate`.
+ * dictionary (json-schemas/layer-1/tlctc-framework.v2.7.json). Part of `npm run validate`.
  *
  * The dictionary is the single source of truth; several derived artifacts repeat
  * its facts (rule count, DRE code list, cluster strings). This script fails when
@@ -28,7 +28,7 @@ const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
 const readJSON = (rel) => JSON.parse(read(rel));
 const exists = (rel) => fs.existsSync(path.join(ROOT, rel));
 
-const fw = readJSON('json-schemas/layer-1/tlctc-framework.v2.6.json');
+const fw = readJSON('json-schemas/layer-1/tlctc-framework.v2.7.json');
 const findings = [];
 const note = (s) => findings.push(s);
 const sameSet = (a, b) => a.length === b.length && [...a].sort().join('|') === [...b].sort().join('|');
@@ -102,7 +102,7 @@ const em = /extension rules \((\d+)\):\*\*/.exec(glossary);
 if (em && Number(em[1]) !== X) note(`glossary: "extension rules (${em[1]})", registry has ${X}`);
 for (const id of ruleIds) if (!new RegExp(`\\*\\*${id}\\*\\*`).test(glossary)) note(`glossary quick reference: ${id} missing`);
 
-const core = read('documentation/tlctc-v2.6-core.md');
+const core = read('documentation/tlctc-v2.7-core.md');
 for (const id of ruleIds) if (!new RegExp(`\\*\\*${id}\\*\\*`).test(core)) note(`core paper: rule ${id} not defined in bold`);
 for (const r of fw.rules) if (!core.includes(r.statement)) note(`core paper: rule ${r.rule_id} statement not reproduced verbatim`);
 const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
@@ -119,6 +119,111 @@ for (const [id, c] of Object.entries(fw.clusters)) {
   for (const field of ['definition', 'attackers_view', 'generic_vulnerability']) {
     if (!core.includes(c[field])) note(`core paper: ${id} ${field} not reproduced verbatim`);
   }
+}
+
+// ───────────────────────── 7. consequence chain (v2.7 C1–C3) ─────────────────
+// A Δt exists only on causal transitions; a BRE is reached by a causal or a
+// normative edge. These phrases said otherwise and must not come back.
+const CHAIN_DOCS = [
+  'documentation/tlctc-v2.7-core.md',
+  'documentation/tlctc-v2.7-application.md',
+  'documentation/tlctc-glossary.md',
+  'documentation/tlctc-v2.0-whitepaper.md',
+  'documentation/tlctc-layered-event-modelling.md',
+  'documentation/images/tlctc-consequence-chain.svg',
+];
+const RETIRED_CHAIN_PHRASES = [
+  /every transition carries its own Δt/i,
+  /every Δt (is )?a detection/i,
+  /Δt detection windows at every transition/i,
+  /triggered by a (DRE|Data Risk Event)/i,
+  /each (BRE→BRE )?transition (has|carries|having) its own Δt/i,
+  /has its own \*\*Δt\*\* — a detection and intervention window/i,
+  /Δt (representing|is) a detection/i,
+  /notification obligation triggered/i,
+  /Every transition \(SRE→DRE/i,
+  /distinguishable by inspecting the record itself/i, // v2.7 C4: the stopping rule reads the record's present standing
+  /Every node is a risk event/i, // Figure 3 draws the clusters, which are causes, not events
+];
+for (const rel of CHAIN_DOCS) {
+  if (!exists(rel)) { note(`${rel}: missing`); continue; }
+  const txt = read(rel);
+  for (const p of RETIRED_CHAIN_PHRASES) if (p.test(txt)) note(`${rel}: retired consequence-chain phrase "${p.source}" (v2.7 C1/C2)`);
+}
+const cc = fw.consequence_chain;
+if (!cc) note('dictionary: consequence_chain section missing (v2.7 C3)');
+else if (!core.includes(cc.business_risk_event.definition)) note('core paper: BRE definition not reproduced verbatim from consequence_chain');
+
+// ───────────────────────── 8. Layered Event Modelling paper ──────────────────
+// The LEM paper is the method; TLCTC is its instance. It quotes the canon
+// verbatim and carries no draft residue. Tasks append to both lists.
+const LEM_PATH = 'documentation/tlctc-layered-event-modelling.md';
+const LEM_FORBIDDEN = [
+  'Changes in v0.',
+  'Draft v0.',
+  'Earlier drafts',
+  'An earlier version of this framework',
+  'P4 replaces a weaker earlier test',
+  'because v0.5 named it',
+  '## 11. A conjecture',
+  'Generality beyond it ',
+  'unauthorised actor',
+  'unauthorised agent',
+  'authorised agent',
+  'authorised control envelope',
+  'Fraud / integrity',
+  'facility risk event',
+  'Facility risk event',
+  'A future revision should',
+  '$$',
+  '\\mathbb',
+  '(Figure in the web edition.)',
+];
+const LEM_REQUIRED = [
+  '**Version:** 1.0',
+  '**License:** CC BY 4.0',
+  'orcid.org/0009-0005-2148-9903',
+  '### N6 — A conjecture beyond risk modelling',
+  '## Development history',
+  '## Declarations',
+  '### 9.4 A worked case: possession',
+  'DCS_d = TTD_P90 / Δt',
+  'Δt is the duration of a transition, carried by the causal edge along which one event brings about the next; it is not the time between any two timestamps.',
+  '**E0 — Structure routing.**',
+  'A rack loses power',
+  '11. Further S2 levels',
+];
+if (!exists(LEM_PATH)) note(`${LEM_PATH}: missing`);
+else {
+  const lem = read(LEM_PATH);
+  for (const p of LEM_FORBIDDEN) if (lem.includes(p)) note(`LEM paper: forbidden text "${p}"`);
+  for (const p of LEM_REQUIRED) if (!lem.includes(p)) note(`LEM paper: required text missing "${p}"`);
+  const sre = fw.system_risk_event.types[0].definition;
+  if (!lem.includes(sre)) note('LEM paper: System Compromise definition not quoted verbatim from the dictionary');
+  if (fw.consequence_chain && !lem.includes(fw.consequence_chain.business_risk_event.definition)) note('LEM paper: BRE definition not quoted verbatim from consequence_chain');
+  for (const c of fw.data_risk_events.codes.filter((x) => !x.refinements || x.refinements.length === 0)) {
+    if (!lem.includes(c.name)) note(`LEM paper: DRE code ${c.code} name "${c.name}" missing`);
+    if (!lem.includes(c.property)) note(`LEM paper: DRE code ${c.code} property "${c.property}" missing`);
+  }
+}
+
+// ───────────────────────── 9. version pins (v2.7 final review) ───────────────
+// Documents that claim to be the current version must name the dictionary's
+// version; provenance tags (*(v2.6)*, "since v2.6") are not matched here.
+const ver = fw.metadata.tlctc_version;
+const appTxt = exists('documentation/tlctc-v2.7-application.md') ? read('documentation/tlctc-v2.7-application.md') : '';
+for (const [label, txt] of [['core paper', core], ['application paper', appTxt], ['glossary', glossary]]) {
+  for (const m of txt.matchAll(/(?:v(\d+\.\d+) normative registry|normative rule registry of v(\d+\.\d+)|TLCTC v(\d+\.\d+) core paper)/g)) {
+    const v = m[1] || m[2] || m[3];
+    if (v !== ver) note(`${label}: registry version pin "${m[0]}" != dictionary v${ver}`);
+  }
+}
+const pin = glossary.match(/mirrors the canonical dictionary \(`tlctc-framework\.v(\d+\.\d+)\.json`\)/);
+if (!pin || pin[1] !== ver) note(`glossary: canonical-dictionary filename pin ${pin ? 'v' + pin[1] : 'missing'} != v${ver}`);
+if (exists(LEM_PATH)) {
+  const lemTxt = read(LEM_PATH);
+  if (!lemTxt.includes(`TLCTC framework specification v${ver}`)) note(`LEM paper: missing "TLCTC framework specification v${ver}"`);
+  if (!lemTxt.includes(`version ${ver}. Zenodo`)) note(`LEM paper: missing "version ${ver}. Zenodo"`);
 }
 
 // ───────────────────────── report ────────────────────────────────────────────

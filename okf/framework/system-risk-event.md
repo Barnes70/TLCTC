@@ -17,7 +17,7 @@ Any risk event at the system altitude: the point at which a system's behaviour, 
 
 | Type | Name | Clusters reach it | Definition |
 |---|---|---|---|
-| `compromise` | System Compromise — Loss of Control | yes | The behaviour, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective. Reached only through cluster steps (the Attack row). This is the pivot of the Cyber Bow-Tie: everything the ten clusters classify converges on it, and the detection-and-intervention window between compromise and any Data Risk Event exists only for this type. |
+| `compromise` | System Compromise — Loss of Control | yes | The behaviour, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective. Reached only through cluster steps (the Attack row). This is the pivot of the Cyber Bow-Tie: everything the ten clusters classify converges on it, and the interval in which compromise detection can act before any Data Risk Event, bounded by the causal Δt of that transition, exists only for this type. |
 
 ## Other system-altitude events (outside the clusters)
 

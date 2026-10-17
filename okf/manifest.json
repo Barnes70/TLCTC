@@ -1,9 +1,9 @@
 {
   "bundle": "tlctc-okf",
   "okf_spec_version": "0.1",
-  "tlctc_version": "2.6",
+  "tlctc_version": "2.7",
   "generator": "scripts/build-okf.js",
-  "document_count": 440,
+  "document_count": 441,
   "type_counts": {
     "attack-path": 60,
     "axiom": 10,
@@ -20,7 +20,7 @@
     "rule": 17,
     "sphere": 9,
     "sre": 1,
-    "term": 262
+    "term": 263
   },
   "documents": [
     {
@@ -1916,7 +1916,7 @@
       "path": "/glossary/business-risk-event-bre.md",
       "type": "term",
       "title": "Business Risk Event (BRE)",
-      "description": "A discrete, observable business level event on the consequence side of the Bow Tie model, triggered by a Data Risk Event or by a preceding BRE.",
+      "description": "A discrete, observable business level event on the consequence side of the Bow Tie model, reached from a Data Risk Event or a preceding BRE by a causal edge (it is brought about, after a Δt) or by a normative edge (a duty arises or a norm is violated; no Δt is defined).",
       "resource": "tlctc:term:business-risk-event-bre",
       "tags": [
         "glossary"
@@ -2466,7 +2466,7 @@
       "path": "/glossary/event-chain-length.md",
       "type": "term",
       "title": "Event Chain Length",
-      "description": "The number of causal events between the initial incident (E1) and a regulatory trigger point (E3x).",
+      "description": "The number of events between the initial incident (E1) and the event at which a regulatory duty arises (E3x).",
       "resource": "tlctc:term:event-chain-length",
       "tags": [
         "glossary"
@@ -2476,7 +2476,7 @@
       "path": "/glossary/event-chain.md",
       "type": "term",
       "title": "Event Chain",
-      "description": "A causal sequence where one outcome event triggers subsequent events, following the consequence chain SRE → DRE → BRE\\ .",
+      "description": "A sequence of risk events in which each event either brings about the next (a causal edge, with a Δt) or meets a norm's condition or violates it (a normative edge, without one), following the consequence chain SRE → DRE → BRE\\ .",
       "resource": "tlctc:term:event-chain",
       "tags": [
         "glossary"
@@ -2826,7 +2826,7 @@
       "path": "/glossary/loss-of-confidentiality-loc.md",
       "type": "term",
       "title": "Loss of Confidentiality (LoC)",
-      "description": "A Data Risk Event outcome where an attacker gains unauthorized access to data.",
+      "description": "A Data Risk Event outcome where data are disclosed to, or obtained by, a party not entitled to them — whatever the cause: an attacker's step, an error in use (a misdirected email), or an entitled actor's abuse of rights.",
       "resource": "tlctc:term:loss-of-confidentiality-loc",
       "tags": [
         "glossary"
@@ -2856,7 +2856,7 @@
       "path": "/glossary/loss-of-integrity-loi.md",
       "type": "term",
       "title": "Loss of Integrity (LoI)",
-      "description": "A Data Risk Event outcome where the standing of a record as a faithful and attributable representation has changed other than through its intended, authorised process — typically an attacker's unauthorized modification.",
+      "description": "A Data Risk Event outcome where the standing of a record as a faithful and attributable representation has changed other than through its intended, authorised process — typically an attacker's unauthorized modification, but also an error in use or an entitled actor's in grant abuse (Abuse of Rights), which uses an authorised process against its purpose.",
       "resource": "tlctc:term:loss-of-integrity-loi",
       "tags": [
         "glossary"
@@ -2978,6 +2978,16 @@
       "title": "NIST CSF (Cybersecurity Framework)",
       "description": "The National Institute of Standards and Technology Cybersecurity Framework providing guidelines for managing cybersecurity risk.",
       "resource": "tlctc:term:nist-csf-cybersecurity-framework",
+      "tags": [
+        "glossary"
+      ]
+    },
+    {
+      "path": "/glossary/normative-edge.md",
+      "type": "term",
+      "title": "Normative Edge",
+      "description": "An edge on the consequence chain along which an occurrent meets the condition of a norm — a statute, regulation, contract or policy — so that a duty arises, or stands as its violation, and so becomes a Business Risk Event: a notification duty arising, a reporting deadline missed.",
+      "resource": "tlctc:term:normative-edge",
       "tags": [
         "glossary"
       ]
@@ -3246,7 +3256,7 @@
       "path": "/glossary/r-abuse-function-misuse-determination.md",
       "type": "term",
       "title": "R-ABUSE (Function Misuse Determination) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.7 normative registry.",
       "resource": "tlctc:term:r-abuse-function-misuse-determination",
       "tags": [
         "glossary"
@@ -3296,7 +3306,7 @@
       "path": "/glossary/r-human-human-manipulation-isolation.md",
       "type": "term",
       "title": "R-HUMAN (Human Manipulation Isolation) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.7 normative registry.",
       "resource": "tlctc:term:r-human-human-manipulation-isolation",
       "tags": [
         "glossary"
@@ -3306,7 +3316,7 @@
       "path": "/glossary/r-intra-intra-system-boundary-rules.md",
       "type": "term",
       "title": "R-INTRA (Intra-System Boundary Rules)",
-      "description": "The v2.6 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification.",
+      "description": "The v2.7 normative registry carries exactly two R INTRA rules governing the intra system operator ( |...| ): | Rule | Summary | | | | | R INTRA 7 | Intra system boundary crossings never change cluster classification.",
       "resource": "tlctc:term:r-intra-intra-system-boundary-rules",
       "tags": [
         "glossary"
@@ -3326,7 +3336,7 @@
       "path": "/glossary/r-physical-physical-domain-isolation.md",
       "type": "term",
       "title": "R-PHYSICAL (Physical Domain Isolation) **",
-      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.6 normative registry.",
+      "description": "Retired v2.0 whitepaper rule ID; not part of the v2.7 normative registry.",
       "resource": "tlctc:term:r-physical-physical-domain-isolation",
       "tags": [
         "glossary"
@@ -3346,7 +3356,7 @@
       "path": "/glossary/r-rules-quick-reference.md",
       "type": "term",
       "title": "R-* Rules Quick Reference",
-      "description": "The v2.6 normative registry contains exactly 17 rules : seven core rules and ten v2.1 extension rules.",
+      "description": "The v2.7 normative registry contains exactly 17 rules : seven core rules and ten v2.1 extension rules.",
       "resource": "tlctc:term:r-rules-quick-reference",
       "tags": [
         "glossary"
@@ -3396,7 +3406,7 @@
       "path": "/glossary/r-transit-transit-boundary-rules.md",
       "type": "term",
       "title": "R-TRANSIT (Transit Boundary Rules)",
-      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | Only R TRANSIT 3 is part of the v2.6 normative registry.",
+      "description": "The complete transit boundary rule set governing use of the transit operator ( ⇒ ): | Rule | Name | Summary | | | | | | R TRANSIT 3 | Vendor Code on Target Device | Vendor code running on the target device is NOT transit — it is the attack surface and MUST be classified by R ROLE | Only R TRANSIT 3 is part of the v2.7 normative registry.",
       "resource": "tlctc:term:r-transit-transit-boundary-rules",
       "tags": [
         "glossary"

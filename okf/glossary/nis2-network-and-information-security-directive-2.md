@@ -8,7 +8,7 @@ tags:
 ---
 # NIS2 (Network and Information Security Directive 2)
 
-The EU directive establishing cybersecurity risk management and incident reporting obligations for essential and important entities. In TLCTC: NIS2 is an **incident-triggered regulation** — its reporting obligations activate at E1 (Significant Incident / System Compromise) regardless of whether personal data is involved. This contrasts with GDPR, which is **data-triggered** (activates at E2 when PII is affected). NIS2 Art. 23 requires a 24-hour early warning, creating a shorter event chain length (E1→E3b = 2 events) compared to GDPR's 72-hour notification timeline (E1→E2→E3a = 3 events).
+The EU directive establishing cybersecurity risk management and incident reporting obligations for essential and important entities. In TLCTC: NIS2 is an **incident-triggered regulation** — its reporting duty arises, by a normative edge, at a significant incident (E1 — e.g. a System Compromise) regardless of whether personal data is involved. This contrasts with GDPR, which is **data-triggered** (the duty arises at E2 when personal data is affected). NIS2 Art. 23 requires an early warning within 24 hours of becoming aware of the significant incident, giving a shorter event chain length (E1→E3b = 2 events) than GDPR's notification within 72 hours of awareness (E1→E2→E3a = 3 events). In both, the deadline bounds the response process from awareness; it is not a Δt on the normative edge.
 
 **Reference:** V1.9.1 §Cyber Threat Radars
 

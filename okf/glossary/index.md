@@ -1,6 +1,6 @@
 # glossary
 
-262 document(s).
+263 document(s).
 
 - [Abuse of Functions (#1)](/glossary/abuse-of-functions-1.md) — `term`
 - [Abuse of Rights](/glossary/abuse-of-rights.md) — `term`
@@ -139,6 +139,7 @@
 - [MITRE ATT&CK](/glossary/mitre-att-ck.md) — `term`
 - [NIS2 (Network and Information Security Directive 2)](/glossary/nis2-network-and-information-security-directive-2.md) — `term`
 - [NIST CSF (Cybersecurity Framework)](/glossary/nist-csf-cybersecurity-framework.md) — `term`
+- [Normative Edge](/glossary/normative-edge.md) — `term`
 - [Normative Keywords](/glossary/normative-keywords.md) — `term`
 - [Notation Systems](/glossary/notation-systems.md) — `term`
 - [OAuth Attack](/glossary/oauth-attack.md) — `term`

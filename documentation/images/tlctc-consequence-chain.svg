@@ -121,6 +121,6 @@
     <!-- ======================== -->
     <!-- Caption                  -->
     <!-- ======================== -->
-    <text x="510" y="205" text-anchor="middle" font-size="9" fill="#6b7280">Every node is a risk event. Every Δt is a detection window. All 6 NIST CSF functions apply at each point.</text>
+    <text x="510" y="205" text-anchor="middle" font-size="9" fill="#6b7280">Every event node is a risk event; the clusters are causes. Drawn: all transitions causal, each Δt bounding detection and response. All 6 NIST CSF functions apply at each point.</text>
     <text x="510" y="218" text-anchor="middle" font-size="9" fill="#6b7280">BRE chain length is organization- and incident-dependent. The terminal BRE is designated BI by the organization's Risk Appetite.</text>
 </svg>

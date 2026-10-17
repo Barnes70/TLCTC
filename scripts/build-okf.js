@@ -21,8 +21,8 @@ const OUT = path.join(ROOT, 'okf');
 
 // ───────────────────────── source paths ──────────────────────────────────────
 const SRC = {
-  framework: 'json-schemas/layer-1/tlctc-framework.v2.6.json',
-  core: 'documentation/tlctc-v2.6-core.md',
+  framework: 'json-schemas/layer-1/tlctc-framework.v2.7.json',
+  core: 'documentation/tlctc-v2.7-core.md',
   registry: 'json-schemas/layer-2/example-registry.json',
   whitepaper: 'documentation/tlctc-v2.0-whitepaper.md',
   glossary: 'documentation/tlctc-glossary.md',
@@ -896,7 +896,7 @@ function writeRoot() {
     'controls, mappings).', '',
     '## Provenance notes', '',
     '- Cluster bodies render the whitepaper §4.1 seven-field definitions (Definition, Generic',
-    '  Vulnerability, and Attacker\'s View verbatim from `tlctc-framework.v2.6.json`; Scope and',
+    '  Vulnerability, and Attacker\'s View verbatim from `tlctc-framework.v2.7.json`; Scope and',
     '  Developer\'s View canonical in the whitepaper; Boundary Tests canonical in core §4 and',
     '  mirrored into whitepaper §4.1 under a build check).',
     '- Control docs combine NIST CSF objectives (normative) with ISO 27001:2022 Annex A *starter*',

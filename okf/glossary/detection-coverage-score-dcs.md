@@ -8,11 +8,11 @@ tags:
 ---
 # Detection Coverage Score (DCS)
 
-A strategic indicator measuring the defender's **timing adequacy** relative to Attack Velocity, in two forms read on distributions rather than means *(v2.6)*: detection `DCS_d = TTD_P90 / Δt` and containment `DCS_c = TTC_P90 / Δt`, where TTD and TTC are the defender's time-to-detect and time-to-contain distributions at an edge, read at the 90th percentile. Where Δt is itself a distribution it is read at a fast percentile (P10). It answers one question: does the defender act before the attacker completes the transition between two adjacent steps?
+A strategic indicator measuring the defender's **timing adequacy** relative to Attack Velocity, in two forms read on distributions rather than means *(v2.6)*: detection `DCS_d = TTD_P90 / Δt` and containment `DCS_c = TTC_P90 / Δt`, where TTD and TTC are the defender's time-to-detect and time-to-contain distributions at an edge, read at the 90th percentile. Where Δt is itself a distribution it is read at a fast percentile (P10). It answers one question: does the defender typically act before the attacker completes the transition between two adjacent steps? *(v2.7)* It is a distributional target, not a guarantee for each incident, and it is defined for Δt > 0; a transition recorded as instantaneous is prevention-only.
 
-- **Score < 1.0:** the defender acts first (for `DCS_c`, the transition is stopped)
+- **Score < 1.0:** the defender's slow tail beats the attacker's fast one (for `DCS_c`, the target for stopping the transition is met; the slowest incidents can still lose)
 - **Score > 1.0:** the adversary completes the step first
-- **`DCS_d < 1` with `DCS_c > 1`:** the step was seen but not stopped
+- **`DCS_d < 1` with `DCS_c > 1`:** the step is typically seen but not stopped
 
 The v2.0–v2.5 formula `DCS = MTTD / Δt` (mean time to detect) is the mean-based special case of `DCS_d` and remains valid where only means are available.
 

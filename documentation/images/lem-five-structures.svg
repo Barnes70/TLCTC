@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="920" height="320" viewBox="0 0 920 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five structures shown as five separate vertical stacks: S1 substrate, S2 event abstraction highlighted in red, S3 representation, S4 epistemic access, and S5 normative standing.">
+<style>
+  svg { color: #111111; font-family: Inter, "Segoe UI", Arial, sans-serif; }
+  .bx { fill: none; stroke: currentColor; stroke-opacity: 0.28; }
+  .hair { stroke: currentColor; stroke-opacity: 0.28; fill: none; }
+  .lbl { fill: currentColor; font-size: 11px; }
+  .mono { fill: #5f6368; font-family: Consolas, "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; letter-spacing: 0.14em; }
+  .mono.in { letter-spacing: 0.06em; }
+  .lane { fill: currentColor; fill-opacity: 0.035; stroke: none; }
+  .edge { stroke-opacity: 0.75; }
+  .dot { stroke-dasharray: 1.5 3; }
+  .dash { stroke-dasharray: 4 3; }
+  .ddot { stroke-dasharray: 7 3 1.5 3; }
+  .acc-bx { fill: none; stroke: #e5484d; stroke-opacity: 0.85; }
+  .acc-hair { stroke: #e5484d; stroke-opacity: 0.85; fill: none; }
+  .acc-txt { fill: #e5484d; }
+  .acc-fill { fill: #e5484d; }
+</style>
+                    <!-- S1 -->
+                    <g>
+                        <text class="mono" x="20" y="18">S1 &#183; SUBSTRATE</text>
+                        <rect class="bx" x="20" y="34" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="100" y="61" text-anchor="middle">Sites</text>
+                        <line class="hair" x1="100" y1="80" x2="100" y2="92"/>
+                        <rect class="bx" x="20" y="92" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="100" y="119" text-anchor="middle">Hardware</text>
+                        <line class="hair" x1="100" y1="138" x2="100" y2="150"/>
+                        <rect class="bx" x="20" y="150" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="100" y="177" text-anchor="middle">Execution environments</text>
+                        <line class="hair" x1="100" y1="196" x2="100" y2="208"/>
+                        <rect class="bx" x="20" y="208" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="100" y="235" text-anchor="middle">Processes</text>
+                        <text class="mono" x="100" y="278" text-anchor="middle">MEREOLOGICAL</text>
+                    </g>
+                    <!-- S2 (focal) -->
+                    <g>
+                        <text class="mono acc-txt" x="200" y="18">S2 &#183; EVENT ABSTRACTION</text>
+                        <rect class="acc-bx" x="200" y="34" width="160" height="46" rx="2"/>
+                        <text class="lbl acc-txt" x="280" y="61" text-anchor="middle">System risk event</text>
+                        <line class="acc-hair" x1="280" y1="80" x2="280" y2="92"/>
+                        <rect class="acc-bx" x="200" y="92" width="160" height="46" rx="2"/>
+                        <text class="lbl acc-txt" x="280" y="119" text-anchor="middle">Data risk event</text>
+                        <line class="acc-hair" x1="280" y1="138" x2="280" y2="150"/>
+                        <rect class="acc-bx" x="200" y="150" width="160" height="46" rx="2"/>
+                        <text class="lbl acc-txt" x="280" y="177" text-anchor="middle">Business risk event</text>
+                        <text class="mono acc-txt" x="280" y="278" text-anchor="middle">&#916;t ON CAUSAL EDGES</text>
+                    </g>
+                    <!-- S3 -->
+                    <g>
+                        <text class="mono" x="380" y="18">S3 &#183; REPRESENTATION</text>
+                        <rect class="bx" x="380" y="34" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="460" y="61" text-anchor="middle">World state</text>
+                        <line class="hair" x1="460" y1="80" x2="460" y2="92"/>
+                        <rect class="bx" x="380" y="92" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="460" y="119" text-anchor="middle">Data</text>
+                        <line class="hair" x1="460" y1="138" x2="460" y2="150"/>
+                        <rect class="bx" x="380" y="150" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="460" y="177" text-anchor="middle">Information</text>
+                        <line class="hair" x1="460" y1="196" x2="460" y2="208"/>
+                        <rect class="bx" x="380" y="208" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="460" y="235" text-anchor="middle">Decision</text>
+                        <text class="mono" x="460" y="278" text-anchor="middle">SEMANTIC</text>
+                    </g>
+                    <!-- S4 -->
+                    <g>
+                        <text class="mono" x="560" y="18">S4 &#183; EPISTEMIC ACCESS</text>
+                        <rect class="bx" x="560" y="34" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="640" y="61" text-anchor="middle">Evidence</text>
+                        <line class="hair" x1="640" y1="80" x2="640" y2="92"/>
+                        <rect class="bx" x="560" y="92" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="640" y="119" text-anchor="middle">Observation</text>
+                        <line class="hair" x1="640" y1="138" x2="640" y2="150"/>
+                        <rect class="bx" x="560" y="150" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="640" y="177" text-anchor="middle">Inference</text>
+                        <text class="mono" x="640" y="278" text-anchor="middle">DETECTION LIVES HERE</text>
+                    </g>
+                    <!-- S5 -->
+                    <g>
+                        <text class="mono" x="740" y="18">S5 &#183; NORMATIVE</text>
+                        <rect class="bx" x="740" y="34" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="820" y="51" text-anchor="middle">Meta-layer</text>
+                        <text class="mono" x="820" y="64" text-anchor="middle">AUTHORITY &#183; COMPETENCE</text>
+                        <text class="mono" x="820" y="75" text-anchor="middle">ENFORCEABILITY &#183; SCOPE</text>
+                        <line class="hair" x1="820" y1="80" x2="820" y2="92"/>
+                        <rect class="bx" x="740" y="92" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="820" y="119" text-anchor="middle">Rights</text>
+                        <rect class="bx" x="740" y="150" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="820" y="177" text-anchor="middle">Obligations</text>
+                        <rect class="bx" x="740" y="208" width="160" height="46" rx="2"/>
+                        <text class="lbl" x="820" y="235" text-anchor="middle">Prohibitions</text>
+                        <text class="mono" x="820" y="278" text-anchor="middle">DEONTIC</text>
+                    </g>
+                    <line class="hair" x1="20" y1="296" x2="900" y2="296"/>
+                    <text class="mono" x="20" y="314">S2 CROSSES S1, S3 AND S5 WITHOUT BEING REDUCIBLE TO ANY OF THEM</text>
+                </svg>

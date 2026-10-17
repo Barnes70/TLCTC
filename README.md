@@ -1,6 +1,6 @@
 # Top Level Cyber Threat Clusters (TLCTC)
 
-**Version 2.6** · CC BY 4.0 · [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20633176.svg)](https://doi.org/10.5281/zenodo.20633176) · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.6-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
+**Version 2.7** · CC BY 4.0 · [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20633176.svg)](https://doi.org/10.5281/zenodo.20633176) · [tlctc.net](https://www.tlctc.net) · [Core Paper (citable)](documentation/tlctc-v2.7-core.md) · [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)
 
 A cause-oriented, axiomatic cyber threat taxonomy. We are aware of no prior framework that classifies threats by the generic vulnerability exploited rather than by outcome or actor.
 
@@ -12,16 +12,19 @@ TLCTC provides the missing semantic foundation for cybersecurity: a stable, non-
 
 ## Framework Documents
 
-TLCTC v2.6 is the current citable version: the v2.3 consolidation freeze of the finalized v2.1 framework, plus the v2.4 interaction-model clarification, the v2.5 disambiguation and scope rules, and the v2.6 answers to an external review — #10 requires subversion, R-SPECIFIC replaces three precedence rules, successes-only classification (see [`tlctc-traceability.md`](documentation/tlctc-traceability.md) and the core paper's Appendix A). The documents form a deliberate hierarchy:
+TLCTC v2.7 is the current citable version: the v2.3 consolidation freeze of the finalized v2.1 framework, plus the v2.4 interaction-model clarification, the v2.5 disambiguation and scope rules, the v2.6 answers to an external review — #10 requires subversion, R-SPECIFIC replaces three precedence rules, successes-only classification — and the v2.7 consequence chain aligned with Layered Event Modelling: Δt only on causal transitions, Business Risk Events reached by causal or normative edges, the DRE stopping rule restated and DCS read as a distributional target (see [`tlctc-traceability.md`](documentation/tlctc-traceability.md) and the core paper's Appendix A). The documents form a deliberate hierarchy:
 
 | Document | Role |
 |---|---|
-| [**Core Paper**](documentation/tlctc-v2.6-core.md) ([PDF](documentation/tlctc-v2.6-core.pdf)) | **The canonical definition** of the framework: derivation, 10 clusters, 10 axioms, 17 classification rules, attack-path notation, glossary, references. Citable (see How to Cite). |
-| [**Application Paper**](documentation/tlctc-v2.6-application.md) ([PDF](documentation/tlctc-v2.6-application.pdf), [DOI](https://doi.org/10.5281/zenodo.22697636)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. Separately citable (DOI). |
+| [**Core Paper**](documentation/tlctc-v2.7-core.md) ([PDF](documentation/tlctc-v2.7-core.pdf)) | **The canonical definition** of the framework: derivation, 10 clusters, 10 axioms, 17 classification rules, attack-path notation, glossary, references. Citable (see How to Cite). |
+| [**Application Paper**](documentation/tlctc-v2.7-application.md) ([PDF](documentation/tlctc-v2.7-application.pdf), [DOI](https://doi.org/10.5281/zenodo.22697636)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. Separately citable (DOI). |
 | [**White Paper**](documentation/tlctc-v2.0-whitepaper.md) ([web](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)) | The extended practitioner handbook: full notation grammar (§11), boundary catalogs, decision procedures, anti-patterns, and worked detail beyond the core. Conforms to the core; filename kept for link stability. |
+| [**Layered Event Modelling**](documentation/tlctc-layered-event-modelling.md) ([PDF](documentation/tlctc-layered-event-modelling.pdf), [web](https://www.tlctc.net/tlctc-layered-event-modelling.html), [DOI](https://doi.org/10.5281/zenodo.23438101)) | The method paper (v1.0): semantic separation across five structures, six edge types, Δt only on causal edges. TLCTC is its worked instantiation; it quotes the canon and defines no TLCTC object. Separately citable. |
 | [**Operational Enumeration**](documentation/tlctc-operational-enumeration.md) ([JSON](json-schemas/operational/tlctc-operational-enumeration.json)) | The *evolving* `TLCTC-XX.YY` sub-cluster catalogue. The strategic layer (10 clusters) is frozen; the operational layer grows by contribution. |
 
-Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.6.json`](json-schemas/layer-1/tlctc-framework.v2.6.json). The v2.3, v2.4 and v2.5 dictionaries are retained unchanged as frozen records for classifications made under those versions.
+Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.7.json`](json-schemas/layer-1/tlctc-framework.v2.7.json). The v2.3, v2.4, v2.5 and v2.6 dictionaries are retained unchanged as frozen records for classifications made under those versions.
+
+v2.7 is classification-preserving: no cluster, axiom, rule or DRE code changed, so every v2.6 classification remains valid. The attack-path records, mappings and integrations were checked against v2.6 and keep declaring it; the v2.6 dictionary they reference is retained.
 
 ---
 
@@ -405,7 +408,7 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 
 ## Use TLCTC in an AI Agent
 
-The `tlctc-classify` agent skill gives an AI agent the complete TLCTC v2.6 analysis system — axioms, the ten clusters, the R-* rules, the SRE doctrine, the DRE refinement tree and the attack-path notation — loaded whenever you ask it to classify an incident, a CVE or a threat report. Nothing to paste.
+The `tlctc-classify` agent skill gives an AI agent the complete TLCTC v2.6 analysis system (unchanged in v2.7, which touches only the consequence chain) — axioms, the ten clusters, the R-* rules, the SRE doctrine, the DRE refinement tree and the attack-path notation — loaded whenever you ask it to classify an incident, a CVE or a threat report. Nothing to paste.
 
 | Agent | Install | Copy (licence) |
 |---|---|---|
@@ -510,7 +513,8 @@ tlctc/
 │   │   ├── tlctc-framework.schema.json       # Schema for framework packages
 │   │   ├── tlctc-framework.v2.3.json         # V2.3 frozen record (retained for 2.3.x classifications)
 │   │   ├── tlctc-framework.v2.5.json         # V2.5.1 frozen record (retained for 2.5.x classifications)
-│   │   └── tlctc-framework.v2.6.json         # V2.6 canonical dictionary: clusters, axioms, 17 rules, DRE tree, cause-side partition, SRE types, FEC boundary
+│   │   ├── tlctc-framework.v2.6.json         # V2.6 frozen record (retained for 2.6 classifications; records and mappings reference it)
+│   │   └── tlctc-framework.v2.7.json         # V2.7 canonical dictionary: clusters, axioms, 17 rules, DRE tree, cause-side partition, SRE types, FEC boundary, consequence chain
 │   ├── layer-2/                              # Reference Registry (Context)
 │   │   ├── tlctc-reference.schema.json       # Schema for reference registries
 │   │   └── example-registry.json             # Example org-specific registry
@@ -546,15 +550,21 @@ tlctc/
 │   ├── controls/                             # NIST CSF × ISO 27001 matrix, effectiveness model, indicators
 │   └── mappings/                             # ATT&CK / CWE / Sigma grouped by cluster
 ├── documentation/
-│   ├── tlctc-v2.6-core.md                    # ⭐ Core paper (v2.6, citable)
+│   ├── tlctc-v2.7-core.md                    # ⭐ Core paper (v2.7, citable)
+│   ├── tlctc-v2.7-core.pdf                   # PDF of the v2.7 core paper
+│   ├── tlctc-v2.7-application.md             # Application & governance companion (v2.7)
+│   ├── tlctc-v2.7-application.pdf            # PDF of the v2.7 application paper
+│   ├── tlctc-layered-event-modelling.md      # Layered Event Modelling v1.0 (method paper; TLCTC is its instantiation)
+│   ├── tlctc-layered-event-modelling.pdf     # PDF of the LEM paper
+│   ├── tlctc-v2.6-core.md                    # Core paper v2.6 (previous deposit; frozen)
 │   ├── tlctc-v2.6-core.pdf                   # PDF of the v2.6 core paper
-│   ├── tlctc-v2.6-application.md             # Application & governance companion (v2.6)
+│   ├── tlctc-v2.6-application.md             # Application companion (v2.6 deposit; frozen)
 │   ├── tlctc-v2.6-application.pdf            # PDF of the v2.6 application paper
 │   ├── tlctc-v2.5-core.md                    # Core paper v2.5.1 (previous deposit; frozen)
 │   ├── tlctc-v2.5-core.pdf                   # PDF of the v2.5.1 core paper
 │   ├── tlctc-v2.5-application.md             # Application companion (v2.5.1 deposit; frozen)
 │   ├── tlctc-v2.5-application.pdf            # PDF of the v2.5.1 application paper
-│   ├── tlctc-traceability.md            # consolidation & version traceability (v2.1 → v2.6)
+│   ├── tlctc-traceability.md            # consolidation & version traceability (v2.1 → v2.7)
 │   ├── tlctc-operational-enumeration.md      # Evolving TLCTC-XX.YY sub-cluster catalogue
 │   ├── tlctc-v2.0-whitepaper.md              # Extended practitioner handbook (v2.1 content; filename kept for link stability)
 │   ├── tlctc-v2.0-whitepaper.pdf             # PDF export of the white paper
@@ -720,10 +730,10 @@ tlctc/
 
 ## Getting Started
 
-1. **Read the core paper** — [`documentation/tlctc-v2.6-core.md`](documentation/tlctc-v2.6-core.md) is the canonical definition: derivation, clusters, axioms, rules, and notation in one self-contained paper.
+1. **Read the core paper** — [`documentation/tlctc-v2.7-core.md`](documentation/tlctc-v2.7-core.md) is the canonical definition: derivation, clusters, axioms, rules, and notation in one self-contained paper.
 2. **Read the axioms** — They are the non-negotiable foundation. If you skip them, you'll misclassify.
 3. **Understand the Bow-Tie** — Threats are causes, outcomes are consequences. Never confuse them.
-4. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation. The [Application Paper](documentation/tlctc-v2.6-application.md) walks the procedure end-to-end.
+4. **Practice with attack paths** — Take any recent incident report and decompose it into TLCTC notation. The [Application Paper](documentation/tlctc-v2.7-application.md) walks the procedure end-to-end.
 5. **Use the JSON schemas** — Validate your attack path instances against Layer 3 schema.
 6. **Explore the ATT&CK mapping** — See [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) to understand how operational techniques translate to strategic clusters.
 7. **Explore the CWE mapping** — See [`mappings/mitre-cwe/`](mappings/mitre-cwe/) to connect vulnerability findings to threat clusters.
@@ -753,15 +763,16 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 
 | Resource | Description |
 |---|---|
-| [Core Paper v2.6](documentation/tlctc-v2.6-core.md) ([PDF](documentation/tlctc-v2.6-core.pdf)) | The canonical definition of the framework |
-| [Application Paper v2.6](documentation/tlctc-v2.6-application.md) ([PDF](documentation/tlctc-v2.6-application.pdf)) | Classification in practice, governance, controls, and indicators |
+| [Core Paper v2.7](documentation/tlctc-v2.7-core.md) ([PDF](documentation/tlctc-v2.7-core.pdf)) | The canonical definition of the framework |
+| [Application Paper v2.7](documentation/tlctc-v2.7-application.md) ([PDF](documentation/tlctc-v2.7-application.pdf)) | Classification in practice, governance, controls, and indicators |
+| [Layered Event Modelling v1.0](documentation/tlctc-layered-event-modelling.md) ([PDF](documentation/tlctc-layered-event-modelling.pdf)) | The method paper the consequence chain instantiates |
 | [tlctc.net](https://tlctc.net) | Official TLCTC website with documentation, visuals, and tools |
 | [White Paper](https://www.tlctc.net/tlctc-v2.0-whitepaper.html) | Extended practitioner handbook: boundary logic, epistemic operators, and complete notation specification |
 | [barnes.ch](https://barnes.ch) | Author's site with foundational analysis on cybersecurity's language problem |
 
 ## How to Cite
 
-> Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.6) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.20633176
+> Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (Version 2.7) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.20633176
 
 ```bibtex
 @misc{kreinz2026tlctc,
@@ -769,7 +780,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
   title     = {A Cause-Oriented Cyber Threat Taxonomy: The Top Level
                Cyber Threat Clusters Framework},
   year      = {2026},
-  version   = {2.6},
+  version   = {2.7},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.20633176},
   url       = {https://doi.org/10.5281/zenodo.20633176}
@@ -779,7 +790,7 @@ See [`attack-paths/CONTRIBUTING.md`](attack-paths/CONTRIBUTING.md) for guideline
 To cite the **application paper** instead — the companion on classification
 procedure, governance, and cross-domain integration — use its own record:
 
-> Kreinz, B. (2026). *Applying the Top Level Cyber Threat Clusters: Classification, Governance, and Cross-Domain Application* (Version 2.6) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.22697636
+> Kreinz, B. (2026). *Applying the Top Level Cyber Threat Clusters: Classification, Governance, and Cross-Domain Application* (Version 2.7) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.22697636
 
 ```bibtex
 @misc{kreinz2026tlctcapplication,
@@ -787,7 +798,7 @@ procedure, governance, and cross-domain integration — use its own record:
   title     = {Applying the Top Level Cyber Threat Clusters: Classification,
                Governance, and Cross-Domain Application},
   year      = {2026},
-  version   = {2.6},
+  version   = {2.7},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.22697636},
   url       = {https://doi.org/10.5281/zenodo.22697636}
@@ -799,12 +810,31 @@ material it introduces, since it redefines no normative element.
 
 Both DOIs above are *concept DOIs*: each always resolves to the most recent
 published version of its paper. To cite a specific release instead, use that
-version's own DOI. For v2.6: core
+version's own DOI. For v2.7: core
+[10.5281/zenodo.23437984](https://doi.org/10.5281/zenodo.23437984). For v2.6: core
 [10.5281/zenodo.22943490](https://doi.org/10.5281/zenodo.22943490), application
 [10.5281/zenodo.22943516](https://doi.org/10.5281/zenodo.22943516). Earlier
 versions are listed on each Zenodo record
 ([core](https://doi.org/10.5281/zenodo.20633176),
 [application](https://doi.org/10.5281/zenodo.22697636)).
+
+To cite the **Layered Event Modelling** method paper, of which TLCTC is the
+worked instantiation, use its own record:
+
+> Kreinz, B. (2026). *Layered Event Modelling: Semantic Separation as a Precondition for Explicit Causal Analysis* (Version 1.0) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.23438101
+
+```bibtex
+@misc{kreinz2026lem,
+  author    = {Kreinz, Bernhard},
+  title     = {Layered Event Modelling: Semantic Separation as a
+               Precondition for Explicit Causal Analysis},
+  year      = {2026},
+  version   = {1.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23438101},
+  url       = {https://doi.org/10.5281/zenodo.23438101}
+}
+```
 
 ## License
 

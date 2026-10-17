@@ -1,26 +1,35 @@
 // Render a TLCTC markdown paper to a machine-readable, Google-Scholar-friendly PDF.
-// Deps (package.json is gitignored in this repo): npm install marked puppeteer
-// Usage: node scripts/build-pdf.js <input.md> <output.pdf>
+// Deps: marked and puppeteer (see package.json).
+// Usage: node scripts/build-pdf.js <input.md> <output.pdf> [--footer "<text>"]
 const fs = require("fs");
 const path = require("path");
 const { pathToFileURL } = require("url");
 const { marked } = require("marked");
 const puppeteer = require("puppeteer");
 
-const [, , inPath, outPath] = process.argv;
-if (!inPath || !outPath) {
-  console.error("Usage: node scripts/build-pdf.js <input.md> <output.pdf>");
+const args = process.argv.slice(2);
+let footerText = "TLCTC — A Cause-Oriented Cyber Threat Taxonomy";
+const fi = args.indexOf("--footer");
+if (fi !== -1) {
+  footerText = args[fi + 1];
+  args.splice(fi, 2);
+}
+const [inPath, outPath] = args;
+if (!inPath || !outPath || !footerText) {
+  console.error('Usage: node scripts/build-pdf.js <input.md> <output.pdf> [--footer "<text>"]');
   process.exit(1);
 }
+const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 const md = fs.readFileSync(inPath, "utf8");
+const docTitle = ((md.match(/^# (.+)$/m) || [])[1] || "TLCTC").trim();
 const bodyHtml = marked.parse(md, { mangle: false, headerIds: true });
 
 const css = `
   @page { size: A4; margin: 22mm 20mm 20mm 20mm; }
   html { -webkit-print-color-adjust: exact; }
   body {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: Georgia, "Cambria Math", "Segoe UI Symbol", "Times New Roman", serif;
     font-size: 10.5pt; line-height: 1.5; color: #111; max-width: 100%;
   }
   h1 { font-size: 20pt; line-height: 1.25; margin: 0 0 4pt; }
@@ -44,7 +53,7 @@ const css = `
 `;
 
 const html = `<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><title>TLCTC</title><style>${css}</style></head>
+<html lang="en"><head><meta charset="utf-8"><title>${esc(docTitle)}</title><style>${css}</style></head>
 <body>${bodyHtml}</body></html>`;
 
 // Serve the HTML from a temp file in the markdown's own directory so that
@@ -68,7 +77,7 @@ const tmpHtmlPath = path.join(
     headerTemplate: "<span></span>",
     footerTemplate:
       '<div style="font-size:8px; width:100%; text-align:center; color:#888;">' +
-      "TLCTC — A Cause-Oriented Cyber Threat Taxonomy &nbsp;·&nbsp; " +
+      esc(footerText) + " &nbsp;·&nbsp; " +
       '<span class="pageNumber"></span> / <span class="totalPages"></span></div>',
     margin: { top: "22mm", bottom: "16mm", left: "20mm", right: "20mm" },
   });

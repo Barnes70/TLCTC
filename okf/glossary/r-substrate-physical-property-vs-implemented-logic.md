@@ -8,7 +8,7 @@ tags:
 ---
 # R-SUBSTRATE (Physical Property vs Implemented Logic) **
 
-*Retired v2.5 rule ID; since v2.6 the **substrate** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.6 normative registry; the ID keeps its meaning and is never reused.*
+*Retired v2.5 rule ID; since v2.6 the **substrate** clause of R-SPECIFIC, with its proposition unchanged. Not part of the v2.7 normative registry; the ID keeps its meaning and is never reused.*
 
 Original statement (v2.5): Classify as `#8 Physical Attack` only where a physical-layer property of the substrate — charge, voltage, electromagnetic emission, temperature, emission-borne timing, wear, or material state — is itself the exploited generic vulnerability. Where the physical layer serves only as the readout channel for a defect in implemented logic, classify by that defect (`#2` or `#3` per R-ROLE). Attacker proximity or possession is **not** the test.
 

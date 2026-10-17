@@ -14,7 +14,7 @@ Data Risk Event (DRE) type codes used in '+ [DRE: ...]' tags. Three parent prope
 
 ## Stopping rule
 
-Split a property only where the resulting states are distinguishable by inspecting the record itself — never by the story of how it got there. The rule admits exactly two splits (I → Ii/If: check provenance and attribution; A → Av/Ac: is the data absent, or present and unusable?), refuses every split of C (accidental versus deliberate disclosure is provenance; one party versus public is extent, i.e. severity, not a state), and refuses any split by cause — outcomes never inherit the classification of the step that produced them (Axiom III).
+Split a property only where the resulting states differ in the record's present standing — what now holds of the record when it is checked against its referent, its declared scope, its claimed origin or the agents entitled to use it — never by the story of how it came to be in that state (the mechanism, the actor or the intent). On that test the vocabulary is closed, by decision, at two splits (I → Ii/If: does the content fail, or the claimed origin? A → Av/Ac: is the data absent, or present and unusable?); any further split would have to pass the same test. The rule refuses every split of C (accidental versus deliberate disclosure is the story of the disclosure; one party versus public is extent, i.e. severity, not a state), and refuses any split by cause — outcomes never inherit the classification of the step that produced them (Axiom III).
 
 ## Codes
 
