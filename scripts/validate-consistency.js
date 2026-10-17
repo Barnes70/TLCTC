@@ -210,8 +210,8 @@ else {
 const ver = fw.metadata.tlctc_version;
 const appTxt = exists('documentation/tlctc-v2.7-application.md') ? read('documentation/tlctc-v2.7-application.md') : '';
 for (const [label, txt] of [['core paper', core], ['application paper', appTxt], ['glossary', glossary]]) {
-  for (const m of txt.matchAll(/(?:v(\d+\.\d+) normative registry|normative rule registry of v(\d+\.\d+))/g)) {
-    const v = m[1] || m[2];
+  for (const m of txt.matchAll(/(?:v(\d+\.\d+) normative registry|normative rule registry of v(\d+\.\d+)|TLCTC v(\d+\.\d+) core paper)/g)) {
+    const v = m[1] || m[2] || m[3];
     if (v !== ver) note(`${label}: registry version pin "${m[0]}" != dictionary v${ver}`);
   }
 }
