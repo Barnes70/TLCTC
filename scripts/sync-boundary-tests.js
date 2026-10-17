@@ -9,7 +9,7 @@ const path = require('path');
 const bt = require('./boundary-tests');
 
 const ROOT = path.resolve(__dirname, '..');
-const CORE = path.join(ROOT, 'documentation/tlctc-v2.6-core.md');
+const CORE = path.join(ROOT, 'documentation/tlctc-v2.7-core.md');
 const WP = path.join(ROOT, 'documentation/tlctc-v2.0-whitepaper.md');
 
 const core = fs.readFileSync(CORE, 'utf8');

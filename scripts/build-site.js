@@ -8,9 +8,10 @@
  *   node scripts/build-site.js --no-pdf --no-okf --site <dir>
  *
  * Pipeline (order matters; each step is skipped when nothing changed):
- *   1. mirror   documentation/{core,application,glossary,v2.0-whitepaper}.md → site tree (read-only mirrors)
+ *   1. mirror   documentation/{core,application,glossary,v2.0-whitepaper,layered-event-modelling}.md
+ *               → site tree (read-only mirrors)
  *   2. pdfs     scripts/build-pdf.js for any paper whose .md source changed (core, application,
- *               glossary, handbook)
+ *               glossary, handbook, lem)
  *   3. stable   copy PDFs under the site's stable names (tlctc-whitepaper.pdf, …)
  *   4. html     node html-build.js --no-pdf in the site tree (core, application, handbook)
  *   5. glossary python build_glossary_page.py + build_glossary_index.py; "Last updated"
@@ -90,12 +91,16 @@ function run(cmd, cmdArgs, cwd, env) {
 // ───────────────────────── 1. mirrors ────────────────────────────────────────
 log('1. mirrors');
 const PAPERS = [
-  { md: 'documentation/tlctc-v2.6-core.md', pdf: 'documentation/tlctc-v2.6-core.pdf', stablePdf: 'tlctc-whitepaper.pdf', html: 'tlctc-whitepaper.html' },
-  { md: 'documentation/tlctc-v2.6-application.md', pdf: 'documentation/tlctc-v2.6-application.pdf', stablePdf: 'tlctc-application.pdf', html: 'tlctc-application.html' },
+  { md: 'documentation/tlctc-v2.7-core.md', pdf: 'documentation/tlctc-v2.7-core.pdf', stablePdf: 'tlctc-whitepaper.pdf', html: 'tlctc-whitepaper.html' },
+  { md: 'documentation/tlctc-v2.7-application.md', pdf: 'documentation/tlctc-v2.7-application.pdf', stablePdf: 'tlctc-application.pdf', html: 'tlctc-application.html' },
   { md: 'documentation/tlctc-glossary.md', pdf: 'documentation/tlctc-glossary.pdf', stablePdf: 'tlctc-glossary.pdf', html: 'tlctc-glossary.html' },
   // The practitioner handbook keeps its historical filename. Its PDF is built by scripts/build-pdf.js like
   // the papers (the release cut does the same); html-build.js renders only its HTML page.
   { md: 'documentation/tlctc-v2.0-whitepaper.md', pdf: 'documentation/tlctc-v2.0-whitepaper.pdf', stablePdf: 'tlctc-v2.0-whitepaper.pdf', html: 'tlctc-v2.0-whitepaper.html', key: 'handbook' },
+  // Layered Event Modelling: the web page is hand-made in the site tree (kept in step with the
+  // markdown by scripts/check-lem-sync.js), so only the mirror and the PDF come from here.
+  { md: 'documentation/tlctc-layered-event-modelling.md', pdf: 'documentation/tlctc-layered-event-modelling.pdf', stablePdf: 'tlctc-layered-event-modelling.pdf', html: null, key: 'lem',
+    footer: 'Layered Event Modelling — Semantic Separation and Explicit Causal Analysis' },
 ];
 const mdChanged = {};
 for (const p of PAPERS) mdChanged[p.md] = copyIfChanged(path.join(ROOT, p.md), path.join(SITE, path.basename(p.md)), 'mirror');
@@ -105,7 +110,7 @@ for (const p of PAPERS) mdChanged[p.md] = copyIfChanged(path.join(ROOT, p.md), p
 // rebuilt only when its markdown source CHANGED since the last build (hash in state),
 // never on mtime alone — otherwise every build would churn the repo's committed PDFs
 // and the Zenodo checksum with them.
-// --rebuild-pdf core|application|glossary|handbook|all forces a rebuild (e.g. after a figure changed).
+// --rebuild-pdf core|application|glossary|handbook|lem|all forces a rebuild (e.g. after a figure changed).
 log('2. pdfs' + (NO_PDF ? ' (skipped: --no-pdf)' : ''));
 const mdHashes = state.mdHashes || {};
 const firstRun = !state.mdHashes;
@@ -125,7 +130,7 @@ if (!NO_PDF) {
     const stale = forced || !fs.existsSync(pdf) || mdHashes[p.md] !== h;
     if (!stale) continue;
     log(`  build ${p.pdf} (${forced ? '--rebuild-pdf' : 'source changed'})`);
-    run('node', [path.join(ROOT, 'scripts/build-pdf.js'), md, pdf], ROOT);
+    run('node', [path.join(ROOT, 'scripts/build-pdf.js'), md, pdf, ...(p.footer ? ['--footer', p.footer] : [])], ROOT);
     mdHashes[p.md] = h;
   }
 }
@@ -168,7 +173,7 @@ log('5. glossary (build_glossary_page.py, build_glossary_index.py)');
 
 // ───────────────────────── 6. local views ────────────────────────────────────
 log('6. local html views → documentation/');
-for (const p of PAPERS) if (fs.existsSync(path.join(SITE, p.html))) fs.copyFileSync(path.join(SITE, p.html), path.join(ROOT, 'documentation', p.html));
+for (const p of PAPERS) if (p.html && fs.existsSync(path.join(SITE, p.html))) fs.copyFileSync(path.join(SITE, p.html), path.join(ROOT, 'documentation', p.html));
 
 // ───────────────────────── 7. images ─────────────────────────────────────────
 log('7. images');

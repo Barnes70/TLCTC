@@ -193,3 +193,17 @@ v2.6 answers an external review of v2.5 with change items C1–C19. The full tab
 **Artifacts.** `tlctc-framework.v2.6.json` (new; `tlctc-framework.v2.5.json` retained unchanged), `tlctc-v2.6-core.md`, `tlctc-v2.6-application.md`, glossary v2.6.
 
 **Deposit.** Released as tag `v2.6.0`; both PDFs deposited as new versions of their Zenodo records, published 2026-09-24: core version DOI 10.5281/zenodo.22943490 (concept 10.5281/zenodo.20633176), application version DOI 10.5281/zenodo.22943516 (concept 10.5281/zenodo.22697636).
+
+## Normative Change — v2.7: the Consequence Chain and Layered Event Modelling (2026-10-17)
+
+v2.7 aligns the consequence side of the Cyber Bow-Tie with the Layered Event Modelling method (LEM v1.0, released alongside), with change items C1–C3. The full table is the core paper's Appendix A; the dictionary records the same items under `changes_from_v2_6`. **Classification-preserving.**
+
+| Item | Change |
+|---|---|
+| C1 | Δt is the causal interval of a transition and bounds the detection-and-response window; it is not itself the window. The System Compromise clause claims only the window for compromise detection, bounded by the causal Δt |
+| C2 | A Business Risk Event is reached by a causal edge (with Δt) or a normative edge (without); a statutory deadline bounds a separate response process whose clock starts at awareness |
+| C3 | New dictionary section `consequence_chain`: BRE definition, the two edge kinds, and the entry points into the chain, including a BRE entered directly by a normative edge (compliance risk, no cluster) |
+
+**Re-qualification.** None needed: no cluster, axiom, rule, DRE code or topology changed (dictionary diff v2.6 → v2.7: `metadata`, `system_risk_event.types[0].definition`, the new `consequence_chain`, `changes_from_v2_6`). Layer-3 records, mappings and integrations keep declaring 2.6 and referencing `tlctc-framework.v2.6.json`, which is retained unchanged; a `tlctc_version` states what a record was checked against.
+
+**Artifacts.** `tlctc-framework.v2.7.json` (new; `tlctc-framework.v2.6.json` retained unchanged), `tlctc-v2.7-core.md`, `tlctc-v2.7-application.md`, glossary v2.7, `tlctc-layered-event-modelling.md` (LEM v1.0; canon quotes guarded by `npm run validate`). The v2.6 in-place corrections of 2026-09-25 (core Figure 6, application §10.4) are carried into the v2.7 deposits.

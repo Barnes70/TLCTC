@@ -1,7 +1,7 @@
 # TLCTC Framework Glossary — Version 2.7
 
 *Comprehensive definitions and concepts for the Top Level Cyber Threat Clusters framework.*
-*Author: Bernhard Kreinz | Last Updated: 15 Oct 2026*
+*Author: Bernhard Kreinz | Last Updated: 17 Oct 2026*
 
 ---
 

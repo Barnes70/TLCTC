@@ -2,10 +2,10 @@
 
 **Author:** Bernhard Kreinz
 **Version:** 2.7
-**Date:** 2026-10-15
+**Date:** 2026-10-17
 **License:** CC BY 4.0
 **Companion to:** *A Cause-Oriented Cyber Threat Taxonomy: The TLCTC Framework* (the v2.7 core paper) — DOI [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176)
-**Status:** Working version — not deposited. Cite v2.6: [10.5281/zenodo.22943516](https://doi.org/10.5281/zenodo.22943516).
+**DOI:** [10.5281/zenodo.22697636](https://doi.org/10.5281/zenodo.22697636) (concept DOI — always resolves to the latest version)
 **Implements:** TLCTC framework specification v2.7 (canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.7.json`); this paper is the v2.7-compatible application profile and introduces no normative content of its own.
 
 ## Abstract
