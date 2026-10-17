@@ -4,7 +4,8 @@
 **Version:** 1.0
 **Date:** 2026-10-17
 **License:** CC BY 4.0
-**Status:** Working version — not deposited.
+**DOI:** [10.5281/zenodo.23438101](https://doi.org/10.5281/zenodo.23438101)
+**How to cite:** Kreinz, B. (2026). *Layered Event Modelling: Semantic Separation as a Precondition for Explicit Causal Analysis* (Version 1.0) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.23438101
 **Instantiation:** TLCTC framework specification v2.7 (canonical dictionary `json-schemas/layer-1/tlctc-framework.v2.7.json`); TLCTC definitions, where quoted, are quoted from it verbatim.
 
 **Keywords:** levels of abstraction; causal modelling; ontology; operational risk; compliance risk; normative structure; deontic logic; bow-tie; transition duration (Δt); semantic precision; event layering
@@ -453,7 +454,7 @@ Drafts v0.4 to v0.6 were published on tlctc.net between August and October 2026.
 
 [27] Chillarege, R., Bhandari, I. S., Chaar, J. K., Halliday, M. J., Moebus, D. S., Ray, B. K., & Wong, M.-Y. (1992). Orthogonal defect classification — a concept for in-process measurements. *IEEE Transactions on Software Engineering*, 18(11), 943–956.
 
-[28] Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework*, version 2.7. Zenodo. https://doi.org/10.5281/zenodo.20633176
+[28] Kreinz, B. (2026). *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework*, version 2.7. Zenodo. https://doi.org/10.5281/zenodo.23437984
 
 [29] Regulation (EU) 2016/679 of the European Parliament and of the Council (General Data Protection Regulation), Article 33. *Official Journal of the European Union*, L 119, 4 May 2016, 1–88.
 

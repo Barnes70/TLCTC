@@ -19,7 +19,7 @@ TLCTC v2.7 is the current citable version: the v2.3 consolidation freeze of the 
 | [**Core Paper**](documentation/tlctc-v2.7-core.md) ([PDF](documentation/tlctc-v2.7-core.pdf)) | **The canonical definition** of the framework: derivation, 10 clusters, 10 axioms, 17 classification rules, attack-path notation, glossary, references. Citable (see How to Cite). |
 | [**Application Paper**](documentation/tlctc-v2.7-application.md) ([PDF](documentation/tlctc-v2.7-application.pdf), [DOI](https://doi.org/10.5281/zenodo.22697636)) | Companion for putting the taxonomy to work: classification procedure, worked examples, NIST CSF mapping, controls, KRI/KCI/KPI. Takes the core as given. Separately citable (DOI). |
 | [**White Paper**](documentation/tlctc-v2.0-whitepaper.md) ([web](https://www.tlctc.net/tlctc-v2.0-whitepaper.html)) | The extended practitioner handbook: full notation grammar (§11), boundary catalogs, decision procedures, anti-patterns, and worked detail beyond the core. Conforms to the core; filename kept for link stability. |
-| [**Layered Event Modelling**](documentation/tlctc-layered-event-modelling.md) ([PDF](documentation/tlctc-layered-event-modelling.pdf), [web](https://www.tlctc.net/tlctc-layered-event-modelling.html)) | The method paper (v1.0): semantic separation across five structures, six edge types, Δt only on causal edges. TLCTC is its worked instantiation; it quotes the canon and defines no TLCTC object. Separately citable. |
+| [**Layered Event Modelling**](documentation/tlctc-layered-event-modelling.md) ([PDF](documentation/tlctc-layered-event-modelling.pdf), [web](https://www.tlctc.net/tlctc-layered-event-modelling.html), [DOI](https://doi.org/10.5281/zenodo.23438101)) | The method paper (v1.0): semantic separation across five structures, six edge types, Δt only on causal edges. TLCTC is its worked instantiation; it quotes the canon and defines no TLCTC object. Separately citable. |
 | [**Operational Enumeration**](documentation/tlctc-operational-enumeration.md) ([JSON](json-schemas/operational/tlctc-operational-enumeration.json)) | The *evolving* `TLCTC-XX.YY` sub-cluster catalogue. The strategic layer (10 clusters) is frozen; the operational layer grows by contribution. |
 
 Machine-readable twin of the core: [`json-schemas/layer-1/tlctc-framework.v2.7.json`](json-schemas/layer-1/tlctc-framework.v2.7.json). The v2.3, v2.4, v2.5 and v2.6 dictionaries are retained unchanged as frozen records for classifications made under those versions.
@@ -810,12 +810,31 @@ material it introduces, since it redefines no normative element.
 
 Both DOIs above are *concept DOIs*: each always resolves to the most recent
 published version of its paper. To cite a specific release instead, use that
-version's own DOI. For v2.6: core
+version's own DOI. For v2.7: core
+[10.5281/zenodo.23437984](https://doi.org/10.5281/zenodo.23437984). For v2.6: core
 [10.5281/zenodo.22943490](https://doi.org/10.5281/zenodo.22943490), application
 [10.5281/zenodo.22943516](https://doi.org/10.5281/zenodo.22943516). Earlier
 versions are listed on each Zenodo record
 ([core](https://doi.org/10.5281/zenodo.20633176),
 [application](https://doi.org/10.5281/zenodo.22697636)).
+
+To cite the **Layered Event Modelling** method paper, of which TLCTC is the
+worked instantiation, use its own record:
+
+> Kreinz, B. (2026). *Layered Event Modelling: Semantic Separation as a Precondition for Explicit Causal Analysis* (Version 1.0) [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.23438101
+
+```bibtex
+@misc{kreinz2026lem,
+  author    = {Kreinz, Bernhard},
+  title     = {Layered Event Modelling: Semantic Separation as a
+               Precondition for Explicit Causal Analysis},
+  year      = {2026},
+  version   = {1.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23438101},
+  url       = {https://doi.org/10.5281/zenodo.23438101}
+}
+```
 
 ## License
 
