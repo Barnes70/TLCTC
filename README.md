@@ -811,7 +811,8 @@ material it introduces, since it redefines no normative element.
 Both DOIs above are *concept DOIs*: each always resolves to the most recent
 published version of its paper. To cite a specific release instead, use that
 version's own DOI. For v2.7: core
-[10.5281/zenodo.23437984](https://doi.org/10.5281/zenodo.23437984). For v2.6: core
+[10.5281/zenodo.23437984](https://doi.org/10.5281/zenodo.23437984), application
+[10.5281/zenodo.23438220](https://doi.org/10.5281/zenodo.23438220). For v2.6: core
 [10.5281/zenodo.22943490](https://doi.org/10.5281/zenodo.22943490), application
 [10.5281/zenodo.22943516](https://doi.org/10.5281/zenodo.22943516). Earlier
 versions are listed on each Zenodo record
