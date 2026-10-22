@@ -1,6 +1,7 @@
 # Claude Code
 CLAUDE.md
 .claude/
+.env
 
 # Superpowers workflow scaffolding (internal plans/specs, not deliverables)
 docs/superpowers/
