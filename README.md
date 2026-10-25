@@ -661,7 +661,7 @@ tlctc/
 ├── attack-paths/                             # Community-contributed incident analyses (51 incidents, 58 path files)
 │   ├── CONTRIBUTING.md
 │   ├── # Canonical pattern reference
-│   ├── ad-domain-admin-cascade-2025.json     # Active Directory Domain-Admin → ransomware #1-cascade (composite pattern: Lynx, Storm-2603, Storm-0300/Akira)
+│   ├── ad-domain-admin-cascade-2025.json     # Active Directory Domain-Admin → ransomware #1-cascade (Lynx, DFIR Report 2025; evidence-only reference path)
 │   ├── # Historical incidents (2008–2024)
 │   ├── agent-btz-usb-2008.json               # USB worm (2008)
 │   ├── watering-hole-iphonedevsdk-2013.json   # Watering hole (2013)

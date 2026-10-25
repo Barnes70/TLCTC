@@ -27,13 +27,13 @@
       "path": "/attack-paths/ad-domain-admin-cascade-2025.md",
       "type": "attack-path",
       "title": "AD-DOMAIN-ADMIN-CASCADE-2025",
-      "description": "Canonical reference path for the Active Directory Domain-Admin → ransomware cascade — a composite/pattern analysis grounded in three 2025 incidents: Lynx (DFIR Report, March 2025), Storm-2603 / ToolShell (Cisco Talos, August 2025), and Storm-0300 / Akira (Microsoft Security Blog, April 2025).",
+      "description": "Reference path for the Active Directory Domain-Admin → ransomware cascade, modelled on the Lynx intrusion (The DFIR Report, 'Cat's Got Your Files: Lynx Ransomware', 17 December 2025; intrusion of early March 2025; time to ransomware just under 178 hours across nine calendar days).",
       "resource": "tlctc:attack-path:ad-domain-admin-cascade-2025",
       "tags": [
         "attack-path",
         "cluster-4",
-        "cluster-1",
         "cluster-7",
+        "cluster-1",
         "confidence-high"
       ]
     },
