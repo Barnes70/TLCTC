@@ -2,8 +2,8 @@
 
 [ClawHub](https://github.com/openclaw/clawhub) is the public skill registry for
 [OpenClaw](https://docs.openclaw.ai). This folder holds the ClawHub edition of the
-`tlctc-classify` skill: the complete TLCTC v2.6 analysis system (10 axioms, 10 clusters,
-17 R-* rules, SRE doctrine, DRE refinement tree, attack-path notation) as one `SKILL.md`.
+`tlctc-classify` skill: the complete TLCTC v2.7 analysis system (10 axioms, 10 clusters,
+17 R-* rules, SRE doctrine, DRE refinement tree, consequence chain, attack-path notation) as one `SKILL.md`.
 
 ```
 integrations/clawhub/
@@ -64,9 +64,9 @@ clawhub login                        # prints a one-time code + URL; approve wit
 clawhub whoami
 
 npm run validate-skills
-clawhub skill publish integrations/clawhub/tlctc-classify --version 2.6.0 --dry-run
-clawhub skill publish integrations/clawhub/tlctc-classify --version 2.6.0 \
-  --changelog "TLCTC v2.6 (2026-09-23): 10 clusters, 10 axioms, 17 R-* rules incl. R-SCOPE and R-SPECIFIC, SRE doctrine, DRE refinement tree, attack-path notation."
+clawhub skill publish integrations/clawhub/tlctc-classify --version 2.7.0 --dry-run
+clawhub skill publish integrations/clawhub/tlctc-classify --version 2.7.0 \
+  --changelog "TLCTC v2.7 (2026-10-17): consequence chain added (BRE, causal and normative edges, entry points), DRE stopping rule and DCS wording updated. Classification-preserving: no cluster, axiom, rule or DRE code changed."
 ```
 
 Checked 2026-09-27 with clawhub CLI 0.23.3: the dry run reports

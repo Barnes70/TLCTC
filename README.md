@@ -408,7 +408,7 @@ The TLCTC JSON architecture enables **machine-readable threat intelligence shari
 
 ## Use TLCTC in an AI Agent
 
-The `tlctc-classify` agent skill gives an AI agent the complete TLCTC v2.6 analysis system (unchanged in v2.7, which touches only the consequence chain) — axioms, the ten clusters, the R-* rules, the SRE doctrine, the DRE refinement tree and the attack-path notation — loaded whenever you ask it to classify an incident, a CVE or a threat report. Nothing to paste.
+The `tlctc-classify` agent skill gives an AI agent the complete TLCTC v2.7 analysis system — axioms, the ten clusters, the R-* rules, the SRE doctrine, the DRE refinement tree, the consequence chain and the attack-path notation — loaded whenever you ask it to classify an incident, a CVE or a threat report. Nothing to paste.
 
 | Agent | Install | Copy (licence) |
 |---|---|---|

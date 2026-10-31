@@ -7,8 +7,8 @@ https://www.tlctc.net/.well-known/skills/index.json
 https://www.tlctc.net/.well-known/skills/tlctc-classify/SKILL.md
 ```
 
-This is the **CC BY 4.0 web edition** of the skill: the complete TLCTC v2.6 analysis system
-(10 axioms, 10 clusters, 17 R-* rules, SRE doctrine, DRE refinement tree, attack-path notation),
+This is the **CC BY 4.0 web edition** of the skill: the complete TLCTC v2.7 analysis system
+(10 axioms, 10 clusters, 17 R-* rules, SRE doctrine, DRE refinement tree, consequence chain, attack-path notation),
 with `license: CC-BY-4.0`, `author` and an attribution line. The ClawHub edition in
 [`../clawhub/`](../clawhub/) carries the same text under ClawHub's MIT-0 terms.
 

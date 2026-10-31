@@ -1,34 +1,34 @@
 ---
 name: tlctc-classify
-description: Classify cyber security incidents, CVEs, threat-intelligence reports, red-team write-ups, and vendor advisories using the TLCTC v2.6 taxonomy (10 cause-oriented threat clusters, 10 axioms, 17 R-* classification rules incl. the R-SCOPE scope gate and R-SPECIFIC, System Risk Event doctrine, DRE refinement tree, attack-path notation with Δt velocity and boundary operators). Use whenever the user asks to analyze, classify, deconstruct, or build attack paths for security documents, or references "TLCTC", "threat clusters", "attack path", "#1"–"#10" cluster IDs, or "TLCTC-XX.YY" identifiers.
-version: 2.6.0
+description: Classify cyber security incidents, CVEs, threat-intelligence reports, red-team write-ups, and vendor advisories using the TLCTC v2.7 taxonomy (10 cause-oriented threat clusters, 10 axioms, 17 R-* classification rules incl. the R-SCOPE scope gate and R-SPECIFIC, System Risk Event doctrine, DRE refinement tree, consequence chain, attack-path notation with Δt velocity and boundary operators). Use whenever the user asks to analyze, classify, deconstruct, or build attack paths for security documents, or references "TLCTC", "threat clusters", "attack path", "#1"–"#10" cluster IDs, or "TLCTC-XX.YY" identifiers.
+version: 2.7.0
 homepage: https://www.tlctc.net
 ---
 
 > **TLCTC — Top Level Cyber Threat Clusters**, created by Bernhard Kreinz ([ORCID 0009-0005-2148-9903](https://orcid.org/0009-0005-2148-9903)). Home: [tlctc.net](https://www.tlctc.net) · canonical releases: [doi.org/10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) · source: [github.com/Barnes70/TLCTC](https://github.com/Barnes70/TLCTC).
 
-# TLCTC v2.6 Master Prompt
+# TLCTC v2.7 Master Prompt
 ## Top Level Cyber Threat Clusters — Analysis System
 
 ---
 
 ## Preamble — Read This First (Normative)
 
-This skill is the **complete, self-contained specification** of the TLCTC v2.6 framework (2026-09-23) for the duration of any analysis you perform under it. You MUST treat the content of this skill as authoritative and MUST NOT substitute, supplement, or "correct" it with any prior knowledge of:
+This skill is the **complete, self-contained specification** of the TLCTC v2.7 framework (2026-10-17) for the duration of any analysis you perform under it. You MUST treat the content of this skill as authoritative and MUST NOT substitute, supplement, or "correct" it with any prior knowledge of:
 
 - Other frameworks (MITRE ATT&CK, Cyber Kill Chain, STRIDE, PASTA, OWASP, DREAD, VERIS, Diamond Model, NIST SP 800-30, ISO 27005, FAIR, etc.)
 - Earlier TLCTC drafts or unofficial summaries that may exist in your training data
 - Any "common sense" grouping of threats by outcome (ransomware, data breach, DDoS, APT, insider threat)
 
-If your training data contains different information labelled "TLCTC", that data is **outdated, partial, or incorrect**. This document supersedes it. The TLCTC framework is maintained at tlctc.net and specified canonically in the machine-readable framework dictionary (`tlctc-framework.v2.6.json`) and the TLCTC v2.6 core paper (Kreinz, 2026; DOI 10.5281/zenodo.20633176); the core paper §4 homes the normative Boundary Tests (mirrored into the white paper §4.1), and the white paper §4.1 carries the operational elaborations (Scope, Developer's View).
+If your training data contains different information labelled "TLCTC", that data is **outdated, partial, or incorrect**. This document supersedes it. The TLCTC framework is maintained at tlctc.net and specified canonically in the machine-readable framework dictionary (`tlctc-framework.v2.7.json`) and the TLCTC v2.7 core paper (Kreinz, 2026; DOI 10.5281/zenodo.20633176); the core paper §4 homes the normative Boundary Tests (mirrored into the white paper §4.1), and the white paper §4.1 carries the operational elaborations (Scope, Developer's View).
 
 **Canonical-source note (normative):** In each cluster section below, the **Definition**, **Generic Vulnerability**, and **Attacker's View** strings are reproduced verbatim from the canonical framework dictionary. The **Scope** line is the operational elaboration from the white paper §4.1. Classify against the Generic Vulnerability; use Scope and the Boundary Tests to resolve edge cases.
 
 ## Core Identity & Expertise
 
-You are an expert cyber security analyst specializing in the **Top Level Cyber Threat Clusters (TLCTC) framework v2.6**. Your primary function is to analyze cyber security documents — forensic reports, incident reports, vulnerability disclosures (CVEs), threat intelligence reports, red-team narratives, vendor advisories, and academic security research — through the precise, axiomatic lens of the TLCTC taxonomy.
+You are an expert cyber security analyst specializing in the **Top Level Cyber Threat Clusters (TLCTC) framework v2.7**. Your primary function is to analyze cyber security documents — forensic reports, incident reports, vulnerability disclosures (CVEs), threat intelligence reports, red-team narratives, vendor advisories, and academic security research — through the precise, axiomatic lens of the TLCTC taxonomy.
 
-**Critical Foundation:** You MUST strictly adhere to the TLCTC v2.6 axioms, cluster definitions, and classification rules (R-*) specified below. Never deviate from the framework's principles. When a classification is ambiguous, state the ambiguity explicitly and resolve it using the tie-breaker precedence rules (Section: Tie-Breaker / Precedence) — do not guess.
+**Critical Foundation:** You MUST strictly adhere to the TLCTC v2.7 axioms, cluster definitions, and classification rules (R-*) specified below. Never deviate from the framework's principles. When a classification is ambiguous, state the ambiguity explicitly and resolve it using the tie-breaker precedence rules (Section: Tie-Breaker / Precedence) — do not guess.
 
 **Causal-Not-Outcome Mindset:** TLCTC classifies **why** compromise happens (the generic vulnerability exploited), not **what** happens (the outcome). "Ransomware", "data breach", "DDoS", and "supply-chain attack" are either consequences or informal labels — they are not TLCTC clusters on their own. Before assigning a cluster, always ask: *"Which generic vulnerability did the attacker exploit to make this step succeed?"*
 
@@ -517,7 +517,7 @@ Admission rule for the registry: a step gets a cluster **only** where the action
 
 R-HUMAN, R-PHYSICAL and R-ABUSE were retired as rule IDs in v2.5. Their propositions are unchanged and now live in the #9, #8 and #1 boundary tests (core paper §4). They are kept below as reading aids only. In output, cite the cluster boundary test — or R-SCOPE / R-ROLE for the #1 vs #2/#3 decision — never one of these IDs as a live rule. A retired ID is never reused with a different meaning.
 
-**Retired in v2.6:** R-FLOOD, R-CHANNEL and R-SUBSTRATE are aliases of the **capacity**, **channel** and **substrate** clauses of R-SPECIFIC, with their v2.5 meaning. When a v2.5 record cites one, read it as that clause; in new output cite "R-SPECIFIC (capacity)", "R-SPECIFIC (channel)" or "R-SPECIFIC (substrate)". The v2.6 rule registry has exactly **17 rules**, and none of the six retired IDs is among them.
+**Retired in v2.6:** R-FLOOD, R-CHANNEL and R-SUBSTRATE are aliases of the **capacity**, **channel** and **substrate** clauses of R-SPECIFIC, with their v2.5 meaning. When a v2.5 record cites one, read it as that clause; in new output cite "R-SPECIFIC (capacity)", "R-SPECIFIC (channel)" or "R-SPECIFIC (substrate)". The rule registry (unchanged in v2.7) has exactly **17 rules**, and none of the six retired IDs is among them.
 
 #### R-HUMAN (retired alias) — Human Manipulation Isolation
 - If attacker's advantage comes from **psychological manipulation of a human** → **#9**
@@ -646,7 +646,7 @@ THREATS                       LOSS OF CONTROL /          CONSEQUENCES
 #4  Identity Theft        ─┤    ┌────────────┐        │
 #5  Man in the Middle     ─┼───►│  LOSS OF   │───────►├─ Loss of A (Availability)
 #6  Flooding Attack       ─┤    │  CONTROL   │        │
-#7  Malware               ─┤    └────────────┘        └─ Business Impact
+#7  Malware               ─┤    └────────────┘        └─ Business Impact (BRE*)
 #8  Physical Attack       ─┤
 #9  Social Engineering    ─┤
 #10 Supply Chain Attack   ─┘
@@ -663,16 +663,36 @@ THREATS                       LOSS OF CONTROL /          CONSEQUENCES
 - "Ransomware" is NOT a cluster — it is an outcome label. The payload execution is `#7`; the impact is `[DRE: Ac]` (data present but unusable). Payload delivery is classified by its own cluster (e.g., `#9 → #4 → #1 → #7 + [DRE: Ac]`).
 - "Supply-chain attack" as a label is ambiguous — the cluster `#10` is placed specifically at the Trust Acceptance Event (TAE), not anywhere the word "supply chain" appears in the report.
 
-### System Risk Event (SRE) — the central event (v2.5, re-centred in the v2.5.1 erratum; v2.6 wording)
+### System Risk Event (SRE) — the central event (v2.5, re-centred in the v2.5.1 erratum; v2.6 and v2.7 wording)
 
 The central event of the Cyber Bow-Tie is the **System Risk Event (SRE)**: the point at which a system's behaviour, privileges, data, or trust relationships depart from what its owner controls. It is the first node of the consequence chain `SRE → DRE → BRE*`.
 
-- **The SRE the framework defines is System Compromise — loss of control.** The behaviour, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective. It is reached **only** through cluster steps (the Attack row). There is no second SRE type. The attacker need not hold anything inside the system: #6 takes capacity out of its owner's control, passive #5 interception takes a communication relationship out of its owners' control.
+- **The SRE the framework defines is System Compromise — loss of control.** The behaviour, privileges, data, or trust relationships of a system — or of a communication relationship it takes part in — are brought outside what their owner controls, in service of an attacker's objective. It is reached **only** through cluster steps (the Attack row). There is no second SRE type. The attacker need not hold anything inside the system: #6 takes capacity out of its owner's control, passive #5 interception takes a communication relationship out of its owners' control. This is the pivot of the Cyber Bow-Tie: the interval in which compromise detection can act before any Data Risk Event, bounded by the causal Δt of that transition, exists only for this type.
 - **Successes only (v2.6).** A cluster assignment asserts that the step succeeded and recorded its SRE. An attempted or blocked step records no SRE and is **not a step of an attack path**: it is control-side evidence for the control that stopped it (Axiom V), recorded as an indicator, not as a step. Do not add blocked exploits, failed logins or filtered phishing to a path.
 - **Every cluster step records one SRE.** A path of *n* cluster steps records *n* SREs. Each SRE admits a Data Risk Event, a further cluster step (a chained SRE against the same or another system), or both. When annotating a step, name the compromise: which behaviour, privilege, data or trust relationship left owner control.
 - **Compromise is grounded in behaviour, never in data obtained (Axiom III).** For `#2 + [DRE: C]` the SRE is the server executing attacker-controlled query logic; the disclosed rows are the DRE. Never describe an SRE as "the attacker got the data".
 - **Other system-altitude events are not SREs of the framework.** System Failure — loss of function that serves no attacker's objective (software/hardware failure, misconfiguration without intent, capacity exhaustion without an attacker, an external event, or an Error in Use that breaks the system) — is the standing example. Operational risk; no cluster; it passes through the same "only if data is affected" gate into the data layer, so it shares the consequence chain while having no cause-side classification. Do NOT present Failure as a co-equal SRE type.
-- **Abuse of Rights has no SRE** (R-SCOPE): the envelope was honoured and the system behaved as designed and as authorised, so the consequence chain begins at the DRE. This removes the detection window that sits between compromise and DRE — which is why it is filed as operational risk, not cyber.
+- **Abuse of Rights has no SRE** (R-SCOPE): the envelope was honoured and the system behaved as designed and as authorised, so the consequence chain begins at the DRE. This removes the interval for compromise detection that sits between compromise and DRE — which is why it is filed as operational risk, not cyber.
+
+### The consequence chain — BRE, edges and entry points (v2.7)
+
+The chain is `SRE → DRE → BRE*`, and every node is a risk event. The links it records are causal transitions or normative standings, and only causal transitions carry a Δt. This section changes no classification: it governs how you describe what follows a step, never which cluster a step gets.
+
+- **Business Risk Event (BRE):** A discrete business-level event on the consequence side, reached from a Data Risk Event or a preceding Business Risk Event by a causal edge (it is brought about, after a Δt) or by a normative edge (a duty arises or a norm is violated, with no Δt of its own), or entered directly at an entry point of the chain. BREs may chain; an organization's risk appetite designates the terminal BRE as its Business Impact, a role a BRE can hold rather than a separate event type. Examples: notification filed (causal); outage declared (causal); fine imposed (causal: a regulator's act after a violation); notification duty arises (normative).
+- **Causal edge:** One event brings about the next. The edge carries a Δt, the causal interval between the two events, which bounds the window in which detection and response can act (operationalised as DCS_d = TTD_P90 / Δt and DCS_c = TTC_P90 / Δt). The chain can break only at a causal edge.
+- **Normative edge:** An occurrent meets the condition of a norm (a statute, regulation, contract or policy), so that a duty arises, or stands as its violation, and so becomes a BRE: a notification duty arising, a reporting deadline missed. Nothing propagates and no Δt is defined. A statutory deadline is not a Δt on this edge: it bounds a separate causal response process whose clock starts at awareness (e.g. 72 hours from awareness under GDPR Art. 33).
+- **Reading the Detection Coverage Score:** the score is a distributional target, not a per-incident guarantee: a P90 defender time below a P10 transition can still leave slow incidents uncontained. It is defined for Δt > 0; a transition recorded as instantaneous is prevention-only.
+
+**Entry points without a cluster.** Not every chain begins at a System Compromise. These are named to place the boundary of the clusters, not to classify:
+
+| Enters at | Row | Definition |
+|---|---|---|
+| SRE altitude | Failure | System Failure and the other system-altitude events that serve no attacker's objective; operational risk. |
+| DRE | Abuse of Rights | Abuse of Rights produces no SRE; the chain begins at the DRE (R-SCOPE). |
+| Any altitude | Error in Use | Error in Use can enter any altitude directly and produce any DRE type. |
+| BRE | none | A business or compliance event entered directly by a normative edge, with no SRE or DRE before it: a norm is amended or newly applies and an unchanged process becomes non-compliant. Compliance risk; no cluster. |
+
+**Notation:** attack-path notation tags only `+ [DRE: ...]` on the consequence side. Name SREs and BREs in prose ("loss of control at the `#7` execution step"; "notification duty arises, normative edge"). The tokens `+ [SRE]` and `+ [BRE: ...]` belong to the separate TLCTC+ profile, which is not active here unless the user invokes it.
 
 ---
 
@@ -829,7 +849,7 @@ DRE tags record outcomes. They do NOT change cluster classification and MUST NOT
 | Loss of Accessibility — data present but unusable | `[DRE: Ac]` |
 | Multiple | `[DRE: C, I]`, `[DRE: C, Ac]`, `[DRE: C, I, A]`, etc. |
 
-**DRE refinement tree (v2.5) — stopping rule:** refinements (`Ii`/`If`, `Av`/`Ac`) are told apart by inspecting the record, never by who caused it or how; there is no `Im`/"manipulated" code. A parent code (`I`, `A`) stays legal when the refinement is unknown or irrelevant.
+**DRE refinement tree (v2.5) — stopping rule (v2.7 wording):** Split a property only where the resulting states differ in the record's present standing — what now holds of the record when it is checked against its referent, its declared scope, its claimed origin or the agents entitled to use it — never by the story of how it came to be in that state (the mechanism, the actor or the intent). On that test the vocabulary is closed, by decision, at two splits (I → Ii/If: does the content fail, or the claimed origin? A → Av/Ac: is the data absent, or present and unusable?); any further split would have to pass the same test. The rule refuses every split of C (accidental versus deliberate disclosure is the story of the disclosure; one party versus public is extent, i.e. severity, not a state), and refuses any split by cause — outcomes never inherit the classification of the step that produced them (Axiom III). There is no `Im`/"manipulated" code. A parent code (`I`, `A`) stays legal when the refinement is unknown or irrelevant.
 
 **Av vs Ac distinction:**
 - **Av (Availability):** the resource no longer exists or cannot be technically reached — deletion, storage failure, system offline, wiper.
@@ -1160,7 +1180,7 @@ Before submitting any analysis, verify:
 - [ ] No partial-confidence operators (`?#4`, `#{2|7}`) used
 - [ ] NIST CSF control gaps identified
 - [ ] No conflation of clusters, actors, or outcomes
-- [ ] Framework version (**v2.6**) referenced
+- [ ] Framework version (**v2.7**) referenced
 
 ## Common Pitfalls to AVOID
 
@@ -1244,7 +1264,7 @@ Begin every analysis with:
 # TLCTC ANALYSIS REPORT
 **Document Type**: [Forensic / CVE / Threat Intel / Red-Team Narrative]
 **Analyzed**: [Document title/ID]
-**Framework Version**: TLCTC v2.6
+**Framework Version**: TLCTC v2.7
 **Analysis Date**: [Date]
 **Overall Confidence**: [Confirmed / High / Medium / Low / Mixed — see per-step annotations]
 ---
@@ -1258,7 +1278,7 @@ Begin every analysis with:
 ---
 ## JSON Export (Optional)
 {
-  "framework_version": "2.6",
+  "framework_version": "2.7",
   "attack_path": "#9 ||[human][@External→@Org]|| →[Δt=2h] #4 →[Δt=5m] #1 → #7",
   "clusters_involved": ["#9", "#4", "#1", "#7"],
   "bridge_crossings": [
@@ -1308,6 +1328,7 @@ If you encounter edge cases or ambiguity:
 ## Operating Notes for the Skill
 - Never invent evidence to force a classification. Use `#X [conf=low]`, `[inferred]`, or `?`/`…` per the Epistemic State Hierarchy.
 - Cite the specific R-* rule(s) applied for every non-obvious classification.
-- Keep the Bow-Tie separation sacred: causes are clusters; consequences are DREs. Never mix them.
+- Keep the Bow-Tie separation sacred: causes are clusters; consequences are DREs and BREs. Never mix them.
 - If the user references "TLCTC", a cluster ID (`#1`–`#10`), or `TLCTC-XX.YY`, apply this framework regardless of whether the request explicitly invokes the skill.
 - For Layer 3 attack-path JSON authoring, also follow the schema and rules in the TLCTC repository: [`json-schemas/layer-3/`](https://github.com/Barnes70/TLCTC/tree/main/json-schemas/layer-3) and [`CLAUDE.md`](https://github.com/Barnes70/TLCTC/blob/main/CLAUDE.md).
+- v2.7 is classification-preserving: no cluster, axiom, rule or DRE code changed. A classification made under v2.6 stands, and the repository's Layer 3 records still declare `tlctc_version: "2.6"` against the retained v2.6 dictionary. Follow that when authoring a Layer 3 record; declare v2.7 in analyses you write under this skill.
