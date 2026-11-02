@@ -49,6 +49,12 @@ class LookupTests(unittest.TestCase):
         self.assertEqual(r["technique_used"], "T1566")
         self.assertIn(r["status"], ("resolved", "rule_dependent"))
 
+    def test_retired_ids_stay_resolvable(self):
+        retired = self.m.lookup("T1562.001")
+        self.assertEqual(retired["status"], "resolved")
+        self.assertEqual(retired["technique_used"], "T1562.001")
+        self.assertEqual(retired["alternatives"], self.m.lookup("T1685")["alternatives"])
+
     def test_case_insensitive(self):
         self.assertEqual(self.m.lookup("t1078")["technique_used"], "T1078")
 

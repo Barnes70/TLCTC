@@ -61,9 +61,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "16ab6143-510a-44e2-a615-bdb80b8317fc",
@@ -95,9 +97,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "42ccce6d-7bd3-4930-95cd-e4d83fa94a30",
@@ -110,9 +114,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "b91e8d5e-0033-44fe-973f-b730316f23a1",
@@ -125,9 +131,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ff91e3f0-ad15-459f-9a85-1556390c138d",
@@ -140,9 +148,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "7215374a-de4f-4b33-8ba5-70804c9251d3",
@@ -419,9 +429,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ccd55945-badd-4bae-936b-823a735d37dd",
@@ -434,9 +446,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "04ad83ef-1a37-4c10-b57a-81092164bf33",
@@ -480,9 +494,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "f8ed0e8f-7438-4b79-85eb-f358ef2fbebd",
@@ -1827,9 +1843,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "d2656e78-c069-4571-8220-9e0ab5913f19",
@@ -1841,9 +1859,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "352a918a-34d8-4882-8470-44830c507aa3",
@@ -1871,9 +1891,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "c803b2ce-c4a2-4836-beae-b112010390b1",
@@ -1885,9 +1907,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a840e606-7c8c-4684-9bc1-eb6b6155127f",
@@ -2006,9 +2030,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "f8103686-e3e8-46f3-be72-65f7fcb4aa53",
@@ -2269,9 +2295,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "0a5177f4-6ca9-44c2-aacf-d3f3d8b6e4d2",
@@ -2522,9 +2550,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "abae8fec-57bd-4f87-aff6-6e3db989843d",
@@ -2831,9 +2861,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "025c9fe7-db72-49f9-af0d-31341dd7dd57",
@@ -2845,9 +2877,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a622fcd2-4b5a-436a-b8a2-a4171161833c",
@@ -2980,9 +3014,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "08d6ac24-c927-4469-b3b7-2e422d6e3c43",
@@ -3119,9 +3155,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "2a7d64cf-81fa-4daf-ab1b-ab80b789c067",
@@ -4843,9 +4881,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "980a7598-1e7f-4962-9372-2d754c930d0e",
@@ -5715,9 +5755,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "62fff148-278d-497e-8ecd-ad6083231a35",
@@ -5770,9 +5812,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "fe10751f-1995-40a5-aaa2-c97ccb4123fe",
@@ -6016,9 +6060,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "f4d3748a-65d1-4806-bd23-e25728081d01",
@@ -6311,9 +6357,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "808146b2-9332-4d78-9416-d7e47012d83d",
@@ -6377,9 +6425,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ea61bb82-a5e0-42e6-8537-91d29500f1b9",
@@ -6463,9 +6513,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "eca5e022-d368-4043-98e5-9736fb01f72f",
@@ -6478,9 +6530,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "759d0d51-bc99-4b5e-9add-8f5b2c8e7512",
@@ -6915,9 +6969,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "c8e35e96-19ce-4f16-aeb6-fd5588dc5365",
@@ -7211,9 +7267,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "36388120-b3f1-4ce9-b50b-280d9a7f4c04",
@@ -7225,9 +7283,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "8c1a5675-cb85-452f-a298-b01b22a51856",
@@ -7465,9 +7525,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "3fcc9b35-39e4-44c0-a2ad-9e82b6902b31",
@@ -7479,9 +7541,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ec127035-a636-4b9a-8555-0efd4e59f316",
@@ -7639,9 +7703,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "067d8238-7127-451c-a9ec-fa78045b618b",
@@ -8019,9 +8085,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "b45e3d6f-42c6-47d8-a478-df6bd6cf534c",
@@ -8508,9 +8576,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "de25eeb8-3655-4643-ac3a-b662d3f26b6b",
@@ -8527,7 +8597,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "c21c4eaa-ba2e-419a-92b2-8371703cbe21",
@@ -9248,9 +9318,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "7794fa3c-edea-4cff-bec7-267dd4770fd7",
@@ -9362,9 +9434,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "b743623c-2776-40e0-87b1-682b975d0ca5",
@@ -10315,9 +10389,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "9705a6a1-6db6-4a16-a987-15b7151e299b",
@@ -10675,9 +10751,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "f24ab7a8-f09a-4319-82c1-915586aa642b",
@@ -10689,9 +10767,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ddbbe845-1d74-43a8-8231-2156d180234d",
@@ -11876,11 +11956,12 @@
         "T1685"
       ],
       "clusterSet": [
+        "#1",
         "#2",
         "#3",
         "#7"
       ],
-      "primaryCluster": "#2",
+      "primaryCluster": "#1",
       "derivationStatus": "ambiguous"
     },
     {
@@ -12207,11 +12288,12 @@
         "T1685"
       ],
       "clusterSet": [
+        "#1",
         "#2",
         "#3",
         "#7"
       ],
-      "primaryCluster": "#2",
+      "primaryCluster": "#1",
       "derivationStatus": "ambiguous"
     },
     {
@@ -12837,9 +12919,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "9e2575e7-2cb9-4da1-adc8-ed94221dca5e",
@@ -12851,9 +12935,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "eca81e8d-09e1-4d04-8614-c91f44fd0519",
@@ -12865,9 +12951,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "79609c82-a488-426e-abcf-9f341a39365d",
@@ -12879,9 +12967,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "c187c075-bb3e-4c62-b4fa-beae0ffc211f",
@@ -12893,9 +12983,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "7ec15688-fd24-4177-ba43-1a950537ee39",
@@ -12907,9 +12999,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "04b60639-39c0-412a-9fbe-e82499c881a3",
@@ -12921,9 +13015,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "00bb5bd5-1379-4fcf-a965-a5b6f7478064",
@@ -12935,9 +13031,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a5b40a90-baf5-4bf7-a6f7-373494881d22",
@@ -13503,9 +13601,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ff151c33-45fa-475d-af4f-c2f93571f4fe",
@@ -13729,9 +13829,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "24549159-ac1b-479c-8175-d42aea947cae",
@@ -13782,9 +13884,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "8cd538a4-62d5-4e83-810b-12d41e428d6e",
@@ -13935,9 +14039,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ab4561b1-6c7e-48a7-ad08-087cfb9ce8f1",
@@ -13950,9 +14056,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a4c90ea1-2634-4ca0-adbb-35eae169b6fc",
@@ -13969,7 +14077,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "4ac1f50b-3bd0-4968-902d-868b4647937e",
@@ -14068,9 +14176,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "7b14c76a-c602-4ae6-9717-eff868153fc0",
@@ -14558,7 +14668,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "35bc7e28-ee6b-492f-ab04-da58fcf6402e",
@@ -15580,9 +15690,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "0badd08f-c6a3-4630-90d3-6875cca440be",
@@ -15629,9 +15741,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "e9c8808f-4cfb-4ba9-97d4-e5f3beaa244d",
@@ -15644,9 +15758,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "f033f3f3-fd24-4995-97d8-a3bb17550a88",
@@ -15802,9 +15918,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "e9d4ab66-a532-4ef7-a502-66a9e4a34f5d",
@@ -15899,9 +16017,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "100ef69e-3327-481c-8e5c-6d80d9507556",
@@ -15913,9 +16033,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "d22df9cd-2aee-4089-93c7-9dc4eae77f2c",
@@ -16109,9 +16231,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "52a85084-6989-40c3-8f32-091e12e13f09",
@@ -16921,9 +17045,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a0a278fe-2c0e-4de2-ac3c-c68b08a9ba98",
@@ -16972,9 +17098,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a3ab73f1-bd46-4319-8f06-4b20d0617886",
@@ -16986,9 +17114,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "91903aba-1088-42ee-b680-d6d94fe002b0",
@@ -17000,9 +17130,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "2afe6582-e149-11ea-87d0-0242ac130003",
@@ -17026,9 +17158,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ea9bf0fa-edec-4fb8-8b78-b119f2528186",
@@ -17057,9 +17191,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "dd80db93-6ec2-4f4c-a017-ad40da6ffe81",
@@ -17071,9 +17207,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "bc92ca75-cd42-4d61-9a37-9d5aa259c88b",
@@ -17085,9 +17223,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "801bd44f-ceed-4eb6-887c-11544633c0aa",
@@ -17099,9 +17239,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "49e5bc24-8b86-49f1-b743-535f332c2856",
@@ -17113,9 +17255,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "57b649ef-ff42-4fb0-8bf6-62da243a1708",
@@ -17144,9 +17288,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "0b7889b4-5577-4521-a60a-3376ee7f9f7b",
@@ -18528,9 +18674,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "df6ecb8b-7822-4f4b-b412-08f524b4576c",
@@ -20348,9 +20496,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "b447f7de-1e53-4cbf-bfb4-f1f6d0b04e4e",
@@ -21229,9 +21379,10 @@
         "T1685"
       ],
       "clusterSet": [
+        "#1",
         "#7"
       ],
-      "primaryCluster": "#7",
+      "primaryCluster": "#1",
       "derivationStatus": "ambiguous"
     },
     {
@@ -21246,9 +21397,10 @@
         "T1685"
       ],
       "clusterSet": [
+        "#1",
         "#7"
       ],
-      "primaryCluster": "#7",
+      "primaryCluster": "#1",
       "derivationStatus": "ambiguous"
     },
     {
@@ -21379,9 +21531,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "75c505b1-711d-4f68-a357-8c3fe37dbf2d",
@@ -24136,9 +24290,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "df9a0e0e-fedb-4d6c-8668-d765dfc92aa7",
@@ -24853,9 +25009,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "fa2559c8-1197-471d-9cdd-05a0273d4522",
@@ -24868,9 +25026,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "3ceb2083-a27f-449a-be33-14ec1b7cc973",
@@ -25196,9 +25356,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ddcd88cb-7f62-4ce5-86f9-1704190feb0a",
@@ -25338,7 +25500,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "aa7a3fce-bef5-4311-9cc1-5f04bb8c308c",
@@ -26516,9 +26678,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "162e69a7-7981-4344-84a9-0f1c9a217a52",
@@ -27227,9 +27391,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "14c71865-6cd3-44ae-adaa-1db923fae5f2",
@@ -27242,9 +27408,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "adf876b3-f1f8-4aa9-a4e4-a64106feec06",
@@ -27463,9 +27631,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "851c506b-6b7c-4ce2-8802-c703009d03c0",
@@ -27676,9 +27846,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a49fa4d5-11db-418c-8473-1e014a8dd462",
@@ -27915,9 +28087,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "fb3722e4-1a06-46b6-b772-253e2e7db933",
@@ -27964,9 +28138,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ec570e53-4c76-45a9-804d-dc3f355ff7a7",
@@ -28141,9 +28317,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "9c7e131a-0f2c-4ae0-9d43-b04f4e266d43",
@@ -28308,9 +28486,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "0a13e132-651d-11eb-ae93-0242ac130002",
@@ -28322,9 +28502,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "d7b81144-b866-48a4-9bcc-275dc69d870e",
@@ -28336,9 +28518,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "c80e66d8-1780-48a9-b412-46663fd21ac0",
@@ -29934,9 +30118,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "dcaa3f04-70c3-427a-80b4-b870d73c94c4",
@@ -30198,9 +30384,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "b9e8c7d6-a5f4-4e3d-8b1a-9f0c8d7e6a5b",
@@ -30212,9 +30400,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "214641c2-c579-4ecb-8427-0cf19df6842e",
@@ -30439,9 +30629,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ebea773c-a8f1-42ad-a856-00cb221966e8",
@@ -30836,7 +31028,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "be344333-921d-4c4d-8bb8-e584cf584780",
@@ -31113,7 +31305,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "4d7cda18-1b12-4e52-b45c-d28653210df8",
@@ -31130,7 +31322,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "f53714ec-5077-420e-ad20-907ff9bb2958",
@@ -31876,9 +32068,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "eb2d07d4-49cb-4523-801a-da002df36602",
@@ -31890,9 +32084,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "79f4ede3-402e-41c8-bc3e-ebbf5f162581",
@@ -32517,9 +32713,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ff23ffbc-3378-435e-992f-0624dcf93ab4",
@@ -32766,9 +32964,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "d9367cbb-c2e0-47ce-bdc0-128cb6da898d",
@@ -33144,9 +33344,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "023394c4-29d5-46ab-92b8-6a534c6f447b",
@@ -33245,9 +33447,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "2d3cdeec-c0db-45b4-aa86-082f7eb75701",
@@ -33699,9 +33903,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "e290b10b-1023-4452-a4a9-eb31a9013b3a",
@@ -34532,9 +34738,11 @@
       "techniques": [
         "T1689"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "c8da0dfd-4ed0-4b68-962d-13c9c884384e",
@@ -34719,9 +34927,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "33be4333-2c6b-44f4-ae28-102cdbde0a31",
@@ -35537,9 +35747,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a35f5a72-f347-4e36-8895-9869b0d5fc6d",
@@ -35551,9 +35763,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "01aeb693-138d-49d2-9403-c4f52d7d3d62",
@@ -35565,9 +35779,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "1a5fefe6-734f-452e-a07d-fc1c35bce4b2",
@@ -35579,9 +35795,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "57c4bf16-227f-4394-8ec7-1b745ee061c3",
@@ -35593,9 +35811,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "347906f3-e207-4d18-ae5b-a9403d6bcdef",
@@ -35607,9 +35827,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "0e4164da-94bc-450d-a7be-a4b176179f1f",
@@ -36422,9 +36644,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "92a974db-ab84-457f-9ec0-55db83d7a825",
@@ -36436,9 +36660,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "932fb0d8-692b-4b0f-a26e-5643a50fe7d6",
@@ -36582,9 +36808,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "62b7ccc9-23b4-471e-aa15-6da3663c4d59",
@@ -36873,9 +37101,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "17769c90-230e-488b-a463-e05c08e9d48f",
@@ -36887,9 +37117,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a7ee1722-c3c5-aeff-3212-c777e4733217",
@@ -36901,9 +37133,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "12f6b752-042d-483e-bf9c-915a6d06ad75",
@@ -36915,9 +37149,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "fb50eb7a-5ab1-43ae-bcc9-091818cb8424",
@@ -36929,9 +37165,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "b3512211-c67e-4707-bedc-66efc7848863",
@@ -37514,9 +37752,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "edc2f8ae-2412-4dfd-b9d5-0c57727e70be",
@@ -37687,9 +37927,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "21ff4ca9-f13a-41ad-b828-0077b2af2e40",
@@ -37837,9 +38079,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "1114e048-b69c-4f41-bc20-657245ae6e3f",
@@ -38245,9 +38489,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "2c32b543-1058-4808-91c6-5b31b8bed6c5",
@@ -39054,9 +39300,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "0e0255bf-2548-47b8-9582-c0955c9283f5",
@@ -39101,9 +39349,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "c11aecef-9c37-45a6-9c07-bc0782f963fd",
@@ -39131,9 +39381,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "05b2aa93-1210-42c8-8d9a-2fcc13b284f5",
@@ -39145,9 +39397,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "8cbc9475-8d05-4e27-9c32-df960716c701",
@@ -39194,9 +39448,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "5e95028c-5229-4214-afae-d653d573d0ec",
@@ -39208,9 +39464,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "fd877b94-9bb5-4191-bb25-d79cbd93c167",
@@ -39442,7 +39700,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "c43a5405-e8e1-4221-9ac9-dbe3fa14e886",
@@ -39486,9 +39744,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "452bce90-6fb0-43cc-97a5-affc283139b3",
@@ -39500,9 +39760,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "75f7a0e2-7154-4c4d-9eae-5cdb4e0a5c13",
@@ -39514,9 +39776,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "651f87f7-12db-47f9-84c5-f27b081b94b6",
@@ -39806,9 +40070,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "0f9c21f1-6a73-4b0e-9809-cb562cb8d981",
@@ -41581,9 +41847,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "431a1fdb-4799-4f3b-91c3-a683b003fc49",
@@ -43122,9 +43390,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "1cdd9a09-06c9-4769-99ff-626e2b3991b8",
@@ -43321,9 +43591,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a238b5d0-ce2d-4414-a676-7a531b3d13d6",
@@ -43340,7 +43612,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "cc36992a-4671-4f21-a91d-6c2b72a2edf5",
@@ -43352,9 +43624,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "beaa66d6-aa1b-4e3c-80f5-e0145369bfaf",
@@ -44176,7 +44450,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "b17ea6f7-6e90-447e-a799-e6c0a493d6ce",
@@ -44809,9 +45083,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a4824fca-976f-4964-b334-0621379e84c4",
@@ -44853,9 +45129,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "6a5f68d1-c4b5-46b9-94ee-5324892ea939",
@@ -44867,9 +45145,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "7cce6fc8-a07f-4d84-a53e-96e1879843c9",
@@ -45010,9 +45290,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "34275eb8-fa19-436b-b959-3d9ecd53fa1f",
@@ -45557,9 +45839,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "8f3ab69a-aa22-4943-aa58-e0a52fdf6818",
@@ -45878,9 +46162,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "6da2c9f5-7c53-401b-aacb-92c040ce1215",
@@ -47078,9 +47364,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "05c36dd6-79d6-4a9a-97da-3db20298ab2d",
@@ -47445,9 +47733,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "5dfc1465-8f65-4fde-8eb5-6194380c6a62",
@@ -47475,9 +47765,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "07bdd2f5-9c58-4f38-aec8-e101bb79ef8d",
@@ -47506,9 +47798,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "96f697b0-b499-4e5d-9908-a67bec11cdb6",
@@ -47552,9 +47846,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "acd74772-5f88-45c7-956b-6a7b36c294d2",
@@ -47566,9 +47862,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "460479f3-80b7-42da-9c43-2cc1d54dbccd",
@@ -47630,9 +47928,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "919f2ef0-be2d-4a7a-b635-eb2b41fde044",
@@ -47649,7 +47949,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "1a2d6c47-75b0-45bd-b133-2c0be75349fd",
@@ -47796,7 +48096,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "6aa1d992-5925-4e9f-a49b-845e51d1de01",
@@ -48114,9 +48414,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "1547e27c-3974-43e2-a7d7-7f484fb928ec",
@@ -48189,9 +48491,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "aa37cbb0-da36-42cb-a90f-fdf216fc7467",
@@ -48203,9 +48507,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "9df5f547-c86a-433e-b533-f2794357e242",
@@ -48572,9 +48878,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "7d9263bd-dc47-4a58-bc92-5474abab390c",
@@ -48586,9 +48894,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "b64a026b-8deb-4c1d-92fd-98893209dff1",
@@ -48692,7 +49002,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a07f0359-4c90-4dc4-a681-8ffea40b4f47",
@@ -48720,9 +49030,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "7530b96f-ad8e-431d-a04d-ac85cc461fdc",
@@ -48767,9 +49079,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "85b88e05-dadc-430b-8a9e-53ff1cd30aae",
@@ -48799,9 +49113,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "8b7273a4-ba5d-4d8a-b04f-11f2900d043a",
@@ -48813,9 +49129,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "7f2954d2-99c2-4d42-a065-ca36740f187b",
@@ -48827,9 +49145,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "9d3436ef-9476-4c43-acca-90ce06bdf33a",
@@ -48875,9 +49195,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "974515da-6cc5-4c95-ae65-f97f9150ec7f",
@@ -48889,9 +49211,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "e2482f8d-3443-4237-b906-cc145d87a076",
@@ -48931,9 +49255,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "3ae1a046-f7db-439d-b7ce-b8b366b81fa6",
@@ -48977,9 +49303,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "ba226dcf-d390-4642-b9af-b534872f1156",
@@ -49009,9 +49337,11 @@
       "techniques": [
         "T1686"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "2f78da12-f7c7-430b-8b19-a28f269b77a3",
@@ -49023,9 +49353,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "bf9e1387-b040-4393-9851-1598f8ecfae9",
@@ -49037,9 +49369,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "fcddca7c-b9c0-4ddf-98da-e1e2d18b0157",
@@ -49051,9 +49385,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "8ffc5407-52e3-478f-9596-0a7371eafe13",
@@ -49065,9 +49401,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "93d298a1-d28f-47f1-a468-d971e7796679",
@@ -49079,9 +49417,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "275641a5-a492-45e2-a817-7c81e9d9d3e9",
@@ -49162,7 +49502,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "b61e87c0-50db-4b2e-8986-6a2be94b33b0",
@@ -49240,9 +49580,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "0cb8d736-995d-4ce7-a31e-1e8d452a1459",
@@ -49254,9 +49596,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "42205c73-75c8-4a63-9db1-e3782e06fda0",
@@ -49268,9 +49612,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "e3fdf743-f05b-4051-990a-b66919be1743",
@@ -49416,9 +49762,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "555155a2-03bf-4fe7-af74-d176b3fdbe16",
@@ -49454,9 +49802,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "9d8f9bb8-01af-4e15-a3a2-349071530530",
@@ -49468,9 +49818,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "d223b46b-5621-4037-88fe-fda32eead684",
@@ -49704,9 +50056,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "17e53739-a1fc-4a62-b1b9-87711c2d5e44",
@@ -49718,9 +50072,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "63647769-326d-4dde-a419-b925cc0caf42",
@@ -50540,7 +50896,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "a7df0e9e-91a5-459a-a003-4cde67c2ff5d",
@@ -50620,7 +50976,7 @@
         "#1"
       ],
       "primaryCluster": "#1",
-      "derivationStatus": "ambiguous"
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "1c3121ed-041b-4d97-a075-07f54f20fb4a",
@@ -50665,9 +51021,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "f8aebc67-a56d-4ec9-9fbe-7b0e8b7b4efd",
@@ -50813,9 +51171,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "9e8894c0-0ae0-11ef-9d85-1f2942bec57c",
@@ -51188,9 +51548,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "fc014922-5def-4da9-a0fc-28c973f41bfb",
@@ -51235,9 +51597,11 @@
       "techniques": [
         "T1685"
       ],
-      "clusterSet": [],
-      "primaryCluster": null,
-      "derivationStatus": "unmapped"
+      "clusterSet": [
+        "#1"
+      ],
+      "primaryCluster": "#1",
+      "derivationStatus": "ok"
     },
     {
       "ruleId": "6db5eaf9-88f7-4ed9-af7d-9ef2ad12f236",

@@ -122,7 +122,7 @@ These are separate attack steps. A complete path looks like:
 
 ## Handling Resource Development Techniques
 
-Resource Development describes attacker-side preparation that happens **before** the attacker engages `@Org`. All 47 entries are `N/A` from `@Org`'s threat-model perspective. The cluster is `N/A` not because the techniques are unimportant — they are critical to threat-intelligence analysis and tracking — but because they have no boundary crossing into `@Org`.
+Resource Development describes attacker-side preparation that happens **before** the attacker engages `@Org`. All 51 entries are `N/A` from `@Org`'s threat-model perspective. The cluster is `N/A` not because the techniques are unimportant — they are critical to threat-intelligence analysis and tracking — but because they have no boundary crossing into `@Org`.
 
 **Two sphere categories:**
 
@@ -147,7 +147,7 @@ Reconnaissance is mixed: some techniques cross into `@Org`, others stay outside 
 
 - **Active probing of `@Org` infrastructure** — `#1 Abuse of Functions + [DRE: C]`. Target services respond through their designed interfaces and disclose information; that response function is the generic vulnerability. Path: `#1 ||[api][@External→@Org]|| + [DRE: C]`. Applies to T1595 Active Scanning and its sub-techniques.
 - **Human elicitation against `@Org`** — `#9 Social Engineering + [DRE: C]`. Same generic vulnerability as T1566 phishing; only the goal differs (info disclosure rather than payload execution). Path: `#9 ||[human][@External→@Org]|| + [DRE: C]`. Applies to T1598 Phishing for Information and its sub-techniques.
-- **OSINT / closed-source collection** — **N/A**. No `@Org` boundary crossing; data is held by `@External` (registrars, DNS, search engines, breach dumps, dark-web markets) or was voluntarily published by `@Org`. This is a Layer-2 exposure condition, not a Layer-3 step. Applies to T1593, T1594, T1596, T1597, T1681 and the OSINT mode of the umbrella techniques T1589/T1590/T1591/T1592.
+- **OSINT / closed-source collection** — **N/A**. No `@Org` boundary crossing; data is held by `@External` (registrars, DNS, search engines, breach dumps, dark-web markets) or was voluntarily published by `@Org`. This is a Layer-2 exposure condition, not a Layer-3 step. Applies to T1593, T1594, T1596, T1597, T1681, T1682 and the OSINT mode of the umbrella techniques T1589/T1590/T1591/T1592.
 - **Resource Development** — generally **N/A** (`@AttackerInfra`).
 
 Examples:
@@ -220,6 +220,7 @@ Credential Access techniques are almost all **acquisition** steps. Per **R-CRED 
 |---|---|---|
 | Dump-then-use | `(#1 \| #7) → #4` (extract via API or malware, then apply) | T1555* Password Stores |
 | Read-then-use | `#1 → #4` (read via API, then apply) | T1552* Unsecured Credentials, T1558.003 Kerberoasting, T1606* Forge Web Credentials |
+| Acquire by function or from a person, then use | `(#1 \| #9) → #4` | T1528 Steal App Access Token, T1697 Steal Application Specific Passwords |
 | Pure dump (acquisition only) | `#1 \| #7` | T1003* OS Credential Dumping, T1056* Input Capture, T1539 Steal Web Session Cookie |
 | Brute force | `#4` | T1110* (repeated application against auth surface) |
 | AiTM | `#5` (often `#1 → #5 → #4`) | T1557* Adversary-in-the-Middle |
@@ -253,6 +254,7 @@ Execution techniques are dominated by the LOLBAS pattern (`#1 → #7`) — a des
 | User Execution (T1204*) | `#9 → #7` | Human induction is `#9`; what they run is `#7` |
 | Client exploit (T1203) | `#3 → #7` | Client-role flaw is `#3`; payload that runs is `#7` |
 | Supply-chain pipeline (T1677) | `(#1 → #7) \| (#10.2 → #7)` | Poisoning @Org's own pipeline through designed write access (`#1`) → runner execution (`#7`); only a subverted upstream dependency/action is a TAE (`#10.2 → #7`) |
+| Prompt injection (T1698, T1699) | `#1` | ATT&CK files these under Execution, but no foreign code runs. See [AI techniques](#handling-ai-techniques) |
 
 **Common older-mapping errors corrected in v2.1 revalidation:**
 
@@ -367,16 +369,16 @@ PrivEsc techniques split between **abuse of designed elevation mechanisms** (`#1
 - T1134.004 Parent PID Spoofing was `#1`-only — the spawned attacker process runs FEC, requiring the `#7` step. Corrected to `#1 → #7`.
 - T1548.001 Setuid was `#1`-only — when the suid target is attacker binary, future invocation runs FEC at elevated privilege. Corrected to `#1 → #7`.
 
-## Handling Defense Evasion Techniques
+## Handling Stealth and Defense Impairment Techniques
 
-Defense Evasion is the largest tactic (215 entries) and the most varied. Most map to `#1` (abuse of designed admin/configuration features) or `#1 → #7` (LOLBAS-style proxied execution). FEC-feature framing (per the user-clarified pattern from T1497/T1622) applies to several malware-internal evasion behaviors.
+ATT&CK v20 has no Defense Evasion tactic. It replaced it with **Stealth** (151 entries, the largest tactic) and **Defense Impairment** (57 entries), and moved the old T1562 Impair Defenses family to T1685, T1686, T1688, T1689 and T1690. No classification changed in that move. Most techniques map to `#1` (abuse of designed admin/configuration features) or `#1 → #7` (LOLBAS-style proxied execution). FEC-feature framing (per the user-clarified pattern from T1497/T1622) applies to several malware-internal evasion behaviors.
 
 **Cluster patterns:**
 
 | Pattern | Cluster | Examples |
 |---|---|---|
 | LOLBAS — signed proxy execution | `#1 → #7` | T1216* Signed Script Proxy, T1218* System Binary Proxy (mshta, regsvr32, rundll32, etc.), T1220 XSL, T1127* Trusted Dev Utilities (MSBuild/ClickOnce) |
-| Defender impairment via designed admin | `#1` | T1562* Impair Defenses (disable EDR, AV, firewall, logging) |
+| Defender impairment via designed admin | `#1` | T1685* Disable or Modify Tools (EDR, AV, logging), T1686* System Firewall, T1688 Safe Mode Boot, T1689 Downgrade Attack, T1690 Command History |
 | Indicator removal via designed admin | `#1` | T1070* Indicator Removal (event logs, history, files) |
 | Hide artifacts via designed file/proc features | `#1` | T1564* Hide Artifacts (hidden attrs, ADS, hidden window, exclusions) |
 | Cloud admin abuse | `#1` | T1535, T1578*, T1666 |
@@ -384,11 +386,12 @@ Defense Evasion is the largest tactic (215 entries) and the most varied. Most ma
 | Obfuscation as FEC build feature | `#7` | T1027 sub-techniques: polymorphic, junk insertion, stripped, dynamic API, etc. |
 | Obfuscation reusing system libraries | `#1 \| #7` | T1027 mixed-mode subs |
 | FEC environmental gating | `#7` | T1480* Execution Guardrails, T1678 Delay, T1679 Selective Exclusion (and T1497 sandbox evasion, T1622 debugger evasion) |
-| Exploit a flaw to disable defenses | `(#2 \| #3) → #7` | T1211 |
+| Exploit a flaw to hide or to disable defenses | `(#2 \| #3) → #7` | T1211 Exploitation for Stealth, T1687 Exploitation for Defense Impairment |
+| Designed check accepts the response | `#1` | T1696* Anti-Automation Evasion (CAPTCHA solving or avoidance) |
 | Reflective in-memory loading | `#1 → #7` | T1620 |
-| Impersonation (social engineering) | `#9` | T1656 |
+| Social engineering | `#9` | T1684, T1684.001 Impersonation (the forging step in T1684.002 Email Spoofing stays `#1`; the deception is the `#9` step of the phishing technique) |
 
-**Common older-mapping errors corrected in v2.1 revalidation:**
+**Common older-mapping errors corrected in v2.1 revalidation** (IDs and names as they were then):
 
 - **T1127* Trusted Developer Utilities** was `#1 | #10` — but no malicious artifact crosses a trust boundary; this is the LOLBAS pattern (signed utility runs attacker code). Corrected to `#1 → #7`.
 - **T1211 Exploitation for Defense Evasion** was `#2 | #3` — missing the `→ #7` chain that is the entire point of exploitation. Corrected to `(#2 | #3) → #7` (cf. T1068 PrivEsc).
@@ -528,6 +531,19 @@ The `Av` vs `Ac` distinction matters operationally: ransomware (`Ac`) leaves rec
 - T1498.002 Reflection Amplification → `#6 ||[network][@External⇒@Reflectors→@Org]|| + [DRE: A]`
 - T1565.002 Transmitted Data Manipulation → `#1 | #5 + [DRE: I]` (host-side abuse vs MitM)
 - T1667 Email Bombing → `#6 + [DRE: A]` (volumetric, not function-abuse)
+
+## Handling AI Techniques
+
+The v20 techniques that concern AI follow the existing rules. Who or what performs a step never changes its cluster (Axiom IV), and the core paper classifies natural-language instructions to a model or agent as `#1`: following input is the model's designed function, with no implementation flaw and no foreign executable content.
+
+| Technique | Cluster | Reading |
+|---|---|---|
+| T1698 Indirect Prompt Injection, T1699 Direct Prompt Injection | `#1` | ATT&CK files them under Execution, but R-EXEC only applies if the agent later runs foreign content, as a separate `#7` step |
+| T1685.007 Impair Autonomous Defenses | `#1` | A prompt aimed at an LLM-assisted defense. An implant that carries the prompt is its own `#7` step when it executes |
+| T1700 AI-Enabled Exfiltration | `#1` + `[DRE: C]` | The agent's designed tool use is abused, as in ATLAS AML.T0086 |
+| T1608.007 AI Result Poisoning | `N/A` | Attacker-side web content. Acting on it later is `#1` for an agent inside `@Org`, `#9` for a deceived person |
+| T1682 Query Public AI Services | `N/A` | OSINT against an `@External` service |
+| T1683* Generate Content | `N/A` | Attacker-side preparation. Use against a person is `#9` |
 
 ## Quality Checklist
 

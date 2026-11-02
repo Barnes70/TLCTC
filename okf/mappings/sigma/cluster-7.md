@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "Sigma rules → #7 Malware"
-description: "79 Sigma rules entries mapped to TLCTC #7 Malware."
+description: "77 Sigma rules entries mapped to TLCTC #7 Malware."
 resource: "tlctc:mapping:sigma:cluster-7"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: SigmaHQ rules → TLCTC mapping (`mappings/sigma/`). Derived via ATT&CK technique mapping.
 
-Mapped entries: **79**. Cluster: [#7 Malware](/clusters/cluster-7.md).
+Mapped entries: **77**. Cluster: [#7 Malware](/clusters/cluster-7.md).
 
 | Rule | Techniques | Cluster set | Status |
 |---|---|---|---|
@@ -59,8 +59,6 @@ Mapped entries: **79**. Cluster: [#7 Malware](/clusters/cluster-7.md).
 | File With Uncommon Extension Created By An Office Application | T1204 | #7, #9 | ambiguous |
 | Suspicious Binaries and Scripts in Public Folder | T1204 | #7, #9 | ambiguous |
 | Suspicious Appended Extension | T1486 | #7 | ok |
-| Load Of RstrtMgr.DLL By A Suspicious Process | T1486, T1685 | #7 | ambiguous |
-| Load Of RstrtMgr.DLL By An Uncommon Process | T1486, T1685 | #7 | ambiguous |
 | HackTool - SILENTTRINITY Stager DLL Load | T1071 | #7 | ok |
 | DotNET Assembly DLL Loaded Via Office Application | T1204 | #7, #9 | ambiguous |
 | CLR DLL Loaded Via Office Applications | T1204 | #7, #9 | ambiguous |

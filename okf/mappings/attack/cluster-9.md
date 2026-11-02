@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "ATT&CK techniques → #9 Social Engineering"
-description: "18 ATT&CK techniques entries mapped to TLCTC #9 Social Engineering."
+description: "19 ATT&CK techniques entries mapped to TLCTC #9 Social Engineering."
 resource: "tlctc:mapping:attack:cluster-9"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE ATT&CK Enterprise → TLCTC mapping (`mappings/mitre-attack-enterprise/`).
 
-Mapped entries: **18**. Cluster: [#9 Social Engineering](/clusters/cluster-9.md).
+Mapped entries: **19**. Cluster: [#9 Social Engineering](/clusters/cluster-9.md).
 
 | Technique | Name | TLCTC | Rationale |
 |---|---|---|---|
@@ -33,4 +33,5 @@ Mapped entries: **18**. Cluster: [#9 Social Engineering](/clusters/cluster-9.md)
 | T1598.002 | Phishing for Information: Spearphishing Attachment | #9 | Spearphishing attachment used to elicit information (e.g., credential-harvesting form embedded in document) manipulates a human in @Org into disclosure. The attachment is the lure, not foreign executable content. #9 with no #7 step. Path: `#9 \|\|[human][@External→@Org]\|\| + [DRE: C]`. |
 | T1598.003 | Phishing for Information: Spearphishing Link | #9 | Spearphishing link directs a human in @Org to attacker-controlled disclosure surface (credential page, fake form). #9 Social Engineering; the credential capture is the DRE outcome of this step. Path: `#9 \|\|[human][@External→@Org]\|\| + [DRE: C]`. If captured credentials are subsequently used to authenticate, that is a separate #4 step (R-CRED, Axiom X). |
 | T1598.004 | Phishing for Information: Spearphishing Voice | #9 | Spearphishing voice (vishing) elicits information from a human in @Org by phone. Generic vulnerability is human cognition under conversational social pressure — #9. Path: `#9 \|\|[human][@External⇒@Telco→@Org]\|\| + [DRE: C]`. |
-| T1656 | Impersonation | #9 | Impersonation: pose as a trusted person or organization (executive, IT support, vendor, partner) to manipulate a target into performing an action — wire transfer, credential disclosure, software install, policy override. Cluster corrected from prior `#1`: impersonation is the defining example of `#9` Social Engineering — it manipulates human cognition through pretext, authority, urgency, and trust. Path: `#9 \|\|[human][@External→@Org]\|\| → …`. (When delivered via voice, mark `⇒@Telco`; via SMS, `⇒@SMSProvider`; via deepfake on a video call, `⇒@VideoService`.) |
+| T1684 | Social Engineering | #9 | Social Engineering: influence people to grant access, approve changes, disclose information or run adversary-supplied instructions. The generic vulnerability is human trust and cognition — `#9`. What the target then does, or what the attacker does with the result, is its own step (`#1`, `#4` or `#7`). Path: `#9 \|\|[human][@External→@Org]\|\| → …`. |
+| T1684.001 | Social Engineering: Impersonation | #9 | Impersonation: pose as a trusted person or organization (executive, IT support, vendor, partner) to manipulate a target into performing an action — wire transfer, credential disclosure, software install, policy override. Impersonation is the defining example of `#9` Social Engineering. Path: `#9 \|\|[human][@External→@Org]\|\| → …`. (When delivered via voice, mark `⇒@Telco`; via SMS, `⇒@SMSProvider`; via deepfake on a video call, `⇒@VideoService`.) Replaces T1656, same classification. |

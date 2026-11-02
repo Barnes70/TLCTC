@@ -67,9 +67,13 @@ _CLUSTER_RE = re.compile(r"#(\d+)")
 
 
 def load_attack_index(attack_path=ATTACK_MAPPING):
-    """techniqueId -> tlctcMapping expression (e.g. 'T1059' -> '#1')."""
+    """techniqueId -> tlctcMapping expression (e.g. 'T1059' -> '#1').
+
+    Retired ATT&CK IDs stay resolvable, because Sigma rules may still carry them.
+    """
     doc = json.loads(Path(attack_path).read_text(encoding="utf-8"))
-    return {e["techniqueId"]: e.get("tlctcMapping", "") for e in doc["mappings"]}
+    entries = doc["mappings"] + doc.get("retired", [])
+    return {e["techniqueId"]: e.get("tlctcMapping", "") for e in entries}
 
 
 def _clusters(expr):

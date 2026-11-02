@@ -325,7 +325,7 @@ The [`mappings/mitre-cwe/`](mappings/mitre-cwe/) directory contains the **mappin
 
 ### MITRE ATT&CK → TLCTC
 
-Operational techniques map to strategic clusters based on the generic vulnerability exploited. The [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) directory contains the **complete mapping of 698 ATT&CK Enterprise techniques** to TLCTC clusters, including detailed rationale for each classification and a decision tree methodology.
+Operational techniques map to strategic clusters based on the generic vulnerability exploited. The [`mappings/mitre-attack-enterprise/`](mappings/mitre-attack-enterprise/) directory contains the **complete mapping of 706 ATT&CK Enterprise v20 techniques** to TLCTC clusters, including detailed rationale for each classification and a decision tree methodology.
 
 Quick examples:
 - T1566.001 "Spearphishing Attachment" → **#9 Social Engineering** (the phishing step; the payload execution is a separate #7 step)
@@ -469,7 +469,7 @@ tlctc/
 │   │   └── decision-tree.md                  # AI-specific questions before the ATT&CK tree
 │   ├── mitre-attack-enterprise/              # MITRE ATT&CK Enterprise → TLCTC
 │   │   ├── README.md                         # Mapping documentation & notation
-│   │   ├── tlctc-enterprise-attack.json      # 698 technique mappings with rationale
+│   │   ├── tlctc-enterprise-attack.json      # 706 technique mappings with rationale
 │   │   ├── decision-tree.md                  # Classification methodology
 │   │   └── examples/
 │   │       └── soc-to-risk-walkthrough.md    # Worked example: SOC → risk register

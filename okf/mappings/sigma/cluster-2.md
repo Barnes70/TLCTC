@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "Sigma rules → #2 Exploiting Server"
-description: "55 Sigma rules entries mapped to TLCTC #2 Exploiting Server."
+description: "53 Sigma rules entries mapped to TLCTC #2 Exploiting Server."
 resource: "tlctc:mapping:sigma:cluster-2"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: SigmaHQ rules → TLCTC mapping (`mappings/sigma/`). Derived via ATT&CK technique mapping.
 
-Mapped entries: **55**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md).
+Mapped entries: **53**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md).
 
 | Rule | Techniques | Cluster set | Status |
 |---|---|---|---|
@@ -53,9 +53,7 @@ Mapped entries: **55**. Cluster: [#2 Exploiting Server](/clusters/cluster-2.md).
 | Path Traversal Exploitation Attempts | T1190 | #2 | ok |
 | SQL Injection Strings In URI | T1190 | #2 | ok |
 | Suspicious User-Agents Related To Recon Tools | T1190 | #2 | ok |
-| Microsoft Malware Protection Engine Crash | T1211, T1685 | #2, #3, #7 | ambiguous |
 | Audit CVE Event | T1068, T1203, T1210, T1211, T1212, T1499 | #2, #3, #4, #6, #7 | ambiguous |
-| Microsoft Malware Protection Engine Crash - WER | T1211, T1685 | #2, #3, #7 | ambiguous |
 | Failed Logon From Public IP | T1078, T1133, T1190 | #2, #4 | ambiguous |
 | Kerberos Manipulation | T1212 | #2, #3, #4 | ambiguous |
 | Zerologon Exploitation Using Well-known Tools | T1210 | #2 | ok |

@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "Sigma rules → #1 Abuse of Functions"
-description: "2294 Sigma rules entries mapped to TLCTC #1 Abuse of Functions."
+description: "2478 Sigma rules entries mapped to TLCTC #1 Abuse of Functions."
 resource: "tlctc:mapping:sigma:cluster-1"
 tags:
   - "mapping"
@@ -12,13 +12,18 @@ tags:
 
 > Source: SigmaHQ rules → TLCTC mapping (`mappings/sigma/`). Derived via ATT&CK technique mapping.
 
-Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md).
+Mapped entries: **2478**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.md).
 
 | Rule | Techniques | Cluster set | Status |
 |---|---|---|---|
 | Bitbucket Full Data Export Triggered | T1213 | #1 | ok |
 | Bitbucket Global Permission Changed | T1098 | #1 | ok |
+| Bitbucket Global Secret Scanning Rule Deleted | T1685 | #1 | ok |
 | Bitbucket Global SSH Settings Changed | T1021, T1685 | #1, #4 | ambiguous |
+| Bitbucket Audit Log Configuration Updated | T1685 | #1 | ok |
+| Bitbucket Project Secret Scanning Allowlist Added | T1685 | #1 | ok |
+| Bitbucket Secret Scanning Exempt Repository Added | T1685 | #1 | ok |
+| Bitbucket Secret Scanning Rule Deleted | T1685 | #1 | ok |
 | Bitbucket Unauthorized Full Data Export Triggered | T1213, T1586 | #1 | ambiguous |
 | Bitbucket User Details Export Attempt Detected | T1082, T1213, T1591 | #1 | ambiguous |
 | Bitbucket User Login Failure Via SSH | T1021, T1110 | #1, #4 | ambiguous |
@@ -29,7 +34,10 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | New Github Organization Member Added | T1136 | #1 | ok |
 | Github Outside Collaborator Detected | T1098, T1213 | #1 | ok |
 | GitHub Repository Pages Site Changed to Public | T1567 | #1, #7 | ambiguous |
+| Github Push Protection Bypass Detected | T1685 | #1 | ok |
+| Github Push Protection Disabled | T1685 | #1 | ok |
 | Github Repository/Organization Transferred | T1020, T1537 | #1, #7 | ambiguous |
+| Github Secret Scanning Feature Disabled | T1685 | #1 | ok |
 | Github Self Hosted Runner Changes Detected | T1078, T1213, T1526 | #1, #4 | ambiguous |
 | Kubernetes Admission Controller Modification | T1078, T1552 | #1, #4 | ambiguous |
 | Kubernetes Events Deleted | T1070 | #1 | ok |
@@ -75,7 +83,12 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Antivirus Password Dumper Detection | T1003, T1558 | #1, #4, #7 | ambiguous |
 | Antivirus Web Shell Detection | T1505 | #1, #7 | ambiguous |
 | Suspicious SQL Query | T1190, T1505 | #1, #2, #7 | ambiguous |
+| AWS CloudTrail Important Change | T1685 | #1 | ok |
+| AWS GuardDuty Detector Deleted Or Updated | T1685 | #1 | ok |
+| New Network ACL Entry Added | T1686 | #1 | ok |
+| New Network Route Added | T1686 | #1 | ok |
 | PUA - AWS TruffleHog Execution | T1003, T1555 | #1, #4, #7 | ambiguous |
+| AWS Config Disabling Channel/Recorder | T1685 | #1 | ok |
 | AWS Console GetSigninToken Potential Abuse | T1021, T1550 | #1, #4 | ambiguous |
 | SES Identity Has Been Deleted | T1070 | #1 | ok |
 | AWS SAML Provider Deletion Activity | T1078, T1531 | #1, #4, #7 | ambiguous |
@@ -87,6 +100,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | AWS ElastiCache Security Group Created | T1136 | #1 | ok |
 | AWS ElastiCache Security Group Modified or Deleted | T1531 | #1, #7 | ambiguous |
 | Potential Bucket Enumeration on AWS | T1580, T1619 | #1 | ok |
+| AWS GuardDuty Important Change | T1685 | #1 | ok |
 | AWS IAM Backdoor Users Keys | T1098 | #1 | ok |
 | AWS IAM S3Browser LoginProfile Creation | T1059, T1078 | #1, #4, #7 | ambiguous |
 | AWS IAM S3Browser Templated S3 Bucket Policy Creation | T1059, T1078 | #1, #4, #7 | ambiguous |
@@ -97,6 +111,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | AWS Route 53 Domain Transfer Lock Disabled | T1098 | #1 | ok |
 | AWS Route 53 Domain Transferred to Another Account | T1098 | #1 | ok |
 | AWS S3 Data Management Tampering | T1537 | #1, #7 | ambiguous |
+| AWS SecurityHub Findings Evasion | T1685 | #1 | ok |
 | AWS Snapshot Backup Exfiltration | T1537 | #1, #7 | ambiguous |
 | AWS Identity Center Identity Provider Change | T1556 | #1, #7 | ambiguous |
 | AWS STS AssumeRole Misuse | T1548, T1550 | #1, #4, #7 | ambiguous |
@@ -112,6 +127,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Number Of Resource Creation Or Deployment Activities | T1098 | #1 | ok |
 | Azure Device or Configuration Modified or Deleted | T1485, T1565 | #1, #7 | ambiguous |
 | Azure DNS Zone Modified or Deleted | T1565 | #1 | ok |
+| Azure Firewall Modified or Deleted | T1686 | #1 | ok |
+| Azure Firewall Rule Collection Modified or Deleted | T1686 | #1 | ok |
 | Granting Of Permissions To An Account | T1098 | #1 | ok |
 | Azure Keyvault Key Modified or Deleted | T1552 | #1, #4 | ambiguous |
 | Azure Key Vault Modified or Deleted | T1552 | #1, #4 | ambiguous |
@@ -119,12 +136,14 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Azure Kubernetes Admission Controller | T1078, T1552 | #1, #4 | ambiguous |
 | Azure Kubernetes Cluster Created or Deleted | T1485, T1489, T1496 | #1, #7 | ambiguous |
 | Azure Kubernetes CronJob | T1053 | #1, #7 | ambiguous |
+| Azure Kubernetes Events Deleted | T1685 | #1 | ok |
 | Azure Kubernetes Network Policy Change | T1485, T1489, T1496 | #1, #7 | ambiguous |
 | Azure Kubernetes Sensitive Role Access | T1485, T1489, T1496 | #1, #7 | ambiguous |
 | Azure Kubernetes RoleBinding/ClusterRoleBinding Modified and Deleted | T1485, T1489, T1496 | #1, #7 | ambiguous |
 | Azure Kubernetes Secret or Config Object Access | T1485, T1489, T1496 | #1, #7 | ambiguous |
 | Azure Kubernetes Service Account Modified or Deleted | T1485, T1489, T1496, T1531 | #1, #7 | ambiguous |
 | Disabled MFA to Bypass Authentication Mechanisms | T1556 | #1, #7 | ambiguous |
+| Azure Network Firewall Policy Modified or Deleted | T1686 | #1 | ok |
 | Azure New CloudShell Created | T1059 | #1, #7 | ambiguous |
 | Rare Subscription-level Operations In Azure | T1003 | #1, #7 | ambiguous |
 | CA Policy Removed by Non Approved Actor | T1548, T1556 | #1, #7 | ambiguous |
@@ -164,6 +183,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | GCP Access Policy Deleted | T1098 | #1 | ok |
 | GCP Break-glass Container Workload Deployed | T1548 | #1, #7 | ambiguous |
 | Google Cloud Re-identifies Sensitive Information | T1565 | #1 | ok |
+| Google Cloud Firewall Modified or Deleted | T1685 | #1 | ok |
 | Google Full Network Traffic Packet Capture | T1074 | #1 | ok |
 | Google Cloud Kubernetes Admission Controller | T1078, T1552 | #1, #4 | ambiguous |
 | Google Cloud Service Account Disabled or Deleted | T1531 | #1, #7 | ambiguous |
@@ -186,7 +206,9 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Okta MFA Reset or Deactivated | T1556 | #1, #7 | ambiguous |
 | Potential Okta Password in AlternateID Field | T1552 | #1, #4 | ambiguous |
 | Okta User Account Locked Out | T1531 | #1, #7 | ambiguous |
+| Okta User Session Start Via An Anonymising Proxy Service | T1685 | #1 | ok |
 | Binary Padding - Linux | T1027 | #1, #7 | ambiguous |
+| Bpfdoor TCP Ports Redirect | T1686 | #1 | ok |
 | Linux Capabilities Discovery | T1083, T1548 | #1, #7 | ambiguous |
 | File Time Attribute Change - Linux | T1070 | #1 | ok |
 | Remove Immutable File Attribute - Auditd | T1222 | #1 | ok |
@@ -199,6 +221,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Hidden Files and Directories | T1564 | #1 | ok |
 | Steganography Hide Zip Information in Picture File | T1027 | #1, #7 | ambiguous |
 | Masquerading as Linux Crond Process | T1036 | #1, #7 | ambiguous |
+| Modify System Firewall | T1686 | #1 | ok |
 | Network Sniffing - Linux | T1040 | #1, #5 | ambiguous |
 | Screen Capture with Import Tool | T1113 | #1 | ok |
 | Screen Capture with Xwd | T1113 | #1 | ok |
@@ -215,13 +238,17 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Linux Keylogging with Pam.d | T1003, T1056 | #1, #7 | ambiguous |
 | Password Policy Discovery - Linux | T1201 | #1 | ok |
 | System Information Discovery - Auditd | T1082 | #1 | ok |
+| Auditing Configuration Changes on Linux Host | T1685 | #1 | ok |
 | BPFDoor Abnormal Process ID or Lock File Accessed | T1059, T1106 | #1, #7 | ambiguous |
 | Use Of Hidden Paths Or Files | T1574 | #1, #7 | ambiguous |
 | Modification of ld.so.preload | T1574 | #1, #7 | ambiguous |
+| Logging Configuration Changes on Linux Host | T1685 | #1 | ok |
 | Potential Abuse of Linux Magic System Request Key | T1059, T1489, T1499, T1529 | #1, #6, #7 | ambiguous |
 | System and Hardware Information Discovery | T1082 | #1 | ok |
 | Systemd Service Creation | T1543 | #1, #7 | ambiguous |
 | Unix Shell Configuration Modification | T1546 | #1, #7 | ambiguous |
+| Disable System Firewall | T1686 | #1 | ok |
+| Clear or Disable Kernel Ring Buffer Logs via Syslog Syscall | T1685 | #1 | ok |
 | Creation Of An User Account | T1136 | #1 | ok |
 | Loading of Kernel Module via Insmod | T1547 | #1, #7 | ambiguous |
 | Linux Network Service Scanning - Auditd | T1046 | #1 | ok |
@@ -240,6 +267,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious Reverse Shell Command Line | T1059 | #1, #7 | ambiguous |
 | Shellshock Expression | T1505 | #1, #7 | ambiguous |
 | JexBoss Command Sequence | T1059 | #1, #7 | ambiguous |
+| Disabling Security Tools - Builtin | T1686 | #1 | ok |
 | Linux Doas Conf File Creation | T1548 | #1, #7 | ambiguous |
 | Persistence Via Sudoers.d Files | T1548 | #1, #7 | ambiguous |
 | New Cron File Created | T1053 | #1, #7 | ambiguous |
@@ -253,6 +281,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potentially Suspicious Malware Callback Communication - Linux | T1571 | #1, #7 | ambiguous |
 | Shell Invocation via Apt - Linux | T1083 | #1 | ok |
 | Scheduled Task/Job At | T1053 | #1, #7 | ambiguous |
+| Audit Rules Deleted Via Auditctl | T1685 | #1 | ok |
+| Kaspersky Endpoint Security Stopped Via CommandLine - Linux | T1685 | #1 | ok |
 | Suspicious Invocation of Shell via AWK - Linux | T1059 | #1, #7 | ambiguous |
 | Decode Base64 Encoded Text | T1027 | #1, #7 | ambiguous |
 | BPFtrace Unsafe Option Usage | T1059 | #1, #7 | ambiguous |
@@ -262,6 +292,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Capsh Shell Invocation - Linux | T1059 | #1, #7 | ambiguous |
 | Remove Immutable File Attribute | T1222 | #1 | ok |
 | Chmod Targeting Sensitive Directories | T1222 | #1 | ok |
+| Linux Logs Clearing Attempts | T1685 | #1 | ok |
+| Syslog Clearing or Removal Via System Utilities | T1685 | #1 | ok |
 | Clipboard Collection with Xclip Tool | T1115 | #1 | ok |
 | Copy Passwd Or Shadow From TMP Path | T1552 | #1, #4 | ambiguous |
 | Crontab Enumeration | T1007 | #1 | ok |
@@ -269,6 +301,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Curl Usage on Linux | T1105 | #1 | ok |
 | Suspicious Download and Execute Pattern via Curl/Wget | T1059, T1203 | #1, #3, #7 | ambiguous |
 | Potential Linux Process Code Injection Via DD Utility | T1055 | #1, #7 | ambiguous |
+| Ufw Force Stop Using Ufw-Init | T1686 | #1 | ok |
 | Linux Doas Tool Execution | T1548 | #1, #7 | ambiguous |
 | Shell Invocation via Env Command - Linux | T1059 | #1, #7 | ambiguous |
 | ESXi Network Configuration Discovery Via ESXCLI | T1007, T1033, T1059 | #1, #7 | ambiguous |
@@ -290,6 +323,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Group Has Been Deleted Via Groupdel | T1531 | #1, #7 | ambiguous |
 | Install Root Certificate | T1553 | #1, #10 | ambiguous |
 | Suspicious Package Installed - Linux | T1553 | #1, #10 | ambiguous |
+| Flush Iptables Ufw Chain | T1686 | #1 | ok |
 | Local System Accounts Discovery - Linux | T1087 | #1 | ok |
 | Local Groups Discovery - Linux | T1069 | #1 | ok |
 | Potential GobRAT File Discovery Via Grep | T1082 | #1 | ok |
@@ -310,7 +344,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious Invocation of Shell via Rsync | T1059, T1203 | #1, #3, #7 | ambiguous |
 | Scheduled Cron Task/Job - Linux | T1053 | #1, #7 | ambiguous |
 | Security Software Discovery - Linux | T1518 | #1 | ok |
-| Disable Or Stop Services | T1489, T1685 | #1 | ambiguous |
+| Disabling Security Tools | T1686 | #1 | ok |
+| Disable Or Stop Services | T1489, T1685 | #1 | ok |
 | Setuid and Setgid | T1548 | #1, #7 | ambiguous |
 | Shell Invocation Via Ssh - Linux | T1059 | #1, #7 | ambiguous |
 | Potential Linux Amazon SSM Agent Hijacking | T1219 | #1, #7 | ambiguous |
@@ -344,12 +379,14 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Binary Padding - MacOS | T1027 | #1, #7 | ambiguous |
 | File Time Attribute Change | T1070 | #1 | ok |
 | Hidden Flag Set On File/Directory Via Chflags - MacOS | T1105, T1218, T1552, T1564 | #1, #4, #7 | ambiguous |
+| Indicator Removal on Host - Clear Mac System Logs | T1685 | #1 | ok |
 | Clipboard Data Collection Via OSAScript | T1059, T1115 | #1, #7 | ambiguous |
 | Creation Of A Local User Account | T1136 | #1 | ok |
 | Hidden User Creation | T1564 | #1 | ok |
 | Credentials from Password Stores - Keychain | T1555 | #1, #4, #7 | ambiguous |
 | System Integrity Protection (SIP) Disabled | T1518 | #1 | ok |
 | System Integrity Protection (SIP) Enumeration | T1518 | #1 | ok |
+| Disable Security Tools | T1685 | #1 | ok |
 | File and Directory Discovery - MacOS | T1083 | #1 | ok |
 | Credentials In Files | T1552 | #1, #4 | ambiguous |
 | GUI Input Capture - macOS | T1056 | #1, #7 | ambiguous |
@@ -394,6 +431,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Cisco Clear Logs | T1070 | #1 | ok |
 | Cisco Collect Data | T1005, T1087, T1552 | #1, #4 | ambiguous |
 | Cisco Crypto Commands | T1552, T1553 | #1, #4, #10 | ambiguous |
+| Cisco Disabling Logging | T1685 | #1 | ok |
 | Cisco Discovery | T1016, T1018, T1033, T1049, T1057, T1082, T1083, T1124, T1201 | #1 | ok |
 | Cisco Denial of Service | T1495, T1529, T1565 | #1, #7 | ambiguous |
 | Cisco Dot1x Disabled | T1556, T1685 | #1, #7 | ambiguous |
@@ -408,6 +446,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious DNS Query with B64 Encoded String | T1048, T1071 | #1, #7 | ambiguous |
 | Telegram Bot API Request | T1102 | #1 | ok |
 | FortiGate - New Administrator Account Created | T1136 | #1 | ok |
+| FortiGate - Firewall Address Object Added | T1685 | #1 | ok |
+| FortiGate - New Firewall Policy Added | T1685 | #1 | ok |
 | FortiGate - New Local User Created | T1136 | #1 | ok |
 | MITRE BZAR Indicators for Execution | T1047, T1053, T1569 | #1, #7 | ambiguous |
 | MITRE BZAR Indicators for Persistence | T1547 | #1, #7 | ambiguous |
@@ -442,6 +482,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Webshell ReGeorg Detection Via Web Logs | T1505 | #1, #7 | ambiguous |
 | Windows Webshell Strings | T1505 | #1, #7 | ambiguous |
 | LSASS Process Crashed - Application | T1003 | #1, #7 | ambiguous |
+| Microsoft Malware Protection Engine Crash | T1211, T1685 | #1, #2, #3, #7 | ambiguous |
 | Ntdsutil Abuse | T1003 | #1, #7 | ambiguous |
 | Backup Catalog Deleted | T1070 | #1 | ok |
 | Restricted Software Access By SRP | T1072 | #1, #7 | ambiguous |
@@ -450,6 +491,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Atera Agent Installation | T1219 | #1, #7 | ambiguous |
 | Remote Access Tool - ScreenConnect Command Execution | T1059 | #1, #7 | ambiguous |
 | Remote Access Tool - ScreenConnect File Transfer | T1059 | #1, #7 | ambiguous |
+| Microsoft Malware Protection Engine Crash - WER | T1211, T1685 | #1, #2, #3, #7 | ambiguous |
 | AppLocker Prevented Application or Script from Running | T1059, T1204 | #1, #7, #9 | ambiguous |
 | Windows AppX Deployment Full Trust Package Installation | T1204, T1553 | #1, #7, #9, #10 | ambiguous |
 | Windows AppX Deployment Unsigned Package Installation | T1204, T1553 | #1, #7, #9, #10 | ambiguous |
@@ -469,6 +511,14 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Query Tor Onion Address - DNS Client | T1090 | #1, #7 | ambiguous |
 | DNS Query To Ufile.io - DNS Client | T1567 | #1, #7 | ambiguous |
 | DNS Server Error Failed Loading the ServerLevelPluginDLL | T1574 | #1, #7 | ambiguous |
+| Uncommon New Firewall Rule Added In Windows Firewall Exception List | T1686 | #1 | ok |
+| New Firewall Rule Added In Windows Firewall Exception List For Potential Suspicious Application | T1686 | #1 | ok |
+| New Firewall Rule Added In Windows Firewall Exception List Via WmiPrvSE.EXE | T1686 | #1 | ok |
+| All Rules Have Been Deleted From The Windows Firewall Configuration | T1686 | #1 | ok |
+| A Rule Has Been Deleted From The Windows Firewall Exception List | T1686 | #1 | ok |
+| The Windows Defender Firewall Service Failed To Load Group Policy | T1686 | #1 | ok |
+| Windows Defender Firewall Has Been Reset To Its Default Configuration | T1686 | #1 | ok |
+| Windows Firewall Settings Have Been Changed | T1686 | #1 | ok |
 | ETW Logging/Processing Option Disabled On IIS Server | T1505, T1685 | #1, #7 | ambiguous |
 | HTTP Logging Disabled On IIS Server | T1505, T1685 | #1, #7 | ambiguous |
 | New Module Module Added To IIS Server | T1505, T1685 | #1, #7 | ambiguous |
@@ -489,6 +539,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | A Security-Enabled Global Group Was Deleted | T1098 | #1 | ok |
 | Potential Privilege Escalation via Local Kerberos Relay over LDAP | T1548 | #1, #7 | ambiguous |
 | Successful Account Login Via WMI | T1047 | #1, #7 | ambiguous |
+| Windows Filtering Platform Blocked Connection From EDR Agent Binary | T1685 | #1 | ok |
 | Azure AD Health Monitoring Agent Registry Keys Access | T1012 | #1 | ok |
 | Azure AD Health Service Agents Registry Keys Access | T1012 | #1 | ok |
 | Powerview Add-DomainObjectAcl DCSync AD Extend Right | T1098 | #1 | ok |
@@ -500,8 +551,10 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Access To ADMIN$ Network Share | T1021 | #1, #4 | ambiguous |
 | Enabled User Right in AD to Control User Objects | T1098 | #1 | ok |
 | Active Directory User Backdoors | T1098 | #1 | ok |
+| Weak Encryption Enabled and Kerberoast | T1685 | #1 | ok |
 | Hacktool Ruler | T1059, T1087, T1114, T1550 | #1, #4, #7 | ambiguous |
 | Remote Task Creation via ATSVC Named Pipe | T1053 | #1, #7 | ambiguous |
+| Security Eventlog Cleared | T1685 | #1 | ok |
 | Processes Accessing the Microphone and Webcam | T1123 | #1 | ok |
 | CobaltStrike Service Installations - Security | T1021, T1543, T1569 | #1, #4, #7 | ambiguous |
 | Failed Code Integrity Checks | T1027 | #1, #7 | ambiguous |
@@ -509,11 +562,14 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | DCOM InternetExplorer.Application Iertutil DLL Hijack - Security | T1021 | #1, #4 | ambiguous |
 | Mimikatz DC Sync | T1003 | #1, #7 | ambiguous |
 | Windows Default Domain GPO Modification | T1484 | #1 | ok |
-| ETW Logging Disabled In .NET Processes - Registry | T1112, T1685 | #1 | ambiguous |
+| Windows Event Auditing Disabled | T1685 | #1 | ok |
+| Important Windows Event Auditing Disabled | T1685 | #1 | ok |
+| ETW Logging Disabled In .NET Processes - Registry | T1112, T1685 | #1 | ok |
 | DPAPI Domain Backup Key Extraction | T1003 | #1, #7 | ambiguous |
 | DPAPI Domain Master Key Backup Attempt | T1003 | #1, #7 | ambiguous |
 | Persistence and Execution at Scale via GPO Scheduled Task | T1053 | #1, #7 | ambiguous |
 | Hidden Local User Creation | T1136 | #1 | ok |
+| HackTool - EDRSilencer Execution - Filter Added | T1685 | #1 | ok |
 | HackTool - NoFilter Execution | T1134 | #1, #4 | ambiguous |
 | HybridConnectionManager Service Installation | T1554 | #1, #7 | ambiguous |
 | Impacket PsExec Execution | T1021 | #1, #4 | ambiguous |
@@ -537,7 +593,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Metasploit SMB Authentication | T1021 | #1, #4 | ambiguous |
 | Metasploit Or Impacket Service Installation Via SMB PsExec | T1021, T1569, T1570 | #1, #4, #7 | ambiguous |
 | Meterpreter or Cobalt Strike Getsystem Service Installation - Security | T1134 | #1, #4 | ambiguous |
-| NetNTLM Downgrade Attack | T1112, T1685 | #1 | ambiguous |
+| NetNTLM Downgrade Attack | T1112, T1685 | #1 | ok |
 | Windows Network Access Suspicious desktop.ini Action | T1547 | #1, #7 | ambiguous |
 | New or Renamed User Account with '$' Character | T1036 | #1, #7 | ambiguous |
 | Denied Access To Remote Desktop | T1021 | #1, #4 | ambiguous |
@@ -592,17 +648,23 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | User Added to Local Administrator Group | T1078, T1098 | #1, #4 | ambiguous |
 | User Couldn't Call a Privileged Service 'LsaRegisterLogonProcess' | T1558 | #1, #4 | ambiguous |
 | Local User Creation | T1136 | #1 | ok |
+| Potential Privileged System Service Operation - SeLoadDriverPrivilege | T1685 | #1 | ok |
 | User Logoff Event | T1531 | #1, #7 | ambiguous |
 | VSSAudit Security Event Source Registration | T1003 | #1, #7 | ambiguous |
+| Windows Defender Exclusion List Modified | T1685 | #1 | ok |
+| Windows Defender Exclusion Registry Key - Write Access Requested | T1685 | #1 | ok |
 | WMI Persistence - Security | T1546 | #1, #7 | ambiguous |
 | T1047 Wmiprvse Wbemcomn DLL Hijack | T1021, T1047 | #1, #4, #7 | ambiguous |
 | Microsoft Defender Blocked from Loading Unsigned DLL | T1574 | #1, #7 | ambiguous |
 | Unsigned Binary Loaded From Suspicious Location | T1574 | #1, #7 | ambiguous |
 | HybridConnectionManager Service Running | T1554 | #1, #7 | ambiguous |
 | Unsigned or Unencrypted SMB Connection to Share Established | T1021 | #1, #4 | ambiguous |
+| Sysmon Application Crashed | T1685 | #1 | ok |
 | Active Directory Certificate Services Denied Certificate Enrollment Request | T1553 | #1, #10 | ambiguous |
 | DHCP Server Loaded the CallOut DLL | T1574 | #1, #7 | ambiguous |
 | DHCP Server Error Failed Loading the CallOut DLL | T1574 | #1, #7 | ambiguous |
+| Eventlog Cleared | T1685 | #1 | ok |
+| Important Windows Eventlog Cleared | T1685 | #1 | ok |
 | ISATAP Router Address Was Set | T1557, T1565 | #1, #5 | ambiguous |
 | No Suitable Encryption Key Found For Generating Kerberos Ticket | T1558 | #1, #4 | ambiguous |
 | Critical Hive In Suspicious Location Access Bits Cleared | T1003 | #1, #7 | ambiguous |
@@ -610,6 +672,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Crash Dump Created By Operating System | T1003, T1005 | #1, #7 | ambiguous |
 | Vulnerable Netlogon Secure Channel Connection Allowed | T1548 | #1, #7 | ambiguous |
 | CobaltStrike Service Installations - System | T1021, T1543, T1569 | #1, #4, #7 | ambiguous |
+| Windows Defender Threat Detection Service Disabled | T1685 | #1 | ok |
 | smbexec.py Service Installation | T1021, T1569 | #1, #4, #7 | ambiguous |
 | Invoke-Obfuscation CLIP+ Launcher - System | T1027, T1059 | #1, #7 | ambiguous |
 | Invoke-Obfuscation Obfuscated IEX Invocation - System | T1027 | #1, #7 | ambiguous |
@@ -651,10 +714,21 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Important Scheduled Task Deleted or Disabled | T1489 | #1 | ok |
 | Ngrok Usage with Remote Desktop Service | T1090 | #1, #7 | ambiguous |
 | Mimikatz Use | T1003 | #1, #7 | ambiguous |
+| Windows Defender Grace Period Expired | T1685 | #1 | ok |
 | LSASS Access Detected via Attack Surface Reduction | T1003 | #1, #7 | ambiguous |
 | PSExec and WMI Process Creations Block | T1047, T1569 | #1, #7 | ambiguous |
+| Windows Defender Exclusions Added | T1685 | #1 | ok |
+| Windows Defender Exploit Guard Tamper | T1685 | #1 | ok |
+| Windows Defender Submit Sample Feature Disabled | T1685 | #1 | ok |
+| Windows Defender Malware And PUA Scanning Disabled | T1685 | #1 | ok |
 | Windows Defender AMSI Trigger Detected | T1059 | #1, #7 | ambiguous |
+| Windows Defender Real-time Protection Disabled | T1685 | #1 | ok |
+| Windows Defender Real-Time Protection Failure/Restart | T1685 | #1 | ok |
+| Win Defender Restored Quarantine File | T1685 | #1 | ok |
+| Windows Defender Configuration Changes | T1685 | #1 | ok |
+| Microsoft Defender Tamper Protection Trigger | T1685 | #1 | ok |
 | Windows Defender Threat Detected | T1059 | #1, #7 | ambiguous |
+| Windows Defender Virus Scanning Feature Disabled | T1685 | #1 | ok |
 | WMI Persistence | T1546 | #1, #7 | ambiguous |
 | HackTool - CACTUSTORCH Remote Thread Creation | T1055, T1059, T1218 | #1, #7 | ambiguous |
 | HackTool - Potential CobaltStrike Process Injection | T1055 | #1, #7 | ambiguous |
@@ -722,6 +796,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious File Created by ArcSOC.exe | T1105, T1127, T1133 | #1, #4, #7 | ambiguous |
 | BloodHound Collection Files | T1059, T1069, T1087, T1482 | #1, #7 | ambiguous |
 | Potentially Suspicious File Creation by OpenEDR's ITSMService | T1105, T1219, T1570 | #1, #4, #7 | ambiguous |
+| EVTX Created In Uncommon Location | T1685 | #1 | ok |
 | Creation Of Non-Existent System DLL | T1574 | #1, #7 | ambiguous |
 | Suspicious Deno File Written from Remote Source | T1059, T1105, T1204 | #1, #7, #9 | ambiguous |
 | New Custom Shim Database Created | T1547 | #1, #7 | ambiguous |
@@ -804,6 +879,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Legitimate Application Dropped Script | T1218 | #1, #7 | ambiguous |
 | Suspicious LNK Double Extension File Created | T1036 | #1, #7 | ambiguous |
 | PowerShell Profile Modification | T1546 | #1, #7 | ambiguous |
+| Suspicious PROCEXP152.sys File Created In TMP | T1685 | #1 | ok |
 | Potential File Extension Spoofing Using Right-to-Left Override | T1036 | #1, #7 | ambiguous |
 | Suspicious Startup Folder Persistence | T1204, T1547 | #1, #7, #9 | ambiguous |
 | Suspicious Interactive PowerShell as SYSTEM | T1059 | #1, #7 | ambiguous |
@@ -841,6 +917,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | CredUI.DLL Loaded By Uncommon Process | T1056 | #1, #7 | ambiguous |
 | Suspicious Unsigned Dbghelp/Dbgcore DLL Loaded | T1003 | #1, #7 | ambiguous |
 | PCRE.NET Package Image Load | T1059 | #1, #7 | ambiguous |
+| Load Of RstrtMgr.DLL By A Suspicious Process | T1486, T1685 | #1, #7 | ambiguous |
+| Load Of RstrtMgr.DLL By An Uncommon Process | T1486, T1685 | #1, #7 | ambiguous |
 | Diagnostic Library Sdiageng.DLL Loaded By Msdt.EXE | T1202 | #1 | ok |
 | PowerShell Core DLL Loaded By Non PowerShell Process | T1059 | #1, #7 | ambiguous |
 | Time Travel Debugging Utility Usage - Image | T1003, T1218 | #1, #7 | ambiguous |
@@ -848,6 +926,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious Volume Shadow Copy VSS_PS.dll Load | T1490 | #1 | ok |
 | Suspicious Volume Shadow Copy Vssapi.dll Load | T1490 | #1 | ok |
 | Potentially Suspicious Volume Shadow Copy Vsstrace.dll Load | T1490 | #1 | ok |
+| HackTool - SharpEvtMute DLL Load | T1685 | #1 | ok |
 | Potential DCOM InternetExplorer.Application DLL Hijack - Image Load | T1021 | #1, #4 | ambiguous |
 | Unsigned Image Loaded Into LSASS Process | T1003 | #1, #7 | ambiguous |
 | WMI ActiveScriptEventConsumers Activity Via Scrcons.EXE DLL Load | T1546 | #1, #7 | ambiguous |
@@ -992,6 +1071,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Renamed Powershell Under Powershell Channel | T1036, T1059 | #1, #7 | ambiguous |
 | Use Get-NetTCPConnection | T1049 | #1 | ok |
 | Zip A Folder With PowerShell For Staging In Temp - PowerShell | T1074 | #1 | ok |
+| Tamper Windows Defender - PSClassic | T1685 | #1 | ok |
 | Suspicious Non PowerShell WSMAN COM Provider | T1021, T1059 | #1, #4, #7 | ambiguous |
 | Alternate PowerShell Hosts - PowerShell Module | T1059 | #1, #7 | ambiguous |
 | Bad Opsec Powershell Code Artifacts | T1059 | #1, #7 | ambiguous |
@@ -1025,6 +1105,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Access to Browser Login Data | T1555 | #1, #4, #7 | ambiguous |
 | Powershell Add Name Resolution Policy Table Rule | T1565 | #1 | ok |
 | PowerShell ADRecon Execution | T1059 | #1, #7 | ambiguous |
+| AMSI Bypass Pattern Assembly GetType | T1685 | #1 | ok |
+| Potential AMSI Bypass Script Using NULL Bits | T1685 | #1 | ok |
 | Silence.EDA Detection | T1059, T1071, T1529, T1572 | #1, #7 | ambiguous |
 | Get-ADUser Enumeration Using UserAccountControl Flags | T1033 | #1 | ok |
 | Automated Collection Command PowerShell | T1119 | #1 | ok |
@@ -1041,13 +1123,14 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | DirectorySearcher Powershell Exploitation | T1018 | #1 | ok |
 | Manipulation of User Computer or Group Security Principals Across AD | T1136 | #1 | ok |
 | Disable Powershell Command History | T1070 | #1 | ok |
+| Disable-WindowsOptionalFeature Command PowerShell | T1685 | #1 | ok |
 | Potential In-Memory Execution Using Reflection.Assembly | T1620 | #1, #7 | ambiguous |
 | Potential COM Objects Download Cradles Usage - PS Script | T1105 | #1 | ok |
 | DSInternals Suspicious PowerShell Cmdlets - ScriptBlock | T1059 | #1, #7 | ambiguous |
 | Dump Credentials from Windows Credential Manager With PowerShell | T1555 | #1, #4, #7 | ambiguous |
 | Enable Windows Remote Management | T1021 | #1, #4 | ambiguous |
 | Enumerate Credentials from Windows Credential Manager With PowerShell | T1555 | #1, #4, #7 | ambiguous |
-| Disable of ETW Trace - Powershell | T1070, T1685 | #1 | ambiguous |
+| Disable of ETW Trace - Powershell | T1070, T1685 | #1 | ok |
 | Certificate Exported Via PowerShell - ScriptBlock | T1552 | #1, #4 | ambiguous |
 | Suspicious FromBase64String Usage On Gzip Archive - Ps Script | T1132 | #1, #7 | ambiguous |
 | Service Registry Permissions Weakness Check | T1574 | #1, #7 | ambiguous |
@@ -1109,6 +1192,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Powershell Store File In Alternate Data Stream | T1564 | #1 | ok |
 | AD Groups Or Users Enumeration Using PowerShell - ScriptBlock | T1069 | #1 | ok |
 | Potential PowerShell Obfuscation Using Character Join | T1027, T1059 | #1, #7 | ambiguous |
+| Suspicious Eventlog Clear | T1685 | #1 | ok |
 | Powershell Directory Enumeration | T1083 | #1 | ok |
 | Suspicious PowerShell Download - Powershell Script | T1059 | #1, #7 | ambiguous |
 | Powershell Execute Batch Script | T1059 | #1, #7 | ambiguous |
@@ -1145,6 +1229,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious PowerShell WindowStyle Option | T1564 | #1 | ok |
 | Zip A Folder With PowerShell For Staging In Temp - PowerShell Script | T1074 | #1 | ok |
 | SyncAppvPublishingServer Execution to Bypass Powershell Restriction | T1218 | #1, #7 | ambiguous |
+| Tamper Windows Defender Remove-MpPreference - ScriptBlockLogging | T1685 | #1 | ok |
+| Tamper Windows Defender - ScriptBlockLogging | T1685 | #1 | ok |
 | Testing Usage of Uncommonly Used Port | T1571 | #1, #7 | ambiguous |
 | Powershell Timestomp | T1070 | #1 | ok |
 | User Discovery And Export Via Get-ADUser Cmdlet - PowerShell | T1033 | #1 | ok |
@@ -1155,6 +1241,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | PowerShell WMI Win32_Product Install MSI | T1218 | #1, #7 | ambiguous |
 | Potential WinAPI Calls Via PowerShell Scripts | T1059, T1106 | #1, #7 | ambiguous |
 | Windows Defender Exclusions Added - PowerShell | T1059, T1685 | #1, #7 | ambiguous |
+| Windows Firewall Profile Disabled | T1686 | #1 | ok |
 | Winlogon Helper DLL | T1547 | #1, #7 | ambiguous |
 | Powershell WMI Persistence | T1546 | #1, #7 | ambiguous |
 | WMIC Unquoted Services Path Lookup - PowerShell | T1047 | #1, #7 | ambiguous |
@@ -1166,6 +1253,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | HackTool - Generic Process Access | T1003 | #1, #7 | ambiguous |
 | HackTool - HandleKatz Duplicating LSASS Handle | T1003, T1106 | #1, #7 | ambiguous |
 | HackTool - LittleCorporal Generated Maldoc Injection | T1055, T1204 | #1, #7, #9 | ambiguous |
+| HackTool - SysmonEnte Execution | T1685 | #1 | ok |
 | Lsass Memory Dump via Comsvcs DLL | T1003 | #1, #7 | ambiguous |
 | LSASS Memory Access by Tool With Dump Keyword In Name | T1003 | #1, #7 | ambiguous |
 | Potential Credential Dumping Activity Via LSASS | T1003 | #1, #7 | ambiguous |
@@ -1179,8 +1267,10 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious Process Access to LSASS with Dbgcore/Dbghelp DLLs | T1003, T1685 | #1, #7 | ambiguous |
 | Potential Direct Syscall of NtOpenProcess | T1106 | #1, #7 | ambiguous |
 | Credential Dumping Attempt Via Svchost | T1548 | #1, #7 | ambiguous |
+| Suspicious Svchost Process Access | T1685 | #1 | ok |
 | Function Call From Undocumented COM Interface EditionUpgradeManager | T1548 | #1, #7 | ambiguous |
 | UAC Bypass Using WOW64 Logger DLL Hijack | T1548 | #1, #7 | ambiguous |
+| Suspicious Process Access of MsMpEng by WerFaultSecure - EDR-Freeze | T1685 | #1 | ok |
 | 7Zip Compressing Dump Files | T1560 | #1 | ok |
 | Compress Data and Lock With Password for Exfiltration With 7-ZIP | T1560 | #1 | ok |
 | Suspicious AddinUtil.EXE CommandLine Execution | T1218 | #1, #7 | ambiguous |
@@ -1190,6 +1280,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potential Adplus.EXE Abuse | T1003 | #1, #7 | ambiguous |
 | AgentExecutor PowerShell Execution | T1218 | #1, #7 | ambiguous |
 | Suspicious AgentExecutor PowerShell Execution | T1218 | #1, #7 | ambiguous |
+| Windows AMSI Related Registry Tampering Via CommandLine | T1685 | #1 | ok |
 | Uncommon Child Process Of Appvlp.EXE | T1218 | #1, #7 | ambiguous |
 | Suspicious ArcSOC.exe Child Process | T1059, T1203 | #1, #3, #7 | ambiguous |
 | AspNetCompiler Execution | T1127 | #1, #7 | ambiguous |
@@ -1199,6 +1290,9 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Uncommon  Assistive Technology Applications Execution Via AtBroker.EXE | T1218 | #1, #7 | ambiguous |
 | Hiding Files with Attrib.exe | T1564 | #1 | ok |
 | Set Suspicious Files as System Files Using Attrib.EXE | T1564 | #1 | ok |
+| Audit Policy Tampering Via NT Resource Kit Auditpol | T1685 | #1 | ok |
+| Audit Policy Tampering Via Auditpol | T1685 | #1 | ok |
+| Windows EventLog Autologger Session Registry Modification Via CommandLine | T1685 | #1 | ok |
 | Suspicious Autorun Registry Modified via WMI | T1047, T1547 | #1, #7 | ambiguous |
 | Suspicious BitLocker Access Agent Update Utility Execution | T1021, T1218 | #1, #4, #7 | ambiguous |
 | Indirect Inline Command Execution Via Bash.EXE | T1202 | #1 | ok |
@@ -1288,6 +1382,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Control Panel Items | T1218, T1546 | #1, #7 | ambiguous |
 | New DMSA Service Account Created in Specific OUs | T1078, T1098 | #1, #4 | ambiguous |
 | CreateDump Process Dump | T1003, T1036 | #1, #7 | ambiguous |
+| Windows Credential Guard Registry Tampering Via CommandLine | T1685 | #1 | ok |
 | Dynamic .NET Compilation Via Csc.EXE | T1027 | #1, #7 | ambiguous |
 | Csc.EXE Execution Form Potentially Suspicious Parent | T1027, T1059, T1218 | #1, #7 | ambiguous |
 | Suspicious Csi.exe Usage | T1072, T1218 | #1, #7 | ambiguous |
@@ -1297,6 +1392,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious CustomShellHost Execution | T1216 | #1, #7 | ambiguous |
 | ManageEngine Endpoint Central Dctask64.EXE Potential Abuse | T1055 | #1, #7 | ambiguous |
 | Uncommon Child Process Of Defaultpack.EXE | T1218 | #1, #7 | ambiguous |
+| PowerShell Defender Threat Severity Default Action Set to 'Allow' or 'NoAction' | T1685 | #1 | ok |
+| Windows Defender Context Menu Removed | T1685 | #1 | ok |
 | Remote File Download Via Desktopimgdownldr Utility | T1105 | #1 | ok |
 | Suspicious Desktopimgdownldr Command | T1105 | #1 | ok |
 | Devcon Execution Disabling VMware VMCI Device | T1543, T1685 | #1, #7 | ambiguous |
@@ -1309,6 +1406,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Diskshadow Script Mode - Uncommon Script Extension Execution | T1218 | #1, #7 | ambiguous |
 | Diskshadow Script Mode - Execution From Potential Suspicious Location | T1218 | #1, #7 | ambiguous |
 | PowerShell Web Access Feature Enabled Via DISM | T1548 | #1, #7 | ambiguous |
+| Dism Remove Online Package | T1685 | #1 | ok |
 | DLL Sideloading by VMware Xfer Utility | T1574 | #1, #7 | ambiguous |
 | Dllhost.EXE Execution Anomaly | T1055 | #1, #7 | ambiguous |
 | DNS Exfiltration and Tunneling Tools Execution | T1048, T1071, T1132 | #1, #7 | ambiguous |
@@ -1328,7 +1426,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Esentutl Gather Credentials | T1003 | #1, #7 | ambiguous |
 | Copying Sensitive Files with Credential Data | T1003 | #1, #7 | ambiguous |
 | Esentutl Steals Browser Information | T1005 | #1 | ok |
-| Security Event Logging Disabled via MiniNt Registry Key - Process | T1112, T1685 | #1 | ambiguous |
+| Security Event Logging Disabled via MiniNt Registry Key - Process | T1112, T1685 | #1 | ok |
 | Potentially Suspicious Event Viewer Child Process | T1548 | #1, #7 | ambiguous |
 | Potentially Suspicious Cabinet File Expansion | T1218 | #1, #7 | ambiguous |
 | Explorer Process Tree Break | T1036 | #1, #7 | ambiguous |
@@ -1344,8 +1442,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Insensitive Subfolder Search Via Findstr.EXE | T1105, T1218, T1552, T1564 | #1, #4, #7 | ambiguous |
 | Sysmon Discovery Via Default Driver Altitude Using Findstr.EXE | T1518 | #1 | ok |
 | Finger.EXE Execution | T1105 | #1 | ok |
-| Filter Driver Unloaded Via Fltmc.EXE | T1070, T1685 | #1 | ambiguous |
-| Sysmon Driver Unloaded Via Fltmc.EXE | T1070, T1685 | #1 | ambiguous |
+| Filter Driver Unloaded Via Fltmc.EXE | T1070, T1685 | #1 | ok |
+| Sysmon Driver Unloaded Via Fltmc.EXE | T1070, T1685 | #1 | ok |
 | Forfiles.EXE Child Process Masquerading | T1036 | #1, #7 | ambiguous |
 | Forfiles Command Execution | T1059 | #1, #7 | ambiguous |
 | Use of FSharp Interpreters | T1059 | #1, #7 | ambiguous |
@@ -1380,6 +1478,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | HackTool - DInjector PowerShell Cradle Execution | T1055 | #1, #7 | ambiguous |
 | HackTool - Doppelanger LSASS Dumper Execution | T1003 | #1, #7 | ambiguous |
 | HackTool - Dumpert Process Dumper Execution | T1003 | #1, #7 | ambiguous |
+| Hacktool - EDR-Freeze Execution | T1685 | #1 | ok |
+| HackTool - EDRSilencer Execution | T1685 | #1 | ok |
 | HackTool - Empire PowerShell Launch Parameters | T1059 | #1, #7 | ambiguous |
 | HackTool - Empire PowerShell UAC Bypass | T1548 | #1, #7 | ambiguous |
 | HackTool - WinRM Access Via Evil-WinRM | T1021 | #1, #4 | ambiguous |
@@ -1410,6 +1510,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | HackTool - NetExec Execution | T1018, T1021 | #1, #4 | ambiguous |
 | HackTool - PCHunter Execution | T1007, T1012, T1057, T1082, T1083 | #1 | ok |
 | HackTool - Default PowerSploit/Empire Scheduled Task Creation | T1053, T1059 | #1, #7 | ambiguous |
+| HackTool - PowerTool Execution | T1685 | #1 | ok |
 | HackTool - Pypykatz Credentials Dumping Activity | T1003 | #1, #7 | ambiguous |
 | HackTool - Quarks PwDump Execution | T1003 | #1, #7 | ambiguous |
 | HackTool - RedMimicry Winnti Playbook Execution | T1059, T1106, T1218 | #1, #7 | ambiguous |
@@ -1421,6 +1522,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | HackTool - SharpDPAPI Execution | T1134 | #1, #4 | ambiguous |
 | HackTool - SharpImpersonation Execution | T1134 | #1, #4 | ambiguous |
 | HackTool - SharPersist Execution | T1053 | #1, #7 | ambiguous |
+| HackTool - SharpEvtMute Execution | T1685 | #1 | ok |
 | HackTool - SharpLdapWhoami Execution | T1033 | #1 | ok |
 | HackTool - SharpMove Tool Execution | T1021 | #1, #4 | ambiguous |
 | HackTool - SharpUp PrivEsc Tool Execution | T1569, T1574, T1615 | #1, #7 | ambiguous |
@@ -1437,11 +1539,13 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | HackTool - XORDump Execution | T1003, T1036 | #1, #7 | ambiguous |
 | Suspicious ZipExec Execution | T1202, T1218 | #1, #7 | ambiguous |
 | Suspicious Execution of Hostname | T1082 | #1 | ok |
+| Hypervisor-protected Code Integrity (HVCI) Related Registry Tampering Via CommandLine | T1685 | #1 | ok |
 | Suspicious HWP Sub Processes | T1059, T1203, T1566 | #1, #3, #7, #9 | ambiguous |
 | Potential Fake Instance Of Hxtsr.EXE Executed | T1036 | #1, #7 | ambiguous |
 | Use Icacls to Hide File to Everyone | T1564 | #1 | ok |
 | File Download And Execution Via IEExec.EXE | T1105 | #1 | ok |
 | Self Extracting Package Creation Via Iexpress.EXE From Potentially Suspicious Location | T1218 | #1, #7 | ambiguous |
+| Disable Windows IIS HTTP Logging | T1685 | #1 | ok |
 | Microsoft IIS Service Account Password Dumped | T1003 | #1, #7 | ambiguous |
 | IIS Native-Code Module Command Line Installation | T1505 | #1, #7 | ambiguous |
 | Microsoft IIS Connection Strings Decryption | T1003 | #1, #7 | ambiguous |
@@ -1458,6 +1562,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potentially Suspicious Child Process of KeyScrambler.exe | T1203, T1574 | #1, #3, #7 | ambiguous |
 | Import LDAP Data Interchange Format File Via Ldifde.EXE | T1105, T1218 | #1, #7 | ambiguous |
 | Uncommon Link.EXE Parent Process | T1218 | #1, #7 | ambiguous |
+| Suspicious Windows Trace ETW Session Tamper Via Logman.EXE | T1685 | #1 | ok |
 | LOLBAS Data Exfiltration by DataSvcUtil.exe | T1567 | #1, #7 | ambiguous |
 | Devtoolslauncher.exe Executes Specified Binary | T1218 | #1, #7 | ambiguous |
 | Suspicious Diantz Alternate Data Stream Execution | T1564 | #1 | ok |
@@ -1506,6 +1611,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Use of VSIISExeLauncher.exe | T1127 | #1, #7 | ambiguous |
 | Use of Wfc.exe | T1127 | #1, #7 | ambiguous |
 | Potential Register_App.Vbs LOLScript Abuse | T1218 | #1, #7 | ambiguous |
+| LSA PPL Protection Setting Modification via CommandLine | T1689 | #1 | ok |
 | Potential Credential Dumping Via LSASS Process Clone | T1003 | #1, #7 | ambiguous |
 | Potential Mftrace.EXE Abuse | T1127 | #1, #7 | ambiguous |
 | Windows Default Domain GPO Modification via GPME | T1484 | #1 | ok |
@@ -1516,6 +1622,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potential Suspicious Mofcomp Execution | T1218 | #1, #7 | ambiguous |
 | Potential Mpclient.DLL Sideloading Via Defender Binaries | T1574 | #1, #7 | ambiguous |
 | File Download Via Windows Defender MpCmpRun.EXE | T1105, T1218 | #1, #7 | ambiguous |
+| Windows Defender Definition Files Removed | T1685 | #1 | ok |
 | MSDT Execution Via Answer File | T1218 | #1, #7 | ambiguous |
 | Potential Arbitrary Command Execution Using Msdt.EXE | T1202 | #1 | ok |
 | Suspicious Cabinet File Execution Via Msdt.EXE | T1202 | #1 | ok |
@@ -1561,6 +1668,12 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | New User Created Via Net.EXE With Never Expire Option | T1136 | #1 | ok |
 | Suspicious Manipulation Of Default Accounts Via Net.EXE | T1560 | #1 | ok |
 | Share And Session Enumeration Using Net.EXE | T1018 | #1 | ok |
+| New Firewall Rule Added Via Netsh.EXE | T1686 | #1 | ok |
+| Suspicious Program Location Whitelisted In Firewall Via Netsh.EXE | T1686 | #1 | ok |
+| RDP Connection Allowed Via Netsh.EXE | T1686 | #1 | ok |
+| Firewall Rule Deleted Via Netsh.EXE | T1686 | #1 | ok |
+| Firewall Disabled via Netsh.EXE | T1686 | #1 | ok |
+| Netsh Allow Group Policy on Microsoft Defender Firewall | T1686 | #1 | ok |
 | Firewall Configuration Discovery Via Netsh.EXE | T1016 | #1 | ok |
 | Potential Persistence Via Netsh Helper DLL | T1546 | #1, #7 | ambiguous |
 | New Network Trace Capture Started Via Netsh.EXE | T1040 | #1, #5 | ambiguous |
@@ -1599,6 +1712,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | PktMon.EXE Execution | T1040 | #1, #5 | ambiguous |
 | Suspicious Plink Port Forwarding | T1021, T1572 | #1, #4, #7 | ambiguous |
 | Potential RDP Tunneling Via Plink | T1572 | #1, #7 | ambiguous |
+| Potential AMSI Bypass Via .NET Reflection | T1685 | #1 | ok |
+| Potential AMSI Bypass Using NULL Bits | T1685 | #1 | ok |
 | Audio Capture via PowerShell | T1123 | #1 | ok |
 | Suspicious Encoded PowerShell Command Line | T1059 | #1, #7 | ambiguous |
 | Suspicious PowerShell Encoded Command Patterns | T1059 | #1, #7 | ambiguous |
@@ -1606,6 +1721,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Malicious Base64 Encoded PowerShell Keywords in Command Lines | T1059 | #1, #7 | ambiguous |
 | PowerShell Base64 Encoded IEX Cmdlet | T1059 | #1, #7 | ambiguous |
 | PowerShell Base64 Encoded Invoke Keyword | T1027, T1059 | #1, #7 | ambiguous |
+| Powershell Base64 Encoded MpPreference Cmdlet | T1685 | #1 | ok |
 | PowerShell Base64 Encoded Reflective Assembly Load | T1027, T1059, T1620 | #1, #7 | ambiguous |
 | Suspicious Encoded And Obfuscated Reflection Assembly Load Function Call | T1027, T1059 | #1, #7 | ambiguous |
 | PowerShell Base64 Encoded WMI Classes | T1027, T1059 | #1, #7 | ambiguous |
@@ -1621,6 +1737,11 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potential PowerShell Console History Access Attempt via History File | T1552 | #1, #4 | ambiguous |
 | New Service Creation Using PowerShell | T1543 | #1, #7 | ambiguous |
 | Gzip Archive Decode Via PowerShell | T1132 | #1, #7 | ambiguous |
+| Powershell Defender Disable Scan Feature | T1685 | #1 | ok |
+| Powershell Defender Exclusion | T1685 | #1 | ok |
+| Disable Windows Defender AV Security Monitoring | T1685 | #1 | ok |
+| Windows Firewall Disabled via PowerShell | T1685 | #1 | ok |
+| Disabled IE Security Features | T1685 | #1 | ok |
 | Potential PowerShell Downgrade Attack | T1059 | #1, #7 | ambiguous |
 | Potential COM Objects Download Cradles Usage - Process Creation | T1105 | #1 | ok |
 | Obfuscated PowerShell OneLiner Execution | T1059, T1685 | #1, #7 | ambiguous |
@@ -1650,6 +1771,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potential PowerShell Obfuscation Via WCHAR/CHAR | T1027, T1059 | #1, #7 | ambiguous |
 | Execution of Powershell Script in Public Folder | T1059 | #1, #7 | ambiguous |
 | RemoteFXvGPUDisablement Abuse Via AtomicTestHarnesses | T1218 | #1, #7 | ambiguous |
+| Tamper Windows Defender Remove-MpPreference | T1685 | #1 | ok |
 | Potential Powershell ReverseShell Connection | T1059 | #1, #7 | ambiguous |
 | Run PowerShell Script from ADS | T1564 | #1 | ok |
 | Run PowerShell Script from Redirected Input Stream | T1059 | #1, #7 | ambiguous |
@@ -1658,6 +1780,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potentially Suspicious Powershell Script Execution From Temp Folder | T1059 | #1, #7 | ambiguous |
 | Suspicious Service DACL Modification Via Set-Service Cmdlet | T1543 | #1, #7 | ambiguous |
 | Change PowerShell Policies to an Insecure Level | T1059 | #1, #7 | ambiguous |
+| Service StartupType Change Via PowerShell Set-Service | T1685 | #1 | ok |
 | Deletion of Volume Shadow Copies via WMI with PowerShell | T1490 | #1 | ok |
 | Exchange PowerShell Snap-Ins Usage | T1059, T1114 | #1, #4, #7 | ambiguous |
 | Stop Windows Service Via PowerShell Stop-Service | T1489 | #1 | ok |
@@ -1666,6 +1789,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious PowerShell Parent Process | T1059 | #1, #7 | ambiguous |
 | PowerShell Script Run in AppData | T1059 | #1, #7 | ambiguous |
 | Powershell Token Obfuscation - Process Creation | T1027 | #1, #7 | ambiguous |
+| Suspicious Uninstall of Windows Defender Feature via PowerShell | T1685 | #1 | ok |
 | User Discovery And Export Via Get-ADUser Cmdlet | T1033 | #1 | ok |
 | Net WebClient Casing Anomalies | T1059 | #1, #7 | ambiguous |
 | Suspicious X509Enrollment - Process Creation | T1553 | #1, #10 | ambiguous |
@@ -1689,6 +1813,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | PUA - AdvancedRun Execution | T1059, T1134, T1564 | #1, #4, #7 | ambiguous |
 | PUA - AdvancedRun Suspicious Execution | T1134 | #1, #4 | ambiguous |
 | PUA - Chisel Tunneling Tool Execution | T1090 | #1, #7 | ambiguous |
+| PUA - CleanWipe Execution | T1685 | #1 | ok |
 | PUA - CsExec Execution | T1569, T1587 | #1, #7 | ambiguous |
 | PUA - DefenderCheck Execution | T1027 | #1, #7 | ambiguous |
 | PUA - DIT Snapshot Viewer | T1003 | #1, #7 | ambiguous |
@@ -1734,10 +1859,16 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Process Memory Dump via RdrLeakDiag.EXE | T1003 | #1, #7 | ambiguous |
 | Windows Recovery Environment Disabled Via Reagentc | T1490 | #1 | ok |
 | Potential Persistence Attempt Via Run Keys Using Reg.EXE | T1547 | #1, #7 | ambiguous |
+| Add SafeBoot Keys Via Reg Utility | T1685 | #1 | ok |
 | Dropping Of Password Filter DLL | T1556 | #1, #7 | ambiguous |
+| Suspicious Windows Defender Folder Exclusion Added Via Reg.EXE | T1685 | #1 | ok |
 | RunMRU Registry Key Deletion | T1070 | #1 | ok |
+| SafeBoot Registry Key Deleted Via Reg.EXE | T1685 | #1 | ok |
+| Service Registry Key Deleted Via Reg.EXE | T1685 | #1 | ok |
 | Potentially Suspicious Desktop Background Change Using Reg.EXE | T1112, T1491 | #1, #7 | ambiguous |
 | Direct Autorun Keys Modification | T1547 | #1, #7 | ambiguous |
+| Disabling Windows Defender WMI Autologger Session via Reg.exe | T1685 | #1 | ok |
+| Security Service Disabled Via Reg.EXE | T1685 | #1 | ok |
 | Dumping of Sensitive Hives Via Reg.EXE | T1003 | #1, #7 | ambiguous |
 | Windows Recall Feature Enabled Via Reg.EXE | T1113 | #1 | ok |
 | Enumeration for Credentials in Registry | T1552 | #1, #4 | ambiguous |
@@ -1751,9 +1882,12 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious ScreenSave Change by Reg.exe | T1546 | #1, #7 | ambiguous |
 | Changing Existing Service ImagePath Value Via Reg.EXE | T1574 | #1, #7 | ambiguous |
 | Detected Windows Software Discovery | T1518 | #1 | ok |
-| Reg Add Suspicious Paths | T1112, T1685 | #1 | ambiguous |
+| Reg Add Suspicious Paths | T1112, T1685 | #1 | ok |
 | System Language Discovery via Reg.Exe | T1614 | #1 | ok |
 | System Restore Registry Modification via CommandLine | T1490 | #1 | ok |
+| Disabled Volume Snapshots | T1685 | #1 | ok |
+| Suspicious Windows Defender Registry Key Tampering Via Reg.EXE | T1685 | #1 | ok |
+| Write Protect For Storage Disabled | T1685 | #1 | ok |
 | RegAsm.EXE Execution Without CommandLine Flags or Files | T1218 | #1, #7 | ambiguous |
 | Potentially Suspicious Execution Of Regasm/Regsvcs With Uncommon Extension | T1218 | #1, #7 | ambiguous |
 | Potentially Suspicious Execution Of Regasm/Regsvcs From Uncommon Location | T1218 | #1, #7 | ambiguous |
@@ -1770,6 +1904,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious Debugger Registration Cmdline | T1546 | #1, #7 | ambiguous |
 | Potential Persistence Via Logon Scripts - CommandLine | T1037 | #1, #7 | ambiguous |
 | Potential Credential Dumping Attempt Using New NetworkProvider - CLI | T1003 | #1, #7 | ambiguous |
+| Python Function Execution Security Warning Disabled In Excel | T1685 | #1 | ok |
 | Potential Privilege Escalation via Service Permissions Weakness | T1574 | #1, #7 | ambiguous |
 | Potential Provisioning Registry Key Abuse For Binary Proxy Execution | T1218 | #1, #7 | ambiguous |
 | Hiding User Account Via SpecialAccounts Registry Key - CommandLine | T1564 | #1 | ok |
@@ -1854,6 +1989,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Run Once Task Execution as Configured in Registry | T1112 | #1 | ok |
 | Possible Privilege Escalation via Weak Service Permissions | T1574 | #1, #7 | ambiguous |
 | New Service Creation Using Sc.EXE | T1543 | #1, #7 | ambiguous |
+| Service StartupType Change Via Sc.EXE | T1685 | #1 | ok |
 | New Kernel Driver Via SC.EXE | T1543 | #1, #7 | ambiguous |
 | Interesting Service Enumeration Via Sc.EXE | T1003 | #1, #7 | ambiguous |
 | Allow Service Access Using Security Descriptor Tampering Via Sc.EXE | T1543 | #1, #7 | ambiguous |
@@ -1934,12 +2070,15 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | LOL-Binary Copied From System Directory | T1036 | #1, #7 | ambiguous |
 | Potential Crypto Mining Activity | T1496 | #1, #7 | ambiguous |
 | Potential Data Exfiltration Activity Via CommandLine Tools | T1059 | #1, #7 | ambiguous |
+| Raccine Uninstall | T1685 | #1 | ok |
 | Suspicious Parent Double Extension File Execution | T1036 | #1, #7 | ambiguous |
 | Suspicious Download from Office Domain | T1105, T1608 | #1 | ambiguous |
 | Always Install Elevated MSI Spawned Cmd And Powershell | T1548 | #1, #7 | ambiguous |
 | Elevated System Shell Spawned From Uncommon Parent Location | T1059 | #1, #7 | ambiguous |
 | Hidden Powershell in Link File Pattern | T1059 | #1, #7 | ambiguous |
-| ETW Trace Evasion Activity | T1070, T1685 | #1 | ambiguous |
+| ETW Logging Tamper In .NET Processes Via CommandLine | T1685 | #1 | ok |
+| ETW Trace Evasion Activity | T1070, T1685 | #1 | ok |
+| Suspicious Eventlog Clearing or Configuration Change Activity | T1685 | #1 | ok |
 | Potentially Suspicious EventLog Recon Activity Using Log Query Utilities | T1087, T1552 | #1, #4 | ambiguous |
 | Potentially Suspicious Execution From Parent Process In Public Folder | T1059, T1564 | #1, #7 | ambiguous |
 | Process Execution From A Potentially Suspicious Folder | T1036 | #1, #7 | ambiguous |
@@ -1978,7 +2117,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Sensitive File Access Via Volume Shadow Copy Backup | T1490 | #1 | ok |
 | Suspicious New Service Creation | T1543 | #1, #7 | ambiguous |
 | Suspicious Service Binary Directory | T1202 | #1 | ok |
-| Suspicious Windows Service Tampering | T1489, T1685 | #1 | ambiguous |
+| Suspicious Windows Service Tampering | T1489, T1685 | #1 | ok |
 | Shadow Copies Creation Using Operating Systems Utilities | T1003 | #1, #7 | ambiguous |
 | Shadow Copies Deletion Using Operating Systems Utilities | T1070, T1490 | #1 | ok |
 | Windows Shell/Scripting Processes Spawning Suspicious Programs | T1059, T1218 | #1, #7 | ambiguous |
@@ -2008,6 +2147,9 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious Use of PsLogList | T1087 | #1 | ok |
 | Sysinternals PsService Execution | T1543 | #1, #7 | ambiguous |
 | Sysinternals PsSuspend Execution | T1543 | #1, #7 | ambiguous |
+| Sysinternals PsSuspend Suspicious Execution | T1685 | #1 | ok |
+| Sysmon Configuration Update | T1685 | #1 | ok |
+| Uninstall Sysinternals Sysmon | T1685 | #1 | ok |
 | Potential Binary Impersonating Sysinternals Tools | T1036, T1202, T1218 | #1, #7 | ambiguous |
 | Sysprep on AppData Folder | T1059 | #1, #7 | ambiguous |
 | Suspicious Execution of Systeminfo | T1082 | #1 | ok |
@@ -2015,6 +2157,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Tap Installer Execution | T1048 | #1, #7 | ambiguous |
 | Compressed File Creation Via Tar.EXE | T1560 | #1 | ok |
 | Compressed File Extraction Via Tar.EXE | T1560 | #1 | ok |
+| Taskkill Symantec Endpoint Protection | T1685 | #1 | ok |
 | Loaded Module Enumeration Via Tasklist.EXE | T1003 | #1, #7 | ambiguous |
 | Taskmgr as LOCAL_SYSTEM | T1036 | #1, #7 | ambiguous |
 | New Process Created Via Taskmgr.EXE | T1036 | #1, #7 | ambiguous |
@@ -2044,6 +2187,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | UAC Bypass WSReset | T1548 | #1, #7 | ambiguous |
 | Use of UltraVNC Remote Access Software | T1219 | #1, #7 | ambiguous |
 | Suspicious UltraVNC Execution | T1021 | #1, #4 | ambiguous |
+| Uninstall Crowdstrike Falcon Sensor | T1685 | #1 | ok |
 | User Shell Folders Registry Modification via CommandLine | T1112, T1547 | #1, #7 | ambiguous |
 | Uncommon Userinit Child Process | T1037 | #1, #7 | ambiguous |
 | Windows Credential Manager Access via VaultCmd | T1555 | #1, #4, #7 | ambiguous |
@@ -2060,6 +2204,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potential Binary Proxy Execution Via VSDiagnostics.EXE | T1218 | #1, #7 | ambiguous |
 | Proxy Execution via Vshadow | T1202 | #1 | ok |
 | Suspicious Vsls-Agent Command With AgentExtensionPath Load | T1218 | #1, #7 | ambiguous |
+| Vulnerable Driver Blocklist Registry Tampering Via CommandLine | T1685 | #1 | ok |
 | Use of W32tm as Timer | T1124 | #1 | ok |
 | All Backups Deleted Via Wbadmin.EXE | T1490 | #1 | ok |
 | Windows Backup Deleted Via Wbadmin.EXE | T1490 | #1 | ok |
@@ -2122,6 +2267,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious Process Created Via Wmic.EXE | T1047 | #1, #7 | ambiguous |
 | Application Terminated Via Wmic.EXE | T1047 | #1, #7 | ambiguous |
 | Application Removed Via Wmic.EXE | T1047 | #1, #7 | ambiguous |
+| Potential Tampering With Security Products Via WMIC | T1685 | #1 | ok |
 | XSL Script Execution Via WMIC.EXE | T1047, T1059, T1220 | #1, #7 | ambiguous |
 | WmiPrvSE Spawned A Process | T1047 | #1, #7 | ambiguous |
 | Potential WMI Lateral Movement WmiPrvSE Spawned PowerShell | T1047, T1059 | #1, #7 | ambiguous |
@@ -2139,14 +2285,20 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | COM Object Execution via Xwizard.EXE | T1218 | #1, #7 | ambiguous |
 | Potential Process Hollowing Activity | T1055 | #1, #7 | ambiguous |
 | Potential Defense Evasion Via Raw Disk Access By Uncommon Tools | T1006 | #1 | ok |
+| Windows Credential Guard Related Registry Value Deleted - Registry | T1685 | #1 | ok |
 | Windows Recall Feature Enabled - DisableAIDataAnalysis Value Deleted | T1113 | #1 | ok |
+| Folder Removed From Exploit Guard ProtectedFolders List - Registry | T1685 | #1 | ok |
 | Terminal Server Client Connection History Cleared - Registry | T1070, T1112 | #1 | ok |
+| Removal Of AMSI Provider Registry Keys | T1685 | #1 | ok |
 | Removal of Potential COM Hijacking Registry Keys | T1112 | #1 | ok |
 | RunMRU Registry Key Deletion - Registry | T1070 | #1 | ok |
+| Removal Of Index Value to Hide Schedule Task - Registry | T1685 | #1 | ok |
+| Removal Of SD Value to Hide Schedule Task - Registry | T1685 | #1 | ok |
 | Creation of a Local Hidden User Account by Registry | T1136 | #1 | ok |
 | UAC Bypass Via Wsreset | T1548 | #1, #7 | ambiguous |
 | CMSTP Execution Registry Event | T1218 | #1, #7 | ambiguous |
-| Disable Security Events Logging Adding Reg Key MiniNt | T1112, T1685 | #1 | ambiguous |
+| Windows Defender Threat Severity Default Action Modified | T1685 | #1 | ok |
+| Disable Security Events Logging Adding Reg Key MiniNt | T1112, T1685 | #1 | ok |
 | Wdigest CredGuard Registry Modification | T1112 | #1 | ok |
 | Esentutl Volume Shadow Copy Service Keys | T1003 | #1, #7 | ambiguous |
 | Windows Credential Editor Registry | T1003 | #1, #7 | ambiguous |
@@ -2154,7 +2306,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potential Qakbot Registry Activity | T1112 | #1 | ok |
 | Path To Screensaver Binary Modified | T1546 | #1, #7 | ambiguous |
 | Narrator's Feedback-Hub Persistence | T1547 | #1, #7 | ambiguous |
-| NetNTLM Downgrade Attack - Registry | T1112, T1685 | #1 | ambiguous |
+| NetNTLM Downgrade Attack - Registry | T1112, T1685 | #1 | ok |
 | New DLL Added to AppCertDlls Registry Key | T1546 | #1, #7 | ambiguous |
 | New DLL Added to AppInit_DLLs Registry Key | T1546 | #1, #7 | ambiguous |
 | Office Application Startup - Office Test | T1137 | #1, #7 | ambiguous |
@@ -2172,9 +2324,12 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | DLL Load via LSASS | T1547 | #1, #7 | ambiguous |
 | Suspicious Camera and Microphone Access | T1123, T1125 | #1 | ok |
 | Registry Tampering by Potentially Suspicious Processes | T1059, T1112 | #1, #7 | ambiguous |
+| Enable Remote Connection Between Anonymous Computer - AllowAnonymousCallback | T1685 | #1 | ok |
 | Registry Persistence via Service in Safe Mode | T1564 | #1 | ok |
 | Add Port Monitor Persistence in Registry | T1547 | #1, #7 | ambiguous |
 | Allow RDP Remote Assistance Feature | T1112 | #1 | ok |
+| Potential AMSI COM Server Hijacking | T1685 | #1 | ok |
+| AMSI Disabled via Registry Modification | T1685 | #1 | ok |
 | Classes Autorun Keys Modification | T1547 | #1, #7 | ambiguous |
 | Common Autorun Keys Modification | T1547 | #1, #7 | ambiguous |
 | CurrentControlSet Autorun Keys Modification | T1547 | #1, #7 | ambiguous |
@@ -2196,34 +2351,57 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Bypass UAC Using SilentCleanup Task | T1548 | #1, #7 | ambiguous |
 | Default RDP Port Changed to Non Standard Port | T1547 | #1, #7 | ambiguous |
 | IE Change Domain Zone | T1137 | #1, #7 | ambiguous |
+| Sysmon Driver Altitude Change | T1685 | #1 | ok |
+| Change Winevt Channel Access Permission Via Registry | T1685 | #1 | ok |
 | ClickOnce Trust Prompt Tampering | T1112 | #1 | ok |
 | Potential CobaltStrike Service Installations - Registry | T1021, T1543, T1569 | #1, #4, #7 | ambiguous |
 | COM Hijack via Sdclt | T1546, T1548 | #1, #7 | ambiguous |
 | CrashControl CrashDump Disabled | T1112, T1564 | #1 | ok |
-| Security Event Logging Disabled via MiniNt Registry Key - Registry Set | T1112, T1685 | #1 | ambiguous |
+| Security Event Logging Disabled via MiniNt Registry Key - Registry Set | T1112, T1685 | #1 | ok |
 | Service Binary in Suspicious Folder | T1112 | #1 | ok |
+| Windows Credential Guard Disabled - Registry | T1685 | #1 | ok |
 | Custom File Open Handler Executes PowerShell | T1202 | #1 | ok |
 | Potential Registry Persistence Attempt Via DbgManagedDebugger | T1574 | #1, #7 | ambiguous |
+| Windows Defender Exclusions Added - Registry | T1685 | #1 | ok |
 | Potentially Suspicious Desktop Background Change Via Registry | T1112, T1491 | #1, #7 | ambiguous |
+| Antivirus Filter Driver Disallowed On Dev Drive - Registry | T1685 | #1 | ok |
+| Windows Hypervisor Enforced Code Integrity Disabled | T1685 | #1 | ok |
+| Hypervisor Enforced Paging Translation Disabled | T1685 | #1 | ok |
 | DHCP Callout DLL Installation | T1112, T1574 | #1, #7 | ambiguous |
 | Disable Administrative Share Creation at Startup | T1070 | #1 | ok |
+| Potential AutoLogger Sessions Tampering | T1685 | #1 | ok |
+| Disable Microsoft Defender Firewall via Registry | T1686 | #1 | ok |
 | Disable Internal Tools or Feature in Registry | T1112 | #1 | ok |
+| Disable Privacy Settings Experience in Registry | T1685 | #1 | ok |
 | Disable Windows Security Center Notifications | T1112 | #1 | ok |
 | Registry Disable System Restore | T1490 | #1 | ok |
+| Windows Defender Service Disabled - Registry | T1685 | #1 | ok |
 | Windows Event Log Access Tampering Via Registry | T1112, T1547 | #1, #7 | ambiguous |
+| Disable Windows Firewall by Registry | T1686 | #1 | ok |
+| Disable Windows Event Logging Via Registry | T1685 | #1 | ok |
+| Disable Exploit Guard Network Protection on Windows Defender | T1685 | #1 | ok |
+| Disabled Windows Defender Eventlog | T1685 | #1 | ok |
+| Disable PUA Protection on Windows Defender | T1685 | #1 | ok |
+| Disable Tamper Protection on Windows Defender | T1685 | #1 | ok |
 | Add DisallowRun Execution to Registry | T1112 | #1 | ok |
 | DNS-over-HTTPS Enabled by Registry | T1112, T1140 | #1, #7 | ambiguous |
 | New DNS ServerLevelPluginDll Installed | T1112, T1574 | #1, #7 | ambiguous |
-| ETW Logging Disabled In .NET Processes - Sysmon Registry | T1112, T1685 | #1 | ambiguous |
+| ETW Logging Disabled In .NET Processes - Sysmon Registry | T1112, T1685 | #1 | ok |
 | Directory Service Restore Mode(DSRM) Registry Value Tampering | T1556 | #1, #7 | ambiguous |
 | Periodic Backup For System Registry Hives Enabled | T1113 | #1 | ok |
 | Windows Recall Feature Enabled - Registry | T1113 | #1 | ok |
 | Enabling COR Profiler Environment Variables | T1574 | #1, #7 | ambiguous |
+| Scripted Diagnostics Turn Off Check Enabled - Registry | T1685 | #1 | ok |
+| Potential EventLog File Location Tampering | T1685 | #1 | ok |
+| Suspicious Application Allowed Through Exploit Guard | T1685 | #1 | ok |
 | Change User Account Associated with the FAX Service | T1112 | #1 | ok |
 | Change the Fax Dll | T1112 | #1 | ok |
 | Registry Modification to Hidden File Extension | T1137 | #1, #7 | ambiguous |
 | Displaying Hidden Files Feature Disabled | T1564 | #1 | ok |
 | Registry Hide Function from User | T1112 | #1 | ok |
+| Hide Schedule Task Via Index Value Tamper | T1685 | #1 | ok |
+| Uncommon Extension In Keyboard Layout IME File Registry Value | T1685 | #1 | ok |
+| Suspicious Path In Keyboard Layout IME File Registry Value | T1685 | #1 | ok |
 | New Root or CA or AuthRoot Certificate to Store | T1490 | #1 | ok |
 | Lolbas OneDriveStandaloneUpdater.exe Proxy Download | T1105 | #1 | ok |
 | RestrictedAdminMode Registry Value Tampering | T1112 | #1 | ok |
@@ -2234,6 +2412,8 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Potential Credential Dumping Attempt Using New NetworkProvider - REG | T1003 | #1, #7 | ambiguous |
 | Potentially Suspicious ODBC Driver Registered | T1003 | #1, #7 | ambiguous |
 | Trust Access Disable For VBApplications | T1112 | #1 | ok |
+| Microsoft Office Protected View Disabled | T1685 | #1 | ok |
+| Python Function Execution Security Warning Disabled In Excel - Registry | T1685 | #1 | ok |
 | Enable Microsoft Dynamic Data Exchange | T1559 | #1, #7 | ambiguous |
 | Potential Persistence Via Outlook LoadMacroProviderOnBoot Setting | T1008, T1137, T1546 | #1, #7 | ambiguous |
 | Outlook Macro Execution Without Warning Setting Enabled | T1008, T1137, T1546 | #1, #7 | ambiguous |
@@ -2268,13 +2448,14 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Suspicious PowerShell In Registry Run Keys | T1547 | #1, #7 | ambiguous |
 | PowerShell Logging Disabled Via Registry Key Tampering | T1112, T1564 | #1 | ok |
 | Potential Provisioning Registry Key Abuse For Binary Proxy Execution - REG | T1218 | #1, #7 | ambiguous |
-| ETW Logging Disabled For rpcrt4.dll | T1112, T1685 | #1 | ambiguous |
+| ETW Logging Disabled For rpcrt4.dll | T1112, T1685 | #1 | ok |
 | Potentially Suspicious Command Executed Via Run Dialog Box - Registry | T1059 | #1, #7 | ambiguous |
 | ScreenSaver Registry Key Set | T1218 | #1, #7 | ambiguous |
 | ServiceDll Hijack | T1543 | #1, #7 | ambiguous |
-| ETW Logging Disabled For SCM | T1112, T1685 | #1 | ambiguous |
+| ETW Logging Disabled For SCM | T1112, T1685 | #1 | ok |
 | Registry Explorer Policy Modification | T1112 | #1 | ok |
 | Persistence Via New SIP Provider | T1553 | #1, #10 | ambiguous |
+| Tamper With Sophos AV Registry Keys | T1685 | #1 | ok |
 | Hiding User Account Via SpecialAccounts Registry Key | T1564 | #1 | ok |
 | Activate Suppression of Windows Security Center Notifications | T1112 | #1 | ok |
 | Potential PendingFileRenameOperations Tampering | T1036 | #1, #7 | ambiguous |
@@ -2282,6 +2463,7 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | Registry Persistence via Explorer Run Key | T1547 | #1, #7 | ambiguous |
 | New RUN Key Pointing to Suspicious Folder | T1547 | #1, #7 | ambiguous |
 | Suspicious Space Characters in RunMRU Registry Path - ClickFix | T1027, T1204 | #1, #7, #9 | ambiguous |
+| Suspicious Service Installed | T1685 | #1 | ok |
 | Suspicious Shell Open Command Registry Modification | T1546, T1548 | #1, #7 | ambiguous |
 | Suspicious Space Characters in TypedPaths Registry Path - FileFix | T1027, T1204 | #1, #7, #9 | ambiguous |
 | Modify User Shell Folders Startup Value | T1547 | #1, #7 | ambiguous |
@@ -2301,8 +2483,10 @@ Mapped entries: **2294**. Cluster: [#1 Abuse of Functions](/clusters/cluster-1.m
 | UAC Notification Disabled | T1548 | #1, #7 | ambiguous |
 | UAC Secure Desktop Prompt Disabled | T1548 | #1, #7 | ambiguous |
 | VBScript Payload Stored in Registry | T1547 | #1, #7 | ambiguous |
+| Windows Vulnerable Driver Blocklist Disabled | T1685 | #1 | ok |
 | Execution DLL of Choice Using WAB.EXE | T1218 | #1, #7 | ambiguous |
 | Wdigest Enable UseLogonCredential | T1112 | #1 | ok |
+| Disable Windows Defender Functionalities Via Registry Keys | T1685 | #1 | ok |
 | Winlogon AllowMultipleTSSessions Enable | T1112 | #1 | ok |
 | Winlogon Notify Key Logon Persistence | T1547 | #1, #7 | ambiguous |
 | Sysmon Configuration Error | T1564 | #1 | ok |

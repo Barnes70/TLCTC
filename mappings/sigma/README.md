@@ -4,7 +4,7 @@ This directory derives a **TLCTC cluster view of SigmaHQ detection rules** — t
 
 > ### Experimental derivation chain — read before using
 >
-> This artifact is **derived** from [`mitre-attack-enterprise/tlctc-enterprise-attack.json`](../mitre-attack-enterprise/README.md), which classifies 698 ATT&CK Enterprise techniques into TLCTC clusters. That upstream mapping is the source of truth. Mapping quality is bounded by (a) how consistently each Sigma rule's author tagged it with `attack.t*` tags, and (b) the quality of the ATT&CK→TLCTC mapping for those techniques. Untagged rules and rules whose techniques are absent from the ATT&CK mapping surface as `unmapped` or `ambiguous`. The upstream ATT&CK→TLCTC base is AI-generated and not yet independently validated; a stratified human-expert validation (Cohen's κ) of that base is the planned check that would validate this derived view.
+> This artifact is **derived** from [`mitre-attack-enterprise/tlctc-enterprise-attack.json`](../mitre-attack-enterprise/README.md), which classifies 706 ATT&CK Enterprise techniques into TLCTC clusters. That upstream mapping is the source of truth. Mapping quality is bounded by (a) how consistently each Sigma rule's author tagged it with `attack.t*` tags, and (b) the quality of the ATT&CK→TLCTC mapping for those techniques. Untagged rules and rules whose techniques are absent from the ATT&CK mapping surface as `unmapped` or `ambiguous`. The upstream ATT&CK→TLCTC base is AI-generated and not yet independently validated; a stratified human-expert validation (Cohen's κ) of that base is the planned check that would validate this derived view.
 
 ## Purpose
 
@@ -29,7 +29,7 @@ This is a **coverage audit**: it lets you cross-walk your operational detection 
 
 ```
 SigmaHQ rules clone         tlctc-enterprise-attack.json
-(shallow clone,              (698 techniques, in-tree)
+(shallow clone,              (706 techniques, in-tree)
  commit SHA recorded)              │
         │                          │
         └──────────┬───────────────┘
@@ -108,22 +108,24 @@ Outputs are written directly to `mappings/sigma/tlctc-sigma.json` and `mappings/
 
 The SigmaHQ clone must live **outside the repository working tree** so it is never accidentally staged.
 
-## Statistics (SigmaHQ commit `994da16651194500b607a3007186c29779e1f961`, 2026-05-31)
+## Statistics (SigmaHQ commit `994da16651194500b607a3007186c29779e1f961`, 2026-05-31; ATT&CK mapping v20.0)
+
+These rules were re-derived on 2026-11-01 from the same SigmaHQ commit when the mapping moved to ATT&CK v20. That resolved the rules tagged T1685, T1686, T1689 and T1690, which the earlier mapping did not yet contain: `unmapped` fell from 559 to 379 and `ok` rose from 739 to 935.
 
 Full statistics are in [`tlctc-sigma-stats.json`](tlctc-sigma-stats.json).
 
 ### Coverage
 
 - **3,132** total rules processed
-- **739** (`ok`) — single concrete cluster derived
-- **1,834** (`ambiguous`) — multiple or alternating clusters; `primaryCluster` is the lowest-numbered fallback
-- **559** (`unmapped`) — no `attack.t*` tags, or all tagged techniques absent from the ATT&CK→TLCTC mapping
+- **935** (`ok`) — single concrete cluster derived
+- **1,818** (`ambiguous`) — multiple or alternating clusters; `primaryCluster` is the lowest-numbered fallback
+- **379** (`unmapped`) — no `attack.t*` tags, or all tagged techniques absent from the ATT&CK→TLCTC mapping
 
 ### Primary Cluster Distribution (OK records only)
 
 | Cluster | Count |
 |---------|-------|
-| `#1` Abuse of Functions | 520 |
+| `#1` Abuse of Functions | 716 |
 | `#7` Malware | 53 |
 | `#4` Identity Theft | 100 |
 | `#2` Exploiting Server | 36 |

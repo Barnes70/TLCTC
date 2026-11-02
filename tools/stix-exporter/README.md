@@ -60,7 +60,7 @@ All custom properties are prefixed `x_tlctc_` per STIX 2.1 §3.4.
 ## Known limitations
 
 - **One-way.** STIX → TLCTC is out of scope for v1; CAD-edited graphs would not produce valid Layer 3 paths back without analyst review.
-- **ATT&CK enrichment is best-effort.** Techniques are only attached when a `Txxxx` ID is mentioned in `evidence_refs` or `notes`. We do not auto-explode cluster→technique using the full 698-row mapping (would create noise; cluster is many-to-one with techniques, so reverse-mapping has low signal).
+- **ATT&CK enrichment is best-effort.** Techniques are only attached when a `Txxxx` ID is mentioned in `evidence_refs` or `notes`. We do not auto-explode cluster→technique using the full 706-row mapping (would create noise; cluster is many-to-one with techniques, so reverse-mapping has low signal).
 - **No `extension-definition` SDO.** Custom properties use the `x_*` form allowed by STIX 2.1. A future v1.1 may publish a hosted `extension-definition` for stricter consumers.
 - **Spheres are opaque to STIX-only consumers.** Layer 2 sphere identifiers (`@Org`, `@Vendor`, etc.) are preserved verbatim inside `x_tlctc_boundary` but have no STIX-native equivalent. Consumers without TLCTC awareness will see them as labels.
 - **Δt is on the edge, not the step.** Matches the notation (`→[Δt=…]→` is a *transition* between steps). Tools that visualize node-level dwell time will need to read the relationship SDO.

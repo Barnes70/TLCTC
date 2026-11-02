@@ -120,7 +120,8 @@ class AttackMapping:
 
     def __init__(self, doc: dict, atlas_doc: dict | None = None):
         self.metadata = doc.get("metadata", {})
-        self.by_id: dict[str, dict] = {m["techniqueId"]: m for m in doc["mappings"]}
+        # Retired ATT&CK IDs stay resolvable: published flows still use them.
+        self.by_id: dict[str, dict] = {m["techniqueId"]: m for m in doc["mappings"] + doc.get("retired", [])}
         self.atlas_metadata = (atlas_doc or {}).get("metadata", {})
         if atlas_doc:
             for m in atlas_doc["mappings"]:

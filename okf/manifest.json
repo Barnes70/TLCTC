@@ -4246,7 +4246,7 @@
       "path": "/mappings/attack/cluster-1.md",
       "type": "mapping-set",
       "title": "ATT&CK techniques → #1 Abuse of Functions",
-      "description": "471 ATT&CK techniques entries mapped to TLCTC #1 Abuse of Functions.",
+      "description": "478 ATT&CK techniques entries mapped to TLCTC #1 Abuse of Functions.",
       "resource": "tlctc:mapping:attack:cluster-1",
       "tags": [
         "mapping",
@@ -4270,7 +4270,7 @@
       "path": "/mappings/attack/cluster-2.md",
       "type": "mapping-set",
       "title": "ATT&CK techniques → #2 Exploiting Server",
-      "description": "7 ATT&CK techniques entries mapped to TLCTC #2 Exploiting Server.",
+      "description": "8 ATT&CK techniques entries mapped to TLCTC #2 Exploiting Server.",
       "resource": "tlctc:mapping:attack:cluster-2",
       "tags": [
         "mapping",
@@ -4354,7 +4354,7 @@
       "path": "/mappings/attack/cluster-9.md",
       "type": "mapping-set",
       "title": "ATT&CK techniques → #9 Social Engineering",
-      "description": "18 ATT&CK techniques entries mapped to TLCTC #9 Social Engineering.",
+      "description": "19 ATT&CK techniques entries mapped to TLCTC #9 Social Engineering.",
       "resource": "tlctc:mapping:attack:cluster-9",
       "tags": [
         "mapping",
@@ -4486,7 +4486,7 @@
       "path": "/mappings/sigma/cluster-1.md",
       "type": "mapping-set",
       "title": "Sigma rules → #1 Abuse of Functions",
-      "description": "2294 Sigma rules entries mapped to TLCTC #1 Abuse of Functions.",
+      "description": "2478 Sigma rules entries mapped to TLCTC #1 Abuse of Functions.",
       "resource": "tlctc:mapping:sigma:cluster-1",
       "tags": [
         "mapping",
@@ -4510,7 +4510,7 @@
       "path": "/mappings/sigma/cluster-2.md",
       "type": "mapping-set",
       "title": "Sigma rules → #2 Exploiting Server",
-      "description": "55 Sigma rules entries mapped to TLCTC #2 Exploiting Server.",
+      "description": "53 Sigma rules entries mapped to TLCTC #2 Exploiting Server.",
       "resource": "tlctc:mapping:sigma:cluster-2",
       "tags": [
         "mapping",
@@ -4570,7 +4570,7 @@
       "path": "/mappings/sigma/cluster-7.md",
       "type": "mapping-set",
       "title": "Sigma rules → #7 Malware",
-      "description": "79 Sigma rules entries mapped to TLCTC #7 Malware.",
+      "description": "77 Sigma rules entries mapped to TLCTC #7 Malware.",
       "resource": "tlctc:mapping:sigma:cluster-7",
       "tags": [
         "mapping",
