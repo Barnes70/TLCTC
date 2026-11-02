@@ -16,7 +16,7 @@ Mapped entries: **19**. Cluster: [#9 Social Engineering](/clusters/cluster-9.md)
 
 | Technique | Name | TLCTC | Rationale |
 |---|---|---|---|
-| T1204 | User Execution | #9 → #7 | User Execution: human is induced (lure, pretext, urgency, authority) to perform the action that runs attacker-supplied content. The induction is `#9` per R-HUMAN; the resulting execution is `#7` per R-EXEC. Path: `#9 \|\|[human][@External→@Org]\|\| → #7`. Sub-techniques specify the lure/payload pairing. |
+| T1204 | User Execution | #9 → #7 | User Execution: human is induced (lure, pretext, urgency, authority) to perform the action that runs attacker-supplied content. The induction is `#9` per the #9 boundary tests (core §4); the resulting execution is `#7` per R-EXEC. Path: `#9 \|\|[human][@External→@Org]\|\| → #7`. Sub-techniques specify the lure/payload pairing. |
 | T1204.001 | User Execution: Malicious Link | #9 → #7 | Malicious Link: user induced to click a link that leads to attacker-controlled content; depending on the destination, code runs (drive-by style or downloaded payload). `#9` (user click induction) → `#7` (FEC). |
 | T1204.002 | User Execution: Malicious File | #9 → #7 | Malicious File: user induced to open an attacker-supplied file (executable, document with macros, ISO/IMG mount, LNK shortcut, container archive). `#9` → `#7`. |
 | T1204.003 | User Execution: Malicious Image | #9 → #7 | Malicious Image: user induced to pull/run an attacker-supplied container image, VM image, or system image from a registry/repository they trust. `#9` (induction to pull) → `#7` (image runs FEC). |
