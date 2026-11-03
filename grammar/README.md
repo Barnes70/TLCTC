@@ -19,7 +19,7 @@ This directory is the machine-readable mirror.
 ### Which grammar to use
 
 - For plain TLCTC v2.1 attack paths or v0.1-style records with free-text BRE labels → `tlctc-attack-path.abnf`.
-- For TLCTC+ v0.9 records (record_type `compromise_record` or `pure_9_record`) with structured PATTERN/BRE/IMPACT/REPORT codes → `tlctc-plus-attack-path.abnf`. The two structural types are split on path composition: a `compromise_record` has at least one cluster step other than #9, a `pure_9_record` is a single #9 step. Under the core (since v2.5.1, unchanged in v2.7) every cluster step records its own SRE; `+ [SRE]` is a step annotation marking the first direct one.
+- For TLCTC+ v0.9 records (record_type `compromise_record` or `pure_9_record`) with structured PATTERN/BRE/IMPACT/REPORT codes → `tlctc-plus-attack-path.abnf`. The two structural types are split on path composition: a `compromise_record` has at least one cluster step other than #9, a `pure_9_record` is a single #9 step. A `near_miss_record` (v0.9) holds one attempted step in `[Attempt: ...]` when no step succeeded; it admits only Pattern and Report annotations. Under the core (since v2.5.1, unchanged in v2.7) every cluster step records its own SRE; `+ [SRE]` is a step annotation marking the first direct one.
 
 ## What It Covers
 

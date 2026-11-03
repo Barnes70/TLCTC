@@ -9,7 +9,7 @@
 **License:** CC BY 4.0  
 **Core thesis:** Keep TLCTC pure. Extend the reporting layer.
 
-> **v0.9 intent:** Re-based TLCTC+ from TLCTC v2.5.1 to TLCTC v2.7. Both core releases are classification-preserving for TLCTC+: no record type, catalogue code, track, notation token or grammar rule changes. What changes is what the core now states explicitly and a reporting profile must carry. From v2.6: a cluster step is recorded only if it succeeded, so a reported lure nobody acted on, or a blocked attempt, is control-side evidence and not a record (§4.3); and #10 requires that the trusted third party or its artifact was subverted before acceptance (R-SUPPLY). From v2.7: a BRE is reached by a **causal** edge (brought about, after a Δt) or a **normative** edge (a duty arises or a norm is violated, no Δt); a statutory deadline such as the NIS2 24-hour early warning bounds the separate response process from awareness and is never a Δt; a BRE entered directly by a normative edge, with no cluster before it, is compliance risk outside TLCTC+; and the DRE stopping rule uses the v2.7 wording. The BRE edge kind is recorded in the data model (§17.6), not in the notation.
+> **v0.9 intent:** Re-based TLCTC+ from TLCTC v2.5.1 to TLCTC v2.7, and added a third record type for near misses. Both core releases are classification-preserving: no existing record type, catalogue code or track changes, and every v0.8 record stays valid after its version fields are updated. From v2.6: a cluster step is recorded only if it succeeded (§4.3). A reported lure nobody acted on, or a blocked attempt, is therefore not an incident; but the attacker did act, and the application companion counts such events as **near misses** per cluster (its §10, Key Risk Indicators). v0.9 gives them a record of their own, the `near_miss_record` (§4.4), written `[Attempt: …]` so that the attempted step is an annotation, never a path step; it carries no SRE, DRE, BRE or Impact and never enters incident statistics. Where a path stopped because a later step was averted, `averted_next` names that step. Also from v2.6: #10 requires that the trusted third party or its artifact was subverted before acceptance (R-SUPPLY). From v2.7: a BRE is reached by a **causal** edge (brought about, after a Δt) or a **normative** edge (a duty arises or a norm is violated, no Δt); a statutory deadline such as the NIS2 24-hour early warning bounds the separate response process from awareness and is never a Δt; a BRE entered directly by a normative edge, with no cluster before it, is compliance risk outside TLCTC+; and the DRE stopping rule uses the v2.7 wording. The BRE edge kind is recorded in the data model (§17.6), not in the notation. The grammar gains one production, the near-miss record; the other productions are unchanged.
 >
 > **v0.8 intent (retained):** Three sharpenings of v0.7, none of which changes a record type, a catalogue code, or a track. (1) The record-type split is restated as a distinction between two **SRE kinds** — *direct* (any non-#9 step, #8 and #10 included: the system itself leaves its owner's control) and *induced* (#9: the departure is exercised through the manipulated person's action) — replacing the v0.7 wording "technical step vs. reached a person", which misdescribed the bridge clusters. (2) `+ [SRE]` becomes a deterministic **first-direct-SRE marker**, computable from the path; the v0.7 "decisive compromise" conflated the ontic position of a compromise with the reporting choice of which compromise a record foregrounds, and that choice now lives in its own field, `reporting_pivot_step`. (3) The minimal grammar is restructured so that SRE, DRE and Pattern are annotations of a step inside the path rather than tokens that syntactically follow the path; validator constraints V-1…V-6 are listed explicitly.
 >
@@ -29,12 +29,13 @@
 
 TLCTC+ is a reporting extension for cases that have a TLCTC anchor.
 
-It supports two structurally distinct reporting realities, split on the composition of the TLCTC path:
+It supports two structurally distinct incident realities, split on the composition of the TLCTC path, and one record for the attacks that did not succeed:
 
 1. **Compromise records** — a TLCTC attack path contains at least one cluster step other than #9, i.e. at least one **direct SRE**: the system itself is made to behave outside its owner's control (a function abused, a flaw exploited, a credential applied, a path intercepted, capacity exhausted, content executed, hardware reached, a trust artifact accepted). This single class covers cases historically described as "core cyber incidents" (cyber-side reporting interest, BRE-SVC.* / BRE-DATA.* / BRE-REG.* dominant) and "hybrid cyber-enabled harms" (consequence-side reporting interest, BRE-FIN.* / BRE-ENT.* / BRE-CUS.* dominant). The structural reality — a TLCTC path containing a direct SRE — is the same; the difference is downstream consequence dominance, captured in the BRE family selection.
 2. **Pure #9-anchored digital-harm records** — the path is a single #9 step: the case is digitally mediated and manipulation-driven, and no IT system is compromised by the attacker directly. Per core §3.4 the #9 step still records a System Risk Event — the loss of control lands on the system the manipulated person operates, exercised through the victim's own action — but this SRE is **induced**, not direct: no step made a system misbehave; a person was made to act. No `+ [SRE]` marker is rendered.
+3. **Near-miss records** (v0.9) — the attacker acted, but no step succeeded because a control held: a lure delivered and reported without anyone acting on it, a campaign filtered before delivery, an exploit blocked. The attempted step is written inside `[Attempt: …]` and is not a path step; the record carries no SRE, DRE, BRE or Impact. Near misses are counted per cluster for Key Risk Indicators and never as incidents. For national centres they are usually the largest share of citizen reports.
 
-Under TLCTC (since v2.5.1, unchanged in v2.7) "no SRE" means "no cluster" (Failure, Error in Use, Abuse of Rights — see §5). A record with a TLCTC anchor therefore always has at least one SRE; what distinguishes the two record types is the kind of SRE the path contains — direct system-level loss of control versus manipulation-induced loss of control. The distinction is between two SRE kinds, not between "technical" and "human" steps: #8 and #10 are bridge clusters, and both produce direct SREs.
+Under TLCTC (since v2.5.1, unchanged in v2.7) "no SRE" means "no cluster" (Failure, Error in Use, Abuse of Rights — see §5). An incident record therefore always has at least one SRE; what distinguishes the two incident record types is the kind of SRE the path contains — direct system-level loss of control versus manipulation-induced loss of control. The distinction is between two SRE kinds, not between "technical" and "human" steps: #8 and #10 are bridge clusters, and both produce direct SREs.
 
 The phrase "hybrid cyber-enabled fraud" remains a useful descriptor for compromise records with consequence-side dominance, but it is not a separate record type.
 
@@ -53,6 +54,14 @@ TLCTC cause path
 ```
 
 Pattern is cause-side metadata and uses bracket-only notation. SRE, DRE, BRE, Impact, and Report are event or consequence annotations and use additive notation. `+ [SRE]` marks the first direct SRE; every cluster step records its own SRE whether or not the marker is rendered (§8.2).
+
+A near miss has no path, and its record says so in its first token:
+
+```text
+[Attempt: #X ...]
+[Pattern: ...]
++ [Report: ...]
+```
 
 ---
 
@@ -119,7 +128,7 @@ IMPACT catalogue version:         v0.2
 REPORT catalogue version:         v0.2
 ```
 
-v0.9 re-bases the profile from TLCTC v2.5.1 to TLCTC v2.7 and carries the v2.6 and v2.7 doctrine that a reporting profile must state (successful steps only, the subversion test for #10, causal and normative BRE edges, deadlines from awareness). v0.8 sharpened the v0.7 re-base (direct/induced SRE kinds, deterministic marker plus `reporting_pivot_step`, step-level grammar); v0.7 re-based the profile from TLCTC v2.1 to TLCTC v2.5.1 and changed the record-type split criterion from SRE presence to path composition (see the intent boxes and §23). None of them adds, removes, or renumbers catalogue entries. The v0.5 catalogue decisions remain in force.
+v0.9 re-bases the profile from TLCTC v2.5.1 to TLCTC v2.7, carries the v2.6 and v2.7 doctrine that a reporting profile must state (successful steps only, the subversion test for #10, causal and normative BRE edges, deadlines from awareness), and adds the `near_miss_record`. v0.8 sharpened the v0.7 re-base (direct/induced SRE kinds, deterministic marker plus `reporting_pivot_step`, step-level grammar); v0.7 re-based the profile from TLCTC v2.1 to TLCTC v2.5.1 and changed the record-type split criterion from SRE presence to path composition (see the intent boxes and §23). None of them adds, removes, or renumbers catalogue entries. The v0.5 catalogue decisions remain in force.
 
 `framework_version` in a v0.9 record is `"2.7"`. Because v2.6 and v2.7 preserve every v2.5.1 classification, a v0.8 record (`"2.5.1"`) stays readable; it is converted by changing the two version fields and checking it against §4.3 and R-BRE-EDGE. The v2.3 and v2.4 dictionaries are frozen records; v0.9 records MUST NOT declare them.
 
@@ -127,7 +136,7 @@ v0.9 re-bases the profile from TLCTC v2.5.1 to TLCTC v2.7 and carries the v2.6 a
 
 ## 4. Scope
 
-TLCTC+ covers exactly two structural record types, split on the composition of the TLCTC path. Under the core (since v2.5.1, unchanged in v2.7) every cluster step records an SRE, so the split cannot be "SRE present / absent"; it is the **kind** of SRE the path contains. Every non-#9 cluster step records a *direct* SRE — the system itself departs from its owner's control. A #9 step records an *induced* SRE — the departure is exercised through the manipulated person's own action. Bridge topology is not the criterion: #8 and #10 are bridge clusters and produce direct SREs.
+TLCTC+ covers exactly three record types: two incident record types, split on the composition of the TLCTC path (§4.1, §4.2), and the near-miss record for attacks in which no step succeeded (§4.4). Under the core (since v2.5.1, unchanged in v2.7) every cluster step records an SRE, so the split cannot be "SRE present / absent"; it is the **kind** of SRE the path contains. Every non-#9 cluster step records a *direct* SRE — the system itself departs from its owner's control. A #9 step records an *induced* SRE — the departure is exercised through the manipulated person's own action. Bridge topology is not the criterion: #8 and #10 are bridge clusters and produce direct SREs.
 
 ### 4.1 Compromise Record
 
@@ -187,11 +196,33 @@ Credential acquisition is classified by the enabling cluster. Credential use is 
 
 ### 4.3 Successful Steps Only
 
-A cluster assignment asserts the step's SRE, so a TLCTC+ record contains only steps that succeeded (core §3.4, since v2.6). An attempted or blocked step records no SRE and is not a step of the path; it is control-side evidence that measures the control which stopped it (Axiom V), and the application companion treats it under control indicators.
+A cluster assignment asserts the step's SRE, so a TLCTC+ path contains only steps that succeeded (core §3.4, since v2.6). An attempted or blocked step records no SRE and is not a step of the path. It is a near miss: the application companion (§10) counts it in the attempted cluster's Key Risk Indicator, and it is evidence about the control that stopped it (Axiom V).
 
-For a #9 step, success means the manipulation produced the unsafe action it aimed at: the person paid, disclosed, installed, approved, or otherwise acted. A lure that was received and recognised, reported but not acted on, or filtered before delivery, is not a #9 step. Such reports remain valuable to a national centre — for public warnings, takedowns, and pattern statistics — but they carry no TLCTC path, no SRE, and no TLCTC+ record type (§5). Counting them as records would turn a measure of control success into a count of compromises.
+For a #9 step, success means the manipulation produced the unsafe action it aimed at: the person paid, disclosed, installed, approved, or otherwise acted. A lure that was received and recognised, reported but not acted on, or filtered before delivery, is not a #9 step. Counting it as an incident would turn a measure of control success into a count of compromises. It is recorded as a near miss instead (§4.4).
 
-The same applies inside a path: where a later step was attempted and failed, the path ends at the last step that succeeded, and the failed attempt is recorded as evidence, not as a step.
+The same applies inside a path: where a later step was attempted and averted, the path ends at the last step that succeeded, and the averted step is named in `averted_next` (§17.3), never written as a step.
+
+### 4.4 Near-Miss Record
+
+A near miss is an attack in which the attacker acted but a control held before any step succeeded. The application companion (v2.7, §10) makes near misses part of every cluster's Key Risk Indicator: the threat materialised, the control held, and both facts are information. A near-miss record has:
+
+- one **attempted step**, classified by the cluster the attack aimed at and written inside `[Attempt: …]`, so that it is an annotation and not a path step. Bridge clusters keep their boundary operator (R-BOUNDARY);
+- an optional **Pattern**, which carries the narrative for public warnings;
+- optional **Report** annotations, such as the citizen's report or a warning flag;
+- in the data model, **which control held** (`held_by`) and **where the attack stopped** (`stopped_at`: at `delivery`, before it reached the target, or at the `target`, which did not perform the step). Both are required (V-7).
+
+It has no SRE, no DRE, no BRE and no Impact (R-NEAR-MISS): nothing left its owner's control, so the consequence chain never began.
+
+```text
+[Attempt: #9 ||[messaging][@External→@Citizen]||] [Pattern: PATTERN-ID.13 Fake Login Portal]
++ [Report: REPORT-NCSC.11 Voluntary NCSC/CERT Report Filed]
+```
+
+Near misses arrive in volume. A record MAY stand for one campaign rather than one message, with `campaign_id` and `report_count` in the data model (§17.10), so that a thousand forwarded copies of the same text message are one record with a count.
+
+Near-miss records are never counted as incidents and never enter incident statistics. They are counted as near misses per cluster (Key Risk Indicator, alongside the cluster's incidents) and they feed control indicators such as block rates and the share of lures recognised by recipients.
+
+**Near misses inside an incident.** Where a path succeeded up to a point and the next step was averted, the record stays an incident record and names the averted cluster in `averted_next`. The credential-phishing case is the application companion's own example: the credential was disclosed (`#9 + [DRE: C]`), the victim reported it and the password was reset before the attacker presented it, so the `#4` step was averted. That is a `pure_9_record` with `averted_next: "#4"`, and it counts as a `#9` incident and a `#4` near miss. `averted_next` is set only where a control is known to have held — a credential revoked, a login blocked by MFA, an execution stopped by an allowlist — not merely because the next step has not been observed yet.
 
 ---
 
@@ -200,7 +231,6 @@ The same applies inside a path: where a later step was attempted and failed, the
 TLCTC+ v0.9 does **not** cover:
 
 - the three non-cyber rows of the TLCTC cause-side partition (core §3.5, R-SCOPE): Failure / external event, Error in Use, and Abuse of Rights — none has a cluster, none has a System Risk Event, and Abuse of Rights enters the consequence chain at the DRE;
-- attempted or blocked attacks and lures nobody acted on (§4.3) — control-side evidence, not records;
 - compliance events entered directly by a normative edge with no cluster before them (core §3.4, entry points) — for example a norm amended so that an unchanged process becomes non-compliant;
 - complete enterprise operational-risk taxonomies;
 - criminal-law classification;
@@ -468,6 +498,15 @@ Impact measures harm on the SRE, DRE or BRE it is linked to. It is not the core 
 
 A statutory deadline (NIS2 24 h early warning and 72 h notification, DORA, GDPR Art. 33) bounds the response process, and its clock starts at awareness. It is not a Δt: it does not measure a causal interval between two events in the chain. Deadlines are recorded on the Report track (`timestamp_due`, §17.9), computed from the awareness time the regime defines.
 
+### 8.8 Attempt (near-miss records)
+
+```text
+[Attempt: #9 ||[email][@External→@Org]||]
+[Attempt: #2 ||[web][@External→@Org]||]
+```
+
+`[Attempt: …]` encloses exactly one classified cluster step and opens a near-miss record (§4.4). It is bracket-only, like Pattern, because it is not an event: nothing succeeded. It is never written inside a path, and no SRE, DRE, BRE or Impact annotation may follow it; only an optional Pattern and Report annotations. A bridge cluster inside the brackets keeps its boundary operator. Epistemic annotations (`[conf=low]`) are allowed on the attempted step where the target of the attack is uncertain; the unresolved operators `?` and `…` are not, because a near miss names the cluster it is counted under.
+
 ---
 
 ## 9. Normative Rules
@@ -546,7 +585,11 @@ Each BRE is reached by a causal edge or a normative edge (core §3.4, v2.7). Whe
 
 ### R-SUCCESS
 
-A TLCTC+ record contains only cluster steps that succeeded (core §3.4, since v2.6). An attempted or blocked step, and a lure nobody acted on, is control-side evidence and MUST NOT be recorded as a step or as a record (§4.3).
+A TLCTC+ path contains only cluster steps that succeeded (core §3.4, since v2.6). An attempted or blocked step, and a lure nobody acted on, MUST NOT be recorded as a path step or as an incident record. Where no step succeeded it is a `near_miss_record`; where it followed successful steps it is named in `averted_next` (§4.3, §4.4).
+
+### R-NEAR-MISS
+
+A `near_miss_record` carries exactly one attempted step in `[Attempt: …]`, an optional Pattern, and optional Report annotations. It MUST NOT carry `+ [SRE]`, DRE, BRE or Impact annotations, MUST state `held_by` and `stopped_at` in the data model, and MUST NOT be counted in incident statistics. It is counted as a near miss of the attempted cluster.
 
 ### R-IMPACT
 
@@ -573,6 +616,8 @@ For compromise records, stripping all SRE, DRE, BRE, Impact, Pattern, and Report
 
 For pure #9 records, stripping all annotations MUST recover a valid #9 bridge anchor.
 
+For near-miss records, stripping all annotations, `[Attempt: …]` included, leaves no path. That is the intended result: no step succeeded.
+
 ### R-CAUSE-CONSEQUENCE-INDEPENDENCE
 
 Consequence-side BRE families MUST be selected from observed harm, not auto-derived from cause-side cluster identity.
@@ -586,11 +631,14 @@ New records MUST use structured BRE codes. Free-text labels may be retained for 
 ## 10. Minimal Grammar
 
 ```text
-<tlctc-plus-record> ::= <compromise-record> | <pure-9-record>
+<tlctc-plus-record> ::= <compromise-record> | <pure-9-record> | <near-miss-record>
 
 <compromise-record> ::= <annotated-path> <record-annotation>*
 
 <pure-9-record>     ::= <annotated-9-step> <record-annotation>*
+
+<near-miss-record>  ::= <attempt-annotation> <pattern-annotation>? <report-annotation>*
+<attempt-annotation> ::= "[Attempt: " <cluster-step> "]"                ; v0.9, §4.4, §8.8
 
 <annotated-path>    ::= <annotated-step> (<path-operator> <annotated-step>)*
 <annotated-step>    ::= <step> <step-annotation>*
@@ -613,9 +661,15 @@ V-2  exactly one <annotated-step> in a <compromise-record> carries <sre-marker>,
      and it is the first <cluster-step> other than "#9" in path order          (R-SRE)
 V-3  a <pure-9-record> carries no <sre-marker>                                  (R-SRE-9)
 V-4  an <unresolved-step> carries no <dre-annotation>                           (R-UNRES-5)
-V-5  a <pure-9-record> has at least one <dre-annotation> or <bre-annotation>
+V-5  a <pure-9-record> has at least one <dre-annotation> or <bre-annotation>,
+     or sets averted_next
 V-6  reporting_pivot_step, if set, names a <cluster-step> present in the path
+V-7  a <near-miss-record> states held_by and stopped_at                         (R-NEAR-MISS)
+V-8  averted_next, if set, names a cluster and appears only on a
+     <compromise-record> or a <pure-9-record>                                    (R-SUCCESS)
 ```
+
+The near-miss production admits no SRE, DRE, BRE or Impact annotation, so R-NEAR-MISS's notation half is enforced by the grammar itself.
 
 ```text
 <sre-marker>         ::= "+ [SRE]"
@@ -640,6 +694,7 @@ TLCTC-XX.YY       TLCTC operational threat notation
 SRE               System Risk Event / Loss of Control / System Compromise (one per cluster step; marker = first direct SRE)
 DRE-X             Data Risk Event (core tree: C, I/Ii/If, A/Av/Ac)
 PATTERN-XXX.YY    Cause-side narrative / scam / fraud / crime pattern
+Attempt           Attempted cluster step of a near-miss record (no SRE; not a path step)
 BRE-XXX.YY        Business Risk Event
 IMPACT-XXX.YY     Quantified or qualified impact
 REPORT-XXX.YY     Reporting artefact / workflow state
@@ -984,7 +1039,7 @@ Observable consequence         → BRE (reached by a causal or a normative edge)
 Severity / magnitude           → Impact
 Filing / workflow state        → Report
 Statutory deadline             → Report timestamp_due, counted from awareness (never a Δt)
-Attempt, blocked or not acted on → control-side evidence, no record
+Attempt, blocked or not acted on → near_miss_record (near-miss KRI, never an incident)
 ```
 
 This structure can support NCSC/CERT reporting, financial-sector fraud reporting, DORA-style ICT incident reporting, NIS2-style incident notification, data-protection reporting, and internal OpRisk aggregation while preserving the cause/effect separation of core TLCTC.
@@ -1000,9 +1055,10 @@ External regime labels may be retained as aliases or metadata, but they should n
 ```text
 compromise_record
 pure_9_record
+near_miss_record
 ```
 
-`compromise_record` covers any case whose TLCTC path contains at least one cluster step other than #9 — an actor holds capability over an IT system directly — regardless of whether the dominant downstream BRE family is cyber-side (BRE-SVC.*, BRE-DATA.*, BRE-REG.*) or consequence-side (BRE-FIN.*, BRE-ENT.*, BRE-CUS.*). `pure_9_record` covers manipulation-driven digital harm whose path is a single #9 step; its only SRE is the #9 step's own.
+`compromise_record` covers any case whose TLCTC path contains at least one cluster step other than #9 — an actor holds capability over an IT system directly — regardless of whether the dominant downstream BRE family is cyber-side (BRE-SVC.*, BRE-DATA.*, BRE-REG.*) or consequence-side (BRE-FIN.*, BRE-ENT.*, BRE-CUS.*). `pure_9_record` covers manipulation-driven digital harm whose path is a single #9 step; its only SRE is the #9 step's own. `near_miss_record` (v0.9) covers an attack in which no step succeeded because a control held; it has no path and no SRE, and only its Cause, Pattern and Report fields apply, plus the near-miss fields of §17.10.
 
 ## 17.2 Required Metadata
 
@@ -1023,8 +1079,11 @@ confidence
 ## 17.3 Cause Fields
 
 ```text
-tlctc_path
+tlctc_path                         compromise_record (pure_9_record: tlctc_anchor)
 tlctc_steps[]
+attempted_step                     near_miss_record only: the [Attempt: ...] content, e.g. "#9 ||[messaging][@External→@Citizen]||"
+averted_next                       OPTIONAL — incident records only: the cluster of the next step, which a control
+                                   is known to have averted (e.g. "#4"); counted as a near miss of that cluster
 patterns[]
 evidence[]
 actor_attribution_optional
@@ -1122,6 +1181,21 @@ status
 linked_to_bre_reg
 linked_to_sre
 linked_to_dre
+```
+
+## 17.10 Near-Miss Fields
+
+Required on a `near_miss_record` (V-7); not used on incident records, which name an averted step in `averted_next` instead.
+
+```text
+held_by: user | filter | provider | authority | other
+                                   the control that held: the recipient recognised the lure; a mail, SMS or
+                                   web filter; a platform or operator; a takedown or block by an authority
+stopped_at: delivery | target      delivery = the attack never reached the target; target = it reached the
+                                   person or system, which did not perform the step
+campaign_id                        OPTIONAL — groups reports of the same campaign
+report_count                       OPTIONAL — number of reports or blocked items this record stands for
+first_seen, last_seen              OPTIONAL
 ```
 
 ---
@@ -1236,6 +1310,40 @@ linked_to_dre
 }
 ```
 
+## 18.3 Near Miss — Reported Fake Login Portal
+
+```json
+{
+  "case_id": "case-004",
+  "record_type": "near_miss_record",
+  "framework_version": "2.7",
+  "tlctc_plus_version": "0.9",
+  "attempted_step": "#9 ||[messaging][@External→@Citizen]||",
+  "patterns": [
+    {
+      "code": "PATTERN-ID.13",
+      "label": "Fake Login Portal"
+    }
+  ],
+  "held_by": "user",
+  "stopped_at": "target",
+  "campaign_id": "camp-2026-118",
+  "report_count": 412,
+  "report": [
+    {
+      "code": "REPORT-NCSC.11",
+      "label": "Voluntary NCSC/CERT Report Filed"
+    },
+    {
+      "code": "REPORT-NCSC.13",
+      "label": "Public Warning Candidate Flagged"
+    }
+  ]
+}
+```
+
+No `sre`, `dre`, `bre_chain` or `impact` block: nothing left its owner's control.
+
 ---
 
 # 19. Worked Examples
@@ -1257,7 +1365,7 @@ No `+ [SRE]` marker: the #9 step's SRE (the victim's payment channel used under 
 + [DRE: C]
 ```
 
-Still a `pure_9_record`: the DRE hangs off the #9 step's own SRE. If the credential is later used, append `→ #4 + [SRE]` — the record becomes a `compromise_record` with the marker at #4.
+Still a `pure_9_record`: the DRE hangs off the #9 step's own SRE. If the credential is later used, append `→ #4 + [SRE]` — the record becomes a `compromise_record` with the marker at #4. If instead the victim reports it and the password is reset before use, the record stays a `pure_9_record` with `averted_next: "#4"`: a `#9` incident and a `#4` near miss (§4.4).
 
 ## 19.3 Investment Scam With Account Takeover
 
@@ -1352,17 +1460,36 @@ The stolen credential is a technical identity. Cause-side credential use is stil
 A citizen forwards a text message to the national centre: it imitates their bank and links to a fake login page. They did not open the link. A mobile operator's filter blocked the same campaign for most of its subscribers.
 
 ```text
-(no TLCTC+ record)
+[Attempt: #9 ||[messaging][@External→@Citizen]||] [Pattern: PATTERN-ID.13 Fake Login Portal]
++ [Report: REPORT-NCSC.11 Voluntary NCSC/CERT Report Filed + REPORT-NCSC.13 Public Warning Candidate Flagged]
 ```
 
-No #9 step succeeded, so there is no path, no SRE, and no record type (§4.3, R-SUCCESS). The report is control-side evidence: it can feed a public warning, a takedown, and counts of campaigns and blocked messages. If another recipient enters their credentials on the page, that case is a `pure_9_record`, as in 19.2:
+No #9 step succeeded, so there is no path and no SRE (§4.3, R-SUCCESS). The citizen's report is a `near_miss_record` with `held_by: user` and `stopped_at: target`; the operator's blocks are a second one with `held_by: provider`, `stopped_at: delivery` and the blocked count in `report_count`. Both count as `#9` near misses and feed the public warning; neither is an incident. If another recipient enters their credentials on the page, that case is a `pure_9_record`, as in 19.2:
 
 ```text
 #9 ||[messaging][@External→@Citizen]|| [Pattern: PATTERN-ID.13 Fake Login Portal]
 + [DRE: C]
 ```
 
-The forwarded and blocked messages remain evidence of the same campaign.
+## 19.12 Exploit Blocked at the Perimeter
+
+A web application firewall blocks an injection attempt against a public portal. Nothing reached the application logic.
+
+```text
+[Attempt: #2]
+```
+
+A `#2` near miss with `held_by: filter`, `stopped_at: delivery`. Had the injection reached the application and been rejected by its input validation, `stopped_at` would be `target`. Either way, no SRE: the system never left its owner's control.
+
+## 19.13 Malicious Attachment Opened, Execution Blocked
+
+An employee opens an attachment from a convincing invoice email; application allowlisting stops the payload from executing.
+
+```text
+#9 ||[email][@External→@Org]|| [Pattern: PATTERN-FIN.22 Invoice / Mandate Fraud]
+```
+
+A `pure_9_record` with `averted_next: "#7"`: the manipulation succeeded (the employee acted), so `#9` is an incident with an induced SRE, and the averted execution is a `#7` near miss. No DRE and no BRE are needed; V-5 is met by `averted_next`.
 
 ---
 
@@ -1372,10 +1499,10 @@ The forwarded and blocked messages remain evidence of the same campaign.
    Ask in strict order: Is there an actor? Did the actor intend the outcome? Did an accountable grantor confer an entitlement covering this action? No actor → Failure; no intent → Error in Use; entitled → Abuse of Rights. All three are operational risk, carry no cluster and no SRE, and are outside TLCTC+. Only the Attack row continues.
 
 2. **Did a step succeed, and how is the cause path classified?**  
-   Record only steps that succeeded (R-SUCCESS). If no step succeeded — a lure nobody acted on, a blocked attempt — stop: the report is control-side evidence, not a TLCTC+ record (§4.3). Otherwise classify each successful step using core TLCTC v2.7 (one cluster per step, R-* rules, epistemic annotations where evidence is thin; #10 only where the subversion of the trusted third party is evidenced, R-SUPPLY). If the only step is a human manipulated through a digital channel, record `#9` with a boundary operator.
+   Record only steps that succeeded (R-SUCCESS). If no step succeeded — a lure nobody acted on, a blocked attempt — record a `near_miss_record`: write the attempted step in `[Attempt: …]`, state `held_by` and `stopped_at`, attach Pattern and Report where they apply, and stop (§4.4). Otherwise classify each successful step using core TLCTC v2.7 (one cluster per step, R-* rules, epistemic annotations where evidence is thin; #10 only where the subversion of the trusted third party is evidenced, R-SUPPLY). If the only step is a human manipulated through a digital channel, record `#9` with a boundary operator.
 
 3. **Determine the record type from path composition.**  
-   At least one step other than #9 → `compromise_record`; place `+ [SRE]` on the first non-#9 cluster step (R-SRE). Exactly one step, #9 → `pure_9_record`; render no `+ [SRE]` (R-SRE-9). Every classified step records its own SRE either way (core §3.4); if the record should foreground a later compromise, set `reporting_pivot_step` rather than moving the marker.
+   At least one step other than #9 → `compromise_record`; place `+ [SRE]` on the first non-#9 cluster step (R-SRE). Exactly one step, #9 → `pure_9_record`; render no `+ [SRE]` (R-SRE-9). Every classified step records its own SRE either way (core §3.4); if the record should foreground a later compromise, set `reporting_pivot_step` rather than moving the marker. If a control is known to have averted the next step, set `averted_next`.
 
 4. **Did a Data Risk Event occur?**  
    Attach `+ [DRE: C|I|Ii|If|A|Av|Ac]` to the step whose SRE it belongs to. Refine `I`/`A` only where the state is readable off the record.
@@ -1398,7 +1525,7 @@ The forwarded and blocked messages remain evidence of the same campaign.
 
 A TLCTC+ v0.9 record is conformant if it:
 
-1. uses a TLCTC path or #9 anchor, and lies in the Attack row of the cause-side partition (R-SCOPE);
+1. uses a TLCTC path, a #9 anchor, or (as a `near_miss_record`) an `[Attempt: …]` step, and lies in the Attack row of the cause-side partition (R-SCOPE);
 2. does not introduce new TLCTC top-level clusters;
 3. as a `compromise_record`, carries exactly one `+ [SRE]`, on the first non-#9 cluster step in path order (V-2);
 4. as a `pure_9_record`, renders no `+ [SRE]` and has a path of exactly one classified #9 step;
@@ -1414,10 +1541,12 @@ A TLCTC+ v0.9 record is conformant if it:
 14. does not use ORE notation;
 15. does not classify non-cyber operational failures;
 16. selects BRE families from observed harm, not from the cause-side cluster alone;
-17. recovers a valid TLCTC v2.7 path or #9 bridge anchor when TLCTC+ annotations are stripped;
+17. recovers a valid TLCTC v2.7 path or #9 bridge anchor when TLCTC+ annotations are stripped (a `near_miss_record` recovers no path);
 18. declares `framework_version = "2.7"` and `tlctc_plus_version = "0.9"`;
-19. contains only steps that succeeded, and is not created for an attempt, a blocked step, or a lure nobody acted on (R-SUCCESS);
-20. gives a Δt only to BREs reached by a causal edge, and records statutory deadlines as Report `timestamp_due`, never as Δt (R-BRE-EDGE).
+19. contains only path steps that succeeded; an attempt, a blocked step, or a lure nobody acted on is a `near_miss_record` or an `averted_next` entry, never a path step (R-SUCCESS);
+20. gives a Δt only to BREs reached by a causal edge, and records statutory deadlines as Report `timestamp_due`, never as Δt (R-BRE-EDGE);
+21. as a `near_miss_record`, carries one `[Attempt: …]` step, no SRE, DRE, BRE or Impact, and states `held_by` and `stopped_at` (R-NEAR-MISS, V-7);
+22. keeps near-miss records out of incident statistics and counts them as near misses of the attempted cluster (R-NEAR-MISS).
 
 ---
 
@@ -1447,15 +1576,16 @@ In that future architecture:
 ## 23.1 v0.9 changes from v0.8
 
 1. Re-based the profile from TLCTC v2.5.1 to TLCTC v2.7 (dictionary `tlctc-framework.v2.7.json`, core paper v2.7, DOI 10.5281/zenodo.23437984). `framework_version` is `"2.7"` and `tlctc_plus_version` `"0.9"` (§3, §17.2, §18, conformance 18). References to "core v2.5 notation / path / grammar" now point to v2.7; core section numbers are unchanged. v0.8 records stay readable and convert by changing the two version fields (§3).
-2. Carried the v2.6 "successful steps only" doctrine (core §3.4): new §4.3 and rule R-SUCCESS. A lure nobody acted on, or a blocked attempt, is control-side evidence and not a record; for #9, success means the unsafe action occurred. Added to non-scope (§5), the decision procedure (§20 step 2), conformance 19, and worked example 19.11.
-3. Carried the v2.6 subversion test for #10 (R-SUPPLY): §8.1 note, example 19.6, §20 step 2. A defect in a legitimately supplied component is classified where it is exploited; a supplier's outage is third-party failure. §6.6 example reworded.
-4. Carried the v2.7 consequence chain (core §3.4, dictionary `consequence_chain`): a BRE is reached by a causal edge (with Δt) or a normative edge (no Δt). §8.5 explains the two kinds; new rule R-BRE-EDGE; R-BRE-OP-SCOPE now speaks of a transition, causal or normative; data model §17.6 gains the optional fields `edge` and `delta_t`; both JSON examples in §18 show `edge`; example 19.6 names its normative edges; conformance 20.
-5. Stated that a statutory deadline bounds the response process from awareness and is not a Δt (§8.7, R-BRE-EDGE, §16, §17.9 `timestamp_due`, §20 step 8, example 19.6 with the NIS2 Art. 23(4) deadlines).
-6. Added the v2.7 entry point "BRE entered directly by a normative edge" (compliance risk, no cluster) to non-scope (§5).
-7. Distinguished the Impact track from the core term Business Impact, a role a BRE holds under the organization's risk appetite (§8.6).
-8. Restated the DRE stopping rule in the v2.7 wording (§8.3): a split only where states differ in the record's present standing, never by how it came to be; closure at two splits is a decision.
-9. Resolved an inconsistency carried since v0.7: V-5 required a BRE on every `pure_9_record`, while §4.2, example 19.2 and proposal B.2 show a pure #9 credential disclosure with a DRE only. V-5 now requires at least one DRE or BRE annotation. Grammar comments updated; the grammar itself is unchanged.
-10. Did not change record types, the SRE marker, PATTERN/BRE/IMPACT/REPORT catalogues (v0.2 / v0.3 / v0.2 / v0.2), the six tracks, the notation, the grammar productions, boundary-operator requirements, or cause/consequence independence. Did not touch core TLCTC.
+2. Carried the v2.6 "successful steps only" doctrine (core §3.4): new §4.3 and rule R-SUCCESS. A lure nobody acted on, or a blocked attempt, is not a path step and not an incident; for #9, success means the unsafe action occurred.
+3. Added a third record type, `near_miss_record` (§4.4), for attacks in which the attacker acted and a control held before any step succeeded — the near misses the application companion (§10) counts in every cluster's Key Risk Indicator, and the largest share of citizen reports to national centres. Notation `[Attempt: #X …]` (§8.8), bracket-only so that the attempted step is never a path step; Pattern and Report may follow, SRE, DRE, BRE and Impact may not (R-NEAR-MISS, enforced by the grammar). Data model: `attempted_step`, required `held_by` and `stopped_at` (V-7), optional `campaign_id`, `report_count`, `first_seen`, `last_seen` (§17.10). Near-miss records never enter incident statistics. For averted steps after successful ones, incident records gain the optional field `averted_next` (§17.3, V-8). New: §8.8, §17.10, JSON example 18.3, worked examples 19.11–19.13, decision procedure step 2, conformance 21–22, glossary entries; §1, §3, §4, §10, §11, §16, §17.1 updated. The ABNF grammar gains the NEAR_MISS_RECORD alternative.
+4. Carried the v2.6 subversion test for #10 (R-SUPPLY): §8.1 note, example 19.6, §20 step 2. A defect in a legitimately supplied component is classified where it is exploited; a supplier's outage is third-party failure. §6.6 example reworded.
+5. Carried the v2.7 consequence chain (core §3.4, dictionary `consequence_chain`): a BRE is reached by a causal edge (with Δt) or a normative edge (no Δt). §8.5 explains the two kinds; new rule R-BRE-EDGE; R-BRE-OP-SCOPE now speaks of a transition, causal or normative; data model §17.6 gains the optional fields `edge` and `delta_t`; both JSON examples in §18 show `edge`; example 19.6 names its normative edges; conformance 20.
+6. Stated that a statutory deadline bounds the response process from awareness and is not a Δt (§8.7, R-BRE-EDGE, §16, §17.9 `timestamp_due`, §20 step 8, example 19.6 with the NIS2 Art. 23(4) deadlines).
+7. Added the v2.7 entry point "BRE entered directly by a normative edge" (compliance risk, no cluster) to non-scope (§5).
+8. Distinguished the Impact track from the core term Business Impact, a role a BRE holds under the organization's risk appetite (§8.6).
+9. Restated the DRE stopping rule in the v2.7 wording (§8.3): a split only where states differ in the record's present standing, never by how it came to be; closure at two splits is a decision.
+10. Resolved an inconsistency carried since v0.7: V-5 required a BRE on every `pure_9_record`, while §4.2, example 19.2 and proposal B.2 show a pure #9 credential disclosure with a DRE only. V-5 now requires at least one DRE or BRE annotation, or `averted_next` (example 19.13: the person acted, the payload was blocked).
+11. Did not change the two incident record types, the SRE marker, PATTERN/BRE/IMPACT/REPORT catalogues (v0.2 / v0.3 / v0.2 / v0.2), the six tracks, the existing notation and grammar productions, boundary-operator requirements, or cause/consequence independence. Did not touch core TLCTC.
 
 ## 23.2 v0.8 changes from v0.7
 
@@ -1510,9 +1640,21 @@ In that future architecture:
 
 # 24. Glossary
 
-## `compromise_record` / `pure_9_record`
+## `compromise_record` / `pure_9_record` / `near_miss_record`
 
-The two TLCTC+ record types (since v0.6; split on path composition since v0.7). `compromise_record` carries a TLCTC path with at least one direct SRE and marks the first of them with `+ [SRE]`; `pure_9_record` carries a single #9 step whose SRE is induced and renders no marker. See §4, §17.1.
+The three TLCTC+ record types. The two incident types (since v0.6; split on path composition since v0.7): `compromise_record` carries a TLCTC path with at least one direct SRE and marks the first of them with `+ [SRE]`; `pure_9_record` carries a single #9 step whose SRE is induced and renders no marker. `near_miss_record` (v0.9) carries one attempted step in `[Attempt: …]` and no SRE. See §4, §17.1.
+
+## Attempt
+
+The notation `[Attempt: #X …]` that opens a near-miss record (§8.8). It encloses one classified cluster step, the cluster the attack aimed at, and is bracket-only because nothing succeeded: it is never a path step.
+
+## `averted_next`
+
+Optional field on an incident record naming the cluster of a next step that a control is known to have averted (§4.4, §17.3). Counted as a near miss of that cluster.
+
+## Near miss
+
+An attack in which the attacker acted but a control held before the step succeeded (application companion §10). Counted per cluster in the Key Risk Indicator alongside incidents, never as an incident. In TLCTC+ a `near_miss_record` where nothing succeeded, or `averted_next` on an incident record.
 
 ## Abuse of Rights
 
@@ -1556,7 +1698,7 @@ A procedural artefact, report filing, workflow stage, authority communication, o
 
 ## Successful step
 
-A cluster step that achieved its effect; only successful steps are recorded (core §3.4, R-SUCCESS). For #9, the manipulated person performed the unsafe action. Attempts and blocked steps are control-side evidence (§4.3).
+A cluster step that achieved its effect; only successful steps are recorded (core §3.4, R-SUCCESS). For #9, the manipulated person performed the unsafe action. Attempts and blocked steps are near misses, never path steps (§4.3, §4.4).
 
 ## SRE — System Risk Event
 

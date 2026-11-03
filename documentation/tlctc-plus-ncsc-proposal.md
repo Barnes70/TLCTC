@@ -11,7 +11,7 @@
 
 > **Companion document:** This proposal explains why NCSCs, CERTs, CSIRTs, regulators, financial institutions, fraud teams, and adjacent peer groups should adopt TLCTC+. The implementation details — grammar, conformance, catalogues, JSON records, and decision procedure — are defined in `tlctc-plus-specification.md`.
 >
-> **v0.9:** The proposal now rests on TLCTC v2.7. Nothing in the reporting grammar changes. The proposal now states what v2.6 and v2.7 made explicit: only successful steps are recorded, so a reported lure nobody acted on is evidence for warnings rather than a case record; a supplier incident is #10 only where the supplier or its artifact was subverted; and a business risk event is reached either causally (it is brought about, after a time interval) or normatively (a duty such as a notification obligation arises), with statutory deadlines counted from awareness rather than treated as time intervals in the chain.
+> **v0.9:** The proposal now rests on TLCTC v2.7 and adds a record for near misses. Only successful steps are recorded as incidents, so a reported lure nobody acted on, or a blocked attempt, is not an incident; it is a **near miss**, which TLCTC already counts per cluster for risk indicators, and v0.9 gives it its own record type, written `[Attempt: …]`. For most national centres this is the largest share of what citizens report. The proposal also states what v2.6 and v2.7 made explicit: a supplier incident is #10 only where the supplier or its artifact was subverted; and a business risk event is reached either causally (it is brought about, after a time interval) or normatively (a duty such as a notification obligation arises), with statutory deadlines counted from awareness rather than treated as time intervals in the chain.
 >
 > **Notation policy:** This proposal follows TLCTC+ v0.9. Scam, fraud, extortion, and manipulation labels are recorded as `[Pattern: PATTERN-XXX.YY ...]` on the cause-side step. Consequence-side events are recorded as structured BRE codes: `+ [BRE: BRE-XXX.YY ...]`. The first direct System Risk Event is marked `+ [SRE]` (every cluster step records its own SRE; a pure #9 record renders no marker). Data/resource impact is recorded as `+ [DRE: C|I|Ii|If|A|Av|Ac]`. Measurements are recorded as `+ [Impact: ...]`. Procedural filings and workflow states are recorded as `+ [Report: ...]`. Free-text BRE labels are not conformant.
 
@@ -25,10 +25,11 @@
 
 ## 1. Executive Summary
 
-National Cyber Security Centres (NCSCs), CERTs, and CSIRTs increasingly handle two structurally distinct reporting realities, split on the composition of the TLCTC path:
+National Cyber Security Centres (NCSCs), CERTs, and CSIRTs increasingly handle two structurally distinct incident realities, split on the composition of the TLCTC path, and a large volume of attacks that did not succeed:
 
 1. **Compromise records** — a TLCTC attack path contains at least one cluster step other than #9, i.e. at least one direct System Risk Event. Within this single class, two reporting flavors are common: cyber-side dominance (the historic "core cyber incident" — technical compromise, service outage, regulatory notification) and consequence-side dominance (the historic "hybrid cyber-enabled harm" — fraud, citizen harm, identity harm, financial loss). The structural reality is the same; the distinction is which BRE family dominates downstream.
 2. **Pure #9-anchored digital-harm records** — the case is digitally mediated and manipulation-driven, and no IT system is compromised by the attacker directly. The path is a single #9 step; its SRE is induced (exercised through the manipulated person's own action) and no `+ [SRE]` marker is rendered.
+3. **Near-miss records** — the attacker acted, but a control held before any step succeeded: a fake bank message reported by a citizen who did not click, a campaign blocked by a mobile operator, an exploit stopped at the perimeter. These are not incidents and never enter incident statistics, but they are counted per cluster as near misses, and they drive public warnings.
 
 Core TLCTC already solves the cause-side problem. It classifies cyber threats by the generic vulnerability initially exploited and keeps threats, actors, control failures, data risk events, and business consequences separate.
 
@@ -261,7 +262,20 @@ Credential acquisition is classified by the enabling cluster. Credential use is 
 
 ### 6.3 Successful Steps Only
 
-TLCTC records steps that succeeded. A lure that a citizen received and reported without acting on it, or a phishing campaign a filter blocked, is not a `#9` step and not a TLCTC+ record. Such reports are control-side evidence. They feed public warnings, takedowns and campaign statistics, and they measure how well prevention works. Counting them as records would turn a measure of control success into a count of compromises. A `#9` step succeeds when the person performs the unsafe action the lure aimed at: pays, discloses, installs or approves.
+TLCTC records steps that succeeded. A `#9` step succeeds when the person performs the unsafe action the lure aimed at: pays, discloses, installs or approves. A lure that a citizen received and reported without acting on it, or a phishing campaign a filter blocked, is therefore not a `#9` step and not an incident. Counting it as one would turn a measure of control success into a count of compromises.
+
+### 6.4 Near-Miss Record
+
+The attacker still acted, and the control that held is information. TLCTC's application companion counts such events as near misses in every cluster's Key Risk Indicator. TLCTC+ records them as a third record type, written so that the attempted step can never be read as a path step:
+
+```text
+[Attempt: #9 ||[messaging][@External→@Citizen]||] [Pattern: PATTERN-ID.13 Fake Login Portal]
++ [Report: REPORT-NCSC.11 Voluntary NCSC/CERT Report Filed]
+```
+
+A near-miss record names the cluster the attack aimed at, the pattern for public warnings, and any reports. It has no System, Data or Business Risk Event and no Impact, because nothing left its owner's control. In the case database it states which control held (the user, a filter, a provider, an authority) and whether the attack stopped at delivery or at the target. One record may stand for a whole campaign, with a report count, so that a thousand forwarded copies of the same message are one record.
+
+Where a path succeeded up to a point and the next step was averted, the incident record names that step in `averted_next`. A phishing victim who reports the disclosed password before it is used is a `#9` incident and a `#4` near miss in one record.
 
 ---
 
@@ -319,6 +333,7 @@ Was data/resource affected?       → DRE
 What event happened?              → BRE
 How large was the harm?           → Impact
 Was a filing/referral made?       → Report
+Did a control hold before any step succeeded? → near_miss_record
 ```
 
 ---
@@ -335,7 +350,7 @@ TLCTC+ must not:
 - replace criminal-law categories;
 - replace law-enforcement investigative taxonomies;
 - classify non-cyber operational failures;
-- record attempts, blocked steps or lures nobody acted on as case records;
+- count attempts, blocked steps or lures nobody acted on as incidents (they are near-miss records);
 - overload the TLCTC sequence operator `→`;
 - write a statutory deadline as a time interval in the chain;
 - use free-text BREs in conformant records.
@@ -349,7 +364,7 @@ TLCTC+ must remain an extension profile around TLCTC, not a mutation of TLCTC.
 A national portal or analyst workflow can use the following decision flow.
 
 1. **Is there a TLCTC cyber cause path?**  
-   If yes, classify each successful step using TLCTC `#1`–`#10`. Attempts and blocked steps are not steps (§6.3); a supplier incident is `#10` only where the supplier or its artifact was subverted before acceptance.
+   If yes, classify each successful step using TLCTC `#1`–`#10`. Attempts and blocked steps are not steps (§6.3); if nothing succeeded, record a near miss (§6.4); a supplier incident is `#10` only where the supplier or its artifact was subverted before acceptance.
 
 2. **If not, is there a pure #9 digital-harm anchor?**  
    If a human was psychologically manipulated through a digital or digitally mediated channel, record `#9` with the required bridge boundary.
@@ -372,7 +387,7 @@ A national portal or analyst workflow can use the following decision flow.
 8. **Was a filing, referral, or procedural stage reached?**  
    Attach `+ [Report: REPORT-XXX.YY ...]`, with each deadline counted from awareness.
 
-If there is no TLCTC path and no #9 anchor, the case is outside TLCTC+. If the report describes only a lure nobody acted on or a blocked attempt, it is evidence for warnings and statistics on prevention, not a TLCTC+ record.
+If there is no TLCTC path and no #9 anchor, the case is outside TLCTC+. If the report describes only a lure nobody acted on or a blocked attempt, record it as a `near_miss_record`: it feeds warnings and near-miss statistics and never counts as an incident.
 
 ---
 
@@ -456,14 +471,15 @@ Therefore, TLCTC+ must not reduce external fraud to `#9`. The TLCTC path records
 
 ## 12. Minimal Data Model
 
-A conformant TLCTC+ v0.9 record uses one of two record types:
+A conformant TLCTC+ v0.9 record uses one of three record types:
 
 ```text
 compromise_record
 pure_9_record
+near_miss_record
 ```
 
-`compromise_record` covers cases whose TLCTC path contains at least one cluster step other than #9 (a direct System Risk Event) — regardless of whether the dominant downstream BRE family is cyber-side (BRE-SVC.*, BRE-DATA.*, BRE-REG.*) or consequence-side (BRE-FIN.*, BRE-ENT.*, BRE-CUS.*). The historical "core cyber incident" and "hybrid cyber-enabled harm" labels remain useful descriptive prose but have not been separate record types since v0.6.
+`compromise_record` covers cases whose TLCTC path contains at least one cluster step other than #9 (a direct System Risk Event) — regardless of whether the dominant downstream BRE family is cyber-side (BRE-SVC.*, BRE-DATA.*, BRE-REG.*) or consequence-side (BRE-FIN.*, BRE-ENT.*, BRE-CUS.*). The historical "core cyber incident" and "hybrid cyber-enabled harm" labels remain useful descriptive prose but have not been separate record types since v0.6. `near_miss_record` (v0.9) covers attacks in which no step succeeded; it has cause, pattern and report fields only, plus `held_by`, `stopped_at` and, optionally, `campaign_id` and `report_count`.
 
 Minimum metadata:
 
@@ -787,6 +803,12 @@ Consequence side:
 + [Report: REPORT-XXX.YY]      procedural artefact or workflow state
 ```
 
+Near misses (no step succeeded):
+
+```text
+[Attempt: #X ...]              attempted cluster step; opens a near-miss record
+```
+
 Conformance reminders:
 
 - Pattern uses bracket-only notation.
@@ -794,7 +816,7 @@ Conformance reminders:
 - Every #8/#9/#10 step in a TLCTC+ record carries a boundary operator.
 - BREs are structured codes, not free text.
 - Stripping TLCTC+ annotations recovers a valid TLCTC path or #9 anchor.
-- Only successful steps are recorded; reported lures nobody acted on are evidence, not records.
+- Only successful steps are path steps; a reported lure nobody acted on is a near-miss record, never an incident.
 - A Δt belongs only to causal transitions; statutory deadlines go on the Report track, counted from awareness.
 
 ---
@@ -863,6 +885,15 @@ Ransomware is not the threat cluster. The cause path is `#9 → #7`. The DRE is 
 + [BRE: BRE-ENT.13 Email Account Takeover Harm → BRE-FIN.21 Unauthorized Bank Transfer Executed]
 + [Impact: IMPACT-FIN.12 Direct Fraud Loss]
 ```
+
+### B.8 Reported Fake Bank Message, Nobody Clicked
+
+```text
+[Attempt: #9 ||[messaging][@External→@Citizen]||] [Pattern: PATTERN-ID.13 Fake Login Portal]
++ [Report: REPORT-NCSC.11 Voluntary NCSC/CERT Report Filed + REPORT-NCSC.13 Public Warning Candidate Flagged]
+```
+
+A `#9` near miss: the recipient recognised the lure (`held_by: user`, `stopped_at: target`). It feeds the public warning and the near-miss count, not the incident count.
 
 ---
 

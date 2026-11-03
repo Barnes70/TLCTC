@@ -1,7 +1,7 @@
 ; TLCTC+ Attack Path / Record Notation — Formal Grammar
 ; Version: TLCTC+ v0.9 (base framework: TLCTC v2.7, dictionary
 ;          tlctc-framework.v2.7.json). The productions are unchanged
-;          from v0.8; only comments and the V-5 wording changed.
+;          from v0.8 except the new NEAR_MISS_RECORD alternative.
 ; Format:  ABNF (RFC 5234), UTF-8 source encoding required.
 ; Canonical prose specification: documentation/tlctc-plus-specification.md
 ;          §8 (notation) and §10 (minimal grammar, constraints V-1…V-6)
@@ -20,9 +20,13 @@
 ;                                            i.e. at least one direct SRE)
 ;       - record_type = pure_9_record       (a single #9 step; its SRE is
 ;                                            induced, no marker rendered)
+;       - record_type = near_miss_record    (one attempted cluster step in
+;                                            [Attempt: ...]; no step
+;                                            succeeded, a control held;
+;                                            no path, no SRE/DRE/BRE)
 ;     Under the core (since v2.5.1, unchanged in v2.7) every cluster
 ;     step records its own System Risk
-;     Event (core §3.4), so the two record types are split on PATH
+;     Event (core §3.4), so the two incident record types are split on PATH
 ;     COMPOSITION, not on SRE presence. "+ [SRE]" is the first-direct-SRE
 ;     marker: a step annotation written once, on the first non-#9
 ;     cluster step in path order (R-SRE, V-2). The compromise a record
@@ -34,6 +38,8 @@
 ; Structure (mirrors §10)
 ;   <compromise-record> ::= <annotated-path> <record-annotation>*
 ;   <pure-9-record>     ::= <annotated-9-step> <record-annotation>*
+;   <near-miss-record>  ::= <attempt-annotation> <pattern-annotation>?
+;                           <report-annotation>*
 ;   <annotated-step>    ::= <step> <step-annotation>*
 ;   step annotations   : + [SRE], + [DRE: ...], [Pattern: ...]
 ;   record annotations : + [BRE: ...], + [Impact: ...], + [Report: ...]
@@ -53,6 +59,9 @@
 ;       (BRE-XXX.YY); free-text BRE labels do not parse.
 ;   - V-3 at grammar level: the pure-#9 skeleton admits no SRE marker
 ;       (boundary required, Pattern optional, DRE optional).
+;   - R-NEAR-MISS at grammar level: a near-miss record admits no SRE,
+;       DRE, BRE or Impact annotation, and its attempted step sits inside
+;       [Attempt: ...], so it can never be read as a path step.
 ;   - V-4 at grammar level (stronger than §10 requires): an unresolved
 ;       step admits no step annotation at all — no DRE (R-UNRES-5), no
 ;       SRE marker, no Pattern.
@@ -68,6 +77,9 @@
 ;   - V-5: a pure-#9 record carries at least one DRE or BRE annotation.
 ;   - V-6: reporting_pivot_step names a cluster step present in the path
 ;       (a data-model field; it has no notation).
+;   - V-7: a near-miss record states held_by and stopped_at (data model).
+;   - V-8: averted_next, if set, names a cluster and appears only on a
+;       compromise or pure-#9 record (data model).
 ;   - R-SCOPE (Attack-row admission), R-EXEC, R-CRED, R-SUPPLY, R-ROLE,
 ;       Axiom VI (single-cluster rule), Axiom IV.
 ;   - R-DRE-PLACEMENT beyond adjacency (a DRE binds to the step it
@@ -82,7 +94,8 @@
 ;   - R-BRE-EDGE: causal vs normative BRE edges, Δt on causal edges
 ;       only, deadlines as Report timestamp_due (data model, §17.6;
 ;       the notation does not mark the edge kind).
-;   - Conformance items 1, 3, 15, 16, 17, 18, 19, 20 from §21.
+;   - Conformance items 1, 3, 15, 16, 17, 18, 19, 20, 21 (held_by,
+;       stopped_at), 22 from §21.
 ;
 ; Whitespace: SP is a single space. Records rendered over several lines
 ; (as in §19) MUST have line breaks normalised to SP before parsing.
@@ -102,7 +115,7 @@
 ; Top-level record
 ; =====================================================================
 
-TLCTC_PLUS_RECORD = COMPROMISE_RECORD / PURE_9_RECORD
+TLCTC_PLUS_RECORD = COMPROMISE_RECORD / PURE_9_RECORD / NEAR_MISS_RECORD
 
 ; -- Compromise record ------------------------------------------------
 ; A path containing at least one cluster step other than #9 (V-1),
@@ -126,6 +139,17 @@ PURE_9_RECORD   = ANNOTATED_9_STEP *(SP* RECORD_ANN)
 ANNOTATED_9_STEP = "#9" SP* BOUNDARY
                    [SP* PATTERN_TAG]
                    [SP* DRE_TAG]
+
+; -- Near-miss record (v0.9) -------------------------------------------
+; The attacker acted but no step succeeded: a control held (§4.4). The
+; attempted step is one classified cluster step (bridge clusters keep
+; their REQUIRED boundary, R-BOUNDARY) enclosed in [Attempt: ...], so
+; it is an annotation, not a path step: stripping all TLCTC+ annotations
+; leaves no path, which is correct (R-RECOVERABILITY). Pattern optional;
+; only Report annotations may follow (R-NEAR-MISS): no SRE, DRE, BRE or
+; Impact. held_by / stopped_at are data-model fields (V-7).
+NEAR_MISS_RECORD = ATTEMPT_TAG [SP* PATTERN_TAG] *(SP* REPORT_TAG)
+ATTEMPT_TAG      = "[Attempt:" SP* CLASSIFIED_STEP SP* "]"
 
 ; =====================================================================
 ; Annotated path (cause-side path with step annotations)
