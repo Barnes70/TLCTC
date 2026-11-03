@@ -1,0 +1,637 @@
+{
+  "metadata": {
+    "title": "RSIT → TLCTC Mapping",
+    "description": "Maps every value of the Reference Security Incident Taxonomy (RSIT, TF-CSIRT working group, hosted by ENISA), machinev1 version 1003, to TLCTC v2.6: what the RSIT value already proves about the cause (the cluster and the rule that decides), the question that completes the path where the value cannot, the Data Risk Event code where the value is a data state, and the cause-side partition row where it is not a threat. RSIT records the state of an incident; TLCTC classifies its cause. The mapping links the two without changing either.",
+    "tlctc_version": "2.6",
+    "framework_ref": "json-schemas/layer-1/tlctc-framework.v2.6.json",
+    "rsit_version": 1003,
+    "rsit_source": {
+      "repo": "enisaeu/Reference-Security-Incident-Taxonomy-Task-Force",
+      "commit": "b9ad1f843025bb3e8aefa308cdaf0cc22d4f4b77",
+      "file": "working_copy/machinev1",
+      "see": "PINNED.md"
+    },
+    "license": "CC-BY-4.0",
+    "upstream_license": "CC0-1.0",
+    "publisher": "TLCTC Project",
+    "source": "https://github.com/Barnes70/TLCTC/tree/main/mappings/rsit",
+    "created": "2026-11-03",
+    "updated": "2026-11-03",
+    "mapping_types": {
+      "direct": "The value names exactly one generic vulnerability: one cluster.",
+      "conditional": "The value spans clusters (and may include a no-cluster alternative); each alternative carries the condition under which it applies. The value alone cannot decide.",
+      "chain": "The value names one cluster, and the rules require a companion step (before or after) that RSIT does not record.",
+      "outcome": "A data state, not a cause (Axiom III): a DRE code, with the causes RSIT's own description names as cause_hints.",
+      "no-cluster": "Off the threat axis or no step against an IT system: the cause-side partition row, or out_of_scope, or excluded.",
+      "unresolved": "The value says something happened without naming it; no cluster can be defended (notation ?, R-UNRES-9).",
+      "context": "Reserved for parity with the VERIS mapping (boundary annotations); RSIT has no vector field, so no entry uses it.",
+      "attempt": "An attempted step whose success the value does not assert: the cluster it would be, counted as a near miss when blocked, never as an incident.",
+      "exposure": "A state of the target that enables a cluster: no step and no SRE (exposes lists the clusters).",
+      "indicator": "Attacker infrastructure or an artefact, not a victim event (implies lists the cluster it serves at the victim)."
+    }
+  },
+  "entries": [
+    {
+      "rsit_id": "abusive-content/spam",
+      "rsit_expanded": "Spam",
+      "mapping_type": "indicator",
+      "implies": [
+        {
+          "tlctc": "#9",
+          "condition": "a message carries a lure (link, attachment or request) to a person"
+        }
+      ],
+      "next_question": "Does the message carry a lure? Plain advertising involves no step against an IT system.",
+      "rationale": "RSIT defines Spam as an indicator for spam infrastructure (harvesters, URLs in spam). Messages that carry a lure are social engineering at the recipient (#9, as VERIS social.variety.Spam); the infrastructure itself is not a victim event."
+    },
+    {
+      "rsit_id": "abusive-content/harmful-speech",
+      "rsit_expanded": "Harmful Speech",
+      "mapping_type": "no-cluster",
+      "partition_row": "attack",
+      "out_of_scope": "harm to a person through content; no step against an IT system",
+      "next_question": null,
+      "rationale": "Bullying, harassment and discrimination harm people through what is said. No generic vulnerability of an IT system is exploited, so no cluster applies; the record stays in RSIT for its own purposes."
+    },
+    {
+      "rsit_id": "abusive-content/violence",
+      "rsit_expanded": "(Child) Sexual Exploitation/Sexual/Violent Content",
+      "mapping_type": "no-cluster",
+      "partition_row": "attack",
+      "out_of_scope": "harmful or illegal content; no step against an IT system",
+      "next_question": null,
+      "rationale": "Child sexual exploitation, sexual and violent content are content harms. No generic vulnerability of an IT system is exploited, so no cluster applies."
+    },
+    {
+      "rsit_id": "malicious-code/infected-system",
+      "rsit_expanded": "Infected System",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC"
+        }
+      ],
+      "companion": {
+        "before": "<enabler>: the step that delivered or started the code (#9 lure, #3 client exploit, #2 server exploit, #10 trusted update, #4 → #1 deployment)",
+        "notation": "<enabler> → #7"
+      },
+      "next_question": "How did the code arrive and start?",
+      "rationale": "An infected system means foreign executable content ran: #7 at the execution moment (R-EXEC). The record does not say how the code got there; that enabling step is a separate cluster."
+    },
+    {
+      "rsit_id": "malicious-code/c2-server",
+      "rsit_expanded": "C2 Server",
+      "mapping_type": "indicator",
+      "implies": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC",
+          "condition": "on the infected systems that contact it"
+        }
+      ],
+      "next_question": null,
+      "rationale": "Attacker infrastructure. Contacting the C2 server is part of the malware running on the infected clients (#7); the server is not a victim event."
+    },
+    {
+      "rsit_id": "malicious-code/malware-distribution",
+      "rsit_expanded": "Malware Distribution",
+      "mapping_type": "indicator",
+      "implies": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC",
+          "condition": "a victim runs the downloaded code"
+        },
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "condition": "an exploit kit on the site exploits the visiting browser or client before the code runs"
+        }
+      ],
+      "next_question": "Is the hosting site itself compromised? That is a separate path against its owner.",
+      "rationale": "A URI that serves malware is attacker infrastructure. At the victim the code runs (#7); an exploit kit adds a client exploit before it (#3 → #7)."
+    },
+    {
+      "rsit_id": "malicious-code/malware-configuration",
+      "rsit_expanded": "Malware Configuration",
+      "mapping_type": "indicator",
+      "implies": [
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC",
+          "condition": "on the infected systems that load the configuration"
+        }
+      ],
+      "next_question": null,
+      "rationale": "A hosted configuration file (for example web injects) is attacker infrastructure serving malware already running on victims (#7)."
+    },
+    {
+      "rsit_id": "information-gathering/scanner",
+      "rsit_expanded": "Scanning",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#1"
+        }
+      ],
+      "next_question": null,
+      "rationale": "Scanning sends requests that the services answer through their designed interfaces (port states, banners, replies): designed functionality used for reconnaissance, #1, as ATT&CK T1595 and T1046. Most scan reports have no further step."
+    },
+    {
+      "rsit_id": "information-gathering/sniffing",
+      "rsit_expanded": "Sniffing",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#1",
+          "condition": "capture with designed functions (promiscuous mode) where the attacker already has access"
+        },
+        {
+          "tlctc": "#5",
+          "rule": "R-MITM",
+          "condition": "the attacker holds a position on the communication path"
+        }
+      ],
+      "dre": "C",
+      "next_question": "Where was the capture point?",
+      "rationale": "Recording traffic is #1 or #5 by the attacker's position, as ATT&CK T1040. Position acquisition is its own step before it (R-MITM). The captured content is a confidentiality event."
+    },
+    {
+      "rsit_id": "information-gathering/social-engineering",
+      "rsit_expanded": "Social Engineering",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "dre": "C",
+      "next_question": null,
+      "rationale": "Gathering information from a person by lies, tricks, bribes or threats exploits human trust: #9. The information disclosed is a confidentiality event."
+    },
+    {
+      "rsit_id": "intrusion-attempts/ids-alert",
+      "rsit_expanded": "Exploitation of Known Vulnerabilities",
+      "mapping_type": "attempt",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "condition": "the flawed component serves the attacker (server role)"
+        },
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "condition": "the flawed component consumes attacker content (client role)"
+        }
+      ],
+      "near_miss": true,
+      "next_question": "Did it succeed? If so, classify the record under the matching Intrusions value.",
+      "rationale": "Exploiting a vulnerability with a known identifier is #2 or #3 by the role of the flawed component (R-ROLE). An attempt asserts no successful step, so no cluster is recorded as having occurred. A blocked attempt is a near miss (TLCTC+ near_miss_record; application paper §10), counted per cluster but never as an incident."
+    },
+    {
+      "rsit_id": "intrusion-attempts/brute-force",
+      "rsit_expanded": "Login Attempts",
+      "mapping_type": "attempt",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "near_miss": true,
+      "next_question": "Did any attempt authenticate? If so, classify the record under Unprivileged or Privileged Account Compromise.",
+      "rationale": "Guessing, cracking or spraying passwords against a login is credential application: #4 (R-CRED, as ATT&CK T1110). RSIT also uses this value as an indicator for the attacking resource. An attempt asserts no successful step, so no cluster is recorded as having occurred. A blocked attempt is a near miss (TLCTC+ near_miss_record; application paper §10), counted per cluster but never as an incident."
+    },
+    {
+      "rsit_id": "intrusion-attempts/exploit",
+      "rsit_expanded": "New Attack Signature",
+      "mapping_type": "attempt",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "condition": "the flawed component serves the attacker (server role)"
+        },
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "condition": "the flawed component consumes attacker content (client role)"
+        }
+      ],
+      "near_miss": true,
+      "next_question": "Did it succeed? If so, classify the record under the matching Intrusions value.",
+      "rationale": "An unknown exploit targets an implementation flaw: #2 or #3 by the role of the flawed component (R-ROLE). An attempt asserts no successful step, so no cluster is recorded as having occurred. A blocked attempt is a near miss (TLCTC+ near_miss_record; application paper §10), counted per cluster but never as an incident."
+    },
+    {
+      "rsit_id": "intrusions/privileged-account-compromise",
+      "rsit_expanded": "Privileged Account Compromise",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED",
+          "condition": "administrative credentials were applied; their acquisition is a separate step before"
+        },
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "condition": "a flaw in a privileged component was exploited (local privilege escalation)"
+        },
+        {
+          "tlctc": "#1",
+          "condition": "privileges were reached through designed functions or a misconfiguration"
+        }
+      ],
+      "next_question": "How were administrative privileges obtained?",
+      "rationale": "RSIT records that the attacker holds administrative privileges, not how. Using an admin credential is #4; escalating through a flaw in a privileged component is #2; escalating through designed functions is #1."
+    },
+    {
+      "rsit_id": "intrusions/unprivileged-account-compromise",
+      "rsit_expanded": "Unprivileged Account Compromise",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED"
+        }
+      ],
+      "companion": {
+        "before": "<acquisition>: the step that obtained the credential (#9 phishing, #5 interception, #7 infostealer, #2 data exposure, …)",
+        "notation": "<acquisition> → #4"
+      },
+      "next_question": "How was the credential obtained?",
+      "rationale": "Compromise through a user or service account is credential application: #4 (R-CRED). Acquiring the credential is a separate step under its own cluster (Axiom X)."
+    },
+    {
+      "rsit_id": "intrusions/application-compromise",
+      "rsit_expanded": "Application Compromise",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "condition": "the application serves the attacker (server role), e.g. SQL injection"
+        },
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "condition": "the application processes attacker-supplied content (client role)"
+        }
+      ],
+      "next_question": "Did the application serve the attacker or consume attacker content?",
+      "rationale": "Exploiting a software flaw is #2 or #3 by the role of the flawed component (R-ROLE); RSIT's example, SQL injection, is #2."
+    },
+    {
+      "rsit_id": "intrusions/system-compromise",
+      "rsit_expanded": "System Compromise",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED",
+          "condition": "an unauthorised login with a credential"
+        },
+        {
+          "tlctc": "#1",
+          "condition": "commands run through designed functions"
+        },
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "condition": "a flaw in a server-role component was exploited"
+        }
+      ],
+      "next_question": "Which act gave the attacker the system? RSIT also files attempts on honeypots here; a failed attempt is a near miss, not a compromise.",
+      "rationale": "RSIT records the compromised state. Unauthorised logins are #4; commands through designed functions are #1; a code flaw is #2."
+    },
+    {
+      "rsit_id": "intrusions/burglary",
+      "rsit_expanded": "Burglary",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#8"
+        }
+      ],
+      "next_question": null,
+      "rationale": "Physical intrusion into a building or data centre: #8, across a [physical] boundary."
+    },
+    {
+      "rsit_id": "availability/dos",
+      "rsit_expanded": "Denial of Service",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#6",
+          "rule": "R-SPECIFIC",
+          "condition": "volume or intensity exhausts finite resources"
+        },
+        {
+          "tlctc": "#2",
+          "rule": "R-SPECIFIC",
+          "condition": "an implementation defect crashes or hangs a server-role component"
+        },
+        {
+          "tlctc": "#3",
+          "rule": "R-SPECIFIC",
+          "condition": "an implementation defect crashes or hangs a client-role component"
+        }
+      ],
+      "dre": "A",
+      "next_question": "Flaw or capacity?",
+      "rationale": "RSIT records the availability effect. Capacity exhausted by volume is #6; a crafted request that crashes a component exploits a code defect, #2 or #3 per R-ROLE (R-SPECIFIC; as VERIS hacking.variety.DoS)."
+    },
+    {
+      "rsit_id": "availability/ddos",
+      "rsit_expanded": "Distributed Denial of Service",
+      "mapping_type": "direct",
+      "targets": [
+        {
+          "tlctc": "#6",
+          "rule": "R-SPECIFIC"
+        }
+      ],
+      "dre": "A",
+      "next_question": null,
+      "rationale": "Distributed floods and reflection or amplification exhaust capacity: #6 (R-SPECIFIC; as ATT&CK T1498)."
+    },
+    {
+      "rsit_id": "availability/misconfiguration",
+      "rsit_expanded": "Misconfiguration",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "next_question": null,
+      "rationale": "A software misconfiguration that degrades a service has no attacker: the Failure row of the cause-side partition, operational risk with no cluster (as VERIS error.variety.Misconfiguration)."
+    },
+    {
+      "rsit_id": "availability/sabotage",
+      "rsit_expanded": "Sabotage",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#8",
+          "condition": "physical damage, e.g. cutting wires or arson"
+        },
+        {
+          "tlctc": "#1",
+          "condition": "logical damage by an actor outside any grant, e.g. malicious firewall rules; how the actor reached the system is a separate step"
+        },
+        {
+          "partition_row": "abuse_of_rights",
+          "condition": "an entitled actor acting within the grant (R-SCOPE): operational risk, no cluster"
+        },
+        {
+          "out_of_scope": "a threat with no act against the system, e.g. a bomb threat",
+          "condition": "nothing was done to an IT system"
+        }
+      ],
+      "next_question": "Physical or logical? Was the actor acting within their access rights?",
+      "rationale": "RSIT groups intentional damage at logical and physical level. Physical damage is #8; logical damage by an attacker is #1; an administrator acting within a genuine entitlement is Abuse of Rights (R-SCOPE); a bomb threat involves no step against an IT system."
+    },
+    {
+      "rsit_id": "availability/outage",
+      "rsit_expanded": "Outage",
+      "mapping_type": "no-cluster",
+      "partition_row": "failure",
+      "next_question": null,
+      "rationale": "An outage from an air-conditioning failure or a natural disaster has no attacker: the Failure row, operational risk with no cluster."
+    },
+    {
+      "rsit_id": "information-content-security/unauthorised-information-access",
+      "rsit_expanded": "Unauthorised Access to Information",
+      "mapping_type": "outcome",
+      "dre": "C",
+      "cause_hints": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED",
+          "condition": "stolen login credentials were applied"
+        },
+        {
+          "tlctc": "#5",
+          "rule": "R-MITM",
+          "condition": "traffic was intercepted"
+        },
+        {
+          "tlctc": "#8",
+          "condition": "physical documents were accessed"
+        }
+      ],
+      "next_question": "Which step gave the access?",
+      "rationale": "A data state, not a cause (Axiom III): confidentiality was lost. The causes are those RSIT's own description names."
+    },
+    {
+      "rsit_id": "information-content-security/unauthorised-information-modification",
+      "rsit_expanded": "Unauthorised Modification of Information",
+      "mapping_type": "outcome",
+      "dre": "I",
+      "cause_hints": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED",
+          "condition": "stolen login credentials were applied"
+        },
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC",
+          "condition": "ransomware encrypted the data (DRE Ac: present but unusable)"
+        },
+        {
+          "tlctc": "#7",
+          "rule": "R-EXEC",
+          "condition": "a defacement placed attacker content (as ATT&CK T1491; DRE Ii)"
+        }
+      ],
+      "next_question": "Which step changed the data?",
+      "rationale": "A data state, not a cause (Axiom III): integrity was lost. Refine to Ii for content that is now wrong (defacement) or Ac for data present but unusable (ransomware encryption)."
+    },
+    {
+      "rsit_id": "information-content-security/data-loss",
+      "rsit_expanded": "Data Loss",
+      "mapping_type": "outcome",
+      "dre": "Av",
+      "cause_hints": [
+        {
+          "partition_row": "failure",
+          "condition": "a hard disk or other failure: no cluster"
+        },
+        {
+          "tlctc": "#8",
+          "condition": "physical theft (confidentiality may be lost as well)"
+        }
+      ],
+      "next_question": "Failure or theft?",
+      "rationale": "A data state, not a cause (Axiom III): the data is gone or unreachable (Av). A disk failure has no attacker; physical theft is #8."
+    },
+    {
+      "rsit_id": "information-content-security/data-leak",
+      "rsit_expanded": "Leak of Confidential Information",
+      "mapping_type": "outcome",
+      "dre": "C",
+      "next_question": "Which step exposed the information?",
+      "rationale": "A data state, not a cause (Axiom III): leaked credentials or personal data are a confidentiality event; the record does not name the step."
+    },
+    {
+      "rsit_id": "fraud/unauthorised-use-of-resources",
+      "rsit_expanded": "Unauthorised Use of Resources",
+      "mapping_type": "no-cluster",
+      "partition_row": "abuse_of_rights",
+      "basis": "R-SCOPE",
+      "next_question": "Was the access legitimately granted? If it was gained by an attack, the use is the outcome of that attack's path.",
+      "rationale": "RSIT's example is an entitled user using the organisation's email for chain letters or pyramid schemes: resources used against their purpose within a genuine grant, Abuse of Rights (R-SCOPE), operational risk with no cluster."
+    },
+    {
+      "rsit_id": "fraud/copyright",
+      "rsit_expanded": "Copyright",
+      "mapping_type": "no-cluster",
+      "partition_row": "attack",
+      "out_of_scope": "intellectual-property infringement; no step against an IT system (compliance risk: a BRE entered by a normative edge)",
+      "next_question": null,
+      "rationale": "Offering or installing unlicensed copies infringes rights; it exploits no generic vulnerability of an IT system."
+    },
+    {
+      "rsit_id": "fraud/masquerade",
+      "rsit_expanded": "Masquerade",
+      "mapping_type": "conditional",
+      "targets": [
+        {
+          "tlctc": "#9",
+          "condition": "the impersonation deceives people"
+        },
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED",
+          "condition": "the impersonator authenticates to a system as the entity"
+        }
+      ],
+      "next_question": "Were people deceived, or did a system authenticate the impersonator?",
+      "rationale": "Impersonating another entity to deceive people is #9; presenting the entity's identity artefacts to a system is #4."
+    },
+    {
+      "rsit_id": "fraud/phishing",
+      "rsit_expanded": "Phishing",
+      "mapping_type": "chain",
+      "targets": [
+        {
+          "tlctc": "#9"
+        }
+      ],
+      "companion": {
+        "after": "#4 when the disclosed credentials are used (R-CRED)",
+        "notation": "#9 → #4"
+      },
+      "dre": "C",
+      "next_question": "Were the credentials used?",
+      "rationale": "Persuading a person to reveal credentials is #9 (as ATT&CK T1566/T1598); the disclosure is a confidentiality event. Using the credentials is a separate #4 step (Axiom X). The reported URL is an indicator."
+    },
+    {
+      "rsit_id": "vulnerable/weak-crypto",
+      "rsit_expanded": "Weak Cryptography",
+      "mapping_type": "exposure",
+      "exposes": [
+        {
+          "tlctc": "#5",
+          "condition": "an attacker on the path can read or downgrade the channel (as CWE-326, CWE-327, CWE-757)"
+        }
+      ],
+      "next_question": null,
+      "rationale": "A state of the target, not an event: no step and no SRE. Weak cryptography enables interception on the channel (#5)."
+    },
+    {
+      "rsit_id": "vulnerable/ddos-amplifier",
+      "rsit_expanded": "DDoS Amplifier",
+      "mapping_type": "exposure",
+      "exposes": [
+        {
+          "tlctc": "#6",
+          "condition": "against the victim the reflected traffic is sent to"
+        },
+        {
+          "tlctc": "#1",
+          "condition": "the amplifier's designed response function is abused"
+        }
+      ],
+      "next_question": null,
+      "rationale": "A state of the target, not an event: no step and no SRE. The open service can be used to flood a third party (#6 at the victim) by abusing its designed response function (#1 at the amplifier)."
+    },
+    {
+      "rsit_id": "vulnerable/potentially-unwanted-accessible",
+      "rsit_expanded": "Potentially Unwanted Accessible Services",
+      "mapping_type": "exposure",
+      "exposes": [
+        {
+          "tlctc": "#4",
+          "rule": "R-CRED",
+          "condition": "credentials are applied to the exposed login"
+        },
+        {
+          "tlctc": "#1",
+          "condition": "designed functions of the exposed service are used"
+        }
+      ],
+      "next_question": null,
+      "rationale": "A state of the target, not an event: no step and no SRE. Exposed Telnet, RDP or VNC offer an authentication surface (#4) and designed functions (#1)."
+    },
+    {
+      "rsit_id": "vulnerable/information-disclosure",
+      "rsit_expanded": "Information Disclosure",
+      "mapping_type": "exposure",
+      "exposes": [
+        {
+          "tlctc": "#1",
+          "condition": "unauthenticated designed functions disclose data (as CWE-306)"
+        }
+      ],
+      "dre_potential": "C",
+      "next_question": null,
+      "rationale": "A state of the target, not an event: no step and no SRE. Services such as SNMP or Redis that answer without authentication disclose data through designed functions (#1)."
+    },
+    {
+      "rsit_id": "vulnerable/vulnerable-system",
+      "rsit_expanded": "Vulnerable System",
+      "mapping_type": "exposure",
+      "exposes": [
+        {
+          "tlctc": "#2",
+          "rule": "R-ROLE",
+          "condition": "an outdated or flawed server-role component"
+        },
+        {
+          "tlctc": "#3",
+          "rule": "R-ROLE",
+          "condition": "an outdated or flawed client-role component"
+        },
+        {
+          "tlctc": "#5",
+          "condition": "a proxy auto-discovery misconfiguration (WPAD) lets an attacker take the communication path"
+        }
+      ],
+      "next_question": null,
+      "rationale": "A state of the target, not an event: no step and no SRE. Implementation flaws are #2 or #3 by role (R-ROLE); cross-site scripting adds #7 where the injected script runs (as CWE-79); a WPAD misconfiguration enables #5."
+    },
+    {
+      "rsit_id": "other/other",
+      "rsit_expanded": "Uncategorised",
+      "mapping_type": "unresolved",
+      "next_question": "What happened? Reclassify once the record is understood.",
+      "rationale": "The record fits no RSIT class; no cluster can be defended from the label alone. Notation ?; excluded from statistics (R-UNRES-3)."
+    },
+    {
+      "rsit_id": "other/undetermined",
+      "rsit_expanded": "Undetermined",
+      "mapping_type": "unresolved",
+      "next_question": "What happened? Reclassify once the record is understood.",
+      "rationale": "The categorisation is unknown; no cluster can be defended from the label alone. Notation ?; excluded from statistics (R-UNRES-3)."
+    },
+    {
+      "rsit_id": "test/test",
+      "rsit_expanded": "Test",
+      "mapping_type": "no-cluster",
+      "excluded": "test record, not an event",
+      "next_question": null,
+      "rationale": "Meant for testing; excluded from any classification and count."
+    }
+  ]
+}
