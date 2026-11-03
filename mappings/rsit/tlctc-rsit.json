@@ -380,7 +380,7 @@
         },
         {
           "partition_row": "abuse_of_rights",
-          "condition": "an entitled actor acting within the grant (R-SCOPE): operational risk, no cluster"
+          "condition": "an entitled actor acting within the grant (R-SCOPE)"
         },
         {
           "out_of_scope": "a threat with no act against the system, e.g. a bomb threat",
@@ -455,7 +455,7 @@
       "cause_hints": [
         {
           "partition_row": "failure",
-          "condition": "a hard disk or other failure: no cluster"
+          "condition": "a hard disk or other failure"
         },
         {
           "tlctc": "#8",

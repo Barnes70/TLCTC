@@ -9,8 +9,11 @@
  *  3. Doctrine ids: every cluster, rule, axiom, DRE code and partition row named exists in the
  *     v2.6 dictionary; metadata.tlctc_version equals the dictionary's.
  *  4. The pinned machinev1 sha256 (LF-normalised) equals the one recorded in PINNED.md.
+ *  5. upstream/machinetag.json and upstream/rsit_2_tlctc.md equal fresh generator output
+ *     (LF-normalised); tag rule: machinetag ⇔ direct/chain, exactly 7, uuid = TLCTC MISP entry.
  *
- * Exports validateMapping(mapping, machinev1, dictionary) -> string[] (failures; [] = valid).
+ * Exports validateMapping(mapping, machinev1, dictionary) -> string[] (failures; [] = valid),
+ * checkGenerated({...}) and checkTags(machinetag, mapping, misp).
  * Exit: 0 = valid, 1 = at least one failure (all printed). Deps: Node builtins only.
  */
 'use strict';
@@ -158,12 +161,57 @@ function validateMapping(mapping, machinev1, dictionary) {
   return failures;
 }
 
+/** Byte check of the generated upstream files, comparing LF-normalised text. */
+function checkGenerated({ machinetagOnDisk, expectedMachinetag, mdOnDisk, expectedMd }) {
+  const failures = [];
+  if (machinetagOnDisk === null || lf(machinetagOnDisk) !== expectedMachinetag) failures.push('upstream/machinetag.json differs from generator output — run npm run build-rsit');
+  if (mdOnDisk === null || lf(mdOnDisk) !== expectedMd) failures.push('upstream/rsit_2_tlctc.md differs from generator output — run npm run build-rsit');
+  return failures;
+}
+
+/** Tag rule: machinetag present <=> direct/chain; exactly 7 tagged; uuid equals the MISP entry. */
+function checkTags(machinetag, mapping, misp) {
+  const failures = [];
+  const byId = new Map(mapping.entries.map((e) => [e.rsit_id, e]));
+  const mispByValue = new Map(misp.values.find((g) => g.predicate === 'cluster').entry.map((x) => [x.value, x.uuid]));
+  let tagged = 0;
+  for (const g of machinetag.values) {
+    for (const e of g.entry) {
+      const id = `${g.predicate}/${e.value}`;
+      const m = byId.get(id);
+      const els = e.tlctc || [];
+      const hasTag = els.some((x) => x.machinetag);
+      if (hasTag) tagged += 1;
+      if (m && hasTag !== ['direct', 'chain'].includes(m.mapping_type)) failures.push(`${id}: machinetag present must equal mapping_type in {direct, chain} (is ${m.mapping_type})`);
+      for (const x of els.filter((y) => y.machinetag)) {
+        const value = (x.machinetag.match(/^tlctc:cluster="([^"]+)"$/) || [])[1];
+        if (!value || mispByValue.get(value) !== x.uuid) failures.push(`${id}: ${x.machinetag} uuid ${x.uuid} does not match the TLCTC MISP taxonomy`);
+      }
+    }
+  }
+  if (tagged !== 7) failures.push(`expected 7 tagged RSIT values, found ${tagged}`);
+  return failures;
+}
+
 function main() {
   const mapping = readJSON(FILES.mapping);
   const machinev1Text = fs.readFileSync(FILES.machinev1, 'utf8');
   const machinev1 = JSON.parse(machinev1Text);
   const dictionary = readJSON(FILES.dictionary);
   const failures = validateMapping(mapping, machinev1, dictionary);
+
+  const gen = require('./build-rsit-mapping.js');
+  const os = require('os');
+  const misp = readJSON(gen.PATHS.misp);
+  const readOrNull = (p) => (fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null);
+  const expectedMachinetag = gen.buildMachinetag(mapping, machinev1, misp);
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'rsit-'));
+  fs.writeFileSync(path.join(tmp, 'machinetag.json'), expectedMachinetag);
+  const expectedMd = gen.renderMd(path.join(tmp, 'machinetag.json'), path.join(tmp, 'rsit_2_tlctc.md'));
+  fs.rmSync(tmp, { recursive: true, force: true });
+  failures.push(...checkGenerated({ machinetagOnDisk: readOrNull(gen.PATHS.outJson), expectedMachinetag,
+    mdOnDisk: readOrNull(gen.PATHS.outMd), expectedMd }));
+  failures.push(...checkTags(JSON.parse(expectedMachinetag), mapping, misp));
 
   const sha = crypto.createHash('sha256').update(lf(machinev1Text), 'utf8').digest('hex');
   const recorded = (fs.readFileSync(FILES.pinned, 'utf8').match(/`([0-9a-f]{64})`/) || [])[1];
@@ -179,5 +227,5 @@ function main() {
   console.log(`validate-rsit: OK (${mapping.entries.length} entries, RSIT ${machinev1.version})`);
 }
 
-module.exports = { validateMapping, rsitValues, FILES };
+module.exports = { validateMapping, checkGenerated, checkTags, rsitValues, FILES };
 if (require.main === module) main();
