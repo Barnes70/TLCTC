@@ -1,7 +1,7 @@
 # VERIS → TLCTC Mapping
 
-Maps every enumeration value of **VERIS 1.4.1** (Verizon's Vocabulary for Event Recording
-and Incident Sharing) that can say something about cause or outcome to **TLCTC v2.6**: the
+Maps every enumeration value of **VERIS 1.4.2** (Verizon's Vocabulary for Event Recording
+and Incident Sharing) that can say something about cause or outcome to **TLCTC v2.7**: the
 cluster whose generic vulnerability the action exploits, the rule that decides where VERIS
 cannot, the companion step the rules require but VERIS does not record, the boundary context
 a vector implies, the cause-side partition row for actions that are not threats, and the Data
@@ -10,8 +10,8 @@ reproducible study runs it over the whole VERIS Community Database.
 
 | Piece | Path | Notes |
 |---|---|---|
-| Canonical mapping | `tlctc-veris.json` | 337 entries, hand-authored, one rationale each |
-| Upstream deliverable | `veris-1.4.1_tlctc-2.6.csv` | **generated** by `scripts/build-veris-mapping.js`; the shape of the VERIS → ATT&CK file in [vz-risk/veris `mappings/`](https://github.com/vz-risk/veris/tree/master/mappings) |
+| Canonical mapping | `tlctc-veris.json` | 338 entries, hand-authored, one rationale each |
+| Upstream deliverable | `veris-1.4.2_tlctc-2.7.csv` | **generated** by `scripts/build-veris-mapping.js`; the shape of the VERIS → ATT&CK file in [vz-risk/veris `mappings/`](https://github.com/vz-risk/veris/tree/master/mappings) |
 | How a value is classified | `decision-tree.md` | the walk-through |
 | Classifier | `cli/` | Python 3.10+, standard library only |
 | Study | `study/run-study.py`, `study/results.{json,md}` | 10,047 VCDB records, aggregates committed, no records stored |
@@ -19,9 +19,12 @@ reproducible study runs it over the whole VERIS Community Database.
 | Pinned upstream files | `pinned/`, `PINNED.md` | VERIS enumerations, labels, ATT&CK mapping; VCDB snapshot hash |
 | Owner runbook | `upstream-pr.md` | the pull request to vz-risk/veris |
 
-Cluster names in the CSV come from the v2.6 dictionary at generation time
-(`json-schemas/layer-1/tlctc-framework.v2.6.json`); `npm run validate-veris` fails on any drift
-between the mapping, the dictionary and the pinned VERIS files.
+Cluster names in the CSV come from the v2.7 dictionary at generation time
+(`json-schemas/layer-1/tlctc-framework.v2.7.json`); `npm run validate-veris` fails on any drift
+between the mapping, the dictionary and the pinned VERIS files. Unlike the repository's other
+mappings, which still reference the v2.6 dictionary, this one follows v2.7 so that the open
+upstream pull request names the current release; v2.7 changed no cluster, rule or DRE code, so
+every verdict is the same as under v2.6.
 
 ## What a VERIS value can say: the seven mapping types
 
@@ -31,7 +34,7 @@ between the mapping, the dictionary and the pinned VERIS files.
 | `conditional` — several clusters, a named rule decides | 8 | `action.hacking.variety.Exploit vuln` → #2 \| #3 (R-ROLE); `DoS` → #6 \| #2 \| #3 (R-SPECIFIC, capacity); `Backdoor` → #1 \| #7 (R-EXEC) |
 | `chain` — one cluster plus a companion step VERIS does not record | 51 | `Use of stolen creds` → `<acquisition> → #4` (R-CRED); every malware variety → `<enabler> → #7` (R-EXEC); every social variety → `#9 → <follow-on>`; `RFI` → `#2 → #7` |
 | `context` — vectors: no cluster, an annotation | 65 | `action.malware.vector.Software update` → `[update]` context, R-SUPPLY; `Partner` → `@Vendor→@Org` crossing |
-| `no-cluster` — off the threat axis, partition row named | 58 | `action.error.variety.Misdelivery` → error_in_use (Axiom V); `Privilege abuse` → abuse_of_rights (R-SCOPE); `Extortion` → no IT-system step |
+| `no-cluster` — off the threat axis, partition row named | 59 | `action.error.variety.Misdelivery` → error_in_use (Axiom V); `Privilege abuse` → abuse_of_rights (R-SCOPE); `Extortion` → no IT-system step |
 | `outcome` — not a cause (Axiom III) | 87 | `attribute.availability.variety.Obscuration` → DRE `Ac`; `Loss` → `Av`; action results → nothing |
 | `unresolved` — `Other` / `Unknown` in a threat-bearing category | 19 | `action.hacking.variety.Unknown` → `?` in notation, excluded from statistics (R-UNRES-3) |
 
@@ -76,7 +79,7 @@ score_value,related_score,references,comments,organization,creation_date,last_up
 
 One row per (VERIS value, target): a conditional value has one row per alternative with the
 condition in `comments`; a chain value carries its companion in `comments`; values with no
-cluster have `tlctc_object_id = none` and the reason in `tlctc_object_name`. 346 rows, LF, no BOM.
+cluster have `tlctc_object_id = none` and the reason in `tlctc_object_name`. 347 rows, LF, no BOM.
 
 ## Classifier
 

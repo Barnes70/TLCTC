@@ -1,8 +1,8 @@
 # VERIS → TLCTC Classification Decision Tree
 
-How a VERIS 1.4.1 enumeration value was assigned its `mapping_type` and target in
+How a VERIS 1.4.2 enumeration value was assigned its `mapping_type` and target in
 `tlctc-veris.json`, and how to classify a value the mapping does not know (a future VERIS
-enumeration). Clusters, axioms and rules are cited by id from the v2.6 dictionary; nothing here
+enumeration). Clusters, axioms and rules are cited by id from the v2.7 dictionary; nothing here
 redefines them.
 
 ## Q0 — Which VERIS field is it?

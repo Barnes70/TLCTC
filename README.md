@@ -350,7 +350,7 @@ See the [mapping README](mappings/mitre-atlas/README.md) for the doctrine the ro
 
 ### VERIS → TLCTC
 
-Incident records carry the cause their actions imply. The [`mappings/veris/`](mappings/veris/) directory maps **every VERIS 1.4.1 action variety, vector, result and attribute value** (337 entries) to TLCTC: the cluster whose generic vulnerability the action exploits, the rule that decides where VERIS cannot (`Exploit vuln` is #2 or #3 by R-ROLE), the companion step the rules require but VERIS does not record (malware needs its delivery, credential use its acquisition), the cause-side partition row for errors, environmental events and insider misuse inside a genuine entitlement (Abuse of Rights, R-SCOPE) that are not threats, and the Data Risk Event code for outcomes (`Obscuration` is `Ac`, `Loss` is `Av`). A generated CSV in the layout of the VERIS repository's own ATT&CK crosswalk is the upstream deliverable; a stdlib Python classifier applies the mapping to VERIS/VCDB records; and a reproducible study runs it over the 10,047 records of the VERIS Community Database, with the write-up in [`documentation/tlctc-veris-vcdb-study.md`](documentation/tlctc-veris-vcdb-study.md).
+Incident records carry the cause their actions imply. The [`mappings/veris/`](mappings/veris/) directory maps **every VERIS 1.4.2 action variety, vector, result and attribute value** (338 entries) to TLCTC: the cluster whose generic vulnerability the action exploits, the rule that decides where VERIS cannot (`Exploit vuln` is #2 or #3 by R-ROLE), the companion step the rules require but VERIS does not record (malware needs its delivery, credential use its acquisition), the cause-side partition row for errors, environmental events and insider misuse inside a genuine entitlement (Abuse of Rights, R-SCOPE) that are not threats, and the Data Risk Event code for outcomes (`Obscuration` is `Ac`, `Loss` is `Av`). A generated CSV in the layout of the VERIS repository's own ATT&CK crosswalk is the upstream deliverable; a stdlib Python classifier applies the mapping to VERIS/VCDB records; and a reproducible study runs it over the 10,047 records of the VERIS Community Database, with the write-up in [`documentation/tlctc-veris-vcdb-study.md`](documentation/tlctc-veris-vcdb-study.md).
 
 See the [mapping README](mappings/veris/README.md) for the seven mapping types and the classifier, the [decision tree](mappings/veris/decision-tree.md) for how a VERIS value is classified, and the [study results](mappings/veris/study/results.md) for every table by stratum.
 
@@ -464,9 +464,9 @@ TLCTC relies on 10 non-negotiable axioms organized into four groups. These preve
 ```
 tlctc/
 ├── mappings/
-│   ├── veris/                                # VERIS 1.4.1 → TLCTC (337 entries), classifier, VCDB study
+│   ├── veris/                                # VERIS 1.4.2 → TLCTC v2.7 (338 entries), classifier, VCDB study
 │   │   ├── tlctc-veris.json                  # Canonical mapping with rule and rationale per entry
-│   │   ├── veris-1.4.1_tlctc-2.5.csv         # Generated upstream CSV (vz-risk/veris mappings/ layout)
+│   │   ├── veris-1.4.2_tlctc-2.7.csv         # Generated upstream CSV (vz-risk/veris mappings/ layout)
 │   │   ├── cli/                              # Stdlib classifier for VERIS/VCDB records
 │   │   ├── study/                            # run-study.py + committed results.{json,md}
 │   │   └── decision-tree.md                  # Classification methodology

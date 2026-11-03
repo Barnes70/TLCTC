@@ -1,6 +1,6 @@
 # VCDB study results
 
-Generated 2026-09-22T22:48:06Z from VCDB commit `230cf22b56a481dd1a994b21e4d94c59e2bccea9` (10047 records, sha256 `e4be5dd432ccfad16520a6b60dd83e9d47c63b0f3352c26c4d43a5dd774c32c0`), mapping updated 2026-09-22.
+Generated 2026-11-03T18:36:56Z from VCDB commit `230cf22b56a481dd1a994b21e4d94c59e2bccea9` (10047 records, sha256 `e4be5dd432ccfad16520a6b60dd83e9d47c63b0f3352c26c4d43a5dd774c32c0`), mapping updated 2026-11-03.
 
 Every cell is n (percentage of the row's denominator). Strata follow the VCDB README's warning that `phidbr` and `priority` records are not randomly selected.
 
@@ -122,13 +122,14 @@ Distinct action-variety signatures: 534 over 9815 (97.7%) records with at least 
 |---|---|
 | agree | 2122 (21.1%) |
 | subset | 286 (2.8%) |
-| disjoint | 9 (0.1%) |
-| no-attack-edge | 7630 (75.9%) |
+| disjoint | 21 (0.2%) |
+| no-attack-edge | 7618 (75.8%) |
 
 | VERIS value | disagreeing records | direct | transitive |
 |---|---|---|---|
 | action.malware.variety.Capture stored data | 187 | #7 | #1, #4, #5 |
 | action.malware.variety.Scan network | 106 | #7 | #1 |
+| action.social.variety.Forgery | 18 | #9, #10 | #1 |
 | action.malware.variety.Packet sniffer | 7 | #7 | #1 |
 | action.hacking.variety.Buffer overflow | 5 | #2 | #3, #7 |
 | action.hacking.variety.OS commanding | 4 | #2 | #1, #4, #7 |
@@ -253,13 +254,14 @@ Distinct action-variety signatures: 323 over 5495 (96.7%) records with at least 
 |---|---|
 | agree | 482 (8.5%) |
 | subset | 242 (4.3%) |
-| disjoint | 6 (0.1%) |
-| no-attack-edge | 4954 (87.2%) |
+| disjoint | 13 (0.2%) |
+| no-attack-edge | 4947 (87.0%) |
 
 | VERIS value | disagreeing records | direct | transitive |
 |---|---|---|---|
 | action.malware.variety.Capture stored data | 174 | #7 | #1, #4, #5 |
 | action.malware.variety.Scan network | 105 | #7 | #1 |
+| action.social.variety.Forgery | 12 | #9, #10 | #1 |
 | action.malware.variety.Packet sniffer | 6 | #7 | #1 |
 | action.hacking.variety.Buffer overflow | 3 | #2 | #3, #7 |
 | action.hacking.variety.Cryptanalysis | 3 | #5 | #1, #7 |
@@ -383,12 +385,13 @@ Distinct action-variety signatures: 325 over 3009 (98.8%) records with at least 
 |---|---|
 | agree | 613 (20.1%) |
 | subset | 41 (1.3%) |
-| disjoint | 3 (0.1%) |
-| no-attack-edge | 2389 (78.4%) |
+| disjoint | 8 (0.3%) |
+| no-attack-edge | 2384 (78.3%) |
 
 | VERIS value | disagreeing records | direct | transitive |
 |---|---|---|---|
 | action.malware.variety.Capture stored data | 12 | #7 | #1, #4, #5 |
+| action.social.variety.Forgery | 6 | #9, #10 | #1 |
 | action.hacking.variety.OS commanding | 4 | #2 | #1, #4, #7 |
 | action.hacking.variety.Buffer overflow | 2 | #2 | #3, #7 |
 | action.malware.variety.Packet sniffer | 1 | #7 | #1 |
@@ -631,13 +634,14 @@ Distinct action-variety signatures: 441 over 7906 (97.5%) records with at least 
 |---|---|
 | agree | 1734 (21.4%) |
 | subset | 282 (3.5%) |
-| disjoint | 8 (0.1%) |
-| no-attack-edge | 6086 (75.0%) |
+| disjoint | 14 (0.2%) |
+| no-attack-edge | 6080 (75.0%) |
 
 | VERIS value | disagreeing records | direct | transitive |
 |---|---|---|---|
 | action.malware.variety.Capture stored data | 182 | #7 | #1, #4, #5 |
 | action.malware.variety.Scan network | 105 | #7 | #1 |
+| action.social.variety.Forgery | 12 | #9, #10 | #1 |
 | action.malware.variety.Packet sniffer | 6 | #7 | #1 |
 | action.hacking.variety.Buffer overflow | 4 | #2 | #3, #7 |
 | action.hacking.variety.Cryptanalysis | 3 | #5 | #1, #7 |
@@ -758,11 +762,12 @@ Distinct action-variety signatures: 151 over 1300 (99.2%) records with at least 
 |---|---|
 | agree | 242 (18.5%) |
 | subset | 1 (0.1%) |
-| disjoint | 1 (0.1%) |
-| no-attack-edge | 1066 (81.4%) |
+| disjoint | 7 (0.5%) |
+| no-attack-edge | 1060 (80.9%) |
 
 | VERIS value | disagreeing records | direct | transitive |
 |---|---|---|---|
+| action.social.variety.Forgery | 6 | #9, #10 | #1 |
 | action.malware.variety.Capture stored data | 3 | #7 | #1, #4, #5 |
 | action.hacking.variety.Buffer overflow | 1 | #2 | #3, #7 |
 

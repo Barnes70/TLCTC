@@ -1,13 +1,13 @@
 {
   "metadata": {
     "title": "VERIS → TLCTC Mapping",
-    "description": "Maps every VERIS 1.4.1 action variety and vector, action result and attribute outcome enumeration to TLCTC v2.6: the cluster(s) whose generic vulnerability the action exploits (with the rule that decides), the companion step the rules require but VERIS does not record, the boundary context a vector implies, the cause-side partition row for actions that are not threats, and the Data Risk Event code for outcomes.",
-    "tlctc_version": "2.6",
-    "framework_ref": "json-schemas/layer-1/tlctc-framework.v2.6.json",
-    "veris_version": "1.4.1",
+    "description": "Maps every VERIS 1.4.2 action variety and vector, action result and attribute outcome enumeration to TLCTC v2.7: the cluster(s) whose generic vulnerability the action exploits (with the rule that decides), the companion step the rules require but VERIS does not record, the boundary context a vector implies, the cause-side partition row for actions that are not threats, and the Data Risk Event code for outcomes.",
+    "tlctc_version": "2.7",
+    "framework_ref": "json-schemas/layer-1/tlctc-framework.v2.7.json",
+    "veris_version": "1.4.2",
     "veris_source": {
       "repo": "vz-risk/veris",
-      "commit": "45d9d7ace489b9b7bc4f1cee1daa4bf4872dfcaf",
+      "commit": "dba30b035039f3d002c6eb06dc149dbed7476059",
       "files": [
         "verisc-enum.json",
         "verisc-labels.json"
@@ -45,8 +45,8 @@
       "certainty": "outcome only: potential when the record marks the disclosure as at risk rather than confirmed"
     },
     "created": "2026-09-18",
-    "updated": "2026-09-22",
-    "entry_count": 337
+    "updated": "2026-11-03",
+    "entry_count": 338
   },
   "entries": [
     {
@@ -2457,6 +2457,14 @@
       "mapping_type": "no-cluster",
       "partition_row": "error_in_use",
       "rationale": "An actor acted without intending the outcome: 'Gaffe' is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V).",
+      "basis": "Axiom V"
+    },
+    {
+      "veris_id": "action.error.variety.Inadequate containment",
+      "veris_description": "Failure to enforce technical or logical boundaries around an agentic system",
+      "mapping_type": "no-cluster",
+      "partition_row": "error_in_use",
+      "rationale": "An actor acted without intending the outcome: 'Inadequate containment' (boundaries around an agentic system not enforced) is Error in Use on the cause-side partition (operational risk, no cluster). Control failures are not threats (Axiom V). Where an attacker induced the agent's behaviour, that attack is a separate action with its own cluster.",
       "basis": "Axiom V"
     },
     {

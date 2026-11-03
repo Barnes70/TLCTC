@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T22:48:06Z",
+  "generated": "2026-11-03T18:36:56Z",
   "vcdb": {
     "commit": "230cf22b56a481dd1a994b21e4d94c59e2bccea9",
     "url": "https://raw.githubusercontent.com/vz-risk/VCDB/230cf22b56a481dd1a994b21e4d94c59e2bccea9/data/joined/vcdb.json.zip",
@@ -14,9 +14,9 @@
     },
     "note": "joined dataset; VCDB's packaging excludes the web-skimmer batch"
   },
-  "mapping_updated": "2026-09-22",
-  "mapping_veris_version": "1.4.1",
-  "mapping_tlctc_version": "2.6",
+  "mapping_updated": "2026-11-03",
+  "mapping_veris_version": "1.4.2",
+  "mapping_tlctc_version": "2.7",
   "strata": {
     "all": {
       "records": 10047,
@@ -647,11 +647,11 @@
             "denominator": 10047
           },
           "disjoint": {
-            "n": 9,
+            "n": 21,
             "denominator": 10047
           },
           "no-attack-edge": {
-            "n": 7630,
+            "n": 7618,
             "denominator": 10047
           }
         },
@@ -666,6 +666,12 @@
             "veris_id": "action.malware.variety.Scan network",
             "n": 106,
             "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.social.variety.Forgery",
+            "n": 18,
+            "direct": "#9, #10",
             "transitive": "#1"
           },
           {
@@ -1296,11 +1302,11 @@
             "denominator": 5684
           },
           "disjoint": {
-            "n": 6,
+            "n": 13,
             "denominator": 5684
           },
           "no-attack-edge": {
-            "n": 4954,
+            "n": 4947,
             "denominator": 5684
           }
         },
@@ -1315,6 +1321,12 @@
             "veris_id": "action.malware.variety.Scan network",
             "n": 105,
             "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.social.variety.Forgery",
+            "n": 12,
+            "direct": "#9, #10",
             "transitive": "#1"
           },
           {
@@ -1939,11 +1951,11 @@
             "denominator": 3046
           },
           "disjoint": {
-            "n": 3,
+            "n": 8,
             "denominator": 3046
           },
           "no-attack-edge": {
-            "n": 2389,
+            "n": 2384,
             "denominator": 3046
           }
         },
@@ -1953,6 +1965,12 @@
             "n": 12,
             "direct": "#7",
             "transitive": "#1, #4, #5"
+          },
+          {
+            "veris_id": "action.social.variety.Forgery",
+            "n": 6,
+            "direct": "#9, #10",
+            "transitive": "#1"
           },
           {
             "veris_id": "action.hacking.variety.OS commanding",
@@ -3159,11 +3177,11 @@
             "denominator": 8110
           },
           "disjoint": {
-            "n": 8,
+            "n": 14,
             "denominator": 8110
           },
           "no-attack-edge": {
-            "n": 6086,
+            "n": 6080,
             "denominator": 8110
           }
         },
@@ -3178,6 +3196,12 @@
             "veris_id": "action.malware.variety.Scan network",
             "n": 105,
             "direct": "#7",
+            "transitive": "#1"
+          },
+          {
+            "veris_id": "action.social.variety.Forgery",
+            "n": 12,
+            "direct": "#9, #10",
             "transitive": "#1"
           },
           {
@@ -3788,15 +3812,21 @@
             "denominator": 1310
           },
           "disjoint": {
-            "n": 1,
+            "n": 7,
             "denominator": 1310
           },
           "no-attack-edge": {
-            "n": 1066,
+            "n": 1060,
             "denominator": 1310
           }
         },
         "top_disagreements": [
+          {
+            "veris_id": "action.social.variety.Forgery",
+            "n": 6,
+            "direct": "#9, #10",
+            "transitive": "#1"
+          },
           {
             "veris_id": "action.malware.variety.Capture stored data",
             "n": 3,
