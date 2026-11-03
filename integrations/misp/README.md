@@ -15,8 +15,11 @@ graph shows the attack path itself. The converter turns any file in
 `attack-paths/` into an importable event that uses both.
 
 Cluster definitions and generic vulnerabilities in the taxonomy are copied
-verbatim from the v2.6 dictionary (`json-schemas/layer-1/tlctc-framework.v2.6.json`);
-`npm run validate-misp` fails on any drift.
+verbatim from the v2.7 dictionary (`json-schemas/layer-1/tlctc-framework.v2.7.json`;
+the ten cluster texts are unchanged from v2.6, so taxonomy version 3 differs from
+version 2 only in its description line and every UUID is the same);
+`npm run validate-misp` fails on any drift. The object templates and the converter
+still follow v2.6, like the Layer 3 records they carry.
 
 ## Tags
 
