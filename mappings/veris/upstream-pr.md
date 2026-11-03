@@ -7,6 +7,14 @@ The contribution is the generated CSV `veris-1.4.1_tlctc-2.5.csv`, placed in the
 `mappings/` directory next to `veris-1.4.1_attack-19.1-enterprise.csv` and
 `cis_csc_v8_veris_mapping_v1.csv`, plus one line in `mappings/readme.md`.
 
+**Status:** opened 2026-09-18 as [vz-risk/veris#507](https://github.com/vz-risk/veris/pull/507)
+(VERIS 1.4.1 → TLCTC v2.5). **2026-11-03:** branch `Barnes70/veris:tlctc-mapping` merged the
+current `master` (`dbb856e`) and replaced the file with `veris-1.4.2_tlctc-2.7.csv` (`9594433`);
+title and body updated with a dated note. No reviewer comment yet. The commands below are the
+original submission; later updates copy the CSV with `git -C <tlctc-repo> show main:…` (LF),
+`git rm` the old file name, update the one line in `mappings/readme.md`, commit, push — never
+force-push.
+
 Before the PR: `npm run validate` must pass on the branch (it regenerates the CSV and checks it
 byte for byte), and `study/results.json` must be current for the mapping's `updated` date.
 
