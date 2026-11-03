@@ -7,6 +7,21 @@ Before either PR: `npm run validate` must pass on `main` and the taxonomy
 `version` in `machinetag.json` must be the value the PR introduces (1 for the
 first submission; bump on every later change).
 
+## Status
+
+- **2026-09-16:** taxonomy PR opened as [MISP/misp-taxonomies#348](https://github.com/MISP/misp-taxonomies/pull/348) (TLCTC v2.5, taxonomy version 1). The object-templates PR waits until #348 is merged.
+- **2026-11-03:** #348 had a `MANIFEST.json` conflict after MISP merged #349. On the fork branch
+  `Barnes70/misp-taxonomies:tlctc`: merge commit `8758b4f` (current `main`, conflict resolved) and
+  `4291f2b` (taxonomy follows TLCTC v2.7, version 3; values and UUIDs unchanged). PR title and body
+  updated to v2.7. `validate_all.py` and the PyTaxonomies load pass; the final `gen_manifest.py`
+  step reorders the whole manifest on Windows only (case-sensitive sort), same content.
+  MISP CI is "action required" (maintainer approval for a first-time contributor).
+
+Later updates go on the same branch: regenerate here (`npm run build-misp`), copy
+`integrations/misp/taxonomies/tlctc/machinetag.json` with `git show main:…` (LF), update the
+`tlctc` entry in `MANIFEST.json` by hand (description + version), commit, push; merge
+`upstream/main` first if MISP has moved. Never force-push the PR branch.
+
 ## 1. MISP/misp-taxonomies
 
 ```bash
