@@ -4,6 +4,24 @@ Target: [enisaeu/Reference-Security-Incident-Taxonomy-Task-Force](https://github
 Route: **issue first, pull request second.** The session prepares the fork branch on request; the
 owner opens the issue and the pull request (identity and the CC0 dedication are the owner's).
 
+## 0. Gate: MISP first (owner decision 2026-11-03)
+
+Do not open the RSIT issue until the TLCTC taxonomy is merged in MISP
+([MISP/misp-taxonomies#348](https://github.com/MISP/misp-taxonomies/pull/348)). The `tlctc` field
+references TLCTC MISP machine tags and UUIDs; before the merge they exist only in that pull request.
+State on 2026-11-03: #348 open, no reviewer comment, merge conflict (MISP merged #349 on
+2026-10-11) — rebase the fork branch and regenerate `MANIFEST.json` first
+(`integrations/misp/upstream-pr.md`).
+
+After the merge:
+
+1. `npm run validate-rsit` — the UUIDs must still equal the merged taxonomy (refresh
+   `integrations/misp/taxonomies/tlctc/machinetag.json` from MISP first if they changed anything).
+2. Replace "proposed" references to #348 with the merged taxonomy link in `upstream/README.md`,
+   the issue text below and the blog `tlctc-rsit-mapping.html` (source [5]).
+3. `npm run build-rsit && npm run validate-rsit`, commit, push.
+4. Then open the issue (section 1).
+
 Context on the repository as of 2026-11-03:
 
 - Issue [#70](https://github.com/enisaeu/Reference-Security-Incident-Taxonomy-Task-Force/issues/70) (2019) asks to link RSIT to the ENISA threat taxonomy; the WG agreed in 2020 to sync "with upcoming version"; not done.
