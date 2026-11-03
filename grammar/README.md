@@ -7,19 +7,19 @@ Machine-ingestable formal grammar for TLCTC attack path notation.
 | File | Contents |
 | --- | --- |
 | `tlctc-attack-path.abnf` | ABNF (RFC 5234) grammar for the **core** attack-path notation, covering v2.0 core, v2.1 extensions (transit, intra-system boundaries, unresolved-step operators), and the v0.1 TLCTC+ free-text BRE annotation |
-| `tlctc-plus-attack-path.abnf` | ABNF grammar for **TLCTC+ v0.8 records** (base TLCTC v2.5.1) — adds the `+ [SRE]` first-direct-SRE step marker, `+ [DRE: ...]` (already in core), `+ [BRE: BRE-XXX.YY ...]` (structured codes only), `+ [Impact: ...]`, `+ [Report: ...]`, and the cause-side `[Pattern: PATTERN-XXX.YY]` step annotation. Enforces R-BOUNDARY (bridge clusters #8/#9/#10 require boundary) and R-PATTERN-POSITION (Pattern is bracket-only) at the grammar level. |
+| `tlctc-plus-attack-path.abnf` | ABNF grammar for **TLCTC+ v0.9 records** (base TLCTC v2.7) — adds the `+ [SRE]` first-direct-SRE step marker, `+ [DRE: ...]` (already in core), `+ [BRE: BRE-XXX.YY ...]` (structured codes only), `+ [Impact: ...]`, `+ [Report: ...]`, and the cause-side `[Pattern: PATTERN-XXX.YY]` step annotation. Enforces R-BOUNDARY (bridge clusters #8/#9/#10 require boundary) and R-PATTERN-POSITION (Pattern is bracket-only) at the grammar level. |
 
 The canonical *prose* specifications live in:
 
 - `documentation/tlctc-v2.0-whitepaper.md` §11.7 — core attack-path grammar
-- `documentation/tlctc-plus-specification.md` §8 and §10 — TLCTC+ v0.8 notation and minimal grammar
+- `documentation/tlctc-plus-specification.md` §8 and §10 — TLCTC+ v0.9 notation and minimal grammar
 
 This directory is the machine-readable mirror.
 
 ### Which grammar to use
 
 - For plain TLCTC v2.1 attack paths or v0.1-style records with free-text BRE labels → `tlctc-attack-path.abnf`.
-- For TLCTC+ v0.8 records (record_type `compromise_record` or `pure_9_record`) with structured PATTERN/BRE/IMPACT/REPORT codes → `tlctc-plus-attack-path.abnf`. The two structural types are split on path composition: a `compromise_record` has at least one cluster step other than #9, a `pure_9_record` is a single #9 step. Under core v2.5.1 every cluster step records its own SRE; `+ [SRE]` is a step annotation marking the first direct one.
+- For TLCTC+ v0.9 records (record_type `compromise_record` or `pure_9_record`) with structured PATTERN/BRE/IMPACT/REPORT codes → `tlctc-plus-attack-path.abnf`. The two structural types are split on path composition: a `compromise_record` has at least one cluster step other than #9, a `pure_9_record` is a single #9 step. Under the core (since v2.5.1, unchanged in v2.7) every cluster step records its own SRE; `+ [SRE]` is a step annotation marking the first direct one.
 
 ## What It Covers
 

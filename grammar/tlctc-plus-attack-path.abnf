@@ -1,6 +1,7 @@
 ; TLCTC+ Attack Path / Record Notation — Formal Grammar
-; Version: TLCTC+ v0.8 (base framework: TLCTC v2.5.1, dictionary
-;          tlctc-framework.v2.5.json)
+; Version: TLCTC+ v0.9 (base framework: TLCTC v2.7, dictionary
+;          tlctc-framework.v2.7.json). The productions are unchanged
+;          from v0.8; only comments and the V-5 wording changed.
 ; Format:  ABNF (RFC 5234), UTF-8 source encoding required.
 ; Canonical prose specification: documentation/tlctc-plus-specification.md
 ;          §8 (notation) and §10 (minimal grammar, constraints V-1…V-6)
@@ -13,13 +14,14 @@
 ;     free-text BRE extension. Use that grammar for plain core attack
 ;     paths and v0.1-style records.
 ;   This file (tlctc-plus-attack-path.abnf) is a self-contained mirror
-;     of TLCTC+ v0.8 §10. Use it to validate TLCTC+ records:
+;     of TLCTC+ v0.9 §10. Use it to validate TLCTC+ records:
 ;       - record_type = compromise_record   (path with at least one
 ;                                            cluster step other than #9,
 ;                                            i.e. at least one direct SRE)
 ;       - record_type = pure_9_record       (a single #9 step; its SRE is
 ;                                            induced, no marker rendered)
-;     Under core v2.5.1 every cluster step records its own System Risk
+;     Under the core (since v2.5.1, unchanged in v2.7) every cluster
+;     step records its own System Risk
 ;     Event (core §3.4), so the two record types are split on PATH
 ;     COMPOSITION, not on SRE presence. "+ [SRE]" is the first-direct-SRE
 ;     marker: a step annotation written once, on the first non-#9
@@ -54,7 +56,7 @@
 ;   - V-4 at grammar level (stronger than §10 requires): an unresolved
 ;       step admits no step annotation at all — no DRE (R-UNRES-5), no
 ;       SRE marker, no Pattern.
-;   - DRE codes are the core v2.5 refinement tree (C, I/Ii/If, A/Av/Ac)
+;   - DRE codes are the core refinement tree (C, I/Ii/If, A/Av/Ac)
 ;       with "," as the in-bracket separator.
 ;
 ; What this grammar does NOT enforce (validator territory)
@@ -63,7 +65,7 @@
 ;   - V-2: exactly one SRE marker, on the first non-#9 cluster step in
 ;       path order (R-SRE). The grammar admits zero or several markers
 ;       and does not fix their position.
-;   - V-5: a pure-#9 record carries at least one BRE annotation.
+;   - V-5: a pure-#9 record carries at least one DRE or BRE annotation.
 ;   - V-6: reporting_pivot_step names a cluster step present in the path
 ;       (a data-model field; it has no notation).
 ;   - R-SCOPE (Attack-row admission), R-EXEC, R-CRED, R-SUPPLY, R-ROLE,
@@ -75,7 +77,12 @@
 ;   - DRE legality on pure-#9 records (only direct-disclosure cases are
 ;       semantically valid; the grammar accepts any DRE code set).
 ;   - R-UNRES-8: a path containing "?" or "…" needs a prose note.
-;   - Conformance items 1, 3, 15, 16, 17, 18 from §21.
+;   - R-SUCCESS: only successful steps are recorded; attempts and
+;       lures nobody acted on are evidence, not records (§4.3).
+;   - R-BRE-EDGE: causal vs normative BRE edges, Δt on causal edges
+;       only, deadlines as Report timestamp_due (data model, §17.6;
+;       the notation does not mark the edge kind).
+;   - Conformance items 1, 3, 15, 16, 17, 18, 19, 20 from §21.
 ;
 ; Whitespace: SP is a single space. Records rendered over several lines
 ; (as in §19) MUST have line breaks normalised to SP before parsing.
@@ -112,7 +119,8 @@ COMPROMISE_RECORD = ANNOTATED_PATH *(SP* RECORD_ANN)
 ; Pattern optional, DRE optional (direct-disclosure cases, §4.2).
 ; No SRE marker (V-3 / R-SRE-9): the #9 step's SRE is induced and
 ; implicit in the classified step. No epistemic or unresolved operators
-; (§8.1). At least one BRE annotation is required by V-5 (validator).
+; (§8.1). At least one DRE or BRE annotation is required by V-5
+; (validator).
 PURE_9_RECORD   = ANNOTATED_9_STEP *(SP* RECORD_ANN)
 
 ANNOTATED_9_STEP = "#9" SP* BOUNDARY
@@ -226,7 +234,7 @@ INTRA_TYPE      = "sandbox" / "privilege" / "process" / "hypervisor"
 SRE_TAG         = "+" SP* "[SRE]"
 
 ; -- DRE: Data Risk Event ---------------------------------------------
-; Core v2.5 refinement tree (core §7.6; dictionary data_risk_events):
+; Core refinement tree (core §7.6; dictionary data_risk_events):
 ; C; I with refinements Ii/If; A with refinements Av/Ac. A parent code
 ; stays legal when the refinement is unknown. "," is the only separator
 ; inside [DRE: ...]; "+" and "→" are not used there (R-BRE-OP-SCOPE).

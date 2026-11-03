@@ -1,17 +1,19 @@
-# TLCTC+ for NCSCs and CERTs: A National Reporting Extension Proposal v0.8
+# TLCTC+ for NCSCs and CERTs: A National Reporting Extension Proposal v0.9
 
-## Policy proposal aligned with TLCTC+ Specification v0.8
+## Policy proposal aligned with TLCTC+ Specification v0.9
 
 **Author:** Bernhard Kreinz  
-**Framework version:** TLCTC v2.5.1  
-**Document version:** v0.8 proposal, aligned with TLCTC+ Specification v0.8  
+**Framework version:** TLCTC v2.7 (DOI 10.5281/zenodo.23437984)  
+**Document version:** v0.9 proposal, aligned with TLCTC+ Specification v0.9  
 **Status:** Draft for peer review  
 **License:** CC BY 4.0  
 **Core thesis:** Keep TLCTC pure. Extend the reporting layer.
 
 > **Companion document:** This proposal explains why NCSCs, CERTs, CSIRTs, regulators, financial institutions, fraud teams, and adjacent peer groups should adopt TLCTC+. The implementation details — grammar, conformance, catalogues, JSON records, and decision procedure — are defined in `tlctc-plus-specification.md`.
 >
-> **Notation policy:** This proposal follows TLCTC+ v0.8. Scam, fraud, extortion, and manipulation labels are recorded as `[Pattern: PATTERN-XXX.YY ...]` on the cause-side step. Consequence-side events are recorded as structured BRE codes: `+ [BRE: BRE-XXX.YY ...]`. The first direct System Risk Event is marked `+ [SRE]` (every cluster step records its own SRE; a pure #9 record renders no marker). Data/resource impact is recorded as `+ [DRE: C|I|Ii|If|A|Av|Ac]`. Measurements are recorded as `+ [Impact: ...]`. Procedural filings and workflow states are recorded as `+ [Report: ...]`. Free-text BRE labels are not conformant.
+> **v0.9:** The proposal now rests on TLCTC v2.7. Nothing in the reporting grammar changes. The proposal now states what v2.6 and v2.7 made explicit: only successful steps are recorded, so a reported lure nobody acted on is evidence for warnings rather than a case record; a supplier incident is #10 only where the supplier or its artifact was subverted; and a business risk event is reached either causally (it is brought about, after a time interval) or normatively (a duty such as a notification obligation arises), with statutory deadlines counted from awareness rather than treated as time intervals in the chain.
+>
+> **Notation policy:** This proposal follows TLCTC+ v0.9. Scam, fraud, extortion, and manipulation labels are recorded as `[Pattern: PATTERN-XXX.YY ...]` on the cause-side step. Consequence-side events are recorded as structured BRE codes: `+ [BRE: BRE-XXX.YY ...]`. The first direct System Risk Event is marked `+ [SRE]` (every cluster step records its own SRE; a pure #9 record renders no marker). Data/resource impact is recorded as `+ [DRE: C|I|Ii|If|A|Av|Ac]`. Measurements are recorded as `+ [Impact: ...]`. Procedural filings and workflow states are recorded as `+ [Report: ...]`. Free-text BRE labels are not conformant.
 
 ---
 
@@ -200,7 +202,7 @@ TLCTC+ uses six tracks.
 ```text
 Cause Track       TLCTC path or #9 anchor; Pattern attaches here
 SRE Track         System Risk Events — one per cluster step (direct or induced); the first direct SRE is marked
-DRE Track         Confidentiality, Integrity, Accessibility, Availability
+DRE Track         Confidentiality, Integrity (incorrect / misattributed), Availability (unavailable / inaccessible)
 BRE Track         Business, citizen, legal, regulatory, service, organizational events
 Impact Track      Quantified or qualified measurements
 Report Track      Filing, routing, notification, or workflow artefacts
@@ -255,7 +257,11 @@ If the disclosed credential, token, session artifact, or identity artifact is la
 + [DRE: C] → #4 + [SRE]
 ```
 
-Credential acquisition is classified by the enabling cluster. Credential use is always `#4`.
+Credential acquisition is classified by the enabling cluster. Credential use is `#4` whenever the identity claimed is not the presenter's own (R-CRED).
+
+### 6.3 Successful Steps Only
+
+TLCTC records steps that succeeded. A lure that a citizen received and reported without acting on it, or a phishing campaign a filter blocked, is not a `#9` step and not a TLCTC+ record. Such reports are control-side evidence. They feed public warnings, takedowns and campaign statistics, and they measure how well prevention works. Counting them as records would turn a measure of control success into a count of compromises. A `#9` step succeeds when the person performs the unsafe action the lure aimed at: pays, discloses, installs or approves.
 
 ---
 
@@ -329,7 +335,9 @@ TLCTC+ must not:
 - replace criminal-law categories;
 - replace law-enforcement investigative taxonomies;
 - classify non-cyber operational failures;
+- record attempts, blocked steps or lures nobody acted on as case records;
 - overload the TLCTC sequence operator `→`;
+- write a statutory deadline as a time interval in the chain;
 - use free-text BREs in conformant records.
 
 TLCTC+ must remain an extension profile around TLCTC, not a mutation of TLCTC.
@@ -341,7 +349,7 @@ TLCTC+ must remain an extension profile around TLCTC, not a mutation of TLCTC.
 A national portal or analyst workflow can use the following decision flow.
 
 1. **Is there a TLCTC cyber cause path?**  
-   If yes, classify each step using TLCTC `#1`–`#10`.
+   If yes, classify each successful step using TLCTC `#1`–`#10`. Attempts and blocked steps are not steps (§6.3); a supplier incident is `#10` only where the supplier or its artifact was subverted before acceptance.
 
 2. **If not, is there a pure #9 digital-harm anchor?**  
    If a human was psychologically manipulated through a digital or digitally mediated channel, record `#9` with the required bridge boundary.
@@ -356,15 +364,15 @@ A national portal or analyst workflow can use the following decision flow.
    Attach `[Pattern: PATTERN-XXX.YY ...]` to the cause-side step.
 
 6. **Did a business, citizen, service, legal, regulatory, reputation, third-party, or organizational event occur?**  
-   Attach `+ [BRE: BRE-XXX.YY ...]`.
+   Attach `+ [BRE: BRE-XXX.YY ...]`. In the case database, record whether each BRE was brought about (causal) or arose as a duty or a norm violation (normative).
 
 7. **Can the harm be measured?**  
    Attach `+ [Impact: IMPACT-XXX.YY = <value>]`.
 
 8. **Was a filing, referral, or procedural stage reached?**  
-   Attach `+ [Report: REPORT-XXX.YY ...]`.
+   Attach `+ [Report: REPORT-XXX.YY ...]`, with each deadline counted from awareness.
 
-If there is no TLCTC path and no #9 anchor, the case is outside TLCTC+.
+If there is no TLCTC path and no #9 anchor, the case is outside TLCTC+. If the report describes only a lure nobody acted on or a blocked attempt, it is evidence for warnings and statistics on prevention, not a TLCTC+ record.
 
 ---
 
@@ -381,10 +389,14 @@ Root cause / likely threat        → TLCTC cause path
 System compromise                 → SRE
 Data or resource impact           → DRE
 Service / business consequence    → BRE
+Notification obligation           → BRE-REG (reached by a normative edge: the duty arises)
 Severity and scope                → Impact
 Notification stages               → Report
+Notification deadlines            → Report due timestamp, counted from awareness (not a Δt)
 Cross-border relevance            → BRE-REG / Report metadata
 ```
+
+Under TLCTC v2.7 a notification duty is a business risk event reached by a normative edge: the data event meets the condition of the norm, and the duty arises. Nothing propagates, so no time interval is defined on that edge. The 24-hour early warning and 72-hour notification bound the response process from the moment of awareness; the filings themselves are causal acts of that process.
 
 ### 11.2 DORA-Style Reporting
 
@@ -444,7 +456,7 @@ Therefore, TLCTC+ must not reduce external fraud to `#9`. The TLCTC path records
 
 ## 12. Minimal Data Model
 
-A conformant TLCTC+ v0.8 record uses one of two record types:
+A conformant TLCTC+ v0.9 record uses one of two record types:
 
 ```text
 compromise_record
@@ -473,11 +485,12 @@ Minimum track fields:
 
 ```text
 Cause:      tlctc_path or tlctc_anchor, tlctc_steps[], patterns[], evidence[]
-SRE:        present, status, timestamp, linked_to_step, scope
+SRE:        kind, status, epistemic, timestamp, linked_to_step, reporting_pivot_step, scope
 DRE:        type, status, affected_data_or_resource, linked_to_step, linked_to_sre
-BRE:        code, label, status, parent, operator, timestamp, linked_to_step/dre/sre
+BRE:        code, label, status, parent, operator, edge (causal | normative), delta_t (causal only),
+            timestamp, linked_to_step/dre/sre
 Impact:     code, label, amount/value, unit/currency, estimate_type, linked_to_bre/dre/sre
-Report:     code, label, regime, stage, due/filed timestamp, authority, status
+Report:     code, label, regime, stage, due timestamp (from awareness), filed timestamp, authority, status
 ```
 
 ---
@@ -490,8 +503,8 @@ Report:     code, label, regime, stage, due/filed timestamp, authority, status
 {
   "case_id": "case-002",
   "record_type": "pure_9_record",
-  "framework_version": "2.5.1",
-  "tlctc_plus_version": "0.8",
+  "framework_version": "2.7",
+  "tlctc_plus_version": "0.9",
   "tlctc_anchor": "#9 ||[messaging][@External→@Citizen]||",
   "patterns": [
     {
@@ -512,7 +525,8 @@ Report:     code, label, regime, stage, due/filed timestamp, authority, status
     "nodes": [
       {
         "code": "BRE-FIN.11",
-        "label": "Authorized Push Payment Made"
+        "label": "Authorized Push Payment Made",
+        "edge": "causal"
       }
     ]
   },
@@ -539,8 +553,8 @@ Report:     code, label, regime, stage, due/filed timestamp, authority, status
 {
   "case_id": "case-003",
   "record_type": "compromise_record",
-  "framework_version": "2.5.1",
-  "tlctc_plus_version": "0.8",
+  "framework_version": "2.7",
+  "tlctc_plus_version": "0.9",
   "tlctc_path": "#9 ||[email][@External→@Org]|| [Pattern: PATTERN-ID.11 Phishing for Credentials] + [DRE: C] → #4 + [SRE]",
   "patterns": [
     {
@@ -569,11 +583,14 @@ Report:     code, label, regime, stage, due/filed timestamp, authority, status
     "nodes": [
       {
         "code": "BRE-ENT.13",
-        "label": "Email Account Takeover Harm"
+        "label": "Email Account Takeover Harm",
+        "edge": "causal"
       },
       {
         "code": "BRE-FIN.11",
-        "label": "Authorized Push Payment Made"
+        "label": "Authorized Push Payment Made",
+        "edge": "causal",
+        "delta_t": "3d"
       }
     ]
   },
@@ -606,11 +623,11 @@ The TLCTC+ profile is versioned separately from core TLCTC. It defines the repor
 
 PATTERN, BRE, IMPACT, and REPORT catalogues are versioned independently from the document.
 
-Current v0.8 status:
+Current v0.9 status:
 
 ```text
-Specification document version:   TLCTC+ v0.8
-Base framework:                   TLCTC v2.5.1 (dictionary tlctc_version 2.5)
+Specification document version:   TLCTC+ v0.9
+Base framework:                   TLCTC v2.7 (dictionary tlctc_version 2.7)
 PATTERN catalogue version:        v0.2
 BRE catalogue version:            v0.3
 IMPACT catalogue version:         v0.2
@@ -700,7 +717,7 @@ TLSFC  ─┘
 
 Use TLCTC as the stable cause-oriented taxonomy for cyber threats against IT systems.
 
-### Phase 2 — Adopt TLCTC+ v0.8 as a Reporting Profile
+### Phase 2 — Adopt TLCTC+ v0.9 as a Reporting Profile
 
 Publish TLCTC+ as a national reporting extension for TLCTC-anchored digital harms.
 
@@ -732,7 +749,7 @@ Review catalogues and national aliases annually. Do not reopen the ten clusters 
 
 ## 18. Formal Recommendation
 
-NCSCs, CERTs, CSIRTs, regulators, and financial-sector reporting bodies should adopt TLCTC as the stable cause-oriented taxonomy for cyber threats and TLCTC+ v0.8 as the controlled reporting extension for TLCTC-anchored digital harms.
+NCSCs, CERTs, CSIRTs, regulators, and financial-sector reporting bodies should adopt TLCTC as the stable cause-oriented taxonomy for cyber threats and TLCTC+ v0.9 as the controlled reporting extension for TLCTC-anchored digital harms.
 
 TLCTC+ should begin with the Pattern + BRE model anchored at `#9 Social Engineering` for manipulation-driven digital harm (`pure_9_record`), while supporting the full six-track form for compromise records — both cyber-side-dominant and consequence-side-dominant flavors:
 
@@ -777,6 +794,8 @@ Conformance reminders:
 - Every #8/#9/#10 step in a TLCTC+ record carries a boundary operator.
 - BREs are structured codes, not free text.
 - Stripping TLCTC+ annotations recovers a valid TLCTC path or #9 anchor.
+- Only successful steps are recorded; reported lures nobody acted on are evidence, not records.
+- A Δt belongs only to causal transitions; statutory deadlines go on the Report track, counted from awareness.
 
 ---
 
@@ -819,12 +838,14 @@ Ransomware is not the threat cluster. The cause path is `#9 → #7`. The DRE is 
 ### B.5 Supply-Chain Incident With Regulatory Reporting
 
 ```text
-#10 ||[update][@Vendor→@Org]|| → #7 + [SRE] + [DRE: C + I]
+#10 ||[update][@Vendor→@Org]|| + [SRE] → #7 + [DRE: C, I]
 + [BRE: BRE-REG.11 Mandatory Notification Obligation Triggered
    → BRE-REG.17 Cross-Border Authority Notification Obligation]
 + [Report: REPORT-NIS2.11 24h Early Warning Filed
    + REPORT-NIS2.12 72h Incident Notification Filed]
 ```
+
+`#10` applies because the vendor's update channel was subverted before the update was accepted; the first direct SRE is marked there. Both obligations are reached by normative edges. The 24-hour and 72-hour deadlines count from awareness and sit on the Report entries, not in the chain.
 
 ### B.6 Fake Tech Support Without Code Execution
 
