@@ -52,6 +52,27 @@ The rules that shape the table:
   T1595/T1046/T1040; Login Attempts #4 follows T1110; DoS #6 \| #2 \| #3 follows VERIS
   `hacking.variety.DoS`; defacement as a cause hint #7 follows T1491; XSS with #7 follows CWE-79.
 
+## What the mapping cannot do: the terms
+
+Several RSIT values use words that other frameworks, reports and communities define differently,
+and the RSIT descriptions do not always draw the line where TLCTC draws it:
+
+- **Phishing** is an indicator (a URL) in RSIT's description, a social-engineering step in TLCTC,
+  and a fraud or attack category in other reports.
+- **Masquerade** covers both deceiving people and authenticating to a system as someone else.
+- **Sabotage** spans physical damage, logical damage by an attacker and damage by an entitled
+  administrator, and includes bomb threats.
+- **Fraud** and **Information Content Security** group infrastructure, content, misuse and data
+  states rather than causes.
+- **System Compromise** and **Intrusion Attempts** name a state or an attempt, not how it came about.
+
+The mapping does not settle what these words mean. It maps each value by its description in
+`machinev1` version 1003, as written; where one word covers several causes, the entry is
+`conditional` and names the question that decides. Two records with the same RSIT tag can therefore
+have different causes, and the same cause can appear under different tags. Clearing up the
+terms is a question for the RSIT community and for whoever uses them; the TLCTC definitions are in
+the [core specification](../../documentation/tlctc-v2.7-core.md).
+
 ## Build and validate
 
 ```bash
