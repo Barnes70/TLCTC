@@ -27,6 +27,13 @@ class RenderTests(unittest.TestCase):
         row = next(r for r in rows(m2t.render(generated())) if "| Infected System |" in r)
         self.assertIn('tlctc:cluster="07-malware"', row)
 
+    def test_angle_brackets_escaped(self):
+        row = next(r for r in rows(m2t.render(generated())) if "| Infected System |" in r)
+        self.assertIn("&lt;enabler&gt; → #7", row)
+        self.assertNotIn("<enabler>", row)
+        self.assertIn("<br><br>", m2t.tlctc_cell([{"candidates": ["#1"], "mapping_type": "x", "note": "a"},
+                                                    {"candidates": ["#2"], "mapping_type": "x", "note": "b"}]))
+
     def test_unresolved_head_is_question_mark(self):
         row = next(r for r in rows(m2t.render(generated())) if "| Uncategorised |" in r)
         self.assertIn("| ? (unresolved):", row)

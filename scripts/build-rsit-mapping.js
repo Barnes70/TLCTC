@@ -56,7 +56,7 @@ const alt = (x) => {
   if (x.partition_row) return `no cluster, ${ROW_NAMES[x.partition_row] || x.partition_row}, if ${x.condition}`;
   return `no cluster (${x.out_of_scope}) if ${x.condition}`;
 };
-const dre = (e) => (e.dre ? ` + [DRE: ${e.dre}]` : '');
+const dre = (e) => (e.dre ? ` + [DRE: ${e.dre}]` : e.dre_potential ? ` (potential DRE ${e.dre_potential})` : '');
 const ask = (e) => (e.next_question ? ` Ask: ${e.next_question}` : '');
 
 function noteFor(e) {
@@ -70,7 +70,7 @@ function noteFor(e) {
     return `${path}${rule}; RSIT does not record the ${e.companion.after ? 'following' : 'preceding'} step.${ask(e)}`;
   }
   if (t === 'conditional') return `One of: ${e.targets.map(alt).join('; ')}${dre(e)}.${ask(e)}`;
-  if (t === 'attempt') return `Attempt, success not asserted: ${e.targets.map(alt).join('; ')}. A blocked attempt is a near miss, not an incident.${ask(e)}`;
+  if (t === 'attempt') return `Attempt, success not asserted: ${e.targets.map(alt).join('; ')}. A blocked attempt is a near miss, not a successful step.${ask(e)}`;
   if (t === 'exposure') return `Exposure: a state with no step and no SRE; enables ${e.exposes.map(alt).join('; ')}${e.dre_potential ? ` (potential DRE ${e.dre_potential})` : ''}.`;
   if (t === 'indicator') return `Indicator: attacker infrastructure, not a victim event; serves ${e.implies.map(alt).join('; ')}.${ask(e)}`;
   if (t === 'outcome') {

@@ -18,8 +18,9 @@ Context on the repository as of 2026-11-03:
 
 ```markdown
 RSIT records the state of an incident; it deliberately does not say how the incident came to be
-(as noted in #128). Issue #70 asked for a link from RSIT to the threat side. I would like to offer
-one, as a crosswalk that changes nothing in RSIT.
+(as noted in #128). Issue #70 asked to link RSIT to the ENISA threat taxonomy. This proposal is
+related but different: a link from RSIT to a cause taxonomy, as a crosswalk that changes nothing
+in RSIT.
 
 TLCTC (Top Level Cyber Threat Clusters) is an openly licensed, cause-oriented taxonomy: ten
 non-overlapping clusters, each defined by the generic vulnerability an attacker exploits
@@ -30,7 +31,7 @@ where it does not. Some examples:
 - Malicious Code / Infected System → #7 (the code ran); open question: how did it arrive?
 - Intrusions / Unprivileged Account Compromise → #4 (a credential was used); open question: how was it obtained?
 - Availability / Denial of Service → #6 (capacity) or #2/#3 (a defect crashes the component)
-- Intrusion Attempts → the cluster of the attempted step, recorded as a near miss, not an incident
+- Intrusion Attempts → the cluster of the attempted step; when blocked, a near miss (no successful step)
 - Vulnerable → the cluster the exposure enables; no event
 - Availability / Outage → no attacker, no cluster
 
@@ -56,21 +57,25 @@ repository. Open the issue after that push.
 
 ```bash
 gh repo fork enisaeu/Reference-Security-Incident-Taxonomy-Task-Force --clone=false
-git clone https://github.com/Barnes70/Reference-Security-Incident-Taxonomy-Task-Force.git C:/Users/bkrei/Downloads/rsit
+git clone -c core.autocrlf=false https://github.com/Barnes70/Reference-Security-Incident-Taxonomy-Task-Force.git C:/Users/bkrei/Downloads/rsit
 cd C:/Users/bkrei/Downloads/rsit
-git config core.autocrlf false
 git remote add upstream https://github.com/enisaeu/Reference-Security-Incident-Taxonomy-Task-Force.git
-git fetch upstream && git switch -c rsit2tlctc upstream/master     # check: upstream/master == pinned b9ad1f8, else re-pin first
+git fetch upstream && git switch -c rsit2tlctc upstream/master
+test "$(git rev-parse upstream/master)" = b9ad1f843025bb3e8aefa308cdaf0cc22d4f4b77 || echo "upstream moved: re-pin (PINNED.md) before continuing"
 mkdir -p working_copy/rsit2tlctc
-cp ../tlctc/mappings/rsit/upstream/{machinetag.json,rsit_2_tlctc.md,machinetag2tlctc.py,README.md} working_copy/rsit2tlctc/
-python3 working_copy/rsit2tlctc/machinetag2tlctc.py working_copy/rsit2tlctc/machinetag.json /tmp/check.md && diff /tmp/check.md working_copy/rsit2tlctc/rsit_2_tlctc.md
-git add working_copy/rsit2tlctc && git commit -m "Add rsit2tlctc: RSIT → TLCTC crosswalk (tlctc field per value, generated table)"
-git push -u origin rsit2tlctc
+for f in machinetag.json rsit_2_tlctc.md machinetag2tlctc.py README.md; do    # committed LF bytes, never the CRLF working tree
+  git -C ../tlctc show main:mappings/rsit/upstream/$f > working_copy/rsit2tlctc/$f
+done
+python3 working_copy/rsit2tlctc/machinetag2tlctc.py working_copy/rsit2tlctc/machinetag.json /tmp/check.md \
+  && diff /tmp/check.md working_copy/rsit2tlctc/rsit_2_tlctc.md \
+  && ! grep -lU $'\r' working_copy/rsit2tlctc/* \
+  && git add working_copy/rsit2tlctc \
+  && git commit -m "Add rsit2tlctc: RSIT → TLCTC crosswalk (tlctc field per value, generated table)" \
+  && git push -u origin rsit2tlctc
 ```
 
-The files must be LF in the commit (`core.autocrlf false` in the clone; the copies come from the
-TLCTC working tree, which is CRLF on Windows: normalise with `sed -i 's/\r$//'` before `git add`, or copy
-from `git show main:mappings/rsit/upstream/<file>`).
+The chain stops before `git add` if the table does not regenerate identically or any file has a CR.
+The copies come from the committed blobs on `main` (LF), so the TLCTC branch must be merged first.
 
 ## 3. Pull request (owner runs)
 

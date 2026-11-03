@@ -78,8 +78,15 @@ test('changed generated file fails the byte check', () => {
   assert.strictEqual(failures.length, 1);
 });
 
-test('chain note puts the DRE on the RSIT step, before an after-companion', () => {
+test('chain note: phishing DRE is potential and sits on the #9 step', () => {
   const { mapping, misp } = load();
   const el = tlctcElement(mapping.entries.find((e) => e.rsit_id === 'fraud/phishing'), misp);
-  assert.ok(el.note.startsWith('#9 + [DRE: C] → #4'), el.note);
+  assert.ok(el.note.startsWith('#9 (potential DRE C) → #4'), el.note);
+});
+
+test('attempt note says no successful step, not "not an incident"', () => {
+  const { mapping, misp } = load();
+  const el = tlctcElement(mapping.entries.find((e) => e.rsit_id === 'intrusion-attempts/brute-force'), misp);
+  assert.ok(el.note.includes('a near miss, not a successful step'), el.note);
+  assert.ok(!el.note.includes('not an incident'));
 });

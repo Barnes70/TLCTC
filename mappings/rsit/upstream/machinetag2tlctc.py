@@ -24,8 +24,9 @@ and the question that decides.
 
 
 def cell(text):
-    """Escape a value for a Markdown table cell."""
-    return str(text).replace("|", "\\|").replace("\r", " ").replace("\n", " ")
+    """Escape a value for a Markdown table cell (HTML specials first, so <enabler> is not read as a tag)."""
+    text = str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    return text.replace("|", "\\|").replace("\r", " ").replace("\n", " ")
 
 
 def tlctc_cell(elements):

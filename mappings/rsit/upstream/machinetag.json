@@ -151,7 +151,7 @@
               "machinetag": "tlctc:cluster=\"09-social-engineering\"",
               "uuid": "b4c35957-b394-5157-8e7d-5c263c194c60",
               "mapping_type": "direct",
-              "note": "#9 + [DRE: C].",
+              "note": "#9 (potential DRE C).",
               "timestamp": 20261103
             }
           ],
@@ -172,7 +172,7 @@
                 "#3"
               ],
               "mapping_type": "attempt",
-              "note": "Attempt, success not asserted: #2 (R-ROLE) if the flawed component serves the attacker (server role); #3 (R-ROLE) if the flawed component consumes attacker content (client role). A blocked attempt is a near miss, not an incident. Ask: Did it succeed? If so, classify the record under the matching Intrusions value.",
+              "note": "Attempt, success not asserted: #2 (R-ROLE) if the flawed component serves the attacker (server role); #3 (R-ROLE) if the flawed component consumes attacker content (client role). A blocked attempt is a near miss, not a successful step. Ask: Did it succeed? If so, classify the record under the matching Intrusions value.",
               "timestamp": 20261103
             }
           ],
@@ -187,7 +187,7 @@
                 "#4"
               ],
               "mapping_type": "attempt",
-              "note": "Attempt, success not asserted: #4 (R-CRED). A blocked attempt is a near miss, not an incident. Ask: Did any attempt authenticate? If so, classify the record under Unprivileged or Privileged Account Compromise.",
+              "note": "Attempt, success not asserted: #4 (R-CRED). A blocked attempt is a near miss, not a successful step. Ask: Did any attempt authenticate? If so, classify the record under Unprivileged or Privileged Account Compromise.",
               "timestamp": 20261103
             }
           ],
@@ -203,7 +203,7 @@
                 "#3"
               ],
               "mapping_type": "attempt",
-              "note": "Attempt, success not asserted: #2 (R-ROLE) if the flawed component serves the attacker (server role); #3 (R-ROLE) if the flawed component consumes attacker content (client role). A blocked attempt is a near miss, not an incident. Ask: Did it succeed? If so, classify the record under the matching Intrusions value.",
+              "note": "Attempt, success not asserted: #2 (R-ROLE) if the flawed component serves the attacker (server role); #3 (R-ROLE) if the flawed component consumes attacker content (client role). A blocked attempt is a near miss, not a successful step. Ask: Did it succeed? If so, classify the record under the matching Intrusions value.",
               "timestamp": 20261103
             }
           ],
@@ -491,7 +491,7 @@
               "machinetag": "tlctc:cluster=\"09-social-engineering\"",
               "uuid": "b4c35957-b394-5157-8e7d-5c263c194c60",
               "mapping_type": "chain",
-              "note": "#9 + [DRE: C] → #4; RSIT does not record the following step. Ask: Were the credentials used?",
+              "note": "#9 (potential DRE C) → #4; RSIT does not record the following step. Ask: Were the credentials used?",
               "timestamp": 20261103
             }
           ],

@@ -34,9 +34,9 @@ const TYPES = ['direct', 'conditional', 'chain', 'outcome', 'no-cluster', 'unres
   'attempt', 'exposure', 'indicator'];
 const BASE_FIELDS = ['rsit_id', 'rsit_expanded', 'mapping_type', 'next_question', 'rationale'];
 const TYPE_FIELDS = {
-  direct: ['targets', 'dre'],
+  direct: ['targets', 'dre', 'dre_potential'],
   conditional: ['targets', 'dre'],
-  chain: ['targets', 'companion', 'dre'],
+  chain: ['targets', 'companion', 'dre', 'dre_potential'],
   outcome: ['dre', 'cause_hints'],
   'no-cluster': ['partition_row', 'basis', 'out_of_scope', 'excluded'],
   unresolved: [],
@@ -193,39 +193,65 @@ function checkTags(machinetag, mapping, misp) {
   return failures;
 }
 
-function main() {
-  const mapping = readJSON(FILES.mapping);
-  const machinev1Text = fs.readFileSync(FILES.machinev1, 'utf8');
-  const machinev1 = JSON.parse(machinev1Text);
-  const dictionary = readJSON(FILES.dictionary);
-  const failures = validateMapping(mapping, machinev1, dictionary);
-
+/** Read every input of the validation from disk. */
+function loadInputs() {
   const gen = require('./build-rsit-mapping.js');
-  const os = require('os');
-  const misp = readJSON(gen.PATHS.misp);
   const readOrNull = (p) => (fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null);
-  const expectedMachinetag = gen.buildMachinetag(mapping, machinev1, misp);
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'rsit-'));
-  fs.writeFileSync(path.join(tmp, 'machinetag.json'), expectedMachinetag);
-  const expectedMd = gen.renderMd(path.join(tmp, 'machinetag.json'), path.join(tmp, 'rsit_2_tlctc.md'));
-  fs.rmSync(tmp, { recursive: true, force: true });
-  failures.push(...checkGenerated({ machinetagOnDisk: readOrNull(gen.PATHS.outJson), expectedMachinetag,
-    mdOnDisk: readOrNull(gen.PATHS.outMd), expectedMd }));
-  failures.push(...checkTags(JSON.parse(expectedMachinetag), mapping, misp));
+  return {
+    mapping: readJSON(FILES.mapping),
+    machinev1Text: fs.readFileSync(FILES.machinev1, 'utf8'),
+    dictionary: readJSON(FILES.dictionary),
+    pinnedMd: fs.readFileSync(FILES.pinned, 'utf8'),
+    misp: readJSON(gen.PATHS.misp),
+    machinetagOnDisk: readOrNull(gen.PATHS.outJson),
+    mdOnDisk: readOrNull(gen.PATHS.outMd),
+  };
+}
 
+/** All failures for the given inputs. Never throws on bad data: mapping failures stop before
+ *  generation, and a generator error is reported as a failure. */
+function collectFailures(inputs) {
+  const { mapping, machinev1Text, dictionary, pinnedMd, misp, machinetagOnDisk, mdOnDisk } = inputs;
+  const failures = [];
   const sha = crypto.createHash('sha256').update(lf(machinev1Text), 'utf8').digest('hex');
-  const recorded = (fs.readFileSync(FILES.pinned, 'utf8').match(/`([0-9a-f]{64})`/) || [])[1];
+  const recorded = (pinnedMd.match(/`([0-9a-f]{64})`/) || [])[1];
   if (sha !== recorded) failures.push(`pinned/machinev1 sha256 ${sha} != PINNED.md ${recorded}`);
-  if (mapping.metadata.rsit_source && !fs.readFileSync(FILES.pinned, 'utf8').includes(mapping.metadata.rsit_source.commit)) {
+  if (mapping.metadata && mapping.metadata.rsit_source && !pinnedMd.includes(mapping.metadata.rsit_source.commit)) {
     failures.push(`metadata.rsit_source.commit ${mapping.metadata.rsit_source.commit} not in PINNED.md`);
   }
+  let machinev1;
+  try { machinev1 = JSON.parse(machinev1Text); } catch (err) { return [...failures, `pinned/machinev1 does not parse: ${err.message}`]; }
+  const mappingFailures = validateMapping(mapping, machinev1, dictionary);
+  failures.push(...mappingFailures);
+  if (mappingFailures.length) return failures; // generation would run on invalid data
 
+  try {
+    const gen = require('./build-rsit-mapping.js');
+    const os = require('os');
+    const expectedMachinetag = gen.buildMachinetag(mapping, machinev1, misp);
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'rsit-'));
+    let expectedMd;
+    try {
+      fs.writeFileSync(path.join(tmp, 'machinetag.json'), expectedMachinetag);
+      expectedMd = gen.renderMd(path.join(tmp, 'machinetag.json'), path.join(tmp, 'rsit_2_tlctc.md'));
+    } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+    failures.push(...checkGenerated({ machinetagOnDisk, expectedMachinetag, mdOnDisk, expectedMd }));
+    failures.push(...checkTags(JSON.parse(expectedMachinetag), mapping, misp));
+  } catch (err) {
+    failures.push(`generation failed: ${err.message}`);
+  }
+  return failures;
+}
+
+function main() {
+  const inputs = loadInputs();
+  const failures = collectFailures(inputs);
   if (failures.length) {
     for (const f of failures) console.error(`FAIL ${f}`);
     process.exit(1);
   }
-  console.log(`validate-rsit: OK (${mapping.entries.length} entries, RSIT ${machinev1.version})`);
+  console.log(`validate-rsit: OK (${inputs.mapping.entries.length} entries, RSIT ${JSON.parse(inputs.machinev1Text).version})`);
 }
 
-module.exports = { validateMapping, checkGenerated, checkTags, rsitValues, FILES };
+module.exports = { validateMapping, checkGenerated, checkTags, collectFailures, loadInputs, rsitValues, FILES };
 if (require.main === module) main();

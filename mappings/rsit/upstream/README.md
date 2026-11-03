@@ -38,14 +38,14 @@ Every other value carries the candidate clusters as plain text and the deciding 
 ]
 ```
 
-Seven values carry a machine tag: Scanning (#1), Information Gathering / Social Engineering (#9), Burglary (#8), Distributed Denial of Service (#6), Infected System (#7), Unprivileged Account Compromise (#4) and Phishing (#9). The others are left untagged on purpose. In TLCTC a cluster tag asserts that the step succeeded, so a tag on an attempt, an exposure, an indicator or a data state would count something that did not happen as an attack.
+Seven values carry a machine tag: Scanning (#1), Information Gathering / Social Engineering (#9), Burglary (#8), Distributed Denial of Service (#6), Infected System (#7), Unprivileged Account Compromise (#4) and Phishing (#9). The others are left untagged on purpose. In TLCTC a cluster tag asserts that the step succeeded, so a tag on an attempt, an exposure, an indicator or a data state would assert a successful step that the record does not show.
 
 | `mapping_type` | Meaning | Values |
 |---|---|---|
 | `direct` | one cluster | 4 |
 | `chain` | one cluster; the rules require a step before or after that RSIT does not record | 3 |
 | `conditional` | several clusters; the condition decides | 7 |
-| `attempt` | an attempted step; when blocked, a near miss, not an incident | 3 |
+| `attempt` | an attempted step; when blocked, a near miss (no successful step) | 3 |
 | `exposure` | a state of the target that enables a cluster; no step | 5 |
 | `indicator` | attacker infrastructure, not a victim event | 4 |
 | `outcome` | a data state (confidentiality, integrity, availability), not a cause | 4 |

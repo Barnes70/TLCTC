@@ -82,3 +82,32 @@ test('expanded text equals machinev1', () => {
   entry(mapping, 'fraud/phishing').rsit_expanded = 'Fishing';
   assert.ok(has(validateMapping(mapping, machinev1, dictionary), 'fraud/phishing'));
 });
+
+test('collectFailures names added and renamed RSIT values instead of throwing', () => {
+  const { collectFailures } = require('./validate-rsit.js');
+  const inputs = require('./validate-rsit.js').loadInputs();
+  const mv = JSON.parse(inputs.machinev1Text);
+  const avail = mv.values.find((g) => g.predicate === 'availability');
+  avail.entry.find((e) => e.value === 'dos').value = 'denial-of-service';
+  avail.entry.push({ description: 'x', expanded: 'New Thing', value: 'new-thing' });
+  const failures = collectFailures({ ...inputs, machinev1Text: JSON.stringify(mv, null, 2) + '\n' });
+  assert.ok(has(failures, 'availability/new-thing'), failures.join('\n'));
+  assert.ok(has(failures, 'availability/denial-of-service'));
+  assert.ok(has(failures, 'availability/dos'));
+  assert.ok(has(failures, 'sha256'));
+});
+
+test('collectFailures reports a malformed chain entry instead of throwing', () => {
+  const { collectFailures, loadInputs } = require('./validate-rsit.js');
+  const inputs = loadInputs();
+  delete inputs.mapping.entries.find((e) => e.rsit_id === 'fraud/phishing').companion;
+  const failures = collectFailures(inputs);
+  assert.ok(has(failures, 'fraud/phishing: chain needs companion'), failures.join('\n'));
+});
+
+test('dre_potential accepted on direct and chain', () => {
+  const { mapping, machinev1, dictionary } = load();
+  assert.strictEqual(entry(mapping, 'fraud/phishing').dre_potential, 'C');
+  assert.strictEqual(entry(mapping, 'fraud/phishing').dre, undefined);
+  assert.deepStrictEqual(validateMapping(mapping, machinev1, dictionary), []);
+});

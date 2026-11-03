@@ -166,9 +166,9 @@
           "tlctc": "#9"
         }
       ],
-      "dre": "C",
+      "dre_potential": "C",
       "next_question": null,
-      "rationale": "Gathering information from a person by lies, tricks, bribes or threats exploits human trust: #9. The information disclosed is a confidentiality event."
+      "rationale": "Gathering information from a person by lies, tricks, bribes or threats exploits human trust: #9. Information actually disclosed is a confidentiality event (DRE C)."
     },
     {
       "rsit_id": "intrusion-attempts/ids-alert",
@@ -445,7 +445,7 @@
         }
       ],
       "next_question": "Which step changed the data?",
-      "rationale": "A data state, not a cause (Axiom III): integrity was lost. Refine to Ii for content that is now wrong (defacement) or Ac for data present but unusable (ransomware encryption)."
+      "rationale": "A data state, not a cause (Axiom III): integrity was lost. Refine to Ii for content that is now wrong (defacement). Ransomware encryption is recorded as Ac instead (an availability refinement: the data is present but unusable)."
     },
     {
       "rsit_id": "information-content-security/data-loss",
@@ -522,9 +522,9 @@
         "after": "#4 when the disclosed credentials are used (R-CRED)",
         "notation": "#9 → #4"
       },
-      "dre": "C",
+      "dre_potential": "C",
       "next_question": "Were the credentials used?",
-      "rationale": "Persuading a person to reveal credentials is #9 (as ATT&CK T1566/T1598); the disclosure is a confidentiality event. Using the credentials is a separate #4 step (Axiom X). The reported URL is an indicator."
+      "rationale": "Persuading a person to reveal credentials is #9 (as ATT&CK T1566/T1598); credentials actually disclosed are a confidentiality event (DRE C). Using the credentials is a separate #4 step (Axiom X). The reported URL is an indicator."
     },
     {
       "rsit_id": "vulnerable/weak-crypto",
