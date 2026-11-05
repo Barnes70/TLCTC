@@ -123,10 +123,12 @@ Existing frameworks often mix causes, outcomes, actors, and control failures. TL
 Specification document version:   TLCTC+ v0.9
 Base framework:                   TLCTC v2.7 (dictionary tlctc_version 2.7)
 PATTERN catalogue version:        v0.2
-BRE catalogue version:            v0.3
+BRE catalogue version:            v0.4   (2026-11-05: adds the BRE-DATA family, §13.10)
 IMPACT catalogue version:         v0.2
 REPORT catalogue version:         v0.2
 ```
+
+BRE catalogue v0.4 is a catalogue release within TLCTC+ v0.9: the catalogues are versioned independently of the document. It adds the `BRE-DATA` family, which earlier versions named (§4.1.1, §13.4) without cataloguing, and five catalogue rules for it (D-1…D-5). No existing code is changed, renumbered or removed, and no grammar production changes: `BRE-DATA.11` already parses as a BRE code. Every v0.9 record stays valid.
 
 v0.9 re-bases the profile from TLCTC v2.5.1 to TLCTC v2.7, carries the v2.6 and v2.7 doctrine that a reporting profile must state (successful steps only, the subversion test for #10, causal and normative BRE edges, deadlines from awareness), and adds the `near_miss_record`. v0.8 sharpened the v0.7 re-base (direct/induced SRE kinds, deterministic marker plus `reporting_pivot_step`, step-level grammar); v0.7 re-based the profile from TLCTC v2.1 to TLCTC v2.5.1 and changed the record-type split criterion from SRE presence to path composition (see the intent boxes and §23). None of them adds, removes, or renumbers catalogue entries. The v0.5 catalogue decisions remain in force.
 
@@ -755,7 +757,7 @@ PATTERN-EXT.15 Law-Enforcement Impersonation Threat
 
 ---
 
-# 13. BRE Catalogue v0.3
+# 13. BRE Catalogue v0.4
 
 BREs are discrete, observable business, citizen, legal, regulatory, service, third-party, or organizational consequence events.
 
@@ -893,6 +895,95 @@ BRE-ORG.15 Board Notification Made
 BRE-ORG.16 Control Remediation Program Opened
 BRE-ORG.17 Staff Productivity Disruption Event
 ```
+
+## 13.10 Data Consequence (v0.4)
+
+`BRE-DATA.*` records what a Data Risk Event means for the organization that holds the data: its custody of other people's data, its own secrets, its control over its systems, the records it relies on, and whether it can get its data back. The DRE states what happened to the data; a BRE-DATA code states what happened to the business because of it.
+
+```text
+BRE-DATA.00 Data Consequence — reserved
+
+BRE-DATA.10 Disclosure Family — reserved              reached from [DRE: C]
+BRE-DATA.11 Entrusted Data Exposed
+BRE-DATA.12 Proprietary Data Exposed
+BRE-DATA.13 Control Material Exposed
+BRE-DATA.14 Exposed Data Published
+BRE-DATA.15 Exposed Data Offered for Sale
+BRE-DATA.16 Exposed Data Used to Target Data Subjects
+
+BRE-DATA.20 Reliance Family — reserved                reached from [DRE: I], [DRE: Ii] or [DRE: If]
+BRE-DATA.21 Decision Taken on Incorrect Data
+BRE-DATA.22 Incorrect Data Passed to Counterparties
+BRE-DATA.23 Records Restatement Required
+BRE-DATA.24 Misattributed Record Accepted
+BRE-DATA.25 Record Provenance Not Demonstrable
+
+BRE-DATA.30 Recoverability Family — reserved          reached from [DRE: A], [DRE: Av] or [DRE: Ac]
+BRE-DATA.31 Data Restored With Loss
+BRE-DATA.32 Data Permanently Lost
+BRE-DATA.33 Records Reconstructed From Secondary Sources
+BRE-DATA.34 Recovery Dependent on Attacker
+```
+
+**Structure.** The decades follow the core DRE tree (core §7.6): the decade of a code names the DRE property it is reached from — disclosure from `C`, reliance from `I`, recoverability from `A`. Inside a decade, codes split by the organization's relation to the data — whose data it is, what it does, what relied on it — and never by how the data state came about. This is the business-layer counterpart of the core DRE stopping rule (§8.3): mechanism, actor and intent do not create codes. The decades are keyed to the DRE, which is consequence-side, and never to a cluster (R-CAUSE-CONSEQUENCE-INDEPENDENCE). In the disclosure decade, .11–.13 are the exposure itself, one code per data role; .14–.16 are what happens to exposed data afterwards, reached causally from .11–.13.
+
+| Code | Reached from | Event |
+|---|---|---|
+| BRE-DATA.11 | `C` | Data the organization holds for others — customers, citizens, employees, clients — has left its control. The custody event. |
+| BRE-DATA.12 | `C` | The organization's own confidential information — trade secrets, source code, strategy, pricing or deal data — has left its control. |
+| BRE-DATA.13 | `C` | Credentials, keys, tokens, certificates or configurations that grant control over systems have left the organization's control. Every system the material opens is no longer under assured control until it is re-keyed. Exposure is the event: use of the material is a separate `#4` on the cause side (core Axiom X) and need not have occurred. |
+| BRE-DATA.14 | .11, .12 or .13; causal | Exposed data is made publicly accessible (leak site, paste site, media). |
+| BRE-DATA.15 | .11, .12 or .13; causal | Exposed data is offered to buyers. |
+| BRE-DATA.16 | .11 or .13; causal | Exposed data is used to approach the people or organizations it describes, e.g. tailored phishing of customers. The harm to them is recorded in their own records. |
+| BRE-DATA.21 | `Ii` or `I` | A business decision, calculation or automated action relied on data in an incorrect state. |
+| BRE-DATA.22 | `Ii` or `I` | Incorrect data was passed to customers, partners, markets or authorities. |
+| BRE-DATA.23 | `Ii` or `I` | Records the organization answers for — books, statements, registers — must be corrected and reissued. |
+| BRE-DATA.24 | `If` or `I` | A business process accepted a record or instruction as authoritative although its claimed origin is false. |
+| BRE-DATA.25 | `If` or `I` | The organization can no longer demonstrate who created or changed a set of records — audit trails, signatures, logs. Their evidential value is lost. |
+| BRE-DATA.31 | `A`, `Av` or `Ac` | Data was restored, but changes since the last recovery point are lost. |
+| BRE-DATA.32 | `Av` or `A` | No recovery path exists; the data is lost. |
+| BRE-DATA.33 | `A`, `Av` or `Ac` | Records are recreated from secondary sources — paper, partners, correspondence. |
+| BRE-DATA.34 | `Ac` or `A` | The only recovery path for inaccessible data runs through the attacker (decryptor or key); the organization faces the ransom decision. A ransom paid is `BRE-FIN.12 Authorized Crypto Transfer Made`, reached causally from it. |
+
+Five catalogue rules apply to the family:
+
+```text
+D-1  Reachability. A record carrying a BRE-DATA code carries a DRE of the code's decade
+     (linked_to_dre, §17.6), and the code is reached from that DRE directly or through
+     other BREs. Where a code names a refinement (.21–.23 Ii; .24–.25 If; .32 Av; .34 Ac),
+     the DRE is that refinement or its parent. Checkable by a validator.
+D-2  One code per role. Data that plays several roles gets one code per role, co-realized
+     with "+": (BRE-DATA.11 + BRE-DATA.13). There are no combined codes.
+D-3  Specific family first. Where the consequence is a payment (BRE-FIN), an authorization
+     or identity harm (BRE-ENT), a stopped process (BRE-SVC), a duty (BRE-REG, BRE-LGL) or
+     an ecosystem disruption (BRE-3P), that family is used. BRE-DATA records the
+     consequence for the data itself: custody, reliance, recoverability. A misattributed
+     instruction executed as a payment is BRE-FIN.21, not BRE-DATA.24; a forged
+     authorization is BRE-ENT.17.
+D-4  Event, not count. Record, account and system counts are IMPACT-DATA.* (R-IMPACT).
+D-5  Duties on top. Where the custody event is known, the record SHOULD carry it and reach
+     the notification duty from it by a normative edge, so that the first BRE is a business
+     event and the duty sits on it: [DRE: C] + [BRE: BRE-DATA.11 → BRE-REG.11]. Reaching
+     BRE-REG.11 directly from the DRE (§8.5) remains valid.
+```
+
+Examples:
+
+```text
+… → #4 ||[auth][@External→@MSP]|| + [SRE] → #1 + [DRE: C]
++ [BRE: (BRE-DATA.11 Entrusted Data Exposed + BRE-DATA.13 Control Material Exposed)
+   → (BRE-REG.11 Mandatory Notification Obligation Triggered + BRE-ORG.16 Control Remediation Program Opened)]
+```
+
+A managed service provider's document store held its customers' MFA and RMM API keys and backup-storage credentials. The material is both entrusted and control material, so it takes two codes (D-2). The notification duty is reached from BRE-DATA.11 by a normative edge; the remediation programme from BRE-DATA.13 by a causal edge.
+
+```text
+#9 ||[email][@External→@Org]|| → #7 + [SRE] + [DRE: Ac]
++ [BRE: (BRE-SVC.16 Critical Business Process Interrupted + BRE-DATA.34 Recovery Dependent on Attacker)
+   → BRE-FIN.12 Authorized Crypto Transfer Made]
+```
+
+The stopped process is BRE-SVC.16 and the data's recoverability is BRE-DATA.34: two consequences of one DRE, in two families (D-3). The ransom payment follows from the recoverability event.
 
 ---
 
@@ -1572,6 +1663,13 @@ In that future architecture:
 ---
 
 # 23. Changelog
+
+## 23.0 BRE catalogue v0.4 (2026-11-05, within v0.9)
+
+1. Added the `BRE-DATA` family (§13.10): three reserved decades aligned with the core DRE tree — disclosure (`BRE-DATA.10`, from `C`), reliance (`BRE-DATA.20`, from `I`/`Ii`/`If`), recoverability (`BRE-DATA.30`, from `A`/`Av`/`Ac`) — and fifteen codes. Inside a decade, codes split by the organization's relation to the data, never by how the data state came about.
+2. Added the catalogue rules D-1 (reachability from a DRE of the code's decade, validator-checkable through `linked_to_dre`), D-2 (one code per data role, co-realized), D-3 (more specific families first), D-4 (counts are Impact) and D-5 (notification duties sit on the custody event).
+3. The family closes a gap: since v0.3 the specification referred to `BRE-DATA.*` as a dominant family of cyber-side records (§4.1.1, §13.4, §17.1) without cataloguing a single code, so the first business event of a data breach could not be coded.
+4. Did not change any existing code, the PATTERN/IMPACT/REPORT catalogues (v0.2 / v0.2 / v0.2), the grammar, the data model, the record types or the specification version (v0.9).
 
 ## 23.1 v0.9 changes from v0.8
 
