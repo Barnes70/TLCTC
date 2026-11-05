@@ -645,10 +645,12 @@ Current v0.9 status:
 Specification document version:   TLCTC+ v0.9
 Base framework:                   TLCTC v2.7 (dictionary tlctc_version 2.7)
 PATTERN catalogue version:        v0.2
-BRE catalogue version:            v0.3
+BRE catalogue version:            v0.4   (2026-11-05: adds the BRE-DATA family)
 IMPACT catalogue version:         v0.2
 REPORT catalogue version:         v0.2
 ```
+
+BRE catalogue v0.4 adds the `BRE-DATA` family, the consequences of a Data Risk Event for the organization that holds the data. Its three decades follow the core DRE tree — disclosure (from `C`), reliance (from `I`), recoverability (from `A`) — and inside each, codes split by the organization's relation to the data: data held for others, its own secrets, control material such as credentials and keys, the records it relies on. A breach of personal data can then be recorded with a business event first and the notification duty on top of it: `BRE-DATA.11 Entrusted Data Exposed → BRE-REG.11 Mandatory Notification Obligation Triggered`.
 
 National aliases and national extensions may be added under national governance, but core catalogue codes should remain stable enough for cross-border comparability.
 
