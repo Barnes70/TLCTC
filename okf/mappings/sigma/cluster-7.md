@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "Sigma rules → #7 Malware"
-description: "77 Sigma rules entries mapped to TLCTC #7 Malware."
+description: "76 Sigma rules entries mapped to TLCTC #7 Malware."
 resource: "tlctc:mapping:sigma:cluster-7"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: SigmaHQ rules → TLCTC mapping (`mappings/sigma/`). Derived via ATT&CK technique mapping.
 
-Mapped entries: **77**. Cluster: [#7 Malware](/clusters/cluster-7.md).
+Mapped entries: **76**. Cluster: [#7 Malware](/clusters/cluster-7.md).
 
 | Rule | Techniques | Cluster set | Status |
 |---|---|---|---|
@@ -24,7 +24,6 @@ Mapped entries: **77**. Cluster: [#7 Malware](/clusters/cluster-7.md).
 | Suspicious Inbox Manipulation Rules | T1140 | #7 | ok |
 | Microsoft 365 - Potential Ransomware Activity | T1486 | #7 | ok |
 | Microsoft 365 - Unusual Volume of File Deletion | T1485 | #7 | ok |
-| Microsoft 365 - User Restricted from Sending Email | T1199 | #7, #10 | ambiguous |
 | Overwriting the File with Dev Zero or Null | T1485 | #7 | ok |
 | Symlink Etc Passwd | T1204 | #7, #9 | ambiguous |
 | Linux Base64 Encoded Pipe to Shell | T1140 | #7 | ok |

@@ -194,7 +194,7 @@ Initial Access techniques always cross the @Org boundary. The key distinctions:
 - T1195.001 Software Dependencies → `#10.2 → #7` at the `||[dev][@Vendor→@Org]||` boundary.
 - T1195.002 Software Supply Chain → `#10.1 → #7` at the `||[update][@Vendor→@Org]||` boundary.
 - T1195.003 Hardware Supply Chain → `#10.3 → #7` at the `||[physical][@Vendor→@Org]||` boundary.
-- T1199 Trusted Relationship → `#10 → #7` at the `||[trust][@Vendor→@Org]||` boundary; `#10` placed at the Trust Acceptance Event, not at the upstream compromise.
+- T1199 Trusted Relationship → `#4 | #10`. ATT&CK names the relationship, not the mechanism, so ask what crosses the boundary. The partner's credential, token or delegated-administration account presented to authenticate → `#4 ||[auth][@External→@Org]||` (R-CRED; this is the case the ATT&CK description gives, and it holds however the credential was obtained, including by compromising the partner). The partner's own subverted system acting over an established channel, with no credential presented as another identity → `#10 ||[trust][@Vendor→@Org]||` at the Trust Acceptance Event, followed by `#1` or `#7`.
 
 ## Handling Credential Access Techniques
 

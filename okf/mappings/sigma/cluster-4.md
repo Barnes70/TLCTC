@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "Sigma rules → #4 Identity Theft"
-description: "104 Sigma rules entries mapped to TLCTC #4 Identity Theft."
+description: "105 Sigma rules entries mapped to TLCTC #4 Identity Theft."
 resource: "tlctc:mapping:sigma:cluster-4"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: SigmaHQ rules → TLCTC mapping (`mappings/sigma/`). Derived via ATT&CK technique mapping.
 
-Mapped entries: **104**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
+Mapped entries: **105**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
 
 | Rule | Techniques | Cluster set | Status |
 |---|---|---|---|
@@ -81,6 +81,7 @@ Mapped entries: **104**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
 | Azure Login Bypassing Conditional Access Policies | T1078 | #4 | ok |
 | Microsoft 365 - Impossible Travel Activity | T1078 | #4 | ok |
 | Logon from a Risky IP Address | T1078 | #4 | ok |
+| Microsoft 365 - User Restricted from Sending Email | T1199 | #4, #10 | ambiguous |
 | Okta New Admin Console Behaviours | T1078 | #4 | ok |
 | Remote Access Tool - Team Viewer Session Started On Linux Host | T1133 | #4 | ok |
 | User Added To Admin Group Via Dscl | T1078 | #4 | ok |

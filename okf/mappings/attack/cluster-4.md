@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "ATT&CK techniques → #4 Identity Theft"
-description: "33 ATT&CK techniques entries mapped to TLCTC #4 Identity Theft."
+description: "34 ATT&CK techniques entries mapped to TLCTC #4 Identity Theft."
 resource: "tlctc:mapping:attack:cluster-4"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE ATT&CK Enterprise → TLCTC mapping (`mappings/mitre-attack-enterprise/`).
 
-Mapped entries: **33**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
+Mapped entries: **34**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
 
 | Technique | Name | TLCTC | Rationale |
 |---|---|---|---|
@@ -40,6 +40,7 @@ Mapped entries: **33**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
 | T1114.002 | Email Collection: Remote Email Collection | #4 → #1 | Remote Email Collection: authenticate to mail server (`#4`) and pull mailboxes via IMAP/POP/EWS/Graph (`#1`). Outcome `[DRE: C]`. |
 | T1114.003 | Email Collection: Email Forwarding Rule | #4 → #1 | Email Forwarding Rule: authenticate to mail account (`#4`) and configure a forwarding/auto-redirect rule via designed mail-rules UI/API (`#1`) so that subsequent inbound mail is silently copied to attacker. Outcome `[DRE: C]` (continuous data exposure for the lifetime of the rule). |
 | T1133 | External Remote Services | #4 | External remote services (VPN, Citrix, RDP gateway, SSH bastion, cloud admin portals) are accessed by **presenting valid credentials** at their auth surface. Per MITRE description: "Access to Valid Accounts to use the service is often a requirement." This is credential application — #4 per R-CRED. Cluster corrected from prior `#2`: exploiting an implementation flaw in the remote service is a different technique (T1190 Exploit Public-Facing Application — #2). T1133 is the auth-via-creds path. Path: `#4 \|\|[auth][@External→@Org]\|\|`. |
+| T1199 | Trusted Relationship | #4 \| #10 | ATT&CK defines this technique by the relationship (a third party that has access to the victim), not by the mechanism, so the cluster depends on what crosses the boundary. (a) The attacker presents the partner's credential, token or delegated-administration account to authenticate into @Org: #4 (R-CRED; federation test, core §4 #10: presenting a credential is #4 wherever it is presented and however it was obtained). This is the case the ATT&CK description gives (the other party's Valid Accounts compromised and used; a compromised partner or reseller account with delegated administration). That the partner was compromised to obtain the credential does not make the step #10: leave the credential with the attacker and remove the partner compromise, and the step still succeeds. @Org honouring a token from an identity provider that was not subverted is the trust link working as designed and is not a step. Path: `#4 \|\|[auth][@External→@Org]\|\|`. (b) The attacker acts through the partner's own subverted system over an established channel (management server, site-to-site link, integration backend) and @Org accepts its connection, command or service response as authoritative, with no credential presented as another identity: #10 at the Trust Acceptance Event (R-SUPPLY, subversion test). Path: `#10 \|\|[trust][@Vendor→@Org]\|\|`, followed by `#1` (function abuse over the channel) or `#7` when attacker code executes (R-EXEC). |
 | T1530 | Data from Cloud Storage | #4 → #1 | Read data from cloud storage (S3, Azure Blob, GCS, Box, Dropbox, OneDrive). Authenticate via valid identity artifact (`#4` per R-CRED) and invoke designed object-listing/download APIs (`#1`). Outcome `[DRE: C]`. Path: `#4 → #1 + [DRE: C]`. |
 | T1550 | Use Alternate Authentication Material | #4 | Using alternate authentication material (tokens, hashes, tickets, cookies) to authenticate without re-entering a password is **credential application** — presenting an identity artifact to an auth surface. Per **R-CRED** and **Axiom X**, application is always `#4`, regardless of the artifact type. Cluster corrected from prior `#1` (with a copy-pasted "defense evasion uses legitimate capabilities" rationale that did not apply): the artifacts here are credentials, and using them to impersonate an identity is by definition `#4`, not generic function abuse. Path: `#4`. The acquisition of the artifact (dump, intercept, theft) is a separate prior step in its own cluster. |
 | T1550.001 | Use Alternate Authentication Material: Application Access Token | #4 | Application access tokens (OAuth bearer tokens, SaaS API tokens, cloud session tokens) are identity artifacts that authenticate API calls. Presenting a stolen token to authenticate is `#4` per R-CRED / Axiom X. Cluster corrected from prior `#1`. Path: `#4`. |
