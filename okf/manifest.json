@@ -448,7 +448,6 @@
         "cluster-2",
         "cluster-7",
         "cluster-1",
-        "cluster-10",
         "cluster-4",
         "confidence-high"
       ]
@@ -4258,7 +4257,7 @@
       "path": "/mappings/attack/cluster-10.md",
       "type": "mapping-set",
       "title": "ATT&CK techniques → #10 Supply Chain Attack",
-      "description": "5 ATT&CK techniques entries mapped to TLCTC #10 Supply Chain Attack.",
+      "description": "4 ATT&CK techniques entries mapped to TLCTC #10 Supply Chain Attack.",
       "resource": "tlctc:mapping:attack:cluster-10",
       "tags": [
         "mapping",
@@ -4294,7 +4293,7 @@
       "path": "/mappings/attack/cluster-4.md",
       "type": "mapping-set",
       "title": "ATT&CK techniques → #4 Identity Theft",
-      "description": "33 ATT&CK techniques entries mapped to TLCTC #4 Identity Theft.",
+      "description": "34 ATT&CK techniques entries mapped to TLCTC #4 Identity Theft.",
       "resource": "tlctc:mapping:attack:cluster-4",
       "tags": [
         "mapping",
@@ -4534,7 +4533,7 @@
       "path": "/mappings/sigma/cluster-4.md",
       "type": "mapping-set",
       "title": "Sigma rules → #4 Identity Theft",
-      "description": "104 Sigma rules entries mapped to TLCTC #4 Identity Theft.",
+      "description": "105 Sigma rules entries mapped to TLCTC #4 Identity Theft.",
       "resource": "tlctc:mapping:sigma:cluster-4",
       "tags": [
         "mapping",
@@ -4570,7 +4569,7 @@
       "path": "/mappings/sigma/cluster-7.md",
       "type": "mapping-set",
       "title": "Sigma rules → #7 Malware",
-      "description": "77 Sigma rules entries mapped to TLCTC #7 Malware.",
+      "description": "76 Sigma rules entries mapped to TLCTC #7 Malware.",
       "resource": "tlctc:mapping:sigma:cluster-7",
       "tags": [
         "mapping",

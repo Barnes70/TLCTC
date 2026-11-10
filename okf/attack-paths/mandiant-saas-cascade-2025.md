@@ -8,7 +8,6 @@ tags:
   - "cluster-2"
   - "cluster-7"
   - "cluster-1"
-  - "cluster-10"
   - "cluster-4"
   - "confidence-high"
 timestamp: "2026-04-14T00:00:00Z"
@@ -19,7 +18,7 @@ tlctc_version: "2.6"
 ## Attack path
 
 ```
-||[api][@External→@SaaSProvider]|| #2 →[Δt=~1h] #7 (FEC) →[Δt=~1d] #1 →[Δt=~6h] #1 + [DRE: C] →[Δt=~1h] ||[api][@SaaSProvider→@Customer]|| #10 →[Δt=instant] #4 →[Δt=~1h] #1 + [DRE: C]
+||[api][@External→@SaaSProvider]|| #2 →[Δt=~1h] #7 (FEC) →[Δt=~1d] #1 →[Δt=~6h] #1 + [DRE: C] →[Δt=~1h] ||[auth][@External→@Customer]|| #4 →[Δt=~1h] #1 + [DRE: C]
 ```
 
 # Schema
@@ -30,9 +29,8 @@ tlctc_version: "2.6"
 | s2-webshell-persistence | [#7](/clusters/cluster-7.md) (FEC) |  | ~1d |  |
 | s3-cloud-recon | [#1](/clusters/cluster-1.md) |  | ~6h |  |
 | s4-service-principal-exfil | [#1](/clusters/cluster-1.md) |  | ~1h | C |
-| s5-trust-acceptance | [#10](/clusters/cluster-10.md) | \|\|[api][@SaaSProvider→@Customer]\|\| | instant |  |
-| s6-sp-auth-to-customer | [#4](/clusters/cluster-4.md) |  | ~1h |  |
-| s7-customer-data-access | [#1](/clusters/cluster-1.md) |  |  | C |
+| s5-sp-auth-to-customer | [#4](/clusters/cluster-4.md) | \|\|[auth][@External→@Customer]\|\| | ~1h |  |
+| s6-customer-data-access | [#1](/clusters/cluster-1.md) |  |  | C |
 
 ## Step notes
 
@@ -40,10 +38,9 @@ tlctc_version: "2.6"
 - **s2-webshell-persistence:** Webshell / post-exploitation implant installed on the provider's infrastructure. R-EXEC satisfied: FEC execution of attacker-supplied code on the provider's server. Enables persistent hands-on-keyboard operations inside the provider's tenancy.
 - **s3-cloud-recon:** Azure AD / Entra ID reconnaissance within the provider's tenant: enumerate service principals, OAuth applications, and multi-tenant integrations. Legitimate cloud management APIs, abused scope. No exploit, no FEC.
 - **s4-service-principal-exfil:** Extract service-principal secrets / OAuth refresh tokens that grant the provider's app delegated access into downstream customer tenants. Legitimate secret-retrieval APIs (Key Vault, configuration store), abused scope. DRE:C — the provider's cross-tenant credentials are the crown jewels.
-- **s5-trust-acceptance:** Trust Acceptance Event (R-SUPPLY): the customer tenant honors the provider's service principal as if it were the provider itself — cryptographically it is. v2.6 federation: the provider and its service-principal secret, its federation trust material, were subverted at s1-s4, so the customer's acceptance of the subverted authority is the TAE (#10). Falsifiability (v2.6): remove that subversion and the acceptance is the trust link working as designed, not a step. Each authentication presented through the subverted authority remains #4 (s6): #10 → #4. v2.5 recorded the order #4 → #10.
-- **s6-sp-auth-to-customer:** Authentication into the downstream customer tenant using the exfiltrated service-principal secret. R-CRED / Axiom X: credential application is ALWAYS #4, regardless of how the credential was acquired. The authentication looks indistinguishable from normal provider-to-customer integration traffic. Under v2.6 federation it follows the TAE (s5).
-- **s7-customer-data-access:** Use of delegated API access to query customer data (CRM records, documents, emails). Legitimate, audited API calls — abused scope. DRE:C. The downstream victim's only observable signal is behavioral: unusual query volume or off-hours access from the provider's service principal.
+- **s5-sp-auth-to-customer:** Authentication into the downstream customer tenant using the exfiltrated service-principal secret. R-CRED / Axiom X: credential application is ALWAYS #4, regardless of how the credential was acquired. The authentication looks indistinguishable from normal provider-to-customer integration traffic. This is the crossing into the customer: an internal cluster crossing a domain boundary, annotated ||[auth][@External→@Customer]||. No #10 precedes it: the identity provider that issued the token was not subverted, and the customer tenant honouring that token is the trust link working as designed (core §4 #10, federation test).
+- **s6-customer-data-access:** Use of delegated API access to query customer data (CRM records, documents, emails). Legitimate, audited API calls — abused scope. DRE:C. The downstream victim's only observable signal is behavioral: unusual query volume or off-hours access from the provider's service principal.
 
 # Citations
 
-Attack path derived from Mandiant M-Trends 2026 'The Cascading Impact of Third-Party SaaS Compromises' (pp. 74-77). UNC5221-style pattern: compromise a SaaS provider via a public-facing webshell / SQLi, extract Azure Service Principals and OAuth refresh tokens, then ride the provider's legitimate integration chain into downstream customer tenants. The downstream step is where #10 (Supply Chain) appears — at the customer's Trust Acceptance Event where the provider's service principal is honored. Sources: M-Trends 2026 pp. 21, 74-77. v2.6 requalification (2026-09-23): the provider-to-customer segment is re-sequenced from #4 -> #10 to #10 -> #4. Under v2.6 federation, the customer's acceptance of the subverted provider authority (the provider and its service-principal secret were subverted at s1-s4) is the TAE (s5, #10), and each authentication presented through it remains #4 (s6). Step ids renumbered accordingly (v2.5: s5 = #4, s6 = #10). Path: #2 -> #7 -> #1 -> #1 + [DRE: C] -> #10 -> #4 -> #1 + [DRE: C].
+Attack path derived from Mandiant M-Trends 2026 'The Cascading Impact of Third-Party SaaS Compromises' (pp. 74-77). UNC5221-style pattern: compromise a SaaS provider via a public-facing webshell / SQLi, extract Azure Service Principals and OAuth refresh tokens, then present them in downstream customer tenants. Sources: M-Trends 2026 pp. 21, 74-77. History: v2.5 recorded the provider-to-customer segment as #4 -> #10; the v2.6 requalification (2026-09-23) re-sequenced it to #10 -> #4, reading the stolen service-principal secret as subverted federation trust material. Correction (2026-11-10): the #10 step is removed. A service-principal secret is a credential of the provider's application, not trust material of the identity provider; the identity provider was not subverted and issued its tokens correctly, so the customer tenant honouring them is the trust link working as designed and is not a step (core §4 #10, federation test; whitepaper B19: stolen credentials at an identity provider that was not subverted give #4 -> #1). Falsifiability: leave the secret with the attacker and remove the provider compromise, and the entry into the customer still succeeds, so it was never #10. The crossing into the customer is #4 with its boundary annotated. Step ids renumbered (s5 = #4, s6 = #1). Path: #2 -> #7 -> #1 -> #1 + [DRE: C] -> #4 -> #1 + [DRE: C].

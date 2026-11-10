@@ -45,7 +45,7 @@
   "T1195.001":  {"primary": "#10", "sequence": ["#10"], "splits": "Software dependency compromise — TAE at install/update"},
   "T1195.002":  {"primary": "#10", "sequence": ["#10"], "splits": "Software supply chain compromise"},
   "T1195.003":  {"primary": "#10", "sequence": ["#10"], "splits": "Hardware supply chain compromise"},
-  "T1199":      {"primary": "#10", "sequence": ["#10"], "splits": "Trusted relationship — TAE when partner trust is accepted"},
+  "T1199":      {"primary": "#4",  "sequence": ["#4"], "splits": "Trusted relationship: partner credential or delegated account presented → #4 (R-CRED). #10 instead only where the partner's own subverted system acts over an established channel without presenting a credential"},
   "T1203":      {"primary": "#3",  "sequence": ["#3"], "splits": "Exploitation for Client Execution: client-role flaw → #3"},
   "T1210":      {"primary": "#2",  "sequence": ["#2"], "splits": "Exploitation of Remote Services: remote service is server-role → #2"},
   "T1219":      {"primary": "#7",  "sequence": ["#9", "#7"], "splits": "Remote access tool deployed via social engineering typically — split per Axiom VI"},
