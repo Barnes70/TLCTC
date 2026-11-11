@@ -5,7 +5,7 @@
     "tlctc_version": "2.6",
     "cwe_version": "4.16",
     "source": "https://www.tlctc.net/tlctc-mitre-cwe-mapping.html",
-    "total_entries": 985,
+    "total_entries": 997,
     "provenance": "ai_generated_human_reviewed",
     "audit_history": [
       "2026-05-06: Step 9 rationale standardization sweep — 283 stub rationales rewritten with decision-tree-citing prose. Family patterns: sanitization-of-special-elements series (CWE-140-165), server-side info-leak via artifact (CWE-526-550), hardware/SoC flaws (CWE-1190-1334) split into design / debug / side-channel / fault-injection / data-remanence / protection sub-families, resource-exhaustion (CWE-400-410, 770-779, 1325) citing Q5, malware (CWE-507-512) citing Q6 + Axiom III, deprecated entries (CWE-71/92/132/...) citing Prohibited-verdict policy, XSS variants (CWE-82-87) citing CWE-79 parent. After this sweep, 0 entries with rationales under 60 characters remain.",
@@ -19,7 +19,9 @@
       "2026-08-07: role review of the R-SUBSTRATE re-audit — the 56 hardware entries moved to #2 on 2026-08-07 were re-examined against R-ROLE (v2.4) to test whether #2 or '#2 | #3' is correct. For 52 the call direction is fixed by the architecture: lower-privileged software or firmware issues a register write, bus transaction or instruction, and the hardware block services it, which is unambiguously server-role. These are NOT analogous to the 262-entry '#2 | #3' group (memory-safety, injection, type confusion), where the same defect can appear in code acting in either role; a fabric bridge or register interface does not have a client-role instantiation, so a context-dependent mapping would assert an ambiguity that does not exist. 4 entries were refined to '#2 | #3' because the flawed block CONSUMES data a lower-privileged entity can influence, which per the R-ROLE v2.4 note is client-role: CWE-1282 (assumed-immutable data read back from writable memory), CWE-1283 (verifier consuming mutable attestation/measurement data), CWE-1304 (block consuming configuration state restored after a power transition), CWE-1326 (boot chain consuming stages it cannot anchor without an immutable root of trust). Statistics recomputed from the data.",
       "2026-08-07: metadata tlctc_version 2.3 -> 2.5. The field had lagged since the file was authored: it read 2.3 while the mapping already embedded the v2.3.1 #4 re-alignment and, after the 2026-08-06/07 passes, the v2.5 rules R-CHANNEL and R-SUBSTRATE. The bump records which dictionary the mapping's RULES are aligned to; it is NOT a claim that all 985 entries have been re-audited against v2.5. Actual re-audit coverage: #4 revisited against v2.3.1 (2026-07-01), #5 against R-CHANNEL (2026-08-06, certificate/peer-authenticity family plus the CWE-923/941/614 remainder), #8 against R-SUBSTRATE in full (2026-08-07, all 81 entries), and the hardware role review against R-ROLE v2.4 (2026-08-07). Clusters #1, #2, #3, #6, #7, #9 and #10 have not been systematically revisited since the v2.1 audit of 2026-05-05, except where entries moved into them from #5 or #8 during the passes above — those carry their own reasoning per entry. Consumers needing per-cluster assurance should read this audit_history rather than infer it from the version field.",
       "2026-08-08: v2.5 consistency pass RULING on the hardware-substrate question. The #2/#3 definition and attackers_view strings in the canonical dictionary were retightened from 'source code implementation' to 'implementation flaws within a component acting in a server/client role' (substrate-neutral). This settles, at the definition level, the question recorded in the 2026-08-06 substrate-sweep note: hardware/RTL/firmware/microcode implementation flaws DO carry software clusters (#2/#3) by component role. NO mapping changes required — the 2026-08-07 R-SUBSTRATE re-audit and its role review had already decided the full #8 bucket (81 -> 16, with the parked entries resolved on the property test alone), and this ruling RATIFIES those decisions rather than reopening them: the six transient-execution entries at #2, the 52 hardware-logic entries at #2, the 4 role-refined '#2 | #3' entries, the 7 context-dependent '#2 | #8' entries, and the 16 confirmed #8 entries all stand unchanged. The mapping and the canonical definitions are now aligned with no residual open question on this family.",
-      "2026-09-23: v2.6 re-audit (TLCTC v2.6 core: #10 subversion test C4, federation C5, data-vs-code boundary C10, prompt injection C11). 18 entries re-adjudicated: CWE-1395 and CWE-1104 #10 -> #2 | #3 (a flaw in a legitimately supplied component is classified where it is exploited); CWE-1357 #10 -> #10 | #2 | #3; CWE-426 #10 -> #1 -> #7 (planted file, designed loader, nothing third-party subverted); CWE-553 #10 -> #1 -> #7 | #10 -> #7; CWE-912 #10 -> #1 | #10; CWE-1273 #10 -> #4 (shared unlock credential presented); CWE-1328 #10 -> #1 (rollback to a genuine signed image through the designed update path); CWE-1427 #2 -> #1 (prompt injection); CWE-79 and the seven variants that inherit its mapping (CWE-80, 82, 83, 84, 85, 86, 87) #2 -> #7 | #3 -> #2 -> #7 | #3 -> #7 (DOM-XSS script executes in the browser JS engine); CWE-1336 #2 -> #7 | #3 -> #7 -> #2 | #3 | #2 -> #7 | #3 -> #7 (template syntax is data unless it reaches code evaluation). Retired rule IDs in rationales rewritten to R-SPECIFIC clauses (94 rationales). No verdict label changed. metadata tlctc_version 2.5 -> 2.6."
+      "2026-09-23: v2.6 re-audit (TLCTC v2.6 core: #10 subversion test C4, federation C5, data-vs-code boundary C10, prompt injection C11). 18 entries re-adjudicated: CWE-1395 and CWE-1104 #10 -> #2 | #3 (a flaw in a legitimately supplied component is classified where it is exploited); CWE-1357 #10 -> #10 | #2 | #3; CWE-426 #10 -> #1 -> #7 (planted file, designed loader, nothing third-party subverted); CWE-553 #10 -> #1 -> #7 | #10 -> #7; CWE-912 #10 -> #1 | #10; CWE-1273 #10 -> #4 (shared unlock credential presented); CWE-1328 #10 -> #1 (rollback to a genuine signed image through the designed update path); CWE-1427 #2 -> #1 (prompt injection); CWE-79 and the seven variants that inherit its mapping (CWE-80, 82, 83, 84, 85, 86, 87) #2 -> #7 | #3 -> #2 -> #7 | #3 -> #7 (DOM-XSS script executes in the browser JS engine); CWE-1336 #2 -> #7 | #3 -> #7 -> #2 | #3 | #2 -> #7 | #3 -> #7 (template syntax is data unless it reaches code evaluation). Retired rule IDs in rationales rewritten to R-SPECIFIC clauses (94 rationales). No verdict label changed. metadata tlctc_version 2.5 -> 2.6.",
+      "2026-11-11: coverage fix — four weaknesses that this file never carried were added after a full id comparison with the CWE 4.19 catalogue (969 weaknesses): CWE-190 Integer Overflow or Wraparound -> #2 | #3 (Allowed; arithmetic code flaw, Q2, the family ruling already applied to CWE-191..197 and named in decision-tree.md); CWE-200 Exposure of Sensitive Information to an Unauthorized Actor -> N/A (Discouraged, Consequence; Axiom III, and CWE's own mapping notes call confidentiality loss a technical impact, not a root cause; the README rule 'cause, not consequence' named this entry while the file lacked it); CWE-317 Cleartext Storage of Sensitive Information in GUI -> enabling-condition (Allowed-with-Review; the v2.3.1 storage family CWE-312..318, from which it was the only member absent); CWE-1426 Improper Validation of Generative AI Output -> #2 | #3 | #2 -> #7 | #3 -> #7 (Allowed-with-Review; output-validation flaw in the integrating product, -> #7 only where the output reaches a code-evaluation sink, same shape as CWE-1336; prompt injection itself stays #1, CWE-1427). cveReferences are the Observed Examples of CWE 4.19. total_entries 985 -> 989; statistics recomputed from the records (the block had not been refreshed by the 2026-09-23 re-audit). Not done: cwe_version stays 4.16 because names and statuses were not refreshed (6 names and 13 statuses differ from 4.19), and the weaknesses new in CWE 5.0 are not covered. No existing record changed.",
+      "2026-11-11: category coverage — eight CWE category ids that CISA KEV records cite were added as N/A / Prohibited (decision tree Q0, 'Structure / View'): CWE-19, CWE-189, CWE-254, CWE-255, CWE-264, CWE-310, CWE-388, CWE-399. They were the whole remainder of the KEV overlay's 'cwe-unmapped-in-tlctc' bucket after the coverage fix above (61 records); the overlay now resolves every CWE id it meets. Each rationale names where the members classify. total_entries 989 -> 997; statistics recomputed. The other CWE categories and views stay unlisted: the file lists category nodes only where real data cites them."
     ],
     "license": "CC-BY-4.0",
     "publisher": "TLCTC Project",
@@ -37,40 +39,43 @@
     },
     "statistics": {
       "by_verdict": {
-        "Allowed": 726,
-        "Allowed-with-Review": 43,
-        "Prohibited": 44,
-        "Discouraged": 172,
+        "Allowed": 727,
+        "Allowed-with-Review": 45,
+        "Prohibited": 52,
+        "Discouraged": 173,
         "Unreviewed": 0
       },
       "by_mapping": {
-        "#2 | #3": 266,
-        "N/A": 184,
-        "#2": 182,
-        "#1": 160,
+        "#2 | #3": 269,
+        "N/A": 193,
+        "#2": 181,
+        "#1": 162,
         "#5": 28,
         "#6": 27,
-        "enabling-condition": 20,
-        "#4": 19,
+        "enabling-condition": 21,
+        "#4": 20,
         "#8": 16,
-        "#10": 14,
+        "#2 → #7 | #3 → #7": 14,
         "#4 | #5": 10,
-        "#2 → #7 | #3": 8,
         "#9": 8,
-        "#2 → #7 | #3 → #7": 7,
         "#2 | #8": 7,
         "#3": 6,
         "#2 → #7": 6,
-        "#1 → #7": 4,
+        "#10": 6,
+        "#1 → #7": 5,
         "#7": 4,
         "#10 → #7": 3,
         "#5 | #4": 2,
+        "#2 | #3 | #2 → #7 | #3 → #7": 2,
         "#1 | #4": 1,
         "#10 | #5": 1,
+        "#1 → #7 | #10 → #7": 1,
         "#4 | #6": 1,
-        "#1 | #8": 1
+        "#1 | #10": 1,
+        "#1 | #8": 1,
+        "#10 | #2 | #3": 1
       },
-      "context_dependent": 256
+      "context_dependent": 264
     }
   },
   "mappings": [
@@ -192,6 +197,17 @@
       "tlctcMappingName": "Abuse of Functions",
       "mappingRationale": "The attacker manipulates inputs to abuse the system's configuration functionality (#1), altering behavior within designed (but unsafe) parameters.",
       "mappingVerdict": "Allowed",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-19",
+      "cweName": "Data Processing Errors",
+      "cweStatus": "Category / View",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Structure / View",
+      "mappingRationale": "CWE category node (Data Processing Errors): groups input-handling and data-representation weaknesses, which classify at member level (typically #2 | #3). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+      "mappingVerdict": "Prohibited",
       "contextDependent": false,
       "cveReferences": []
     },
@@ -2895,6 +2911,48 @@
       "cveReferences": []
     },
     {
+      "cweId": "CWE-189",
+      "cweName": "Numeric Errors",
+      "cweStatus": "Category / View",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Structure / View",
+      "mappingRationale": "CWE category node (Numeric Errors): groups arithmetic weaknesses (CWE-190, CWE-191, CWE-193 and others), which classify at member level (#2 | #3). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+      "mappingVerdict": "Prohibited",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-190",
+      "cweName": "Integer Overflow or Wraparound",
+      "cweStatus": "Stable",
+      "tlctcMapping": "#2 | #3",
+      "tlctcMappingName": "Exploiting Server or Exploiting Client",
+      "mappingRationale": "Integer overflow or wraparound: a calculation exceeds the range of its type and wraps, typically feeding a size, index or loop bound. Arithmetic/numeric code implementation flaw. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
+      "mappingVerdict": "Allowed",
+      "contextDependent": true,
+      "cveReferences": [
+        "CVE-2025-46687",
+        "CVE-2025-27363",
+        "CVE-2021-43537",
+        "CVE-2019-19911",
+        "CVE-2022-0545",
+        "CVE-2021-30860",
+        "CVE-2021-30663",
+        "CVE-2018-10887",
+        "CVE-2019-1010006",
+        "CVE-2010-1866",
+        "CVE-2010-2753",
+        "CVE-2005-1513",
+        "CVE-2002-0391",
+        "CVE-2002-0639",
+        "CVE-2005-1141",
+        "CVE-2005-0102",
+        "CVE-2004-2013",
+        "CVE-2017-1000121",
+        "CVE-2013-1591"
+      ]
+    },
+    {
       "cweId": "CWE-191",
       "cweName": "Integer Underflow (Wrap or Wraparound)",
       "cweStatus": "Draft",
@@ -3021,6 +3079,37 @@
       "mappingVerdict": "Allowed",
       "contextDependent": false,
       "cveReferences": []
+    },
+    {
+      "cweId": "CWE-200",
+      "cweName": "Exposure of Sensitive Information to an Unauthorized Actor",
+      "cweStatus": "Draft",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Consequence",
+      "mappingRationale": "Per Axiom III a consequence (loss of confidentiality, [DRE: C]), not a generic vulnerability. CWE's own mapping notes mark the entry Discouraged for the same reason: confidentiality loss is a technical impact, not a root cause error. Decision tree Q1 -> N/A. Classify by the cause that exposed the information, at the child or instance level: CWE-201, CWE-203 or CWE-538 (#2 | #3), CWE-209 (#1), CWE-497 (#2), or the access-control cause (CWE-285, CWE-287, CWE-732: #1).",
+      "mappingVerdict": "Discouraged",
+      "contextDependent": false,
+      "cveReferences": [
+        "CVE-2022-31162",
+        "CVE-2021-25476",
+        "CVE-2001-1483",
+        "CVE-2001-1528",
+        "CVE-2004-2150",
+        "CVE-2005-1205",
+        "CVE-2002-1725",
+        "CVE-2002-0515",
+        "CVE-2004-0778",
+        "CVE-2000-1117",
+        "CVE-2003-0190",
+        "CVE-2008-2049",
+        "CVE-2007-5172",
+        "CVE-2008-4638",
+        "CVE-2007-1409",
+        "CVE-2005-0603",
+        "CVE-2004-2268",
+        "CVE-2003-1078",
+        "CVE-2022-0708"
+      ]
     },
     {
       "cweId": "CWE-201",
@@ -3793,6 +3882,28 @@
       ]
     },
     {
+      "cweId": "CWE-254",
+      "cweName": "7PK - Security Features",
+      "cweStatus": "Category / View",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Structure / View",
+      "mappingRationale": "CWE category node (7PK - Security Features): one of the Seven Pernicious Kingdoms; groups authentication, access-control, cryptography and privilege weaknesses, which classify at member level (typically #1, #4 or #5). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Incomplete in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+      "mappingVerdict": "Prohibited",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-255",
+      "cweName": "Credentials Management Errors",
+      "cweStatus": "Category / View",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Structure / View",
+      "mappingRationale": "CWE category node (Credentials Management Errors): groups credential weaknesses, which classify at member level: point-of-use acceptance is #4, storage and protection are enabling conditions (R-CRED). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+      "mappingVerdict": "Prohibited",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
       "cweId": "CWE-256",
       "cweName": "Plaintext Storage of a Password",
       "cweStatus": "Incomplete",
@@ -3890,6 +4001,17 @@
       "mappingRationale": "Password Aging with Long Expiration: a credential storage / protection / lifecycle weakness. Under TLCTC v2.3.1 the #4 Identity Theft cluster is retightened to point-of-use identity-artifact binding, so this is an acquisition-side enabling condition, not #4. Per R-CRED the operative cluster is set by the acquisition vector that reaches the exposed credential at incident time (e.g. #2 server exploit, #7 malware, #8 physical, #5 transit); #4 is reserved for the later credential application. Not itself a single cluster (see decision-tree Q3 / ruling-2, revised for v2.3.1).",
       "mappingVerdict": "Allowed-with-Review",
       "contextDependent": true,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-264",
+      "cweName": "Permissions, Privileges, and Access Controls",
+      "cweStatus": "Category / View",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Structure / View",
+      "mappingRationale": "CWE category node (Permissions, Privileges, and Access Controls): groups permission, privilege and access-control weaknesses, which classify at member level (typically #1). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Obsolete in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+      "mappingVerdict": "Prohibited",
+      "contextDependent": false,
       "cveReferences": []
     },
     {
@@ -4668,6 +4790,17 @@
       "cveReferences": []
     },
     {
+      "cweId": "CWE-310",
+      "cweName": "Cryptographic Issues",
+      "cweStatus": "Category / View",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Structure / View",
+      "mappingRationale": "CWE category node (Cryptographic Issues): groups cryptographic weaknesses, which classify at member level (typically #5, or #4 where a credential is accepted). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+      "mappingVerdict": "Prohibited",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
       "cweId": "CWE-311",
       "cweName": "Missing Encryption of Sensitive Data",
       "cweStatus": "Draft",
@@ -4790,6 +4923,19 @@
         "CVE-2001-1517",
         "CVE-2001-0984",
         "CVE-2003-0291"
+      ]
+    },
+    {
+      "cweId": "CWE-317",
+      "cweName": "Cleartext Storage of Sensitive Information in GUI",
+      "cweStatus": "Draft",
+      "tlctcMapping": "enabling-condition",
+      "tlctcMappingName": "Enabling Condition (R-CRED)",
+      "mappingRationale": "Cleartext Storage of Sensitive Information in GUI: a credential storage / protection / lifecycle weakness. Under TLCTC v2.3.1 the #4 Identity Theft cluster is retightened to point-of-use identity-artifact binding, so this is an acquisition-side enabling condition, not #4. Per R-CRED the operative cluster is set by the acquisition vector that reaches the exposed credential at incident time (e.g. #2 server exploit, #7 malware, #8 physical, #5 transit); #4 is reserved for the later credential application. Not itself a single cluster (see decision-tree Q3 / ruling-2, revised for v2.3.1).",
+      "mappingVerdict": "Allowed-with-Review",
+      "contextDependent": true,
+      "cveReferences": [
+        "CVE-2002-1848"
       ]
     },
     {
@@ -5723,6 +5869,17 @@
       "cveReferences": []
     },
     {
+      "cweId": "CWE-388",
+      "cweName": "7PK - Errors",
+      "cweStatus": "Category / View",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Structure / View",
+      "mappingRationale": "CWE category node (7PK - Errors): one of the Seven Pernicious Kingdoms; groups error-handling weaknesses, which classify at member level. Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+      "mappingVerdict": "Prohibited",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
       "cweId": "CWE-390",
       "cweName": "Detection of Error Condition Without Action",
       "cweStatus": "Draft",
@@ -5828,6 +5985,17 @@
       "tlctcMappingName": "Code Quality",
       "mappingRationale": "Code-quality/style issue (declare throws Exception). Not a generic vulnerability.",
       "mappingVerdict": "Discouraged",
+      "contextDependent": false,
+      "cveReferences": []
+    },
+    {
+      "cweId": "CWE-399",
+      "cweName": "Resource Management Errors",
+      "cweStatus": "Category / View",
+      "tlctcMapping": "N/A",
+      "tlctcMappingName": "Structure / View",
+      "mappingRationale": "CWE category node (Resource Management Errors): groups memory and resource-lifetime weaknesses, which classify at member level (typically #2 | #3, or #6 where capacity is exhausted). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+      "mappingVerdict": "Prohibited",
       "contextDependent": false,
       "cveReferences": []
     },
@@ -14180,6 +14348,19 @@
         "CVE-2017-5754",
         "CVE-2022-0001",
         "CVE-2021-33149"
+      ]
+    },
+    {
+      "cweId": "CWE-1426",
+      "cweName": "Improper Validation of Generative AI Output",
+      "cweStatus": "Incomplete",
+      "tlctcMapping": "#2 | #3 | #2 → #7 | #3 → #7",
+      "tlctcMappingName": "Exploiting Server OR Exploiting Client OR Exploiting Server -> Malware OR Exploiting Client -> Malware",
+      "mappingRationale": "The product passes the output of a generative AI component to a downstream consumer (renderer, interpreter, query, tool) without validating it. Output-validation code implementation flaw in the integrating product, not in the model: decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. Under the v2.6 data-vs-code boundary the output is data unless it reaches a code-evaluation sink; where it does (model output rendered as script, CVE-2024-3402, or handed to an interpreter), R-EXEC adds -> #7. The step that steers the model is separate: prompt injection is #1 (CWE-1427), and where acting on the output is the product's designed function (agent tool use) the step is #1, not this entry. Output that only breaches a content or privacy policy is a consequence, not a cluster step. CWE marks the entry Discouraged while research continues; review at instance level.",
+      "mappingVerdict": "Allowed-with-Review",
+      "contextDependent": true,
+      "cveReferences": [
+        "CVE-2024-3402"
       ]
     },
     {

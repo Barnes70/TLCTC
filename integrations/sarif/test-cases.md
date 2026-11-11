@@ -24,7 +24,7 @@ The unit tests in `tests/` cover the same logic against
 | Test method | `test_classifier.TestClassifier.test_allowed_cwe_classifies` |
 
 **Why this matters:** Validates the core CWE-first lookup path. CWE-89 maps
-to `#2` in the canonical 985-entry mapping — the classifier must resolve it
+to `#2` in the canonical 997-entry mapping — the classifier must resolve it
 directly without context-dependent logic.
 
 ---

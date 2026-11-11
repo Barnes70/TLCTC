@@ -28,7 +28,7 @@ import on 6.2 (different object schemas, LayoutsContainer, content-pack format).
 
 The SonarQube build:
 
-- Translates SAST findings to TLCTC clusters via the canonical 985-entry CWE→TLCTC mapping (`mappings/mitre-cwe/tlctc-cwe.json`).
+- Translates SAST findings to TLCTC clusters via the canonical 997-entry CWE→TLCTC mapping (`mappings/mitre-cwe/tlctc-cwe.json`).
 - Applies R-ROLE context-aware logic (file-path globs) for ambiguous `#2 | #3` mappings.
 - Read-only by default (emits JSON / Markdown / SARIF); opt-in `--apply-tags` writes `tlctc-NN` tags back via `/api/issues/set_tags`.
 - Works equally on self-hosted SonarQube and SonarCloud (Web-API based).
@@ -37,7 +37,7 @@ The SonarQube build:
 The SARIF build:
 
 - Classifies findings from any SARIF 2.1.0 producer to TLCTC clusters.
-- CWE-first via the canonical 985-entry CWE→TLCTC mapping; CVE-only findings fall back to the offline KEV→TLCTC table (`mappings/cisa-kev/tlctc-kev.json`).
+- CWE-first via the canonical 997-entry CWE→TLCTC mapping; CVE-only findings fall back to the offline KEV→TLCTC table (`mappings/cisa-kev/tlctc-kev.json`).
 - Applies R-ROLE (file-path globs) for ambiguous `#2 | #3` mappings.
 - Emits JSON / Markdown / TLCTC-enriched SARIF; `--fail-on-cluster` gates CI.
 - Does NOT emit Layer 3 — SARIF findings are weaknesses, not realised attack paths.

@@ -107,18 +107,18 @@ Four orthogonal failure modes — **do not collapse**:
 
 - **1,568** total entries
 - **313** ransomware-linked (`knownRansomwareCampaignUse: "Known"`) — 19.96% of catalog
-- **976** (`ok`) derivation-complete records
+- **989** (`ok`) derivation-complete records
 - **167** (`cwe-missing`) — KEV entry carries no CWE reference
-- **291** (`cwe-too-abstract`) — dominated by CWE-20 (Improper Input Validation)
-- **94** (`cwe-unmapped-in-tlctc`)
-- **40** (`mixed`)
+- **375** (`cwe-too-abstract`) — dominated by CWE-20 (Improper Input Validation)
+- **0** (`cwe-unmapped-in-tlctc`)
+- **37** (`mixed`)
 
 ### Primary Cluster Distribution (OK records only)
 
 | Cluster | Count | Ransomware |
 |---------|-------|------------|
-| `#2` Exploiting Server | 547 | 129 |
-| `#3` Exploiting Client | 210 | 10 |
+| `#2` Exploiting Server | 552 | 129 |
+| `#3` Exploiting Client | 218 | 10 |
 | `#1` Abuse of Functions | 166 | 47 |
 | `#10` Supply Chain Attack | 15 | 1 |
 | `#5` Man in the Middle | 12 | 0 |
@@ -129,10 +129,13 @@ Four orthogonal failure modes — **do not collapse**:
 ### R-ROLE Disambiguation
 
 - **400** entries — `cwe-unambiguous` (source CWE not context-dependent)
-- **365** entries — `product-heuristic` fired (350 of them in `ok` status)
-- **803** entries — `unresolved` (includes all `cwe-missing`, `cwe-too-abstract`, `cwe-unmapped-in-tlctc`; plus 241 `ok`-status `#2 | #3` entries where no rule matched)
+- **374** entries — `product-heuristic` fired (358 of them in `ok` status)
+- **794** entries — `unresolved` (includes all `cwe-missing`, `cwe-too-abstract`, `cwe-unmapped-in-tlctc`; plus 246 `ok`-status `#2 | #3` entries where no rule matched)
 
 The v2.6 regeneration (2026-09-23) moved `#10` from 20 to 15 and `#5` from 2 to 12: the snapshot had last been derived from an earlier CWE mapping, before the 2026-08 re-audit and the v2.6 subversion test (a flaw in a legitimately supplied component is classified where it is exploited, not `#10`). The same regeneration fixed R-ROLE detection: path-form expressions such as `#2 → #7 | #3 → #7` (CWE-94, CWE-502) are now routed through the product-role heuristic like `#2 | #3`, so a document-borne Office exploit resolves to `#3` instead of defaulting to the left-most `#2`.
+
+The 2026-11-11 regeneration followed the CWE coverage fix (CWE-190 and CWE-200 had been absent from `tlctc-cwe.json`): 33 records left `cwe-unmapped-in-tlctc` and 3 left `mixed`; 13 of them became `ok` (`#2` +5, `#3` +8, integer overflows) and 23 `cwe-too-abstract` (CWE-200 names a consequence, not a cause). The remaining 61 carried CWE category ids (CWE-264, CWE-399, CWE-189, CWE-19, CWE-255, CWE-310, CWE-388, CWE-254); these are now listed in the CWE mapping as `N/A` / Prohibited, so the records moved to `cwe-too-abstract` and no CWE id in the snapshot is unknown to the mapping.
+
 ## Refresh Procedure
 
 ```bash
