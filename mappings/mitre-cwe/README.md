@@ -27,7 +27,7 @@ A CWE describes a *class* of flaws. Each specific CVE is an instance of a CWE. T
 
 Three factors prevent universal one-to-one CWE→TLCTC mapping:
 
-1. **Role-dependent mapping (R-ROLE):** The same weakness maps to different clusters depending on where it exists. CWE-787 (Out-of-bounds Write) is **#2** in server-side code, **#3** in client-side code. This accounts for 229 context-dependent entries.
+1. **Role-dependent mapping (R-ROLE):** The same weakness maps to different clusters depending on where it exists. CWE-787 (Out-of-bounds Write) is **#2** in server-side code, **#3** in client-side code. This accounts for 230 context-dependent entries.
 
 2. **Overly broad CWEs:** Umbrella entries like CWE-20 (Improper Input Validation) span multiple clusters — they are root causes of #1, #2, #3, and #6 depending on context. These are marked `Discouraged`.
 
@@ -37,7 +37,7 @@ Three factors prevent universal one-to-one CWE→TLCTC mapping:
 
 | File | Description |
 |------|-------------|
-| [`tlctc-cwe.json`](tlctc-cwe.json) | 997 CWE mappings with rationale, verdict, and CVE references |
+| [`tlctc-cwe.json`](tlctc-cwe.json) | 1,012 CWE mappings (CWE 5.0) with rationale, verdict, and CVE references |
 | [`decision-tree.md`](decision-tree.md) | Classification methodology for CWE→TLCTC mapping |
 | [`examples/cwe-to-control-walkthrough.md`](examples/cwe-to-control-walkthrough.md) | Worked example: vulnerability findings to risk controls |
 
@@ -48,7 +48,8 @@ Each entry in `tlctc-cwe.json` follows this structure:
 ```json
 {
   "cweId": "CWE-79",
-  "cweName": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+  "cweName": "Improper Neutralization of Input During Web Page Generation",
+  "cweCommonNames": ["Cross-site Scripting", "XSS", "CSS"],
   "cweStatus": "Stable",
   "tlctcMapping": "#2 → #7 | #3",
   "tlctcMappingName": "Exploiting Server → Malware | Exploiting Client",
@@ -64,8 +65,9 @@ Each entry in `tlctc-cwe.json` follows this structure:
 | Field | Type | Description |
 |-------|------|-------------|
 | `cweId` | string | CWE identifier (e.g., `CWE-79`) |
-| `cweName` | string | Human-readable weakness name |
-| `cweStatus` | string | CWE maturity status (`Stable`, `Draft`, `Incomplete`, `Deprecated`) |
+| `cweName` | string | Weakness name, verbatim from CWE 5.0 |
+| `cweCommonNames` | string[] | Optional. Names people actually search for: the alternate terms CWE 5.0 marks Common-Name, Acronym or Abbreviation, plus the common name a title carried before 5.0 (CWE 5.0 removed `('SQL Injection')`-style suffixes from the titles) |
+| `cweStatus` | string | CWE maturity status (`Stable`, `Draft`, `Incomplete`, `Deprecated`), verbatim from CWE 5.0; `Category / View` for grouping and view nodes |
 | `tlctcMapping` | string | TLCTC cluster mapping using path notation |
 | `tlctcMappingName` | string | Human-readable cluster name(s) |
 | `mappingRationale` | string | Argument explaining why this mapping applies |
@@ -89,32 +91,32 @@ Each mapping carries a confidence verdict:
 
 | Verdict | Count | Meaning |
 |---------|-------|---------|
-| **Allowed** | 727 | High confidence — CWE is specific enough for unambiguous classification |
-| **Allowed-with-Review** | 45 | Cluster genuinely depends on a use-context that varies between CVE instances — review at instance level (includes the 21 `enabling-condition` credential-protection CWEs) |
-| **Discouraged** | 173 | CWE is too abstract or generic for reliable mapping (umbrella CWE) OR is a code-quality / maintainability / consequence-only observation with no defensible threat cluster |
-| **Prohibited** | 52 | CWE is a category/view/list/deprecated entry, not a concrete weakness |
+| **Allowed** | 735 | High confidence — CWE is specific enough for unambiguous classification |
+| **Allowed-with-Review** | 46 | Cluster genuinely depends on a use-context that varies between CVE instances — review at instance level (includes the 22 `enabling-condition` credential-protection CWEs) |
+| **Discouraged** | 174 | CWE is too abstract or generic for reliable mapping (umbrella CWE) OR is a code-quality / maintainability / consequence-only observation with no defensible threat cluster |
+| **Prohibited** | 57 | CWE is a category/view/list/deprecated entry, not a concrete weakness |
 
 ## Statistics
 
-Counts as of the 2026-11-11 coverage fix, which added four weaknesses (CWE-190, CWE-200, CWE-317, CWE-1426) and the eight CWE category ids that CISA KEV records cite (CWE-19, 189, 254, 255, 264, 310, 388, 399; `N/A`, Prohibited) to the 2026-09-23 v2.6 re-audit (`metadata.tlctc_version` 2.6). Weakness coverage was compared id by id with CWE 4.19; the weaknesses new in CWE 5.0 are not covered yet, and category or view nodes are listed only where real data cites them.
+Counts as of the 2026-11-11 update to **CWE 5.0** (`metadata.cwe_version` 5.0, `metadata.tlctc_version` 2.6). The file covers all 984 weaknesses of CWE 5.0 (956 not deprecated) plus 28 other ids: grouping and view nodes that real data cites, and the placeholder CWE-0. The same day's coverage fix had added four weaknesses that were missing (CWE-190, CWE-200, CWE-317, CWE-1426) and eight category ids that CISA KEV records cite. 791 entries carry a cluster mapping, 22 are enabling conditions, 199 are `N/A`.
 
-- **997** total CWE entries
+- **1,012** total CWE entries
 - **28** unique mapping values
-- **264** context-dependent mappings
-- **727** high-confidence (`Allowed`) mappings
+- **265** context-dependent mappings
+- **735** high-confidence (`Allowed`) mappings
 
 ### Cluster Distribution
 
 | Mapping | Count | Description |
 |---------|-------|-------------|
 | `#2 \| #3` | 269 | Server or client code flaw (role-dependent), including flaws in legitimately supplied third-party components (CWE-1395, CWE-1104) |
-| `N/A` | 193 | Not directly mappable (Discouraged or Prohibited) |
-| `#2` | 181 | Server-side implementation flaw |
-| `#1` | 162 | Abuse of designed functions (includes prompt injection, CWE-1427) |
+| `N/A` | 199 | Not directly mappable (Discouraged or Prohibited) |
+| `#2` | 182 | Server-side implementation flaw |
+| `#1` | 163 | Abuse of designed functions (includes prompt injection, CWE-1427) |
 | `#5` | 28 | Man in the Middle / communication path (R-SPECIFIC, channel) |
 | `#6` | 27 | Flooding / resource exhaustion (R-SPECIFIC, capacity) |
-| `#4` | 20 | Identity theft — point-of-use credential binding |
-| `enabling-condition` | 21 | Acquisition-side credential storage/protection/lifecycle weakness — operative cluster set by the acquisition vector per R-CRED (v2.3.1), not #4 |
+| `#4` | 26 | Identity theft — point-of-use credential binding (includes the CWE 5.0 session family, CWE-1462 to 1467) |
+| `enabling-condition` | 22 | Acquisition-side credential storage/protection/lifecycle weakness — operative cluster set by the acquisition vector per R-CRED (v2.3.1), not #4 |
 | `#8` | 16 | Physical attack — a physical-layer property is the exploited generic vulnerability (R-SPECIFIC, substrate) |
 | `#2 → #7 \| #3 → #7` | 14 | Script, code, deserialization injection with execution (role-dependent), including the XSS family (CWE-79, 80, 82–87) |
 | `#4 \| #5` | 10 | Predictable random values (token vs key context) |

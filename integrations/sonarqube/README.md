@@ -2,7 +2,7 @@
 
 Translates SonarQube SAST findings into TLCTC v2.6 cluster exposure. A Python
 CLI sidecar that pulls issues via the SonarQube Web API, joins them against
-the canonical 997-entry CWE→TLCTC mapping, applies R-ROLE context-aware logic
+the canonical 1,012-entry CWE→TLCTC mapping, applies R-ROLE context-aware logic
 to resolve ambiguous mappings, and emits JSON / Markdown / SARIF reports.
 
 The CLI is **read-only by default**. An opt-in `--apply-tags` flag writes
@@ -128,7 +128,7 @@ used in the [cortex-xsoar-8](../cortex-xsoar-8/) pack does not apply here.
 
 - Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (core paper, v2.6) — cluster definitions, axioms, and
   classification rules. [Read the core paper](https://www.tlctc.net/tlctc-whitepaper.html).
-- `mappings/mitre-cwe/tlctc-cwe.json` — canonical CWE→TLCTC mapping (997
+- `mappings/mitre-cwe/tlctc-cwe.json` — canonical CWE→TLCTC mapping (1,012
   entries, audited 2026-05-05).
 - [cortex-xsoar-8 integration](../cortex-xsoar-8/) — sibling content pack
   whose deploy / test-cases conventions this pack mirrors.

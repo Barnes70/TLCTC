@@ -484,6 +484,7 @@
     .col-cve { min-width: 150px; } /* Added width for CVE column */
 
     /* Badges */
+    .common-names { font-size: 0.8em; font-weight: 400; opacity: 0.72; margin-top: 2px; }
     .technique-id {
       font-family: monospace;
       font-weight: 700;
@@ -1249,17 +1250,18 @@
   },
   {
     "cwe_id": "CWE-21",
-    "cwe_name": "Pathname Traversal and Equivalence Errors",
-    "cwe_status": "Draft",
-    "tlctc_mapping": "#2 | #3",
-    "tlctc_name": "Exploiting Server or Exploiting Client",
-    "mapping_argument": "Parent class for path-traversal and path-equivalence errors. Specific cases classify at child CWEs (CWE-22 onward). Decision tree Q2 -> #2 | #3 per R-ROLE.",
-    "Mapping_Notes": "Discouraged",
+    "cwe_name": "DEPRECATED: Pathname Traversal and Equivalence Errors",
+    "cwe_status": "Deprecated",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "N/A",
+    "mapping_argument": "Deprecated category (a grouping since CWE 5.0). Per Prohibited-verdict policy, deprecated entries map to N/A. Path-traversal and path-equivalence weaknesses classify at CWE-22 and its children (#2 | #3).",
+    "Mapping_Notes": "Prohibited",
     "CVE": "No Evidence found in V4.1"
   },
   {
     "cwe_id": "CWE-22",
-    "cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "cwe_name": "Improper Limitation of a Pathname to a Restricted Directory",
+    "common_names": "Path traversal",
     "cwe_status": "Stable",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1319,7 +1321,7 @@
   },
   {
     "cwe_id": "CWE-28",
-    "cwe_name": "Path Traversal: '..\filedir'",
+    "cwe_name": "Path Traversal: '..\\filedir'",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1329,7 +1331,7 @@
   },
   {
     "cwe_id": "CWE-29",
-    "cwe_name": "Path Traversal: '\..\filename'",
+    "cwe_name": "Path Traversal: '\\..\\filename'",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1339,7 +1341,7 @@
   },
   {
     "cwe_id": "CWE-30",
-    "cwe_name": "Path Traversal: '\dir\..\filename'",
+    "cwe_name": "Path Traversal: '\\dir\\..\\filename'",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1349,7 +1351,7 @@
   },
   {
     "cwe_id": "CWE-31",
-    "cwe_name": "Path Traversal: 'dir\..\..\filename'",
+    "cwe_name": "Path Traversal: 'dir\\..\\..\\filename'",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1419,7 +1421,7 @@
   },
   {
     "cwe_id": "CWE-38",
-    "cwe_name": "Path Traversal: '\absolute\pathname\here'",
+    "cwe_name": "Path Traversal: '\\absolute\\pathname\\here'",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1439,7 +1441,7 @@
   },
   {
     "cwe_id": "CWE-40",
-    "cwe_name": "Path Traversal: '\\UNC\share\name\'",
+    "cwe_name": "Path Traversal: '\\\\UNC\\share\\name\\' (Windows UNC Share)",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1569,7 +1571,7 @@
   },
   {
     "cwe_id": "CWE-53",
-    "cwe_name": "Path Equivalence: '\multiple\\internal\backslash'",
+    "cwe_name": "Path Equivalence: '\\multiple\\\\internal\\backslash'",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1579,7 +1581,7 @@
   },
   {
     "cwe_id": "CWE-54",
-    "cwe_name": "Path Equivalence: 'filedir\' (Trailing Backslash)",
+    "cwe_name": "Path Equivalence: 'filedir\\' (Trailing Backslash)",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1629,7 +1631,8 @@
   },
   {
     "cwe_id": "CWE-59",
-    "cwe_name": "Improper Link Resolution Before File Access ('Link Following')",
+    "cwe_name": "Improper Link Resolution Before File Access",
+    "common_names": "Link Following",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1739,7 +1742,8 @@
   },
   {
     "cwe_id": "CWE-74",
-    "cwe_name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')",
+    "cwe_name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component",
+    "common_names": "Injection",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "N/A",
     "tlctc_name": "Generic Root Cause",
@@ -1749,7 +1753,8 @@
   },
   {
     "cwe_id": "CWE-75",
-    "cwe_name": "Failure to Sanitize Special Elements into a Different Plane (Special Element Injection)",
+    "cwe_name": "Failure to Sanitize Special Elements into a Different Plane",
+    "common_names": "Special Element Injection",
     "cwe_status": "Draft",
     "tlctc_mapping": "N/A",
     "tlctc_name": "Generic Root Cause",
@@ -1769,7 +1774,8 @@
   },
   {
     "cwe_id": "CWE-77",
-    "cwe_name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')",
+    "cwe_name": "Improper Neutralization of Special Elements used in a Command",
+    "common_names": "Command Injection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 → #7",
     "tlctc_name": "Exploiting Server -> Malware",
@@ -1779,7 +1785,8 @@
   },
   {
     "cwe_id": "CWE-78",
-    "cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "cwe_name": "Improper Neutralization of Special Elements used in an OS Command",
+    "common_names": "OS Command Injection",
     "cwe_status": "Stable",
     "tlctc_mapping": "#2 → #7",
     "tlctc_name": "Exploiting Server -> Malware",
@@ -1789,7 +1796,8 @@
   },
   {
     "cwe_id": "CWE-79",
-    "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+    "cwe_name": "Improper Neutralization of Input During Web Page Generation",
+    "common_names": "Cross-site Scripting, XSS, CSS",
     "cwe_status": "Stable",
     "tlctc_mapping": "#2 → #7 | #3 → #7",
     "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
@@ -1799,7 +1807,8 @@
   },
   {
     "cwe_id": "CWE-80",
-    "cwe_name": "Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)",
+    "cwe_name": "Improper Neutralization of Script-Related HTML Tags in a Web Page",
+    "common_names": "Basic XSS",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 → #7 | #3 → #7",
     "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
@@ -1879,7 +1888,8 @@
   },
   {
     "cwe_id": "CWE-88",
-    "cwe_name": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "cwe_name": "Improper Neutralization of Argument Delimiters in a Command",
+    "common_names": "Argument Injection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -1889,7 +1899,8 @@
   },
   {
     "cwe_id": "CWE-89",
-    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command",
+    "common_names": "SQL Injection, SQLi",
     "cwe_status": "Stable",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -1899,7 +1910,8 @@
   },
   {
     "cwe_id": "CWE-90",
-    "cwe_name": "Improper Neutralization of Special Elements used in an LDAP Query ('LDAP Injection')",
+    "cwe_name": "Improper Neutralization of Special Elements used in an LDAP Query",
+    "common_names": "LDAP Injection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -1909,7 +1921,8 @@
   },
   {
     "cwe_id": "CWE-91",
-    "cwe_name": "XML Injection (aka Blind XPath Injection)",
+    "cwe_name": "XML Injection",
+    "common_names": "Blind XPath Injection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1929,7 +1942,8 @@
   },
   {
     "cwe_id": "CWE-93",
-    "cwe_name": "Improper Neutralization of CRLF Sequences ('CRLF Injection')",
+    "cwe_name": "Improper Neutralization of CRLF Sequences",
+    "common_names": "CRLF Injection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -1939,7 +1953,8 @@
   },
   {
     "cwe_id": "CWE-94",
-    "cwe_name": "Improper Control of Generation of Code ('Code Injection')",
+    "cwe_name": "Improper Control of Generation of Code",
+    "common_names": "Code Injection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 → #7 | #3 → #7",
     "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
@@ -1949,7 +1964,8 @@
   },
   {
     "cwe_id": "CWE-95",
-    "cwe_name": "Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection')",
+    "cwe_name": "Improper Neutralization of Directives in Dynamically Evaluated Code",
+    "common_names": "Eval Injection",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 → #7 | #3 → #7",
     "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
@@ -1959,7 +1975,8 @@
   },
   {
     "cwe_id": "CWE-96",
-    "cwe_name": "Improper Neutralization of Directives in Statically Saved Code ('Static Code Injection')",
+    "cwe_name": "Improper Neutralization of Directives in Statically Saved Code",
+    "common_names": "Static Code Injection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 → #7 | #3 → #7",
     "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
@@ -1979,7 +1996,8 @@
   },
   {
     "cwe_id": "CWE-98",
-    "cwe_name": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion')",
+    "cwe_name": "Improper Control of Filename for Include/Require Statement in PHP Program",
+    "common_names": "Remote file include, RFI, Local file inclusion, PHP Remote File Inclusion",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 → #7",
     "tlctc_name": "Exploiting Server -> Malware",
@@ -1989,7 +2007,8 @@
   },
   {
     "cwe_id": "CWE-99",
-    "cwe_name": "Improper Control of Resource Identifiers ('Resource Injection')",
+    "cwe_name": "Improper Control of Resource Identifiers",
+    "common_names": "Resource Injection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -2109,7 +2128,8 @@
   },
   {
     "cwe_id": "CWE-113",
-    "cwe_name": "Improper Neutralization of CRLF Sequences in HTTP Headers ('HTTP Request/Response Splitting')",
+    "cwe_name": "Improper Neutralization of CRLF Sequences in HTTP Headers",
+    "common_names": "HTTP Request Splitting, HTTP Response Splitting, HTTP Request/Response Splitting",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -2159,7 +2179,8 @@
   },
   {
     "cwe_id": "CWE-118",
-    "cwe_name": "Incorrect Access of Indexable Resource ('Range Error')",
+    "cwe_name": "Incorrect Access of Indexable Resource",
+    "common_names": "Range Error",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -2179,7 +2200,8 @@
   },
   {
     "cwe_id": "CWE-120",
-    "cwe_name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')",
+    "cwe_name": "Buffer Copy without Checking Size of Input",
+    "common_names": "Classic Buffer Overflow",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -2219,7 +2241,8 @@
   },
   {
     "cwe_id": "CWE-124",
-    "cwe_name": "Buffer Underwrite ('Buffer Underflow')",
+    "cwe_name": "Buffer Underwrite",
+    "common_names": "Buffer Underrun, Buffer Underflow",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -2639,7 +2662,8 @@
   },
   {
     "cwe_id": "CWE-172",
-    "cwe_name": "Encoding Error",
+    "cwe_name": "Improper Encoding or Decoding of Data",
+    "common_names": "Encoding Error",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -2820,6 +2844,7 @@
   {
     "cwe_id": "CWE-190",
     "cwe_name": "Integer Overflow or Wraparound",
+    "common_names": "Year 2038 problem, Y2K38, Y2038, Epochalypse",
     "cwe_status": "Stable",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -3339,7 +3364,8 @@
   },
   {
     "cwe_id": "CWE-244",
-    "cwe_name": "Improper Clearing of Heap Memory Before Release ('Heap Inspection')",
+    "cwe_name": "Improper Clearing of Heap Memory Before Release",
+    "common_names": "Heap Inspection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -3820,7 +3846,7 @@
   {
     "cwe_id": "CWE-295",
     "cwe_name": "Improper Certificate Validation",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
     "mapping_argument": "Certificate validation is the peer-authenticity control of the communication path. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. Aligns this entry with CWE-940/757/300/311/319, already #5.",
@@ -3830,7 +3856,7 @@
   {
     "cwe_id": "CWE-296",
     "cwe_name": "Improper Following of a Certificate's Chain of Trust",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
     "mapping_argument": "Following a certificate's chain of trust is how the peer-authenticity control resolves to a trust anchor; failing to follow it defeats the control itself. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
@@ -3850,7 +3876,7 @@
   {
     "cwe_id": "CWE-298",
     "cwe_name": "Improper Validation of Certificate Expiration",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
     "mapping_argument": "Certificate expiration validation is the validity-window component of the peer-authenticity control. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
@@ -3860,7 +3886,7 @@
   {
     "cwe_id": "CWE-299",
     "cwe_name": "Improper Check for Certificate Revocation",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
     "mapping_argument": "Revocation checking is the withdrawal component of the peer-authenticity control. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
@@ -3880,7 +3906,7 @@
   {
     "cwe_id": "CWE-301",
     "cwe_name": "Reflection Attack in an Authentication Protocol",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
     "mapping_argument": "Reflection attacks exploit weaknesses in authentication protocol design (#1) where challenges can be reflected back to the challenger. The protocol's functional logic itself is vulnerable to manipulation. This is abuse of the protocol's designed behavior through parameter manipulation.",
@@ -3929,7 +3955,7 @@
   },
   {
     "cwe_id": "CWE-306",
-    "cwe_name": "Missing Authentication for Critical Function",
+    "cwe_name": "Missing Authentication for Critical Functionality",
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -4070,7 +4096,7 @@
   {
     "cwe_id": "CWE-321",
     "cwe_name": "Use of Hard-coded Cryptographic Key",
-    "cwe_status": "",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#4",
     "tlctc_name": "Identity Theft",
     "mapping_argument": "Hard-coded cryptographic key in the binary — once extracted, every deployment's encrypted data and authenticated calls are reproducible by the attacker. Decision tree Q3 -> #4.",
@@ -4379,7 +4405,8 @@
   },
   {
     "cwe_id": "CWE-352",
-    "cwe_name": "Cross-Site Request Forgery (CSRF)",
+    "cwe_name": "Cross-Site Request Forgery",
+    "common_names": "Cross Site Reference Forgery, XSRF, CSRF",
     "cwe_status": "Stable",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -4400,7 +4427,7 @@
   {
     "cwe_id": "CWE-354",
     "cwe_name": "Improper Validation of Integrity Check Value",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
     "mapping_argument": "Code implementation flaw (#2/#3) in the logic that validates integrity values (HMAC, checksums, signatures). The validation code itself contains bugs.",
@@ -4409,7 +4436,8 @@
   },
   {
     "cwe_id": "CWE-356",
-    "cwe_name": "Product UI does not Warn User of Unsafe Actions",
+    "cwe_name": "Missing User Interaction for Potentially Unsafe Action",
+    "common_names": "HITL, Product UI does not Warn User of Unsafe Actions",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#9",
     "tlctc_name": "Social Engineering",
@@ -4440,6 +4468,7 @@
   {
     "cwe_id": "CWE-359",
     "cwe_name": "Exposure of Private Personal Information to an Unauthorized Actor",
+    "common_names": "PPI, PII, PHI",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "N/A",
     "tlctc_name": "Code Quality",
@@ -4459,7 +4488,8 @@
   },
   {
     "cwe_id": "CWE-362",
-    "cwe_name": "Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')",
+    "cwe_name": "Concurrent Execution using Shared Resource with Improper Synchronization",
+    "common_names": "Race Condition",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -4540,7 +4570,7 @@
   {
     "cwe_id": "CWE-370",
     "cwe_name": "Missing Check for Certificate Revocation after Initial Check",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
     "mapping_argument": "Revocation is checked initially but not re-checked, leaving the peer-authenticity control unenforced for the remainder of the session. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
@@ -4589,13 +4619,13 @@
   },
   {
     "cwe_id": "CWE-377",
-    "cwe_name": "Insecure Temporary File",
-    "cwe_status": "Incomplete",
-    "tlctc_mapping": "#2 | #3",
-    "tlctc_name": "Exploiting Server or Exploiting Client",
-    "mapping_argument": "Predictable/insecure temporary-file handling enables symlink races and content substitution. Code implementation flaw - server-role (#2) or client-role (#3) per R-ROLE.",
-    "Mapping_Notes": "Allowed",
-    "CVE": "CVE-2022-41954"
+    "cwe_name": "DEPRECATED: Insecure Temporary File",
+    "cwe_status": "Deprecated",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "N/A",
+    "mapping_argument": "Deprecated in CWE 5.0: the entry named the affected resource (a temporary file), not the mistake that produced it. Per Prohibited-verdict policy, deprecated entries map to N/A. Until 5.0 this entry was mapped #2 | #3; classify at the weakness behind the insecure file, for example CWE-378 (#1) or CWE-379 (#1).",
+    "Mapping_Notes": "Prohibited",
+    "CVE": "No Evidence found in V4.1"
   },
   {
     "cwe_id": "CWE-378",
@@ -4689,12 +4719,12 @@
   },
   {
     "cwe_id": "CWE-391",
-    "cwe_name": "Unchecked Error Condition",
-    "cwe_status": "Incomplete",
-    "tlctc_mapping": "#2 | #3",
-    "tlctc_name": "Exploiting Server or Exploiting Client",
-    "mapping_argument": "Error-handling code implementation flaw — failure to detect/propagate the condition leaves the program in an undefined or insecure state. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
-    "Mapping_Notes": "Allowed",
+    "cwe_name": "DEPRECATED: Unchecked Error Condition",
+    "cwe_status": "Deprecated",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "N/A",
+    "mapping_argument": "Deprecated in CWE 5.0: ambiguous wording that merged several different weaknesses. Per Prohibited-verdict policy, deprecated entries map to N/A. Until 5.0 this entry was mapped #2 | #3; use CWE-252 (#2 | #3), CWE-248 (#2 | #3), CWE-754 (#2 | #3) or CWE-755 (#2 | #3).",
+    "Mapping_Notes": "Prohibited",
     "CVE": "No Evidence found in V4.1"
   },
   {
@@ -4789,7 +4819,8 @@
   },
   {
     "cwe_id": "CWE-402",
-    "cwe_name": "Transmission of Private Resources into a New Sphere ('Resource Leak')",
+    "cwe_name": "Transmission of Private Resources into a New Sphere",
+    "common_names": "Resource Leak",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -4799,7 +4830,8 @@
   },
   {
     "cwe_id": "CWE-403",
-    "cwe_name": "Exposure of File Descriptor to Unintended Control Sphere ('File Descriptor Leak')",
+    "cwe_name": "Exposure of File Descriptor to Unintended Control Sphere",
+    "common_names": "File descriptor leak",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -4959,7 +4991,8 @@
   },
   {
     "cwe_id": "CWE-422",
-    "cwe_name": "Unprotected Windows Messaging Channel ('Shatter')",
+    "cwe_name": "Unprotected Windows Messaging Channel",
+    "common_names": "Shatter",
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -4989,7 +5022,8 @@
   },
   {
     "cwe_id": "CWE-425",
-    "cwe_name": "Direct Request ('Forced Browsing')",
+    "cwe_name": "Direct Request",
+    "common_names": "Forced Browsing",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -5129,7 +5163,8 @@
   },
   {
     "cwe_id": "CWE-441",
-    "cwe_name": "Unintended Proxy or Intermediary ('Confused Deputy')",
+    "cwe_name": "Unintended Proxy or Intermediary",
+    "common_names": "Confused Deputy",
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -5149,7 +5184,8 @@
   },
   {
     "cwe_id": "CWE-444",
-    "cwe_name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')",
+    "cwe_name": "Inconsistent Interpretation of HTTP Requests",
+    "common_names": "HTTP Request Smuggling, HTTP Response Smuggling, HTTP Request/Response Smuggling",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -5369,7 +5405,8 @@
   },
   {
     "cwe_id": "CWE-470",
-    "cwe_name": "Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection')",
+    "cwe_name": "Use of Externally-Controlled Input to Select Classes or Code",
+    "common_names": "Reflection Injection, Unsafe Reflection",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2 → #7 | #3 → #7",
     "tlctc_name": "Exploiting Server -> Malware OR Exploiting Client -> Malware",
@@ -5430,6 +5467,7 @@
   {
     "cwe_id": "CWE-476",
     "cwe_name": "NULL Pointer Dereference",
+    "common_names": "NPD, null deref, NPE",
     "cwe_status": "Stable",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -5559,7 +5597,8 @@
   },
   {
     "cwe_id": "CWE-491",
-    "cwe_name": "Public cloneable() Method Without Final ('Object Hijack')",
+    "cwe_name": "Public cloneable() Method Without Final",
+    "common_names": "Object Hijack",
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -5649,7 +5688,8 @@
   },
   {
     "cwe_id": "CWE-500",
-    "cwe_name": "Public Static Final Field References Mutable Object",
+    "cwe_name": "Public Static Field Not Marked Final",
+    "common_names": "Public Static Final Field References Mutable Object",
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -6199,7 +6239,8 @@
   },
   {
     "cwe_id": "CWE-564",
-    "cwe_name": "SQL Injection: Hibernate",
+    "cwe_name": "Use of Hibernate with HQL/SQL Query String Containing External Input",
+    "common_names": "SQL Injection: Hibernate",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -6480,7 +6521,7 @@
   {
     "cwe_id": "CWE-593",
     "cwe_name": "Authentication Bypass: OpenSSL CTX Object Modified after SSL Objects are Created",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
     "mapping_argument": "Modifying the SSL_CTX after SSL objects are created means the configured verification settings never apply, defeating certificate verification by construction. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned. Per decision-tree NOTE 4, \"authentication bypass\" here means PEER authenticity of the channel, not identity authentication of a principal, so NOTE 1's #1 ruling does not govern.",
@@ -6529,7 +6570,8 @@
   },
   {
     "cwe_id": "CWE-598",
-    "cwe_name": "Use of GET Request Method With Sensitive Query Strings",
+    "cwe_name": "Use of HTTP Request With Sensitive Query String",
+    "common_names": "Use of GET Request Method With Sensitive Query Strings",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -6540,7 +6582,7 @@
   {
     "cwe_id": "CWE-599",
     "cwe_name": "Missing Validation of OpenSSL Certificate",
-    "cwe_status": "Draft",
+    "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
     "mapping_argument": "Trusting a certificate without consulting SSL_get_verify_result() means the verification result is never applied — the peer-authenticity control is present but inert. Per R-SPECIFIC (channel) (v2.4) the defective logic is constitutive of a communication-path control, so the generic vulnerability is the lack of sufficient control over the communication path (#5) — not the code flaw (#2/#3) that the Q2-first decision-tree ordering previously assigned.",
@@ -6549,7 +6591,7 @@
   },
   {
     "cwe_id": "CWE-600",
-    "cwe_name": "Uncaught Exception in Servlet ",
+    "cwe_name": "Uncaught Exception in Servlet",
     "cwe_status": "Draft",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -6559,7 +6601,8 @@
   },
   {
     "cwe_id": "CWE-601",
-    "cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "cwe_name": "URL Redirection to Untrusted Site",
+    "common_names": "Open Redirect, Unvalidated Redirect",
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -6669,18 +6712,18 @@
   },
   {
     "cwe_id": "CWE-613",
-    "cwe_name": "Insufficient Session Expiration",
-    "cwe_status": "Incomplete",
-    "tlctc_mapping": "#4",
-    "tlctc_name": "Identity Theft",
-    "mapping_argument": "Insufficient session expiration extends the window in which a stolen session token remains valid for impersonation. Decision tree Q3 -> #4.",
-    "Mapping_Notes": "Allowed",
+    "cwe_name": "DEPRECATED: Insufficient Session Expiration",
+    "cwe_status": "Deprecated",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "N/A",
+    "mapping_argument": "Deprecated in CWE 5.0 and split into CWE-1462 Improper Session Management and its children (CWE-1463 timeout, CWE-1464 invalidation). Per Prohibited-verdict policy, deprecated entries map to N/A. Until 5.0 this entry was mapped #4, and its successors are #4 as well.",
+    "Mapping_Notes": "Prohibited",
     "CVE": "No Evidence found in V4.1"
   },
   {
     "cwe_id": "CWE-614",
     "cwe_name": "Sensitive Cookie in HTTPS Session Without 'Secure' Attribute",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
     "mapping_argument": "Omitting the Secure attribute allows a session cookie to be transmitted over an unencrypted connection, placing a credential on a path with no confidentiality control. Per R-SPECIFIC (channel) (v2.4) the attribute IS the per-cookie channel-encryption control, so its failure is the lack of sufficient control over the communication path (#5); consistent with CWE-319 Cleartext Transmission, already #5, and with the decision-tree enabling-condition table ('cleartext transmission / weak channel encryption -> #5'). The prior #1 rationale classified by substrate ('it is a configuration parameter') rather than by the generic vulnerability. Note CWE-1275 (SameSite) remains #1: SameSite governs cross-site request attachment (CSRF), not channel confidentiality. Reclassified from #1 in the 2026-08-06 R-SPECIFIC (channel) remainder sweep.",
@@ -6729,7 +6772,8 @@
   },
   {
     "cwe_id": "CWE-619",
-    "cwe_name": "Dangling Database Cursor ('Cursor Injection')",
+    "cwe_name": "Dangling Database Cursor",
+    "common_names": "Cursor Injection",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -6829,7 +6873,8 @@
   },
   {
     "cwe_id": "CWE-636",
-    "cwe_name": "Not Failing Securely ('Failing Open')",
+    "cwe_name": "Not Failing Securely",
+    "common_names": "Failing Open",
     "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -6899,7 +6944,8 @@
   },
   {
     "cwe_id": "CWE-643",
-    "cwe_name": "Improper Neutralization of Data within XPath Expressions ('XPath Injection')",
+    "cwe_name": "Improper Neutralization of Data within XPath Expressions",
+    "common_names": "XPath Injection",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -6989,7 +7035,8 @@
   },
   {
     "cwe_id": "CWE-652",
-    "cwe_name": "Improper Neutralization of Data within XQuery Expressions ('XQuery Injection')",
+    "cwe_name": "Improper Neutralization of Data within XQuery Expressions",
+    "common_names": "XQuery Injection",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -7170,7 +7217,7 @@
   {
     "cwe_id": "CWE-674",
     "cwe_name": "Uncontrolled Recursion",
-    "cwe_status": "Incomplete",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
     "mapping_argument": "Uncontrolled recursion — input drives recursion depth, causing stack exhaustion. Error-handling code implementation flaw — failure to detect/propagate the condition leaves the program in an undefined or insecure state. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
@@ -7529,7 +7576,8 @@
   },
   {
     "cwe_id": "CWE-757",
-    "cwe_name": "Selection of Less-Secure Algorithm During Negotiation ('Algorithm Downgrade')",
+    "cwe_name": "Selection of Less-Secure Algorithm During Negotiation",
+    "common_names": "Algorithm Downgrade",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#5",
     "tlctc_name": "Man in the Middle",
@@ -7719,7 +7767,8 @@
   },
   {
     "cwe_id": "CWE-776",
-    "cwe_name": "Improper Restriction of Recursive Entity References in DTDs ('XML Entity Expansion')",
+    "cwe_name": "Improper Restriction of Recursive Entity References in DTDs",
+    "common_names": "XEE, Billion Laughs Attack, XML Entity Expansion",
     "cwe_status": "Draft",
     "tlctc_mapping": "#6",
     "tlctc_name": "Flooding Attack",
@@ -8149,7 +8198,8 @@
   },
   {
     "cwe_id": "CWE-835",
-    "cwe_name": "Loop with Unreachable Exit Condition ('Infinite Loop')",
+    "cwe_name": "Loop with Unreachable Exit Condition",
+    "common_names": "Infinite Loop",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -8219,7 +8269,8 @@
   },
   {
     "cwe_id": "CWE-843",
-    "cwe_name": "Access of Resource Using Incompatible Type ('Type Confusion')",
+    "cwe_name": "Access of Resource Using Incompatible Type",
+    "common_names": "Type Confusion, Object Type Confusion",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -8339,7 +8390,8 @@
   },
   {
     "cwe_id": "CWE-917",
-    "cwe_name": "Improper Neutralization of Special Elements used in an Expression Language Statement ('Expression Language Injection')",
+    "cwe_name": "Improper Neutralization of Special Elements used in an Expression Language Statement",
+    "common_names": "EL Injection, Expression Language Injection",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 → #7",
     "tlctc_name": "Exploiting Server -> Malware",
@@ -8349,7 +8401,8 @@
   },
   {
     "cwe_id": "CWE-918",
-    "cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_name": "Server-Side Request Forgery",
+    "common_names": "XSPA, SSRF",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -8469,7 +8522,7 @@
   },
   {
     "cwe_id": "CWE-942",
-    "cwe_name": "Permissive Cross-domain Policy with Untrusted Domains",
+    "cwe_name": "Permissive Cross-domain Security Policy with Untrusted Domains",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
@@ -8489,7 +8542,7 @@
   },
   {
     "cwe_id": "CWE-1000",
-    "cwe_name": "Research Concepts",
+    "cwe_name": "Complete Weakness Hierarchy",
     "cwe_status": "Stable",
     "tlctc_mapping": "N/A",
     "tlctc_name": "Structure / View",
@@ -9339,7 +9392,7 @@
   },
   {
     "cwe_id": "CWE-1116",
-    "cwe_name": "Inaccurate Comments",
+    "cwe_name": "Inaccurate Source Code Comments",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "N/A",
     "tlctc_name": "Code Quality",
@@ -10139,7 +10192,7 @@
   },
   {
     "cwe_id": "CWE-1279",
-    "cwe_name": "Cryptographic Operations are run Before Supporting Units are Ready",
+    "cwe_name": "Cryptographic Operations are Run Before Supporting Units are Ready",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2",
     "tlctc_name": "Exploiting Server",
@@ -10399,12 +10452,12 @@
   },
   {
     "cwe_id": "CWE-1305",
-    "cwe_name": "Improper Logic in Memory Address Decoding",
-    "cwe_status": "Incomplete",
-    "tlctc_mapping": "#2",
-    "tlctc_name": "Exploiting Server",
-    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: memory address decoding is logic. Applying the removal test, if every physical property of the silicon behaved ideally the flaw would remain, so the hardware is the location of the defect and not its cause. The block services transactions issued by lower-privileged software or firmware, which places it in server-role per R-ROLE (v2.4), where roles follow call direction at any interface and a network is not a precondition. Reclassified in the 2026-08-07 R-SPECIFIC (substrate) re-audit; the prior #8 mapping followed decision-tree Q7 on the presence of hardware, which is a location, not a cause.",
-    "Mapping_Notes": "Allowed",
+    "cwe_name": "CISQ Quality Measures (2020)",
+    "cwe_status": "Category / View",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Structure / View",
+    "mapping_argument": "View node (CISQ Quality Measures 2020), not a concrete weakness. Per R-Q0, view nodes are Prohibited. Corrected 2026-11-11: this record used to describe a weakness, 'Improper Logic in Memory Address Decoding' (#2), that does not exist in the CWE catalogue.",
+    "Mapping_Notes": "Prohibited",
     "CVE": "No Evidence found in V4.1"
   },
   {
@@ -10519,7 +10572,8 @@
   },
   {
     "cwe_id": "CWE-1321",
-    "cwe_name": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')",
+    "cwe_name": "Improperly Controlled Modification of Object Prototype Attributes",
+    "common_names": "Prototype Pollution",
     "cwe_status": "Incomplete",
     "tlctc_mapping": "#2 | #3",
     "tlctc_name": "Exploiting Server or Exploiting Client",
@@ -10940,7 +10994,7 @@
   {
     "cwe_id": "CWE-1432",
     "cwe_name": "Weaknesses in the 2025 CWE Most Important Hardware Weaknesses List",
-    "cwe_status": "Unknown (new in 4.18; status not shown in diff report)",
+    "cwe_status": "Category / View",
     "tlctc_mapping": "N/A",
     "tlctc_name": "Structure / View",
     "mapping_argument": "Navigational list node (2025 MIHW list) introduced in CWE 4.18. Not a concrete weakness — classify at member CWE level. Per R-Q0, list/view nodes are Prohibited.",
@@ -10950,7 +11004,7 @@
   {
     "cwe_id": "CWE-1433",
     "cwe_name": "2025 MIHW Supplement: Expert Insights",
-    "cwe_status": "Unknown (new in 4.18; status not shown in diff report)",
+    "cwe_status": "Category / View",
     "tlctc_mapping": "N/A",
     "tlctc_name": "Structure / View",
     "mapping_argument": "Supplement/meta node introduced in CWE 4.18 (MIHW supplement). Not a concrete weakness definition. Per R-Q0, meta nodes are Prohibited.",
@@ -10960,7 +11014,7 @@
   {
     "cwe_id": "CWE-1434",
     "cwe_name": "Insecure Setting of Generative AI/ML Model Inference Parameters",
-    "cwe_status": "Unknown (new in 4.18; status not shown in diff report)",
+    "cwe_status": "Draft",
     "tlctc_mapping": "#1",
     "tlctc_name": "Abuse of Functions",
     "mapping_argument": "Insecure default values for GenAI inference parameters (temperature, top-p, max-tokens) abuse the legitimate inference function to amplify prompt-injection or unsafe output. Decision tree Q9 -> #1.",
@@ -11086,6 +11140,156 @@
     "mapping_argument": "OWASP Top Ten 2025 RC1 aggregation view. Informational/list node only. Per R-Q0, view nodes are Prohibited.",
     "Mapping_Notes": "Prohibited",
     "CVE": "No Evidence found in V4.1"
+  },
+  {
+    "cwe_id": "CWE-1461",
+    "cwe_name": "Hardware Simulation / Synthesis Mismatch",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#2",
+    "tlctc_name": "Exploiting Server",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property of the substrate: the synthesized hardware behaves differently from the simulated design. Applying the removal test, if every physical property behaved ideally the mismatch would remain. Decision tree Q2 -> #2 (hardware-logic family, as CWE-1298 and CWE-1264).",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2025-51678, CVE-2025-51677, CVE-2025-51679, CVE-2025-51675"
+  },
+  {
+    "cwe_id": "CWE-1462",
+    "cwe_name": "Improper Session Management",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#4",
+    "tlctc_name": "Identity Theft",
+    "mapping_argument": "Parent class for session-management weaknesses, introduced in CWE 5.0 when CWE-613 was split. Specific cases classify at child CWEs (CWE-1463 timeout, CWE-1464 invalidation, CWE-1467 shared artifact, CWE-384 fixation). Decision tree Q3 -> #4.",
+    "Mapping_Notes": "Discouraged",
+    "CVE": "CVE-2020-6291, CVE-2021-38869, CVE-2019-12421"
+  },
+  {
+    "cwe_id": "CWE-1463",
+    "cwe_name": "Insufficient Session Timeout Value",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#4",
+    "tlctc_name": "Identity Theft",
+    "mapping_argument": "A session without a timeout, or with an excessive one, keeps a session artifact valid long after its holder has gone, so whoever presents it is still accepted. Point-of-use weakness in the session mechanism (successor of CWE-613). Decision tree Q3 -> #4.",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2026-107275, CVE-2025-46344, CVE-2024-8888, CVE-2024-35206, CVE-2024-27782, CVE-2020-6291"
+  },
+  {
+    "cwe_id": "CWE-1464",
+    "cwe_name": "Improper Session Invalidation",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#4",
+    "tlctc_name": "Identity Theft",
+    "mapping_argument": "The session mechanism keeps accepting a session artifact that should have been invalidated (inactivity, account change), so a presenter who is not its authentic holder is accepted. Decision tree Q3 -> #4.",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2021-38869, CVE-2019-5638"
+  },
+  {
+    "cwe_id": "CWE-1465",
+    "cwe_name": "Improper Session Invalidation after User Logout",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#4",
+    "tlctc_name": "Identity Theft",
+    "mapping_argument": "Logout does not invalidate the session on the server, so the session artifact remains acceptable after its holder has ended the session. Variant of CWE-1464. Decision tree Q3 -> #4.",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2026-105690, CVE-2019-12421"
+  },
+  {
+    "cwe_id": "CWE-1466",
+    "cwe_name": "Improper Session Invalidation after Authentication Credential Change",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#4",
+    "tlctc_name": "Identity Theft",
+    "mapping_argument": "Existing sessions survive a change of password or other authentication credential, so a session artifact held by someone else stays valid after the holder has rotated the credential. Variant of CWE-1464. Decision tree Q3 -> #4.",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2022-21652, CVE-2025-24859"
+  },
+  {
+    "cwe_id": "CWE-1467",
+    "cwe_name": "Use of Singular Authentication Artifact for Multiple User Sessions",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#4",
+    "tlctc_name": "Identity Theft",
+    "mapping_argument": "One authentication artifact serves every authenticated session, so presenting it proves nothing about which holder is present: the mechanism cannot bind the artifact to its authentic holder. Decision tree Q3 -> #4.",
+    "Mapping_Notes": "Allowed",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
+    "cwe_id": "CWE-1469",
+    "cwe_name": "Improper Check for Credential Expiration",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#4",
+    "tlctc_name": "Identity Theft",
+    "mapping_argument": "The product accepts a credential (key, password, confirmation code, token) without checking whether it has expired, so a credential that should be dead is still honoured at the point of use. Decision tree Q3 -> #4, as for session expiration. Peer-certificate expiry in a channel is CWE-298 (#5, R-SPECIFIC channel); issuing credentials with too long a life is CWE-1472 (enabling condition).",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2024-8642, CVE-2023-48220, CVE-2026-66400, CVE-2026-67242"
+  },
+  {
+    "cwe_id": "CWE-1470",
+    "cwe_name": "Improper External Identity Verification",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#1",
+    "tlctc_name": "Abuse of Functions",
+    "mapping_argument": "The enrolment or account-linking function accepts an external identifier (email address, phone number, social account, domain) without verifying that the user controls it. Logic weakness in the verification function, not credential application: decision tree NOTE 1 and Q9 -> #1. A later login as the victim through the claimed identifier is a separate #4 step (#1 -> #4).",
+    "Mapping_Notes": "Allowed",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
+    "cwe_id": "CWE-1471",
+    "cwe_name": "Insufficiently Controlled Parser Differential",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": "Exploiting Server or Exploiting Client",
+    "mapping_argument": "Two parsers of one format interpret the same input differently, and the difference is security-relevant (filter bypass, request smuggling as in CWE-444). Parsing code implementation flaw. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2026-83611"
+  },
+  {
+    "cwe_id": "CWE-1472",
+    "cwe_name": "Generation of Credential with Long Expiration",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "enabling-condition",
+    "tlctc_name": "Enabling Condition (R-CRED)",
+    "mapping_argument": "Generation of Credential with Long Expiration: a credential storage / protection / lifecycle weakness. Under TLCTC v2.3.1 the #4 Identity Theft cluster is retightened to point-of-use identity-artifact binding, so this is an acquisition-side enabling condition, not #4. Per R-CRED the operative cluster is set by the acquisition vector that reaches the exposed credential at incident time (e.g. #2 server exploit, #7 malware, #8 physical, #5 transit); #4 is reserved for the later credential application. Not itself a single cluster (see decision-tree Q3 / ruling-2, revised for v2.3.1).",
+    "Mapping_Notes": "Allowed-with-Review",
+    "CVE": "CVE-2026-96616, CVE-2026-33707, CVE-2026-26342, CVE-2026-21622, CVE-2026-8760"
+  },
+  {
+    "cwe_id": "CWE-1473",
+    "cwe_name": "Improper Expiration of Cached Data",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Generic Root Cause",
+    "mapping_argument": "Too abstract to name one generic vulnerability: what is cached decides the cluster. A cached session or credential that outlives its validity is a point-of-use weakness (#4, CWE-1463, CWE-1469), a cached name-resolution or peer-identity result concerns the communication path (#5), a cached authorization decision is a logic weakness (#1). Decision tree Q1 -> N/A; classify at the specific weakness or at instance level.",
+    "Mapping_Notes": "Discouraged",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
+    "cwe_id": "CWE-1474",
+    "cwe_name": "Non-Equivalent Data Transformation",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": "Exploiting Server or Exploiting Client",
+    "mapping_argument": "Parsing or transforming data yields a result that is not semantically equivalent to the input (a web application firewall that parses multipart bodies differently from the application, a URL library that mis-parses leading whitespace). Data-handling code implementation flaw. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2022-48279, CVE-2022-24723"
+  },
+  {
+    "cwe_id": "CWE-1475",
+    "cwe_name": "Incomplete Data/State Propagation",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": "Exploiting Server or Exploiting Client",
+    "mapping_argument": "A component hands control or data to another without the security-critical state the receiver needs (an archive tool that drops the Mark-of-the-Web, a service that does not pass on a token's expiry). Implementation flaw in the propagating component. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2026-58052, CVE-2025-50328, CVE-2026-44394"
+  },
+  {
+    "cwe_id": "CWE-1476",
+    "cwe_name": "Improper Request Propagation before Data Reception in Write Transactions in a Bus Architecture",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#2",
+    "tlctc_name": "Exploiting Server",
+    "mapping_argument": "Per R-SPECIFIC (substrate) the exploited generic vulnerability is a defect in implemented logic, not a physical-layer property: the interconnect propagates a write request before the manager has supplied the data and does not bound the wait, so one manager can stall the bus. If every physical property behaved ideally the defect would remain. The stall is the consequence, not a capacity weakness (decision tree Q5 note). Decision tree Q2 -> #2 (hardware-logic family, as CWE-1264).",
+    "Mapping_Notes": "Allowed",
+    "CVE": "No Evidence found in V4.1"
   }
 ];
     
@@ -11172,6 +11376,7 @@
         _index: index,
         id: item.cwe_id || '',
         name: item.cwe_name || '',
+        common: item.common_names || '',
         status: item.cwe_status || 'Unknown',
         tlctcId: item.tlctc_mapping || 'N/A',
         tlctcName: item.tlctc_name || 'N/A',
@@ -11329,7 +11534,7 @@
               matchesSearch = item.id.toLowerCase().includes(searchQuery);
               break;
             case 'name':
-              matchesSearch = item.name.toLowerCase().includes(searchQuery);
+              matchesSearch = item.name.toLowerCase().includes(searchQuery) || item.common.toLowerCase().includes(searchQuery);
               break;
             case 'cve':
               matchesSearch = item.cve.toLowerCase().includes(searchQuery);
@@ -11341,6 +11546,7 @@
               matchesSearch = 
                 item.id.toLowerCase().includes(searchQuery) ||
                 item.name.toLowerCase().includes(searchQuery) ||
+                item.common.toLowerCase().includes(searchQuery) ||
                 item.argument.toLowerCase().includes(searchQuery) ||
                 item.notes.toLowerCase().includes(searchQuery) ||
                 item.tlctcName.toLowerCase().includes(searchQuery) ||
@@ -11566,7 +11772,7 @@
               </button>
             </td>
             ${visibleColumns.id ? `<td class="col-id"><span class="technique-id">${highlightMatch(item.id, 'id')}</span></td>` : ''}
-            ${visibleColumns.name ? `<td class="col-name"><strong>${highlightMatch(item.name, 'name')}</strong></td>` : ''}
+            ${visibleColumns.name ? `<td class="col-name"><strong>${highlightMatch(item.name, 'name')}</strong>${item.common ? `<div class="common-names">${highlightMatch(item.common, 'name')}</div>` : ''}</td>` : ''}
             ${visibleColumns.cve ? `<td class="col-cve">${highlightMatch(item.cve, 'cve')}</td>` : ''}
             ${visibleColumns.status ? `<td class="col-status"><span class="cwe-status-badge ${getStatusClass(item.status)}">${item.status}</span></td>` : ''}
             ${visibleColumns.verdict ? `<td class="col-verdict">${item.notes ? `<span class="note-badge ${getNoteClass(item.notes)}">${item.notes}</span>` : '-'}</td>` : ''}
@@ -11586,7 +11792,11 @@
                     <div class="detail-label">CWE Name</div>
                     <div class="detail-value">${item.name}</div>
                   </div>
-                  <div class="detail-item">
+${item.common ? `                  <div class="detail-item">
+                    <div class="detail-label">Also known as</div>
+                    <div class="detail-value">${item.common}</div>
+                  </div>
+` : ''}                  <div class="detail-item">
                     <div class="detail-label">CWE Status</div>
                     <div class="detail-value"><span class="cwe-status-badge ${getStatusClass(item.status)}">${item.status}</span></div>
                   </div>

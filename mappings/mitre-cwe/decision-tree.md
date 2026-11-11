@@ -6,7 +6,7 @@ This document provides the step-by-step methodology for mapping any MITRE CWE we
 
 Before classifying a CWE, establish two things:
 
-1. **Is this a concrete weakness?** Category nodes, views, and deprecated CWEs cannot be mapped → **Prohibited**.
+1. **Is this a concrete weakness?** Category nodes, views, and deprecated CWEs cannot be mapped → **Prohibited**. (CWE 5.0 turned categories into *groupings* that keep their ids; the rule is unchanged.) When MITRE deprecates a weakness, its record becomes `N/A` / Prohibited and the rationale names the successors, as for CWE-613 → CWE-1462 family in CWE 5.0.
 2. **Is it specific enough?** Umbrella CWEs that span multiple root causes (e.g., CWE-20 "Improper Input Validation") → **Discouraged** or **N/A**.
 
 ## The Decision Tree
@@ -152,7 +152,7 @@ Q9: Is this a LOGIC, CONFIGURATION, or SCOPE weakness?
 
 ## The Role Disambiguation: #2 vs. #3
 
-The largest context-dependent group (219 entries) maps to `#2 | #3`. These are code implementation flaws where the TLCTC cluster depends on the **role** of the vulnerable component:
+The largest context-dependent group (230 entries) maps to `#2 | #3`. These are code implementation flaws where the TLCTC cluster depends on the **role** of the vulnerable component:
 
 ```
 Is the vulnerable code acting as a SERVER (receiving and processing requests)?
