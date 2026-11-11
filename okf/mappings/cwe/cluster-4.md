@@ -1,7 +1,7 @@
 ---
 type: "mapping-set"
 title: "CWE weaknesses → #4 Identity Theft"
-description: "31 CWE weaknesses entries mapped to TLCTC #4 Identity Theft."
+description: "37 CWE weaknesses entries mapped to TLCTC #4 Identity Theft."
 resource: "tlctc:mapping:cwe:cluster-4"
 tags:
   - "mapping"
@@ -12,7 +12,7 @@ tags:
 
 > Source: MITRE CWE → TLCTC mapping (`mappings/mitre-cwe/`). AI-generated, human-reviewed; experimental.
 
-Mapped entries: **31**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
+Mapped entries: **37**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
@@ -38,7 +38,6 @@ Mapped entries: **31**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
 | CWE-343 | Predictable Value Range from Previous Values | #4 | Allowed | Constrained range from prior outputs lets an attacker brute-force the next valid token/identifier. Per ruling-2 → #4. |
 | CWE-384 | Session Fixation | #4 | Allowed | Weak session management allows an attacker to fix or reuse a victim's session identifier. The attacker thereby creates/possesses a valid credential (the session ID) and uses it to impersonate the victim, which is #4 Identity Theft in TLCTC. |
 | CWE-521 | Weak Password Requirements | #4 | Allowed | Weak password requirements (low minimum length, no complexity) yield credentials trivially brute-forceable offline. Decision tree Q3 -> #4. |
-| CWE-613 | Insufficient Session Expiration | #4 | Allowed | Insufficient session expiration extends the window in which a stolen session token remains valid for impersonation. Decision tree Q3 -> #4. |
 | CWE-798 | Use of Hard-coded Credentials | #4 | Allowed | Hard-coded credentials baked into the product (passwords, API keys, cryptographic keys) — once extracted from binaries/firmware, every deployment becomes impersonable. Decision tree Q3 -> #4. |
 | CWE-799 | Improper Control of Interaction Frequency | #4 \| #6 | Allowed-with-Review | Missing rate-limiting / lockout permits unbounded interaction. Authentication endpoints → #4 (credential brute force / impersonation); resource endpoints → #6 (flooding / DoS). Per ruling-2 enabling-condition policy. |
 | CWE-1241 | Use of Predictable Algorithm in Random Number Generator | #4 \| #5 | Allowed | Predictable algorithm in an RNG produces guessable outputs. Token/identifier use -> #4 (impersonation); key/IV use -> #5 (channel decryption). Per ruling-2; consistent with CWE-331-339 PRNG family. |
@@ -47,3 +46,10 @@ Mapped entries: **31**. Cluster: [#4 Identity Theft](/clusters/cluster-4.md).
 | CWE-1392 | Use of Default Credentials | #4 | Allowed | Default credentials shipped with the product (passwords or cryptographic keys) — any attacker who knows the defaults can authenticate. Decision tree Q3 -> #4. |
 | CWE-1393 | Use of Default Password | #4 | Allowed | The product uses default passwords for potentially critical functionality. Real-world exploits use these known passwords to bypass authentication and gain administrative/DBA access. This matches TLCTC #4 Identity Theft: the attacker possesses a known default password and uses it as a credential to operate under a legitimate identity. There is no requirement in the CWE text that the password be first harvested via another cluster, so it is not just an enabling condition. |
 | CWE-1394 | Use of Default Cryptographic Key | #4 | Allowed | Default cryptographic key shipped with the product — once known, every deployment's protected operations can be impersonated. Decision tree Q3 -> #4. |
+| CWE-1462 | Improper Session Management | #4 | Discouraged | Parent class for session-management weaknesses, introduced in CWE 5.0 when CWE-613 was split. Specific cases classify at child CWEs (CWE-1463 timeout, CWE-1464 invalidation, CWE-1467 shared artifact, CWE-384 fixation). Decision tree Q3 -> #4. |
+| CWE-1463 | Insufficient Session Timeout Value | #4 | Allowed | A session without a timeout, or with an excessive one, keeps a session artifact valid long after its holder has gone, so whoever presents it is still accepted. Point-of-use weakness in the session mechanism (successor of CWE-613). Decision tree Q3 -> #4. |
+| CWE-1464 | Improper Session Invalidation | #4 | Allowed | The session mechanism keeps accepting a session artifact that should have been invalidated (inactivity, account change), so a presenter who is not its authentic holder is accepted. Decision tree Q3 -> #4. |
+| CWE-1465 | Improper Session Invalidation after User Logout | #4 | Allowed | Logout does not invalidate the session on the server, so the session artifact remains acceptable after its holder has ended the session. Variant of CWE-1464. Decision tree Q3 -> #4. |
+| CWE-1466 | Improper Session Invalidation after Authentication Credential Change | #4 | Allowed | Existing sessions survive a change of password or other authentication credential, so a session artifact held by someone else stays valid after the holder has rotated the credential. Variant of CWE-1464. Decision tree Q3 -> #4. |
+| CWE-1467 | Use of Singular Authentication Artifact for Multiple User Sessions | #4 | Allowed | One authentication artifact serves every authenticated session, so presenting it proves nothing about which holder is present: the mechanism cannot bind the artifact to its authentic holder. Decision tree Q3 -> #4. |
+| CWE-1469 | Improper Check for Credential Expiration | #4 | Allowed | The product accepts a credential (key, password, confirmation code, token) without checking whether it has expired, so a credential that should be dead is still honoured at the point of use. Decision tree Q3 -> #4, as for session expiration. Peer-certificate expiry in a channel is CWE-298 (#5, R-SPECIFIC channel); issuing credentials with too long a life is CWE-1472 (enabling condition). |

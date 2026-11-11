@@ -16,7 +16,7 @@ Mapped entries: **8**. Cluster: [#9 Social Engineering](/clusters/cluster-9.md).
 
 | CWE | Name | TLCTC | Verdict | Rationale |
 |---|---|---|---|---|
-| CWE-356 | Product UI does not Warn User of Unsafe Actions | #9 | Allowed | UI does not warn the user before performing an unsafe action (overwrite, dangerous download, irreversible change). Per ruling-2, this enables user-deception attacks. Decision tree -> #9. |
+| CWE-356 | Missing User Interaction for Potentially Unsafe Action | #9 | Allowed | UI does not warn the user before performing an unsafe action (overwrite, dangerous download, irreversible change). Per ruling-2, this enables user-deception attacks. Decision tree -> #9. |
 | CWE-357 | Insufficient UI Warning of Dangerous Operations | #9 | Allowed | UI warning for dangerous operations is missing or insufficient (low-contrast, easily-dismissed, after-the-fact). Per ruling-2 -> #9. |
 | CWE-446 | UI Discrepancy for Security Feature | #9 | Allowed | UI presents inconsistent state for a security feature (icon shows secure when it isn't, or vice versa) — enables user deception. Per ruling-2 -> #9. |
 | CWE-451 | User Interface (UI) Misrepresentation of Critical Information | #9 | Allowed | UI misrepresents critical security information (URL spoofing in address bar, certificate UI manipulation) — primary phishing/deception vector. Per ruling-2 -> #9. |

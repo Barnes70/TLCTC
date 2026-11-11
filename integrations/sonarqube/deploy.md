@@ -62,7 +62,7 @@ Expected output (file paths will differ):
 
 ```
 config OK: examples/tlctc-sonar.json (source=json)
-mapping OK: .../mappings/mitre-cwe/tlctc-cwe.json (997 entries, tlctc_version=2.6)
+mapping OK: .../mappings/mitre-cwe/tlctc-cwe.json (1012 entries, tlctc_version=2.6)
 ```
 
 If the mapping integrity check fails, stop and re-pull the repo — the CLI
