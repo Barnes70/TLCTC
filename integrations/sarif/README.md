@@ -15,7 +15,7 @@ calls, no build step.
 - Mines CWE and CVE identifiers from taxa, `properties`, `relationships`,
   and `ruleId` heuristics — covering the heterogeneous identifier placement
   across producers.
-- CWE-first lookup against the canonical 985-entry CWE→TLCTC mapping
+- CWE-first lookup against the canonical 997-entry CWE→TLCTC mapping
   (`mappings/mitre-cwe/tlctc-cwe.json`) — single source of truth, never
   forked.
 - CVE-only findings (no CWE present or all CWE lookups skipped) fall back
@@ -117,7 +117,7 @@ used in the [cortex-xsoar-8](../cortex-xsoar-8/) pack does not apply here.
 
 - Kreinz, B. *A Cause-Oriented Cyber Threat Taxonomy: The Top Level Cyber Threat Clusters Framework* (core paper, v2.6) — cluster definitions, axioms, and
   classification rules. [Read the core paper](https://www.tlctc.net/tlctc-whitepaper.html).
-- `mappings/mitre-cwe/tlctc-cwe.json` — canonical CWE→TLCTC mapping (985
+- `mappings/mitre-cwe/tlctc-cwe.json` — canonical CWE→TLCTC mapping (997
   entries, audited 2026-05-05).
 - `mappings/cisa-kev/tlctc-kev.json` — offline KEV→TLCTC derivation (1,568
   CVEs, deterministically derived from the CISA KEV snapshot).

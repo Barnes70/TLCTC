@@ -1228,6 +1228,16 @@
     "CVE": "No Evidence found in V4.1"
   },
   {
+    "cwe_id": "CWE-19",
+    "cwe_name": "Data Processing Errors",
+    "cwe_status": "Category / View",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Structure / View",
+    "mapping_argument": "CWE category node (Data Processing Errors): groups input-handling and data-representation weaknesses, which classify at member level (typically #2 | #3). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+    "Mapping_Notes": "Prohibited",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
     "cwe_id": "CWE-20",
     "cwe_name": "Improper Input Validation",
     "cwe_status": "Stable",
@@ -2798,6 +2808,26 @@
     "CVE": "No Evidence found in V4.1"
   },
   {
+    "cwe_id": "CWE-189",
+    "cwe_name": "Numeric Errors",
+    "cwe_status": "Category / View",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Structure / View",
+    "mapping_argument": "CWE category node (Numeric Errors): groups arithmetic weaknesses (CWE-190, CWE-191, CWE-193 and others), which classify at member level (#2 | #3). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+    "Mapping_Notes": "Prohibited",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
+    "cwe_id": "CWE-190",
+    "cwe_name": "Integer Overflow or Wraparound",
+    "cwe_status": "Stable",
+    "tlctc_mapping": "#2 | #3",
+    "tlctc_name": "Exploiting Server or Exploiting Client",
+    "mapping_argument": "Integer overflow or wraparound: a calculation exceeds the range of its type and wraps, typically feeding a size, index or loop bound. Arithmetic/numeric code implementation flaw. Decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE.",
+    "Mapping_Notes": "Allowed",
+    "CVE": "CVE-2025-46687, CVE-2025-27363, CVE-2021-43537, CVE-2019-19911, CVE-2022-0545, CVE-2021-30860, CVE-2021-30663, CVE-2018-10887, CVE-2019-1010006, CVE-2010-1866, CVE-2010-2753, CVE-2005-1513, CVE-2002-0391, CVE-2002-0639, CVE-2005-1141, CVE-2005-0102, CVE-2004-2013, CVE-2017-1000121, CVE-2013-1591"
+  },
+  {
     "cwe_id": "CWE-191",
     "cwe_name": "Integer Underflow (Wrap or Wraparound)",
     "cwe_status": "Draft",
@@ -2876,6 +2906,16 @@
     "mapping_argument": "Use of incorrect byte ordering (host vs. network endianness mishandled) yields wrong values in protocol/file parsing. Arithmetic/numeric code implementation flaw. Server-role (#2) or client-role (#3) per R-ROLE.",
     "Mapping_Notes": "Allowed",
     "CVE": "No Evidence found in V4.1"
+  },
+  {
+    "cwe_id": "CWE-200",
+    "cwe_name": "Exposure of Sensitive Information to an Unauthorized Actor",
+    "cwe_status": "Draft",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Consequence",
+    "mapping_argument": "Per Axiom III a consequence (loss of confidentiality, [DRE: C]), not a generic vulnerability. CWE's own mapping notes mark the entry Discouraged for the same reason: confidentiality loss is a technical impact, not a root cause error. Decision tree Q1 -> N/A. Classify by the cause that exposed the information, at the child or instance level: CWE-201, CWE-203 or CWE-538 (#2 | #3), CWE-209 (#1), CWE-497 (#2), or the access-control cause (CWE-285, CWE-287, CWE-732: #1).",
+    "Mapping_Notes": "Discouraged",
+    "CVE": "CVE-2022-31162, CVE-2021-25476, CVE-2001-1483, CVE-2001-1528, CVE-2004-2150, CVE-2005-1205, CVE-2002-1725, CVE-2002-0515, CVE-2004-0778, CVE-2000-1117, CVE-2003-0190, CVE-2008-2049, CVE-2007-5172, CVE-2008-4638, CVE-2007-1409, CVE-2005-0603, CVE-2004-2268, CVE-2003-1078, CVE-2022-0708"
   },
   {
     "cwe_id": "CWE-201",
@@ -3388,6 +3428,26 @@
     "CVE": "CVE-2023-49286"
   },
   {
+    "cwe_id": "CWE-254",
+    "cwe_name": "7PK - Security Features",
+    "cwe_status": "Category / View",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Structure / View",
+    "mapping_argument": "CWE category node (7PK - Security Features): one of the Seven Pernicious Kingdoms; groups authentication, access-control, cryptography and privilege weaknesses, which classify at member level (typically #1, #4 or #5). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Incomplete in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+    "Mapping_Notes": "Prohibited",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
+    "cwe_id": "CWE-255",
+    "cwe_name": "Credentials Management Errors",
+    "cwe_status": "Category / View",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Structure / View",
+    "mapping_argument": "CWE category node (Credentials Management Errors): groups credential weaknesses, which classify at member level: point-of-use acceptance is #4, storage and protection are enabling conditions (R-CRED). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+    "Mapping_Notes": "Prohibited",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
     "cwe_id": "CWE-256",
     "cwe_name": "Plaintext Storage of a Password",
     "cwe_status": "Incomplete",
@@ -3465,6 +3525,16 @@
     "tlctc_name": "Enabling Condition (R-CRED)",
     "mapping_argument": "Password Aging with Long Expiration: a credential storage / protection / lifecycle weakness. Under TLCTC v2.3.1 the #4 Identity Theft cluster is retightened to point-of-use identity-artifact binding, so this is an acquisition-side enabling condition, not #4. Per R-CRED the operative cluster is set by the acquisition vector that reaches the exposed credential at incident time (e.g. #2 server exploit, #7 malware, #8 physical, #5 transit); #4 is reserved for the later credential application. Not itself a single cluster (see decision-tree Q3 / ruling-2, revised for v2.3.1).",
     "Mapping_Notes": "Allowed-with-Review",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
+    "cwe_id": "CWE-264",
+    "cwe_name": "Permissions, Privileges, and Access Controls",
+    "cwe_status": "Category / View",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Structure / View",
+    "mapping_argument": "CWE category node (Permissions, Privileges, and Access Controls): groups permission, privilege and access-control weaknesses, which classify at member level (typically #1). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Obsolete in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+    "Mapping_Notes": "Prohibited",
     "CVE": "No Evidence found in V4.1"
   },
   {
@@ -3898,6 +3968,16 @@
     "CVE": "No Evidence found in V4.1"
   },
   {
+    "cwe_id": "CWE-310",
+    "cwe_name": "Cryptographic Issues",
+    "cwe_status": "Category / View",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Structure / View",
+    "mapping_argument": "CWE category node (Cryptographic Issues): groups cryptographic weaknesses, which classify at member level (typically #5, or #4 where a credential is accepted). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+    "Mapping_Notes": "Prohibited",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
     "cwe_id": "CWE-311",
     "cwe_name": "Missing Encryption of Sensitive Data",
     "cwe_status": "Draft",
@@ -3956,6 +4036,16 @@
     "mapping_argument": "Cleartext Storage of Sensitive Information in Memory: a credential storage / protection / lifecycle weakness. Under TLCTC v2.3.1 the #4 Identity Theft cluster is retightened to point-of-use identity-artifact binding, so this is an acquisition-side enabling condition, not #4. Per R-CRED the operative cluster is set by the acquisition vector that reaches the exposed credential at incident time (e.g. #2 server exploit, #7 malware, #8 physical, #5 transit); #4 is reserved for the later credential application. Not itself a single cluster (see decision-tree Q3 / ruling-2, revised for v2.3.1).",
     "Mapping_Notes": "Allowed-with-Review",
     "CVE": "CVE-2001-1517, CVE-2001-0984, CVE-2003-0291"
+  },
+  {
+    "cwe_id": "CWE-317",
+    "cwe_name": "Cleartext Storage of Sensitive Information in GUI",
+    "cwe_status": "Draft",
+    "tlctc_mapping": "enabling-condition",
+    "tlctc_name": "Enabling Condition (R-CRED)",
+    "mapping_argument": "Cleartext Storage of Sensitive Information in GUI: a credential storage / protection / lifecycle weakness. Under TLCTC v2.3.1 the #4 Identity Theft cluster is retightened to point-of-use identity-artifact binding, so this is an acquisition-side enabling condition, not #4. Per R-CRED the operative cluster is set by the acquisition vector that reaches the exposed credential at incident time (e.g. #2 server exploit, #7 malware, #8 physical, #5 transit); #4 is reserved for the later credential application. Not itself a single cluster (see decision-tree Q3 / ruling-2, revised for v2.3.1).",
+    "Mapping_Notes": "Allowed-with-Review",
+    "CVE": "CVE-2002-1848"
   },
   {
     "cwe_id": "CWE-318",
@@ -4578,6 +4668,16 @@
     "CVE": "No Evidence found in V4.1"
   },
   {
+    "cwe_id": "CWE-388",
+    "cwe_name": "7PK - Errors",
+    "cwe_status": "Category / View",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Structure / View",
+    "mapping_argument": "CWE category node (7PK - Errors): one of the Seven Pernicious Kingdoms; groups error-handling weaknesses, which classify at member level. Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+    "Mapping_Notes": "Prohibited",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
     "cwe_id": "CWE-390",
     "cwe_name": "Detection of Error Condition Without Action",
     "cwe_status": "Draft",
@@ -4655,6 +4755,16 @@
     "tlctc_name": "Code Quality",
     "mapping_argument": "Code-quality/style issue (declare throws Exception). Not a generic vulnerability.",
     "Mapping_Notes": "Discouraged",
+    "CVE": "No Evidence found in V4.1"
+  },
+  {
+    "cwe_id": "CWE-399",
+    "cwe_name": "Resource Management Errors",
+    "cwe_status": "Category / View",
+    "tlctc_mapping": "N/A",
+    "tlctc_name": "Structure / View",
+    "mapping_argument": "CWE category node (Resource Management Errors): groups memory and resource-lifetime weaknesses, which classify at member level (typically #2 | #3, or #6 where capacity is exhausted). Cited by CISA KEV records, which is why the id is listed. Not a concrete weakness (CWE category, status Draft in CWE 4.19). Per R-Q0, category nodes are Prohibited.",
+    "Mapping_Notes": "Prohibited",
     "CVE": "No Evidence found in V4.1"
   },
   {
@@ -10776,6 +10886,16 @@
     "mapping_argument": "Information leak caused by shared microarchitectural predictor state influencing transient execution. Transient-execution attacks are mounted entirely in software: the attacker supplies an instruction stream and recovers data across a privilege or isolation boundary from shared microarchitectural state. No physical accessibility and no physical-layer property is exploited by the attacker, so #8's generic vulnerability (\"physical accessibility of infrastructure and the exploitability of physical-layer properties\") does not apply — the prior mapping classified the substrate (the flaw lives in silicon) rather than the cause. Per R-ROLE (v2.4), roles are established by call direction at any interface, including intra-system privilege interfaces; the component servicing the attacker's instruction stream (CPU, kernel, hypervisor, or sandbox host) is in server-role, so the exploited generic vulnerability is a server-side implementation flaw enabling unintended behaviour (#2). Reclassified from #8 in the 2026-08-06 substrate sweep; see audit_history on the open hardware-substrate question.",
     "Mapping_Notes": "Allowed",
     "CVE": "CVE-2017-5754, CVE-2022-0001, CVE-2021-33149"
+  },
+  {
+    "cwe_id": "CWE-1426",
+    "cwe_name": "Improper Validation of Generative AI Output",
+    "cwe_status": "Incomplete",
+    "tlctc_mapping": "#2 | #3 | #2 → #7 | #3 → #7",
+    "tlctc_name": "Exploiting Server OR Exploiting Client OR Exploiting Server -> Malware OR Exploiting Client -> Malware",
+    "mapping_argument": "The product passes the output of a generative AI component to a downstream consumer (renderer, interpreter, query, tool) without validating it. Output-validation code implementation flaw in the integrating product, not in the model: decision tree Q2 -> server-role #2 or client-role #3 per R-ROLE. Under the v2.6 data-vs-code boundary the output is data unless it reaches a code-evaluation sink; where it does (model output rendered as script, CVE-2024-3402, or handed to an interpreter), R-EXEC adds -> #7. The step that steers the model is separate: prompt injection is #1 (CWE-1427), and where acting on the output is the product's designed function (agent tool use) the step is #1, not this entry. Output that only breaches a content or privacy policy is a consequence, not a cluster step. CWE marks the entry Discouraged while research continues; review at instance level.",
+    "Mapping_Notes": "Allowed-with-Review",
+    "CVE": "CVE-2024-3402"
   },
   {
     "cwe_id": "CWE-1427",

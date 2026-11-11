@@ -1113,18 +1113,22 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
-      "contextResolvedBy": "unresolved",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#3",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
+      "contextResolvedBy": "product-heuristic",
+      "contextHeuristicNotes": "Apple's KEV-listed products are overwhelmingly client-side (iOS/macOS/Safari).",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -1201,18 +1205,22 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
-      "contextResolvedBy": "unresolved",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#3",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
+      "contextResolvedBy": "product-heuristic",
+      "contextHeuristicNotes": "Mobile chipset vulns — client attack surface.",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -2102,18 +2110,21 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#2",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -2341,14 +2352,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "mixed",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         },
         {
           "cwe": "CWE-284",
@@ -2434,14 +2445,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -5016,14 +5027,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -7853,14 +7864,14 @@
         "#3"
       ],
       "confidence": "Allowed",
-      "derivationStatus": "mixed",
+      "derivationStatus": "ok",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         },
         {
           "cwe": "CWE-122",
@@ -10438,14 +10449,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -11445,14 +11456,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -11489,14 +11500,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -12022,18 +12033,21 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#2",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -12758,18 +12772,21 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#2",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -13149,14 +13166,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -14041,14 +14058,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -14187,14 +14204,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -15147,18 +15164,22 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
-      "contextResolvedBy": "unresolved",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#3",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
+      "contextResolvedBy": "product-heuristic",
+      "contextHeuristicNotes": "Mobile chipset vulns — client attack surface.",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -15329,18 +15350,22 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
-      "contextResolvedBy": "unresolved",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#3",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
+      "contextResolvedBy": "product-heuristic",
+      "contextHeuristicNotes": "Browser engine.",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -17714,18 +17739,22 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
-      "contextResolvedBy": "unresolved",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#3",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
+      "contextResolvedBy": "product-heuristic",
+      "contextHeuristicNotes": "Apple's KEV-listed products are overwhelmingly client-side (iOS/macOS/Safari).",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -18016,14 +18045,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -18349,14 +18378,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -18522,14 +18551,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -18701,14 +18730,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -18751,18 +18780,22 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
-      "contextResolvedBy": "unresolved",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#3",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
+      "contextResolvedBy": "product-heuristic",
+      "contextHeuristicNotes": "Browser engine.",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -20009,18 +20042,21 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#2",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -20821,14 +20857,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -21476,14 +21512,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-189",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -21503,14 +21539,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-189",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -21851,14 +21887,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -21878,14 +21914,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-310",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -21905,14 +21941,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-189",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -23040,14 +23076,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -23251,15 +23287,15 @@
         "#3"
       ],
       "confidence": "Allowed",
-      "derivationStatus": "mixed",
+      "derivationStatus": "ok",
       "contextResolvedBy": "product-heuristic",
       "contextHeuristicNotes": "Browser engine.",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         },
         {
           "cwe": "CWE-787",
@@ -23545,14 +23581,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-189",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -23839,14 +23875,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24156,18 +24192,22 @@
       "sourceCwes": [
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
-      "contextResolvedBy": "unresolved",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#3",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
+      "derivationStatus": "ok",
+      "contextResolvedBy": "product-heuristic",
+      "contextHeuristicNotes": "Browser plugin.",
       "sourceCweTrace": [
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -24245,14 +24285,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24302,14 +24342,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24383,14 +24423,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24410,14 +24450,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -24437,14 +24477,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-189",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24464,14 +24504,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24491,14 +24531,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-19",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24576,14 +24616,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24620,14 +24660,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24647,14 +24687,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24701,14 +24741,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -24728,14 +24768,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24816,14 +24856,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24877,14 +24917,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -24921,14 +24961,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -25099,14 +25139,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -25126,14 +25166,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -25312,14 +25352,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -25339,14 +25379,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -25366,14 +25406,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -25393,14 +25433,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -25504,14 +25544,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -26259,14 +26299,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -28090,14 +28130,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -28229,14 +28269,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -28256,14 +28296,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -28337,14 +28377,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-19",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -28391,14 +28431,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-189",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -28510,14 +28550,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -28593,14 +28633,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -30098,14 +30138,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -30330,14 +30370,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -30889,14 +30929,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -31159,14 +31199,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -31186,14 +31226,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -31213,14 +31253,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-255",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -31606,14 +31646,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -31633,14 +31673,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -31795,14 +31835,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -31876,14 +31916,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -31903,14 +31943,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-388",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -31930,14 +31970,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -32217,14 +32257,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -32298,14 +32338,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -32325,14 +32365,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -32433,14 +32473,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -32460,14 +32500,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -32769,14 +32809,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -32959,14 +32999,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -32986,14 +33026,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -33067,14 +33107,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -33121,14 +33161,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -33296,14 +33336,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-200",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Discouraged"
         }
       ]
     },
@@ -33525,14 +33565,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -33643,14 +33683,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -34554,14 +34594,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-254",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -37234,12 +37274,16 @@
         "CWE-20",
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#3",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
       "derivationStatus": "mixed",
-      "contextResolvedBy": "unresolved",
+      "contextResolvedBy": "product-heuristic",
+      "contextHeuristicNotes": "Apple's KEV-listed products are overwhelmingly client-side (iOS/macOS/Safari).",
       "sourceCweTrace": [
         {
           "cwe": "CWE-20",
@@ -37249,9 +37293,9 @@
         },
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -37760,12 +37804,16 @@
         "CWE-20",
         "CWE-190"
       ],
-      "derivedMappingExpression": null,
-      "primaryCluster": null,
-      "clusterSet": [],
-      "confidence": "n/a",
+      "derivedMappingExpression": "#2 | #3",
+      "primaryCluster": "#3",
+      "clusterSet": [
+        "#2",
+        "#3"
+      ],
+      "confidence": "Allowed",
       "derivationStatus": "mixed",
-      "contextResolvedBy": "unresolved",
+      "contextResolvedBy": "product-heuristic",
+      "contextHeuristicNotes": "Apple's KEV-listed products are overwhelmingly client-side (iOS/macOS/Safari).",
       "sourceCweTrace": [
         {
           "cwe": "CWE-20",
@@ -37775,9 +37823,9 @@
         },
         {
           "cwe": "CWE-190",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "ok",
+          "expression": "#2 | #3",
+          "verdict": "Allowed"
         }
       ]
     },
@@ -40205,14 +40253,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-255",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -40261,14 +40309,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -40919,14 +40967,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -41515,14 +41563,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-399",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -42200,14 +42248,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
@@ -43409,14 +43457,14 @@
       "primaryCluster": null,
       "clusterSet": [],
       "confidence": "n/a",
-      "derivationStatus": "cwe-unmapped-in-tlctc",
+      "derivationStatus": "cwe-too-abstract",
       "contextResolvedBy": "unresolved",
       "sourceCweTrace": [
         {
           "cwe": "CWE-264",
-          "status": "cwe-unmapped-in-tlctc",
-          "expression": null,
-          "verdict": null
+          "status": "cwe-too-abstract",
+          "expression": "N/A",
+          "verdict": "Prohibited"
         }
       ]
     },
