@@ -1,0 +1,74 @@
+{
+  "tool": "tlctc-control-work-planner",
+  "schemaVersion": 1,
+  "programme": {
+    "name": "Control uplift 2027",
+    "sponsor": "CISO",
+    "manager": "PMO lead",
+    "startDate": "2026-11-01",
+    "endDate": "2027-06-30",
+    "statusNote": "Detection work on plan; patch SLA waits for the asset inventory.",
+    "targetMaturity": 3
+  },
+  "environments": [
+    { "id": "env-prod", "name": "Production" },
+    { "id": "env-corp", "name": "Corporate IT" }
+  ],
+  "milestones": [
+    { "id": "ms-soc", "name": "SOC detection baseline", "date": "2027-01-31", "description": "Central detection covers the internal clusters #1 to #7." }
+  ],
+  "items": [
+    {
+      "id": "edr-prod",
+      "title": "EDR rollout to production servers: detection and host isolation",
+      "type": "local",
+      "envId": "env-prod",
+      "cells": ["7-DE", "7-RS"],
+      "cellDone": { "7-DE": "2026-11-10" },
+      "control": "EDR",
+      "owner": "Server team",
+      "status": "in-progress",
+      "priority": "P1",
+      "startDate": "2026-10-15",
+      "dueDate": "2026-12-15",
+      "effortEst": 15,
+      "milestoneId": "ms-soc",
+      "maturityFrom": 1,
+      "maturityTo": 3,
+      "checklist": [
+        { "text": "Linux servers", "done": true },
+        { "text": "Windows servers", "done": false }
+      ]
+    },
+    {
+      "id": "siem",
+      "title": "Central SIEM: correlation for clusters #1 to #7",
+      "type": "umbrella",
+      "scope": "all",
+      "cells": ["1-DE", "2-DE", "3-DE", "4-DE", "5-DE", "6-DE", "7-DE"],
+      "control": "Central SIEM",
+      "owner": "SOC lead",
+      "status": "planned",
+      "priority": "P1",
+      "dueDate": "2027-01-31",
+      "effortEst": 60,
+      "dependsOn": ["edr-prod"],
+      "milestoneId": "ms-soc",
+      "updates": [
+        { "date": "2026-11-12", "text": "Licence renewal in procurement." }
+      ]
+    }
+  ],
+  "raid": [
+    {
+      "kind": "risk",
+      "title": "SIEM licence renewal not yet approved",
+      "severity": "high",
+      "status": "open",
+      "owner": "Programme manager",
+      "dueDate": "2026-11-30",
+      "itemIds": ["siem"],
+      "mitigation": "Business case with three volume scenarios."
+    }
+  ]
+}

@@ -2464,7 +2464,7 @@ function ImportModal({ state, onClose, onApply }) {
 
                 {kind === 'planner' && (
                     <div className="mt-4 space-y-2 text-sm">
-                        <p><span className="font-semibold">Control Work Planner plan:</span> {json.items.length} work items, {(json.milestones || []).length} milestones, {(json.raid || []).length} RAID entries{json.programme?.name ? ` — “${json.programme.name}”` : ''}.</p>
+                        <p><span className="font-semibold">Control Work Planner plan:</span> {plural(json.items.length, 'work item')}, {plural((json.milestones || []).length, 'milestone')}, {plural((json.raid || []).length, 'RAID entry').replace('entrys', 'entries')}{json.programme?.name ? ` — “${json.programme.name}”` : ''}.</p>
                         <label className="flex items-start gap-2"><input type="radio" name="mode" checked={mode === 'replace'} onChange={() => setMode('replace')} className="mt-1" /><span><span className="font-medium">Replace the current plan</span><span className="block text-xs text-muted-foreground">Everything in this browser is overwritten. Export first if you want to keep it.</span></span></label>
                         <label className="flex items-start gap-2"><input type="radio" name="mode" checked={mode === 'merge'} onChange={() => setMode('merge')} className="mt-1" /><span><span className="font-medium">Add to the current plan</span><span className="block text-xs text-muted-foreground">Work items get new keys; environments with the same name are joined.</span></span></label>
                     </div>
