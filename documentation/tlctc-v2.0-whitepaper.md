@@ -12,7 +12,7 @@
 
 &nbsp;
 
-> **Cluster definitions current as of framework v2.6 (2026-09-23).** This
+> **Cluster definitions current as of framework v2.7 (2026-11-17).** This
 > paper's structure and argument remain those of Version 2.1. The ten generic
 > vulnerability statements are kept harmonized with the framework dictionary,
 > so errata issued after 2.1 — such as the v2.3.1 retightening of #4 and the
@@ -30,13 +30,22 @@
 > the #10 definition to name subversion of the trusted third party (a flaw in
 > a legitimately supplied component is classified where it is exploited), and
 > made the core paper §4 canonical for boundary tests: the §4.1 boundary tests
-> below are mirrored from it verbatim. Rule IDs stated in this paper's
+> below are mirrored from it verbatim. v2.7 is classification-preserving and
+> changes the consequence side only: Δt is recorded on causal transitions
+> and bounds the window for detection and response; a Business Risk Event is
+> reached by a causal edge (with Δt) or a normative edge (without), and the
+> consequence chain names its entry points (§6.3.1 below reflects this); the
+> Detection Coverage Score is a distributional target, defined for Δt > 0
+> (§10.7 and §12.6 notes); and the Data Risk Event stopping rule is restated
+> around a record's present standing. The DRE refinement tree (I → Ii/If,
+> A → Av/Ac, since v2.5) and its stopping rule are defined in the core paper
+> §7.6 and are not restated here. Rule IDs stated in this paper's
 > §4.2.4–§4.2.5 (R-ABUSE, R-HUMAN, R-PHYSICAL, R-FLOOD, R-CHANNEL,
 > R-SUBSTRATE, and the draft R-TRANSIT/R-INTRA series) are retired or
-> deprecated aliases under v2.6; the normative rule registry is the 17-rule
+> deprecated aliases since v2.6; the normative rule registry is the 17-rule
 > set of the canonical dictionary (see the core paper §6, its Appendix A for
-> every v2.6 change, and the glossary). Where this paper's body differs from
-> the v2.6 core, the core governs. Cite the core paper:
+> every v2.7 change, and the glossary). Where this paper's body differs from
+> the v2.7 core, the core governs. Cite the core paper:
 > [10.5281/zenodo.20633176](https://doi.org/10.5281/zenodo.20633176) (concept DOI).
 
 &nbsp;
@@ -4275,6 +4284,8 @@ Example:
 - `DCS = 15/10 = 1.5` → detection is systematically too slow for that edge without automation.
 
 **Important:** DCS depends on the chosen defender latency definition; declare it explicitly (e.g., `Δt_def=TTD`, `Δt_def=TTC`).
+
+> *v2.7 note:* the core paper (§7.2) names this ratio the **Detection Coverage Score** and fixes the two declarations as `DCS_d = TTD_P90 / Δt` (detection) and `DCS_c = TTC_P90 / Δt` (containment). It is read on distributions, so it is a target for the slow tail, not a guarantee for each incident: "winning" above means the defender's slow tail is faster than the attacker's fast one. DCS is defined for Δt > 0; a transition recorded as instantaneous leaves no time for a reactive control and is prevention-only.
 
 ---
 
