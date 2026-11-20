@@ -175,8 +175,8 @@ Top-Level Threat Clusters are chained into attack paths to represent complete sc
 
 Credentials (passwords, tokens, keys, session identifiers, and equivalent access-enabling representations) exhibit dual operational nature:
 
-- **Acquisition (Credential as Data):** (capture, exposure) maps to the enabling cluster—the generic vulnerability that made obtaining or creating the credential possible.
-- **Application (Credential as System Element):** (presenting, derivation, forgery credentials to an authentication/authorization decision point to operate as an identity) always maps to **#4 Identity Theft**.
+- **Acquisition (Credential as Data):** (capture, exposure, derivation, forgery) maps to the enabling cluster—the generic vulnerability that made obtaining or creating the credential possible.
+- **Application (Credential as System Element):** (presenting a credential to an authentication/authorization decision point to operate as an identity not the presenter's own) always maps to **#4 Identity Theft**.
 
 When both occur in a scenario, express as a sequence: `(enabling cluster) → #4`.
 
@@ -303,7 +303,7 @@ Each cluster below uses the same structure:
 
 **Definition:** An attacker targets implementation flaws within a component acting in a server role.
 
-**Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. This forces an UNINTENDED data→code transition.
+**Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. The flaw produces behaviour the design never intended — an UNINTENDED data→code transition in injection and memory-corruption cases, unintended logic or resource behaviour in others (IDOR, ReDoS, TOCTOU).
 
 **Exploit Code Mechanism:** Crafted payloads (SQL injection strings, buffer overflow, XXE payloads, etc.) that trigger specific implementation bugs to achieve unauthorized behavior or enable code execution.
 
@@ -1365,6 +1365,8 @@ If the attacker's success **does not require any implementation flaw** and inste
 | Using LOLBins to invoke execution | Legitimate binary invocation (`#1`) and then FEC execution (`#7`) |
 
 > **Avoidance note:** If “parameter tampering” succeeds because authorization is not enforced (IDOR-style access), that is an **implementation flaw** and maps to `#2` by R-ROLE—not `#1`.
+>
+> **Discriminator (`#1` vs `#2`/`#3` for out-of-envelope access):** ask whether the system's design was meant to enforce the restriction — designed to enforce it but the code fails to (IDOR, missing object-level check) → `#2`/`#3`; never part of the system's design, the restriction living only in the entitlement register (the R-SCOPE region-parameter and €12,000 cases, core paper §3.5) → `#1`.
 
 ---
 
@@ -3682,10 +3684,10 @@ VCHAR         = %x21-7E
 
 ### 11.8 Examples (Informative)
 
-- **MFA bombing / fatigue pattern (V1.9 example, rendered with V2.0 formatting):**
+- **MFA bombing / fatigue pattern (V1.9 example `#4 → #1 → #9 → #4`, corrected under the v2.6 successes-only rule — the password presentation that triggers each push records no SRE):**
 
   ```
-  #4 → #1 → #9 → #4
+  #1 → #9 → #4
   ```
 - **Server exploit leading to execution and availability loss:**
 
@@ -6482,9 +6484,9 @@ Each example is written as:
 ### B12 — MFA bombing / push spamming (full chain)
 
 - **Scenario:** Attacker spams MFA challenges until the user approves.
-- **Attack Path:** `#4 → #1 → #9 → #4`
+- **Attack Path:** `#1 → #9 → #4`
 - **Outcomes:** Varies
-- **Notes:** Initial credential use triggers MFA (#4). Abuse of the MFA challenge process (spamming) is #1. User fatigue/approval is #9. Final successful authentication is #4.
+- **Notes:** Abuse of the MFA challenge process (spamming) is #1. User fatigue/approval is #9. The completed authentication as the victim is #4. The password presentation that triggers each push is not a separate #4: authentication is incomplete until approval, so it records no SRE (successes only).
 
 ### B13 — MitM after gaining local network access (#1/#8 → #5)
 

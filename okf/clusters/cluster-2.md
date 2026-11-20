@@ -16,7 +16,7 @@ topology: "internal"
 
 **Definition:** An attacker targets implementation flaws within a component acting in a server role.
 
-**Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. This forces an UNINTENDED data→code transition.
+**Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. The flaw produces behaviour the design never intended — an UNINTENDED data→code transition in injection and memory-corruption cases, unintended logic or resource behaviour in others (IDOR, ReDoS, TOCTOU).
 
 **Exploit Code Mechanism:** Crafted payloads (SQL injection strings, buffer overflow, XXE payloads, etc.) that trigger specific implementation bugs to achieve unauthorized behavior or enable code execution.
 

@@ -1,7 +1,7 @@
 ---
 name: tlctc-classify
 description: Classify cyber security incidents, CVEs, threat-intelligence reports, red-team write-ups, and vendor advisories using the TLCTC v2.7 taxonomy (10 cause-oriented threat clusters, 10 axioms, 17 R-* classification rules incl. the R-SCOPE scope gate and R-SPECIFIC, System Risk Event doctrine, DRE refinement tree, consequence chain, attack-path notation with Δt velocity and boundary operators). Use whenever the user asks to analyze, classify, deconstruct, or build attack paths for security documents, or references "TLCTC", "threat clusters", "attack path", "#1"–"#10" cluster IDs, or "TLCTC-XX.YY" identifiers.
-version: 2.7.0
+version: 2.7.1
 homepage: https://www.tlctc.net
 ---
 
@@ -62,7 +62,7 @@ You are an expert cyber security analyst specializing in the **Top Level Cyber T
 | Axiom | Statement |
 |-------|-----------|
 | **IX** | **Clusters Chain into Attack Paths; Δt Expresses Velocity** – Clusters chain into attack paths to represent complete scenarios. The time between successive cluster steps (Δt) expresses the attack velocity. |
-| **X** | **Credentials Have Dual Operational Nature** – Credentials are system control elements with dual nature: **Acquisition** (capture, exposure) maps to the enabling cluster; **Application** (presenting, derivation, forgery credentials to operate as an identity) ALWAYS maps to **#4 Identity Theft**. |
+| **X** | **Credentials Have Dual Operational Nature** – Credentials are system control elements; acquisition and application are distinct steps. **Acquisition** (credential as data: capture, exposure, derivation, forgery) maps to the enabling cluster; **Application** (presenting the credential to authenticate as an identity not the presenter's own) ALWAYS maps to **#4 Identity Theft** (R-CRED). |
 
 ---
 
@@ -124,7 +124,7 @@ TLCTC distinguishes two fundamentally different execution mechanisms:
 ### #2 Exploiting Server
 **Definition:** An attacker targets implementation flaws within a component acting in a server role.
 
-**Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. This forces an **UNINTENDED data→code transition**.
+**Scope:** Triggering an **implementation flaw** in **server-role** software using **Exploit Code**, exploiting coding mistakes in how the server processes requests, handles data, enforces logic, or manages resources. The flaw produces behaviour the design never intended — an **UNINTENDED data→code transition** in injection and memory-corruption cases, unintended logic or resource behaviour in others (IDOR, ReDoS, TOCTOU).
 
 **Exploit Code Mechanism:** Crafted payloads (SQL injection strings, buffer overflow, XXE payloads, etc.) that trigger specific implementation bugs to achieve unauthorized behavior or enable code execution.
 
@@ -433,6 +433,7 @@ Where one weakness is describable both as a **specific** generic vulnerability a
   - "The peer-authenticity check did not happen or did not bind" → #5
   - "A memory/parsing bug happened to be located in TLS code" → #2/#3
 - The test is constitutive versus incidental, not server versus client
+- **Why the check itself is #5:** the communication path between the endpoints cannot be controlled, so peer-authenticity checking and channel encryption are the compensating controls that build a controlled channel to the right endpoint over it. A missing or non-binding check leaves exactly the #5 generic vulnerability (no control over the path) exposed; it is not a separate code-flaw cluster. A broken credential-signature check is different: it is an implementation flaw at an authentication decision point (#2/#3 per R-ROLE), and presenting the forged credential is a separate #4 step (R-CRED)
 - Note: the channel clause classifies the **weakness**; R-MITM sequences the **path** (position acquisition vs action). They do not conflict
 
 | Scenario | What Failed | Cluster |
@@ -562,6 +563,8 @@ R-HUMAN, R-PHYSICAL and R-ABUSE were retired as rule IDs in v2.5. Their proposit
 
 **Avoidance note:** If "parameter tampering" succeeds because authorization is not enforced (IDOR-style access), that is an implementation flaw and maps to #2 by R-ROLE—not #1.
 
+**Discriminator (#1 vs #2/#3 for out-of-envelope access):** ask whether the system's design was meant to enforce the restriction — designed to enforce it but the code fails to (IDOR, missing object-level check) → **#2/#3**; never part of the system's design, the restriction living only in the entitlement register (the R-SCOPE region-parameter and €12,000 cases above) → **#1**.
+
 ---
 
 ## Tie-Breaker / Precedence Rules
@@ -569,10 +572,10 @@ R-HUMAN, R-PHYSICAL and R-ABUSE were retired as rule IDs in v2.5. Their proposit
 When a step appears to fit multiple clusters, apply in order:
 
 1. **Classify by Initial Generic Vulnerability** — Not outcomes, actors, control failures, or tool names
-2. **Implementation Flaw vs Legitimate Function Misuse** — Flaw required = #2/#3; No flaw = #1
-3. **Credential Use Always Wins** — If action is "operate as identity" → #4
-4. **MitM Starts at Controlled Position** — Gaining position ≠ #5; exploiting position = #5
-5. **Specific Beats Residual (R-SPECIFIC)** — Capacity exhaustion → #6; a defect that *is* a communication-path control → #5; a physical-layer property of the substrate → #8; otherwise defects are #2/#3 and designed functions are #1
+2. **Specific Beats Residual (R-SPECIFIC)** — Capacity exhaustion → #6; a defect that *is* a communication-path control → #5; a physical-layer property of the substrate → #8; only where none applies do the residual tests in 3 run
+3. **Implementation Flaw vs Legitimate Function Misuse** — Flaw required = #2/#3 (per R-ROLE); No flaw = #1
+4. **Credential Use Always Wins** — If action is "operate as identity" not the presenter's own → #4 (self-issued proviso, R-CRED)
+5. **MitM Starts at Controlled Position** — Gaining position ≠ #5; exploiting position = #5
 6. **FEC Execution Must Be Explicit** — Always record #7 when FEC executes
 7. **Human / Physical / Third-Party Are Not Shortcuts** — These bridge clusters mark domain boundary crossings
 8. **Document Non-Obvious Decisions** — Record rationale when classification is non-obvious
@@ -603,7 +606,9 @@ When a step appears to fit multiple clusters, apply in order:
    └─ No — a defect in a legitimately supplied component is not #10: continue
       and classify it where it is exploited (e.g. Log4Shell → #2)
 4. Is the action CREDENTIAL USE (present/replay identity artifact)?
-   └─ Yes → #4 Identity Theft
+   └─ Yes, claiming an identity not the presenter's own → #4 Identity Theft
+   └─ No — the target issued it to the presenter via designed enrolment
+      (self-issued, R-CRED proviso) → not #4; an out-of-scope enrolment is #1
 5. Is the action EXPLOITING A CONTROLLED COMMUNICATION PATH POSITION?
    └─ Yes → #5 Man in the Middle
    (Note: GAINING position is a different step/cluster)
@@ -801,11 +806,11 @@ Forensic reality: evidence sometimes confirms that *something happened* at a pos
 | `?` | Single Unresolved Step | Exactly one step | One real attack step exists; cluster cannot be determined on available evidence |
 | `…` | Unresolved Gap | ≥1 step | At least one step exists; both count and clusters unknown (ASCII `...` accepted) |
 
-**Normative Rules (R-UNRES-1 … R-UNRES-9):**
-- **R-UNRES-1:** Use `?`/`…` ONLY for genuine forensic uncertainty — never as shorthand for laziness or approximation.
+**Normative Rules (R-UNRES-2, 3, 5–9 are registry rules; R-UNRES-1 and R-UNRES-4 are handbook elaborations consolidated out of the 17-rule registry, kept here as guidance):**
+- **R-UNRES-1 (guidance):** Use `?`/`…` ONLY for genuine forensic uncertainty — never as shorthand for laziness or approximation.
 - **R-UNRES-2:** `?` and `…` are **epistemic annotations, not clusters**. They have no generic vulnerability. They are NOT `#11`/`#12`. Never reference them as if they were.
 - **R-UNRES-3:** `?` and `…` MUST NOT be counted in frequency distributions, heat maps, or any statistical aggregation. They represent absence of knowledge, not presence of a category.
-- **R-UNRES-4:** Δt velocity annotations MAY be applied to transitions involving `?`/`…` (timing is often independently observable).
+- **R-UNRES-4 (guidance):** Δt velocity annotations MAY be applied to transitions involving `?`/`…` (timing is often independently observable).
 - **R-UNRES-5:** DRE tags (`+ [DRE: ...]`) MUST NOT be appended to `?` or `…`. Without a classified cluster there is no causal basis for a DRE in the notation. Record confirmed DREs in prose only.
 - **R-UNRES-6:** Boundary operators (`||...||`, `⇒`, `|...|`) MAY appear adjacent to `?`/`…` — boundaries are independently observable.
 - **R-UNRES-7:** Every `?`/`…` is an open analytical task. Replace with classified steps as evidence matures.
@@ -1060,20 +1065,20 @@ Based on TLCTC profile and velocity analysis:
 - **Attack Path:** `#2 + [DRE: C]`
 - **Rationale:** Implementation flaw (IDOR) required; no FEC execution
 
-## Example 6: Client XSS with Script Execution (#3 → #7)
-- **Scenario:** Reflected XSS causes attacker JavaScript to execute in browser
-- **Attack Path:** `#3 → #7`
-- **Rationale:** Bug is in client-role content handling (#3); script execution is FEC → #7
+## Example 6: XSS with Script Execution (#2 → #7 / #3 → #7)
+- **Scenario:** Reflected or stored XSS causes attacker JavaScript to execute in the victim's browser
+- **Attack Path:** `#2 → #7`
+- **Rationale:** The output-encoding flaw is in server-role code (#2); the browser executes the script as designed, which is FEC → #7. Only DOM-based XSS, where the flaw is in client-side JavaScript, is `#3 → #7`
 
 ## Example 7: Credential Phishing and Login (#9 → #4)
 - **Scenario:** User tricked into entering credentials; attacker logs in
 - **Attack Path:** `#9 ||[human][@External→@Org]|| → #4`
 - **Rationale:** Human manipulation is #9 (bridge); credential use is #4 (R-CRED)
 
-## Example 8: MFA Fatigue Attack (#4 → #1 → #9 → #4)
-- **Scenario:** Attacker spams MFA challenges until user approves
-- **Attack Path:** `#4 → #1 → #9 → #4`
-- **Rationale:** Initial credential use triggers MFA (#4); abuse of MFA challenge process (spamming) is #1; user fatigue/approval (#9); successful authentication (#4)
+## Example 8: MFA Fatigue Attack (#1 → #9 → #4)
+- **Scenario:** Attacker holding a stolen password spams MFA challenges until user approves
+- **Attack Path:** `#1 → #9 → #4`
+- **Rationale:** Repeatedly invoking the push-challenge function is #1; the user's fatigued approval is #9; the completed authentication as the victim is #4 (R-CRED). The password presentation that triggers each push is not a separate #4: authentication is incomplete until approval, so it records no SRE (successes only)
 
 ## Example 9: Volumetric DDoS (#6)
 - **Scenario:** Large-volume traffic overwhelms bandwidth and connection limits
@@ -1202,7 +1207,7 @@ Before submitting any analysis, verify:
 
 ❌ **Don't call consequences "threats"**
 - Wrong: "Ransomware is #7 and causes #6 DDoS"
-- Right: "Ransomware is #7; it causes [DRE: A] (Loss of Availability)"
+- Right: "Ransomware is an outcome label, not a cluster: the payload execution is #7 and the impact is [DRE: Ac] (data present but unusable)"
 
 ❌ **Don't confuse capacity exhaustion with implementation defects**
 - Wrong: "ReDoS is #6 because it exhausts CPU"
@@ -1279,20 +1284,18 @@ Begin every analysis with:
 ## JSON Export (Optional)
 {
   "framework_version": "2.7",
-  "attack_path": "#9 ||[human][@External→@Org]|| →[Δt=2h] #4 →[Δt=5m] #1 → #7",
+  "attack_path": "#9 ||[human][@External→@Org]|| →[Δt=2h] #4 →[Δt=5m] #1 →[Δt=5s] #7 + [DRE: Ac]",
   "clusters_involved": ["#9", "#4", "#1", "#7"],
   "bridge_crossings": [
     {"cluster": "#9", "context": "human", "source": "@External", "target": "@Org"}
   ],
   "transit_parties": [],
-  "intra_system_boundaries": [
-    {"step": "step-3", "type": "privilege", "from": "@user", "to": "@root"}
-  ],
+  "intra_system_boundaries": [],
   "unresolved_steps": [],
   "velocity_profile": {
     "#9→#4": "2h",
     "#4→#1": "5m",
-    "#1→#7": "seconds"
+    "#1→#7": "5s"
   },
   "velocity_class": "VC-2→VC-3→VC-4",
   "data_risk_events": ["Ac"],

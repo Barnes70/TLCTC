@@ -64,9 +64,9 @@ clawhub login                        # prints a one-time code + URL; approve wit
 clawhub whoami
 
 npm run validate-skills
-clawhub skill publish integrations/clawhub/tlctc-classify --version 2.7.0 --dry-run
-clawhub skill publish integrations/clawhub/tlctc-classify --version 2.7.0 \
-  --changelog "TLCTC v2.7 (2026-10-17): consequence chain added (BRE, causal and normative edges, entry points), DRE stopping rule and DCS wording updated. Classification-preserving: no cluster, axiom, rule or DRE code changed."
+clawhub skill publish integrations/clawhub/tlctc-classify --version 2.7.1 --dry-run
+clawhub skill publish integrations/clawhub/tlctc-classify --version 2.7.1 \
+  --changelog "Skill fixes (2026-11-20), framework still v2.7: Axiom X wording; reflected XSS is #2 -> #7; MFA fatigue is #1 -> #9 -> #4 (successes only); R-SPECIFIC ahead of the flaw-vs-function tie-breaker; self-issued proviso in the decision tree; #1 vs #2 discriminator; JSON template fixed."
 ```
 
 Checked 2026-09-27 with clawhub CLI 0.23.3: the dry run reports

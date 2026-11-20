@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Top Level Cyber Threat Clusters (TLCTC) — cause-oriented, axiomatic cyber threat taxonomy as a Claude Code plugin.",
-    "version": "2.7.0"
+    "version": "2.7.1"
   },
   "plugins": [
     {
